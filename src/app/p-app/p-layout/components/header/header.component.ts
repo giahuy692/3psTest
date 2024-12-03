@@ -92,7 +92,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     let c = this.menuService.allowModuleList$.subscribe(v => this.allowModuleList = v);
     let d = this.menuService.currentModule$.subscribe(v => { this.currentModule = v });
 
-    const vapidKey = 'BPFQMK_yrisDvRGCflI_Rvgk2_Gf-yptZyQnX7Xw6dAfuq4na7IE5PyM1uCIQd-FZwtF6Rp5rrBAe_LRc1A7xtE'; // Thay bằng VAPID Key từ Firebase Console
+    const vapidKey = 'BJ3oniCKyBFvdawVwUXnr3NebzsCmKOVxQ6nc8V0-_RMcYWII8f8yAE8GHR895VGRjJKiOFVYjXIwfrfe2sZoAQ'; // Thay bằng VAPID Key từ Firebase Console
     this.messagingService.requestPermission(vapidKey);
     this.messagingService.receiveMessage();
     let f = this.messagingService.currentMessage$.subscribe((msg) => {
