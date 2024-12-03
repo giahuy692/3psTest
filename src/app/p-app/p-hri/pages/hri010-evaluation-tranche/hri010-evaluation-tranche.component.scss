@@ -1,0 +1,269 @@
+@import "../../../../../assets/scss/variable.scss";
+// @import "../../../../../assets/scss/myCustomize.scss";
+
+::ng-deep {
+
+	app-hri010-evaluation-tranche {
+
+		#headerEvaluation,
+		#footerEvaluation {
+			position: relative;
+			z-index: 101;
+		}
+
+		#evaluationTranche {
+			height: calc(100vh - 55px);
+
+			.myCustomBreadCrumb.k-breadcrumb {
+				width: 265px;
+			}
+
+			// BREADCRUMB AND BUTTON
+			#breadcrumbButtonBlock {
+				display: flex;
+				height: 60px;
+				align-items: center;
+				justify-content: space-between;
+				padding: 15px;
+				border-bottom: 1px solid $blue-gray;
+				position: relative;
+				z-index: 1;
+				background-color: $gray-100;
+				overflow-x: auto;
+				overflow-y: hidden;
+
+				.buttonGroup,
+				kendo-buttongroup {
+					display: flex;
+					gap: 10px;
+				}
+			}
+
+			// FUNCTIONBAR
+			#functionbar {
+				display: flex;
+				justify-content: flex-start;
+				padding: 15px;
+				position: relative;
+				z-index: 101;
+				background-color: $gray-100;
+				z-index: 1;
+				overflow-y: scroll;
+
+				kendo-label {
+					width: 100%;
+					height: 57.5px;
+					display: flex;
+					flex-direction: column;
+					justify-content: space-between;
+
+					label {
+						font-weight: 700;
+						font-size: 13px;
+						color: $light-blue-gray;
+					}
+
+					.in-label {
+						display: flex;
+						align-items: center;
+
+						.temp {
+							color: $light-blue-gray;
+							padding: 0 10px;
+						}
+
+						.datepicker-wrapper {
+							width: 130px;
+						}
+					}
+				}
+
+				.buttonGroup,
+				kendo-buttongroup {
+					display: flex;
+					gap: 10px;
+					align-self: flex-end;
+
+				}
+			}
+
+			.rowMoreActionPopup {
+				.popup-item {
+					.k-i-parameters-byte-array::before {
+						background-image: url(../../../../../assets/img/icon/icon_autoCalculate.svg);
+						color: transparent;
+						background-size: contain;
+						background-repeat: no-repeat;
+					}
+				}
+			}
+
+			.grid-wrapper {
+				margin-top: 0;
+				.myCustomGrid {
+					height: calc(100vh - 284px) !important;
+					.k-grid-aria-root {
+						table {
+							tr {
+								td {
+									height: 48px;
+								}
+
+								th {
+									color: #5A6276;
+
+									&.col_NoOfEmployee {
+										.k-link {
+											width: 132px !important;
+											justify-content: center;
+										}
+									}
+								}
+
+								th:first-child {
+									padding-left: 30px;
+								}
+
+								th:nth-child(5) {
+									padding-right: 65px;
+									display: flex;
+									justify-content: flex-end;
+								}
+
+								td:nth-child(2) {
+									max-width: 550px;
+
+									.title {
+										font-weight: 700;
+										font-size: 13px;
+										color: $gray-850;
+									}
+								}
+
+								td:nth-child(3) {
+									.dateStart {
+										font-weight: 700;
+										font-size: 13px;
+										color: $gray-850;
+									}
+								}
+
+								td:nth-child(4) {
+									text-align: center;
+								}
+
+								td:nth-child(5) {
+									padding-right: 60px;
+									text-align: right;
+
+									.statusSession {
+										color: $dark-green;
+									}
+								}
+
+								td:last-child {
+									.btnCell {
+										display: flex;
+										justify-content: center;
+									}
+								}
+							}
+						}
+					}
+
+					.k-grid-pager {
+						position: fixed;
+						bottom: 30px;
+						width: -webkit-fill-available;
+						margin: 0;
+					}
+				}
+			}
+		}
+
+		//DIALOG
+		.k-dialog-wrapper {
+			z-index: 10002;
+
+			.k-dialog {
+				.k-dialog-titlebar {
+					height: 50px;
+					background-color: #FD7676;
+
+					.k-dialog-titlebar-actions {
+						display: none;
+					}
+
+					.k-dialog-title {
+						font-size: 15px !important;
+						font-weight: 700;
+						color: $white;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						gap: 10px;
+						text-transform: uppercase;
+
+						.k-icon {
+							font-size: 25px;
+						}
+					}
+				}
+
+				.k-dialog-content {
+					padding: 0 !important;
+					height: calc(100% - 50px);
+
+					.dialog-content {
+						height: 150px;
+						padding: 22px 35px;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						justify-content: space-around;
+						font-size: 14px;
+
+						div {
+							text-align: center;
+
+							h4 {
+								color: $dark-green;
+								font-size: 17px;
+								text-transform: uppercase;
+							}
+
+							span {
+								text-transform: uppercase;
+								color: $red;
+							}
+						}
+
+						div:last-child:first-letter.qcont:first-letter {
+							text-transform: capitalize
+						}
+					}
+
+					.dialog-footer {
+						column-gap: 0 !important;
+
+						button,
+						button:hover {
+							width: 50%;
+							height: 50px;
+							border: none;
+							border-top: 1px solid $gray-1 ;
+							text-transform: uppercase;
+							font-size: 11px;
+							font-weight: 700;
+						}
+
+						button:last-child {
+							color: $white;
+							background-color: #FD7676;
+						}
+					}
+				}
+			}
+		}
+	}
+}

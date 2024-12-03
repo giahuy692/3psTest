@@ -1,0 +1,3827 @@
+@import "../../../../../assets/scss/variable.scss";
+@import "../../../../../assets/scss/variables/variable_react.scss";
+
+::ng-deep {
+  #app-drawer-container {
+    height: 100%;
+
+    .mat-drawer-container {
+      height: 100%;
+
+      .mat-drawer-content {
+        overflow: hidden;
+      }
+
+      .mat-drawer-backdrop {
+        background-color: rgba(black, 0.3);
+      }
+    }
+
+    .mat-drawer {
+      width: 400px;
+      padding: 10px;
+      padding-right: 0.25rem;
+
+      form {
+        width: 100%;
+        padding: 0 10px;
+
+        fieldset {
+          //.k-form-fieldset
+          margin-right: 5px;
+          padding-bottom: 35px;
+
+          .k-form-field-disabled {
+            //giữ màu cho label khi formfield bị disabled
+            .k-label {
+              opacity: 1;
+            }
+          }
+        }
+        legend {
+          //.k-form-legend
+          margin: 0;
+          padding-bottom: 10px;
+          font-weight: bold;
+          font-size: 16px;
+          color: $dark-green;
+          border-bottom: 1px solid $dark-green;
+        }
+        .k-label {
+          font-weight: bold;
+
+          #folderPath {
+            padding: 0 5px;
+            margin-top: 5px;
+          }
+        }
+        .symbol {
+          padding-left: 5px;
+          color: $dark-red;
+          flex-grow: 1;
+          font-weight: bold;
+        }
+        .text {
+          display: flex;
+          color: $cyan;
+          cursor: pointer;
+        }
+        .k-textbox {
+          &:focus,
+          &:hover {
+            border: 1px solid $dark-green;
+          }
+
+          &[formControlName="ThanhTien"] {
+            font-weight: bold;
+          }
+        }
+        .k-dropdownlist {
+          border-radius: 3px;
+          border: 1px solid transparent;
+
+          &:focus,
+          &:hover {
+            border: 1px solid $dark-green !important;
+          }
+        }
+        .k-checkbox {
+          border-radius: 3px;
+          border-color: $dark-green;
+
+          &:checked,
+          &:hover {
+            background-color: $dark-green;
+
+            &:before {
+              font-size: 13px;
+            }
+          }
+        }
+        div img {
+          background-color: transparent;
+
+          &.img-hachi24 {
+            height: 16px;
+            margin-left: 10px;
+          }
+        }
+
+        .formfield-grid {
+          display: grid;
+          grid-template-columns: auto 50%;
+          column-gap: 32px;
+          margin-top: 8px;
+
+          &.hasNoImage {
+            row-gap: 15px;
+          }
+
+          // .formfield-item {
+          .item1 {
+            margin-top: 0;
+          }
+          .item1,
+          .item3 {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+          }
+          .item2 {
+            grid-column: 2;
+            grid-row: 1 / span 2;
+            width: 100%;
+          }
+          .item5 {
+            .k-label {
+              visibility: hidden;
+            }
+            .red-color {
+              text-decoration: line-through;
+              color: red;
+            }
+          }
+        }
+        .k-form-buttons {
+          position: fixed;
+          bottom: 36px;
+
+          .k-button {
+            height: 32px;
+            width: 103px;
+            border-radius: 3px;
+            border: 1px solid;
+            background-color: white;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 11px;
+
+            &:hover {
+              background-color: $medium-blue-gray;
+              color: white;
+            }
+
+            &.updateBtn {
+              background-color: $dark-green;
+              border: none;
+              color: white;
+
+              &:hover {
+                background-color: $worse-green;
+                border: 1px solid;
+              }
+            }
+          }
+        }
+      }
+
+      .formSanpham {
+        .tensanpham {
+          margin-top: 1rem;
+
+          .VNName {
+            min-height: 32px;
+          }
+        }
+      }
+      .formQuatang {
+        .groupQuatang {
+          display: flex;
+          flex-direction: column;
+          row-gap: 10px;
+          margin-top: 10px;
+
+          .groupName {
+            font-size: 18px;
+            font-weight: bold;
+            color: $dark-green;
+          }
+          .sanpham {
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+          }
+          .sanphamName {
+            font-weight: bold;
+            color: $blue;
+            display: flex;
+            column-gap: 5px;
+            align-items: center;
+
+            img {
+              max-height: 40px;
+              max-width: 40px;
+            }
+          }
+
+          .quatang-list {
+            display: flex;
+            flex-direction: column;
+            row-gap: 15px;
+
+            .quatang-item {
+              display: grid;
+              grid-template-columns: auto 30% auto auto;
+              column-gap: 10px;
+
+              .k-checkbox {
+                grid-column: 1;
+                grid-row: 1 / span 2;
+                margin-top: 10px;
+              }
+              .item2 {
+                grid-column: 2;
+                grid-row: 1 / span 2;
+                width: 100%;
+              }
+              .tenquatang_maquatang {
+                grid-row: 1;
+                grid-column: 3 / span 2;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+              }
+              .soluongquatang {
+                grid-row: 2;
+                grid-column: 3 / span 2;
+                display: flex;
+                white-space: nowrap;
+                align-items: center;
+                column-gap: 20px;
+
+                .soluong {
+                  font-weight: bold;
+                }
+              }
+            }
+          }
+        }
+      }
+      /* width */
+      ::-webkit-scrollbar {
+        width: 0.75rem;
+      }
+    }
+
+    .mat-drawer.mat-drawer-opened {
+      background-color: white;
+    }
+  }
+
+  app-ecom010-cart-generate-detail {
+    height: calc(93vh - #{$footer-height});
+    padding: 0 15px 35px 20px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+
+    .header {
+      display: flex;
+      padding: 9px 0;
+      margin-bottom: 0;
+      border-bottom: 1px solid rgba($gray-500, 0.4);
+
+      @media screen and (max-width: 480px) {
+        display: none;
+      }
+
+      &.header-1 {
+        .checkbox-btn-group {
+          margin-right: 10px;
+        }
+      }
+
+      .label {
+        margin-bottom: 6px;
+        font-weight: 700;
+        font-size: 13px;
+        color: $gray-700;
+      }
+      .nav-btn {
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+      }
+      .nav-breadcrumb {
+        font-weight: bold;
+        color: $gray-500;
+
+        .breadcrumb-item {
+          &:first-child {
+            cursor: pointer;
+            color: $dark-green;
+          }
+        }
+        .breadcrumb-chevron {
+          display: flex;
+        }
+      }
+
+      .nav-crud {
+        flex-grow: 0;
+        justify-content: flex-end;
+
+        .crud-btn {
+          height: 32px;
+          margin-top: auto;
+          margin-left: 10px;
+          font-size: 11px;
+          font-weight: bold;
+          background-color: white !important;
+          box-shadow: 1px 3px 6px 1px rgba($gray-500, 0.2) !important;
+        }
+
+        #reloadBtn {
+          color: $gray-500;
+        }
+        #updateOrderType_Treo_Btn {
+          color: $bad-red;
+        }
+        .updateStatusBtn {
+          // color: $dark-green;
+          text-transform: uppercase;
+
+          &.gray {
+            color: $light-blue-gray;
+          }
+          &.yellow {
+            color: $medium-yellow;
+          }
+          &.green {
+            color: $dark-green;
+          }
+          &.red {
+            color: $bad-red;
+          }
+        }
+        .onDeleteBtn {
+          background-color: $gray-500 !important;
+          color: white;
+        }
+        #onAddBtn {
+          background-color: $dark-green !important;
+          color: white;
+        }
+
+        .border-center {
+          margin: auto 0 1px 10px;
+          border-right: 1px solid $gray-300;
+          height: 31px;
+        }
+      }
+      .nav-file {
+        flex-grow: 0;
+
+        .file-btn-group {
+          background: white;
+          box-shadow: 1px 3px 6px 1px rgba($gray-500, 0.2);
+          border-radius: 3px;
+          color: $gray-500;
+          min-width: fit-content;
+          height: 32px;
+          display: flex;
+          margin-top: auto;
+          margin-left: 15px;
+          // cursor: pointer;
+
+          span.text {
+            margin: auto;
+            padding-right: 9px;
+          }
+          #onUploadBtn {
+            width: 32px;
+          }
+          #onImportBtn {
+            width: 64px;
+
+            .excel-ic {
+              width: 32px;
+              height: 100%;
+              margin-left: 2px;
+            }
+          }
+          .border-center {
+            align-self: center;
+            height: 90%;
+            border-right: 1px solid $gray-500;
+          }
+
+          .k-i-arrow-chevron-down {
+            text-align: center;
+            padding: 7px 0;
+            width: 32px;
+            height: 100%;
+
+            &:before {
+              font-size: 20px;
+            }
+          }
+        }
+      }
+    }
+
+    .body {
+      .sections {
+        .section {
+          .title {
+            margin: 12px 0;
+            font-weight: bold;
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+          }
+          .crud-btn {
+            height: 32px;
+            font-size: 11px;
+            font-weight: bold;
+            background-color: $dark-green !important;
+            color: white;
+          }
+
+          .section-grid {
+            display: grid;
+            column-gap: 26px;
+            row-gap: 10px;
+            background-color: white;
+            padding: 15px;
+
+            .grid-item {
+              display: flex;
+              flex-direction: column;
+
+              .itemNull {
+                display: none !important;
+              }
+            }
+
+            .k-textbox {
+              flex-grow: 1;
+              width: auto;
+            }
+            .k-numerictextbox {
+              flex-grow: 1;
+              width: auto;
+
+              &.red-color input {
+                color: $bad-red;
+              }
+            }
+
+            .k-dropdownlist {
+              flex-grow: 1;
+              width: auto;
+            }
+            .k-datepicker {
+              flex-grow: 1;
+              width: auto;
+            }
+          }
+
+          &#thongtindonhangTbl {
+            .title {
+              justify-content: flex-start;
+              column-gap: 15px;
+
+              span.red {
+                color: $bad-red;
+
+                img {
+                  margin-top: -7px;
+                }
+              }
+
+              .orderType {
+                color: $gray-500;
+
+                &.red {
+                  color: $bad-red;
+                }
+                &.green {
+                  color: $dark-green;
+                }
+              }
+            }
+
+            .section-grid {
+              grid-template-columns: 240px auto auto auto;
+
+              .item1 {
+                .label {
+                  display: flex;
+                  flex-grow: 1;
+                  justify-content: space-between;
+
+                  .tinhtrang {
+                    color: $good-green;
+                  }
+                }
+              }
+              .item7 {
+                .label {
+                  display: flex;
+                  flex-grow: 1;
+                  justify-content: space-between;
+
+                  .nguoimuahang {
+                    color: $good-green;
+                  }
+                }
+              }
+              .item9 {
+                grid-row: 1 / span 2;
+                grid-column: 4 / span 2;
+
+                textarea {
+                  resize: none;
+                  border-radius: 3px;
+                  border-color: rgba(0, 0, 0, 0.08);
+                  outline: none;
+                  height: 100%;
+                  padding: 4px 8px;
+
+                  &:hover,
+                  &:focus-visible {
+                    border-color: $dark-green;
+                  }
+                }
+              }
+              .item10 {
+                #phanloaidonhangBtn {
+                  color: $gray-900;
+                  font-weight: bold;
+                  display: flex;
+                  justify-content: flex-start;
+                  border: none;
+                  box-shadow: none;
+
+                  &:focus,
+                  &:active {
+                    box-shadow: none;
+                  }
+                  .k-checkbox {
+                    margin-right: 9px;
+                  }
+                }
+              }
+              .item12 {
+                grid-row: 3;
+                grid-column: 3 / span 3;
+                flex-direction: row;
+                display: flex;
+                column-gap: 10px;
+
+                .address-item {
+                  display: flex;
+                  flex-direction: column;
+
+                  &.address {
+                    flex-grow: 1;
+                  }
+                  &.address-province {
+                    width: 144px;
+                  }
+                  &.address-district {
+                    width: 115px;
+                  }
+                  &.address-ward {
+                    width: 115px;
+                  }
+                }
+              }
+            }
+          }
+
+          &#thongtinthanhtoanTbl {
+            .section-grid {
+              grid-template-columns: auto 200px 200px 330px;
+              row-gap: 7px;
+
+              .item1 {
+                grid-column: 1;
+                grid-row: 1 / span 2;
+              }
+              .item2 {
+                grid-column: 1;
+                grid-row: 3 / span 2;
+              }
+              .item3 {
+                grid-column: 1;
+                grid-row: 5 / span 3;
+                justify-content: space-evenly;
+
+                .k-textbox {
+                  margin-bottom: 7px;
+
+                  &:last-child {
+                    margin-bottom: 0;
+                  }
+                }
+              }
+              .item4 {
+                grid-row: 1;
+                grid-column: 2 / span 2;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                column-gap: 10px;
+
+                .label {
+                  margin-bottom: 0;
+                }
+                .k-textbox {
+                  flex-grow: 0;
+                }
+              }
+              .item5 {
+                grid-column: 2 / span 2;
+                grid-row: 2 / span 6;
+                column-gap: 40px;
+                row-gap: 10px;
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-content: flex-start;
+
+                .item {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  width: 45%;
+
+                  .k-i-trash {
+                    color: $bad-red;
+                    cursor: pointer;
+                  }
+                }
+              }
+              .item6,
+              .item7,
+              .item8 {
+                justify-content: space-between;
+
+                .item {
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+
+                  .label {
+                    flex-grow: 1;
+                    margin-bottom: 0;
+                  }
+                  .k-numerictextbox {
+                    max-width: 50%;
+                    max-height: 24px;
+                  }
+                }
+              }
+              .item6 {
+                grid-column: 4;
+                grid-row: 1 / span 2;
+              }
+              .item7 {
+                grid-column: 4;
+                grid-row: 3 / span 2;
+              }
+              .item8 {
+                grid-column: 4;
+                grid-row: 5 / span 2;
+                justify-content: space-around;
+              }
+              .item9 {
+                grid-column: 4;
+                grid-row: 7;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+
+                .label {
+                  color: $gray-900;
+                  margin-bottom: 0;
+                }
+                .number {
+                  color: $blue;
+                  font-weight: bold;
+                  font-size: 24px;
+                }
+              }
+            }
+          }
+
+          &#thongtinchitietdonhangTbl {
+            .title {
+              margin-bottom: 0;
+            }
+            .grids {
+              .grid-title {
+                display: flex;
+                align-items: center;
+
+                .grid-subtitle {
+                  font-weight: bold;
+                  font-size: 15px;
+                  margin: 0 15px;
+                }
+                img {
+                  height: 17px;
+                }
+              }
+              .gridGroup {
+                &.gridNull {
+                  display: none;
+                }
+              }
+              .grid1 {
+                .grid-subtitle {
+                  color: $good-green;
+                }
+              }
+              .grid2 {
+                .grid-subtitle {
+                  color: $blue;
+                  margin-top: 12px;
+                }
+              }
+
+              .k-grid {
+                th {
+                  .hachi24 {
+                    height: 15px;
+                  }
+
+                  &:nth-child(3),
+                  &:nth-child(4),
+                  &:nth-child(5) {
+                    text-align: center;
+                  }
+                  &:nth-last-child(2) {
+                    text-align: center;
+                    border-right: 40px solid transparent;
+                  }
+                }
+
+                tr:not(.k-grouping-row) td {
+                  &:first-child {
+                    padding-left: 10px;
+                  }
+                  &:nth-last-child(2) {
+                    border-right: 40px solid transparent;
+                  }
+                }
+
+                .isHachi24,
+                .soluong,
+                .dongia {
+                  max-width: 100px;
+                  width: 100px;
+                  text-align: center;
+                }
+
+                .tensanpham {
+                  display: flex;
+
+                  img {
+                    max-height: 64px;
+                    margin-right: 20px;
+                  }
+                  .tensanpham_masanpham {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+
+                    .tensanpham {
+                      white-space: normal;
+                    }
+
+                    .masanpham {
+                      color: $gray-700;
+                    }
+                  }
+                }
+                .dongia {
+                  .BasePrice {
+                    color: $bad-red;
+                    text-decoration: line-through $bad-red;
+                  }
+                }
+                .thanhtien {
+                  max-width: 130px;
+                  width: 130px;
+                  text-align: center;
+                }
+              }
+            }
+          }
+
+          &#quatangTbl {
+            .quatang-list {
+              display: grid;
+              // grid-template-columns: 18% 18% 18% 18% 18%;
+              grid-template-columns: 18% 18% 18% 18%;
+              // column-gap: 3%;
+              column-gap: 9%;
+
+              .quatang-item {
+                padding: 5px;
+                border-radius: 3px;
+                width: 250px;
+                height: 110px;
+                background-color: white;
+                position: relative;
+                display: grid;
+                grid-template-columns: 30% auto;
+                column-gap: 10px;
+
+                &:hover {
+                  box-shadow: 0 0 0 1px $dark-green;
+                }
+
+                .k-i-trash {
+                  color: $bad-red;
+                  cursor: pointer;
+                  position: absolute;
+                  top: 3px;
+                  left: 3px;
+                }
+                .hinhanh {
+                  grid-column: 1;
+                  grid-row: 1 / span 2;
+                  display: flex;
+                  align-items: center;
+
+                  img {
+                    border-radius: 3px;
+                    width: 100%;
+                  }
+                }
+                .tenquatang_maquatang {
+                  grid-column: 2 / span 2;
+                  grid-row: 1;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: space-between;
+                }
+                .soluongquatang {
+                  grid-column: 2 / span 2;
+                  grid-row: 2;
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+
+                  .soluong {
+                    font-weight: bold;
+                  }
+                }
+              }
+            }
+          }
+
+          &#lichsuxulydonhangTbl {
+            .title {
+              margin-bottom: 0;
+            }
+
+            .k-grid {
+              tr:not(.k-grouping-row) td {
+                &:first-child {
+                  padding-left: 10px;
+                }
+                &:last-child {
+                  display: none;
+                }
+              }
+
+              .thoidiemxuly {
+                display: flex;
+                column-gap: 5px;
+              }
+            }
+          }
+
+          &#chukybengiaonhanTbl {
+            display: flex;
+            flex-direction: column;
+
+            .chuky-bg {
+              max-height: 600px;
+              height: 400px;
+              display: flex;
+              justify-content: center;
+              background-color: white;
+              flex-grow: 1;
+
+              &.empty {
+                height: auto;
+              }
+              img {
+                max-width: auto;
+                max-height: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .label {
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: $gray-500;
+
+      &.thick-label {
+        color: $gray-900;
+
+        + .number {
+          font-weight: bold;
+        }
+        + .k-numerictextbox {
+          input {
+            font-weight: bold;
+          }
+        }
+      }
+      &.thin-label {
+        font-weight: normal;
+        color: $gray-800;
+      }
+    }
+
+    // .my-container{
+    //   padding: 15px;
+    // }
+  }
+  //react
+  .hachi_page_view_cart {
+    .group-product-promotion-time {
+      display: flex;
+      align-items: center;
+      height: 40px;
+      justify-content: flex-end;
+
+      .text {
+        margin-right: 14px;
+      }
+      .badge {
+        cursor: pointer;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        border-radius: 3px;
+        padding: 6px 12px;
+        font-size: 13px;
+        font-weight: bold;
+        margin-left: 10px;
+        margin-bottom: 3px;
+        background-color: $red;
+        color: $white;
+      }
+    }
+    .view-cart__title {
+      font-size: 20px;
+    }
+    .view-cart__card {
+      box-shadow: 0px 3px 8px rgba(134, 139, 134, 0.18);
+      margin-bottom: 6px;
+      .card-body {
+        padding: 22px 17px;
+      }
+    }
+
+    .view-cart__info {
+      box-shadow: 0px 3px 8px rgba(134, 139, 134, 0.18);
+      margin-bottom: 6px;
+
+      .card-body {
+        // display: flex;
+        padding: 11px 17px 5px 17px;
+
+        .icon-text {
+          flex: 1 0 auto;
+
+          .item {
+            margin-bottom: 15px;
+            padding-right: 30px;
+            display: flex;
+
+            .icon {
+              flex: 0 1 18px; //28px
+              margin-right: 5px;
+
+              .hachi-icon-information {
+                &::before {
+                  color: $blue;
+                  font-size: 16px;
+                }
+              }
+            }
+            .text {
+              flex: 1 0 auto;
+              max-width: 100%;
+            }
+          }
+        }
+        .icon-close {
+          // flex: 0 1 49px;
+          position: absolute;
+          top: 10px;
+          right: 5px;
+
+          .btn-close {
+            // background: $white;
+            background: none;
+            border: unset;
+            display: flex;
+            align-content: center;
+
+            span::before {
+              color: $lightgreen;
+            }
+          }
+        }
+      }
+    }
+    .view-cart__table {
+      box-shadow: 0px 3px 8px rgba(134, 139, 134, 0.18);
+      margin-bottom: 6px;
+
+      .card-body {
+        padding: 20px 17px;
+      }
+    }
+
+    .dia-chi-nhan-hang {
+      border: 1px solid $white;
+      .card-body {
+        padding: 14px 16px;
+        .card-title {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 14px;
+          > div {
+            font-weight: 700;
+          }
+        }
+        .thong-tin-dia-chi {
+          .ten-dien-thoai {
+            width: 100%;
+            font-weight: bold;
+            ul {
+              margin-bottom: 8px;
+              margin-left: 0;
+            }
+          }
+        }
+      }
+    }
+    .ap-dung-ma-giam-gia {
+      border: 1px solid $white;
+
+      .card-body {
+        padding: 14px 16px;
+
+        .card-title {
+          display: flex;
+          align-items: center;
+          margin-bottom: 14px;
+
+          > div {
+            font-weight: 700;
+          }
+        }
+        .card-form {
+          .hachi_form {
+            width: 100%;
+
+            > div.text {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              padding: 6px 0px;
+
+              .hachi-icon-information::before {
+                color: $gray-2;
+              }
+
+              .hachi-link {
+                cursor: pointer;
+              }
+            }
+            > div.control {
+              width: 100%;
+              display: flex;
+              align-items: center;
+
+              input {
+                padding: 7px;
+                border: 1px solid $whitegray-7;
+                border-right: 0;
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+                box-sizing: border-box;
+                flex: auto;
+              }
+              button {
+                font-family: $font-nunito;
+                font-weight: bold;
+                padding: 6px;
+                box-sizing: border-box;
+                border-radius: 3px;
+                width: 94px;
+              }
+            }
+          }
+          .error {
+            margin-top: 10px;
+            font-family: $font-roboto;
+            color: $lightorange;
+          }
+          .list-giam-gia {
+            margin-top: 10px;
+
+            .giam-gia {
+              margin-bottom: 10px;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+
+              .text {
+                .ma {
+                  font-family: $font-nunito;
+                  font-style: normal;
+                  font-weight: bold;
+                  font-size: 13px;
+                  line-height: 20px;
+                  color: $green;
+                  margin-right: 5px;
+                }
+                .xoa {
+                  font-family: $font-nunito;
+                  color: $gray-2;
+                  cursor: pointer;
+                }
+              }
+              .price {
+                font-family: $font-nunito;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 13px;
+                line-height: 18px;
+                color: $lightorange;
+                white-space: nowrap;
+              }
+            }
+          }
+        }
+      }
+
+      .ma-giam-gia {
+        // margin-top: 20px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        line-height: 20px;
+
+        .icon {
+          margin-right: 10px;
+        }
+        .name {
+          color: $gray-1;
+          margin-right: 12px;
+          white-space: nowrap;
+        }
+
+        .popup-ma-giam-gia {
+          .hachi-popup {
+            // left: 0;
+            // left: -17px;
+            top: 30px; //25
+            right: -17px;
+            // width: 100%;
+            width: 490px;
+
+            .hachi-popup-content {
+              padding-bottom: 48px;
+              min-width: 0;
+              max-width: 490px;
+            }
+            .hachi-popup-header {
+              .text-1 {
+                font-weight: 600;
+                font-family: $font-nunito;
+                font-size: 16px;
+                line-height: 24px;
+              }
+              .text-2 {
+                color: $green;
+                line-height: 20px;
+                margin-bottom: 6px;
+              }
+            }
+            .hachi-popup-body {
+              form {
+                width: 100%;
+                padding-right: 22px;
+
+                > div {
+                  width: 100%;
+                  height: 52px;
+                  display: flex;
+                  align-items: center;
+                  padding: 10px;
+                  background-color: $whitegray-2;
+                  border-radius: 5px;
+
+                  input {
+                    padding: 8px;
+                    border: 1px solid $whitegray-7;
+                    box-sizing: border-box;
+                    border-radius: 5px;
+                    width: 304px;
+                    margin-right: 10px;
+                    height: 32px;
+                    // &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                    //     color:$text-main;
+                    //     opacity: 1; /* Firefox */
+                    //   }
+
+                    //   &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+                    //     color: $text-main;
+                    //   }
+
+                    //   &::-ms-input-placeholder { /* Microsoft Edge */
+                    //     color: $text-main;
+                    //   }
+                  }
+                  button {
+                    font-family: $font-nunito;
+                    font-weight: bold;
+                    color: $gray-2;
+                    padding: 8px;
+                    background-color: $white;
+                    border: 1px solid $whitegray-7;
+                    box-sizing: border-box;
+                    border-radius: 3px;
+                    width: 94px;
+                    height: 32px;
+                  }
+                }
+              }
+              .list-ma-giam-gia {
+                margin-top: 16px;
+                display: flex;
+                flex-direction: column;
+                grid-row-gap: 16px;
+                // padding-top: 10px;
+                // padding-bottom: 10px;
+                // height: 300px;
+                height: 260px;
+                overflow-x: hidden;
+                overflow-y: auto;
+
+                .item-ma-giam-gia {
+                  width: 428px;
+                  max-width: 100%;
+                  display: flex;
+                  justify-content: space-between;
+                  padding: 10px;
+                  align-items: center;
+                  box-shadow: 0px 3px 8px rgba(134, 139, 134, 0.18);
+                  border-radius: 3px;
+                  // margin-bottom: 16px;
+                  border: 1px solid $white;
+
+                  .code {
+                    position: relative;
+                    width: 109px;
+                    height: 52px;
+                    margin-right: 10px;
+                    display: flex;
+                    align-items: center;
+
+                    .code-imge {
+                      width: 109px;
+                      height: 52px;
+                    }
+                    .code-text {
+                      color: #8dc63f;
+                      position: absolute;
+                      font-size: 14px;
+                      line-height: 21px;
+                      right: 7px;
+                      top: 17px;
+                    }
+                  }
+                  .info {
+                    display: flex;
+                    line-height: 20px;
+                    flex-direction: column;
+                    flex: auto;
+                    max-width: 50%;
+                    max-height: 85px;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 4;
+                    -webkit-box-orient: vertical;
+
+                    .name {
+                      color: $gray-2;
+                      font-weight: 500;
+                    }
+                    .hsd {
+                      margin-top: 5px;
+                      color: $gray-2;
+                    }
+                    .description {
+                      color: $gray-2;
+                    }
+                  }
+                  .button {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    align-items: center;
+                    // min-height: 65px;
+                    min-height: 52px;
+                    height: 100%;
+                    white-space: nowrap;
+                    color: $gray-2;
+
+                    .hachi-icon-information::before {
+                      color: $blue;
+                      font-size: 16px;
+                    }
+                    .apdung {
+                      cursor: pointer;
+                      display: block;
+                    }
+                    .bochon {
+                      cursor: pointer;
+                      display: none;
+                    }
+                  }
+                  &.active {
+                    border: 1px solid $green;
+
+                    .info {
+                      display: flex;
+                      line-height: 20px;
+                      flex-direction: column;
+
+                      .name {
+                        color: $green;
+                        font-weight: 500;
+                      }
+                      .hsd {
+                        color: $green;
+                        margin-top: 5px;
+                      }
+                      .description {
+                        color: $green;
+                      }
+                    }
+                    .button {
+                      color: $green;
+
+                      .apdung {
+                        display: none;
+                      }
+                      .bochon {
+                        display: block;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .tong-gia-tri-gio-hang {
+      border: 1px solid $white;
+      box-shadow: 0px 3px 8px rgba(134, 139, 134, 0.18);
+
+      .card-body {
+        padding: 14px 16px 0px 16px;
+
+        .card-title {
+          display: flex;
+          align-items: center;
+          margin-bottom: 13px;
+
+          > div {
+            font-weight: 700;
+          }
+        }
+        .cart-info {
+          .item {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            line-height: 20px;
+            border-bottom: 1px solid #e2e2e2;
+
+            &.bold {
+              .item-lable,
+              .item-value {
+                font-weight: 500;
+              }
+            }
+          }
+        }
+      }
+    }
+    .tam-tinh {
+      border: 1px solid $white;
+      box-shadow: 0px 3px 8px rgba(134, 139, 134, 0.18);
+      margin-top: 1px;
+
+      .card-body {
+        padding: 17px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .cart-label {
+          font-weight: 500;
+          font-size: 20px;
+
+          .subtitle {
+            font-style: italic;
+            font-weight: normal;
+            font-size: 11px;
+            line-height: 17px;
+            color: $gray-2;
+          }
+        }
+        .cart-value {
+          color: $lightblue;
+          line-height: 37px;
+          font-size: 24px;
+        }
+      }
+    }
+    .dieu-huong {
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      justify-content: space-between;
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .tien-hanh-dat-hang {
+        button {
+          padding: 11px 5px 11px 11px;
+          background: $lightorange;
+          border-radius: 3px;
+          font-family: $font-nunito;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 13px;
+          line-height: 23px;
+          border: 1px solid $lightorange;
+          color: $white;
+
+          span:before {
+            color: $white;
+          }
+        }
+      }
+      .tiep-tu-mua-sam {
+        button {
+          background-color: transparent;
+          color: $gray-1;
+          font-family: $font-nunito;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 13px;
+          line-height: 23px;
+          border: unset;
+
+          span:before {
+            color: $gray-1;
+          }
+        }
+      }
+    }
+
+    .js-cart-body-title {
+      max-width: 100%; //100vw;
+    }
+    .js-cart-noti {
+      max-width: 100%; //100vw;
+    }
+    .js-view-cart {
+      max-width: 100%; // 100vw;
+
+      .card-body {
+        padding-top: 17px;
+      }
+    }
+    // .js-total-cart {
+    //     background: white;
+    // }
+    .js-gift-cart {
+      max-width: 100%; //100vw;
+      margin-top: 23px;
+
+      .quatang_carousel_container {
+        padding: 10px 15px 0;
+
+        .label {
+          color: #626662;
+          font-weight: 500;
+          line-height: 19px;
+
+          .sublabel {
+            color: #868b86;
+            font-weight: 400;
+
+            .amount {
+              color: #649e0f;
+            }
+          }
+        }
+      }
+      .col-12 {
+        padding: 0;
+      }
+      .hachi__owl-carousel {
+        padding-left: 12px;
+        padding-right: 12px;
+
+        .owl-stage {
+          width: max-content !important;
+          padding: 22px 0 10px;
+        }
+
+        .owl-item {
+          width: 140px !important;
+
+          .item {
+            .product {
+              margin-bottom: 0;
+              border-color: #ffffff;
+              min-height: 128px;
+              max-height: 128px;
+              padding: 6px 8px;
+
+              .product__header {
+                height: auto;
+                padding: 0;
+
+                .product__header_img {
+                  width: 100%;
+                  height: 78px;
+                  max-height: 78px;
+
+                  img {
+                    height: 100%;
+                    width: auto;
+
+                    margin: 0 auto;
+                  }
+                }
+              }
+
+              .product__content {
+                padding: 0;
+
+                .product__name {
+                  padding: 0;
+
+                  a {
+                    text-align: center;
+                    &::before {
+                      content: none;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .owl-prev,
+        .owl-next {
+          padding: 5px;
+          height: 24px;
+          width: 24px;
+          top: 40%;
+          background-color: rgba(2, 2, 2, 0.15);
+
+          &:hover {
+            .hachi-icon-left,
+            .hachi-icon-right {
+              &::before {
+                color: #649e0f;
+              }
+            }
+          }
+        }
+        .owl-prev {
+          left: 0;
+        }
+        .owl-next {
+          right: 0;
+        }
+      }
+    }
+    .js-cart-combo {
+      .label {
+        padding-top: 39px;
+        padding-bottom: 21px;
+        font-family: Nunito;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 28px;
+
+        .combo-icon {
+          img {
+            height: 20px;
+            margin-right: 10px;
+          }
+        }
+      }
+      .hachi__owl-carousel {
+        .col-12 {
+          z-index: 0;
+        }
+      }
+      .owl-stage {
+        width: max-content !important;
+      }
+      .owl-item {
+        width: 222px !important;
+      }
+      .owl-prev,
+      .owl-next {
+        padding: 5px;
+        height: 24px;
+        width: 24px;
+        top: 40%;
+        background-color: rgba(2, 2, 2, 0.15);
+
+        &:hover {
+          .hachi-icon-left,
+          .hachi-icon-right {
+            &::before {
+              color: #649e0f;
+            }
+          }
+        }
+      }
+      .owl-prev {
+        left: 0;
+      }
+      .owl-next {
+        right: 0;
+      }
+    }
+
+    .grid-container {
+      // &.grid-container-desktop{
+
+      // }
+      position: relative;
+
+      &.grid-container-mobile {
+        display: none;
+      }
+    }
+  }
+  .view-cart-table {
+    display: flex;
+    flex-direction: column;
+
+    .col-name {
+      // flex: 1 0 auto;
+      // max-width: calc(100% - 220px);
+      max-width: calc(100% - 180px);
+    }
+    .col-price {
+      // flex: 0 0 120px;
+      // flex: 0 0 100px;
+      // text-align: center;
+      flex-grow: 1;
+      text-align: right;
+      padding-right: 10px;
+
+      .UnitPrice {
+        font-family: $font-nunito;
+        color: #46b1ff;
+        line-height: 23px;
+        white-space: nowrap;
+
+        .UnitPrice_vip {
+          // color: #353935;
+          // color: #46b1ff;
+          color: #d82c12;
+          font-size: 11px;
+          line-height: 19px;
+        }
+
+        &.red {
+          color: #d82c12;
+          // text-decoration: line-through;
+
+          .UnitPrice_vip {
+            color: #d82c12;
+          }
+        }
+      }
+      .BasePrice {
+        color: #46b1ff;
+        line-height: 19px;
+
+        &.gray {
+          color: $gray-1;
+          text-decoration: line-through;
+        }
+      }
+    }
+    .col-quantity {
+      // flex: 0 0 100px;
+      flex: 0 0 90px;
+      text-align: center;
+      margin-left: auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .view-cart-table__header {
+      display: flex;
+      padding-bottom: 20px;
+      line-height: 23px;
+
+      .col-name,
+      .col-quantity,
+      .col-price {
+        color: $gray-1;
+        font-weight: bold;
+        font-family: $font-nunito;
+        text-align: center;
+      }
+      .col-price {
+        padding-right: 20px;
+        text-align: right;
+      }
+      .col-name {
+        text-align: left;
+      }
+    }
+    .view-cart-table__body {
+      display: flex;
+      flex-direction: column;
+
+      input[type="number"] {
+        -moz-appearance: textfield;
+      }
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    }
+    .view-cart-table__row {
+      width: 100%;
+      border-top: 1px solid $whitegray-6;
+      padding-bottom: 10px;
+
+      > .item {
+        display: flex;
+        padding-top: 20px;
+
+        .image {
+          width: 70px;
+          min-width: 70px;
+          height: 70px;
+          margin-right: 14px;
+          position: relative;
+          border: 1px solid $white;
+          box-sizing: border-box;
+          border-radius: 3px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          .image-product {
+            width: 70px;
+            // height: 70px;
+          }
+          .image-freeship {
+            position: absolute;
+            bottom: 0;
+            left: 3px;
+            width: 64px;
+            margin-top: 3px;
+
+            img {
+              width: 39px;
+            }
+          }
+        }
+        .info {
+          .info-name {
+            line-height: 18px;
+            padding-right: 10px;
+
+            .combo-icon {
+              margin-right: 12px;
+            }
+          }
+          .info-button {
+            margin-top: 6px;
+            display: flex;
+            white-space: nowrap;
+            line-height: 20px;
+
+            .info-button--delete {
+              button {
+                padding: 0;
+                background: unset;
+                border: unset;
+                color: $gray-2;
+              }
+            }
+            .info-button--hethang {
+              margin-left: 20px;
+              color: $lightorange;
+            }
+            .info-button--combo {
+              margin-left: 20px;
+              color: $gray-2;
+              cursor: pointer;
+
+              .hachi-icon-down::before,
+              .hachi-icon-up::before {
+                margin-left: 5px;
+                font-size: 8px;
+                color: $gray-2;
+              }
+            }
+            .info-button--phanloai {
+              margin-left: 20px;
+              position: relative;
+
+              .phan-loai {
+                cursor: pointer;
+
+                .phan-loai-text {
+                  color: $red;
+                }
+                .hachi-icon-down::before,
+                .hachi-icon-up::before {
+                  margin-left: 5px;
+                  font-size: 8px;
+                  color: $gray-2;
+                }
+              }
+              .phan-loai-value {
+                color: $gray-1;
+              }
+              .popup-phan-loai {
+                .hachi-popup {
+                  left: 0;
+                  top: 40px;
+                  width: 375px;
+
+                  .hachi-popup-content {
+                    min-width: 0;
+                    max-width: 490px;
+                  }
+
+                  .hachi-popup-body {
+                    .popup-phan-loai_content {
+                      padding: 15px 15px 0 8px;
+                      padding-top: 0;
+                      padding-left: 0;
+                      width: 100%;
+                      position: relative;
+
+                      .close {
+                        position: absolute;
+                        right: 15px;
+                        top: 15px;
+                        color: #8dc63f;
+                      }
+                      .img-price {
+                        display: flex;
+
+                        .phan-loai-image {
+                          width: 87px;
+                          height: 79px;
+                          border: 1px solid #e2e2e2;
+                          border-radius: 3px;
+                          display: flex;
+                          align-items: center;
+
+                          img {
+                            display: none;
+
+                            &.active {
+                              display: block;
+                            }
+                          }
+                        }
+                        .name {
+                          padding-left: 28px;
+                          font-size: 16px;
+                          line-height: 22px;
+                          margin-bottom: 17px;
+                        }
+                        .price {
+                          padding-left: 28px;
+                          display: flex;
+                          flex-direction: column;
+                          justify-content: flex-end;
+                          white-space: nowrap;
+
+                          .d-flex {
+                            align-items: center;
+                          }
+                          .price-active {
+                            font-family: $font-nunito;
+                            font-weight: bold;
+                            font-size: 20px;
+                            color: #46b1ff;
+                            white-space: nowrap;
+                          }
+                          .price-promo {
+                            font-family: $font-nunito;
+                            font-weight: bold;
+                            font-size: 20px;
+                            color: #ff5230;
+                            line-height: 35px;
+                            white-space: nowrap;
+                          }
+                          .price-base {
+                            color: #868b86;
+                            font-family: $font-roboto;
+                            font-size: 15px;
+                            text-decoration: line-through;
+                            margin-left: 25px; //15px theo design + chữ "đ"
+                            line-height: 23px;
+                            white-space: nowrap;
+                          }
+                        }
+                      }
+                      .price_vip {
+                        margin-top: 18px;
+                        padding-left: 28px;
+                        display: flex;
+                        color: #649e0f;
+                        font-family: $font-nunito;
+                        line-height: 23px;
+                        white-space: nowrap;
+
+                        // svg {
+                        img {
+                          height: auto;
+                          margin: 0 7px;
+                        }
+                        .price {
+                          display: unset;
+                          padding-left: 0;
+                          white-space: nowrap;
+                        }
+                      }
+
+                      .info_type {
+                        display: flex;
+                        // align-items: center;
+
+                        > div:first-child {
+                          margin-right: 18px;
+                          // width: 160px;
+                          font-size: 13px;
+                          font-weight: bold;
+                          color: #868b86;
+                          line-height: 27px; //cho chữ của ô này bằng chiều dọc với badge
+                        }
+                        > div:nth-child(2) {
+                          flex: auto;
+                        }
+                        .list-type {
+                          width: 100%;
+                          margin-bottom: 14px;
+                          line-height: 20px;
+                          display: flex;
+                          grid-column-gap: 10px;
+                          grid-row-gap: 10px;
+
+                          .badge {
+                            cursor: pointer;
+                            color: $gray-1;
+                            border: 1px solid #868b86;
+                            box-sizing: border-box;
+                            border-radius: 3px;
+                            padding: 6px 12px;
+                            font-size: 13px;
+                            font-weight: normal;
+                            // margin-right: 10px;
+                            // margin-bottom: 3px;
+
+                            &:hover {
+                              background-color: #316e00;
+                              color: #fff;
+                            }
+                            &.active {
+                              background-color: #316e00;
+                              color: #fff;
+                            }
+                          }
+                        }
+                        .info_remark {
+                          width: 100%;
+                          color: #868b86;
+                          white-space: normal;
+                        }
+                      }
+                    }
+                    .line {
+                      width: 100%;
+                      height: 1px;
+                      background-color: #f2f2f2;
+                      margin-top: 20px;
+                      margin-bottom: 20px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        &:hover {
+          .image {
+            border: 1px solid $lightgreen;
+          }
+          .info {
+            .info-name {
+              color: $green;
+            }
+          }
+        }
+      }
+      .group_quanlity {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        .group-input {
+          display: flex;
+          -webkit-box-align: center;
+          align-items: center;
+
+          button:first-child {
+            border-right: none;
+            background: $whitegray-4;
+            border-radius: 3px 0px 0px 3px;
+            padding: 4px;
+          }
+          button {
+            cursor: pointer;
+            width: 26px;
+            background-color: rgb(255, 255, 255);
+            border: 1px solid rgb(236, 236, 236);
+            height: 26px;
+            color: rgb(36, 36, 36);
+            font-size: 14px;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+
+            [class^="hachi-icon-"]::before {
+              font-size: 11px;
+            }
+
+            &:disabled {
+              opacity: 0.6;
+            }
+          }
+          button:last-child {
+            border-left: none;
+            background: $whitegray-4;
+            border-radius: 0px 3px 3px 0px;
+            padding: 4px;
+          }
+          input {
+            height: 26px;
+            color: rgb(36, 36, 36);
+            font-size: 14px;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+            width: 34px;
+            border: 1px solid rgb(236, 236, 236);
+            line-height: 19px;
+          }
+        }
+      }
+      .ma-giam-gia {
+        // margin-top: 20px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        line-height: 20px;
+
+        .icon {
+          margin-right: 10px;
+        }
+        .name {
+          color: $gray-1;
+          margin-right: 12px;
+          white-space: nowrap;
+        }
+        .danh-sach-ma-giam-gia {
+          display: flex;
+          grid-row-gap: 10px;
+          grid-column-gap: 10px;
+          align-items: center;
+          // flex-wrap: wrap;
+
+          .bage-ma-giam-gia {
+            white-space: nowrap;
+            color: $gray-1;
+            font-size: 13px;
+            padding: 1px 8px;
+            border-radius: 12px;
+            border: 1px solid #f1f2f1;
+            // margin-bottom: 10px;
+            // margin-right: 10px;
+            font-weight: normal;
+            background: $whitegray-3;
+            cursor: pointer;
+
+            &:hover {
+              background: rgba(100, 158, 15, 0.05);
+              color: #649e0f;
+              border: 1px solid #649e0f;
+            }
+            &.active {
+              background: rgba(100, 158, 15, 0.05);
+              color: #649e0f;
+              border: 1px solid #649e0f;
+            }
+
+            &.plus {
+              display: none;
+            }
+          }
+          .hachi-icon-down::before,
+          .hachi-icon-up::before {
+            // margin-left: 5px;
+            font-size: 8px;
+            color: $gray-2;
+            cursor: pointer;
+          }
+        }
+        .popup-ma-giam-gia {
+          .hachi-popup {
+            left: 0;
+            top: 25px;
+            width: 100%;
+
+            .hachi-popup-content {
+              padding-bottom: 48px;
+              min-width: 0;
+              max-width: 490px;
+            }
+            .hachi-popup-header {
+              .text-1 {
+                font-weight: 600;
+                font-family: $font-nunito;
+                font-size: 16px;
+                line-height: 24px;
+              }
+              .text-2 {
+                color: $green;
+                line-height: 20px;
+                margin-bottom: 6px;
+              }
+            }
+            .hachi-popup-body {
+              form {
+                width: 100%;
+                padding-right: 22px;
+
+                > div {
+                  width: 100%;
+                  height: 52px;
+                  display: flex;
+                  align-items: center;
+                  padding: 10px;
+                  background-color: $whitegray-2;
+                  border-radius: 5px;
+
+                  input {
+                    padding: 8px;
+                    border: 1px solid $whitegray-7;
+                    box-sizing: border-box;
+                    border-radius: 5px;
+                    width: 304px;
+                    margin-right: 10px;
+                    height: 32px;
+                    // &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                    //     color:$text-main;
+                    //     opacity: 1; /* Firefox */
+                    //   }
+
+                    //   &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+                    //     color: $text-main;
+                    //   }
+
+                    //   &::-ms-input-placeholder { /* Microsoft Edge */
+                    //     color: $text-main;
+                    //   }
+                  }
+                  button {
+                    font-family: $font-nunito;
+                    font-weight: bold;
+                    color: $gray-2;
+                    padding: 8px;
+                    background-color: $white;
+                    border: 1px solid $whitegray-7;
+                    box-sizing: border-box;
+                    border-radius: 3px;
+                    width: 94px;
+                    height: 32px;
+                  }
+                }
+              }
+              .list-ma-giam-gia {
+                margin-top: 16px;
+                display: flex;
+                flex-direction: column;
+                grid-row-gap: 16px;
+                // padding-top: 10px;
+                // padding-bottom: 10px;
+                // height: 300px;
+                height: 260px;
+                overflow-x: hidden;
+                overflow-y: auto;
+
+                .item-ma-giam-gia {
+                  width: 428px;
+                  max-width: 100%;
+                  display: flex;
+                  justify-content: space-between;
+                  padding: 10px;
+                  align-items: center;
+                  box-shadow: 0px 3px 8px rgba(134, 139, 134, 0.18);
+                  border-radius: 3px;
+                  // margin-bottom: 16px;
+                  border: 1px solid $white;
+
+                  .code {
+                    position: relative;
+                    width: 109px;
+                    height: 52px;
+                    margin-right: 10px;
+                    display: flex;
+                    align-items: center;
+
+                    .code-imge {
+                      width: 109px;
+                      height: 52px;
+                    }
+                    .code-text {
+                      color: #8dc63f;
+                      position: absolute;
+                      font-size: 14px;
+                      line-height: 21px;
+                      right: 7px;
+                      top: 17px;
+                    }
+                  }
+                  .info {
+                    display: flex;
+                    line-height: 20px;
+                    flex-direction: column;
+                    flex: auto;
+                    max-width: 50%;
+                    max-height: 85px;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 4;
+                    -webkit-box-orient: vertical;
+
+                    .name {
+                      color: $gray-2;
+                      font-weight: 500;
+                    }
+                    .hsd {
+                      margin-top: 5px;
+                      color: $gray-2;
+                    }
+                    .description {
+                      color: $gray-2;
+                    }
+                  }
+                  .button {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    align-items: center;
+                    // min-height: 65px;
+                    min-height: 52px;
+                    height: 100%;
+                    white-space: nowrap;
+                    color: $gray-2;
+
+                    .hachi-icon-information::before {
+                      color: $blue;
+                      font-size: 16px;
+                    }
+                    .apdung {
+                      cursor: pointer;
+                      display: block;
+                    }
+                    .bochon {
+                      cursor: pointer;
+                      display: none;
+                    }
+                  }
+                  &.active {
+                    border: 1px solid $green;
+
+                    .info {
+                      display: flex;
+                      line-height: 20px;
+                      flex-direction: column;
+
+                      .name {
+                        color: $green;
+                        font-weight: 500;
+                      }
+                      .hsd {
+                        color: $green;
+                        margin-top: 5px;
+                      }
+                      .description {
+                        color: $green;
+                      }
+                    }
+                    .button {
+                      color: $green;
+
+                      .apdung {
+                        display: none;
+                      }
+                      .bochon {
+                        display: block;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .danh-sach-qua-tang {
+        margin-top: 10px;
+        position: relative;
+        width: 100%;
+        line-height: 19px;
+
+        .qua-tang {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+
+          .icon {
+            margin-right: 14px;
+
+            // svg path {
+            //     stroke: #8dc63f;
+            // }
+            img path {
+              stroke: #8dc63f;
+            }
+          }
+          .name {
+            color: $gray-1;
+          }
+          .hachi-icon-down::before,
+          .hachi-icon-up::before {
+            margin-left: 10px;
+            font-size: 8px;
+            color: $gray-2;
+            cursor: pointer;
+          }
+        }
+        .popup-qua-tang {
+          // .hachi-popup {
+          //     left: 0;
+          //     top: 25px;
+          //     width: 100%;
+          //     position: static;
+
+          .hachi-popup-content {
+            min-width: 0;
+            // max-width: 490px;
+            margin: 0 27px 0;
+            padding-top: 27px;
+            max-width: unset;
+          }
+          .hachi-popup-body {
+            .product-gift {
+              width: 100%;
+              margin-top: 5px;
+
+              fieldset.scheduler-border {
+                border: 1px dashed #8dc63f !important;
+                border-radius: 8px;
+                // padding: 0 1.4em 1.4em 8px !important;
+                padding: 0 34px 30px !important;
+                margin: 0 0 1.5em 0 !important;
+                -webkit-box-shadow: 0px 0px 0px 0px #000;
+                box-shadow: 0px 0px 0px 0px #000;
+              }
+              legend.scheduler-border {
+                text-align: left !important;
+                width: auto;
+                padding: 0 10px;
+                border-bottom: none;
+
+                span.text {
+                  // color: $gray-2;
+                  color: #8dc63f;
+                  font-size: 13px;
+                  display: inline-block;
+                  line-height: 20px;
+                  white-space: nowrap;
+                }
+              }
+              .lst-gift {
+                padding-left: 10px;
+                padding-top: 24px;
+
+                .item-gift {
+                  display: -webkit-box;
+                  display: -ms-flexbox;
+                  display: flex;
+
+                  &-image {
+                    width: 124px;
+                    height: 71px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  }
+                }
+
+                .owl-nav {
+                  button.owl-prev {
+                    display: none;
+                    position: absolute;
+                    left: -25px;
+                    top: 20px;
+                    padding: 8px 12px !important;
+                    padding-top: 10px;
+                    background-color: transparent !important;
+
+                    &:hover {
+                      background-color: #fff;
+                      // span:before {
+                      //     color: #fff;
+                      // }
+                    }
+                  }
+                  button.owl-next {
+                    display: none;
+                    position: absolute;
+                    right: -25px;
+                    top: 20px;
+                    padding: 8px 12px !important;
+                    padding-top: 10px;
+                    background-color: transparent !important;
+
+                    &:hover {
+                      background-color: #fff;
+                      // span:before {
+                      //     color: #fff;
+                      // }
+                    }
+                  }
+                }
+                &:hover {
+                  .owl-nav {
+                    button.owl-next {
+                      display: unset;
+                    }
+                    button.owl-prev {
+                      display: unset;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          // }
+        }
+      }
+      .danh-sach-combo {
+        .item-combo {
+          display: flex;
+          padding-top: 20px;
+          padding-left: 16px;
+
+          .image {
+            // width: 70px;
+            // height: 70px;
+            width: 54px;
+            height: 54px;
+            margin-right: 14px;
+            position: relative;
+            border: 1px solid $white;
+            box-sizing: border-box;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .image-product {
+              width: 70px;
+            }
+          }
+          .info {
+            .info-name {
+              line-height: 18px;
+              padding-right: 10px;
+            }
+            .info-button {
+              margin-top: 9px;
+              display: flex;
+            }
+          }
+        }
+      }
+    }
+  }
+  //hachi popup
+  .hachi-popup {
+    position: absolute;
+    top: 0;
+
+    .hachi-popup-content {
+      min-width: 490px;
+      position: relative;
+      background-color: $white;
+      min-height: 00px;
+      z-index: 2;
+      padding: 20px;
+      box-shadow: 0px 6px 16px rgba(53, 57, 53, 0.35);
+      border-radius: 3px;
+
+      .btn-header {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        cursor: pointer;
+        z-index: 4;
+
+        button.btn-close {
+          background: $white;
+          border: unset;
+          display: flex;
+          align-content: center;
+
+          span::before {
+            color: $lightgreen;
+          }
+        }
+      }
+      .hachi-popup-header {
+        width: 100%;
+        padding-right: 25px;
+      }
+    }
+  }
+  .modal-content-delete {
+    .modal-body {
+      // margin-bottom: 37px;
+      padding-bottom: 37px !important;
+    }
+    .btn {
+      font-weight: 700;
+      line-height: 23px;
+      padding: 4px 10px;
+      margin: 0 0 0 16px;
+      min-width: 86px;
+    }
+    .hachi-outline-primary {
+      background-color: white;
+      color: #8dc63f;
+
+      &:hover {
+        background-color: #8dc63f;
+        color: white;
+      }
+    }
+  }
+  .modal_add_product_success_containter,
+  .modal_add_full_order_success_containter {
+    .modal-dialog {
+      width: 396px;
+
+      .modal-body {
+        display: flex;
+        align-items: center;
+        padding: 37px 10px !important;
+
+        .icon_check {
+          width: 16px;
+          height: 16px;
+          margin-right: 14px;
+
+          &::before {
+            width: 16px;
+            height: 16px;
+            padding: 0 3px;
+            content: "\2713";
+            border-radius: 50%;
+            background-color: #8dc63f;
+            color: white;
+            position: absolute;
+            font-weight: 700;
+          }
+        }
+
+        .img {
+          height: 64px;
+          width: 64px;
+          display: flex;
+        }
+      }
+
+      .modal-footer {
+        background-color: #8dc63f;
+        padding: 6px 15px;
+      }
+    }
+  }
+  .btn.hachi-warning,
+  .hachi-warning {
+    background-color: #ff5230;
+    color: white;
+    border-radius: 3px;
+  }
+  //.js-add-coupon-cart tooltip
+  #showCartCouponCondition {
+    // opacity: 1;
+
+    position: absolute;
+    z-index: 1;
+    background: white;
+    width: 222px;
+    right: -17px;
+    top: 28px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 3px;
+    box-shadow: 0px 4px 12px rgba(134, 139, 134, 0.36);
+
+    // .tooltip-inner {
+    //     background-color: white;
+    //     color: #353935;
+    //     padding: 10px 20px;
+    //     max-width: none;
+    //     width: 222px;
+    //     border-radius: 3px;
+    //     box-shadow: 0px 3px 8px rgba(134, 139, 134, 0.18);
+    //     font-size: 13px;
+    //     text-align: left;
+
+    .btn-container {
+      padding-top: 10px;
+      padding-right: 10px;
+      padding-left: 1em;
+      // display: flex;
+    }
+    .btn-close {
+      background: none;
+      border: unset;
+      display: flex;
+      align-content: center;
+      // margin-top: 10px;
+      // margin-right: 10px;
+
+      span::before {
+        color: #8dc63f;
+      }
+    }
+    ul {
+      list-style-position: outside;
+      // margin-left: 1em;
+      padding: 0 20px;
+
+      li {
+        color: #353935;
+      }
+    }
+    // }
+  }
+  // payment
+  .cpn_phuong_thuc_giao_hang {
+    width: 100%;
+
+    .card {
+      background: #ffffff;
+      box-shadow: 0px 3px 8px rgba(134, 139, 134, 0.18);
+      border-radius: 3px;
+      border-color: #fff;
+
+      .card-body {
+        padding: 16px 20px;
+        padding-bottom: 0;
+
+        .divider {
+          margin-left: -10px;
+          margin-right: -10px;
+        }
+        .cart {
+          .cart_detail {
+            margin-bottom: 17px;
+
+            &_header {
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+
+              .col-left {
+                flex: auto;
+                flex-grow: 1;
+                width: 100%;
+
+                span.hachi24h::after {
+                  display: none;
+                }
+                .subtitle {
+                  color: $gray-2;
+                }
+              }
+              .col-right {
+                font-weight: bold;
+                white-space: nowrap;
+              }
+            }
+          }
+          .cart-body {
+            .cart-row {
+              display: flex;
+              flex-direction: column;
+              margin-bottom: 16px;
+
+              .cart-row-info {
+                display: flex;
+                align-items: center;
+
+                .col-image {
+                  width: 64px;
+                  height: 64px;
+                  display: flex;
+                  justify-content: center;
+                }
+                .col-name {
+                  padding-left: 10px;
+                  // flex: auto;
+                  max-width: 50%;
+                }
+                .col-sl {
+                  padding-left: 10px;
+                  width: 100px;
+                  text-align: right;
+                  margin-left: auto;
+                }
+                .col-price {
+                  padding-left: 10px;
+                  width: 100px;
+                  text-align: right;
+                }
+              }
+              .cart-row-change-type {
+                // margin-top: 16px;
+                display: flex;
+                justify-content: flex-end;
+              }
+            }
+          }
+        }
+      }
+    }
+    .hinh-thuc-van-chuyen {
+      .card {
+        border-color: #fff;
+        background: #ffffff;
+        box-shadow: 0px 3px 8px rgba(134, 139, 134, 0.18);
+        border-radius: 3px;
+
+        .card-body {
+          padding: 0px;
+
+          // .hachi_form {
+          .item {
+            display: flex;
+            justify-content: space-between;
+            padding: 16px 24px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e2e2e2;
+
+            /* optional styles for centering radiobuttons */
+            .form-radio {
+              display: flex;
+              width: 100%;
+
+              label {
+                padding-left: 5px;
+                margin-bottom: 0px;
+                display: flex;
+                width: 100%;
+
+                .fee {
+                  flex-grow: 1;
+                  text-align: right;
+                  color: $lightblue;
+                }
+              }
+
+              input[type="radio"] {
+                /* remove standard background appearance */
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                /* create custom radiobutton appearance */
+                display: inline-block;
+                width: 15px;
+                height: 15px;
+                padding: 3px;
+                /* background-color only for content */
+                background-clip: content-box;
+                border: 1px solid #bbc0bb;
+                // background-color: #e7e6e7;
+                border-radius: 50%;
+
+                &:checked,
+                &:hover {
+                  background-color: $green;
+                  border-color: $green;
+
+                  &:disabled {
+                    opacity: 0.5;
+                  }
+                }
+              }
+
+              /* appearance for checked radiobutton */
+              // input[type="radio"]:checked {
+              //     background-color: $green;
+              //     border-color: $green;
+              // }
+            }
+            &.active {
+              .form-radio {
+                label {
+                  span {
+                    color: $green;
+                  }
+                }
+              }
+            }
+          }
+          // }
+        }
+      }
+    }
+  }
+  .cpn_title {
+    color: $green;
+    font-family: $font-nunito;
+    font-size: 20px;
+    line-height: 35px;
+    font-weight: 700;
+  }
+  .divider {
+    width: 100%;
+    height: 1px;
+    background-color: #e2e2e2;
+  }
+
+  .cpn_hinh_thuc_thanh_toan {
+    width: 100%;
+
+    .card {
+      border-color: #fff;
+      background: #ffffff;
+      box-shadow: 0px 3px 8px rgba(134, 139, 134, 0.18);
+      border-radius: 3px;
+
+      .card-body {
+        padding: 0px;
+
+        .item {
+          // display: flex;
+          // justify-content: space-between;
+          padding: 16px 24px;
+          padding-bottom: 10px;
+          border-bottom: 1px solid #e2e2e2;
+          /* optional styles for centering radiobuttons */
+          .form-radio {
+            display: flex;
+
+            label {
+              padding-left: 5px;
+              margin-bottom: 0px;
+
+              span {
+                font-weight: 500;
+              }
+            }
+
+            input[type="radio"] {
+              /* remove standard background appearance */
+              -webkit-appearance: none;
+              -moz-appearance: none;
+              appearance: none;
+              /* create custom radiobutton appearance */
+              display: inline-block;
+              width: 15px;
+              height: 15px;
+              padding: 3px;
+              /* background-color only for content */
+              background-clip: content-box;
+              border: 1px solid #bbc0bb;
+              // background-color: #e7e6e7;
+              border-radius: 50%;
+            }
+
+            /* appearance for checked radiobutton */
+            input[type="radio"]:checked {
+              background-color: $green;
+              border-color: $green;
+            }
+          }
+          &.active {
+            .form-radio {
+              label {
+                span {
+                  color: $green;
+                }
+              }
+            }
+          }
+          .list-bank {
+            padding: 16px 0px 16px 16px;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+
+            .bank {
+              position: relative;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 104px;
+              height: 50px;
+              margin-right: 5px;
+              border: 1px dashed #8dc63f;
+              box-sizing: border-box;
+              border-radius: 3px;
+              margin-bottom: 8px;
+
+              // img {
+              img.image-bank {
+                width: auto;
+                height: 46px;
+              }
+              // svg {
+              img:not(.image-bank) {
+                position: absolute;
+                right: -4px;
+                top: -8px;
+                display: none;
+              }
+              &.active {
+                border: 2px solid #ff5230;
+
+                // svg {
+                img:not(.image-bank) {
+                  display: unset;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .js_hinh_thuc_thanh_toan {
+    .btn-datmua {
+      width: 100%;
+
+      button {
+        width: 100%;
+        padding-top: 9px;
+        padding-bottom: 9px;
+        background: #ff5230;
+        border-radius: 3px;
+        font-family: $font-nunito;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 28px;
+        border: 1px solid #ff5230;
+        color: #ffffff;
+        text-align: center;
+        margin-bottom: 9px;
+      }
+    }
+    .chon-qua {
+      font-style: normal;
+      font-weight: normal;
+      font-size: 10px;
+      line-height: 152.34%;
+      color: #828282;
+    }
+  }
+  .cpn_xuat_hoa_don {
+    .card {
+      background: #ffffff;
+      box-shadow: 0px 3px 8px rgba(134, 139, 134, 0.18);
+      border-radius: 3px;
+      border-color: #fff;
+      padding: 0;
+
+      .card-body {
+        padding: 24px 16px;
+
+        ul.info {
+          list-style: none;
+          padding-left: 16px;
+          padding-right: 10px;
+
+          li {
+            line-height: 20px;
+
+            &::before {
+              content: "\2022";
+              color: $gray-4;
+              font-weight: bold;
+              display: inline-block;
+              width: 10px;
+              margin-left: -1em;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .hachi_page_cart_payment {
+    // padding-top: 36px;
+
+    h1.title {
+      color: $green;
+      font-family: $font-nunito;
+      font-size: 20px;
+      line-height: 35px;
+    }
+    .hasTwoOrdersText {
+      font-size: 15px;
+      font-weight: 700;
+      padding-left: 20px;
+      margin: 10px 0;
+    }
+    .hinh-thuc-thanh-toan {
+      .card {
+        border-color: #fff;
+        background: #ffffff;
+        box-shadow: 0px 3px 8px rgba(134, 139, 134, 0.18);
+        border-radius: 3px;
+
+        .card-body {
+          padding: 0px;
+
+          .hachi_form {
+            .item {
+              display: flex;
+              justify-content: space-between;
+              padding: 16px 24px;
+              padding-bottom: 10px;
+              border-bottom: 1px solid #e2e2e2;
+
+              /* optional styles for centering radiobuttons */
+              .form-radio {
+                display: flex;
+
+                label {
+                  padding-left: 5px;
+                  margin-bottom: 0px;
+                  span {
+                    font-weight: 500;
+                  }
+                }
+
+                input[type="radio"] {
+                  /* remove standard background appearance */
+                  -webkit-appearance: none;
+                  -moz-appearance: none;
+                  appearance: none;
+                  /* create custom radiobutton appearance */
+                  display: inline-block;
+                  width: 15px;
+                  height: 15px;
+                  padding: 3px;
+                  /* background-color only for content */
+                  background-clip: content-box;
+                  border: 1px solid #bbc0bb;
+                  // background-color: #e7e6e7;
+                  border-radius: 50%;
+                }
+
+                /* appearance for checked radiobutton */
+                input[type="radio"]:checked {
+                  background-color: $green;
+                  border-color: $green;
+                }
+              }
+              &.active {
+                .form-radio {
+                  label {
+                    span {
+                      color: $green;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .popup-noti {
+      width: 400px;
+
+      .btn {
+        font-weight: 700;
+        line-height: 23px;
+        padding: 4px 10px;
+        margin: 0 0 0 16px;
+        min-width: 86px;
+      }
+    }
+
+    #js-total-cart {
+      #dieu-huong-dat-mua {
+        margin-top: 16px;
+      }
+      .btn-datmua {
+        button {
+          width: 100%;
+          padding-top: 9px;
+          padding-bottom: 9px;
+          background: #ff5230;
+          border-radius: 3px;
+          font-family: "Nunito", sans-serif;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 16px;
+          line-height: 28px;
+          border: 1px solid #ff5230;
+          color: #ffffff;
+          text-align: center;
+          margin-bottom: 9px;
+        }
+      }
+      .chon-qua {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 10px;
+        line-height: 152.34%;
+        color: #828282;
+        padding: 0 5px;
+      }
+    }
+  }
+  .hachi_page_cart_delivery {
+    // padding-top: 36px;
+
+    h1.title {
+      color: $green;
+      font-family: $font-nunito;
+      font-size: 20px;
+      line-height: 35px;
+    }
+    .subtitle {
+      color: $gray-1;
+      line-height: 20px;
+    }
+    .phuong-thuc-giao-hang {
+      border-color: #fff;
+      background: #ffffff;
+      box-shadow: 0px 3px 8px rgba(134, 139, 134, 0.18);
+      border-radius: 3px;
+
+      .card-body {
+        padding: 16px 24px;
+      }
+      .hachi_form {
+        .item {
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+    }
+    .dia-chi-giao-hang {
+      background: #ffffff;
+      border-color: #fff;
+      box-shadow: 0px 3px 8px rgba(134, 139, 134, 0.18);
+      border-radius: 3px;
+      height: 100%;
+
+      .card-body {
+        // padding: 16px 24px 16px 42px;
+        padding: 16px 10px;
+        display: flex;
+        flex-direction: column;
+
+        .card-title {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 10px;
+
+          .name {
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 23px;
+          }
+          .card-btn {
+            display: flex;
+            //     font-weight: 500;
+            //     font-size: 13px;
+            //     .dia-chi-mac-dinh {
+            //         display: none;
+            //     }
+            //     .giao-dia-chi {
+            //         color: #626662;
+            //     }
+            .hachi-radio {
+              + label {
+                margin: 0;
+                color: #868b86;
+              }
+
+              &:checked {
+                + label {
+                  font-weight: 500;
+                  color: #649e0f;
+                }
+              }
+            }
+          }
+        }
+        .card-address {
+          display: flex;
+          justify-content: space-between;
+
+          .address {
+            flex: auto;
+
+            span {
+              color: $gray-1;
+              margin-right: 5px;
+            }
+          }
+          // .card-btn {
+          //     span {
+          //         margin-left: 15px;
+          //         cursor: pointer;
+          //         color: $gray-1;
+          //     }
+          // }
+        }
+        .card-phone {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 10px;
+          margin-bottom: 16px;
+
+          .phone {
+            flex: auto;
+
+            span {
+              color: $gray-1;
+              margin-right: 5px;
+            }
+          }
+          // .card-btn {
+          //     color: $gray-1;
+          //     cursor: pointer;
+          //     .edit {
+          //         display: none;
+          //     }
+          // }
+        }
+        .card-btn-group {
+          display: flex;
+          // justify-content: flex-end;
+          grid-column-gap: 16px;
+          margin-top: auto;
+
+          .btn {
+            font-weight: 700;
+          }
+
+          .btn-secondary {
+            border-color: #868b86;
+            background-color: #868b86;
+
+            &:hover {
+              opacity: 0.7;
+            }
+          }
+          .btn-outline-secondary {
+            border-color: #868b86;
+            color: #868b86;
+
+            &:hover {
+              color: white;
+            }
+          }
+        }
+      }
+    }
+    .form-dia-chi-giao-hang {
+      // margin-top: 20px;
+
+      .k-dropdownlist {
+        width: 100%;
+      }
+      textarea {
+        height: 128px !important;
+      }
+      .card {
+        background: #ffffff;
+        border-color: #fff;
+        box-shadow: 0px 3px 8px rgba(134, 139, 134, 0.18);
+        border-radius: 3px;
+        padding: 0;
+        .card-title {
+          padding: 16px 24px;
+          font-size: 16px;
+          line-height: 23px;
+          border-bottom: 1px solid #e2e2e2;
+          font-weight: 700;
+        }
+        .hachi_form {
+          .card-body {
+            padding: 20px 24px;
+            padding-bottom: 27px;
+
+            .form-group {
+              align-items: center;
+
+              &.form-group-textarea {
+                align-items: normal;
+              }
+              .label {
+                margin-bottom: auto;
+              }
+              label {
+                white-space: nowrap;
+                height: 32px;
+                display: flex;
+                align-items: center;
+              }
+              textarea {
+                height: 128px;
+              }
+              .hachi-warning,
+              .hachi-primary {
+                width: 305px;
+
+                + .btn {
+                  margin-left: 16px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .hachi_form {
+      &.chua-dang-nhap {
+        .card-title {
+          border-bottom: none;
+          font-size: 13px;
+          line-height: 20px;
+          padding-bottom: 0;
+          white-space: nowrap;
+        }
+        .card-body {
+          padding: 0 24px 16px;
+        }
+        .form-group {
+          align-items: center;
+
+          &.form-group-textarea {
+            align-items: normal;
+            margin-bottom: 20px;
+
+            textarea {
+              height: 32px;
+            }
+          }
+          .hachi-icon-right::before {
+            color: white;
+          }
+
+          label {
+            white-space: nowrap;
+          }
+
+          .btn.hachi-warning {
+            font-weight: 700;
+            line-height: 23px;
+            width: 164px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .hachi-icon-right {
+              margin-left: 14px;
+            }
+          }
+        }
+      }
+    }
+    #popup-xacnhan-khtt {
+      .modal {
+        overflow: scroll;
+      }
+    }
+  }
+  .form-xac-nhan-khtt {
+    .text {
+      line-height: 20px;
+
+      .hachi-link {
+        color: #ff5230;
+      }
+    }
+    .d-flex {
+      margin-top: 12px;
+
+      .hachi-radio {
+        margin-right: 17px;
+        min-width: 16px;
+        min-height: 16px;
+      }
+    }
+    .box {
+      margin: 20px 0;
+      padding: 12px 16px;
+      border: 1px solid #e2e2e2;
+      border-radius: 3px;
+      background: #f1f2f1;
+      display: flex;
+      flex-direction: column;
+      grid-row-gap: 4px;
+
+      .label {
+        color: #868b86;
+
+        .text {
+          line-height: 18px;
+          font-weight: 500;
+          color: #353935;
+          margin-left: 12px;
+        }
+      }
+    }
+    .modal-header {
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .modal-footer {
+      justify-content: center;
+
+      .btn {
+        width: 190px;
+
+        // svg {
+        img {
+          margin-right: 14px;
+        }
+      }
+    }
+  }
+
+  .hachi_page_cart_gift {
+    .view-cart__table {
+      margin-bottom: 40px !important;
+    }
+    .card {
+      align-items: center;
+
+      .card-body {
+        width: 100%;
+        max-width: 960px;
+
+        .sanpham {
+          border-top: 1px solid #e2e2e2;
+          padding-top: 20px;
+          margin-top: 20px;
+
+          .label_quatang_list {
+            padding-top: 40px;
+
+            > .label {
+              color: #626662;
+              font-weight: 500;
+              line-height: 19px;
+              padding-bottom: 16px;
+
+              .sublabel {
+                color: #868b86;
+                font-weight: 400;
+
+                .amount {
+                  color: #649e0f;
+                }
+              }
+            }
+          }
+          .quatang-list {
+            &.desktop {
+              display: grid;
+              grid-template-columns: 222px 222px 222px 222px;
+              grid-row-gap: 16px;
+              grid-column-gap: 24px;
+            }
+
+            &.mobile {
+              display: none;
+
+              .my-slick-prev,
+              .my-slick-next {
+                position: absolute;
+                top: 50%;
+                padding-left: 4px;
+                padding-top: 10px;
+                font-size: 13px;
+                width: 16px;
+                height: 32px;
+                background-color: rgba(0, 0, 0, 0.18);
+                border-radius: 2px;
+                z-index: 1;
+
+                &::before {
+                  content: none;
+                }
+                &:hover {
+                  background-color: rgba(0, 0, 0, 0.32);
+                }
+                &.slick-disabled {
+                  background-color: rgba(0, 0, 0, 0.1);
+                }
+
+                span:before {
+                  color: #626662;
+                }
+              }
+              .my-slick-prev {
+                left: 10px;
+              }
+              .my-slick-next {
+                right: 10px;
+              }
+              .slick-list {
+                padding: 2px;
+              }
+              .slick-slider:hover {
+                .my-slick-next {
+                  display: unset;
+                }
+                .my-slick-prev {
+                  display: unset;
+                }
+              }
+            }
+
+            .quatang-item {
+              padding: 5px;
+              border-radius: 3px;
+              width: 222px;
+              height: 104px;
+              background-color: white;
+              position: relative;
+              display: grid !important;
+              grid-template-columns: 30% auto;
+              grid-template-rows: 70% 30%;
+              grid-column-gap: 10px;
+              padding: 12px;
+
+              &:hover,
+              &.IsChoose {
+                box-shadow: 0 0 0 1px #649e0f;
+              }
+
+              .hachi-checkbox {
+                cursor: pointer;
+                position: absolute;
+                top: 3px;
+                left: 3px;
+              }
+              .hinhanh {
+                grid-column: 1;
+                grid-row: 1 / span 2;
+                display: flex;
+                align-items: center;
+
+                img {
+                  border-radius: 3px;
+                  width: 100%;
+                }
+              }
+              .tenquatang_maquatang {
+                grid-column: 2 / span 2;
+                grid-row: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                .tenquatang {
+                  overflow: hidden;
+                }
+              }
+              .soluongquatang {
+                grid-column: 2 / span 2;
+                grid-row: 2;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                .group_quanlity {
+                  p.label {
+                    color: $gray-1;
+                    font-weight: 500;
+                    margin-bottom: 10px;
+                  }
+
+                  .group-input {
+                    display: flex;
+                    -webkit-box-align: center;
+                    align-items: center;
+
+                    button:first-child {
+                      border-right: none;
+                      background: #edeeed;
+                      border-radius: 3px 0px 0px 3px;
+                      padding: 4px;
+                    }
+                    button {
+                      cursor: pointer;
+                      width: 26px;
+                      height: 26px;
+                      background-color: rgb(255, 255, 255);
+                      border: 1px solid rgb(236, 236, 236);
+                      color: rgb(36, 36, 36);
+                      font-size: 14px;
+                      text-align: center;
+                      outline: none;
+                      transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+
+                      [class^="hachi-icon-"]::before {
+                        font-size: 11px;
+                      }
+                      &:disabled {
+                        opacity: 0.6;
+                      }
+                    }
+                    button:last-child {
+                      border-left: none;
+                      background: #edeeed;
+                      border-radius: 0px 3px 3px 0px;
+                      padding: 4px;
+                    }
+                    input {
+                      height: 26px;
+                      width: 30px;
+                      color: rgb(36, 36, 36);
+                      font-size: 14px;
+                      text-align: center;
+                      outline: none;
+                      transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+
+                      border: 1px solid rgb(236, 236, 236);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .text {
+      line-height: 20px;
+
+      &.vuiLongChon {
+        line-height: 23px;
+      }
+      + .text_promotion {
+        padding-left: 3px;
+      }
+    }
+    ul.text {
+      margin: 0;
+
+      &.d-flex {
+        li {
+          flex-grow: 1;
+          max-width: 50%;
+        }
+      }
+    }
+    .text_bold {
+      font-weight: 700;
+      line-height: 20px;
+    }
+    .text_promotion {
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 26px;
+      color: #d82c12;
+
+      + .text_bold {
+        font-size: 16px;
+        padding-bottom: 30px;
+        line-height: 21px;
+
+        span {
+          color: #649e0f;
+          cursor: pointer;
+        }
+      }
+    }
+    .text_light {
+      font-weight: 300;
+      font-size: 11px;
+    }
+    .giaTriQua {
+      background-color: #f6f7f7;
+      border-radius: 3px;
+      padding: 7px 12px;
+      width: fit-content;
+      width: -moz-fit-content;
+      display: flex;
+      flex-direction: column;
+    }
+    .button-group {
+      grid-column-gap: 25px;
+      padding-bottom: 40px;
+      max-width: 960px;
+      margin: 0 auto;
+
+      .note_btn:last-child {
+        width: 305px;
+      }
+      .note {
+        // padding: 0 25px 14px;
+        padding-bottom: 14px;
+        text-align: center;
+
+        // &:first-of-type {
+        //     width: 258px;
+        // }
+        // &:last-of-type {
+        //     width: 305px;
+        // }
+      }
+      button {
+        font-size: 16px;
+        line-height: 28px;
+
+        &.hachi-standard {
+          width: 258px;
+        }
+        &.hachi-warning {
+          width: 305px;
+        }
+      }
+    }
+  }
+  .hachi-invalid-feedback {
+    margin-top: 10px;
+    font-family: "Roboto", sans-serif;
+    color: $bad-red;
+  }
+}

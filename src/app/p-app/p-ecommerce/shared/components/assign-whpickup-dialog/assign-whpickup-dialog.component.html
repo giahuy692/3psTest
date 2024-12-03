@@ -1,0 +1,18 @@
+<kendo-dialog #WHPickupDialog id="WHPickupDialog" title="GIAO ĐƠN VỊ XỬ LÝ" [hidden]="!WHPickupDialogOpened"
+  (close)="closeWHPickupDialog(false)" [minWidth]="250" class="p-hachi-dialog">
+  <form [formGroup]="WHPickupForm">
+
+    <div *ngFor="let item of orderWHNamePickupList; let i = index" class="WHPickup_row">
+      <input type="radio" id="WHPickup_radio_{{i}}" class="hachi-radio" name="WHPickup_radio" kendoRadioButton
+        value="{{i}}" formControlName="WHPickup_radio" #WHPickup_radio />
+      <label for="WHPickup_radio_{{i}}">{{ item.WHName}}</label>
+    </div>
+
+  </form>
+
+  <div class="dialog-footer">
+    <button class="btn btn-hachi hachi-secondary" (click)="closeWHPickupDialog(false)">ĐÓNG</button>
+    <button class="btn btn-hachi hachi-primary" (click)="assign()" [disabled]="WHPickupForm?.invalid">
+      CẬP NHẬT</button>
+  </div>
+</kendo-dialog>

@@ -1,0 +1,407 @@
+<div [style.visibility]="isCheckVisibilityDialog()">
+
+  <app-p-kendo-dialog class="customDialog" [title]="'THÊM NGOẠI LỆ'" [width]="904" [dialogType]="3" (close)="onClose()">
+    <div class="task-add-body">
+      <div class="body-filter">
+
+        <div class="body-content-list" *ngFor="let listGrid of listException; let i = index">
+          <div class="header header-2">
+            <div class="filter-dropdown-group">
+              <label class="label-text">Ngoại lệ theo <span class="text-red">(*)</span></label>
+              <p-kendo-dropdownlist [data]="listModeException" class="customDropdownList" [textField]="'text'"
+                [valueField]="'value'" (valueChange)="onDropdownlistClick($event, i)"
+                [(ngModel)]="selectedExceptions[i]" [filterable]="true"
+                [itemDisabled]="handleDisabledDropdown.bind(this)" [disabled]="isDropdownDisabled[i]">
+              </p-kendo-dropdownlist>
+            </div>
+
+            <div class="filter-dropdown-group">
+              <label class="label-text"
+                *ngIf="isListCombobxPosition[i] || isListComboboxLocation[i] || isListCombobxTypeStaff[i]">Tìm kiếm
+              </label>
+
+              <!-- Level 1: Position -->
+              <kendo-combobox #position *ngIf=" isListCombobxPosition[i]" class="customCombobox"
+                [data]="ListPolicyPosition" [textField]="'PositionName'" [valueField]="'Position'"
+                [placeholder]="'Tìm theo mã và tên chức danh'" (filterChange)="onHandleFilter($event,'PositionName')"
+                [filterable]="true" [(ngModel)]="currentListPosition"
+                (valueChange)="onDropdownPositionClick($event,i,position)" (open)="onTranformsDataCombobox()"
+                [allowCustom]="true">
+                <ng-template kendoPrefixTemplate>
+                  asdasdsad
+                  <button kendoButton fillMode="flat" [icon]="icons.searchIcon"></button>
+                </ng-template>
+
+                <ng-template kendoComboBoxItemTemplate let-dataItem>
+                  <div class="row-template"
+                    style="display: flex; justify-content: space-between; align-items: center; overflow: hidden; width:100%; gap:10px">
+                    <div class="text-name">
+                      <span class="template">{{ dataItem.PositionName }}
+                        <span *ngIf="dataItem.PositionID" style="font-weight: 700;">|
+                          {{dataItem.PositionID}}</span>
+                      </span>
+                    </div>
+                    <div class="text-role">
+                      <div *ngIf="dataItem.IsLeader">
+                        Trưởng đơn vị
+                      </div>
+                      <div *ngIf="dataItem.IsSupervivor">
+                        Quản lý điểm làm việc
+                      </div>
+                    </div>
+                  </div>
+
+                </ng-template>
+              </kendo-combobox>
+
+              <!-- Level 1: Location -->
+              <kendo-combobox #location *ngIf="isListComboboxLocation[i]" class="customCombobox"
+                [data]="ListPolicyLocation" [textField]="'LocationName'" [valueField]="'Location'"
+                [placeholder]="'Tìm theo mã và tên điểm làm việc'"
+                (filterChange)="onHandleFilter($event,'LocationName')" [filterable]="true"
+                [(ngModel)]="currentListLocation" (valueChange)="onDropdownLocationClick($event,i,location)"
+                (open)="onTranformsDataCombobox()">
+                <ng-template kendoComboBoxItemTemplate let-dataItem>
+
+                  <span class="template">{{ dataItem.LocationName }} <span style="font-weight: 700;">|
+                      {{dataItem.LocationID}}</span></span>
+
+                </ng-template>
+              </kendo-combobox>
+
+              <!-- Level 1: TypeStaff -->
+              <kendo-combobox #typestaff *ngIf="isListCombobxTypeStaff[i]" class="customCombobox"
+                [data]="ListPolicyTypeStaff" [textField]="'TypeStaffName'" [valueField]="'TypeStaff'"
+                [placeholder]="'Tìm theo loại nhân sự'" (filterChange)="onHandleFilter($event,'TypeStaffName')"
+                [(ngModel)]="currentListTypeStaff" (valueChange)="onDropdownTypeStaffClick($event,i,typestaff)"
+                (open)="onTranformsDataCombobox()">
+                <ng-template kendoComboBoxItemTemplate let-dataItem>
+                  <span class="template">{{ dataItem.TypeStaffName }} <span style="font-weight: 700;">|
+                      {{dataItem.ListID}}</span></span>
+
+                </ng-template>
+              </kendo-combobox>
+
+            </div>
+
+          </div>
+
+
+
+
+          <div *ngIf="this.listGrid.length > 0 ">
+            <kendo-grid [data]="listGrid" class="myCustomGrid" (detailExpand)="onDetailExpand($event)"
+              (detailCollapse)="onDetailCollapse($event)" [isDetailExpanded]="toggleDetailExpanded">
+
+              <!-- column 1 -->
+
+              <kendo-grid-column [width]="230">
+                <ng-template kendoGridHeaderTemplate let-dataItem>
+                  <!-- <span>{{dataItem.PositionName !=undefined?
+                    "Chức danh":dataItem.LocationName !=undefined
+                    ?"Điểm làm việc":dataItem.TypeStaffName !=undefined
+                    ?"Loại nhân sự":""}}</span> -->
+                  <span *ngIf="listGrid[listGrid.length-1]?.PositionName !== undefined  && 
+                  listGrid[listGrid.length-1]?.Position !==null">Chức danh</span>
+                  <span *ngIf=" listGrid[listGrid.length-1]?.LocationName !==undefined &&
+                    listGrid[listGrid.length-1]?.Location !==null">Điểm làm việc</span>
+                  <span *ngIf="listGrid[listGrid.length-1]?.TypeStaffName !== undefined  && 
+                  listGrid[listGrid.length-1]?.TypeStaff !==null">Loại nhân sự</span>
+                </ng-template>
+
+                <ng-template kendoGridCellTemplate let-dataItem>
+                  <span class="label-text-bold" [title]="dataItem.PositionName || dataItem.LocationName ||
+                  dataItem.TypeStaffName">{{dataItem.PositionName || dataItem.LocationName ||
+                    dataItem.TypeStaffName }}</span>
+                </ng-template>
+
+              </kendo-grid-column>
+              <!-- colum 2 -->
+              <kendo-grid-column [width]="150" field="DepartmentName">
+                <ng-template kendoGridHeaderTemplate let-dataItem>
+                  <span *ngIf="hasPositionData(listGrid)">Đơn vị trực thuộc</span>
+                </ng-template>
+                <ng-template kendoGridCellTemplate let-dataItem>
+                  <span>{{dataItem.DepartmentName? dataItem.DepartmentName:""}}</span>
+                </ng-template>
+              </kendo-grid-column>
+
+              <!-- column3  -->
+
+              <kendo-grid-column title="" [width]="150">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                  <div class="text-role">
+                    <div *ngIf="dataItem.IsLeader">
+                      Trưởng đơn vị
+                    </div>
+                    <div *ngIf="dataItem.IsSupervivor">
+                      Quản lý điểm làm việc
+                    </div>
+                  </div>
+
+                </ng-template>
+
+              </kendo-grid-column>
+
+              <!-- column 4 dropdown -->
+              <kendo-grid-column title="" [width]="150">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                  <!-- combobox chon loai level 2 -->
+                  <div (click)="getRowData(dataItem)">
+                    <kendo-combobox class="customCombobox" [data]="oncheckChildDropdown(dataItem)" textField="text"
+                      valueField="value" [placeholder]="'Chọn cấp con'" [filterable]="true"
+                      (valueChange)="onComboboxFirstChild($event,dataItem)" [ngModel]="onCheckValueCombobx(dataItem)"
+                      [disabled]="onCheckVisibility(dataItem)" [itemDisabled]="itemDisabledCombobx.bind(this)">
+                    </kendo-combobox>
+                  </div>
+
+
+                </ng-template>
+
+              </kendo-grid-column>
+              <!-- column 5 button xoa -->
+              <kendo-grid-column [width]="50">
+                <ng-template kendoGridCellTemplate let-dataItem>
+
+                  <div class="icon-col" *ngIf="checkDataName(dataItem) || dataItem.ListException?.length === 0 "
+                    [title]="dataItem.PositionName || dataItem.LocationName ||
+                    dataItem.TypeStaffName" (click)="onRemoveException(dataItem,i)">
+                    <kendo-svg-icon class="icon" [icon]="icons.trashIcon"></kendo-svg-icon>
+                  </div>
+
+                </ng-template>
+
+              </kendo-grid-column>
+              <!-- section details row -->
+              <ng-template kendoGridDetailTemplate [kendoGridDetailTemplateShowIf]="showOnlyBeveragesDetails"
+                let-dataItem let-rowIndex="rowIndex">
+                <section *ngIf="dataItem.ListException?.length > 0">
+
+                  <!-- section -->
+                  <div>
+                    <!-- combobox dropdownn chon level 2 -->
+                    <div>
+
+                      <!-- combobox  dropdown level 2 dia diem -->
+
+                      <kendo-combobox #comboboxChild
+                        *ngIf="getLastExceptionItem(dataItem).LocationName !== undefined && getLastExceptionItem(dataItem).Location !==undefined "
+                        class="customCombobox" [data]="filteredChildLocation" textField="LocationName"
+                        valueField="Location" [placeholder]="'Tìm theo mã và tên điểm làm việc'" [filterable]="true"
+                        (valueChange)="onComboboxDataTwoLevelClick($event,dataItem,comboboxChild)"
+                        (filterChange)="onHandleChildFilter($event,'LocationName')"
+                        (open)="onFilterListChildCombobox(dataItem,2)">
+                        <ng-template kendoComboBoxItemTemplate let-dataItem>
+                          <span class="template">{{ dataItem.LocationName }} <span *ngIf="dataItem.LocationID"
+                              style="font-weight: 700;">|
+                              {{dataItem.LocationID}}</span> </span>
+
+                        </ng-template>
+                      </kendo-combobox>
+
+                      <!-- combobox  dropdown level 2 loai nhan su -->
+                      <kendo-combobox #comboboxChild
+                        *ngIf="getLastExceptionItem(dataItem).TypeStaffName!== undefined && getLastExceptionItem(dataItem).TypeStaff !==undefined"
+                        class="customCombobox" [data]="filteredChildTypeStaff" textField="TypeStaffName"
+                        valueField="TypeStaff" [placeholder]="'Tìm theo loại nhân sự'" [filterable]="true"
+                        (valueChange)="onComboboxDataTwoLevelClick($event,dataItem,comboboxChild)"
+                        (filterChange)="onHandleChildFilter($event,'TypeStaffName')"
+                        (open)="onFilterListChildCombobox(dataItem,3)">
+                        <ng-template kendoComboBoxItemTemplate let-dataItem>
+                          <span class="template">{{ dataItem.TypeStaffName }} <span *ngIf="dataItem.ListID"
+                              style="font-weight: 700;">|
+                              {{dataItem.ListID}}</span> </span>
+
+                        </ng-template>
+                      </kendo-combobox>
+                      <!-- combobox dropdown level 2 position -->
+                      <kendo-combobox #comboboxChild
+                        *ngIf="getLastExceptionItem(dataItem).PositionName!== undefined && getLastExceptionItem(dataItem).PositionName !==null"
+                        class="customCombobox position" [data]="filteredChildPosition" textField="PositionName"
+                        valueField="Position" [placeholder]="'Tìm theo mã và tên chức danh'" [filterable]="true"
+                        (valueChange)="onComboboxDataTwoLevelClick($event,dataItem,comboboxChild)"
+                        (filterChange)="onHandleChildFilter($event,'PositionName')"
+                        (open)="onFilterListChildCombobox(dataItem,1)">
+                        <ng-template kendoComboBoxItemTemplate let-dataItem>
+                          <div class="row-template"
+                            style="display: flex; justify-content: space-between; align-items: center; overflow: hidden; width:100%; gap:10px">
+                            <div class="text-name">
+                              <span class="template">{{ dataItem.PositionName }}
+                                <span *ngIf="dataItem.PositionID" style="font-weight: 700;">|
+                                  {{dataItem.PositionID}}</span>
+                              </span>
+                            </div>
+                            <div class="text-role">
+                              <div *ngIf="dataItem.IsLeader">
+                                Trưởng đơn vị
+                              </div>
+                              <div *ngIf="dataItem.IsSupervivor">
+                                Quản lý điểm làm việc
+                              </div>
+                            </div>
+                          </div>
+
+                        </ng-template>
+                      </kendo-combobox>
+                    </div>
+                  </div>
+
+                  <div class="bombobox-mutil-group">
+
+                    <div class="header">
+                      <div class="header-1">
+                        <label class="label-text">
+                          {{ (getLastExceptionItem(dataItem).LocationName !== undefined &&
+                          getLastExceptionItem(dataItem).LocationName !== "") ?
+                          "Điểm làm việc" : (getLastExceptionItem(dataItem).TypeStaffName !== undefined &&
+                          getLastExceptionItem(dataItem).TypeStaffName !== "")
+                          ? "Loại nhân sự" : (getLastExceptionItem(dataItem).PositionName !== undefined &&
+                          getLastExceptionItem(dataItem).PositionName !== "") ? "Chức danh":"" }}
+                        </label>
+                      </div>
+                      <div class="header-2">
+                        <label class="label-text">
+                          {{ ((getLastExceptionItem(dataItem).PositionName !== undefined &&
+                          getLastExceptionItem(dataItem).PositionName !== "")
+                          && dataItem.LocationName) ||
+                          ((getLastExceptionItem(dataItem).LocationName !==undefined &&
+                          getLastExceptionItem(dataItem).LocationName !== "")
+                          && dataItem.PositionName)
+                          ?"Loại nhân sự" :
+                          ((getLastExceptionItem(dataItem).PositionName !== undefined &&
+                          getLastExceptionItem(dataItem).PositionName !== "")
+                          && dataItem.TypeStaffName) ||
+                          ((getLastExceptionItem(dataItem).TypeStaffName !==undefined &&
+                          getLastExceptionItem(dataItem).TypeStaffName !== "")
+                          && dataItem.PositionName)
+                          ? "Địa điểm làm việc" :
+                          ((getLastExceptionItem(dataItem).TypeStaffName !== undefined &&
+                          getLastExceptionItem(dataItem).TypeStaffName !== "")
+                          && dataItem.LocationName) ||
+                          ((getLastExceptionItem(dataItem).LocationName !==undefined &&
+                          getLastExceptionItem(dataItem).LocationName !== "")
+                          && dataItem.TypeStaffName)
+                          ? "Chức danh" : "" }}
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="group-body">
+                      <div class="body-content" *ngFor="let item of dataItem.ListException ; let idx=index">
+                        <div class="body-left">
+                          <span class="label-text-name " [title]="item.PositionName || item.LocationName ||
+                          item.TypeStaffName"> {{ item.LocationName || item.TypeStaffName ||
+                            item.PositionName}} </span>
+                          <span> {{ item.LocationID || item.TypeStaffID || item.PositionID}} </span>
+                        </div>
+                        <div class="body-mid">
+                          <!-- Multi-select cho loại nhân sự -->
+                          <kendo-multiselect
+                            *ngIf="(getLastExceptionItem(dataItem).LocationName !== undefined && getLastExceptionItem(dataItem).LocationName !=='' && dataItem.PositionName) ||
+                          (getLastExceptionItem(dataItem).PositionName !==undefined &&  getLastExceptionItem(dataItem).PositionName !==''&& dataItem.LocationName)  "
+                            class="mapping-multiselect" [data]="ListPolicyTypeStaff" textField="TypeStaffName"
+                            valueField="TypeStaff" (valueChange)="onMultiselectDropdown($event, dataItem,idx)"
+                            (filterChange)="onHandleFilter($event,'TypeStaffName')" [filterable]="true"
+                            (removeTag)="removeTag($event,dataItem,idx)" placeholder="Tìm theo mã và loại nhân sự"
+                            [ngModel]="dataItem.ListException[idx]?.ListException" [clearButton]="false">
+                            <ng-template kendoComboBoxItemTemplate let-dataItem>
+                              <span class="template">{{ dataItem.TypeStaffName }} <span *ngIf="dataItem.ListID"
+                                  style="font-weight: 700;">|
+                                  {{dataItem.ListID}}</span> </span>
+
+                            </ng-template>
+                          </kendo-multiselect>
+
+                          <!-- Multi-select cho địa điểm -->
+                          <kendo-multiselect *ngIf=" (getLastExceptionItem(dataItem).TypeStaffName !==undefined &&
+                            getLastExceptionItem(dataItem).TypeStaffName !=='' && dataItem.PositionName) ||
+                            (getLastExceptionItem(dataItem).PositionName !==undefined &&
+                            getLastExceptionItem(dataItem).PositionName !=='' && dataItem.TypeStaffName) "
+                            class=" mapping-multiselect" [data]="ListPolicyLocation" textField="LocationName"
+                            valueField="Location" (valueChange)="onMultiselectDropdown($event, dataItem,idx)"
+                            (filterChange)="onHandleFilter($event,'LocationName')" [filterable]="true"
+                            (removeTag)="removeTag($event,dataItem,idx)" placeholder="Tìm theo mã và tên điểm làm việc"
+                            [ngModel]="dataItem.ListException[idx]?.ListException" [clearButton]="false">
+                            <ng-template kendoComboBoxItemTemplate let-dataItem>
+                              <span class="template">{{ dataItem.LocationName }} <span *ngIf="dataItem.LocationID"
+                                  style="font-weight: 700;">|
+                                  {{dataItem.LocationID}}</span> </span>
+
+                            </ng-template>
+                          </kendo-multiselect>
+
+                          <!-- Multi-select cho chức danh -->
+                          <kendo-multiselect *ngIf=" (getLastExceptionItem(dataItem).TypeStaffName !==undefined &&
+                            getLastExceptionItem(dataItem).TypeStaffName !=='' && dataItem.LocationName) ||
+                            (getLastExceptionItem(dataItem).LocationName !==undefined &&
+                            getLastExceptionItem(dataItem).LocationName !=='' && dataItem.TypeStaffName) "
+                            class=" mapping-multiselect" [data]="ListPolicyPosition" textField="PositionName"
+                            valueField="Position" (valueChange)="onMultiselectDropdown($event, dataItem,idx)"
+                            [ngModel]="dataItem.ListException[idx]?.ListException" placeholder="Tìm theo mã và tên chức danh"
+                            (filterChange)="onHandleFilter($event,'PositionName')" [filterable]="true"
+                            (removeTag)="removeTag($event,dataItem,idx)" [clearButton]="false">
+                            <ng-template kendoComboBoxItemTemplate let-dataItem>
+                              <div class="row-template"
+                                style="display: flex; justify-content: space-between; align-items: center; overflow: hidden; width:100%; gap:10px">
+                                <div class="text-name">
+                                  <span class="template">{{ dataItem.PositionName }}
+                                    <span *ngIf="dataItem.PositionID" style="font-weight: 700;">|
+                                      {{dataItem.PositionID}}</span>
+                                  </span>
+                                </div>
+                                <div class="text-role">
+                                  <div *ngIf="dataItem.IsLeader">
+                                    Trưởng đơn vị
+                                  </div>
+                                  <div *ngIf="dataItem.IsSupervivor">
+                                    Quản lý điểm làm việc
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-template>
+                          </kendo-multiselect>
+
+
+
+                        </div>
+                        <div class=" body-right">
+                          <div class="icon-col"
+                            *ngIf="!checkDataName(dataItem) && dataItem.ListException?.length >0 && checkChildDataItem(dataItem?.ListException[idx]) "
+                            (click)=" onRemoveChildException(dataItem,item)" [title]=" getLastExceptionItem(dataItem).PositionName ||  getLastExceptionItem(dataItem).LocationName ||
+                            getLastExceptionItem(dataItem).TypeStaffName">
+                            <kendo-svg-icon class=" icon" [icon]="icons.trashIcon"></kendo-svg-icon>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </section>
+              </ng-template>
+            </kendo-grid>
+          </div>
+        </div>
+
+
+
+      </div>
+      <!-- button tao ngoai le -->
+      <div class="footer-content">
+        <div class="add-ex">
+          <div class="btn-ex" (click)="handleCreateException()"
+            [class.disabled]="listException.length >= 3 || isDisabledBtn">
+            <kendo-svg-icon class="ex-icon" [icon]="icons.plusIcon"></kendo-svg-icon>
+            <span class="label-text">Tạo ngoại lệ</span>
+          </div>
+        </div>
+        <div class="button-group">
+          <button kendoButton class="k-button closeBtn" (click)="onClose()">Đóng</button>
+          <button kendoButton [disabled]="isButtonDisabled()" class="k-button updateBtn"
+            (click)="onUpdateException()">Cập
+            nhật</button>
+        </div>
+      </div>
+    </div>
+  </app-p-kendo-dialog>
+</div>

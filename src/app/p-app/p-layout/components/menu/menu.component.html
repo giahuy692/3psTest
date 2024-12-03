@@ -1,0 +1,65 @@
+<kendo-drawer-container>
+    <!-- listMenu[2] != undefined ? allowedListMenu : listMenuUser -->
+    <kendo-drawer #drawer [items]="allowedListMenu" [mode]="drawerMode" [mini]="drawerMini"
+        [(expanded)]="drawerExpanded" [width]="220" (select)="onSelect($event)">
+        <!-- [width]="220" -->
+        <ng-template kendoDrawerItemTemplate let-item>
+            <!-- <a *ngIf="item.Type != 'btn'" aria-current="page" class="drawer-item nav-link"
+                (click)="item.Code != 'itemMenuUser' ? item.Type == 'group' ? onMenuClickToggle(item) : onMenuClick(item) : onClickListMenuUser(item)"
+                [ngClass]="{'active': item.Code == currentMenu.Code || (item.Code == currentMenu.Code && currentMenuExpanded), 
+                    'groupMenu': item.Type == 'group', 'itemMenuUser': item.Code == 'itemMenuUser'}"> -->
+            <!-- MENU GROUP OR MENU FUNCTION -->
+            <a *ngIf="item.Type != 'btn'" aria-current="page" class="drawer-item nav-link"
+                (click)="item.Code != 'itemMenuUser' ? item.Type == 'group' ? onMenuClickToggle(item) : onMenuClick(item) : onClickListMenuUser(item)"
+                [ngClass]="{'active': item.Code == currentMenu.Code || (item.Code == currentMenu.Code && item.Actived ), 
+                    'groupMenu': item.Type == 'group', 'itemMenuUser': item.Code == 'itemMenuUser'}" [title]="item.Name">
+
+                <!-- <span class="k-icon item-icon" [ngClass]="{'{{item.Icon}}': item.Icon != null && item.Icon != '',
+                'k-i-categorize': item.Icon == null || item.Icon == ''}"></span> -->
+
+                <!-- <span class="k-icon item-icon k-i-categorize"></span> -->
+
+                <!-- <i class="fas fas-brands fas-angular"></i> -->
+
+                <fa-icon [icon]="['fas', item.Icon]" *ngIf="item.Icon != null && item.Icon != ''"></fa-icon>
+                <!-- <fa-icon [icon]="['far', 'star']"></fa-icon> -->
+                <span *ngIf="drawerExpanded">{{ item.Name }} </span>
+
+                <!-- <span *ngIf="item.Type == 'group' && item.LstChild.length > 0 && drawerExpanded  
+                    && !currentMenuExpanded" class="k-icon k-i-arrow-chevron-down"></span>
+                <span *ngIf="item.Type == 'group' && item.LstChild.length > 0 && drawerExpanded
+                    && currentMenuExpanded" class="k-icon k-i-arrow-chevron-up"></span> -->
+                <span *ngIf="item.Type == 'group' && item.LstChild.length > 0 && drawerExpanded  
+                    && !item.Actived " class="k-icon k-i-arrow-chevron-down"></span>
+                <span *ngIf="item.Type == 'group' && item.LstChild.length > 0 && drawerExpanded
+                    && item.Actived " class="k-icon k-i-arrow-chevron-up"></span>
+            </a>
+
+            <!-- <a *ngFor="let menuItem of item.LstChild" [hidden]="menuItem.Type == '' || currentMenu.Code != item.Code 
+                || !currentMenuExpanded" aria-current="page" class="drawer-item nav-link"
+                (click)="onMenuClick(menuItem)" [ngClass]="{'active': menuItemIsActive(menuItem) }"> -->
+
+            <!-- MENU FUNCTION -->
+            <a *ngFor="let menuItem of item.LstChild" [hidden]="menuItem.Type == '' 
+                || !item.Actived " aria-current="page" class="drawer-item nav-link"
+                (click)="onMenuClick(menuItem, item)" [ngClass]="{'active': menuItemIsActive(menuItem) }" [title]="menuItem.Name">
+                <fa-icon [icon]="['fas', menuItem.Icon]" *ngIf="menuItem.Icon != null && menuItem.Icon != ''"></fa-icon>
+                <!-- <span class="k-icon item-icon k-i-arrow-60-right"></span> -->
+                <span class="child" *ngIf="drawerExpanded">{{ menuItem.Name }}</span>
+            </a>
+
+            <a *ngIf="item.Type == 'btn'" aria-current="page" class="drawer-last-item nav-link">
+                <!-- <span *ngIf="drawerExpanded" class="k-icon item-icon k-i-arrow-chevron-left"></span>
+                <span *ngIf="!drawerExpanded" class="k-icon item-icon k-i-arrow-chevron-right"></span>
+                <span *ngIf="drawerExpanded">{{ item.Name}}</span> -->
+            </a>
+        </ng-template>
+        <ng-template kendoDrawerFooterTemplate>
+            <a aria-current="page" class="drawer-item nav-link drawerExpanded" (click)=toggleDrawer()>
+                <span *ngIf="drawerExpanded" class="k-icon item-icon k-i-arrow-chevron-left"></span>
+                <span *ngIf="!drawerExpanded" class="k-icon item-icon k-i-arrow-chevron-right"></span>
+                <span *ngIf="drawerExpanded">Thu nhỏ Menu</span>
+            </a>
+        </ng-template>
+    </kendo-drawer>
+</kendo-drawer-container>

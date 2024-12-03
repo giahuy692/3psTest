@@ -1,0 +1,236 @@
+<div class="config006-partner-list app-drawer-container">
+    <mat-drawer-container [hasBackdrop]="true" >
+  
+        <mat-drawer-content>
+
+            <div class="header header-1">
+                <app-p-kendo-breadcrumb (loadData)="loadBRC()"></app-p-kendo-breadcrumb>
+        
+                <div class="nav-crud">
+                    <div class="nav-btn nav-crud">
+                        <button kendoButton  class="k-button onAddBtn" [icon]="'plus'" (click)="onAddNew()" *ngIf="isCreator || isMaster">TẠO MỚI</button>
+                  </div>
+                </div>
+            </div>
+
+            <div class="header header-2">
+                <app-search-filter-group placeholder="Tìm theo tên đối tác, mã số thuế"
+                 (onReset)="onResetFilter($event)" (filterChange)="onSearchValuePartner($event)"
+                 [fields]="['VNName','InvNo']" [ignoreCase]="true">
+                </app-search-filter-group>
+
+                <div class="classify">
+                    <div class="label">Phân loại</div>
+                    <div class="checkbox-partner">
+                        <span> <input type="checkbox" (change)="applyFilter($event,'isLocal')"   [checked]="isLocal"  kendoCheckBox > Đối tác trong nước </span>
+                        <span> <input type="checkbox" (change)="applyFilter($event,'isForeign')" [checked]="isForeign" kendoCheckBox > Đối tác nước ngoài </span>
+                    </div>
+                </div>
+            </div>
+
+       
+                <div class="treelist-wrapper">
+                    <kendo-treelist #myTreeList [kendoTreeListFlatBinding]="rootData" [fetchChildren]="fetchChildren" [hasChildren]="hasChildren" 
+                    kendoTreeListSelectable [selectable]="settingsTreelist" [loading]="loading" 
+                    (selectionChange)="onSelectionChange($event)" [initiallyExpanded]="true" [(expandedKeys)]="collapsedIds"
+                    kendoTreeListExpandable 
+                     >
+            
+                     <kendo-treelist-span-column [expandable]="true">
+                          <kendo-treelist-column field="Tên đối tác" [width]="350" class="PartnerName">
+                  
+                  </kendo-treelist-column >
+                          <ng-template kendoTreeListCellTemplate let-dataItem>
+                              <span [title]="dataItem.VNName" class="VNName">{{ dataItem.VNName}}</span>
+                      
+                          </ng-template>
+                      </kendo-treelist-span-column>
+          
+                      <!-- COLUMN 2 -->
+                      <kendo-treelist-column field="Mã số thuế" class="InvNo"  [width]="150">
+                          <ng-template kendoTreeListCellTemplate let-dataItem>
+                              <span [title]="dataItem.InvNo">{{dataItem.InvNo}} </span>
+                          </ng-template>
+                      </kendo-treelist-column>
+          
+                <!-- col 3 -->
+                <kendo-treelist-column field="Địa chỉ" class="Address" [width]="300">
+                          <ng-template kendoTreeListCellTemplate let-dataItem>
+                              <span [title]="dataItem.InvAddress">{{dataItem.InvAddress}} </span>
+                          </ng-template>
+                      </kendo-treelist-column>
+          
+          
+                <!-- col 4 -->
+                <kendo-treelist-column field="Quốc gia" class="Country" [width]="120">
+                          <ng-template kendoTreeListCellTemplate let-dataItem>
+                              <span >{{dataItem.CountryName}} </span>
+                          </ng-template>
+                      </kendo-treelist-column>
+
+                      <kendo-treelist-column field="Phân loại" class="TypeName" [width]="150">
+                        <ng-template kendoTreeListCellTemplate let-dataItem>
+                            <span>{{dataItem.TypeName }} </span>
+                        </ng-template>
+                    </kendo-treelist-column>
+          
+          
+                <!-- col 5 - action -->
+                      <kendo-treelist-column class="btn-action" [width]="50">
+                        <ng-template kendoTreeListCellTemplate let-dataItem let-rowIndex="rowIndex">
+                          <div class="horizontal">
+                            <kendo-button #anchor class="k-button k-button-icon togglePopup"
+                            icon="more-horizontal" (click)="togglePopup(rowIndex, dataItem)"></kendo-button>  
+                          </div>
+                        </ng-template>
+                      </kendo-treelist-column>
+          
+          
+                    </kendo-treelist>
+                  
+                  </div>
+          
+            
+           
+
+        </mat-drawer-content>
+        <!-- disableClose -->
+        <mat-drawer  #formDrawer [mode]="'over'" position="end" disableClose>
+            <form class="formInfoPartner k-form" (keydown)="onKeyDown($event)" [formGroup]="partnerForm" >
+                <ng-container>
+                  <!-- API FORM -->
+                    <fieldset [disabled]="false">
+                        <legend>THÔNG TIN ĐỐI TÁC</legend>
+                        <div class="formPartner">
+                            <div class="form-item item1">
+                                <div class="label">Mã số thuế <span class="impose"> (*) </span></div> 
+                                <app-p-textbox [propName]="'InvNo'" formControlName="InvNo" (blur)="onInvNoBlur()" [disabled]="disableInvNo"></app-p-textbox>
+                            </div>
+                            <div class="form-item item2">
+                                <div class="label">Tên tiếng Việt <span class="impose"> (*) </span></div> 
+                                <app-p-textbox [propName]="'VNName'" formControlName="VNName" [disabled]="isLockAll"></app-p-textbox>
+                            </div>
+                            <div class="form-item item3">
+                                <div class="label">Tên tiếng Anh</div>
+                                <app-p-textbox [propName]="'VNName'" formControlName="ENName" [disabled]="isLockAll"></app-p-textbox>
+                            </div>
+                            <div class="form-item item4">
+                                <div class="label">Tên tiếng Nhật</div>
+                                <app-p-textbox [propName]="'VNName'" formControlName="JPName" [disabled]="isLockAll"></app-p-textbox>
+                            </div>
+                            <div class="form-item item5">
+                                <div class="label">Tên viết tắt <span class="impose"> (*) </span></div> 
+                                <app-p-textbox [propName]="'VNName'" formControlName="ShortName" [disabled]="isLockAll"></app-p-textbox>
+                            </div>
+                            <div class="form-item item6">
+                                <div class="label">Trực thuộc công ty</div>
+                               <kendo-dropdowntree  
+                               [data]="parsedData"
+                               [fetchChildren]="children"
+                               [hasChildren]="hasChildrenDropdown"
+                               [loading]="loading"
+                               textField="VNName"
+                               valueField="Code"
+                               formControlName="ParentID"
+                               [filterable]="true"
+                               (filterChange)="handleFilter($event)"
+                               (valueChange)="
+                               selectionChangeForm($event)"
+                               [disabled]="isLockAll"
+                               [popupSettings]="{ appendTo: 'component' }"
+                           ></kendo-dropdowntree>
+                               
+                            </div>
+                            <div class="form-item item7">
+                                <div class="label">Địa chỉ liên hệ</div>
+                                <app-p-textarea [propName]="'VNName'" formControlName="Address" [disabled]="isLockAll"></app-p-textarea>
+                            </div>
+                            <div class="form-item item8">
+                                <div class="label">Quốc gia</div>
+                               <p-kendo-dropdownlist [data]="listCountry" [textField]="'VNName'" [valueField]="'Code'" (valueChange)="onDropdownlistClick($event, 'Country')"
+                                [filterable]="true"   formControlName="CountryObj" [disabled]="isLockAll"
+                                 ></p-kendo-dropdownlist>
+                            </div>
+                            <div class="form-item item9">
+                                <div class="label">Tỉnh thành</div>
+                               <p-kendo-dropdownlist #dropdown2 [data]="listProvince" [textField]="'VNProvince'" [valueField]="'Code'" (valueChange)="onDropdownlistClick($event, 'Province')"
+                               [filterable]="true" [disabled]="disableProvince || isLockAll" formControlName="ProvinceObj"
+                               ></p-kendo-dropdownlist>
+                            </div>
+                            <div class="form-item item10">
+                                <div class="label">Quận huyện</div>
+                               <p-kendo-dropdownlist #dropdown3 [data]="listDistrict" [textField]="'VNDistrict'" [valueField]="'Code'" (valueChange)="onDropdownlistClick($event, 'District')"
+                               [filterable]="true" [disabled]="disableDistrict || isLockAll" formControlName="DistrictObj"></p-kendo-dropdownlist>
+                            </div>
+                            <div class="form-item item11">
+                                <div class="label">Phường/xã</div>
+                               <p-kendo-dropdownlist #dropdown4 [data]="listWard" [textField]="'VNWard'" [valueField]="'Code'" (valueChange)="onDropdownlistClick($event, 'Ward')"
+                               [filterable]="true" [disabled]="disableWard || isLockAll" formControlName="WardObj"></p-kendo-dropdownlist>
+                            </div>
+                            <div class="form-item item12">
+                                <div class="phone">
+                                    <div class="label">Số điện thoại</div>
+                                   <kendo-maskedtextbox mask="000 000 0000" class="k-textbox"  [propName]="'Tel'" formControlName="Tel" [disabled]="isLockAll"></kendo-maskedtextbox>
+                                </div>
+                                <div class="fax">
+                                    <div class="label">Số fax <span class="impose"> (*) </span></div> 
+                                   <kendo-maskedtextbox mask="000 000 0000" class="k-textbox"  [propName]="'Fax'" formControlName="Fax" [disabled]="isLockAll"></kendo-maskedtextbox>
+                                </div>
+                            </div>
+                            <div class="form-item item13">
+                                <div class="label">Website</div>
+                                <app-p-textbox [propName]="'VNName'" formControlName="Website" [disabled]="isLockAll"></app-p-textbox>
+                            </div>
+                            <div class="form-item item14">
+                                <div class="label">Tên hóa đơn <span class="impose"> (*) </span></div> 
+                                <app-p-textbox [propName]="'VNName'" formControlName="InvName" [disabled]="isLockAll"></app-p-textbox>
+                            </div>
+                            <div class="form-item item15">
+                                <div class="label">Địa chỉ hóa đơn <span class="impose"> (*) </span></div> 
+                                <app-p-textarea [propName]="'VNName'" formControlName="InvAddress" [disabled]="isLockAll"></app-p-textarea>
+                            </div>
+
+                            <i><span class="impose">(*) Thông tin bắt buộc nhập </span></i>
+                        </div>
+                        <div class="k-form-buttons">
+                            <button kendoButton class="k-button btn-hachi closeBtn" (click)="onCloseForm()">
+                              Đóng
+                            </button>
+                            <button kendoButton class="k-button btn-hachi updateBtn" (click)="onUpdatePartner()">
+                                <span *ngIf="partnerForm.value">{{partnerForm.controls['Code'].value > 0
+                                    ? "CẬP NHẬT"
+                                    : partnerForm.controls['Code'].value == 0 && isCreator || isMaster
+                                    ? "TẠO MỚI": ""}}</span>
+                            </button>
+                            <button kendoButton class="k-button btn-hachi deleteBtn" (click)="openDialog()" *ngIf="(isCreator || isMaster) && partnerForm.controls['Code'].value > 0">
+                              XÓA
+                            </button>
+                          </div>
+                    </fieldset>
+                </ng-container>
+            </form>
+        </mat-drawer>
+
+    </mat-drawer-container>
+
+    <app-p-kendo-dialog *ngIf="dialog" class="dialogPartner" [title]="'Xác nhận Xóa Đối tác'"
+    (close)="closeDialog()"
+    (handleButton)="onDeletePartner()"
+    [cancelText]="'KHÔNG'"
+    [actionText]="'Có'"
+    [dialogType]="1"
+    >
+      <p>Bạn có chắc chắn muốn Xóa Đối tác  <span style="color: green">{{selectedItemPopup?.VNName}}</span> này? </p>
+     
+    </app-p-kendo-dialog>
+
+    <kendo-popup #stylePopup class="stylePopup" [style.visibility]="isPopupVisible() " [anchor]="getAnchor()"
+    [anchorAlign]="{ horizontal:'left', vertical: 'top'}" [popupAlign]="{ horizontal:'right', vertical: 'top'}"
+    
+  >
+    <div  *ngFor="let item of menuItemList; let i = index" class="popup-item" (click)="onClickMenuDropdownItem(item)">
+        <span class="k-icon k-i-{{ item.iconName}}"></span>
+        <span class="item-text">{{ item.text}}</span>
+    </div>
+  </kendo-popup>
+</div>

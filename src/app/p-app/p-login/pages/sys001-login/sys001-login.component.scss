@@ -1,0 +1,291 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+    .sys001-login{
+        display: flex;
+        .cursor-pointer{
+            cursor: pointer;
+        }
+        .col10{
+            column-gap: 10px;
+        }
+        .plPass{
+            padding-right: 46px;
+        }
+        .right-half {
+            display: flex;
+            align-items: center;
+            width: 606px;
+            height: 100vh;
+            background-color: white;
+            text-align: center;
+            
+    
+            @media screen and (max-width: 606px) {
+                width: 100vw;
+            }
+            .img-logo {
+                width: 200px;
+                margin-bottom: 50px;
+            }
+            .article {
+                // position: absolute;
+                // top: 45%;
+                // left: 50%;
+                // transform: translate(-50%, -50%);
+                width: 100%;
+    
+                .login {
+                    height: 30px;
+                    text-align: center;
+    
+                    .dang-nhap {
+                        font-size: 20px;
+                        font-weight: 700;
+                        color: $light-blue-gray;
+                        margin-right: 38px;
+                        cursor: pointer;
+                        &:not(.actived):hover {
+                            color: $medium-blue-gray;
+                        }
+                    }
+                    .dang-ky {
+                        font-size: 20px;
+                        font-weight: 700;
+                        color: $light-blue-gray;
+                        cursor: pointer;
+                        text-decoration: none;
+
+                        &:not(.actived):hover {
+                            color: $medium-blue-gray;
+                        }
+                    }
+                    .actived{
+                        color: $medium-blue-gray;
+                    }
+                }
+                .line-login,
+                .line-register, .line-forgotFwd {
+                    width: 324px;
+                    height: 3px;
+                    margin: 15px auto 30px;
+                    background-image: linear-gradient(90deg, #edeff3, #edeff3 53px, $dark-green 0, $dark-green 156px, #edeff3 0, #edeff3 168px);
+                }
+
+                .line-register {
+                    background-image: linear-gradient(-90deg, #edeff3, #edeff3 48px, $dark-green 0, $dark-green 132px, #edeff3 0, #edeff3 177px);
+                }
+                .line-forgotFwd {
+                    background-image: linear-gradient(90deg, #edeff3, #edeff3 50px, #1a6634 0, #1a6634 278px, #edeff3 0, #edeff3 177px);
+                }
+                .hpanel {
+                    margin-left: auto;
+                    margin-right: auto;
+                    width: 324px;
+                    // height: 180px;
+    
+                    .panel-body {
+                        height: 100%;
+    
+                        .error {
+                            margin-top: 18px;
+                            color: $red;
+                            text-align: start;
+                            height: 100%;
+    
+                            .error-text {
+                                margin-left: 7px;
+                            }
+                        }
+
+                        .duration{
+                            margin-right: auto;
+                        }
+    
+                        .forgot-pwd{
+                            display: block;
+                            color: #31ADFF;
+                            font-size: 15px;
+                            text-align: left;
+                            margin-top: 10px;
+                            margin-left: auto;
+                        }
+                    }
+                }
+                form {
+                    margin: 0 auto;
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 1rem;
+
+                    kendo-formfield{
+                        display: flex;
+                        flex-direction: column;
+                        row-gap: 6px;
+                    }
+    
+                    .form-group {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        max-height: 65px;
+                        position: relative;
+                        column-gap: 10px;
+                        margin-bottom: 0;
+                        position: relative;
+    
+                        .icon-left {
+                            pointer-events: none;
+                            z-index: 11;
+                            width: 32px;
+                            height: 32px;
+                            font-size: 32px;
+                            flex-basis: 32px;
+                            color: $light-blue-gray;
+
+                            > svg {
+                                fill: $light-blue-gray;
+                                flex: 1 0 auto;
+                            }
+                        }
+                        .icon-right {
+                            position: absolute;
+                            cursor: pointer;
+                            right: 10px;
+                            top: 10px;
+                            z-index: 11;
+    
+                            > svg {
+                                fill: $gray-200;
+                                flex: 1 0 auto;
+                            }
+                        }
+                        .icon-right:hover {
+                            > svg {
+                                fill: $light-blue-gray !important;
+                            }
+                        }
+
+                        input[type=number]{
+                            width: 40px;
+                            padding: 5px;
+                            text-align: center;
+                        }
+                        input[type=number]::-webkit-inner-spin-button, 
+                        input[type=number]::-webkit-outer-spin-button { 
+                            -webkit-appearance: none;
+                            -moz-appearance: none;
+                            appearance: none;
+                            margin: 0; 
+                        }
+                    }
+                    #btn-group {
+                        text-align: center;
+                        margin-top: 50px;
+                    }
+                    input {
+                        height: 48px;
+                        padding-left: 48px;
+                        font-size: 1rem;
+                        font-weight: 400;
+                        flex: 1;
+                    }
+                    input:focus {
+                        box-shadow: 0 0 0 2px $dark-green;
+                    }
+                    .invalid-feedback {
+                        font-size: 14px;
+                        display: contents;
+                    }
+                    .btn {
+                        font-size: 1rem;
+                    }
+                    #loginBtn {
+                        // margin-top: 20px;
+                        height: 48px;
+                        width: 100%;
+                        border-radius: 3px;
+                        background-color: $dark-green;
+                        color: white;
+                        text-transform: uppercase;
+                        font-size: 13px;
+                        font-weight: 700;
+                    }
+
+                    .textError{
+                        color: $worse-red;
+                    }
+                }
+            }
+        }
+        .left-half {
+            width: calc(100vw - 606px);
+            height: 100vh;
+            flex-basis: calc(100vw - 606px);
+    
+            .k-scrollview,
+            .k-scrollview.k-scrollview-wrap {
+                touch-action: pan-y pinch-zoom;
+                width: 100%;
+                height: 100%;
+    
+                .carousel-caption {
+                    left: 10%;
+                    text-align: start;
+                    bottom: 17%;
+                    width: 80%;
+                    pointer-events: auto;
+    
+                    span {
+                        white-space: pre-wrap;
+                    }
+                    .text-title {
+                        font-size: 43px;
+                        font-weight: 800;
+                        user-select: none;
+                    }
+                }
+            }
+            .k-scrollview-elements {
+                .k-scrollview-next,
+                .k-scrollview-prev {
+                    text-decoration: none;
+                    color: $dark-green;
+                }
+                kendo-scrollview-pager.ng-star-inserted {
+                    height: fit-content;
+                }
+                .k-scrollview-pageable {
+                    width: fit-content;
+                    overflow: hidden;
+                    line-height: normal;
+                    display: block;
+                    margin-left: 10%;
+                    margin-bottom: 30px;
+                }
+                .k-scrollview-pageable > .k-button {
+                    width: 20px;
+                    flex: 0 0 20px;
+                    height: 5px;
+                    border-radius: 4px;
+                    margin: 0 5px;
+                }
+                .k-scrollview-pageable > .k-button.k-primary,
+                .k-scrollview-pageable > .k-button:hover {
+                    width: 40px;
+                    flex: 0 0 40px;
+                    background: $dark-green;
+                    border: $dark-green;
+                }
+                .k-scrollview-pageable > .k-button.k-primary::before {
+                    display: none;
+                }
+            }
+            img {
+                height: 100%;
+                width: 100%;
+                max-width: calc(100vw - 606px);
+            }
+        }
+    }
+}

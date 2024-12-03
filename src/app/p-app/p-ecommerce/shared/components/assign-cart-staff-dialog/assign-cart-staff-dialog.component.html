@@ -1,0 +1,25 @@
+<kendo-dialog #AssignUserDialog id="AssignUserDialog" title="CHUYỂN GIAO CA LÀM VIỆC" [hidden]="!AssignUserDialogOpened"
+  (close)="closeAssignUserDialog(false)" [minWidth]="250" class="p-hachi-dialog" [loading]="loading">
+  <form [formGroup]="AssignUserForm">
+    <div class="search-btn">
+      <span class="k-icon k-i-search"></span>
+      <kendo-textbox type="text" class="k-textbox" placeholder="Tìm kiếm nhân sự" (inputBlur)="search()"
+        (keydown.Enter)="$event.target.blur()" [(value)]="searchUser">
+      </kendo-textbox>
+    </div>
+
+    <div class="onlineUser_list">
+      <div *ngFor="let item of filterOnlineUserList | async; let i = index" class="onlineUser_row">
+        <input type="radio" class="hachi-radio" id="onlineUser_radio_{{i}}" name="onlineUser_radio" kendoRadioButton
+          value="{{i}}" formControlName="onlineUser_radio" #onlineUser_radio />
+        <label for="onlineUser_radio_{{i}}">{{ item.FullName}}</label>
+      </div>
+    </div>
+  </form>
+
+  <div class="dialog-footer">
+    <button class="btn btn-hachi hachi-secondary" (click)="closeAssignUserDialog(false)">ĐÓNG</button>
+    <button class="btn btn-hachi hachi-primary" (click)="assign()" [disabled]="AssignUserForm?.invalid">CẬP
+      NHẬT</button>
+  </div>
+</kendo-dialog>

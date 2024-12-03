@@ -1,0 +1,31 @@
+import DTOChannel from './DTOChannel.dto';
+
+export class DTOChannelGroup {
+    Code: number = 0;
+    Product?: number = 0
+    ChannelGroupName: string = "";
+    ChannelGroupID: string = "";
+    ChannelGroup: number = 0;
+    ParentID?: number = null;
+    ParentName?: string = "";
+    ListIcon?: any[] = [];
+    NumOfProducts?: number = 0;
+    ListGroup?: DTOChannelGroup[] = []
+    ListOtherChannel: DTOChannelGroup[] = []
+    IsPoolStock: boolean = true;
+    IsOutDistributedStock: boolean = false;
+    Priority?: number = 0;
+    ListChannel?: DTOChannel[] = [];
+    ListPriority?: DTOChannelGroup[] = []
+    TypeData: number = 0;
+    Level: number = 1;
+    MinQty?: number = 0;
+    MaxQty?: number = 0;
+    IsApproved?: boolean = false
+    ApprovedTime?: Date = null;
+    IsFilter?: boolean = false;
+    IsChild?: boolean = false;
+    HasChannel?: boolean = false;
+    StatusID?: number = 0;
+    StatusName?: string = ''
+}

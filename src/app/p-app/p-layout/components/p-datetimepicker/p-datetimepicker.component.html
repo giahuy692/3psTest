@@ -1,0 +1,57 @@
+<div class="datetimepicker-wrapper">
+  <kendo-datepicker class="customDatePicker" #datepickerRef [disabled]="disabled" [(ngModel)]="DateTime"
+    calendarType="classic" [readOnlyInput]="readOnlyInput" [disabledDates]="disabledDates" [format]="format"
+    [placeholder]="placeholder" [formatPlaceholder]="formatPlaceholder"
+    (ngModelChange)="onDatepickerValueChange($event)" [min]="min" [max]="max"
+    [ngClass]="{ readOnlyInput: readOnlyInput }" (blur)="onBlurDate()" (keydown.Enter)="onEnterKeyPressed($event)"
+    [popupSettings]="popupSetting" (focus)="onFocusDate()" (open)="onOpendDate()" (close)="onCloseDate($event)">
+    <ng-template kendoCalendarHeaderTitleTemplate let-title let-date let-view="activeView">
+      <span>{{
+        view === "month"
+        ? (title | date : formatHeaderTitle : "Indochina Time" : "vi_VN")
+        : title
+        }}</span>
+      <ng-template kendoCalendarYearCellTemplate let-context="cellContext">
+        <span>{{
+          view === "year"
+          ? (context.value | date : formatYearCell : "Indochina Time" : "vi_VN")
+          : context.formattedValue
+          }}</span>
+      </ng-template>
+      <ng-template kendoCalendarMonthCellTemplate let-date let-context="cellContext">
+        <span>{{ date.getDate() }}
+        </span>
+      </ng-template>
+    </ng-template>
+  </kendo-datepicker>
+</div>
+<div id="TimePicker" #TimePicker>
+  <div class="content-time">
+    <div class="check-wrapper" [hidden]="turnOnAllDay">
+      <input type="checkbox" #AllDay kendoCheckBox [(ngModel)]="isAllDay" (change)="onAllDayChange()" />
+      Cả ngày
+      <!-- <kendo-label class="k-checkbox-label p-0 m-0" [for]="AllDay" text="Cả ngày">
+      </kendo-label> -->
+    </div>
+    <div class="wrapper-time Bps">
+      <kendo-dropdownlist #DropDownTime [data]="TimeItemList" class="dropTime" [valuePrimitive]="true"
+        [(ngModel)]="currentTime" (selectionChange)="selectionTimeChange($event)" (blur)="blurTime()"
+        (focus)="onFocusTime()" [disabled]="isAllDay" [itemDisabled]="isItemDisabled.bind(this)">
+        <ng-template kendoDropDownListValueTemplate let-dataItem>
+          {{ dataItem }}
+        </ng-template>
+      </kendo-dropdownlist>
+      <div class="optionTime">
+        <kendo-buttongroup ButtonGroupSelection="single" class="option">
+          <button *ngFor="let button of buttons" kendoButton [toggleable]="true" [(selected)]="button.selected"
+            (selectedChange)="handleTimeSelection($event, button)"
+            [ngClass]="{'selectedTime': OptionTimeIndex == button?.index}" [disabled]="isAllDay">
+            <span class="text-center">
+              {{ button.text }}
+            </span>
+          </button>
+        </kendo-buttongroup>
+      </div>
+    </div>
+  </div>
+</div>

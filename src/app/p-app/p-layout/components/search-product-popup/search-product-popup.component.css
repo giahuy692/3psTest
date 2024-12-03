@@ -1,0 +1,139 @@
+::ng-deep #searchProductPopup {
+  z-index: 7;
+}
+
+::ng-deep #searchProductPopup .k-dialog {
+  width: 500px;
+  min-height: 500px;
+  border-radius: 3px;
+}
+
+::ng-deep #searchProductPopup .k-dialog .k-dialog-titlebar {
+  color: white;
+  background-color: #1a6634;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 14px;
+  border-radius: 3px 3px 0 0;
+}
+
+::ng-deep #searchProductPopup .k-dialog .k-dialog-titlebar .k-dialog-title {
+  justify-content: center;
+  font-size: 20px;
+}
+
+::ng-deep #searchProductPopup .k-dialog .k-dialog-content.k-window-content {
+  padding: 0 13px 13px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+::ng-deep #searchProductPopup .k-dialog .k-dialog-content.k-window-content .label {
+  margin: 13px 0 6px;
+  font-weight: 700;
+  font-size: 13px;
+  color: #5c6873;
+}
+
+::ng-deep #searchProductPopup .k-dialog .k-dialog-content.k-window-content .productCbx {
+  position: relative;
+}
+
+::ng-deep #searchProductPopup .k-dialog .k-dialog-content.k-window-content .productCbx .k-i-cart {
+  position: absolute;
+  z-index: 1;
+  height: 100%;
+  padding-left: 15px;
+}
+
+::ng-deep #searchProductPopup .k-dialog .k-dialog-content.k-window-content .productCbx .k-combobox {
+  width: 100%;
+}
+
+::ng-deep #searchProductPopup .k-dialog .k-dialog-content.k-window-content .productCbx .k-combobox .k-input {
+  padding-left: 30px;
+  color: #5CB800;
+}
+
+::ng-deep #searchProductPopup .k-dialog .k-dialog-content.k-window-content .left-col .textarea {
+  background-color: #f0f3f5;
+  padding: 4px 10px;
+  border-radius: 3px;
+}
+
+::ng-deep #searchProductPopup .k-dialog .k-dialog-content.k-window-content .right-col img {
+  max-width: 100%;
+  margin: 13px 0 6px;
+}
+
+::ng-deep #searchProductPopup .k-dialog .k-dialog-content.k-window-content .right-col .priceGroup {
+  display: flex;
+  align-items: center;
+  column-gap: 16px;
+}
+
+::ng-deep #searchProductPopup .k-dialog .k-dialog-content.k-window-content .right-col .priceGroup .label {
+  margin: 0;
+}
+
+::ng-deep #searchProductPopup .k-dialog .k-dialog-content.k-window-content .right-col .priceGroup .price .newPrice {
+  color: #f86c6b;
+}
+
+::ng-deep #searchProductPopup .k-dialog .k-dialog-content.k-window-content .right-col .priceGroup .price .oldPrice {
+  margin-top: 6px;
+  text-decoration: line-through;
+}
+
+::ng-deep #searchProductPopup .k-dialog .k-dialog-content.k-window-content .right-col .description {
+  margin-top: 13px;
+  font-size: 10px;
+  color: #20a8d8;
+}
+
+::ng-deep #searchProductPopup .k-dialog .k-dialog-content.k-window-content .warehouseList {
+  margin-top: 6px;
+  width: 60%;
+}
+
+::ng-deep #searchProductPopup .k-dialog .k-dialog-content.k-window-content .warehouseList .warehouseItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+
+::ng-deep #searchProductPopup .k-dialog .k-dialog-content.k-window-content .warehouseList .warehouseItem .quantity {
+  min-width: 50px;
+  text-align: center;
+}
+
+::ng-deep #searchProductPopup .k-dialog .k-dialog-content.k-window-content .warehouseList .warehouseItem.total {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+::ng-deep #searchProductPopup .k-dialog .k-dialog-content.k-window-content .warehouseList .warehouseItem.total .warehouse {
+  display: flex;
+  align-items: flex-end;
+}
+
+::ng-deep #searchProductPopup .k-dialog .k-dialog-content.k-window-content .warehouseList .warehouseItem.total .line {
+  height: 1px;
+  width: 50px;
+  margin: 0 auto 5px;
+  background-color: #5c6873;
+}
+
+::ng-deep #searchProductPopup .k-dialog .k-dialog-content.k-window-content .warehouseList .warehouseItem.notReceived {
+  color: #EB273A;
+  font-weight: 600;
+}
+
+::ng-deep .k-popup .productItem {
+  display: flex;
+  column-gap: 15px;
+}
+
+::ng-deep .k-popup .productItem .code {
+  color: #73818f;
+}

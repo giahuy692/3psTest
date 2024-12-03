@@ -1,0 +1,398 @@
+@import "../../../../../assets/scss/variables/colors";
+
+@mixin SizeIcon() {
+  width: 32px;
+  height: 32px;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  border-radius: 16px;
+}
+
+@mixin IconHover() {
+  background-color: $whitegray-8 !important;
+  // width: 100%;
+  // color: $light-blue-gray;
+}
+
+@mixin Today() {
+  background-color: $blue-gray;
+  color: $white;
+  // width: 100%;
+}
+
+@mixin PickedDate() {
+  background-color: $dark-green;
+  color: $white;
+  // width: 100%;
+}
+
+@mixin HoverOnADate() {
+  border: 1px solid $dark-green;
+  background-color: $white;
+  color: $gray-850;
+  border-radius: 16px;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  -ms-border-radius: 16px;
+  -o-border-radius: 16px;
+  // width:100%;
+}
+
+::ng-deep {
+  app-datepicker {
+    height: fit-content;
+
+    .datepicker-wrapper {
+      border-radius: 3px;
+      border: 1px solid transparent;
+      width: 130px;
+      min-width: 130px;
+      height: 32px;
+
+      &:not(:has(.k-disabled)):hover {
+        border-color: $dark-green;
+      }
+
+      .k-datepicker {
+        height: 100%;
+        // border: 1px solid $light-blue-gray;
+        flex-direction: row-reverse;
+        background-color: $white;
+        border-radius: 3px;
+
+        .k-dateinput {
+          border: none;
+          border-radius: 0;
+
+          &:hover {
+            border: none;
+          }
+
+          .k-input-inner {
+            border-radius: 0;
+            background-color: transparent;
+            color: $gray-700;
+            text-align: center;
+            height: 32px;
+            color: $dark-green;
+
+            &::placeholder {
+              color: $gray-700;
+            }
+          }
+        }
+
+        .k-input-button {
+          height: 32px;
+          border-radius: 0;
+          background-color: transparent;
+          color: $gray-700;
+          border: $white;
+
+          &:hover {
+            border: none;
+          }
+        }
+
+        .k-i-calendar {
+          color: $dark-green;
+
+          &::before {
+            color: $dark-green;
+          }
+        }
+
+
+
+        // popup
+        .k-animation-container {
+          z-index: 550;
+
+          .k-popup {
+            .k-calendar-classic {
+              .k-calendar-range {
+                .k-calendar-header {
+                  //k-hstack
+                  text-transform: capitalize;
+
+                  .k-nav-fast {}
+
+                  .k-calendar-nav {
+                    gap: 10px;
+
+                    .k-calendar-nav-prev {
+                      @include SizeIcon();
+
+                      &:hover {
+                        @include IconHover();
+                      }
+
+                      .k-button-icon {
+                        .k-i-chevron-left {}
+                      }
+                    }
+
+                    .k-calendar-nav-today {
+                      display: none;
+                    }
+
+                    .k-calendar-nav-next {
+                      @include SizeIcon();
+
+                      &:hover {
+                        @include IconHover();
+                      }
+
+                      .k-button-icon {
+                        .k-i-chevron-right {}
+                      }
+                    }
+                  }
+                }
+
+                .k-calendar-view {
+                  height: auto;
+                  min-height: unset;
+
+                  .k-calendar-table {
+                    border-spacing: 5px;
+
+                    .k-calendar-thead {
+                      display: none;
+                    }
+
+                    .k-calendar-tbody {
+                      .k-calendar-tr {
+                        &:has(.k-calendar-td:first-child.k-empty):not(:has(.k-selected)):not(:has(.k-today)):not(:has(.k-focus)):has(.k-calendar-td:last-child.k-empty) {
+                          display: none;
+                        }
+
+                        // &:has(.k-calendar-td:first-child.k-other-month):has(.k-calendar-td:last-child.k-empty) {
+                        // display: none;
+                        // }
+
+                        &:has(.k-calendar-td:first-child.k-other-month):has(.k-calendar-td:last-child.k-other-month) {
+                          display: none;
+                        }
+
+                        &:has(.k-calendar-td.hide-cell) {
+                          display: none;
+                        }
+
+                        .k-calendar-td {
+                          border-radius: 16px;
+
+                          // width: 100%;
+                          &:has(span.hide-cell) {
+                            display: none;
+                          }
+
+                          &.k-today {
+                            .k-link {
+                              border-radius: 16px;
+                              @include Today();
+                            }
+                          }
+
+                          .k-link {
+                            border: 1px solid transparent;
+
+                            &:hover {
+                              @include HoverOnADate();
+                              background-color: unset;
+                            }
+                          }
+
+                          &.k-other-month {
+                            visibility: hidden;
+                          }
+
+                          &.k-selected {
+                            @include PickedDate();
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+
+              .k-calendar .k-calendar-td:hover .k-link,
+              .k-calendar .k-calendar-td.k-state-hover .k-link {
+                background-color: unset;
+              }
+            }
+          }
+
+
+        }
+      }
+
+      .readOnlyInput {
+
+        // .k-input-button {
+        //   background-color: $gray-300;
+        // }
+        // .k-dateinput {
+        //   border: none;
+        //   .k-input-inner {
+        //     background-color: $gray-300;
+        //     color: $blackgray;
+        //   }
+        //   &:read-only {
+        //     pointer-events: none;
+        //   }
+        // }
+        .k-dateinput {
+          :read-only {
+            outline: none !important;
+            cursor: default !important;
+            background-color: #c8ced36b !important;
+            border-radius: 0;
+            pointer-events: none;
+            box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2) !important;
+            color: $gray-base !important;
+          }
+        }
+
+        .k-disabled {
+          outline: none !important;
+          cursor: default !important;
+          opacity: 0.6 !important;
+          filter: grayscale(0.1) !important;
+          pointer-events: none !important;
+          border: 1px solid rgba(0, 0, 0, 0.08) !important;
+          box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2) !important;
+          background-color: $gray-300 !important;
+
+          :hover {
+            border-color: transparent;
+          }
+
+          .k-input-button,
+          .k-dateinput {
+            border-color: transparent !important;
+          }
+        }
+      }
+    }
+  }
+
+  .popupLayoutCpnDatePicker {
+    .k-calendar-classic {
+      .k-calendar-range {
+        .k-calendar-header {
+          //k-hstack
+          text-transform: capitalize;
+
+          .k-nav-fast {}
+
+          .k-calendar-nav {
+            gap: 10px;
+
+            .k-calendar-nav-prev {
+              @include SizeIcon();
+
+              &:hover {
+                @include IconHover();
+              }
+
+              .k-button-icon {
+                .k-i-chevron-left {}
+              }
+            }
+
+            .k-calendar-nav-today {
+              display: none;
+            }
+
+            .k-calendar-nav-next {
+              @include SizeIcon();
+
+              &:hover {
+                @include IconHover();
+              }
+
+              .k-button-icon {
+                .k-i-chevron-right {}
+              }
+            }
+          }
+        }
+
+        .k-calendar-view {
+          height: auto;
+          min-height: unset;
+
+          .k-calendar-table {
+            border-spacing: 5px;
+
+            .k-calendar-thead {
+              display: none;
+            }
+
+            .k-calendar-tbody {
+              .k-calendar-tr {
+                &:has(.k-calendar-td:first-child.k-empty):not(:has(.k-selected)):not(:has(.k-today)):not(:has(.k-focus)):has(.k-calendar-td:last-child.k-empty) {
+                  display: none;
+                }
+
+                // &:has(.k-calendar-td:first-child.k-other-month):has(.k-calendar-td:last-child.k-empty) {
+                //   display: none;
+                // }
+
+                &:has(.k-calendar-td:first-child.k-other-month):has(.k-calendar-td:last-child.k-other-month) {
+                  display: none;
+                }
+
+                &:has(.k-calendar-td.hide-cell) {
+                  display: none;
+                }
+
+                .k-calendar-td {
+                  border-radius: 16px;
+
+                  // width: 100%;
+                  &:has(span.hide-cell) {
+                    display: none;
+                  }
+
+                  &.k-today {
+                    .k-link {
+                      border-radius: 16px;
+                      @include Today();
+                    }
+                  }
+
+                  .k-link {
+                    border: 1px solid transparent;
+
+                    &:hover {
+                      @include HoverOnADate();
+                      background-color: unset;
+                    }
+                  }
+
+                  &.k-other-month {
+                    visibility: hidden;
+                  }
+
+                  &.k-selected {
+                    @include PickedDate();
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .k-calendar .k-calendar-td:hover .k-link,
+      .k-calendar .k-calendar-td.k-state-hover .k-link {
+        background-color: unset;
+      }
+    }
+  }
+
+
+}

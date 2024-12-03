@@ -1,0 +1,36 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep app-hri019-paycheck-detail{
+    .app-hri019-paycheck-detail{
+        height: calc(93vh - #{$footer-height});
+        padding: 0 15px 0 20px;
+        display: flex;
+        flex-direction: column;
+    }
+    
+}
+::ng-deep{
+    @media only screen and (max-width: 500px) {
+        app-hri019-paycheck-detail{
+            app-hr-paycheck-detail{
+                position: absolute;
+            }
+            .app-hri019-paycheck-detail{
+                padding: 0 15px 0 8px !important;
+            }
+            :has(.paycheck-login) app-hr-paycheck-detail{
+                position: relative;
+            }
+        }
+    }
+    @media only screen and (max-width: 400px) {
+        .app-hri019-paycheck-detail{
+            padding: 0 15px 0 10px !important;
+        }
+    }
+    @media only screen and (max-width: 380px) {
+        .app-hri019-paycheck-detail{
+            padding: 0 15px 0 5px !important;
+        }
+    }
+}

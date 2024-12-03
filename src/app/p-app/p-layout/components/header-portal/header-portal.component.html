@@ -1,0 +1,17 @@
+<div class="header-portal" [ngClass]="{'isExpandedTrue': isMenuOpen}" *ngIf="isShow" >
+    <div class="headerLeft">
+        <div class="logoHachiPortal">
+            <div class="logoHachi"></div>
+        </div>
+        <kendo-button class="btn-portal hachi-secondary iconMenu" iconClass="k-icon k-i-menu" title="menu"  (click)="openSidebar()"></kendo-button>
+    </div>
+    <div class="headerRight">
+        <app-p-kendo-breadcrumb (loadData)="loadData()"></app-p-kendo-breadcrumb>
+        <div class="wrapper-header-user" kendoTooltip>
+            <kendo-button  class="btn-portal hachi-secondary" iconClass="k-icon k-i-bell" title="Thông báo"></kendo-button>
+            <kendo-button class="btn-portal hachi-secondary" #gearAnchor  iconClass="k-icon k-i-gear" title="Cài đặt"></kendo-button>
+            <span class="line"></span>
+            <kendo-button  class="btn-portal hachi-primary btnHome" iconClass="k-icon k-i-home" title="Hệ thống ERP" [disabled]="isGoBack" routerLink="" (click)="goToEERP()">Hệ thống ERP</kendo-button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+export class DTOQuizSession {
+        StatusName: string = 'Đang soạn thảo';
+        Code: number = 0;
+        SessionID: string = '';
+        SessionName: string = '';
+        SessionObjective: string = '';
+        TypeOfSession: number = null;
+        TypeOfSessionName: string = '';
+        StartDate: Date = null;
+        EndDate: Date = null;
+        OpenedDate: Date = null;
+        ClosedDate: Date = null;
+        StopedTime: number = null;
+        ListOfPostionID: string = '[]';
+        ListOfStaffID: string = '[]';
+        TypeOfTimeEvaluation: number = null;
+        TypeOfTimeEvaluationName: string = '';
+        NoOfQuestion: number = null;
+        NoOfEmployee: number = 0;
+        Duration: number = null;
+        IsCategory: boolean = true;
+        IsCategoryLevel: number = 3;
+        IsCompetence: boolean = true;
+        IsCurrentCompetenceLevel: boolean = true;
+        IsAllStaff: number = 0;
+        EvaluationView: number = 0;
+        SessionStatusID: number = null;
+        SessionStatusName: string = '';
+        StatusID: number = 0;
+        ApprovedBy: string = '';
+        ApprovedTime: Date = null;
+        CreateBy: string = '';
+        CreateTime: Date = null;
+        LastModifiedBy: string = '';
+        LastModifiedTime: Date = null;
+        OrderConfig: number = 0;
+        IsLeaderMonitor: boolean = true;
+        HeadOfExamination: any = null;
+        Supervisor: any = null;
+        ListCompetenceID: any = null;
+        ListCategoryID: any = null;
+        Marker: any = null;
+        ListOfUserRole: any[] = [];
+        HasQuestionEssay: number = 0;
+        AppealTime: number = 3
+        ReEvaluateTime: number = 7
+        AppealDate: Date = null
+        ReEvaluateDate: Date = null
+        IsReEvaluator: boolean
+        constructor() { }
+}

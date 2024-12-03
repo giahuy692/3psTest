@@ -1,0 +1,175 @@
+<div id="evaluationTranche">
+
+	<!-- START BREADCRUMB AND BUTTON -->
+	<div class="header header-1" id="breadcrumbButtonBlock">
+
+		<!-- BREADCRUMB -->
+		<app-p-kendo-breadcrumb (loadData)="onLoadListQuizSession()"></app-p-kendo-breadcrumb>
+
+		<!-- GROUP BUTTON FILTER -->
+		<div class="buttonGroup ml-4">
+			<app-checkbox-button-group title="Đang soạn thảo" [checked]="isNew" (selectedChange)="isNew = $event"
+				(filterChange)="filterChangeCheckbox($event, 'isNew')" field="StatusID" operator="eq" value="0"
+				[disabled]="isDisabledFilter">
+			</app-checkbox-button-group>
+			<app-checkbox-button-group title="Gửi duyệt" [checked]="isSent" (selectedChange)="isSent = $event"
+				(filterChange)="filterChangeCheckbox($event, 'isSent')" field="StatusID" operator="eq" value="1"
+				[disabled]="isDisabledFilter">
+			</app-checkbox-button-group>
+			<app-checkbox-button-group title="Đã duyệt" [checked]="isApproved" (selectedChange)="isApproved = $event"
+				(filterChange)="filterChangeCheckbox($event, 'isApproved')" field="StatusID" operator="eq" value="2"
+				[disabled]="isDisabledFilter">
+			</app-checkbox-button-group>
+			<app-checkbox-button-group title="Ngưng đánh giá" [checked]="isStoped" (selectedChange)="isStoped = $event"
+				(filterChange)="filterChangeCheckbox($event, 'isStoped')" field="StatusID" operator="eq" value="3"
+				[disabled]="isDisabledFilter">
+			</app-checkbox-button-group>
+		</div>
+
+		<!-- BUTTON GROUP -->
+		<kendo-buttongroup class="ml-4">
+			<button kendoButton class="btn-import" icon="export" *ngIf="isCanCreate || isAllPers"
+				(click)="onImportExcel()" [disabled]="isDisabledFilter">
+			</button>
+			<button kendoButton class="btn-import" icon="import" *ngIf="isCanCreate || isAllPers"
+				(click)="onDownloadExcel()" [disabled]="isDisabledFilter">
+				Template
+			</button>
+			<button kendoButton class="btn-hachi hachi-primary" icon="plus" [disabled]="isDisabledFilter"
+				(click)="onDropdownSetSession('hri010-evaluation-tranche-detail')" *ngIf="isCanCreate || isAllPers">
+				thêm mới
+			</button>
+		</kendo-buttongroup>
+	</div>
+	<!-- END BREADCRUMB AND BUTTON -->
+
+	<!-- START FUNCTIONBAR -->
+	<div id="functionbar" class="header header-2">
+
+		<!-- SEARCH FILTER -->
+		<app-search-filter-group placeholder="Tìm theo đợt đánh giá"
+			[fields]="['SessionID', 'SessionName', 'TypeOfSessionName']" (filterChange)="onSearchData($event)"
+			(onReset)="onResetFilter()" [disabled]="isDisabledFilter">
+		</app-search-filter-group>
+
+		<kendo-label text="Lọc theo thời gian mở đợt kiểm tra">
+			<div class="in-label">
+				<!-- <kendo-datepicker [format]="'dd/MM/yyyy'" placeholder="dd/MM/yyyy"
+					[formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }" [(ngModel)]="filterStartDate.value"
+					(valueChange)="onDatepickerChange('filterStartDate', $event)" class="myCustomize"
+					[readOnlyInput]="true" [max]="setMaxDate(filterEndDate.value)">
+				</kendo-datepicker> -->
+				<app-datepicker [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'"
+					[formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }" [(ngModel)]="filterStartDate.value"
+					(valueChange)="onDatepickerChange('filterStartDate', $event)" [readOnlyInput]="true"
+					[max]="limitDate" (focus)="onSetMaxDatepicker()"
+					[popupSetting]="{animate:true, appendTo: 'root',popupClass:'popupClassCustom'}"
+					[disabled]="isDisabledFilter">
+				</app-datepicker>
+				<span class="temp">-</span>
+				<!-- <kendo-datepicker [format]="'dd/MM/yyyy'" placeholder="dd/MM/yyyy"
+					[formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }" [(ngModel)]="filterEndDate.value"
+					(valueChange)="onDatepickerChange('filterStartDate', $event)" class="myCustomize"
+					[readOnlyInput]="true" [min]="setMinDate(filterStartDate.value)">
+				</kendo-datepicker> -->
+				<app-datepicker [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'"
+					[formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }" [(ngModel)]="filterEndDate.value"
+					(valueChange)="onDatepickerChange('filterStartDate', $event)" [readOnlyInput]="true"
+					[min]="limitDate" (focus)="onSetMinDatepicker()"
+					[popupSetting]="{animate:true, appendTo: 'root',popupClass:'popupClassCustom'}"
+					[disabled]="isDisabledFilter">
+				</app-datepicker>
+				<div class="buttonGroup ml-4">
+					<app-checkbox-button-group title="Hoàn tất" [checked]="isComplete" (selectedChange)="isComplete = $event"
+						(filterChange)="filterChangeCheckbox($event, 'isComplete')" field="SessionStatusID" operator="eq"
+						value="3" [disabled]="isDisabledFilter" [disabled]="isDisabledFilter">
+					</app-checkbox-button-group>
+					<app-checkbox-button-group title="Phúc khảo" [checked]="isAppeal" (selectedChange)="isAppeal = $event"
+						(filterChange)="filterChangeCheckbox($event, 'isAppeal')" field="SessionStatusID" operator="eq"
+						value="5" [disabled]="isDisabledFilter" [disabled]="isDisabledFilter">
+					</app-checkbox-button-group>
+				</div>
+			</div>
+		</kendo-label>
+
+		
+	</div>
+	<!-- END FUNCTIONBAR -->
+
+	<!-- START GIRD LAYOUT -->
+	<div class="grid-wrapper">
+		<app-p-kendo-grid class="grid scrollable" [data]="gridView | async" [scrollable]="'none'" [loading]="loading"
+			[pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize" [skip]="gridState.skip"
+			[take]="gridState.take" [selectable]="selectable" [onPageChangeCallback]="onPageChangeCallback"
+			[getActionDropdownCallback]="getActionDropdownCallback"
+			[onActionDropdownClickCallback]="onActionDropdownClickCallback"
+			[onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+			[getSelectionPopupCallback]="getSelectionPopupCallback" [onSelectCallback]="onSelectCallback">
+
+			<!-- COL-1 -->
+			<kendo-grid-column field="SessionName" title="Đợt đánh giá">
+				<ng-template kendoGridCellTemplate let-dataItem>
+					<div class="title d-flex">
+						<span style="width: 70px;">{{dataItem.SessionID}}</span> | <span
+							class="ml-2">{{dataItem.SessionName}}</span>
+					</div>
+					<div class="codeAndTypeQuestion d-flex">
+						<span style="width: 70px;">Phân loại</span> | <span
+							class="ml-2">{{dataItem.TypeOfSessionName}}</span>
+					</div>
+				</ng-template>
+			</kendo-grid-column>
+
+			<!-- COL-2 -->
+			<kendo-grid-column field="StartDate" title="Thời gian bắt đầu">
+				<ng-template kendoGridCellTemplate let-dataItem>
+					<span class="dateStart">{{dataItem.StartDate | date:'dd/MM/yyyy'}}</span><br>
+					<span>{{dataItem.EndDate | date:'dd/MM/yyyy'}}</span>
+				</ng-template>
+			</kendo-grid-column>
+
+			<!-- COL-3 -->
+			<kendo-grid-column field="NoOfEmployee" title="SL nhân sự tham gia"
+				headerClass="col_NoOfEmployee"></kendo-grid-column>
+
+			<!-- COL-4 -->
+			<kendo-grid-column field="StatusName" title="Tình trạng">
+				<ng-template kendoGridCellTemplate let-dataItem>
+					<div [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID">
+					</div>
+					<div class="statusSession">{{dataItem.SessionStatusName}}
+					</div>
+				</ng-template>
+			</kendo-grid-column>
+		</app-p-kendo-grid>
+	</div>
+	<!-- END GIRD LAYOUT -->
+</div>
+
+<!-- START DIALOG -->
+<kendo-dialog class="dialog-delete" [minHeight]="250" [minWidth]="400" *ngIf="openedDialog">
+	<kendo-dialog-titlebar>
+		<span class="k-icon k-i-warning"></span>
+		xóa {{dialog.obj}}
+	</kendo-dialog-titlebar>
+
+	<div class="dialog-content">
+		<div>
+			Bạn chắc chắn muốn xóa {{dialog.obj}}
+			<h4>{{dialog.item}}</h4>
+		</div>
+		<div>
+			<span>{{dialog.obj}}</span> bị xóa sẽ <span>Không</span> thể khôi phục lại.
+		</div>
+	</div>
+
+	<div class="dialog-footer">
+		<button kendoButton (click)="openedDialog = false">Không xóa</button>
+		<button kendoButton icon="trash" (click)="openedDialog = false; deleteQuizSession(arrDelete)">
+			xóa {{dialog.obj}}
+		</button>
+	</div>
+</kendo-dialog>
+
+<app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>
+<!-- END DIALOG -->

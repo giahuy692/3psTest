@@ -1,0 +1,532 @@
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+<div class="Drawer-right">
+  <kendo-drawer-container>
+    <kendo-drawer
+      #drawerRight
+      mode="overlay"
+      [(expanded)]="expandedRight"
+      [(autoCollapse)]="isautoCollapse"
+      fillMode="flat"
+      [position]="'end'"
+    >
+      <ng-template kendoDrawerTemplate let-item>
+        <form [formGroup]="formData">
+          
+          <div class="wrapper-drawer-right">
+            <div class="header-drawer-right">
+              <span class="icon-header-right"></span>
+              
+              <h3>{{isAction == 1
+                ? "THÔNG TIN ĐIỂM LÀM VIỆC CON"
+                : "THÔNG TIN ĐIỂM LÀM VIỆC"}} </h3>
+            </div>
+            <div class="content-drawer-right"> 
+
+              <kendo-formfield> 
+                <kendo-label [for]="LocationName" class="mustHave" text="Tên điểm làm việc"> <span class="symbol">(*)</span>
+                  <kendo-textbox
+                    formControlName="LocationName"
+                    name="LocationName"
+                    #LocationName
+                    class="k-textbox"
+                    resizable="auto"
+                    [style.width.%]="100"
+                    [ngClass]="{'disableInput':  isSeen  }"
+                    required
+                  ></kendo-textbox>
+                </kendo-label> 
+              </kendo-formfield>
+ 
+              <div class="d-flex_between col-gap mt-10">
+                <kendo-formfield> 
+                  <kendo-label  [for]="LocationID" class="mustHave" text="Mã điểm làm việc"> <span class="symbol">(*)</span>
+                    <kendo-textbox
+                      formControlName="LocationID"
+                      name="LocationID"
+                      kendoTextBox
+                      #LocationID
+                      class="k-textbox"
+                      resizable="auto"
+                      [style.width.%]="100"
+                      [ngClass]="{'disableInput': isSeen }"
+                      required
+                    ></kendo-textbox>
+                  </kendo-label>
+                </kendo-formfield>
+                <kendo-label [for]="Brieft"> Tên viết tắt
+                  <kendo-textbox
+                    formControlName="Brieft"
+                    name="Brieft"
+                    kendoTextBox
+                    #Brieft
+                    class="k-textbox"
+                    resizable="auto"
+                    [style.width.%]="100"
+                    [ngClass]="{'disableInput': isSeen }"
+                  ></kendo-textbox>
+                </kendo-label>
+              </div>
+
+              <kendo-label text="Trực thuộc"
+                class="k-form mt-10 d-block"
+                [for]="ParentID"
+              >
+                <kendo-dropdowntree
+                  #ParentID
+                  kendoDropDownTreeExpandable
+                  formControlName="ListChild"
+                  [kendoDropDownTreeHierarchyBinding]="locationList"
+                  childrenField="ListChild"
+                  [loading]="loading"
+                  textField="LocationName"
+                  valueField="Code"
+                  [value]="currentParentID"
+                  [filterable]="true"
+						      [expandOnFilter]="true"                  
+                  (valueChange)="
+                    selectionDropdownChange($event, 'ParentID')
+                  "
+                  [popupSettings]="{ appendTo: 'component' }"
+                >
+                <ng-template kendoDropDownTreeNodeTemplate let-dataItem let-index="index">
+                  <div [ngClass]="{'nullItem': dataItem.Code === null}">
+                    <i class="fa fa-solid fa-location-dot"></i>
+                    {{dataItem.LocationName}}
+                  </div>
+                </ng-template>
+                </kendo-dropdowntree>
+              </kendo-label>
+
+              <kendo-label
+                class="k-form mt-10 d-block"
+                [for]="Address"
+              > Địa chỉ liên hệ
+                <kendo-textbox
+                  formControlName="Address"
+                  name="Address"
+                  kendoTextBox
+                  #Address
+                  class="k-textbox"
+                  resizable="auto"
+                  [style.width.%]="100"
+                  [ngClass]="{'disableInput': isSeen }"
+                ></kendo-textbox>
+              </kendo-label>
+
+              <div id="AddressGroup">
+                <kendo-label text="Tỉnh thành"
+                  class="k-form mt-10 d-block"
+                  [for]="Province"
+                >
+                  <kendo-dropdownlist
+                    [loading]="loading"
+                    #Province
+                    name="Province"
+                    [style.width.px]="200"
+                    fillMode="flat"
+                    [data]="filteredProvinceList"
+                    textField="VNProvince"
+                    valueField="Code"
+                    formControlName="Province"
+                    [filterable]="true"
+                    (filterChange)="handleFilterProvince($event)"
+                    (selectionChange)="
+                      selectionDropdownChange($event, 'Province')
+                    "
+                    [defaultItem]="{ VNProvince: '-- Chọn --', Code: null }"
+                    [valuePrimitive]="true"
+                    [popupSettings]="{ appendTo: 'component' }"
+                    [ngClass]="{'disableInput': isSeen }"
+                    class="optionlabel"
+                  ></kendo-dropdownlist>
+                </kendo-label>
+
+                <kendo-label
+                  class="k-form mt-10 d-block"
+                  text="Quận/huyện"
+                  [for]="District"
+                >
+                  <kendo-dropdownlist
+                    #District
+                    [loading]="loading"
+                    [style.width.px]="200"
+                    [filterable]="true"
+                    (filterChange)="handleFilterDistric($event)"
+                    fillMode="flat"
+                    name="District"
+                    formControlName="District"
+                    [data]="filteredDistricList"
+                    textField="VNDistrict"
+                    valueField="Code"
+                    (selectionChange)="
+                      selectionDropdownChange($event, 'District')
+                    "
+                    [defaultItem]="{ VNDistrict: '-- Chọn --', Code: null }"
+                    [valuePrimitive]="true"
+                    [popupSettings]="{ appendTo: 'component' }"
+                    [ngClass]="{'disableInput':  isSeen  || notSelectedDistrict}"
+                    class="optionlabel"
+                  ></kendo-dropdownlist>
+                </kendo-label>
+
+                <kendo-label
+                  class="k-form mt-10 d-block"
+                  text="Phường/xã"
+                  [for]="Ward"
+                >
+                  <kendo-dropdownlist
+                    #Ward
+                    [loading]="loading"
+                    [style.width.px]="200"
+                    [filterable]="true"
+                    (filterChange)="handleFilterWard($event)"
+                    fillMode="flat"
+                    formControlName="Ward"
+                    name="Ward"
+                    [data]="filteredWardList"
+                    textField="VNWard"
+                    valueField="Code"
+                    (selectionChange)="selectionDropdownChange($event, 'Ward')"
+                    [defaultItem]="{ VNWard: '-- Chọn --', Code: null }"
+                    [valuePrimitive]="true"
+                    [popupSettings]="{ appendTo: 'component' }"
+                    [ngClass]="{'disableInput':  isSeen  || notSelectedWard}"
+                    class="optionlabel"
+                  ></kendo-dropdownlist>
+                </kendo-label>
+              </div>
+
+              <kendo-label
+                class="k-form mt-10 d-block"
+                
+                [for]="Remark"
+              >
+              Mô tả
+                <kendo-textarea
+                  formControlName="Remark"
+                  name="Remark"
+                  #Remark
+                  kendoTextArea
+                  class="k-textbox"
+                  [ngClass]="{'disableInput':  isSeen}"
+                >
+                </kendo-textarea>
+              </kendo-label>
+
+              <kendo-label
+                class="k-form mt-10 d-block"
+                text="Tình trạng"
+                [for]="StatusID"
+              >
+                <kendo-dropdownlist
+                  #StatusID
+                  [loading]="loading"
+                  [style.width.px]="200"
+                  fillMode="flat"
+                  [data]="ListStatus"
+                  textField="StatusName"
+                  valueField="OrderBy"
+                  formControlName="StatusID"
+                  name="StatusID"
+                  [valuePrimitive]="true"
+                  (valueChange)="selectionDropdownChange($event, 'Status')"
+                  [popupSettings]="{ appendTo: 'component' }"
+                  [itemDisabled]="isItemDisabled.bind(this)"
+                ></kendo-dropdownlist>
+              </kendo-label>
+
+              <kendo-formerror>(*) Trường bắt buộc nhập.</kendo-formerror>
+            </div>
+
+             
+            <div class="footer-drawer-right d-flex col-gap">
+              <button class="btn-hachi hachi-secondary" (click)="closeDrawer()" kendoButton>
+                ĐÓNG
+              </button>
+
+              <button
+                kendoButton
+                class="btn-hachi hachi-primary"
+                *ngIf="isAction == 0 || isAction == 1 || isAction == 2"
+                (click)="onAction()"
+              >
+                {{
+                  isAction == 0
+                    ? "THÊM ĐỊA ĐIỂM"
+                    : isAction == 1
+                    ? "THÊM ĐỊA ĐIỂM CON"
+                    : "CẬP NHẬT"
+                }}
+              </button>
+            </div>
+          </div>
+        </form>
+      </ng-template>
+    </kendo-drawer>
+
+    <kendo-drawer-content>
+      <div class="app-hri005-location-list">
+
+        <div class="header header-1">
+          <app-p-kendo-breadcrumb (loadData)="getApi()"></app-p-kendo-breadcrumb>
+          <div class="nav-btn nav-crud">
+            <button
+              kendoButton
+              iconClass="k-icon k-i-export"
+              [disabled]="!isFilterActive"
+              *ngIf="isToanQuyen || isAllowedToCreate"
+              class="addImport"
+              (click)="importExcel()"
+            ></button>
+            <button
+              kendoButton
+              iconClass="k-icon k-i-import"
+              [disabled]="!isFilterActive"
+              *ngIf="isToanQuyen || isAllowedToCreate"
+              class="addExport"
+              (click)="APIDownloadExcel()"
+            >
+              Template
+            </button>
+            <button
+              kendoButton
+              class="crud-btn k-button btn-hachi hachi-primary"
+              imageUrl="assets/img/icon/icon_site_map.svg"
+              (click)="drawer = drawerRight; HandleCreateLocation(0, TreeListDto)"
+              *ngIf="isToanQuyen || isAllowedToCreate"
+            >
+              THÊM ĐIỂM LÀM VIỆC
+            </button>
+            <button
+              kendoButton
+              class="crud-btn k-button btn-hachi hachi-primary"
+              imageUrl="assets/img/icon/icon_site_map.svg"
+              (click)="drawer = drawerRight; HandleCreateLocation(1, TreeListDto)"
+              *ngIf="TreeListDto && TreeListDto.Code > 0 && (isToanQuyen || isAllowedToCreate)"
+            >
+              THÊM ĐIỂM LÀM VIỆC CON
+            </button>
+
+          </div>
+        </div>
+        <div id="functionbar" class="header header-2">
+          <app-search-filter-group placeholder="Tìm theo mã điểm làm việc, tên điểm làm việc"  [disabled]="!isFilterActive" [fields]="['LocationName', 'LocationID']"
+            (filterChange)="handleSearch($event)"
+            (onReset)="resetFilter()"
+            [ignoreCase]="true">
+          </app-search-filter-group>
+
+          <div class="buttonGroup ml-4">
+            <app-checkbox-button-group title="Đang soạn thảo" [checked]="isNew" (selectedChange)="isNew = $event"
+            (filterChange)="filterChangeCheckbox($event, 'isNew')" field="StatusID" operator="eq" value="0">
+          </app-checkbox-button-group>
+          <app-checkbox-button-group title="Gửi duyệt" [checked]="isSent" (selectedChange)="isSent = $event"
+            (filterChange)="filterChangeCheckbox($event, 'isSent')" field="StatusID" operator="eq" value="1">
+          </app-checkbox-button-group>
+          <app-checkbox-button-group title="Đã duyệt" [checked]="isApproved"
+            (selectedChange)="isApproved = $event" (filterChange)="filterChangeCheckbox($event, 'isApproved')"
+            field="StatusID" operator="eq" value="2">
+          </app-checkbox-button-group>
+          <app-checkbox-button-group title="Ngưng áp dụng" [checked]="isStoped"
+            (selectedChange)="isStoped = $event" (filterChange)="filterChangeCheckbox($event, 'isStoped')"
+            field="StatusID" operator="eq" value="3">
+          </app-checkbox-button-group>
+          <!-- <app-checkbox-button-group title="Trả về" [checked]="isReturn" (selectedChange)="isReturn = $event"
+            (filterChange)="filterChangeCheckbox($event, 'isComplete')" field="StatusID" operator="eq"
+            value="4">
+          </app-checkbox-button-group> -->
+            
+          </div>
+        </div>
+        <div class="treelist-wrapper">
+            <kendo-treelist
+              #myTreeList 
+              [data]="treeListDataFind"
+              [loading]="loading"
+              [fetchChildren]="fetchChildren"
+              [hasChildren]="hasChildren"
+              idField="Code"
+              parentIdField="ParentID"
+              [selectable]="settingsTreeList"
+              kendoTreeListSelectable
+              kendoTreeListExpandable
+              [initiallyExpanded]="true"
+              [(selectedItems)]="selectedTreeList"
+              [(expandedKeys)]="collapsedIds"
+             
+              (selectionChange)="getValueSelectedTreeList($event)"
+            >
+              <kendo-treelist-column [expandable]="true" class="d-flex">
+                <ng-template kendoTreeListCellTemplate let-dataItem>
+                  <div style="width: 100%; height: 100%; display: flex">
+                    <div class="treelist--title">
+                      <div class="treelist--title_left">
+                        <i class="fa fa-solid fa-location-dot"></i>
+                        <span class="title-content">{{
+                          dataItem.LocationName
+                        }}</span>
+                        
+                      </div>
+
+                      <span class="treelist--right">{{
+                        dataItem.LocationID
+                      }}</span>
+                    </div>
+                  </div>
+                </ng-template>
+              </kendo-treelist-column>
+              <kendo-treelist-column field="StatusName">
+                <ng-template kendoTreeListCellTemplate let-dataItem>
+                  <div class="statusName" [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID"></div>
+                </ng-template>
+            
+              </kendo-treelist-column>
+              <kendo-treelist-column [width]="50">
+                <ng-template
+                  kendoTreeListCellTemplate
+                  let-dataItem
+                  let-rowIndex="rowIndex"
+                >
+                  <div class="treelist-tool tool" #containerPopup >
+                    <kendo-dropdownbutton
+                      #dropdownlisttree
+                      id="treelist-tool"
+                      class="DropDownButton"
+                      iconClass="fa-solid fa-ellipsis"
+                      [data]="OptionTool"
+                      [popupSettings]="{ animate: true, popupClass: 'fmDropdown rowMoreActionPopupCoppy', align: 'right', appendTo: 'component' }"
+                      (itemClick)="HandleOpenDrawer($event, dataItem)"
+                      [class.selectedPopup]="dataItem.Code == ItemSelectedPopup.Code" 
+                      (open)="openDropDownList(dataItem); Compeonentdropdownlisttree = dropdownlisttree"
+                      (close)="closeDropDownList(dataItem)"
+                    >
+                    <ng-template kendoDropDownButtonItemTemplate let-dataItem>
+                      <div class="popup-item">
+                        
+                        <!-- có những icon không có hình phải dùng kết hợp với icon kendo  -->
+                        <img loading="lazy" *ngIf="dataItem.imageUrl" src="{{dataItem.imageUrl}}" class="imgUrl_popup">
+                        <kendo-icon  *ngIf="dataItem.icon" class="{{dataItem.icon}} k-icon" ></kendo-icon>
+                        <span class="popup-item-text">{{ dataItem.text }}</span>
+                      </div>
+                    </ng-template>
+                    </kendo-dropdownbutton>
+                  </div>
+                </ng-template>
+              </kendo-treelist-column>
+            </kendo-treelist>
+          </div>
+        </div>
+
+      <!-- Start: Dialog verify -->
+      <kendo-dialog
+        *ngIf="opened"
+        (close)="closeDialog('cancel')"
+        [minWidth]="250"
+        [width]="450"
+        [minHeight]="250"
+        class="wrapper-dialog"
+        [actionsLayout]="'stretched'"
+      >
+        <!-- Start: header dialog  -->
+        <kendo-dialog-titlebar>
+          <div class="title-delete d-flex">
+            <span
+              class="btn-title-dialog"
+              kendoButton
+              imageUrl="assets/img/icon/icon_warning.svg"
+            ></span>
+            <span>XÓA ĐIỂM LÀM VIỆC?</span>
+          </div>
+        </kendo-dialog-titlebar>
+        <!-- End: header dialog  -->
+
+        <!-- Start: Body dialog  -->
+        <div class="body_dialog">
+          <div class="content-primary">
+            <p>Bạn chắc chắn muốn xóa</p>
+            <strong>{{ Location?.LocationName }}</strong>
+          </div>
+          <p class="content-sub">
+            Điểm làm việc bị xóa sẽ <span style="color: red">KHÔNG</span> thể
+            khôi phục lại.
+          </p>
+        </div>
+        <!-- Emd: Body dialog  -->
+
+        <!-- Start: action dialog  -->
+        <div class="k-dialog-actions">
+          <button kendoButton (click)="closeDialog('no')" class="cancel">
+            HỦY BỎ
+          </button>
+          <button
+            kendoButton
+            imageUrl="assets/img/icon/icon_bin.svg"
+            (click)="onDeleteDialog('yes')"
+            class="delete"
+          >
+            ĐỒNG Ý
+          </button>
+        </div>
+        <!-- End: action dialog  -->
+      </kendo-dialog>
+
+      <!-- Xác nhận chuyển đổi trạng thái ngưng hiển thị -->
+      <kendo-dialog
+        *ngIf="openedDiaStopped"
+        (close)="closeDialogStopped('cancel')"
+        [minWidth]="250"
+        [width]="450"
+        [minHeight]="250"
+        class="wrapper-dialog"
+        [actionsLayout]="'stretched'"
+      >
+        <!-- Start: header dialog  -->
+        <kendo-dialog-titlebar>
+          <div class="title-delete d-flex">
+            <span
+              class="btn-title-dialog"
+              kendoButton
+              imageUrl="assets/img/icon/icon_warning.svg"
+            ></span>
+            <span>CHUYỂN TRẠNG THÁI NGƯNG ÁP DỤNG?</span>
+          </div>
+        </kendo-dialog-titlebar>
+        <!-- End: header dialog  -->
+
+        <!-- Start: Body dialog  -->
+        <div class="body_dialog">
+          <div class="content-primary">
+            <p>Bạn chắc chắn muốn ngưng áp dụng điểm làm việc này</p>
+            <strong>{{ Location?.LocationName }}</strong>
+          </div>
+          <p class="content-sub">
+            Khi ngưng hiển áp dụng làm việc này thì tất cả các điểm làm việc con thuộc điểm làm việc này cũng sẽ bị ngưng hiển thị.
+          </p>
+        </div>
+        <!-- Emd: Body dialog  -->
+
+        <!-- Start: action dialog  -->
+        <div class="k-dialog-actions">
+          <button kendoButton (click)="closeDialogStopped('no')" class="cancel">
+            HỦY BỎ
+          </button>
+          <button
+            kendoButton
+            imageUrl="assets/img/icon/icon_bin.svg"
+            (click)="handleActionStopped('yes')"
+            class="delete"
+          >
+            ĐỒNG Ý
+          </button>
+        </div>
+        <!-- End: action dialog  -->
+      </kendo-dialog>
+      <!-- End: Dialog  -->
+      
+    </kendo-drawer-content>
+  </kendo-drawer-container>
+</div>
+<app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>

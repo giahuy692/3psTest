@@ -1,0 +1,94 @@
+@import "../../../../../../assets/scss/variable.scss";
+::ng-deep {
+    
+    .body-left{ 
+        width: 180px;
+        background-color: #fff;
+        height: calc(90vh - 70px);
+        overflow: auto;
+        .info-employee{
+            padding: 10px 5px;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            cursor: default;
+            .name{
+                font-weight: 400;
+            }
+            .positionName{
+                font-size: 10px;
+                font-weight: 700;
+            }
+            .avatar{
+                margin: 10px 30px 0 0;
+                display: flex;
+                float: right;
+                .btn-cancel{
+                    background-color: rgba($gray-500, 0.4);
+                    width: 25px;
+                    height: 25px;
+                    clip-path: polygon(100% 0, 0 0, 0 100%);
+                    box-shadow: none;
+                    border: none;
+                    position: relative;
+                    left: 15px;
+                    &:hover{
+                        border: none;
+                    }
+                    .k-button-text{
+                        margin: 0 10px 10px 0;
+                        color: $worse-red;
+                    }
+                }
+                .img-avatar{
+                    border-radius: 50% ;
+                    border: 1px solid rgba($gray-500, 0.4);
+                }
+            }
+            .btn-updateAvt{
+                font-size: 10px;
+                font-weight: 400;
+                color: $dark-green;
+                border: none;
+                box-shadow: none;
+                &:hover{
+                    border: none !important;
+                }
+            }
+            .statusName{
+                color: $dark-green;
+                font-weight: 700;
+            }
+        }
+        .side-router{
+            .list-item{
+                list-style: none;
+                padding: 0;
+                a{
+                    &:hover{
+                        text-decoration: none;
+                    }
+                }                 
+                .item{
+                    color: $light-blue-gray;
+                    font-weight: 700;
+                    padding: 10px;
+                    &.active {
+                        background-color: $whitegray-5;
+                        color: $gray-850 !important; 
+                        border-left: 4px solid $dark-green;
+                    }
+                    &:hover{
+                        background-color: $whitegray-5;
+                        color: $gray-850;
+                        border-left: 4px solid $dark-green;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    
+}
+}

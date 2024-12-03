@@ -1,0 +1,242 @@
+<div id="questionBankList">
+  <!-- START BREADCRUMB AND BUTTON -->
+  <div class="header header-1">
+    <!-- GROUP BUTTON FILTER -->
+    <div class="buttonGroup">
+      <app-checkbox-button-group
+        [ignoreCase]="true"
+        title="Đang soạn thảo"
+        [checked]="isDrafting"
+        [field]="'StatusID'"
+        [value]="0"
+        (selectedChange)="onSelectedChangeCheckbox($event, 'isDrafting')"
+        (filterChange)="onFilterChangeDrafting($event)"
+        [disabled]="!isFilterActive"
+      ></app-checkbox-button-group>
+      <app-checkbox-button-group
+        [ignoreCase]="true"
+        title="Gửi duyệt"
+        [checked]="isSent"
+        [field]="'StatusID'"
+        [value]="1"
+        (selectedChange)="onSelectedChangeCheckbox($event, 'isSent')"
+        (filterChange)="onFilterChangesSent($event)"
+        [disabled]="!isFilterActive"
+      ></app-checkbox-button-group>
+      <app-checkbox-button-group
+        [ignoreCase]="true"
+        title="Đã duyệt"
+        [checked]="isApproved"
+        [field]="'StatusID'"
+        [value]="2"
+        (selectedChange)="onSelectedChangeCheckbox($event, 'isApproved')"
+        (filterChange)="onFilterChangeApproved($event)"
+        [disabled]="!isFilterActive"
+      ></app-checkbox-button-group>
+      
+      <app-checkbox-button-group
+        [ignoreCase]="true"
+        title="Ngưng áp dụng"
+        [checked]="isSuspended"
+        [field]="'StatusID'"
+        [value]="3"
+        (selectedChange)="onSelectedChangeCheckbox($event, 'isSuspended')"
+        (filterChange)="onFilterChangesSuspended($event)"
+        [disabled]="!isFilterActive"
+      ></app-checkbox-button-group>
+    </div>
+
+    <!-- BUTTON -->
+    <div class="btnWrapper">
+      <button
+        kendoButton
+        iconClass="k-icon k-i-export"
+        [disabled]="!isFilterActive"
+        *ngIf="isToanQuyen || isAllowedToCreate"
+        class="addImport"
+        (click)="onImportExcel()"
+      ></button>
+      <button
+        kendoButton
+        iconClass="k-icon k-i-import"
+        [disabled]="!isFilterActive"
+        *ngIf="isToanQuyen || isAllowedToCreate"
+        class="addExport"
+        (click)="APIDownloadExcel()"
+      >
+        Template
+      </button>
+      <button
+        kendoButton
+        iconClass="k-icon k-i-plus"
+        (click)="onAdd()"
+        [disabled]="!isFilterActive"
+        *ngIf="isToanQuyen || isAllowedToCreate"
+        class="addBtn"
+      >
+        thêm mới
+      </button>
+    </div>
+    
+  </div>
+  <!-- END BREADCRUMB AND BUTTON -->
+
+  <!-- START FUNCTIONBAR -->
+  <div id="functionbar" class="header header-2">
+    <!-- SEARCH FILTER -->
+    <app-search-filter-group
+      placeholder="Tìm theo mã và câu hỏi"
+      [fields]="['QuestionID', 'Question', 'Remark']"
+      (filterChange)="handleSearch($event)"
+      (onReset)="onResetFilter()"
+      [disabled]="!isFilterActive"
+    ></app-search-filter-group>
+
+    
+  </div>
+  <!-- END FUNCTIONBAR -->
+
+
+  <!-- START GIRD LAYOUT -->
+  <div class="grid-wrapper">
+    <app-p-kendo-grid
+      class="grid scrollable"
+      [data]="gridView | async"
+      [scrollable]="'none'"
+      [loading]="loading"
+      [pageable]="true"
+      [pageSizes]="pageSizes"
+      [pageSize]="pageSize"
+      [skip]="gridState.skip"
+      [take]="gridState.take"
+      [sortable]="true"
+      [sort]="gridState.sort"
+      [selectable]="selectable"
+      [allowedMoreActionDropdown]="allowActionDropdown"
+      [onActionDropdownClickCallback]="onActionDropdownClickCallback"
+      [getActionDropdownCallback]="getActionDropdownCallback"
+      [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+      [getSelectionPopupCallback]="getSelectionPopupCallback"
+      [onSelectCallback]="onSelectCallback"
+      [onPageChangeCallback]="onPageChangeCallback"
+    >
+      <!-- COL-1 -->
+      <kendo-grid-column
+        field="Question"
+        title="Câu hỏi"
+        class="col_theQueston"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <span class="title font-weight-bold" title="{{ dataItem.Remark }}">{{ dataItem.Remark }}</span>
+          <div class="codeAndTypeQuestion">
+            <span>{{ dataItem.QuestionID }}</span>
+            <span
+              *ngIf="
+                (dataItem.QuestionID != '' &&
+                  dataItem.TypeOfQuestionName == '') ||
+                (dataItem.QuestionID == '' &&
+                  dataItem.TypeOfQuestionName != '') ||
+                (dataItem.QuestionID == '' &&
+                  dataItem.TypeOfQuestionName == '') ||
+                (dataItem.QuestionID != '' && dataItem.TypeOfQuestionName != '')
+              "
+              style="padding: 0 5px;"
+              >|</span
+            >
+            <span>{{ dataItem.TypeOfQuestionName }}</span>
+          </div>
+        </ng-template>
+      </kendo-grid-column>
+
+      <!-- COL-2 -->
+      <kendo-grid-column
+        field="CategoryName"
+        title="Phân nhóm"
+        class="col_subgroups"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <span>{{ dataItem.CategoryName }}</span>
+        </ng-template>
+      </kendo-grid-column>
+
+      <!-- COL-3 -->
+      <kendo-grid-column
+        field="Duration"
+        title="Thời gian làm"
+        headerClass="col_Duration"
+        class="col_Duration"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <span class="font-weight-bold">{{ dataItem.Duration}}<span class="font-weight-bold" *ngIf="dataItem.Duration !== null">s</span></span>
+        </ng-template>
+      </kendo-grid-column>
+
+      <!-- COL-4 -->
+      <kendo-grid-column
+        field="StatusName"
+        title="Tình trạng"
+        class="col_status"
+        headerClass="col_theStatusHeader"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID">
+          </div>
+        </ng-template>
+      </kendo-grid-column>
+    </app-p-kendo-grid>
+  </div>
+  <!-- END GIRD LAYOUT -->
+  <!-- Start: Dialog verify -->
+  <kendo-dialog
+    *ngIf="openedDialog"
+    (close)="onCloseDialog()"
+    [minWidth]="250"
+    [width]="450"
+    [minHeight]="250"
+    class="wrapper-dialog"
+  >
+    <!-- Start: header dialog  -->
+    <kendo-dialog-titlebar>
+      <div class="title-delete d-flex">
+        <span
+          class="btn-title-dialog"
+          kendoButton
+          imageUrl="assets/img/icon/icon_warning.svg"
+        ></span>
+        <span>XÓA CÂU HỎI?</span>
+      </div>
+    </kendo-dialog-titlebar>
+    <!-- End: header dialog  -->
+
+    <!-- Start: Body dialog  -->
+    <div class="body_dialog">
+      <div class="content-primary">
+        <p>Bạn chắc chắn muốn xóa các câu hỏi này không?</p>
+      </div>
+      <p class="content-sub">
+        Câu hỏi bị xóa sẽ <span style="color: red">KHÔNG</span> thể khôi phục
+        lại.
+      </p>
+    </div>
+    <!-- Emd: Body dialog  -->
+
+    <!-- Start: action dialog  -->
+    <div class="k-dialog-actions">
+      <button kendoButton (click)="onCloseDialog()" class="cancel">
+        KHÔNG XÓA
+      </button>
+      <button
+        kendoButton
+        imageUrl="assets/img/icon/icon_bin.svg"
+        (click)="onDeleteDialog('yes')"
+        class="delete"
+      >
+        XÓA
+      </button>
+    </div>
+    <!-- End: action dialog  -->
+  </kendo-dialog>
+  <!-- End: Dialog  -->
+</div>
+
+<app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>

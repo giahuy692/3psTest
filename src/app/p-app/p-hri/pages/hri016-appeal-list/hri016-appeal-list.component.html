@@ -1,0 +1,408 @@
+<div class="app-hri016-appeal-list">
+
+    <div class="header header-1">
+        <div class="breadcumb">
+            <app-p-kendo-breadcrumb (loadData)="onloadPage()"></app-p-kendo-breadcrumb>
+        </div>
+        <div class="nav-btn nav-crud" *ngIf="IsAllowCompleted">
+            <button kendoButton class="k-button onCompletedBtn" [icon]="'check'" (click)="onCompleted()">
+                HOÀN TẤT PHÚC KHẢO
+            </button>
+        </div>
+    </div>
+
+    <div class="main" *ngIf="!isTest">
+
+        <div class="ChairmanView" *ngIf="isChairman">
+        
+            <app-hr-quiz-session-info [canSetting]="isAllowChooseQuizRole" [step] ="4"></app-hr-quiz-session-info>
+        
+            <div class="chairman">
+        
+                <div class="header">
+
+                    <app-search-filter-group
+                    *ngIf="!isChangeList"
+                    title="YÊU CẦU PHÚC KHẢO"
+                    placeholder="Tìm theo nhân sự yêu cầu"
+                    [fields]="['StaffName', 'StaffID', 'Position']"
+                    (filterChange)="handleSearchYC($event)" 
+                    ></app-search-filter-group>
+
+                    <app-search-filter-group
+                    *ngIf="isChangeList"
+                    title="CÂU HỎI PHÚC KHẢO"
+                    placeholder="Tìm theo câu hỏi yêu cầu"
+                    [fields]="['Question']"
+                    (filterChange)="handleSearchCH($event)" 
+                    [disabled]="!isFilterActive"
+                    ></app-search-filter-group>
+
+                    <div class="view-transform-btn-group">
+                        <kendo-button fillMode="flat" class="custombuttonIcon" [disabled]="!isFilterActive">
+                            <span 
+                            [style.color]="!isChangeList ? '#1A6634' : '#959DB3'"
+                            class="  k-icon k-i-grid-layout pointer-style" 
+                            title="Hiển thị danh sách yêu cầu phúc khảo"
+                            (click)="ChangeList(1)">
+                            </span>
+                        </kendo-button>
+                        <span 
+                        *ngIf="!isChangeList" 
+                        class="view-change-icon" 
+                        kendoButton    
+                        imageUrl="assets/img/icon/icon_questionGroupPink.svg" 
+                        title="Hiển thị danh sách câu hỏi phúc khảo"
+                        (click)="ChangeList(2)"
+                        >
+                        </span>
+                        <span 
+                        *ngIf="isChangeList" 
+                        class="view-change-icon" 
+                        kendoButton
+                        imageUrl="assets/img/icon/icon_questionGroupGreen.svg"
+                        title="Hiển thị danh sách câu hỏi phúc khảo"
+                        [disabled]="!isFilterActive"
+                        >
+                        </span>
+                    </div>
+
+                </div>
+
+                <app-p-kendo-grid  
+                *ngIf="!isChangeList"
+                class="grid scrollable requestForAppeal" 
+                [data]="gridViewYC | async" 
+                [scrollable]="'none'" 
+                [loading]="loading"
+                [pageable]="true" 
+                [pageSizes]="pageSizesYC" 
+                [pageSize]="pageSizeYC" 
+                [skip]="gridStateYC.skip"  
+                [take]="gridStateYC.take" 
+                [sortable]="true" 
+                [sort]="gridStateYC.sort" 
+                [onSortChangeCallback]="onSortChangeCallbackYC"
+                [onPageChangeCallback]="onPageChangeCallbackYC" 
+                [allowedMoreActionDropdown]="allowActionDropdownYC" 
+                [getActionDropdownCallback]="getActionDropdownCallbackYC"
+                [onActionDropdownClickCallback]="onActionDropdownClickCallbackYC"
+                >
+
+                    <kendo-grid-column title="Nhân sự yêu cầu" >
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <div class="NSYC">
+                                <img src="{{dataItem.ImageThumb == null ? 'assets/img/icon/icon-nonImageThumb.svg' : dataItem.ImageThumb}}" width="50" height="50">
+                                <div class="content">
+                                    <span class="title">{{dataItem.StaffName}}</span>
+                                    <div class="Position" title="{{ dataItem.StaffID + ' | ' + dataItem.Position }}">
+                                        {{dataItem.StaffID}}<span *ngIf="dataItem.Position != null" >{{' | '+ dataItem.Position }}</span>                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column title="Số câu hỏi y/c" class="testCenter" [headerClass]="'headerCustomClassCenter'">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <span>{{dataItem.NoOfQuestion}}</span>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column title="Đã chấm" class="testCenter" [headerClass]="'headerCustomClassCenter'">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <span>{{dataItem.NoOfMarked}}</span>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column title="Chưa chấm" class="testCenter" [headerClass]="'headerCustomClassCenter'" field="NoOfNotMarked">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <span>{{dataItem.NoOfNotMarked}}</span>
+                        </ng-template>
+                    </kendo-grid-column>
+                    
+                    <kendo-grid-column title="Điểm" class="testCenter" [headerClass]="'headerCustomClassCenter'">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <span class="textColorBrown">{{dataItem.Mark}}</span>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column title="Điểm phúc khảo" class="testCenter" [headerClass]="'headerCustomClassCenter'">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <span class="textColorRed">{{dataItem.FinalMark}}</span>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column title="Ngày yêu cầu" class="testCenter" [headerClass]="'headerCustomClassCenter'">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <span>{{dataItem.CreatedTime | date: 'dd/MM/yyyy'}}</span>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column title="Ngày hoàn tất" class="testCenter" [headerClass]="'headerCustomClassCenter'">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <span *ngIf="CheckDate(dataItem)">{{dataItem.LastModifiedTime | date: 'dd/MM/yyyy'}}</span>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column title="Tình trạng" class="testCenter" [headerClass]="'headerCustomClass'" field="StatusID">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <div class="Status" >
+                                <div [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID">
+                                </div>
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                </app-p-kendo-grid> 
+
+                <app-p-kendo-grid 
+                *ngIf="isChangeList"
+                class="grid scrollable" 
+                [data]="gridViewCH | async"  
+                [scrollable]="'none'" 
+                [loading]="loading"
+                [pageable]="true" 
+                [pageSizes]="pageSizesCH"
+                [pageSize]="pageSizeCH"
+                [skip]="gridStateCH.skip"
+                [take]="gridStateCH.take" 
+                [sortable]="true" 
+                [sort]="gridStateCH.sort" 
+                [id]="'Code'"
+
+                [onSortChangeCallback]="onSortChangeCallbackCH"
+                [onPageChangeCallback]="onPageChangeCallbackCH"
+
+                [allowedMoreActionDropdown]="allowActionDropdownCH" 
+                [getActionDropdownCallback]="getActionDropdownCallbackCH"
+                [onActionDropdownClickCallback]="onActionDropdownClickCallbackCH" 
+                [onSelectCallback]="onSelectCallbackCH"
+                [getSelectionPopupCallback]="getSelectionPopupCallbackCH"
+                [selectable]="selectableCH"
+                [showCheckbox]="false"
+                >
+
+                    <kendo-grid-column title="Câu hỏi phúc khảo">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <div class="CHPK" title="{{removeHtmlTags(dataItem.Question)}}">
+                                {{removeHtmlTags(dataItem.Question)}}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column title="Số y/c phúc khảo" class="testCenter"  [headerClass]="'headerCustomClassCenter'">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <span>{{dataItem.NoOfQuestion}}</span>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column title="Đã chấm" class="testCenter"  [headerClass]="'headerCustomClassCenter'">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <span>{{dataItem.NoOfMarked}}</span>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column title="Chưa chấm" class="testCenter"  [headerClass]="'headerCustomClassCenter'">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <span>{{dataItem.NoOfNotMarked}}</span>
+                        </ng-template>
+                    </kendo-grid-column>
+                    
+                    <kendo-grid-column title="Loại câu hỏi" class="testCenter"  [headerClass]="'headerCustomClassCenter'" field="TypeOfQuestion">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <span *ngIf="dataItem.TypeOfQuestion == 1 || dataItem.TypeOfQuestion == 2">Trắc nghiệm</span>
+                            <span *ngIf="dataItem.TypeOfQuestion == 3">Tự Luận</span>                               
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column title="Ngày hoàn tất" class="testCenter"  [headerClass]="'headerCustomClassCenter'">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <span *ngIf="CheckDate(dataItem)">{{dataItem.LastModifiedTime | date: 'dd/MM/yyyy'}}</span>
+                        </ng-template>
+                    </kendo-grid-column>
+
+
+                    <kendo-grid-column title="Tình trạng" field="StatusID" class="testCenter"  [headerClass]="'headerCustomClassCenter'">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <div class="StatusCecter">
+                                <div [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID">
+                                </div>
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column title="Nhân sự chấm câu phúc khảo" class="cellQuestionColumn4" [headerClass]="'headerCustomClassCenter'"> 
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <kendo-dropdownlist
+                            class="DSNS"
+                            [popupSettings]="{appendTo:'component'}"
+                            [filterable]="true"
+                            [data]="dropdownData"
+                            textField="StaffName"
+                            valueField="Code"
+                            [(ngModel)]="dataItem.ListAppeal[0].EvaluatedBy"
+                            [valuePrimitive]="true" 
+                            (selectionChange)="selectionAppealRoleChange($event, dataItem)"
+                            (filterChange)="handleFilterDropdownlist($event)"
+                            [disabled]="(ListStaffReEval.length == 1 || ListStaffReEval.length == 0 || !isAllowChooseQuizRole) || (InScoring())"
+                            (click)="onDropDownClick($event)"
+                            [readonly]="!isFilterActive && !listItemDropdown.includes(dataItem)"
+                            >
+                            </kendo-dropdownlist>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                </app-p-kendo-grid> 
+                <kendo-dialog
+                *ngIf="dialogOpen"
+                (close)="onCloseDialog()"
+                [minWidth]="250"
+                [width]="450"
+                [minHeight]="250"
+                class="wrapper-dialog"
+                >
+                <!-- Start: header dialog  -->
+                    <kendo-dialog-titlebar>
+                    <div class="title-delete d-flex">
+                        <span
+                        class="btn-title-dialog"
+                        ></span>
+                        <span>CẬP NHẬT NHÂN SỰ CHẤM BÀI</span>
+                    </div>
+                    </kendo-dialog-titlebar>
+                    <!-- End: header dialog  -->
+
+                    <!-- Start: Body dialog  -->
+                    <div class="body_dialog">
+                    <div class="content-primary">
+                        <p>Bạn có muốn cập nhật nhân sự chấm bài 
+                        <strong></strong>
+                        cho tất cả các câu hỏi được chọn?</p>
+                    </div>
+                    </div>
+                    <!-- Emd: Body dialog  -->
+
+                    <!-- Start: action dialog  -->
+                    <div class="k-dialog-actions">
+                    <button kendoButton (click)="onCloseDialog()" class="cancel">
+                        HỦY BỎ
+                    </button>
+
+                        <button
+                        kendoButton
+                        imageUrl=""
+                        (click)="onUpdateOneItem()"
+                        class="update"
+                        >
+                        CHỈ CHỌN MỘT
+                        </button>
+                    <button
+                        kendoButton
+                        imageUrl=""
+                        (click)="onUpdateManyItem()"
+                        class="delete"
+                    >
+                        ĐỒNG Ý
+                    </button>
+                    </div>
+                <!-- End: action dialog  -->
+                </kendo-dialog>
+
+            </div>
+    
+        </div>
+   
+        <div class="IsAllowed" *ngIf="isAllowed"> 
+        
+            <app-hr-quiz-session-info [canSetting]="false"></app-hr-quiz-session-info>
+        
+                <div class="requestForAppealIsAllowed">
+    
+                    <div class="header">
+    
+                        <app-search-filter-group
+                        title="CÂU HỎI PHÚC KHẢO"
+                        placeholder="Tìm theo câu hỏi yêu cầu"
+                        [fields]="['Question']"
+                        (filterChange)="handleSearchCH($event)" 
+                        ></app-search-filter-group>
+    
+                    </div>
+    
+                    <app-p-kendo-grid 
+                    class="grid scrollable " 
+                    [data]="gridViewCH | async" 
+                    [scrollable]="'none'" 
+                    [loading]="loading"
+                    [pageable]="true" 
+                    [pageSizes]="pageSizesCH" 
+                    [pageSize]="pageSizeCH" 
+                    [skip]="gridStateCH.skip"
+                    [take]="gridStateCH.take" 
+                    [sortable]="true" 
+                    [sort]="gridStateCH.sort" 
+                    [onSortChangeCallback]="onSortChangeCallbackCH"
+                    [onPageChangeCallback]="onPageChangeCallbackCH"
+                    [allowedMoreActionDropdown]="allowActionDropdownCH" 
+                    [getActionDropdownCallback]="getActionDropdownCallbackCH"
+                    [onActionDropdownClickCallback]="onActionDropdownClickCallbackCH" 
+                >
+    
+                        <kendo-grid-column title="Câu hỏi phúc khảo" [sortable]="true" >
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                {{removeHtmlTags(dataItem.Question)}}
+                            </ng-template>
+                        </kendo-grid-column>
+    
+                        <kendo-grid-column title="Số y/c phúc khảo" class="testCenter"  [headerClass]="'headerCustomClass'">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span>{{dataItem.NoOfQuestion}}</span>
+                            </ng-template>
+                        </kendo-grid-column>
+    
+                        <kendo-grid-column title="Đã chấm" class="testCenter"  [headerClass]="'headerCustomClass'">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span>{{dataItem.NoOfMarked}}</span>
+                            </ng-template>
+                        </kendo-grid-column>
+    
+                        <kendo-grid-column title="Chưa chấm" class="testCenter"  [headerClass]="'headerCustomClass'">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span>{{dataItem.NoOfNotMarked}}</span>
+                            </ng-template>
+                        </kendo-grid-column>
+                        
+                        <kendo-grid-column title="Loại câu hỏi" class="testCenter"  [headerClass]="'headerCustomClass'" field="TypeOfQuestion">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span *ngIf="dataItem.TypeOfQuestion == 1 || dataItem.TypeOfQuestion == 2">Trắc nghiệm</span>
+                                <span *ngIf="dataItem.TypeOfQuestion == 3">Tự Luận</span>                               
+                                </ng-template>
+                        </kendo-grid-column>
+    
+                        <kendo-grid-column title="Ngày hoàn tất" class="testCenter"  [headerClass]="'headerCustomClass'">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span *ngIf="CheckDate(dataItem)">{{dataItem.LastModifiedTime | date: 'dd/MM/yyyy'}}</span>
+                            </ng-template>
+                        </kendo-grid-column>
+    
+    
+                        <kendo-grid-column title="Tình trạng" field="StatusID" [headerClass]="'headerStatusCustomClass'">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="Status">
+                                    <div [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID">
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+    
+                    </app-p-kendo-grid> 
+    
+                </div>
+    
+        </div>
+
+    </div>
+        
+
+</div>

@@ -1,0 +1,718 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+  .grid-wrapper {
+    // overflow-y: scroll;
+    //header 55 + footer 30 + header1 70 + header2 95 = 266
+    height: calc(100vh - 266px);
+    overflow-x: hidden;
+    overflow-y: hidden;
+    margin-top: 20px;
+
+    app-p-kendo-grid {
+      .myCustomGrid.k-grid {
+        height: calc(100vh - 266px);
+
+        // height của k-grid-aria-root phải bé hơn 49px để paging không bị che
+        .k-grid-aria-root {
+          height: calc(100vh - 315px);
+          overflow-y: scroll;
+          overflow-x: auto;
+
+          .k-grid{
+            .k-table{
+              width: 100% !important;
+            }
+          }
+          .btnCell{
+            display: flex;
+            justify-content: center;
+          }
+        }
+        .question-group{
+          display: flex;
+          gap: 20px;
+        }
+      }
+    }
+  }
+
+  app-p-kendo-grid {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    
+    .myCustomGrid.k-grid {
+      min-height: fit-content;
+      height: 100%;
+      color: $gray-900;
+      background-color: $gray-100;
+      border: none;
+
+      table {
+        border-spacing: 0 4px;
+        width: 100%;
+      }
+      thead {
+        background: none;
+      }
+      tbody {
+        tr {
+          background-color: white;
+
+          > td {
+            border-style: solid;
+            border-width: 1px 0;
+            border-color: transparent;
+
+            &:first-child {
+              border-left-width: 1px;
+            }
+            &:nth-last-child(1) {
+              border-right-width: 1px;
+              width: 40px;
+            }
+          }
+        }
+        tr:hover {
+          background-color: rgba($dark-green, 0.4);
+
+          // td * {
+          //   color: $dark-green !important;
+          //   filter: invert(1);
+          // }
+
+          td.action {
+            // background-color: rgba($dark-green, 0.4);
+            background: transparent;
+          }
+        }
+      }
+      tr {
+        height: 26px;
+        position: relative;
+
+        &.k-state-selected,
+        &.k-selected {
+          background-color: rgba($dark-green, 0.8);
+
+          // td * {
+          //   color: $dark-green !important;
+          //   filter: invert(1);
+          // }
+
+          > td {
+            background: none;
+            border-color: $dark-green;
+          }
+
+          td.action {
+            // background-color: rgba($dark-green, 0.8);
+            background: transparent;
+          }
+        }
+        &:not(.k-grouping-row){
+          td:first-child {
+            padding-left: 30px;
+          }
+        }
+        th,
+        td {
+          white-space: nowrap;
+          border: none;
+
+          .k-button {
+            padding: 0;
+            width: 32px;
+            height: 32px;
+          }
+
+          img {
+            max-width: 200px;
+            max-height: 32px;
+          }
+
+          &.hidden {
+            display: none;
+          }
+        }
+
+        // td:last-child:not(:only-child)
+        td.action {
+          position: sticky !important;
+          top: initial;
+          right: 0;
+          background: white;
+          box-shadow: -3px 0px 3px 0px rgba(143, 155, 166, 0.2);
+
+          .k-button {
+            &:hover,
+            &.k-hover,
+            &:focus,
+            &.k-focus {
+              background: #bdc2d2 !important;
+            }
+          }
+
+          &:has(.hidden) {
+            display: none;
+          }
+        }
+      }
+      .k-grouping-header {
+        display: none;
+      }
+      .k-grouping-row {
+        td {
+          color: $dark-green;
+          font-weight: normal;
+
+          &:hover {
+            background-color: rgba($dark-green, 0.4);
+            color: white;
+          }
+          .k-icon {
+            font-size: 20px;
+            margin-right: 12px;
+            color: inherit;
+          }
+          .groupName {
+            cursor: pointer;
+          }
+        }
+      }
+      .k-grid-header .k-header {
+        font-weight: 700;
+        vertical-align: middle;
+        color: $dark-blue;
+
+        &.k-filterable {
+          .k-grid-filter {
+            padding: 0;
+          }
+          .k-grid-filter:hover {
+            color: $dark-green;
+          }
+        }
+
+        > .k-link,
+        > .k-pager-nav.k-button-flat {
+          display: flex;
+        }
+      }
+      tr.odd:hover,
+      tr.even:hover {
+        transform: translateY(-3px);
+      }
+      .k-grid-pager {
+        &:focus {
+          box-shadow: none;
+        }
+
+        .label {
+          font-weight: 700;
+        }
+        .total{
+          font-weight: 700;
+          display: block;
+          color: #959db3;
+          font-size: 13px;
+          margin-top: 3px;
+          margin-right: 30px;
+          span{
+            color: #5c6873
+          }
+        }
+
+        .k-pager-sizes {
+          flex-grow: 1;
+
+          kendo-icon-wrapper {
+            transform: rotate(0.5turn);
+          }
+        }
+        .k-pager-nav-btn {
+          text-transform: capitalize;
+          display: flex;
+          column-gap: 3px;
+        }
+        .k-link,
+        .k-pager-nav.k-button-flat {
+          min-width: fit-content;
+          width: 20px;
+          color: $gray-700;
+          // box-shadow: none;
+          border-radius: 3px;
+          padding: 0;
+
+          &.k-state-selected,
+          &.k-selected,
+          &:hover {
+            background-color: $gray-700 !important;
+            color: white;
+          }
+        }
+
+        .k-pager-first,
+        .k-pager-last {
+          padding: 0 9px;
+          min-width: 45px !important;
+
+          kendo-icon-wrapper {
+            .k-button-icon:before {
+              text-transform: capitalize;
+              font-family: "Mulish", sans-serif;
+              font-size: 13px;
+              font-weight: 600;
+            }
+          }
+
+          // &.k-disabled,
+          // &.k-state-disabled {
+          //   opacity: 1;
+          // }
+        }
+
+        .k-pager-first {
+          kendo-icon-wrapper .k-button-icon:before {
+            content: "đầu";
+          }
+        }
+        .k-pager-last {
+          kendo-icon-wrapper .k-button-icon:before {
+            content: "cuối";
+          }
+        }
+        .k-pager-numbers,
+        .k-pager-numbers-wrap {
+          column-gap: 3px;
+          font-size: 13px;
+          font-weight: 600;
+
+          select {
+            display: none;
+          }
+        }
+        // @media screen and (max-width: 400px) {
+        //   .k-pager-first,
+        //   .k-pager-last {
+        //     padding: 0;
+
+        //     .k-icon {
+        //       display: inline-flex;
+        //     }
+        //   }
+        //   .k-pager-first {
+        //     &:before {
+        //       content: none;
+        //     }
+        //   }
+        //   .k-pager-last {
+        //     &:after {
+        //       content: none;
+        //     }
+        //   }
+        // }
+      }
+    }
+  }
+  
+  //detail
+  app-p-kendo-grid{
+
+    .k-hierarchy-cell{
+      a{
+        text-decoration: none !important;
+        color: #23282C !important;
+      }
+      .k-icon-wrapper-host {
+        kendo-icon.k-i-plus {
+          
+          &::before {
+            content: "\e015" !important;
+          }
+        }
+
+        >.k-i-minus {
+          &::before {
+            content: "\e013" !important;
+          }
+        }
+      }
+    }
+
+    //typeDetail = 2  -- todo --
+    // .myCustomGrid.k-grid.isDetailTree{
+    //   .master-detail {
+    //     .k-grid{
+    //       height: max-content !important;
+    //     }
+    //     .k-grid-aria-root{
+    //       overflow: unset;
+    //     }
+    //     .k-pager{
+    //       display: none;
+    //     }
+    //   }
+    //   tbody{
+    //     // tr{
+    //     //     td:first-child {
+    //     //       padding-left: 10px !important;
+    //     //     }
+    //     // }
+    //     .k-detail-row{
+    //       background-color: unset !important;
+    //       .k-detail-cell{
+    //         padding: 0;
+    //         // padding-right: 10px;
+           
+    //       }
+
+    //       &:hover{
+    //         background-color: unset !important;
+    //       }
+    //     }
+
+    //   }
+    // }
+
+    //typeDetail = 1
+    .myCustomGrid.k-grid.isDetailGrid{
+      .master-detail {
+        .k-grid{
+          height: max-content !important;
+        }
+        .k-grid-aria-root{
+          overflow: unset;
+        }
+        .k-pager{
+          display: none;
+        }
+      }
+      table:has(.k-detail-row){
+        th.k-header:not(.k-hierarchy-cell):nth-child(2){
+          padding-left: 40px;
+        } 
+       
+          .k-touch-action-auto:nth-child(2){
+            padding-left: 40px;
+          }
+        
+      }
+      tbody:has(.k-detail-row){
+        tr{
+            td:first-child {
+              padding-left: 0;
+              width: 0px;
+            }
+            td.k-hierarchy-cell{
+              display: flex;
+              position: relative;
+              margin-top: 30px;
+              left: 12px;
+              border: none;
+              &:focus{
+                border: none;
+              }
+            }
+        }
+      }
+    
+        tr.k-detail-row{
+          background-color: unset !important;
+          .k-detail-cell{
+            width: 100%;
+            padding: 0;
+          }
+          &:hover{
+            background-color: unset !important;
+          }
+        }
+
+        
+
+    }
+   
+  }
+  
+      
+
+  app-p-kendo-grid.scrollable {
+    .k-grid {
+      .k-grid-aria-root {
+        overflow-x: auto;
+      }
+      table {
+        min-width: 720px !important;
+      }
+      //đặt lại more action btn absolute theo table relative
+      tr {
+        position: initial;
+
+        // td,
+        // th {
+        //   &:last-child {
+        //     // position: absolute;
+        //     position: sticky;
+        //     top: initial;
+        //     margin-top: calc(1% - 10px);
+        //   }
+        // }
+      }
+    }
+  }
+  .k-grid-filter-popup.k-popup {
+    min-width: fit-content;
+
+    .k-filter-menu {
+      //giấu nút Clear, Filter của kendo
+      p-kendo-grid-dropdownlist {
+        + .k-actions,
+        + .k-action-buttons,
+        + .k-columnmenu-actions {
+          display: none;
+        }
+
+        .k-widget {
+          margin: 0;
+        }
+      }
+      //giấu extra filter menu của kendo
+      .k-filter-menu-container {
+        width: fit-content;
+
+        :first-child {
+          :first-child + .k-filter-and.k-widget.k-dropdown.k-header {
+            display: none;
+          }
+          :first-child + .k-filter-and.k-widget.k-dropdown.k-header + kendo-grid-numeric-filter-menu-input {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+  kendo-grid-filter-menu-container {
+    .k-dropdownlist,
+    .k-dropdowntree,
+    .k-combobox {
+      height: 32px;
+      // width: 130px;
+      min-width: fit-content;
+      border-radius: 3px;
+      border: 1px solid #dbdee7;
+      outline: none;
+      box-shadow: 1px 3px 6px 1px rgba($gray-500, 0.2);
+      background: white;
+      display: flex;
+
+      .k-input-values {
+        height: 100%;
+        width: 100%;
+        display: flex;
+      }
+      .k-input-inner {
+        // border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 3px;
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        width: -webkit-fill-available;
+        padding: 4px;
+        white-space: nowrap;
+
+        .k-input-value-text {
+          display: flex;
+          align-items: center;
+          column-gap: 4px;
+        }
+      }
+
+      .k-button,
+      .k-button.k-button-flat {
+        display: flex;
+        box-shadow: none;
+        background-color: inherit;
+        color: inherit;
+        height: 100%;
+        border: none;
+
+        &:hover {
+          border: none;
+        }
+      }
+
+      kendo-popup {
+        border: 1px solid $dark-green;
+      }
+
+      &.k-state-hover,
+      &.k-hover,
+      &:hover,
+      &:focus,
+      &.k-focus {
+        border: 1px solid $dark-green;
+
+        // .k-input-inner {
+        //   border: 1px solid $dark-green;
+        // }
+
+        kendo-popup {
+          border: 1px solid $dark-green;
+        }
+      }
+
+      &.k-state-disabled,
+      &.k-disabled,
+      &.k-widget[disabled] {
+        // opacity: 1;
+        background-color: $gray-100;
+        cursor: not-allowed;
+      }
+
+      &[ng-reflect-disabled="true"],
+      &[disabled],
+      &.k-state-disabled,
+      &.k-disabled {
+        background-color: $gray-100;
+        cursor: not-allowed;
+      }
+      //dùng cho tree
+      kendo-popup {
+        ul,
+        .k-treeview-group {
+          margin: 0;
+          padding: 0;
+          padding-left: 33px;
+        }
+
+        ul.k-treeview-lines {
+          padding-left: 0;
+        }
+
+        li,
+        .k-treeview-item {
+          list-style: none;
+
+          .k-checkbox {
+            margin-right: 0;
+          }
+        }
+        .k-treeview-top,
+        .k-treeview-mid,
+        .k-treeview-bot {
+          white-space: nowrap;
+          height: 32px;
+          padding: 4px;
+          display: flex;
+          align-items: center;
+
+          &.k-state-hover,
+          &.k-hover,
+          &:hover {
+            color: white;
+            background-color: rgba($dark-green, 0.5);
+            cursor: pointer;
+
+            img {
+              filter: brightness(0) saturate(100%) //chuyển thành màu đen
+                invert(100%) sepia(91%) saturate(0%) hue-rotate(320deg) brightness(103%) contrast(105%); //đổi màu;
+            }
+          }
+
+          &.k-selected,
+          &.k-state-selected {
+            color: white;
+            background-color: $dark-green;
+          }
+
+          .k-icon {
+            background-color: transparent;
+            color: inherit;
+          }
+
+          img {
+            margin-right: 12px;
+            margin-left: 10px;
+          }
+        }
+      }
+    }
+
+    kendo-grid-numeric-filter-menu {
+      display: flex;
+      flex-direction: column;
+      padding: 4px;
+
+      kendo-numerictextbox {
+        .k-input-inner {
+          overflow: hidden;
+        }
+      }
+    }
+  }
+  //grid
+  .rowMoreActionPopup .k-popup,
+  .rowMoreActionPopup.k-popup {
+    cursor: pointer;
+    border-radius: 3px 0 0 3px;
+    overflow: hidden;
+
+    .popup-item {
+      &:first-of-type {
+        border-radius: 3px 0 0 0;
+      }
+      // &:nth-last-child(2) {
+      //   border-radius: 0 0 3px 3px;
+      // }
+      &:last-of-type {
+        border-radius: 0 0 3px 3px;
+      }
+
+      &:only-of-type {
+        border-radius: 3px 0 0 3px;
+      }
+      // &:first-child:nth-last-child(2) {
+      //   border-radius: 3px 0 3px 3px;
+      // }
+    }
+    .k-link {
+      padding: 0;
+    }
+    .popup-item {
+      min-width: 147px;
+      height: 30px;
+      padding: 0 9px;
+      // border-radius: 3px;
+      box-shadow: 0px 5px 6px rgba(90, 98, 118, 0.302);
+      color: white;
+      background-color: $blue-gray;
+      border: transparent;
+      width: 100%;
+
+      &:hover {
+        background-color: $gray-700;
+        outline: none;
+      }
+      span {
+        height: 100%;
+        display: inline-block;
+      }
+      .k-icon {
+        font-size: 20px;
+        margin-right: 11px;
+        padding: 0;
+
+        &::before {
+          vertical-align: middle;
+        }
+      }
+      .popup-item-text {
+        &:first-letter {
+          text-transform: capitalize;
+        }
+      }
+    }
+  }
+}

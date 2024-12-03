@@ -1,0 +1,443 @@
+@import "../../../../../assets/scss/variable.scss";
+
+
+
+::ng-deep {
+
+  //css cho dropdowntree header2
+ 
+    .k-treeview{
+      .k-treeview-leaf {
+        padding-left: 10px !important;
+        .k-treeview-leaf-text img{
+          padding-right: 10px;
+        }
+      }
+  }
+  
+  // end
+  #developer003-api-list {
+        // padding-right: 27px;
+        // padding-left: 5px;
+        // height: calc(100% - 30px);
+  
+        .mat-drawer-content {
+          height: 100%;
+          padding: 0 15px;
+        }
+
+        
+        
+
+        //dialog confirm
+        .dialogAPI{
+          .k-dialog-content {
+            font-size: 16px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+          }
+        }
+
+        //popup on tree
+        .stylePopup{
+          .k-popup{
+            width: 150px;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            padding: 0px 0px;
+            font-size: 14px;
+            .popup-item{
+              color: #ffffff;
+              background-color: #bdc2d2;
+              padding: 6px 8px !important;
+              padding-right: 32px !important;
+              span{
+                padding: 3px 5px !important;
+              }
+              &:hover{
+                cursor: pointer;
+                background-color: #5c6873;
+              }
+            }
+          }
+        }
+        
+        //treeview
+        // .k-treeview-item{
+        //   .k-treeview-top{
+        //     padding: 0 10px;
+        //   }
+        // }
+  
+        // Header \\
+        .header {
+          overflow-x: scroll;
+          // overflow-y: hidden;
+          gap: 30px;
+          .breadcumb{
+            min-width: 250px;
+            .k-breadcrumb-container{
+                padding-left: 0 !important;
+            }
+          }
+          .nav-crud {
+            margin-left: auto;
+            margin-top: auto;
+            .onAddBtn {
+              height: 32px;
+              margin-top: auto;
+              background-color: $dark-green;
+              color: white;
+              font-size: 11px;
+              font-weight: bold;
+            }
+          }
+        }
+        .header-2{
+          .dropdown-module{
+            .k-dropdowntree {
+              width: 350px;
+          
+            }
+          }
+        }
+       
+       
+  
+      //TREELIST STYLES
+      .treelist-wrapper {
+        margin-top: 8px;
+        
+        .k-treelist.k-grid {
+          // background-color: #edeff3 !important;
+          border-width: unset !important;
+          border-style: unset !important;
+  
+          .k-grid-aria-root {
+            height: calc(100vh - 225px) !important;
+          }
+          // .k-table-thead{
+          //   display: none;
+          // }
+  
+          // .k-grid-container {
+          //   // max-height: calc(100vh - 170px);
+          // }
+  
+          .k-grid-content {
+            overflow-x: hidden !important;
+            background-color: unset;
+          }
+  
+          .child-text {
+            margin-left: 20px;
+          }
+  
+          td {
+            padding: unset;
+            .iconImg{
+              padding: 0 15px
+            }
+            &:first-child{
+              .k-icon.k-i-none,
+              kendo-icon {
+                width: 32px;
+              }
+            }
+          }
+  
+          tr.k-alt {
+            background-color: white;
+          }
+  
+          //selected item
+          tr.k-selected {
+            background-color: rgba(26, 102, 52, 1) !important;
+            position: relative !important;
+  
+            .text-name,
+            .text-id,
+            .k-button {
+              color: white;
+            }
+            .btn-action{
+              border-left: 1px solid white;
+            }
+  
+            img[src*="icon"] {
+              filter: brightness(0) saturate(100%) //chuyển thành màu đen
+                invert(100%) sepia(91%) saturate(0%) hue-rotate(320deg) brightness(103%) contrast(105%); //đổi màu;
+            }
+          }
+  
+          tr.k-selected > td {
+            background-color: unset;
+            .k-icon,span{
+              color: white !important;
+            }
+          }
+  
+          tr {
+            background-color: white !important;
+            .btn-action,.test{
+              border-left: 1px solid #BDC2D2;
+              .horizontal{
+               display: flex;
+               justify-content: center;
+               align-items: center;
+              }
+            }
+            
+            &:hover {
+              background-color: rgba(26, 102, 52, 0.33) !important;
+              td{
+                .k-icon,span{
+                  color: #5A6276;
+                }
+              }
+              .btn-action{
+                border-left: 1px solid white;
+              }
+            }
+            
+  
+            td {
+              border-width: 0px;
+              margin-right: 30px;
+              &:first-child{
+                // width: 350px;
+                // max-width: 400px;
+                .k-icon {
+                  padding-left: 23px;
+                  height: 32px;
+                  width: 32px;
+                  &[class*="caret"]:hover {
+                    cursor: pointer;
+                  }
+              }
+              span{
+                color: #5A6276;
+                font-weight: 700;
+              }
+            }
+             
+              &:last-child {
+                // padding-left: 3px;
+                text-overflow: unset;
+                overflow: unset;
+                .k-button {
+                  border: none;
+                  background: none;
+                  box-shadow: none;
+                  width: 32px;
+                  height: 32px;
+  
+                  &:active,
+                  &:hover,
+                  &.k-hover,
+                  &:focus,
+                  &.k-focus {
+                    background: #bdc2d2 !important;
+                  }
+  
+                  kendo-icon-wrapper {
+                    width: 100%;
+  
+                    .k-button-icon {
+                      position: static;
+                    }
+                  }
+                }
+              }
+              //span databinding
+              .vietnameseModule{
+                width: 400px !important;
+              }
+              .apiName,.apiID,.serverURL,.remark{
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                word-wrap: break-word;
+                white-space: normal;
+                padding-right: 15px;
+              }
+              .apiName{
+                padding-right: 0;
+              }
+              .noHasAPI{
+                display: none;
+              }
+            }
+          }
+  
+          .k-grid .k-table-tbody > .k-table-row:not(.k-detail-row):hover,
+          .k-grid .k-table-tbody > .k-table-row:not(.k-detail-row).k-hover {
+            background-color: unset !important;
+          }
+  
+          .k-grid-table {
+            border-collapse: collapse !important;
+          }
+  
+          .k-grid-table {
+            border-color: unset !important;
+            border-block-end-width: unset !important;
+            border-inline-start-width: unset !important;
+            border-style: unset !important;
+            padding-inline: unset;
+            padding-block: unset;
+            // padding-top: 20px;
+            // padding-bottom: 16px;
+            height: 58px;
+            width: 100%;
+  
+            &:last-child {
+              border-left: 1px solid #edeff3 !important;
+              text-align: center;
+              height: 58px;
+            }
+  
+            .box-icon {
+              cursor: pointer;
+              height: 24px;
+              text-align: center;
+            }
+          }
+  
+          .k-text-nowrap {
+            display: flex;
+            align-items: center;
+            height: 100%;
+          }
+  
+          tr {
+            border-top: 4px solid #edeff3 !important;
+            border-bottom: 4px solid #edeff3 !important;
+            position: relative !important;
+            height: 58px;
+          }
+  
+          .k-icon {
+            height: 100%;
+          }
+  
+          .menu-wrapper {
+            position: absolute;
+            right: 2.5%;
+            top: 26%;
+            z-index: 2;
+          }
+        }
+      }
+
+      //form - drawer
+      .mat-drawer{
+        padding: 0 !important;
+        height: 100%; transition: none !important;
+        textarea{
+          min-height: 0;
+        }
+        .formInfoAPI{
+          padding: 0 !important;
+          .impose{
+            font-weight: 700;
+            color: $bad-red;
+          }
+          fieldset{
+            margin-right: 0 !important;
+            legend{
+              padding: 10px !important ;
+              position: fixed;
+              z-index: 1;
+              background-color: white
+            }
+            .formAPI{
+              padding: 10px 15px;
+              margin-top: 50px;
+              margin-bottom: 20px;
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+              .item{
+                .label{
+                  color: #343A40;
+                  font-weight: 700;
+                  padding-bottom: 5px;
+                }
+              }
+              .item1{
+                .end-use{
+                  display: flex;
+                  justify-content: space-between;
+                  padding-bottom: 5px;
+                  .label-checkbox{
+                    cursor: pointer;
+                  }
+                  .idApi{
+                    color: $dark-green;
+                  }
+                  .k-checkbox{
+                    margin-right: 0 !important;
+                  }
+                }
+              }
+              .item2{
+                .k-dropdowntree{
+                  .k-clear-value{
+                    display: none;
+                  }
+                  .k-treeview{
+                    .k-treeview-leaf {
+                      padding-left: unset !important;
+                      .k-treeview-leaf-text img{
+                        padding-right: unset !important;
+                      }
+                    }
+                }
+                }
+              }
+              .item6{
+                .customized-textarea{
+                  textarea{
+                    height: 90px !important;
+                  }
+                }
+              }
+              .item7{
+                .customized-input{
+                  width: 150px;
+                  .k-input-inner{
+                    text-align: left;
+                  }
+                }
+              }
+            }
+          }
+          .k-form-buttons{
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);;
+             width: 100%;
+             display: flex;
+             flex-direction: row;
+             bottom: 30px !important;
+             background-color: white;
+             height: 50px;
+             align-items: center;
+             .k-button:first-child{
+               margin-left: 15px;
+             }
+             .closeBtn{
+               background-color: $white;
+               color: $dark-green;
+               box-shadow: #343A40;
+             }
+           }
+        }
+    }
+  }
+}

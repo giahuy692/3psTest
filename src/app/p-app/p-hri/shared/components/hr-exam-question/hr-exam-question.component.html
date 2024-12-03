@@ -1,0 +1,201 @@
+<div class="question-item-container" id="question-{{ index }}">
+  <!-- Thứ tự câu hỏi -->
+  <div class="question-index">
+    <p
+      class="index-text"
+      [ngClass]="{
+        'answered': isQuestionSelectedAnswer,
+        'appealed': isQuestionReviewed,
+      }"
+    >
+      Câu {{ index }}
+    </p>
+    <div class="answered-question-wrapper " *ngIf="isShowFinalMarkQuestion" [ngClass]="{'markOld': isShowFinalMarkAppeal && question?.ListReEval.length > 0 && question?.ListReEval[0].Reason !== ''}">
+      (
+      <p class="answered-quantity">
+        {{ (question?.FinalMark | number: '1.2-2') || 0}}
+      </p>
+      <p class="total-question">
+        /{{ (question?.MaxMark | number: '1.2-2') || 0 }} đ
+      </p>
+      )
+    </div>
+    <div class="markAppeal" *ngIf="isShowFinalMarkAppeal && question?.ListReEval.length > 0 && question?.ListReEval[0].Reason !== ''" [ngStyle]="{'margin-left': windowWidth < 768 ? 'auto' : ''}">
+      <span class="title">{{windowWidth > 500 ? 'Điểm phúc khảo: ' : null}}</span>
+      (
+      <p class="answered-quantity">
+        {{ (question?.ListReEval[0]?.FinalMark | number: '1.2-2') || 0 }}
+      </p>
+      <p class="total-question">
+        /{{ (question?.MaxMark | number: '1.2-2') || 0}} đ
+      </p>
+      )
+    </div>
+
+    <kendo-button
+      class="btnAppeal"
+      title="Bấm vào để để có thể điền lý do phúc khảo cho câu hỏi này"
+      (click)="onButtonClick()"
+      id="btn-{{ index }}"
+      *ngIf="showAppeal == false && allowShowBtnAppeal && isQuestionAppeal"
+      >Phúc khảo</kendo-button
+    >
+  </div>
+  <div class="examQuestion">
+    <div class="question-info">
+      <div
+        *ngIf="
+          question?.Remark !== null &&
+          question?.Remark !== '' &&
+          (isRemarkShow || question['showRemark'])
+        "
+        class="font-weight-bold"
+      >{{question.Remark}}</div>
+      <div
+        *ngIf="
+          question?.Question !== null &&
+          question?.Question !== '' &&
+          (isQuestionDetailShow || question['showQuestionDetail'])
+        "
+        class="font-weight-bold"
+        [innerHTML]="htmlQuestion"
+      ></div>
+      <span *ngIf="question?.TypeOfQuestion === 3 && question?.Min && question?.Max" class="colorBlueGray">
+        (Câu trả lời không ít hơn {{question?.Min}} và không vượt quá {{question?.Max}} ký tự. Hiện bạn đã nhập vào {{question?.Answer?.length}} ký tự)</span>
+      <div class="answer-list">
+        <ng-container *ngFor="let answer of listAnswerQuestion; let i = index">
+          <!-- One choice -->
+          <div
+            class="answer-item"
+            *ngIf="
+              question?.TypeOfQuestion === 1 || question?.TypeOfQuestion === 4
+            "
+          >
+            <!-- icon correct  -->
+            <span
+              kendoButton
+              *ngIf="isViewCorrect && answer?.IsRight == true"
+              class="checkbox-icon"
+              imageUrl="assets/img/icon/icon_check_right.svg"
+            ></span>
+            <!-- icon incorrect  -->
+            <span
+              kendoButton
+              *ngIf="isViewInCorrect && answer?.IsRight == false"
+              class="checkbox-icon"
+              imageUrl="assets/img/icon/icon_check_wrong.svg"
+            ></span>
+            <div class="selection-wrapper d-flex align-items-center">
+              <input
+                [id]="'radio' + i + index"
+                [disabled]="disabledOneChoice"
+                type="radio"
+                [checked]="answer?.Selected"
+                [name]="question?.Code"
+                (change)="onSelectAnswer(question, answer)"
+                class="k-radio k-radio-md"
+                id="radioButtonName"
+              />
+              <label [for]="'radio' + i + index" class="answer-name mb-0">{{
+                answer?.Answer
+              }}</label>
+            </div>
+          </div>
+          <!-- Multiple choices -->
+          <div class="answer-item" *ngIf="question?.TypeOfQuestion === 2">
+            <span
+              kendoButton
+              *ngIf="isViewCorrect && answer?.IsRight == true"
+              class="checkbox-icon"
+              imageUrl="assets/img/icon/icon_check_right.svg"
+            ></span>
+            <span
+              kendoButton
+              *ngIf="isViewInCorrect && answer?.IsRight == false"
+              class="checkbox-icon"
+              imageUrl="assets/img/icon/icon_check_wrong.svg"
+            ></span>
+            <div class="selection-wrapper d-flex align-items-center">
+              <input
+                [id]="'multiple' + i + index"
+                [disabled]="disabledMultiple"
+                type="checkbox"
+                kendoCheckBox
+                [(ngModel)]="answer.Selected"
+                (change)="onSelectAnswer(question, answer)"
+              />
+              <label [for]="'multiple' + i + index" class="answer-name mb-0">{{
+                answer?.Answer
+              }}</label>
+            </div>
+          </div>
+        </ng-container>
+        <!-- Essay -->
+        <div class="answer-item flex-column" *ngIf="question?.TypeOfQuestion === 3">
+          <app-p-textarea
+            #essayAnswerInput
+            id="aessay-answer-{{ index }}"
+            class="essay-answer-input"
+            [tabindex]="index"
+            [readonly]="readonlyEssay"
+            [(ngModel)]="question.Answer" 
+            [propName]="'Answer'" [resizable]="'vertical'"
+            (blur)="onSelectAnswer(question)"
+            (valueChange)="onValueChangeEssay(question)"
+          ></app-p-textarea>
+          <div class="reponseQuizMarking align-self-baseline pt-2" *ngIf="isShowFinalMarkQuestion  && question.Comments">
+            <label class="title">Nhận xét của người chấm</label>
+            <p class="comments">{{question.Comments}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="appealWapper" *ngIf="isAppeal || showAppeal">
+      <ng-container *ngFor="let x of question?.ListReEval; let idx = index">
+        <div class="requestAppeal my-3">
+            <div class="appealHeader d-flex align-items-center  pb-2">
+              <div class="d-flex align-items-center">
+                <label
+                  for="appealRequest"
+                  class="title"
+                  id="appealRequest-{{ index }}"
+                  [tabindex]="index"
+                  >Lý do yêu cầu phúc khảo</label
+                >
+              </div>
+              <label for="appealRequest" class="time">{{x?.CreatedTime | date : "dd/MM/yyyy HH:mm" : "Indochina Time" : "vi_VN"}}</label>
+            </div>
+            <app-p-textarea [propName]="'Reason'"
+              id="appealRequestMobile-{{ idx + index }}"
+              class="appealTextBox" [(ngModel)]="x.Reason" 
+              [placeHolder]="'Lý do yêu cầu phúc khảo...'"  
+              [readonly]="readOnlyQuestionAppeal" [resizable]="'vertical'"
+              (blur)="onBlurAppeal(x)"
+              (valueChange)="onValueChangeAppeal(x)"
+              ></app-p-textarea>
+        </div>
+        <div
+          class="responseAppeal"
+          [ngStyle]="{ 'padding-left': true ? '30px' : '0' }"
+          [hidden]="!x?.Reply"
+        >
+          <div class="appealHeader d-flex">
+            <label for="appealResponse" class="title">Phản hồi</label>
+            <label for="appealResponse" class="time">{{x?.LastModifiedTime | date : "dd/MM/yyyy HH:mm" : "Indochina Time" : "vi_VN"}}</label>
+          </div>
+          <!-- <app-p-textarea
+            id="appealResponse"
+            [propName]="'Reply'"
+            class="appealTextBox"
+            [(ngModel)]="x.Reply"
+            [readonly]="true"
+          ></app-p-textarea> -->
+          <p id="appealResponse" class="appealTextBox">{{x.Reply}}</p>
+        </div>
+
+      </ng-container>
+
+    </div>
+  </div>
+</div>
+

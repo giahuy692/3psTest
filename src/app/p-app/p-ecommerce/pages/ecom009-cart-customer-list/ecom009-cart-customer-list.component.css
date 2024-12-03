@@ -1,0 +1,159 @@
+::ng-deep .app-ecom009-cart-customer-list {
+  height: calc(93vh - 30px);
+  padding: 0 15px 35px 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .header .nav-crud {
+  flex-grow: 1;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .header .nav-filter .filter-btn-group.search-btn-group .search-btn .k-textbox {
+  width: 385px;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .header .nav-filter .filter-btn-group.date-btn-group {
+  position: relative;
+  width: 150px;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .header .nav-filter .filter-btn-group.date-btn-group .label {
+  white-space: nowrap;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .header .nav-filter .filter-btn-group.date-btn-group .k-datepicker {
+  width: 150px;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .header .nav-filter .filter-btn-group.date-btn-group .k-i-close {
+  position: absolute;
+  left: 100px;
+  bottom: 15%;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: lightgrey;
+  color: white;
+  font-size: 13px;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .header .nav-filter .filter-btn-group.date-btn-group .k-i-close:hover {
+  background-color: gray;
+  color: lightgrey;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .header .nav-filter .filter-btn-group.hachi24-btn-group #hachi_24_btn {
+  border: none;
+  background: none;
+  box-shadow: none;
+  padding-left: 0;
+  margin-left: 8px;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .header .nav-filter .filter-btn-group.hachi24-btn-group #hachi_24_btn .k-checkbox {
+  margin-left: 0;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .header .nav-file {
+  margin-left: auto;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .grid.scrollable .k-grid .k-grid-aria-root {
+  overflow-x: auto;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .grid.scrollable .k-grid table {
+  width: 1370px;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .grid.scrollable .k-grid tr {
+  position: initial;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .grid.scrollable .k-grid tr td:last-child,
+::ng-deep .app-ecom009-cart-customer-list .grid.scrollable .k-grid tr th:last-child {
+  position: absolute;
+  top: initial;
+  margin-top: calc(1% - 10px);
+}
+
+::ng-deep .app-ecom009-cart-customer-list .k-grid thead tr {
+  height: fit-content !important;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .k-grid thead tr th {
+  padding: 0 12px;
+  height: 13px;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .k-grid tr:not(.k-grouping-row) td:first-child {
+  padding-left: 10px !important;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .k-grid .col_img_tensanpham_masanpham {
+  max-width: 200px;
+  width: 200px;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .k-grid .img_tensanpham_masanpham {
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .k-grid .img_tensanpham_masanpham img {
+  max-height: 64px;
+  max-width: 64px;
+  width: 100%;
+  margin-right: 10px;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .k-grid .img_tensanpham_masanpham .tensanpham_masanpham {
+  height: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .k-grid .img_tensanpham_masanpham .tensanpham_masanpham .tensanpham {
+  white-space: normal;
+  font-weight: 700;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .k-grid .col_createdBy .gray,
+::ng-deep .app-ecom009-cart-customer-list .k-grid .col_shipper .gray {
+  color: #8f9ba6;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .k-grid .col_shipper .gray {
+  min-width: 200px;
+  white-space: normal;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .k-grid .col_tinhTrang .red {
+  color: #EB273A;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .k-grid .col_tinhTrang .green {
+  color: #1a6634;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .k-grid .col_soLuong {
+  text-align: right;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .k-grid .col_soLuong > .k-link {
+  justify-content: flex-end;
+}
+
+::ng-deep .app-ecom009-cart-customer-list .k-grid .col_ghiChu .remark {
+  padding-right: 50px;
+  max-width: 250px;
+  width: 250px;
+  white-space: normal;
+}

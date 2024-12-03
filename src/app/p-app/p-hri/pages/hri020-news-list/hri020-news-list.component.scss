@@ -1,0 +1,176 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+    app-hri020-news-list {
+        .text-ellipsis {
+            line-height: 1.2em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            white-space: normal;
+        }
+
+        .bold {
+            font-weight: 700;
+        }
+
+        .he-20 {
+            height: 20px;
+        }
+
+        .app-hri020-news-list {
+            padding: 0 15px 0 20px;
+
+            // HEADER 
+            .header-1 {
+                justify-content: space-between;
+
+                app-p-kendo-breadcrumb {
+                    min-width: 340px;
+                }
+            }
+
+
+            .header-2 {
+                .filter-Categories {
+                    .k-multiselect {
+                        min-width: 220px;
+                        max-width: 480px;
+                        // width: 270px;
+
+                        .k-animation-container {
+                            .k-child-animation-container {
+                                .popupClass {
+                                    .category-container {
+                                        width: 100%;
+
+                                        display: grid;
+                                        grid-template-columns: auto 30px;
+                                        align-items: center;
+                                        padding-left: 4px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
+
+
+
+            // GRID
+            .grid-wrapper {
+                margin-top: 0px;
+                height: calc(100vh - 212px) !important;
+
+                app-p-kendo-grid {
+                    .myCustomGrid {
+                        height: calc(100vh - 216px) !important;
+
+                        .k-grid-aria-root {
+                            .k-table {
+
+                                // table heade
+                                .k-table-thead {
+                                    .k-table-row {
+                                        color: #5A6276;
+
+                                        .col_statusName {
+                                            .k-cell-inner {
+                                                .k-link {
+                                                    justify-content: flex-end;
+                                                    margin-right: 5px;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                                // table body
+                                .k-table-tbody {
+                                    .k-table-row {
+                                        .k-table-td {
+                                            &:first-child {
+
+                                                padding-left: 12px;
+                                            }
+
+                                            &.col_namePost {
+                                                // width: 550px;
+                                                width: 20vw;
+
+                                                .namePost {
+                                                    color: #26282E;
+                                                    font-weight: 700;
+                                                }
+
+                                                .des {
+                                                    color: #26282E;
+                                                    line-height: 20px;
+                                                    max-width: 30vw;
+                                                    overflow: hidden;
+                                                    text-overflow: ellipsis;
+                                                }
+
+                                                .cateGroup {
+                                                    color: #5A6276;
+
+
+
+                                                    .cate {
+                                                        font-weight: 400;
+                                                    }
+                                                }
+                                            }
+
+
+                                            &.col_statusName {
+                                                text-align: right;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+
+                        }
+                    }
+                }
+            }
+        }
+
+        // Dialoag Edit Category
+        .editCategoryDialog {
+            .container {
+                column-gap: 0 !important;
+                display: block !important;
+
+                .info-container {
+                    align-items: normal !important;
+
+                    .info {}
+
+                    .action {
+                        padding-top: 5px;
+                        flex-direction: row !important;
+                        justify-content: space-between;
+
+                        .closeBtn {
+                            width: 95px;
+                        }
+
+                        .updateBtn {
+                            width: 120px;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+}

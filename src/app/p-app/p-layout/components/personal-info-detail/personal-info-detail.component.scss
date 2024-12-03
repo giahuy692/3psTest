@@ -1,0 +1,635 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    .personal-info-detail{
+        .sections {
+            padding-bottom: 100px;
+
+            .section {
+
+                .title {
+                    margin-top: 12px;
+                    font-weight: bold;
+                }
+
+                .section-grid {
+                    margin-top: 5px;
+                    background-color: $white;
+                    padding: 15px;
+                    display: grid;
+                    overflow-x: scroll;
+                    grid-template-columns: 300px 300px auto;
+                    grid-template-rows: repeat(4, auto);
+
+                    .grid-item {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+
+                        kendo-label {
+                            font-weight: 700;
+                        }
+
+                        kendo-dropdownlist {
+                            width: 270px;
+                            margin-top: 10px;
+
+                            &:hover {
+                                outline: 1px solid #1a6634;
+                                border-color: rgba(0, 0, 0, 0.16);
+                            }
+
+                            &:focus {
+                                outline: 1px solid #1a6634;
+                                border-color: rgba(0, 0, 0, 0.16);
+                            }
+                        }
+
+                        .k-input-inner {
+                            display: flex;
+                        }
+
+                        body .Bps [class*=caret][class*=down]::before {
+                            color: #959DB3;
+                        }
+
+                        kendo-maskedtextbox {
+                            border: 1px solid lighten($gray-base, 80%);
+                            margin-top: 2px;
+                            border-radius: 3px;
+                            width: 270px;
+
+                            &:hover {
+                                outline: 1px solid #316e00;
+                                ;
+                            }
+
+                            &:focus {
+                                outline: 1px solid #316e00;
+                                ;
+                            }
+                        }
+
+                        .k-textbox,
+                        .k-dropdown {
+                            margin-top: 10px;
+                            width: 270px;
+                            display: flex;
+                        }
+
+                        .k-icon .k-i-arrow-s {
+                            color: lighten($gray-base, 80%);
+                        }
+
+                        .box {
+                            width: 400px;
+                        }
+
+                        .k-textbox {
+                            &:focus {
+                                border-color: rgba($gray-500, 0.4);
+                            }
+                        }
+
+                        kendo-datepicker {
+
+                            &:hover {
+                                outline: 1px solid #1a6634;
+                                border-color: rgba(0, 0, 0, 0.16);
+                            }
+
+                            &:focus {
+                                outline: 1px solid #1a6634;
+                                border-color: rgba(0, 0, 0, 0.16);
+                            }
+
+                            button {
+                                border-left: none;
+                                background-color: rgba(255, 255, 255, 1);
+
+                                &:hover {
+                                    outline: none;
+                                    border-color: rgba(0, 0, 0, 0.16);
+                                }
+
+                                &:focus {
+                                    outline: none;
+                                    border-color: rgba(0, 0, 0, 0.16);
+                                }
+                            }
+
+                            .k-i-calendar::before {
+                                color: #959DB3;
+                            }
+
+                            .k-input-inner{
+                                text-align: left;
+                                color: black !important;
+                            }
+                        }
+
+                        kendo-dateinput {
+                            width: 240px;
+                            border-right: none;
+
+                            &:hover {
+                                outline: none;
+                                border-color: rgba(0, 0, 0, 0.16);
+                            }
+
+                            &:focus {
+                                outline: none;
+                                border-color: rgba(0, 0, 0, 0.16);
+                            }
+                        }
+
+                        .list-dropdownlist {
+                            display: flex;
+                            column-gap: 10px;
+
+                            .dropdownlist-year {
+                                .k-dropdown {
+                                    width: 100px;
+                                }
+                            }
+
+                            .dropdownlist-month {
+                                .k-dropdown {
+                                    max-width: 70px;
+                                }
+                            }
+
+                            .changeSize {
+                                .k-dropdown {
+                                    max-width: 110px !important;
+                                }
+                            }
+
+                            .dropdownlist-date {
+                                .k-dropdown {
+                                    max-width: 75px;
+                                }
+                            }
+                        }
+
+                        .k-numerictextbox {
+                            .k-select {
+                                display: none !important;
+
+                            }
+
+                            input {
+                                text-align: left !important;
+                            }
+                        }
+
+                        .k-datepicker.k-widget {
+                            margin-top: 10px;
+                            width: 270px;
+                            border: 2px solid lighten($gray-base, 80%);
+
+                            .k-select {
+                                background-color: $white;
+                            }
+
+                            .k-picker-wrap.k-state-focused {
+                                box-shadow: none;
+                            }
+                        }
+
+                        .title-Checkbox {
+                            display: flex;
+
+                            input {
+                                margin: 0 10px;
+                            }
+                        }
+
+                        .BoxInternet {
+                            display: flex;
+
+                            .socialNetwork {
+                                margin-left: 5px;
+                                width: 100px;
+                            }
+                        }
+                    }
+
+                    .Scroll {
+                        .k-list {
+                            overflow-y: scroll;
+                        }
+                    }
+                }
+            }
+
+            .thongTinCoBan_tbl {
+                .title-block {
+                    display: flex;
+                    align-items: end;
+                    gap: 10px;
+
+                    .edit-text {
+                        font-style: italic;
+                        color: #0D99FF;
+                        cursor: pointer;
+
+                        &:hover{
+                            filter: brightness(110%);
+                        }
+                    }
+                }
+
+                .seperate-block {
+                    display: flex;
+                    background-color: white;
+
+                    .avatar-block {
+                        display: flex;
+                        flex-direction: column;
+                        min-width: 325px;
+                        width: 325px;
+                        align-items: center;
+                        justify-content: center;
+
+                        &.disable{
+                            pointer-events: none;
+                        }
+
+                        .avatar {
+                            margin: 10px 30px 0 0;
+                            display: flex;
+                            float: right;
+
+                            .btn-cancel {
+                                background-color: rgba($gray-500, 0.4);
+                                width: 25px;
+                                height: 25px;
+                                clip-path: polygon(100% 0, 0 0, 0 100%);
+                                box-shadow: none;
+                                border: none;
+                                position: relative;
+                                left: 15px;
+
+                                &:hover {
+                                    border: none;
+                                }
+
+                                .k-button-text {
+                                    margin: 0 10px 10px 0;
+                                    color: $worse-red;
+                                }
+                            }
+
+                            .img-avatar {
+                                border-radius: 50%;
+                                border: 1px solid rgba($gray-500, 0.4);
+                            }
+                        }
+
+                        .btn-updateAvt {
+                            font-size: 10px;
+                            font-weight: 400;
+                            color: $dark-green;
+                            border: none;
+                            box-shadow: none;
+
+                            &:hover {
+                                border: none !important;
+                            }
+                        }
+                    }
+
+                    overflow-x: auto;
+                }
+
+                .section-grid {
+                    overflow-x: unset;
+                    grid-template-columns: 300px 300px auto;
+
+
+                    .item1 {
+                        grid-column: 1;
+                        grid-row: 1;
+                    }
+
+                    .item2 {
+                        grid-column: 1;
+                        grid-row: 2;
+                    }
+
+                    .item3 {
+                        grid-column: 1;
+                        grid-row: 3;
+                    }
+
+                    .item4 {
+                        grid-column: 1;
+                        grid-row: 4;
+                    }
+
+                    .item5 {
+                        grid-column: 2;
+                        grid-row: 1;
+                    }
+
+                    .item6 {
+                        grid-column: 2;
+                        grid-row: 2;
+                    }
+
+                    .item7 {
+                        grid-column: 2;
+                        grid-row: 3;
+                    }
+
+                    .item8 {
+                        grid-column: 2;
+                        grid-row: 4;
+                    }
+
+                    .item9{
+                        width: fit-content;
+                    }
+
+                    .item10{
+                        width: fit-content;
+                    }
+
+                    .item11{
+                        width: fit-content;
+                    }
+
+                    .item12{
+                        width: fit-content;
+                    }
+
+                }
+            }
+
+            .thongTinChungThuVaThueTNCN_tbl {
+                .section-grid {
+                    .item1 {
+                        grid-column: 1;
+                        grid-row: 1;
+                    }
+
+                    .item2 {
+                        grid-column: 1;
+                        grid-row: 2;
+                    }
+
+                    .item3 {
+                        grid-column: 1;
+                        grid-row: 3;
+                    }
+
+                    .item4 {
+                        grid-column: 1;
+                        grid-row: 4;
+                    }
+
+                    .item5 {
+                        grid-column: 2;
+                        grid-row: 1;
+                    }
+
+                    .item6 {
+                        grid-column: 2;
+                        grid-row: 2;
+                    }
+
+                    .item7 {
+                        grid-column: 2;
+                        grid-row: 3;
+                    }
+
+                    .item8 {
+                        grid-column: 2;
+                        grid-row: 4;
+                    }
+
+                    kendo-datepicker{
+                        flex-direction: row !important;
+                        border-radius: 3px;
+                        outline: 1px solid rgba(0, 0, 0, 0.08) !important;
+
+                        &:hover{
+                            outline-color: #1a6634 !important; 
+                        }
+
+                        .k-dateinput{
+                            border-right: none !important;
+                        }
+
+                        .k-button{
+                            height: 30px;
+                            border-radius: 3px;
+                        }
+                    }
+                }
+            }
+
+            .vanHoaChuyenMonNgheNghiep {
+                .section-grid {
+                    .item1 {
+                        grid-column: 1;
+                        grid-row: 1;
+                    }
+
+                    .item2 {
+                        grid-column: 1;
+                        grid-row: 2;
+                    }
+
+                    .item3 {
+                        grid-column: 1;
+                        grid-row: 3;
+                    }
+
+                    .item4 {
+                        grid-column: 2;
+                        grid-row: 1;
+                    }
+
+                    .item5 {
+                        grid-column: 2;
+                        grid-row: 2;
+                    }
+                }
+            }
+
+            .thongTinLienHe {
+                .section-grid {
+                    .item1 {
+                        grid-column: 1;
+                        grid-row: 1;
+                    }
+
+                    .item2 {
+                        grid-column: 1;
+                        grid-row: 2;
+                    }
+
+                    .item3 {
+                        grid-column: 1;
+                        grid-row: 3;
+                    }
+
+                    .item4 {
+                        grid-column: 2;
+                        grid-row: 1;
+                    }
+
+                    .item5 {
+                        grid-column: 2;
+                        grid-row: 2;
+                    }
+
+                    .item6 {
+                        grid-column: 2;
+                        grid-row: 3;
+                    }
+                }
+            }
+
+            .diaChiCuTru {
+                .section-grid {
+                    background-color: $white;
+                    padding: 15px;
+                    display: grid;
+                    grid-template-columns: 500px 500px;
+                    grid-template-rows: repeat(4, auto);
+
+                    // height: 345px;
+                    .grid-item {
+                        .width500 {
+                            .k-textbox {
+                                width: 450px;
+                            }
+                        }
+
+                        .k-list {
+                            overflow-y: scroll;
+                        }
+                    }
+
+                    .item1 {
+                        grid-column: 1;
+                        grid-row: 1;
+                    }
+
+                    .item2 {
+                        grid-column: 1;
+                        grid-row: 2;
+                    }
+
+                    .item3 {
+                        grid-column: 1;
+                        grid-row: 3;
+                    }
+
+                    .item4 {
+                        grid-column: 1;
+                        grid-row: 4;
+                    }
+
+                    .item5 {
+                        grid-column: 1;
+                        grid-row: 5;
+                    }
+                }
+            }
+
+            .taiKhoanHeThong {
+                margin-bottom: 10px;
+                .seperate-container {
+                    display: flex;
+                    background-color: $white;
+                    padding: 15px;
+                    overflow-x: auto;
+
+                    .input-block {
+                        display: flex;
+                        flex-direction: column;
+                        width: 400px;
+                        gap: 10px;
+
+                        .security-input {
+                            kendo-label {
+                                font-weight: 700;
+                            }
+
+                            .k-input-inner {
+                                display: flex;
+                            }
+
+                            body .Bps [class*=caret][class*=down]::before {
+                                color: #959DB3;
+                            }
+
+                            .k-textbox {
+                                margin-top: 10px;
+                                width: 270px;
+                                display: flex;
+                            }
+
+                            .password-hidden-block {
+                                display: flex;
+                                gap: 10px;
+                                align-items: end;
+
+                                .icon-wrapper {
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    height: 32px;
+
+                                    .hidden-icon {
+                                        color: #959DB3;
+                                        opacity: 0.6;
+                                        font-size: 20px;
+                                        cursor: pointer;
+
+                                        &:hover {
+                                            opacity: 1;
+                                        }
+
+                                        &.isShown {
+                                            opacity: 1;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .company-block {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+
+                        kendo-label {
+                            font-weight: 700;
+
+                        }
+
+                        .company-list {
+                            display: flex;
+                            flex-direction: column;
+                        }
+                    }
+
+                }
+
+            }
+        }
+        
+        .confirm-dialog{
+            .k-window-content{
+                text-align: center;
+            }
+        }
+    }
+
+}

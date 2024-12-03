@@ -1,0 +1,554 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    .app-pur005-supplier-list{
+        // height: calc(100vh - #{$footer-height});
+        padding: 0 15px 0 20px;
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        .header{
+            overflow-x: scroll;
+            &.header-1{
+                justify-content: space-between !important;
+                .checkbox-button-group{
+                    app-checkbox-button-group{
+                        padding: 0 5px;
+                    }
+                }
+            }
+
+            &.header-2{
+                column-gap: 30px;
+                .Date-button-group{
+                    .label{
+                        color: $gray-700;
+                        font-family: $font-family;
+                        font-size: $font-size;
+                        font-weight: 700;
+                    }
+                    .button-group{
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        column-gap: 5px;
+                        .k-dropdownlist{
+                            width: 75px !important;
+                        }
+                    }
+                }
+            }
+
+            .nav-btn {
+                align-items: center;
+                .onAddBtn {
+                    height: 32px;
+                    margin-top: auto;
+                    background-color: $dark-green !important;
+                    color: white;
+                    font-size: 11px;
+                    font-weight: bold;
+                }
+            }
+        }
+
+        .treelist-wrapper{
+            min-height: fit-content;
+            color: $gray-900;
+            background-color: $gray-100;
+            border: none;
+            kendo-treelist{
+              height: calc(100vh - 226px) !important;
+                border: none;
+                .k-grid-aria-root{
+                  overflow: scroll !important;
+                  background: #f0f3f5 !important;
+                  .k-grid-header{
+                    padding: 0px !important;
+                    background-color: $gray-100;
+                    border: none;
+                  }
+                  table{
+                    width: 100%;
+                    border: none;
+                    border-spacing: 0 5px;
+                    background-color: $gray-100;
+                    thead {
+                      background: none;
+                      tr{
+                        th{
+                          border: none;
+                          padding: 0px;
+                          font-weight: 700;
+                        }
+                      }
+                    }
+                    tbody {
+                      tr {
+                        align-items: stretch;
+                        background-color: $white !important;
+                        td {
+                          border-color: transparent;
+                          .treelist--title {
+                            display: flex;
+                            align-items: center;
+                            font-weight: 400;
+                            column-gap: 130px;
+                            margin-left: 10px;
+                            .treelist--title_left {
+                              display: flex;
+                              align-items: center;
+                              column-gap: 19px;
+                              font-weight: 700;
+                            }
+                          }
+                        }
+                        td.col_tool{
+                          background: transparent;
+                          position: sticky !important;
+                          top: initial;
+                          right: 0;
+                          background: white;
+                          box-shadow: -3px 0px 3px 0px rgba(143, 155, 166, 0.2);
+
+                          .k-button {
+                            &:hover,
+                            &.k-hover,
+                            &:focus,
+                            &.k-focus {
+                              background: #bdc2d2 !important;
+                            }
+                          }
+                        }
+                      }
+                      tr:hover {
+                        background-color: rgba($dark-green, 0.4) !important;
+                        td.col_tool{
+                          background: transparent;
+                        }
+                      }
+                      .k-text-nowrap{
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        column-gap: 10px;
+                        width: 400px;
+                        .k-icon-wrapper-host{
+                          height: 16px;
+                        }
+                      }
+                    }
+                  }
+                  .headerCenterCustomClass{
+                    text-align: center;
+                  }
+                  kendo-treelist-list{
+                    .k-virtual-content {
+                      .k-grid-table-wrap {
+                        table {
+                          border-spacing: 0 5px;
+                          tbody {
+                            .k-selected {
+                              background-color: rgba(26, 102, 52, 0.8) !important;
+                              color: $white !important;
+                              ~ .k-i-collapse,
+                              .k-i-collapse,
+                              ~ .k-i-expand,
+                              .k-i-expand {
+                                filter: brightness(0) saturate(100%) invert(100%) sepia(0%)
+                                  hue-rotate(0deg) brightness(100%) contrast(100%);
+                              }
+            
+                              .tool {
+                                button {
+                                  color: $white;
+                                }
+                              }
+          
+            
+                              .treelist--title {
+                                .treelist--title_left {
+                                  span {
+                                    color: $white;
+                                  }
+            
+                                  i {
+                                    color: $white;
+                                  }
+                                }
+                                .treelist--right {
+                                  color: $white;
+                                }
+                              }
+            
+                              span{
+                                color: $white;
+                              }
+                              td{
+                                .statusName{
+                                  color: $white;
+                                }
+                              }
+                            }
+                            tr {
+                              // align-items: stretch;
+                              
+                              &:hover {
+                                background-color: rgba(26, 102, 52, 0.8) !important;
+                              }
+                              
+                              td {
+                                height: 58px;
+                                border-color: transparent;
+                                align-items: center;
+                                padding: 9px;
+                                &:first-child {
+                                  display: flex;
+                                  .k-icon.k-i-none,
+                                  kendo-icon {
+                                    width: 25px;
+                                  }
+                                }
+                                &:last-child {
+                                  border-left: 1px solid #bdc2d2;
+                                  .treelist-tool{
+                                    .k-dropdown-button{
+                                      button{
+                                        justify-content: center;
+                                      }
+                                    }
+                                  }
+                                }
+                                span.k-icon {
+                                  &::before {
+                                    display: none;
+                                  }
+                                }
+            
+                                .k-i-expand {
+                                  background-image: url(../../../../../assets/img/icon/icon_chevron_top.svg);
+                                  background-repeat: no-repeat;
+                                  background-size: inherit;
+                                  background-position: center;
+                                  width: 16px;
+                                  height: 16px;
+                                }
+            
+                                .k-i-collapse {
+                                  background-image: url(../../../../../assets/img/icon/icon_chevron_down.svg);
+                                  background-repeat: no-repeat;
+                                  background-size: inherit;
+                                  background-position: center;
+                                  width: 16px;
+                                  height: 16px;
+                                }
+                                .treelist--title {
+                                  display: flex;
+                                  align-items: center;
+                                  font-weight: 400;
+                                  column-gap: 75px;
+                                  margin-left: 10px;
+                                  .treelist--title_left{
+                                    display: flex;
+                                    align-items: center;
+                                    column-gap: 19px;
+                                    font-weight: 700;
+                            
+                                    span {
+                                      color: #5a6276;
+                                    }
+            
+                                    i {
+                                      color:  #959db3;
+                                    }
+            
+                                  }
+                                  .treelist--right {
+                                    color: #26282e;
+                                  }
+                                }
+                                .treelist-tool {
+                                  
+                                  .k-button {
+                                    &:hover,
+                                    &.k-hover,
+                                    &:focus,
+                                    &.k-focus {
+                                      background: #bdc2d2 !important;
+                                      color: #fff;
+                                    }
+                                  }
+                                    .k-button{
+                                      background-color: transparent;
+                                      .k-button-icon{
+                                        position: unset;
+                                        height: unset;
+                                      }
+                                    }
+            
+                                    .k-popup {
+                                      text-align: left;
+            
+                                      kendo-button {
+                                        .k-group {
+                                          .k-item {
+                                            .k-link{
+                                              align-items: unset;
+                                              .popup-item{
+                                                height: unset;
+                                                display: flex;
+                                                column-gap: 5px;
+                                                align-items: center;
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                  }
+                                  .selectedPopup{
+                                    background-color:$blue-gray;
+                                  }
+                                }
+                              }
+            
+                              td:nth-child(3){
+                                text-align: start;
+                              }
+                              td:nth-child(4){
+                                  text-align: center;
+                              }
+                              td:nth-child(5){
+                                  text-align: center;
+                              }
+                            }
+                            .k-grid-norecords{
+                              .k-table-td{
+                                display: table-cell !important;
+                                border: none;
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                    #functionbar {
+                      display: flex;
+                      justify-content: space-between;
+                      height: 75px;
+                      padding: 15px;
+                      overflow: hidden;
+                      line-height: 1;
+                      overflow-x: auto;
+            
+                      .buttonGroup {
+                        display: flex;
+                        gap: 10px;
+                        // min-width: 619px;
+                        margin-top: 20px;
+                      }
+                    }
+                  }
+                .k-grid-header .k-header:first-child{
+                    padding-left: 35px;
+                }
+                .k-grid-header .k-header:nth-child(2){
+                  padding-left: 12px;
+              }
+                .k-grid-header .k-header:nth-child(3){
+                    padding-left: 17px;
+                }
+                .fmDropdown{
+                  position: relative;
+                }
+              }
+                
+            }
+            .rowMoreActionPopup .k-popup,
+                .rowMoreActionPopup.k-popup {
+                  cursor: pointer;
+                  border-radius: 3px 0 0 3px;
+                  overflow: hidden;
+                  .popup-item {
+                    .imgUrl_popup{
+                      margin-right: 12px;
+                    }
+                  }
+                  .k-link {
+                    padding: 0;
+                  }
+                  .customPoppupItem{
+                    text-align: left;
+                    display: flex;
+                    align-items: center;
+                    column-gap: 10px;
+                  }
+                  .popup-item {
+                    min-width: 147px;
+                    height: 30px;
+                    padding: 0 9px;
+                    // border-radius: 3px;
+                    box-shadow: 0px 5px 6px rgba(90, 98, 118, 0.302);
+                    color: white;
+                    background-color: $blue-gray;
+                    border: transparent;
+                    width: 100%;
+              
+                    &:hover {
+                      background-color: $gray-700;
+                      outline: none;
+                    }
+                    span {
+                      padding-top: 3px;
+                      height: auto;
+                      display: inline-block;
+                    }
+                    .k-icon {
+                      font-size: 20px;
+                      margin-right: 11px;
+                      padding: 0;
+              
+                      &::before {
+                        vertical-align: middle;
+                      }
+                    }
+                    .popup-item-text {
+                      &:first-letter {
+                        text-transform: capitalize;
+                      }
+                    }
+                  }
+                }
+            .SupplierName{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: flex-start;
+                height: 45px;
+                width: 350px;
+                .Title{
+                  font-weight: 700;
+                  color: #26282E;
+                  width: 350px;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                }
+            }
+            .InvNo{
+                width: 120px ;
+                white-space: initial;      
+                overflow: hidden;
+                display: -webkit-inline-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                text-overflow: ellipsis;
+                max-height: 40px;
+                line-height: 20px;
+            }
+            .Address{
+              min-width: 250px;
+              padding-left: 5px;
+              white-space: initial;      
+              overflow: hidden;
+              display: -webkit-inline-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+              text-overflow: ellipsis;
+              max-height: 40px;
+              line-height: 20px;
+            }
+            .CountryName{
+              white-space: nowrap;
+            }
+        }
+
+        .CreateDialogPopup{
+          .k-dialog-titlebar{
+              background-color: $dark-green !important;   
+              .k-window-title{
+                  text-align: center;
+                  justify-content: center;
+              }
+          }
+          .k-window-content{
+            overflow: hidden;
+            .body_dialog{
+              .header{
+                padding-left: 5px;
+                border-bottom: none !important;
+                .filter-btn-group.clear-btn-group{
+                  display: none;
+                }
+              }
+              .popup{
+                min-height: fit-content;
+                height: calc(100vh - 240px);
+                color: $gray-900;
+                background-color: white !important;
+                border: none;
+                kendo-treelist{
+                  .k-grid-aria-root{
+                    .k-grid-header{
+                      padding: 0px !important;
+                      background-color: white !important;
+                    }
+                    .k-grid-header .k-header:first-child{
+                      padding-left: 0 !important;
+                    }
+                    table{
+                      background-color: white !important;
+                      tbody {
+                        tr {
+                          align-items: stretch;
+                          background-color: $gray-100 !important;
+                        
+                        }
+                        .k-text-nowrap{
+                          width: 180px !important;
+                        }
+                      }
+                    }
+                    .Title{
+                      word-wrap: break-word;
+                      font-weight: 700;
+                      color: #26282E;
+                      width: 200px;
+                      padding-left: 5px;
+                      white-space: initial;      
+                      overflow: hidden;
+                      display: -webkit-inline-box;
+                      -webkit-line-clamp: 2;
+                      -webkit-box-orient: vertical;
+                      text-overflow: ellipsis;
+                      max-height: 40px;
+                      line-height: 20px;
+                    }
+                    .Address{
+                      min-width: 140px;
+                    }
+                    .InvNoCustom{
+                      width: 90px !important;
+                      word-wrap: break-word;
+                      white-space: initial;      
+                      overflow: hidden;
+                      display: -webkit-inline-box;
+                      -webkit-line-clamp: 2;
+                      -webkit-box-orient: vertical;
+                      text-overflow: ellipsis;
+                      max-height: 40px;
+                      line-height: 20px;
+                    }
+                    .custom{
+                      padding: 0;
+                      margin: 0;
+                      border: none;
+                      min-width: 50px
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+    }
+}

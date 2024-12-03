@@ -1,0 +1,271 @@
+@import "../../../../../assets/scss/variable.scss";
+::ng-deep {
+    // component datepicker
+    .hr001-staff-detail {
+        height: calc(93vh - #{$footer-height});
+        display: flex;
+        flex-direction: column;
+        //header-btn-breadcrum
+        .header.header1 {
+            min-height: 48px;
+        }
+
+        //end header-btn-breadcrum
+
+        .body {
+            display: flex;
+            padding-bottom: 20px;
+            .body-right {
+                width: 100%;
+                padding: 0 10px;
+                overflow-y: scroll;
+                height: calc(93vh - #{$footer-height});
+                .symbol {
+                    padding-left: 3px;
+                    color: $dark-red !important;
+                }
+                .sections {
+                    padding-bottom: 40px;
+                    //grid tbl thongtinnhanvien
+
+                    .section {
+                        overflow-x: scroll;
+                        .k-textbox,
+                        .k-dropdownlist {
+                            width: 270px;
+                            .k-input-inner {
+                                max-width: 240px;
+                                overflow: hidden;
+                                border-right: none;
+                                border-top-right-radius: 0;
+                                border-bottom-right-radius: 0;
+                                &:hover {
+                                    border-right: none;
+                                }
+                            }
+                            .k-input-button {
+                                border-left: none;
+                                border-top-left-radius: 0;
+                                border-bottom-left-radius: 0;
+                            }
+                        }
+
+                        &.thongTinNhanVien_tbl {
+                            .title {
+                                margin: 12px 0;
+                                font-weight: bold;
+                            }
+                            .section-grid {
+                                min-width: 1100px;
+                                background-color: $white;
+                                padding: 15px;
+                                display: grid;
+                                grid-template-columns: repeat(3, 1fr);
+                                grid-template-rows: repeat(4, auto);
+
+                                .grid-item {
+                                    display: flex;
+                                    flex-direction: column;
+                                    .k-textbox {
+                                        &:focus {
+                                            border-color: rgba($gray-500, 0.4);
+                                        }
+                                    }
+                                    .k-dropdown {
+                                        .k-state-focused {
+                                            box-shadow: none;
+                                        }
+                                    }
+                                    kendo-label {
+                                        font-weight: 700;
+                                        padding: 10px 0;
+                                    }
+                                    .k-list {
+                                        overflow-y: scroll;
+                                    }
+                                }
+
+                                .DontScroll {
+                                    .k-list {
+                                        overflow-y: hidden;
+                                    }
+                                }
+
+                                .item1 {
+                                    grid-column: 1;
+                                    grid-row: 1;
+                                }
+                                .item2 {
+                                    grid-column: 1;
+                                    grid-row: 2;
+                                }
+                                .item3 {
+                                    grid-column: 1;
+                                    grid-row: 3;
+                                }
+                                .item4 {
+                                    grid-column: 1;
+                                    grid-row: 4;
+                                }
+                                .item5 {
+                                    grid-column: 2;
+                                    grid-row: 1;
+                                }
+                                .item6 {
+                                    grid-column: 2;
+                                    grid-row: 2;
+                                }
+                                .item7 {
+                                    grid-column: 2;
+                                    grid-row: 3;
+                                    .k-datepicker {
+                                        width: 270px;
+                                        .k-select {
+                                            background-color: $white;
+                                        }
+                                        .k-picker-wrap.k-state-focused {
+                                            box-shadow: none;
+                                        }
+                                    }
+                                }
+                                .item8 {
+                                    grid-column: 2;
+                                    grid-row: 4;
+                                }
+                                .item9 {
+                                    grid-column: 3;
+                                    grid-row: 1;
+                                }
+                                .item10 {
+                                    grid-column: 3;
+                                    grid-row: 2;
+                                }
+                                .item11 {
+                                    grid-column: 3;
+                                    grid-row: 3;
+                                }
+                                .item12 {
+                                    grid-column: 3;
+                                    grid-row: 4;
+
+                                    .k-datepicker {
+                                        width: 270px;
+                                        .k-select {
+                                            background-color: $white;
+                                        }
+                                        .k-picker-wrap.k-state-focused {
+                                            box-shadow: none;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        //end grid tbl thongtinnhanvien
+
+                        &.phanQuyenHeThong_tbl {
+                            .title {
+                                margin: 12px 0;
+                                font-weight: bold;
+                            }
+                            .section-grid {
+                                min-width: 1100px;
+                                background-color: $white;
+                                padding: 15px;
+
+                                display: grid;
+                                grid-template-columns: repeat(3, 1fr);
+                                grid-template-rows: repeat(2, auto);
+
+                                .grid-item {
+                                    display: flex;
+                                    flex-direction: column;
+                                    .k-textbox,
+                                    .k-dropdown {
+                                        width: 270px;
+                                    }
+                                    .k-input-inner {
+                                        padding-left: 10px;
+                                    }
+
+                                    kendo-label {
+                                        font-weight: 700;
+                                        padding: 10px 0;
+                                    }
+                                    .k-dropdown {
+                                        .k-state-focused {
+                                            box-shadow: none;
+                                        }
+                                    }
+                                    .k-list {
+                                        overflow-y: scroll;
+                                    }
+                                }
+                                .item1 {
+                                    grid-column: 1;
+                                    grid-row: 1;
+                                }
+                                .item2 {
+                                    grid-column: 1;
+                                    grid-row: 2;
+                                    .k-textbox {
+                                        padding-left: 10px;
+                                    }
+                                }
+                                .item3 {
+                                    grid-column: 2;
+                                    grid-row: 1;
+                                    .group-add {
+                                        display: flex;
+                                        .btn-add {
+                                            margin-left: 5px;
+                                            background-color: $dark-green;
+                                            color: $white;
+                                            box-shadow: none;
+                                            font-size: 11px;
+                                        }
+                                    }
+                                }
+                                .item4 {
+                                    overflow-y: auto;
+                                    max-height: 95px;
+                                    grid-column: 2;
+                                    grid-row: 2;
+                                    margin-top: 10px;
+                                    margin-left: 10px;
+                                    .group-del {
+                                        .btn-del {
+                                            margin-right: 120px;
+                                            float: right;
+                                            color: $worse-red;
+                                            border: none;
+                                            box-shadow: none;
+                                            .k-i-delete.k-button-icon {
+                                                margin-bottom: 10px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .k-animation-container{
+        .CustomPopupDatePickerStaff{
+            .k-calendar{
+                kendo-virtualization{
+                    .k-calendar-table{
+                        .k-selected{
+                            background-color: #1a6634;
+                            color: #ffffff;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,15 @@
+<div id="selectedRowitemDialog" [style.visibility]="isSelectedRowitemDialogVisible()">
+  <div class="box count-box">
+    <div class="count">{{ count }}</div>
+    <div>Đã chọn</div>
+  </div>
+
+  <div *ngFor="let item of btnList" class="box box-btn" (click)="buttonClick(item.Type, item.Link)">
+    <div><span class="k-icon k-i-{{item.Code}}"></span></div>
+    <div>{{ item.Name }}</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="box box-btn" (click)="closeSelectedRowitemDialog()">X</div>
+</div>

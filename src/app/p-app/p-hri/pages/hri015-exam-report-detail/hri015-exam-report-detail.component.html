@@ -1,0 +1,107 @@
+<div class="hri015-exam-report-detail">
+
+    <!-- START HEADER -->
+    <div class="header header-1">
+        <app-p-kendo-breadcrumb (loadData)="loadFilter();getListQuizRole()"></app-p-kendo-breadcrumb>
+        <div class="file-btn-group">
+            <!-- <div class="btn-file">
+                <button kendoButton id="onUploadBtn" class="k-button" [icon]="'export'"></button>
+            </div>
+            <div class="btn-file">
+                <button kendoButton id="onDownloadBtn" class="k-button" [icon]="'import'">Template</button>
+            </div> -->
+
+            <kendo-groupbutton>
+                <button kendoButton class="k-button" [icon]="'import'"></button>
+                <button kendoButton class="k-button k-btn-xlsx" imageUrl="assets\img\logo\xlsx.svg" [disabled]="loading" (click)="onExportExcel()"></button>
+                <button kendoButton class="k-button" [icon]="'arrow-chevron-down'"></button>
+            </kendo-groupbutton>
+        </div>
+    </div>
+
+    <div class="header header-2">
+        <div class="filter1">
+            <div class="label">
+                <span class="k-icon k-i-filter"></span> Đợt đánh giá
+            </div>
+            <!-- <kendo-dropdownlist [data]="listQuizSession" [textField]="'SessionName'" [valueField]="'Code'"
+                [(ngModel)]="selectedQuizSession" (valueChange)="loadFilter();getListQuizRole()" [loading]="loading">
+            </kendo-dropdownlist> -->
+            <p-kendo-dropdownlist [data]="listQuizSession" [textField]="'SessionName'" [valueField]="'Code'"
+                [(ngModel)]="selectedQuizSession" (selectionChange)="onSelectionChange($event);" [loading]="loading"   [disabled]="listQuizSession.length == 0"
+                [filterable]="true" [searchFields]="['SessionName']" [hasValueNull]="false"></p-kendo-dropdownlist>
+        </div>
+
+        <app-search-filter-group [placeholder]="'Tìm theo tên nhân sự, mã nhân sự, chức danh, đơn vị công tác, điểm làm việc'" [clearButton]="true"
+            (valueChange)="Search($event)" (onReset)="resetFilter()" [loading]="loading"></app-search-filter-group>
+
+    </div>
+    <!-- END HEADER -->
+
+    <!-- START BODY -->
+    <div class="body">
+        <div class="grid-wrapper">
+            <app-p-kendo-grid class="grid scrollable " [data]="gridView | async" [scrollable]="'none'"
+                [loading]="loading" [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize"
+                [skip]="gridStateRole.skip" [take]="gridStateRole.take" [sortable]="true" [autoHeight]="false"
+                [onPageChangeCallback]="onPageChangeCallback" [getActionDropdownCallback]="getActionDropdownCallback"
+                [onActionDropdownClickCallback]="onActionDropdownClickCallback" [onSelectCallback]="onSelectCallback"
+                [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+                [getSelectionPopupCallback]="getSelectionPopupCallback">
+
+                <kendo-grid-column title="Họ và tên" class="col_hoVaten" [headerClass]="'col_name'">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <div class="img_tennhanvien_manhanvien" [ngClass]="{noExam: !(dataItem.StatusID > 0)}">
+                            <img loading="lazy" [src]="getImgRes(dataItem.ImageThumb)" alt="">
+                            <div class="tennhanvien_manhanvien">
+                                <div class="tennhanvien" *ngIf="(dataItem.StaffName) != null">{{dataItem.StaffName}}
+                                </div>
+                                <div>
+                                    {{dataItem.StaffCode}}<span *ngIf="dataItem.PositionName != null">{{' |  '+dataItem.PositionName}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column title="Đơn vị công tác" field="DepartmentName" class="col_donViCongTac">
+                </kendo-grid-column>
+
+                <kendo-grid-column title="Điểm làm việc" field="LocationName" class="col_diemLamViec">
+                </kendo-grid-column>
+
+                <kendo-grid-column title="Thời gian làm bài thực tế" field="FinalDuration" class="col_FinalDuration">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <span class="info">
+                            {{ dataItem?.FinalDuration | convertMinuteToString }}
+                        </span>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column title="SL câu sai" field="NoOfAllWrong" class="col_NoOfAllWrong"></kendo-grid-column>
+                <kendo-grid-column title="Tổng số câu" field="NoOfQuestion" class="col_NoOfQuestion"></kendo-grid-column>
+
+                <kendo-grid-column title="Ngày vào làm" field="JoinDate" class="col_ngayVaoLam">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <div class="name_date">
+                            <div class="date">{{ dataItem.JoinDate | date: 'dd/MM/yyyy'}}</div>
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column title="Loại nhân viên" field="TypeDataName" class="col_loaiNhanVien">
+                </kendo-grid-column>
+
+                <kendo-grid-column title="Điểm" field="Mark" class="col_Mark">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <div class="name_date">
+                            {{ !(dataItem.Mark > 0) ? 0 : dataItem.Mark | number:'1.0-2'}}
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+            </app-p-kendo-grid>
+        </div>
+
+    </div>
+    <!-- END BODY -->
+
+</div>

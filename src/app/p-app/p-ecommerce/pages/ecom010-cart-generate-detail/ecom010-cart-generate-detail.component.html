@@ -1,0 +1,1287 @@
+<div id="hachi-page" class="background-main">
+  <div id="hachi-page__body" class="hachi_page_view_cart hachi_page_cart_payment" step="3" [hidden]="step != 3">
+    <div class="hachi-section">
+      <div class="my-container">
+        <!-- class="container" -->
+        <div class="grid-container grid-container-desktop row">
+          <div class="col-lg-́8 col-md-8 col-xs-12">
+            <div class="group-product-promotion-time">
+              <div class="text">
+                <img loading="lazy" loading="lazy" src="assets/systems/icon/time-clock.svg" alt="" />
+                <span>Tính tồn sau</span>
+              </div>
+              <div class="time">
+                <span class="badge"><span class="dayvalue">2
+                  </span><span> Giờ</span></span>
+                <span class="badge"><span class="hourvalue">0
+                  </span><span> Phút</span></span>
+                <span class="badge"><span class="minutevalue">0
+                  </span><span> Giây</span></span>
+              </div>
+            </div>
+            <!-- title -->
+            <div class="card view-cart__card border-color-1 js-cart-body-title">
+              <div class="card-body d-flex align-items-center">
+                <h1 class="view-cart__title hachi-color-text-5">GIỎ HÀNG | {{CartState.OrderNo}}</h1>
+                <span class="view-cart__count ml-2 hachi-color-text-2">
+                  ({{ListCartDetailState.length}} sản phẩm)
+                </span>
+                <button kendoButton class="k-button btn-hachi hachi-primary ml-auto" [icon]="'search'"
+                  (click)="openSearchProd()">Tìm sản phẩm</button>
+              </div>
+            </div>
+            <!--/ title -->
+            <!-- noti -->
+            <div class="js-cart-noti" *ngIf="cartNoti != null && cartNoti.length > 0">
+              <div class="card view-cart__info border-color-1">
+                <div class="card-body">
+                  <div class="icon-text">
+                    <div class="item" *ngFor="let item of cartNoti">
+                      <div class="icon">
+                        <span class="hachi-icon-information"></span>
+                      </div>
+                      <div class="text">
+                        {{item.Notification}}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="icon-close">
+                    <button type="button" class="btn-close ml-auto" (click)="cartNoti = []">
+                      <span class="hachi-icon-close"></span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--/ noti -->
+            <!-- VIEW CART -->
+            <!-- cart step 1 & 3 -->
+            <div class="cpn_phuong_thuc_giao_hang" id="js_cpn_phuong_thuc_giao_hang">
+              <div *ngIf="cart24h != null && cart24h.length > 0 && cartStandard != null && cartStandard.length > 0"
+                class="hasTwoOrdersText hachi-color-text-4">
+                Đơn hàng này được tách thành 2 lần giao hàng
+              </div>
+              <div class="card view-cart__table border-color-1 js-view-cart ">
+                <div class="card-body" style="padding-bottom: 0 !important;">
+                  <div class="view-cart-table">
+                    <div class="view-cart-table__header"
+                      [ngClass]="{'pb-0': ListCartDetailState != null && ListCartDetailState.length > 0}">
+                      <div class="col-name">Sản phẩm</div>
+                      <div class="col-price">Đơn giá</div>
+                      <div class="col-quantity">Số lượng</div>
+                    </div>
+                    <div class="view-cart-table__body" style="margin-left: -20px; margin-right: -20px;">
+                      <div class="card mt-2" *ngIf="cart24h != null && cart24h.length > 0">
+                        <div class="card-body">
+                          <div class="cart">
+                            <div class="cart_detail">
+                              <div class="cart_detail_header">
+                                <div class="col-left">
+                                  <div class="title row">
+                                    <span class="font-weight-bold col-5">Đơn hàng <span class="hachi24h ml-2">
+                                        <img loading="lazy" src="assets/img/icon/hachi3h.svg" alt="hachi24" />
+                                      </span>
+                                    </span>
+                                    <b class="hachi-color-text-5 col-3">{{CartState.OrderNo}}-1</b>
+                                  </div>
+                                  <div class="subtitle">
+                                    (Giao hàng nhanh trong vòng 24h)
+                                  </div>
+                                </div>
+                                <div *ngIf="cartsAnyDelivery(cart24h)" class="col-right hachi-color-text-1">
+                                  Phí vận chuyển:&nbsp;
+                                  {{cart24h[0].ShippingFee | number : '1.'}}đ
+                                </div>
+                              </div>
+                            </div>
+                            <div class="cart-body">
+                              <div class="cart-row" *ngFor="let item of cart24h; let i = index">
+                                <CartDetail [idex]="i" [item]="item" [itemCart]="item"
+                                  (OnDeleteCartDetail)="onDeleteCartDetail($event)" [onDataChange]="onDataChangeCB">
+                                </CartDetail>
+                                <div class="cart-row-change-type" *ngIf="isPayment">
+                                  <div class="d-flex check-box">
+                                    <label class="container-checkbox">
+                                      <input type="checkbox" [checked]="false"
+                                        (click)="onChangeCartDelivery(i, item, false)" />
+                                      <span class="checkmark"></span>
+                                    </label>
+                                    Đổi thành giao hàng tiêu chuẩn
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="card mt-2" *ngIf="cartStandard != null && cartStandard.length > 0">
+                        <div class="card-body">
+                          <div class="cart">
+                            <div class="cart_detail">
+                              <div class="cart_detail_header">
+                                <div class="col-left">
+                                  <div class="title row">
+                                    <span class="font-weight-bold col-5">Đơn hàng giao hàng tiêu chuẩn</span>
+                                    <b class="hachi-color-text-5 col-3">{{CartState.OrderNo}}-2</b>
+                                  </div>
+                                  <div class="subtitle">
+                                    (3 ngày với nội thành TPHCM, 5-7 ngày ở các tỉnh)
+                                  </div>
+                                </div>
+                                <div *ngIf="cartsAnyDelivery(cartStandard)" class="col-right hachi-color-text-1">
+                                  Phí vận chuyển:&nbsp;
+                                  {{cartStandard[0].ShippingFee | number: '1.'}}đ
+                                </div>
+                              </div>
+                            </div>
+                            <div class="cart-body">
+                              <div *ngFor="let item of cartStandard;let i = index" class="cart-row">
+                                <CartDetail [idex]="i" [item]="item" [itemCart]="item"
+                                  (OnDeleteCartDetail)="onDeleteCartDetail($event)" [onDataChange]="onDataChangeCB">
+                                </CartDetail>
+                                <div *ngIf="item.IsHachi24 && isPayment" class="cart-row-change-type">
+                                  <div class="d-flex check-box">
+                                    <label class="container-checkbox">
+                                      <input type="checkbox" [checked]="false"
+                                        (click)="onChangeCartDelivery(i, item, true)" />
+                                      <span class="checkmark"></span>
+                                    </label>
+                                    Đổi thành giao hàng nhanh 24h
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <kendo-dialog #dialog class="deleteDialog" title="xóa sản phẩm" [hidden]="!isPopupDeleteDetail"
+                    (close)="isPopupDeleteDetail = false">
+                    <!-- <div class="modal_delete_cart_detail_containter">
+                      <div class="modal-content modal-delete-cart-detail modal-content-delete"> -->
+                    <!-- <div class="modal-header">
+                          <button type="button" class="btn-close ml-auto" (click)="isPopupDeleteDetail = false">
+                            <span class="hachi-icon-close"></span>
+                          </button>
+                        </div> -->
+                    <div class="modal-body">
+                      <div class="warning">Bạn muốn xóa sản phẩm <b>
+                          {{CartDetailState.ProductName}}
+                        </b> ra khỏi giỏ hàng?</div>
+                    </div>
+                    <div class="dialog-footer">
+                      <!-- <div class="modal-footer"> -->
+                      <button type="button" class="btn hachi-primary hachi-outline-primary"
+                        (click)="isPopupDeleteDetail = false">
+                        Không
+                      </button>
+                      <button type="submit" class="btn hachi-warning" (click)="DeleteCartDetail()">
+                        Xóa
+                      </button>
+                    </div>
+                    <!-- </div>
+                    </div> -->
+                  </kendo-dialog>
+                </div>
+              </div>
+
+              <div class="hinh-thuc-van-chuyen" *ngIf="CartState.IsAppliedHachi24">
+                <div class="cpn_title mt-20">
+                  Hình thức vận chuyển
+                </div>
+                <div class="card mt-20">
+                  <div class="card-body">
+                    <ng-container *ngFor="let item of deliveryList; let i = index">
+                      <!-- <div class="item" [ngClass]="{'active': deliveryItem?.Code==item.Code}"> -->
+                        <div class="item"
+                          [ngClass]="{'border-0': i==(deliveryList.length - 1), 'active': deliveryItem?.Code==item.Code}">
+                          <div class="form-radio ">
+                            <input type="radio" name="delivery" [value]="item.Code"
+                              [checked]="item.Code==deliveryItem?.Code" (change)="onClickDelivery(item)" />
+                            <label htmlFor="delivery">
+                              <b>{{item.Name}}</b>
+                              <span *ngIf="item.Description != null && item.Description != ''">
+                                &nbsp;({{item.Description}})&nbsp;
+                              </span>
+                              <b class="fee">
+                                {{item.Fee | number:'1.'}}đ
+                              </b>
+                            </label>
+                          </div>
+                        </div>
+                      <!-- </div> -->
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--/ cart -->
+            <!-- cart gift -->
+            <div class="js-gift-cart" class="d-none"
+              *ngIf="CartGift != null && CartGift.GiftLevels != null && CartGift.GiftLevels.length > 0">
+              <div class="card view-cart__table border-color-1">
+                <img loading="lazy" src={{CartGift.ImageThumb}} />
+
+                <ng-container *ngFor="let item of CartGift.GiftLevels; let i = index">
+                  <div class="quatang_carousel_container" *ngIf="item.GiftItems != null && item.GiftItems.length > 0">
+                    <div class="label">QUÀ TẶNG ({{i}} + 1)} <span class="sublabel">
+                        (ứng với giá trị mua hàng <span class="amount">
+                          {{item.MinLevel | number: '1.'}}đ</span>)
+                      </span>
+                    </div>
+                    <div class="hachi__owl-carousel list-product">
+                      <div class="row">
+                        <div class="col-12">
+                          <OwlCarousel class="owl-theme owl-carousel">
+                            <!-- margin=14} nav dots=false} items=Width> 768 ?                            4                            : 2}
+                            navText=[
+                            '<span class="hachi-icon-left"></span>', '<span class="hachi-icon-right"></span>'
+                            ]} navElement='div'}  -->
+                            <div class="item" *ngFor="let item2 in item.GiftItems">
+                              <div class="product">
+                                <div class="product__header">
+                                  <div class="product__header_img">
+                                    <a [href]="item2.Alias"  target="_blank">
+                                      <img loading="lazy" [src]="item2.ImageThumb" />
+                                    </a>
+                                  </div>
+                                </div>
+                                <div class="product__button"></div>
+                                <div class="product__content">
+                                  <div class="product__name">
+                                    <h5><a class="d-block" [href]="item2.Alias"  target="_blank">
+                                        {{item2.ProductName}}
+                                      </a></h5>
+                                  </div>
+                                </div>
+                                <div class="product__footer"></div>
+                                <div class="product__layout"></div>
+                                <div class="product__layout_more">
+                                  Hết hàng
+                                </div>
+                              </div>
+                            </div>
+                          </OwlCarousel>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+            <!--/ cart gift -->
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-xs-12">
+            <!-- address -->
+            <div class="card view-cart__table dia-chi-nhan-hang js-adderss-cart">
+              <div class="card-body">
+                <div class="card-title">
+                  <div class="text-uppercase hachi-color-text-12 ">ĐỊA CHỈ NHẬN HÀNG</div>
+                  <button type="button" class="btn btn-hachi hachi-standard" *ngIf="isPayment"
+                    (click)="thayDoiDiaChi()">
+                    Thay đổi
+                  </button>
+                </div>
+
+                <div class="thong-tin-dia-chi">
+                  <div class="ten-dien-thoai" *ngIf="CartState != null && CartState != undefined">
+                    <ul class="list-inline">
+                      <li *ngIf="CartState.ReceivedBy != null && CartState.ReceivedBy != ''">
+                        {{CartState.ReceivedBy}}
+                      </li>
+                      <li *ngIf="CartState.Cellphone != null && CartState.Cellphone != ''">
+                        {{CartState.Cellphone}}
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="dia-chi" *ngIf="CartState.FullAddress != null && CartState.FullAddress != ''">
+                    {{CartState.FullAddress}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--/ address -->
+            <!-- cart coupon  -->
+            <div class="w-100 view-cart__table js-add-coupon-cart">
+              <div class="card ap-dung-ma-giam-gia mt-3">
+                <div class="card-body">
+                  <div class="card-title">
+                    <div class="hachi-color-text-12 ">MÃ GIẢM GIÁ ÁP DỤNG CHO ĐƠN HÀNG</div>
+                  </div>
+                  <div class="card-form">
+                    <form class="hachi_form" (submit)="submitCartCoupon($event)" [formGroup]="cartCouponForm">
+                      <div class="text">
+                        <div>
+                          <a class="hachi-link" (click)="toggleCartCoupon()">
+                            Danh sách mã giảm giá
+                          </a>
+                        </div>
+                        <div class="hachi-color-text-12" style="position: relative;">
+                          Xem điều kiện <span class="hachi-icon-information" (mouseenter)="toggleCondition(true)">
+                          </span>
+                          <div id="showCartCouponCondition" *ngIf="showCouponCondition">
+                            <div class="btn-container">
+                              <button type="button" class="btn-close ml-auto" (click)="toggleCondition(false)">
+                                <span class="hachi-icon-close"></span>
+                              </button>
+                              <ul>
+                                <li>
+                                  Đối với mã giảm giá áp dụng cho đơn hàng: áp dụng tối đa 1 mã dành cho giá trị
+                                  mua hàng và 1 mã dành cho phí vận chuyển
+                                </li>
+                                <li>
+                                  Đối với mã mua sắm (phiếu quà tặng, ecoupon mua sắm): áp dụng tối đa 5 mã trong
+                                  1 đơn hàng
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="control" *ngIf="isPayment">
+                        <input type="text" placeholder="Nhập mã e-coupon tại đây" id="CouponCode"
+                          formControlName="CouponCode" autoComplete="off" />
+                        <!-- ref=register( required: "Vui lòng nhập mã giảm giá" , })} -->
+                        <button type="submit" class="btn hachi-secondary">
+                          Áp dụng
+                        </button>
+                      </div>
+                      <!-- <ErrorMessage></ErrorMessage> -->
+                      <!-- errors=errors} name="CouponCode" render=( messages })=> 
+                          return messages
+                          ? Object.entries(messages).map(([type, message]) => (
+                          <span  class="hachi-invalid-feedback mt-3">message}
+                          </span>
+                          )) : null;
+                          }} -->
+                    </form>
+                    <div class="error" *ngIf="errCartCoupon != null && errCartCoupon != ''">
+                      {{errCartCoupon}}
+                    </div>
+                    <ng-container *ngIf="CouponState34 != null && CouponState34.length > 0">
+                      <div class="hachi-color-text-9 mt-3">Mã giảm giá:</div>
+                      <div class="list-giam-gia">
+                        <div class="giam-gia" *ngFor="let item of CouponState34">
+                          <div class="text">
+                            <span class="ma">{{item.CouponCode}}</span>
+                            <span class="xoa" *ngIf="isPayment" (click)="onDeleteCartCoupon(item)">
+                              Xóa
+                            </span>
+                          </div>
+                          <div class="price">
+                            -{{item.CouponAmount | number: '1.'}}đ
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="CouponState5 != null && CouponState5.length > 0">
+                      <div class="hachi-color-text-9 mt-3">Mã mua sắm:</div>
+                      <div class="list-giam-gia">
+                        <div class="giam-gia" *ngFor="let item of CouponState5">
+                          <div class="text">
+                            <span class="ma">{{item.CouponCode}}</span>
+                            <span class="xoa" *ngIf="isPayment" (click)="onDeleteCartCoupon(item)">
+                              Xóa
+                            </span>
+                          </div>
+                          <div class="price">
+                            -{{item.CouponAmount | number: '1.'}}đ
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+
+                    <kendo-dialog #dialog class="deleteDialog" title="xóa coupon" [hidden]="!isPopupDeleteCartCoupon"
+                      (close)="isPopupDeleteCartCoupon = false">
+                      <!-- <div class="modal_delete_coupon_containter" *ngIf="isPayment">
+                        <div class="modal-content modal-delete-coupon modal-content-delete"> -->
+                      <!-- <div class="modal-header">
+                            <button type="button" class="btn-close ml-auto" (click)="isPopupDeleteCartCoupon = false">
+                              <span class="hachi-icon-close"></span>
+                            </button>
+                          </div> -->
+                      <div class="modal-body">
+                        <div class="warning">Bạn muốn xóa mã coupon <b>{{CouponState.CouponCode}}</b> này ra khỏi
+                          giỏ hàng?
+                        </div>
+                      </div>
+                      <div class="dialog-footer">
+                        <!-- <div class="modal-footer"> -->
+                        <button type="button" class="btn hachi-primary hachi-outline-primary"
+                          (click)="isPopupDeleteCartCoupon = false">
+                          Không
+                        </button>
+                        <button type="submit" class="btn hachi-warning" (click)="CouponHandler(CouponState, false)">
+                          Xóa
+                        </button>
+                      </div>
+                      <!-- </div>
+                      </div> -->
+                    </kendo-dialog>
+                  </div>
+
+                  <!-- cart coupon popup -->
+                  <div class="ma-giam-gia"
+                    *ngIf="isPopupCartCoupon && CouponListState != null && CouponListState.length > 0">
+                    <div class="popup-ma-giam-gia">
+                      <div class="hachi-popup">
+                        <div class="hachi-popup-content">
+                          <div class="btn-header">
+                            <button type="button" class="btn-close ml-auto" (click)="isPopupCartCoupon = false">
+                              <span class="hachi-icon-close"></span>
+                            </button>
+                          </div>
+                          <div class="hachi-popup-header">
+                            <div class="text-1">Mã giảm giá</div>
+                            <div class="text-2">Đối với mã giảm giá áp dụng cho đơn hàng: áp dụng tối đa 1 mã dành cho
+                              giá trị mua hàng và 1 mã dành cho phí vận chuyển</div>
+                          </div>
+                          <div class="hachi-popup-body">
+                            <form class="hachi_form" (submit)="submitCartCoupon($event)" [formGroup]="cartCouponForm">
+                              <div>
+                                <input type="text" id="CouponCode" formControlName="CouponCode" autoComplete="off"
+                                  placeholder="Nhập mã giảm giá" />
+                                <!-- ref=register( required: "Vui lòng nhập mã giảm giá"
+                              })} -->
+                                <button type="submit">Áp dụng</button>
+                              </div>
+                              <!-- <ErrorMessage></ErrorMessage> -->
+                              <!-- errors=errors} name="phone" render=( messages })=> 
+                              return messages
+                              ? Object.entries(messages).map(([type, message]) => (
+                              <span  class="hachi-invalid-feedback mt-3">message}</span>
+                              )) : null;
+                              }} -->
+                              <span class="hachi-invalid-feedback mt-3"
+                                *ngIf="errCartCoupon != null && errCartCoupon != ''">{{errCartCoupon}}</span>
+                            </form>
+                            <div class="list-ma-giam-gia">
+                              <ng-container *ngFor="let item of CouponListState">
+                                <script>
+                                  //item.IsChoose = lstSelected.findIndex(s => s.CouponID == item.CouponID) > -1
+                                </script>
+                                <div class="item-ma-giam-gia" [ngClass]="{'active': item.IsChoose}">
+                                  <div class="code">
+                                    <div class="code-imge">
+                                      <img loading="lazy" src="assets/img/icon/icon_coupon_big.svg" alt="" />
+                                    </div>
+                                    <div class="code-text">
+                                      {{item.CouponCode}}
+                                    </div>
+                                  </div>
+                                  <div class="info">
+                                    <div>
+                                      <div class="name">
+                                        {{item.CouponName}}
+                                      </div>
+                                      <div class="description" [title]="item.Description">
+                                        {{item.Description}}
+                                      </div>
+                                    </div>
+                                    <div class="hsd" *ngIf="item.ExpiredDate != null">
+                                      HSD: {{item.ExpiredDate | date :'d/M/yyyy'}}
+                                    </div>
+                                  </div>
+                                  <div class="button">
+                                    <div><span class="hachi-icon-information"></span></div>
+                                    <div class="apdung" *ngIf="isPayment" (click)="applyCartCoupon(item,true)">
+                                      Áp dụng
+                                    </div>
+                                    <div class="bochon" *ngIf="isPayment" (click)="applyCartCoupon(item,false)">
+                                      Bỏ chọn
+                                    </div>
+                                  </div>
+                                </div>
+                              </ng-container>
+                            </div>
+                          </div>
+                        </div>
+
+                        <AlwaysScrollToBottom></AlwaysScrollToBottom>
+                      </div>
+                    </div>
+                  </div>
+                  <!--/ cart coupon popup -->
+                </div>
+              </div>
+
+            </div>
+            <!--/ cart coupon  -->
+            <!-- total -->
+            <div class="js-total-cart">
+              <div class="w-100">
+                <div class="card tong-gia-tri-gio-hang mt-3">
+                  <div class="card-body">
+                    <div class="card-title">
+                      <div class="hachi-color-text-12 ">TỔNG GIÁ TRỊ GIỎ HÀNG</div>
+                    </div>
+                    <div class="cart-info">
+                      <div class="item bold" *ngIf="CartState.TotalAmount > 0 && CartState.PolicyMembership > 0">
+                        <div class="item-lable">
+                          Giá trị sản phẩm
+                        </div>
+                        <div class="item-value">
+                          {{CartState.TotalAmount | number : '1.'}}đ
+                        </div>
+                      </div>
+                      <div class="item" *ngIf="CartState.PolicyMembership > 0">
+                        <div class="item-lable pl-2">
+                          Chiết khấu {{CartState.DiscountMembership}}% KHTT
+                          <a class="mr-1 hachi-link"  target="_blank">
+                            <!-- href={{DTOConfig.appInfo.urlVIPPolicy}} todo -->
+                            xem chi tiết
+                          </a>
+                        </div>
+                        <div class="item-value hachi-color-text-10">
+                          -{{CartState.PolicyMembership | number : '1.'}}đ
+                        </div>
+                      </div>
+                      <div class="item bold">
+                        <div class="item-lable">
+                          Giá trị mua hàng
+                        </div>
+                        <div class="item-value">
+                          {{CartState.TotalAmount - CartState.PolicyMembership | number : '1.'}}đ
+                        </div>
+                      </div>
+                      <div class="item" *ngIf="CartState.CouponPaid > 0">
+                        <div class="item-lable pl-2">
+                          Trừ mã giảm giá
+                        </div>
+                        <div class="item-value hachi-color-text-10">
+                          -{{CartState.CouponPaid | number : '1.'}}đ
+                        </div>
+                      </div>
+                      <div class="item bold" [ngClass]="{'border-0': !(CartState.ShippingFee > 0)}">
+                        <div class="item-lable">
+                          Phí vận chuyển {{CartState.StatusID == 1 ? ' tạm tính' : ''}}
+                        </div>
+                        <div class="item-value">
+                          {{CartState.ShippingFee > 0 ?
+                          (CartState.ShippingFee | number:'1.') + 'đ' : "chưa xác định"}}
+                        </div>
+                      </div>
+                      <div class="item border-0" *ngIf="CartState.ShippingDiscount > 0">
+                        <div class="item-lable pl-2">
+                          Trừ phí vận chuyển
+                        </div>
+                        <div class="item-value hachi-color-text-10">
+                          -{{CartState.ShippingDiscount | number:'1.'}}đ
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card tam-tinh">
+                  <div class="card-body">
+                    <div class="cart-label">
+                      THÀNH TIỀN
+                      <div class="subtitle">
+                        (Đã bao gồm VAT)
+                      </div>
+                    </div>
+                    <div class="cart-value">
+                      {{CartState.Payment | number: '1.'}}đ
+                    </div>
+                  </div>
+                </div>
+
+                <div class="dieu-huong" *ngIf="isPayment && (CartState.TotalAmount - CartState.PolicyMembership) > 0">
+                  <div class="tien-hanh-dat-hang w-100">
+                    <button type="submit" class="w-100 d-flex justify-content-center cursor-pointer">
+                      <label class="cursor-pointer" for="btn-submit-thanh-toan" tabindex="0">
+                        ĐẶT MUA
+                      </label>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--/ total -->
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <div id="js-cart-combo" class="d-none">
+              <!-- cart combo -->
+              <div class="quatang_carousel_container" *ngIf="CartCombo != null && CartCombo.length > 0">
+                <div class="label"><span class="combo-icon">
+                    <img loading="lazy" src="assets/img/icon/combo.svg" alt="Combo" />
+                  </span>
+                  MUA CÁC SẢN PHẨM TRÊN THEO COMBO, GIÁ CỰC TỐT!
+                </div>
+                <div class="hachi__owl-carousel list-product">
+                  <div class="row">
+                    <div class="col-12">
+                      <OwlCarousel class="owl-theme owl-carousel">
+                        <!-- margin={24} nav dots={false} items={Width> 768 ? 4
+                          : 2} navText={[
+                          '<span class="hachi-icon-left"></span>', '<span class="hachi-icon-right"></span>'
+                          ]} navElement={'div'} key={`carousel_${CartCombo.length}`} -->
+                        <!-- {CartCombo.map((item: DTOCartCombo) => {                        return  -->
+                        <div class="item" *ngFor="let item of CartCombo">
+                          <div class="product">
+                            <div class="product__header">
+                              <div class="product__header_img">
+                                <a [href]="item.Alias" target="_blank">
+                                  <img loading="lazy" [src]="item.ImageSetting" />
+                                </a>
+                              </div>
+                            </div>
+                            <div class="product__button">
+                              <div class="product__button_gift">
+                                <span class="combo-icon">
+                                  <img loading="lazy" src="assets/img/icon/combo.svg" alt="Combo" />
+                                </span>
+                              </div>
+                              <div class="product__button_wishlist" *ngIf="item.IsBestPrice">
+                                <img loading="lazy" src="assets/img/icon/tag_best_price.svg" alt="BestPrice" />
+                              </div>
+                            </div>
+                            <div class="product__content">
+                              <div class="product__name">
+                                <h5><a class="d-block" [href]="item.Alias" target="_blank">
+                                    {{item.ProductName}}
+                                  </a></h5>
+                              </div>
+                            </div>
+                            <div class="product__footer">
+                              <div class="product__price">
+                                <div class="product__price__detail">
+                                  <div class="product__price_active w-100 text-center">
+                                    {{item.UnitPrice | number: '1.'}}
+                                    <span class="vnd"></span>
+                                  </div>
+                                </div>
+
+                                <div class="product__price__detail_vip">
+                                  <div class="product__price_text">
+                                    KHTT VIP
+                                  </div>
+                                  <div class="product__price_svg">
+                                    <img loading="lazy" src="assets/img/icon/triangle_right.svg" alt=">" />
+                                  </div>
+                                  <div class="product__price_vip">
+                                    {{item.VIPPrice | number: '1.'}}
+                                    <span class="vnd"></span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="product__cart hachi-add-cart js-hachi-add-cart">
+                                <button type="button" class="btn hachi-primary rounded-circle"
+                                  (click)="AddCartCombo(item)">
+                                  <span class="hachi-icon-trolley"></span>
+                                </button>
+                              </div>
+                            </div>
+                            <div class="product__layout"></div>
+                            <div class="product__layout_more">
+                              Hết hàng
+                            </div>
+                          </div>
+                        </div>
+                      </OwlCarousel>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--/ cart combo -->
+            </div>
+          </div>
+        </div>
+
+        <div class="js_hinh_thuc_thanh_toan mt-30" id="js_hinh_thuc_thanh_toan">
+          <!-- payment & receipt-->
+          <form id="form_hinh_thuc_thanh_toan" class="hachi_form" (submit)="submitThanhToan()" [formGroup]="invoiceForm"
+            (keydown.Enter)="keydownEnter($event)">
+            <div class="cpn_hinh_thuc_thanh_toan">
+              <div class="cpn_title">
+                Hình thức thanh toán
+              </div>
+              <div class="card mt-20">
+                <div class="card-body">
+                  <ng-container *ngFor="let item of PaymentList; let i = index">
+                    <div *ngIf="item.ListBank != null && item.ListBank.length > 0; else ListBankNull" class="item"
+                      [ngClass]="{'active': PaymentState?.ID==item.ID}">
+                      <div class="d-flex justify-content-between w-100">
+                        <div class="form-radio ">
+                          <input type="radio" name="payment" [value]="item.ID" [checked]="item.ID==PaymentState?.ID"
+                            (change)="onClickPayment(item)" />
+                          <label htmlFor="payment">
+                            <span>{{item.PaymentName}}</span>&nbsp;
+                          </label>
+                        </div>
+                        <div class="hachi-color-text-10" *ngIf="PaymentState != null && PaymentState.ID == item.ID">
+                          {{BankState.BankName}}
+                        </div>
+                      </div>
+                      <!-- <div class="hachi-color-text-10 list-bank pb-0 mb-0"
+                        *ngIf="PaymentState != null && PaymentState.ID == item.ID && !(BankState.ID > 0)">
+                        Vui lòng chọn ngân hàng
+                      </div>
+                      <div class="list-bank" *ngIf="PaymentState != null && PaymentState.ID == item.ID ">
+                        <div *ngFor="let bank of item.ListBank" class="bank"
+                          [ngClass]="{'active':BankState.ID==bank.ID}" (click)="onClickBank(bank)">
+                          <img loading="lazy" class="image-bank" src={{bank.ImageSetting1}} alt={{bank.BankName}} />
+                          <img loading="lazy" src="assets/img/icon/check_circle_orange.svg" alt="*" />
+                        </div>
+                      </div>
+                      <div class="hachi-color-text-2" *ngIf="PaymentState != null && PaymentState.ID == item.ID">
+                        {{item.Description}}
+                      </div> -->
+                    </div>
+                    <ng-template #ListBankNull>
+                      <div class="item"
+                        [ngClass]="{'border-0': i==(PaymentList.length - 1), 'active': PaymentState?.ID==item.ID}">
+                        <div class="form-radio ">
+                          <input type="radio" name="payment" [value]="item.ID" [checked]="item.ID==PaymentState?.ID"
+                            (change)="onClickPayment(item)" />
+                          <label htmlFor="radio">
+                            <img loading="lazy" *ngIf="item.ImageSetting1 != null && item.ImageSetting1 != ''" class="mx-2" width="24"
+                              height="24" src=item.ImageSetting1} />
+                            <span>{{item.PaymentName}}</span>
+                          </label>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+            <div class="cpn_xuat_hoa_don w-100 mt-4">
+              <div class="card w-100">
+                <div class="card-body w-100">
+                  <div class="d-flex w-100">
+                    <div class="d-flex check-box text-uppercase hachi-color-text-12">
+                      <label class="container-checkbox">
+                        <input type="checkbox" [checked]="showInvoice" (change)="toggleInvoice()" />
+                        <span class="checkmark"></span>
+                      </label>
+                      XUẤT HÓA ĐƠN
+                    </div>
+                  </div>
+                  <div class="d-flex w-100 mt-20">
+                    <ul class="info">
+                      <li>
+                        Hiện tại Hachi Hachi đã chuyển sang phát hành HÓA ĐƠN ĐIỆN TỬ, tìm hiểu thêm
+                        <a class="hachi-link"  target="_blank"
+                          href="/thong-bao/thong-bao-ve-viec-xuat-hoa-don-khi-mua-hang-tai-hachi-hachi">
+                          tại đây</a>
+                      </li>
+                      <li>
+                        Nếu quý khách không điền thông tin hóa đơn ở bước này, Hachi
+                        Hachi sẽ xuất hóa đơn điện tử theo dạng khách vãng lai và không thể
+                        xuất lại hóa đơn theo yêu cầu về sau của quý khách
+                      </li>
+                      <li>
+                        Đối với những đơn hàng từ 20 triệu đồng trở lên xin vui lòng chọn
+                        hình thức thanh toán qua ngân hàng để được xuất hóa đơn hợp lệ
+                      </li>
+                      <li>
+                        Nếu quý khách không nhập địa chỉ email ở thông tin người đặt hàng
+                        thì Hachi Hachi không thể gửi hóa đơn điện tử đến quý khách
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="d-flex w-100 mt-20" *ngIf="showInvoice">
+                    <div class="hachi_form w-100">
+                      <div class="form-group row align-items-baseline">
+                        <label htmlFor="tencongty" class="col-12 col-lg-3">Tên công ty</label>
+
+                        <input type="text" class="form-control col-lg-6" id="tencongty" formControlName="VATCompany"
+                          aria-describedby="tencongtyhelper" placeholder="Nhập tên công ty"
+                          [value]="CartState?.VATCompany" [disabled]="!isPayment"
+                          (change)="onInputChange('VATCompany',$event)" />
+
+                        <div *ngIf="invoiceForm.controls.VATCompany.errors != null"
+                          class="hachi-color-text-10 col-12 col-lg-3 align-self-center">
+                          Vui lòng điền đầy đủ thông tin.
+                        </div>
+                      </div>
+                      <div class="form-group row align-items-baseline mt-2">
+                        <label htmlFor="masothue" class="col-12 col-lg-3">Mã số thuế</label>
+
+                        <input type="tel" class="form-control col-lg-6" id="masothue" formControlName="VATCode"
+                          aria-describedby="masothuehelper" placeholder="Nhập mã số thuế" [value]="CartState?.VATCode"
+                          [disabled]="!isPayment" (change)="onInputChange('VATCode',$event)" />
+
+                        <div *ngIf="invoiceForm.controls.VATCode.errors != null"
+                          class="hachi-color-text-10 col-12 col-lg-3 align-self-center">
+                          Vui lòng điền đầy đủ thông tin.
+                        </div>
+                      </div>
+                      <div class="form-group row align-items-baseline mt-2">
+                        <label htmlFor="diachicongty" class="col-12 col-lg-3">Địa chỉ công ty</label>
+
+                        <textarea class="form-control col-lg-6" id="diachicongty" formControlName="VATAddress"
+                          placeholder="Nhập địa chỉ công ty (bao gồm Phường / Xã, Quận / Huyện, Tỉnh / Thành Phố)"
+                          [value]="CartState?.VATAddress" [disabled]="!isPayment"
+                          (change)="onInputChange('VATAddress',$event)">
+                        </textarea>
+
+                        <div *ngIf="invoiceForm.controls.VATAddress.errors != null"
+                          class="hachi-color-text-10 col-12 col-lg-3 align-self-center">
+                          Vui lòng điền đầy đủ thông tin.
+                        </div>
+                      </div>
+                      <div class="form-group row align-items-baseline mt-2">
+                        <label htmlFor="email" class="col-12 col-lg-3">Email nhận hóa đơn</label>
+                        <input type="email" class="form-control col-lg-6" id="email" formControlName="VATEmail"
+                          aria-describedby="emailhelper" placeholder="Nhập email nhận hóa đơn điện tử"
+                          [value]="CartState?.VATEmail" [disabled]="!isPayment"
+                          (change)="onInputChange('VATEmail',$event)" />
+
+                        <div *ngIf="invoiceForm.controls.VATEmail.errors != null"
+                          class="hachi-color-text-10 col-12 col-lg-3 align-self-center">
+                          Định dạng email chưa đúng (thiếu @)
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="w-100 mt-3">
+              Bằng việc tiến hành đặt mua, quý khách đồng ý với <a class="hachi-link">Chính sách bán hàng</a> của
+              Hachi Hachi.
+            </div>
+            <div class="mt-30 w-100 d-flex justify-content-end" id="form-payment-dat-mua">
+              <div class="w-50">
+                <div class="btn-datmua d-none">
+                  <button type="submit" id="btn-submit-thanh-toan">
+                    ĐẶT MUA
+                  </button>
+                </div>
+                <div class="chon-qua" *ngIf="CartState.IsGift">
+                  Đơn hàng này đạt giá trị nhận QUÀ TẶNG. Sau khi quý khách hoàn tất đặt mua, vui lòng <a
+                    class="hachi-link">CHỌN
+                    QUÀ</a> ở trang tiếp theo
+                </div>
+              </div>
+            </div>
+          </form>
+          <!--/ payment & receipt-->
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="hachi_page_cart_delivery" [hidden]="step != 2">
+    <div class="hachi-section" id="js-dia-chi-giao-hang">
+      <div class="container">
+        <form class="hachi_form chua-dang-nhap" id="form-js-dia-chi-giao-hang" (submit)="handleSubmitAddress()"
+          [formGroup]="addressForm" (keydown.Enter)="keydownEnter($event)">
+          <div class="row">
+            <div class="col-12 ">
+              <h1 class="title">Địa Chỉ Giao Hàng</h1>
+              <!-- <div class="subtitle">
+              Chọn địa chỉ giao hàng bên dưới. Hoặc <a class="hachi-link cursor-pointer" (click)="createNewAddress()">
+                Tạo địa chỉ giao hàng mới</a>
+            </div> -->
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-12 ">
+              <div class="form-dia-chi-giao-hang">
+                <div class="card">
+                  <div class="card-title">
+                    NGƯỜI ĐẶT HÀNG
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group row">
+                      <div class="col-12 col-md-2 col-lg-2 label">
+                        <label htmlFor="OrderPhone">SDT người đặt *</label>
+                      </div>
+                      <div class="col-12 col-md-5 col-lg-5">
+                        <input type="tel" class="form-control"
+                          [ngClass]="{'error': addressForm.controls.OrderPhone.errors != null}"
+                          placeholder="Số điện thoại di động người đặt" formControlName="OrderPhone"
+                          [defaultValue]="CartState.OrderPhone" (blur)="onInputChange('OrderPhone', $event)" />
+                        <div class="hachi-color-text-10 mt-2" *ngIf="addressForm.controls.OrderPhone.errors != null">
+                          <span>Số điện thoại phải có 10 chữ số</span>
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-2 col-lg-2 label">
+                        <div class="hachi-color-text-5">{{CardState.CardNo}}</div>
+                      </div>
+                    </div>
+                    <div class="form-group row mt-2">
+                      <div class="col-12 col-md-2 col-lg-2 label">
+                        <label htmlFor="OrderBy">Họ tên người đặt *</label>
+                      </div>
+                      <div class="col-12 col-md-5 col-lg-5">
+                        <input type="text" class="form-control"
+                          [ngClass]="{'error': addressForm.controls.OrderBy.errors != null}" formControlName="OrderBy"
+                          placeholder="Họ tên người đặt" [defaultValue]="CartState.OrderBy"
+                          (blur)="onInputChange('OrderBy', $event)">
+                        <div class="hachi-color-text-10 mt-2" *ngIf="addressForm.controls.OrderBy.errors != null">
+                          <span>Vui lòng điền đầy đủ thông tin</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row mt-2 mb-0">
+                      <div class="col-12 col-md-2 col-lg-2 label">
+                        <label htmlFor="OrderEmail">Email người đặt</label>
+                      </div>
+                      <div class="col-12 col-md-5 col-lg-5">
+                        <input type="email" class="form-control"
+                          [ngClass]="{'error': addressForm.controls.OrderEmail.errors != null}"
+                          formControlName="OrderEmail" placeholder="Nhập địa chỉ email" [value]="CartState?.OrderEmail"
+                          (change)="onInputChange('OrderEmail',$event)" />
+                        <div *ngIf="addressForm.controls.OrderEmail.errors != null" class="hachi-color-text-10 mt-2">
+                          <span>Định dạng email chưa đúng (thiếu @)</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-12">
+              <div class="form-dia-chi-giao-hang">
+                <div class="card">
+                  <!-- <div class="card-title">
+                  {{DeliveryState.ID > 0 ? "Cập nhật địa chỉ" : "Thêm địa chỉ mới" }}
+                </div> -->
+                  <div class="card-title">
+                    <div class="row mt-2">
+                      <div class="col-12 col-md-2 col-lg-2">
+                        NGƯỜI NHẬN HÀNG
+                      </div>
+                      <div class="col-5 d-flex align-items-center">
+                        <label class="container-checkbox">
+                          <input type="checkbox" name="ReceivedByIsOrderBy"
+                            [defaultChecked]="CartState.ReceivedByIsOrderBy" [checked]="CartState.ReceivedByIsOrderBy"
+                            (click)="onInputChange('ReceivedByIsOrderBy', $event)" />
+                          <span class="checkmark"></span>
+                        </label>
+                        <span class="hachi-color-text-5 ">Người nhận là người đặt</span>
+                      </div>
+                      <div class="hachi-color-text-10 col-5">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group row ">
+                      <div class="col-12 col-md-2 col-lg-2 label">
+                        <label htmlFor="ReceivedBy">Họ tên người nhận</label>
+                      </div>
+                      <div class="col-12 col-md-5 col-lg-5">
+                        <input type="text" class="form-control"
+                          [ngClass]="{'error': addressForm.controls.ReceivedBy.errors != null}"
+                          formControlName="ReceivedBy" placeholder="Họ tên người nhận"
+                          [defaultValue]="CartState.ReceivedBy" (blur)="onInputChange('ReceivedBy', $event)">
+                        <div class="hachi-color-text-10 mt-2" *ngIf="addressForm.controls.ReceivedBy.errors != null">
+                          <span>Vui lòng điền đầy đủ thông tin</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row  mt-2">
+                      <div class="col-12 col-md-2 col-lg-2 label">
+                        <label htmlFor="Cellphone">SDT người nhận</label>
+                      </div>
+                      <div class="col-12 col-md-5 col-lg-5">
+                        <input type="tel" class="form-control"
+                          [ngClass]="{'error': addressForm.controls.Cellphone.errors != null}"
+                          placeholder="Số điện thoại di động người nhận" formControlName="Cellphone"
+                          [defaultValue]="CartState.Cellphone" (blur)="onInputChange('Cellphone', $event)" />
+                        <div class="hachi-color-text-10 mt-2" *ngIf="addressForm.controls.Cellphone.errors != null">
+                          <span>Số điện thoại phải có 10 chữ số</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row  mt-4">
+                      <div class="col-12 col-md-2 col-lg-2 label">
+                        <label htmlFor="Province">Tỉnh / Thành phố</label>
+                      </div>
+                      <div class="col-12 col-md-5 col-lg-5">
+                        <kendo-dropdownlist [data]="lstProvinceState" [textField]="'ProvinceName'" [valueField]="'Code'"
+                          [value]="curProvince.Code > 0 ? curProvince : defProvince" [defaultItem]="defProvince"
+                          [itemDisabled]="isItemDisabled" (valueChange)="onDropdownlistClick($event, 'Province')"
+                          [title]="curProvince.ProvinceName" formControlName="Province"
+                          [popupSettings]="{appendTo:'component'}">
+                        </kendo-dropdownlist>
+
+                        <div class="hachi-color-text-10 mt-2" *ngIf="addressForm.controls.Province.errors != null">
+                          <span>Vui lòng điền đầy đủ thông tin</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row  mt-2">
+                      <div class="col-12 col-md-2 col-lg-2 label">
+                        <label htmlFor="District">Quận huyện</label>
+                      </div>
+                      <div class="col-12 col-md-5 col-lg-5">
+                        <kendo-dropdownlist [data]="lstDistrictState" [textField]="'DistrictName'" [valueField]="'Code'"
+                          [value]="curDistrict.Code > 0 ? curProvince : defDistrict" [defaultItem]="defDistrict"
+                          [itemDisabled]="isItemDisabled" (valueChange)="onDropdownlistClick($event, 'District')"
+                          [title]="curDistrict.DistrictName" formControlName="District"
+                          [popupSettings]="{appendTo:'component'}">
+                        </kendo-dropdownlist>
+
+                        <div class="hachi-color-text-10 mt-2" *ngIf="addressForm.controls.District.errors != null">
+                          <span>Vui lòng điền đầy đủ thông tin</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row  mt-2">
+                      <div class="col-12 col-md-2 col-lg-2 label">
+                        <label htmlFor="Ward">Phường xã</label>
+                      </div>
+                      <div class="col-12 col-md-5 col-lg-5">
+                        <kendo-dropdownlist [data]="lstWardState" [textField]="'WardName'" [valueField]="'Code'"
+                          [value]="curWard.Code > 0 ? curWard : defWard" [defaultItem]="defWard"
+                          [itemDisabled]="isItemDisabled" (valueChange)="onDropdownlistClick($event, 'Ward')"
+                          [title]="curWard.WardName" formControlName="Ward"
+                          [popupSettings]="{appendTo:'component'}">
+                        </kendo-dropdownlist>
+
+                        <div class="hachi-color-text-10 mt-2" *ngIf="addressForm.controls.Ward.errors != null">
+                          <span>Vui lòng điền đầy đủ thông tin</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row form-group-textarea mt-2">
+                      <div class="col-12 col-md-2 col-lg-2 label">
+                        <label htmlFor="Address">Nhập địa chỉ</label>
+                      </div>
+                      <div class="col-12 col-md-5 col-lg-5">
+                        <textarea class="form-control"
+                          [ngClass]="{'error': addressForm.controls.Address.errors != null}" id="Address"
+                          placeholder="Địa chỉ" formControlName="Address" [defaultValue]="CartState.Address"
+                          (blur)="onInputChange('Address', $event)">
+                        </textarea>
+                        <div class="hachi-color-text-10 mt-2" *ngIf="addressForm.controls.Address.errors != null">
+                          <span>Vui lòng điền đầy đủ thông tin</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="form-group row  mt-2">
+                      <div class="col-12 col-md-2 col-lg-2">
+                        &ensp;
+                      </div>
+                      <div class="col-md-5 d-flex">
+                        <label class="container-checkbox">
+                          <input type="checkbox" name="IsDefault" [defaultChecked]="DeliveryState.IsDefault==true" />
+                          <span class="checkmark"></span>
+                        </label>
+                        <span class="hachi-color-text-5">Đặt làm địa chỉ mặc định</span>
+                      </div>
+                    </div> -->
+                    <div class="form-group row text-left mb-0 mt-4">
+                      <div class="col-0 col-sm-0 col-md-2">
+                        &ensp;
+                      </div>
+                      <div class="col-12 col-sm-12 col-md-5 d-flex align-items-center">
+                        <button type="submit" class="btn hachi-primary">Giao đến địa chỉ này
+                          <span class="hachi-icon-right"></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!-- <div class="row mt-4">
+          <div class="col-sm-12 col-md-6 mb-4" *ngFor="let item of lstDeliveryState; let i = index">
+            <div class="card dia-chi-giao-hang" [ngClass]="{'active': item.IsDefault}"
+              *ngIf="(item.ID != DeliveryState.ID || (item.ID == DeliveryState.ID && IsDeleteAddressPopup)) && !isShowAddressFormState">
+              <div class="card-body">
+                <div class="card-title">
+                  <div class="name">{{item.ReceivedBy}}</div>
+                  <div class="card-btn">
+                    <input type="radio" class="hachi-radio" [id]="'IsDefault_'+i" name="IsDefault"
+                      [checked]="item.IsDefault" (click)="onChonMacDinh(item)" />
+                    <label class="chon-mac-dinh ml-2" [for]="'IsDefault_'+i">Mặc định</label>
+                  </div>
+                </div>
+                <div class="card-address">
+                  <div class="address">
+                    <span class="label">Địa chỉ: </span>{{item.FullAddress}}
+                  </div>
+                </div>
+                <div class="card-phone">
+                  <div class="phone">
+                    <span class="label">Điện thoại: </span>{{item.Cellphone}}
+                  </div>
+                </div>
+                <div class="card-btn-group justify-content-lg-end">
+                  <span class="btn btn-outline-secondary" [ngClass]="{'invisible': item.IsDefault}"
+                    (click)="onDeleteAddress(item)">Xóa</span>
+                  <span *ngIf="!item.IsDefault" class="btn" [ngClass]="{'hachi-primary hachi-outline-primary': item.IsDefault, 
+                  'btn-outline-secondary': !item.IsDefault}" (click)="onClickEditAddress(item)">Sửa</span>
+                  <span class="giao-dia-chi btn"
+                    [ngClass]="{'hachi-primary': item.IsDefault, 'btn-secondary': !item.IsDefault}"
+                    (click)="onClickGiaoDenDiaChi(item)">Giao đến địa chỉ này
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <kendo-dialog #dialog class="" title="" [hidden]="!IsDeleteAddressPopup">
+            <div class="modal-content modal-delete-delivery">
+              <div class="modal-header">
+                <button type="button" class="btn-close ml-auto" (click)="IsDeleteAddressPopup = false">
+                  <span class="hachi-icon-close"></span>
+                </button>
+              </div>
+
+              <div class="modal-body">
+                <div class="warning">Quý khách có chắc muốn xóa địa chỉ này khỏi Sổ địa chỉ giao hàng?</div>
+                <div class="FullAddressVN">{{DeliveryState?.FullAddress}}</div>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn hachi-primary hachi-outline-primary"
+                  (click)="IsDeleteAddressPopup = false">Không xóa</button>
+                <button type="submit" class="btn hachi-warning" [disabled]="IsLoading"
+                  (click)="RemoveDelivery()">Xóa</button>
+              </div>
+            </div>
+          </kendo-dialog>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="hachi_page_view_cart hachi_page_cart_gift" [hidden]="step != 4">
+    <div class="hachi-section">
+      <div class="gift_container">
+        <div id="qua_tang_kem_san_pham">
+          <!-- {GiftList.sort((a, b) => { return Number(a.IsCart) - Number(b.IsCart) })
+        .map((cartGift: DTOItemCartGifts, index: number) => {
+            cartGift.MinAmount = Math.min(...(cartGift.GiftLevels.map(s => s.MinLevel)))            return  -->
+          <div class="border-color-1 card view-cart__table" *ngFor="let cartGift of GiftList; let index = index">
+            <div class="card-body">
+              <div class="cpn_title">QUÀ TẶNG KÈM {{cartGift.IsCart ? 'ĐƠN HÀNG' : 'SẢN PHẨM'}}</div>
+
+              <div class="row sanpham">
+                <div class="col-12 col-md-3 col-lg-3">
+                  <img loading="lazy" src={{cartGift.ImageSetting}} />
+                </div>
+
+                <div class="col-12 col-md-9 col-lg-9">
+                  <div class="text_promotion">Xin chúc mừng!</div>
+                  <div class="text text_bold">
+                    <!-- {{cartGift.IsCart ?
+              'Đơn hàng quý khách đủ điều kiện để chọn quà tặng kèm.'
+              :
+              Đơn hàng quý khách có sản phẩm <span onClick={()=> openInNewTab(cartGift.Alias)}>
+                {cartGift.ProductName}</span> có quà tặng kèm.</>
+              }} -->
+                    <span *ngIf="cartGift.IsCart">Đơn hàng quý khách đủ điều kiện để chọn quà tặng kèm.</span>
+                    <span *ngIf="!cartGift.IsCart">
+                      Đơn hàng quý khách có sản phẩm <span (click)="openInNewTab(cartGift.Alias)">
+                        {{cartGift.ProductName}}</span> có quà tặng kèm.</span>
+                  </div>
+
+                  <ul class="text text_bold d-flex">
+                    <li>Mã đơn hàng: {{cartGift.OrderNo}}</li>
+                    <li>Ngày đặt hàng: {{cartGift.OrderDate|date:'d/M/yyyy'}}</li>
+                  </ul>
+                  <ul class="text text_bold d-flex">
+                    <li>Giá trị mua {{cartGift.IsCart ? 'hàng:' : 'sản phẩm:' }}
+                      {{cartGift.SaleAmount|number:'1.'}}đ
+                    </li>
+                    <li *ngIf="cartGift.IsCart">Giá trị chọn quà tối thiểu: {{cartGift.MinAmount|number:'1.'}}đ</li>
+                  </ul>
+
+                  <div class="row align-items-center">
+                    <div class="col-12 col-md-9 col-lg-9">
+                      <div class="text vuiLongChon">Vui lòng chọn các món quà bên dưới:</div>
+                      <div class="text text_light">
+                        (Khi hết quà tặng Hachi Hachi sẽ gửi tặng quý khách MÃ QUÀ TẶNG TƯƠNG ỨNG VỚI GIÁ TRỊ QUÀ)
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-md-3 col-lg-3 d-flex justify-content-end">
+                      <div class="giaTriQua">
+                        <span class="text">Còn lại:</span>
+                        <span class="text_promotion">{{cartGift.RemainAmount|number:'1.'}}đ</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="label_quatang_list w-100" *ngFor="let giftLevel of cartGift.GiftLevels; let iLevel = index">
+                  <div class="label">QUÀ TẶNG <span class="sublabel">
+                      (ứng với giá trị mua hàng <span class="amount">
+                        {{giftLevel.MinLevel|number:'1.'}}đ</span>)
+                    </span>
+                  </div>
+                  <div class="quatang-list desktop">
+                    <div class="quatang-item" [ngClass]="{'IsChoose': gift.IsChoose}"
+                      *ngFor="let gift of giftLevel.GiftItems; let iGift = index">
+                      <input type="checkbox" name="IsChoose" [id]="index + iLevel + 'quatang_item' + iGift"
+                        class="hachi-checkbox" defaultChecked={{gift.IsChoose}} checked={{gift.IsChoose}}
+                        (click)="onClickGift(index, iLevel, iGift)"
+                        [disabled]="cartGift.RemainAmount < giftLevel.MinLevel * gift.Quantity && !gift.IsChoose" />
+                      <div class="hinhanh">
+                        <img loading="lazy" src={{gift.ImageThumb}} alt="" />
+                      </div>
+                      <div class="tenquatang_maquatang">
+                        <div class="tenquatang" title={{gift.ProductName}}>{{gift.ProductName}}</div>
+                      </div>
+                      <div class="soluongquatang">
+                        <div class="group_quanlity">
+                          <div class="group-input">
+                            <button class="counter-minus" disabled={{!gift.IsChoose}}
+                              (click)="handleClickMinusOrderQuantity(index, iLevel, iGift)">
+                              <span class="hachi-icon-minus"></span>
+                            </button>
+
+                            <input type="number" class="input" defaultValue="0" value={{gift.Quantity}}
+                              disabled={{!gift.IsChoose}}
+                              (valueChange)="onChangeOrderQuantity(index, iLevel, iGift, $event)" />
+
+                            <button class="counter-plus" (click)="handleClickAddOrderQuantity(index, iLevel, iGift)"
+                              [disabled]="!gift.IsChoose || cartGift.RemainAmount < giftLevel.MinLevel">
+                              <span class="hachi-icon-plus"></span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end align-items-end button-group">
+            <div class="note_btn">
+              <div class="note">Đối với tất cả quà tặng ở trên</div>
+              <button class="btn hachi-standard" (click)="UpdateCartGift(false)">TỪ CHỐI NHẬN QUÀ</button>
+            </div>
+            <div class="note_btn">
+              <div class="note">Lưu ý: Quà tặng đã chọn không thể đổi trả sau khi quý khách bấm nút NHẬN QUÀ & TIẾP TỤC
+              </div>
+              <button type="submit" class="btn hachi-warning" (click)="UpdateCartGift(true)">
+                NHẬN QUÀ VÀ TIẾP TỤC</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <cart-search-product-popup (submit)="popupAddCart($event)"></cart-search-product-popup>
+</div>

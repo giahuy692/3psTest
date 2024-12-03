@@ -1,0 +1,79 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+  #selectedRowitemDialog {
+    height: 68px;
+    min-width: fit-content;
+    width: fit-content;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 1px 3px 6px 1px rgba($gray-500, 0.2);
+    border-radius: 3px;
+
+    .box {
+      min-width: 68px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      text-align: center;
+
+      &:first-child {
+        border-radius: 3px 0 0 3px;
+      }
+      &:last-child{
+        border-radius: 0 3px 3px 0;
+      }
+      &.count-box {
+        background-color: $dark-green;
+        color: white;
+        font-size: 13px;
+
+        .count {
+          font-size: 30px;
+        }
+      }
+
+      &.box-btn {
+        padding: 0 22px;
+        cursor: pointer;
+        white-space: normal;
+
+        &:hover{
+          background: $gray-500;
+          color: white;
+        }
+      }
+
+      &.green-btn {
+        color: $dark-green;
+
+        &:hover{
+          background: $dark-green;
+          color: white;
+        }
+      }
+
+      &.red-btn {
+        color: $bad-red;
+
+        &:hover{
+          background: $bad-red;
+          color: white;
+        }
+      }
+    }
+
+    .divider {
+      height: 50px;
+      width: 1px;
+      margin: auto;
+      background-color: $gray-300;
+    }
+  }
+}

@@ -1,0 +1,1221 @@
+@import "../../../../../../assets/scss/variable.scss";
+
+@mixin layoutDetail($nmin, $max) {
+  .title-detail {
+    display: flex;
+
+    .title {
+      max-width: $max;
+      min-width: $nmin;
+    }
+  }
+}
+
+::ng-deep {
+  app-hr-boarding-list {
+    .color_blue_gray {
+      color: $light-blue-gray;
+    }
+
+    .color_blue {
+      color: $blue;
+    }
+
+    .color_green {
+      color: $dark-green;
+    }
+
+    .color_red {
+      color: $bad-red;
+    }
+
+    .color_yellow {
+      color: $medium-yellow;
+    }
+
+
+    .cursor-pointer {
+      cursor: pointer;
+    }
+
+    .emptyText { color: $light-blue-gray; font-style: italic }
+    
+    .line {
+      margin: 0 5px;
+      height: 14px !important;
+      border-left: 1px solid #959db3;
+      padding: 0 !important;
+    }
+
+    .k-drawer-container {
+      position: relative;
+
+      .k-overlay {
+        position: absolute;
+      }
+    }
+
+    .drawer {
+      z-index: 10001 !important;
+      height: calc(100vh - 85px);
+      margin-top: 55px;
+
+      app-p-numeric-textbox,
+      kendo-textbox,
+      kendo-textarea {
+        &.readonly-field {
+          input {
+            background-color: #f0f3f5;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+          }
+        }
+      }
+
+      kendo-multiselect {
+        height: fit-content;
+
+        kendo-taglist {
+          max-height: 96px !important;
+        }
+
+        &.readonly-field {
+
+          kendo-taglist,
+          kendo-searchbar input {
+            background-color: #f0f3f5;
+          }
+        }
+      }
+
+      .k-drawer-wrapper {
+        width: 420px !important;
+        height: 100%;
+        scrollbar-color: unset !important;
+      }
+
+      .add-position-area {
+
+        // TITLE CONTROL
+        .title {
+          height: 40px;
+          border-bottom: 1px solid $gray-300;
+          color: $dark-green;
+          font-size: 13px;
+          font-weight: 700;
+          padding-left: 15px;
+          display: flex;
+          align-items: center;
+          text-transform: uppercase;
+          gap: 10px;
+          box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+        }
+
+        .info-position-area {
+          overflow-y: auto;
+
+        }
+
+        .info-position-area,
+        .info-task {
+          height: calc(100vh - 170px);
+
+          &_block {
+            height: calc(100% - 30px);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 10px;
+
+            .field-text {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+
+              .id-hr {
+                font-weight: bold;
+              }
+
+              .checkbox-area {
+                display: flex;
+                gap: 4px;
+                align-items: center;
+
+                .title-checkbox {
+                  cursor: pointer;
+                }
+
+                .disabled-field {
+                  pointer-events: none;
+                }
+              }
+            }
+
+            .multiselect{
+              height: auto;
+              max-height: 100px;
+            }
+
+            .font-blue {
+              font-weight: 100;
+              color: $blue;
+              font-style: italic;
+              cursor: pointer;
+            }
+
+            .block-assignee,
+            .block-approved {
+              kendo-dropdownlist {
+                width: 100%;
+              }
+            }
+
+            .date-picker-area {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              height: 37px;
+              position: relative;
+
+              .datepicker {
+                width: 100% !important;
+              }
+
+              .datepicker-wrapper {
+                width: 100% !important;
+                max-width: none !important;
+
+                .k-datepicker {
+                  width: 100% !important;
+                  box-shadow: none;
+
+                  .k-input-inner {
+                    text-align: left;
+                  }
+                }
+              }
+
+              .text-warning {
+                color: #bd0100 !important;
+                display: flex;
+                align-items: center;
+                padding-right: 10px;
+                position: absolute;
+                right: 0;
+                margin: 0;
+              }
+            }
+          }
+
+          .note {
+            height: 30px;
+            font-style: italic;
+            color: #eb273a;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+          }
+
+          .block {
+            width: 100%;
+
+            .important {
+              margin-left: 5px;
+              color: $bad-red;
+            }
+
+            .box-area {
+              display: flex;
+              flex-direction: column;
+              gap: 4px;
+
+              .area {
+                display: flex;
+                justify-content: space-between;
+              }
+
+              .none-task {
+                color: #959db3;
+              }
+
+              .label {
+                font-weight: bold;
+              }
+
+              .k-textbox {
+                width: 100%;
+              }
+
+              // .k-textbox:read-only{
+              //   background-color: #D9D9D9;
+              // }
+
+              .multiselect-custom {
+                span.k-clear-value {
+                  display: none !important;
+                }
+
+                &::after {
+                  right: 0 !important;
+                  text-align: center;
+                  font-size: 16px;
+                  font-weight: 600;
+                }
+
+                kendo-searchbar {
+                  margin-right: 0;
+                }
+
+                kendo-taglist {
+                  .k-chip {
+                    background-color: #dbdee7;
+                    color: #000;
+
+                    .k-chip-actions {
+                      kendo-icon {
+                        &.k-i-x-circle {
+                          &::before {
+                            margin-bottom: 1px;
+                            content: "\e11b";
+                            color: #959db3;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+
+              .task-system {
+                padding-left: 10px;
+              }
+            }
+
+            &.block-description-task {
+              kendo-textarea {
+                min-height: 100px;
+                padding: 0 !important;
+                width: 100%;
+              }
+            }
+
+            &.block-duration,
+            &.block-orderby {
+              kendo-numerictextbox {
+                width: 100%;
+
+                input {
+                  text-align: left;
+                }
+
+                .k-input-spinner {
+                  button {
+                    display: none;
+                  }
+                }
+              }
+            }
+
+            &.block-add-exception {
+              .label {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+
+                span {
+                  color: #1a6634;
+
+                  &:hover {
+                    cursor: pointer;
+                  }
+                }
+              }
+
+              // custom treelist
+              .treelist-container {
+
+                .k-grid-header,
+                .k-header,
+                th.k-header,
+                .k-grid-header-wrap,
+                .k-grouping-header,
+                .k-grouping-header .k-group-indicator,
+                .k-grid td,
+                .k-grid-footer,
+                .k-grid-footer-wrap,
+                .k-grid-content-locked,
+                .k-grid-footer-locked,
+                .k-grid-header-locked,
+                .k-filter-row>td,
+                .k-filter-row>th {
+                  border: none !important;
+                }
+
+                .bold-text {
+                  font-weight: 600;
+                }
+
+                .underline-text {
+                  text-decoration: underline;
+                }
+
+                // height: 400px;
+                overflow-y: auto;
+
+                kendo-treelist.treelist-custom {
+                  border: none;
+
+                  kendo-treelist-list {
+                    max-height: fit-content;
+                  }
+
+                  .status-name {
+                    font-size: 12px;
+                  }
+
+                  //Header tree list
+                  thead {
+                    tr.k-table-row {
+                      display: none;
+                    }
+                  }
+
+                  .k-grid-header {
+                    display: none;
+                  }
+
+                  // Body tree list
+                  .k-grid-content {
+                    background-color: #fff !important;
+
+                    table.k-table {
+                      border-spacing: 0 4px;
+
+                      tbody {
+                        .row-level-1 {
+                          td {
+                            border-top: 1px solid #000 !important;
+                          }
+                        }
+
+                        .row-level-1:first-child {
+                          td {
+                            border-top: none !important;
+                          }
+                        }
+
+                        tr.k-table-row {
+                          background-color: #fff;
+                          box-shadow: none !important;
+
+                          td.k-table-td {
+                            height: 46px !important;
+                            box-shadow: none !important;
+                            color: #5a6276;
+
+                            &:first-child {
+                              display: flex;
+                              align-items: center;
+                              gap: 10px;
+                              height: 46px !important;
+                              padding-left: 0px !important;
+
+                              kendo-icon {
+                                cursor: pointer;
+                              }
+
+                              .k-icon {
+                                font-size: 18px;
+                              }
+                            }
+
+                            &:last-child {
+                              .icon {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+
+                                span {
+                                  color: #eb273a;
+                                  cursor: pointer;
+                                  font-size: 20px;
+                                }
+                              }
+                            }
+
+                            &[aria-colindex="1"] {
+                              text-wrap: wrap !important;
+                            }
+
+                            &[aria-colindex="2"] {
+                              text-align: end;
+                            }
+
+                            .name {
+                              display: flex;
+                              // flex-direction: column;
+                              gap: 4px;
+                              overflow: hidden;
+
+                              span {
+                                text-wrap: nowrap;
+                                text-overflow: ellipsis;
+                                overflow: hidden;
+                              }
+                            }
+                          }
+
+                          background-color: #fff;
+                          box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+                          &:hover {
+                            background: none !important;
+
+                            &>td {
+                              background: none !important;
+                            }
+
+                            &>td:last-child {
+                              background: none !important;
+                            }
+                          }
+
+                          .role {
+                            display: flex;
+                            gap: 9px;
+                            align-items: center;
+
+                            .bar {
+                              width: 1px;
+                              height: 16px;
+                              background-color: #5a6276;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          .block-1 {
+            display: flex;
+            justify-content: space-between;
+
+            .box-area {
+              .label {
+                font-weight: bold;
+              }
+
+              .k-textbox {
+                min-width: 193px;
+              }
+
+              .checkbox-area {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+              }
+            }
+
+            .box-right {
+              margin-top: 18px;
+            }
+          }
+
+          .block-4 {
+            .label {
+              font-weight: bold;
+            }
+
+            .list-location {
+              height: 100%;
+              // margin-bottom: 50px;
+              // overflow-y: auto;
+              // overflow-x: hidden;
+
+              .block-area {
+                height: 30px;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                // cursor: pointer;
+
+                .checkbox {
+                  width: 50px;
+                }
+
+                .position-name {
+                  cursor: pointer;
+                  width: 150px;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                }
+
+                .disable-position-name {
+                  cursor: default;
+                  // pointer-events: none;
+                  width: 150px;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                }
+
+                .position-id {
+                  cursor: pointer;
+                  width: 60px;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                }
+
+                .disable-position-id {
+                  cursor: default;
+                  // pointer-events: none;
+                  width: 60px;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                }
+
+                .position-status-name {
+                  cursor: pointer;
+                  width: 120px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: right;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  padding-right: 5px;
+                }
+
+                .disable-position-status-name {
+                  cursor: default;
+                  // pointer-events: none;
+                  width: 120px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: right;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  padding-right: 5px;
+                }
+
+                .icon-area {
+                  width: 20px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+
+                  .icon {
+                    font-size: 20px;
+                    color: red;
+                    cursor: pointer;
+
+                    &:hover {
+                      opacity: 0.7;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .btnControl {
+        background-color: $white;
+        position: absolute;
+        bottom: 0;
+        height: 45px;
+        padding: 0 10px;
+        width: 100%;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        border-top: 1px solid $gray-300;
+        box-shadow: 1px 3px 6px 6px rgba(143, 155, 166, 0.2);
+
+        button {
+          width: 95px;
+          margin-right: 10px;
+        }
+      }
+
+      .assetRecovery {
+        overflow-y: auto;
+        height: 192px;
+
+        app-p-textbox {
+          width: 100%;
+        }
+      }
+    }
+
+    .k-drawer-content {
+      overflow-x: auto;
+      padding: 0 15px 0 20px;
+
+      .main {
+        .header {
+          overflow-x: auto;
+
+          &.header-1 {
+            justify-content: space-between;
+            height: 52px;
+
+            .line {
+              height: 30px !important;
+              border-left: 1px solid #959db3;
+            }
+
+            .pointerDisable {
+              pointer-events: none;
+            }
+
+            .button-group {
+              display: flex;
+              gap: 10px;
+            }
+
+            .box-button{
+              display: flex;
+              box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+              background: white;
+              align-items: center;
+              border-radius: 3px;
+
+              .k-button{
+                  border: none !important;
+                  box-shadow: none !important;
+
+                  &:hover{
+                    filter: brightness(100%);
+                }
+              }
+
+              .line-space {
+                  width: 1px;
+                  height: 18px;
+                  border-radius: 3px;
+                  background: rgba(219, 222, 231, 1);
+              }
+          }
+          }
+
+          &.header-2 {
+            gap: 20px !important;
+            height: 80.5px;
+
+
+
+            .toolSwitchView {
+              display: flex;
+              align-self: flex-end;
+              margin-left: auto;
+
+              button {
+                background-color: transparent;
+                border: none;
+                box-shadow: none;
+              }
+
+              .activeViewStaff,
+              .activeViewTasks {
+                .k-button-icon {
+                  color: $dark-green;
+                }
+              }
+            }
+
+            .filter-search {
+              .k-input-md {
+                width: 506px !important;
+              }
+            }
+
+            kendo-label {
+              .k-label {
+                color: $gray-700;
+                font-weight: 700;
+                margin-bottom: 6px;
+              }
+
+              .in-label {
+                display: flex;
+                gap: 5px;
+
+                .filter-by-date {
+                  .dropdownlistCustom {
+                    width: fit-content;
+                  }
+
+                  .k-input-inner {
+                    min-width: 45px;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+
+        .grid-wrapper {
+          .grid {
+            colgroup col:last-child {
+              width: 60px;
+            }
+
+            &.pagerDisable {
+              .k-pager {
+                pointer-events: none;
+                opacity: 0.6;
+                filter: grayscale(0.1);
+              }
+            }
+
+            th {
+              color: #5a6276 !important;
+
+              &:first-child {
+                padding-left: 30px;
+              }
+            }
+
+            td {
+              font-size: 13px !important;
+            }
+
+            .detail-col {
+              @include layoutDetail(99px, 130px);
+            }
+
+            .taskdetail-col {
+              @include layoutDetail(122px, 130px);
+            }
+
+            .timeboarding-col {
+              @include layoutDetail(99px, 130px);
+            }
+
+            .detailBoarding-col {
+              @include layoutDetail(49px, 130px);
+            }
+
+            .name-col {
+              max-width: 360px;
+              .comtainer_name {
+                display: flex;
+                max-width: 360px;
+
+                .avatar {
+                  border-radius: 50%;
+                  max-height: 40px !important;
+                }
+
+                .Id_joindate {
+                  margin-left: 10px;
+
+                  .Id {
+                    font-weight: 700;
+                    color: #5a6276;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    width: 273px;
+                  }
+                }
+              }
+
+              .taskname {
+                font-weight: 700;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            
+                display: -webkit-box;
+                word-wrap: break-word; /* Ngắt từ nếu dài quá */
+                -webkit-line-clamp: 2; /* Giới hạn hiển thị 2 dòng */
+                -webkit-box-orient: vertical;
+                line-height: 1.5; /* Điều chỉnh khoảng cách dòng nếu cần */
+                max-height: calc(1.5em * 2); /* Tương ứng với 2 dòng */
+              }
+
+              .typeTask {
+                font-size: 11px;
+                color: $light-blue-gray;
+              }
+            }
+
+            .description-col {
+              max-width: 360px;
+              min-width: 165px;
+              .description-text {
+                overflow: hidden;
+                text-overflow: ellipsis;
+            
+                display: -webkit-box;
+                word-wrap: break-word; /* Ngắt từ nếu dài quá */
+                -webkit-line-clamp: 2; /* Giới hạn hiển thị 2 dòng */
+                -webkit-box-orient: vertical;
+                line-height: 1.5; /* Điều chỉnh khoảng cách dòng nếu cần */
+                max-height: calc(1.5em * 2); /* Tương ứng với 2 dòng */
+              }
+            }
+
+            .NumOfDate_header {
+              .k-cell-inner {
+                .k-link {
+                  justify-content: center;
+                  text-align: center;
+
+                  .popup-filterNumOfDate {
+                    background-color: #fff;
+                    position: absolute;
+                    top: 100%;
+                    padding: 10px;
+                  }
+                }
+              }
+            }
+
+            .NumOfDate_Class {
+              text-align: center;
+            }
+
+            .name-ellipsis {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+
+            .flex-center-col {
+              text-align: center;
+
+              .k-link {
+                justify-content: center;
+                padding-right: 18px;
+              }
+            }
+
+            .col-status {
+              min-width: 140px;
+            }
+
+            .flex-end-col {
+              text-align: right;
+              padding-right: 20px;
+
+              .k-link {
+                justify-content: end;
+                padding-right: 18px;
+              }
+            }
+
+            .overflow-text-2 {
+              min-width: 300px;
+              max-width: 450px;
+
+              .description-text {
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: normal !important;
+                word-wrap: break-word;
+                word-break: break-word;
+              }
+            }
+
+            #k-8271dcd0-9ebb-4b3a-8854-d24a4f0ef4c4>table>tbody>tr.k-detail-row.k-table-row.ng-star-inserted>td.k-hierarchy-cell.k-table-td {
+              display: none;
+            }
+
+            #k-8271dcd0-9ebb-4b3a-8854-d24a4f0ef4c4>table>tbody>tr.k-detail-row.k-table-row.ng-star-inserted>td.k-detail-cell.k-table-td {
+              padding: 0;
+            }
+
+            #k-a46415d8-b054-4ab6-baae-f29c1718add1>table>thead>tr {
+              background-color: unset;
+            }
+
+            .k-detail-row {
+              .k-hierarchy-cell.k-table-td {
+                display: none;
+              }
+
+              td {
+                border-style: unset;
+              }
+
+              .k-detail-cell {
+                padding: 0;
+              }
+
+              .k-grid-header {
+                .k-table-row {
+                  background-color: unset;
+                }
+              }
+
+              .k-pager-wrap {
+                display: none;
+              }
+
+              #k-grid-aria-root {
+                height: auto !important;
+              }
+
+              app-hr-task-list .hr-task-list-container .task-list-container .grid-wrapper {
+                margin-top: 0;
+              }
+            }
+
+          }
+        }
+
+
+        // .popup-confirm-custom {
+        //     .dialog-header {
+        //         color: #FD7676;
+        //         font-size: 15px !important;
+        //         font-weight: 600;
+        //         display: flex;
+        //         justify-content: center;
+        //         align-items: center;
+        //         text-transform: uppercase;
+        //         padding: 15px 10px;
+        //         border-bottom: 1px solid #DBDEE7;
+        //         border-top-left-radius: 3px;
+        //         border-top-right-radius: 3px;
+        //         gap: 10px;
+
+        //         .k-icon {
+        //             font-size: 22px;
+        //         }
+
+        //         div {
+        //             padding-top: 3px;
+        //         }
+        //     }
+
+        //     .dialog-content {
+        //         height: calc(100% - 53px - 53px);
+        //         display: flex;
+        //         flex-direction: column;
+        //         justify-content: space-between;
+        //         text-align: center;
+        //         padding: 20px 10px;
+        //         color: #26282E;
+        //         border-radius: 3px;
+
+        //         .deletePlus {
+        //             font-weight: normal !important;
+        //             margin-top: 20px;
+        //         }
+
+        //         .text-confirm {
+        //             max-width: 350px;
+        //             display: flex;
+        //             flex-direction: column;
+        //             align-self: center;
+        //             gap: 5px;
+
+        //             .policy-name-text {
+        //                 font-weight: 600;
+        //                 color: #36C8CF;
+        //                 overflow: hidden;
+        //                 text-wrap: nowrap;
+        //                 text-overflow: ellipsis;
+        //             }
+        //         }
+
+        //         .warning {
+        //             display: flex;
+        //             gap: 3px;
+        //             justify-content: center;
+        //         }
+        //     }
+
+        //     .dialog-footer {
+        //         height: 53px;
+        //         border-bottom-left-radius: 3px;
+        //         border-bottom-right-radius: 3px;
+
+        //         button {
+        //             height: 100%;
+        //             width: 50%;
+        //             text-transform: uppercase;
+        //             font-weight: 600;
+        //             color: #959DB3;
+        //         }
+
+        //         .btn-delete {
+        //             background-color: #FD7676;
+        //             color: #fff;
+
+        //             .k-i-trash {
+        //                 display: flex;
+        //                 align-items: center;
+        //                 font-size: 18px;
+        //             }
+        //         }
+
+        //     }
+
+        //     .k-window {
+        //         border-radius: 3px;
+        //     }
+
+        //     .k-window-content {
+        //         padding: 0 !important;
+        //     }
+        // }
+      }
+
+      // popup xem lịch sử cập nhật công việc
+      .dialog-TaskLog {
+        overflow: hidden;
+
+        .k-window-content {
+          overflow: hidden;
+        }
+
+        .btn-action {
+          display: none;
+        }
+
+        .body-area {
+          height: 100%;
+          overflow: auto;
+        }
+
+        .area {
+          height: 450px;
+
+          .dialog {
+
+            .content-dialog,
+            .header-dialog {
+              display: flex;
+              justify-content: space-between;
+              width: 100%;
+              padding: 0px 10px;
+
+              .header-title {
+                white-space: nowrap;
+                font-weight: 700;
+                color: #5a6276;
+                // padding: 0px 5px;
+              }
+
+              .col-dialog-1 {
+                width: 20%;
+              }
+
+              .col-dialog-2 {
+                width: 30%;
+              }
+
+              .col-dialog-3 {
+                width: 50%;
+              }
+            }
+
+            .content {}
+
+            .content-dialog {
+              height: 70px;
+              padding: 10px;
+              background-color: #edeff3;
+              // margin: 0 !important;
+              margin-bottom: 5px;
+              border-radius: 5px;
+
+              .col-dialog {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                .font-bold {
+                  font-weight: bold;
+                }
+
+                p {
+                  margin-bottom: 5px !important;
+                }
+              }
+
+              .text-des {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                /* Số dòng tối đa trước khi hiển thị dấu "..." */
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                /* Ẩn phần văn bản thừa */
+                text-overflow: ellipsis;
+              }
+            }
+          }
+        }
+
+        .block {
+          .box-area {
+            .label {
+              font-weight: bold;
+              margin-bottom: 5px;
+
+              .important {
+                margin-left: 5px;
+                color: $bad-red;
+              }
+            }
+
+            .text-area-description {
+              height: 64px;
+              width: 100%;
+            }
+
+            .k-textarea:read-only {
+              background-color: $white;
+            }
+
+            .k-dropdown {
+              width: 100%;
+            }
+          }
+        }
+
+        .k-actions-stretched>* {
+          -ms-flex: none;
+          flex: none;
+        }
+
+        .btn-close,
+        .btn-action {
+          width: 105px;
+        }
+
+        .btn-close {
+          color: $dark-green;
+        }
+
+        .k-actions {
+          padding: 26px;
+          justify-content: right;
+          gap: 10px;
+        }
+
+        .k-window-titlebar-actions {
+          display: none;
+        }
+      }
+    }
+  }
+}

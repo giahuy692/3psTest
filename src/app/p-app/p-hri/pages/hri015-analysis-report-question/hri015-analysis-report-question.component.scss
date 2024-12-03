@@ -1,0 +1,161 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    .hri015-analysis-report-question{
+        height: calc(120vh - #{$footer-height});
+        display: flex;
+        flex-direction: column;
+        .header{
+            padding: 15px !important;
+            min-height: 40px;
+        }
+        .col-gap10{
+            column-gap: 10px;
+        }
+        .layoutNumber{
+            width: 100%;
+            .layoutNumberMain{
+                width: 100% !important;
+                display: block;
+                width: 88px;
+            }
+            .layoutNumberMainAmount{
+                display: block;
+                width: 50%;
+                text-align: center;
+            }
+            .layoutNumberMainPercent{
+                display: block;
+                width: 50%;
+                text-align: center;
+            }
+        }
+        .header-1{
+            justify-content: space-between;
+            .myCustomBreadCrumb{
+                width: 550px;
+            }
+            .file-btn-group{
+                min-width: 100px;
+            }
+        }
+        .header-2{
+            min-height: 70px;
+            .filter1{
+                display: flex;
+                flex-direction: column;
+                margin-right: 30px;
+                .k-dropdownlist{
+                    width: 400px;
+                }
+            }
+            .filter-btn-group.clear-btn-group{
+                display: none;
+            }
+        }
+        .body{
+            padding: 20px;
+            .grid-wrapper{
+                margin-top: 0;
+                .grid{
+                    .k-grid-aria-root{
+                        padding-bottom: 30px;
+    
+                        .k-table{
+                            .k-grid-header{
+                                position: sticky;
+                                top: 0;
+                                z-index: 1;
+                                background-color: $gray-100;
+                                border-spacing: 0;
+                            }
+                            th{
+                                border-spacing: 0 !important;
+                                &:last-child{
+                                    display: none;
+                                }
+                                
+                            }
+                        }
+                    }
+                    th.col_name{
+                        span.k-link{
+                            margin-left: 25px;
+                        }
+                    }
+                    
+                    @for $i from 4 through 11 {
+                        th:nth-child(#{$i}){
+                            span.k-link{
+                                justify-content: center;
+                                span{
+                                    text-align: center;
+                                }
+                            }
+                    }
+    
+                    // th:nth-child(7){
+                    //     span.k-link{
+                    //         justify-content: center;
+                    //         span{
+                    //             text-align: center;
+                    //         }
+                    //     }
+                    // }
+                    // th:nth-child(8){
+                    //     span.k-link{
+                    //         justify-content: center;
+                    //         span{
+                    //             text-align: center;
+                    //         }
+                    //     }
+                    // }
+                    }
+                   
+                    
+                    .col_SaiHet{
+                        span.k-link{
+                            margin-left: 10px;
+                        }
+                    }
+    
+                    .col_mucDoKho{
+                        text-align: center;
+                    }
+                    span.k-link{
+                        padding-right: 12px;
+                    }
+                   
+                    td.k-table-td:first-child{
+                        height: 60px;
+                        width: 500px;
+                        max-width: 400px;
+                        white-space: normal;
+                    }
+                    td.k-table-td:nth-child(2){
+                        width: 230px;
+                        max-width: 200px;
+                        white-space: normal;
+                    }
+                    td.k-table-td:nth-child(3){
+                        width: 200px;
+                    }
+                    td.k-table-td:nth-child(4){
+                       text-align: center;
+                    }
+                    @for $i from 4 through 11 {
+                        td.k-table-td:nth-child(#{$i}) {
+                          text-align: center;
+                        }
+                      }
+                    td.k-table-td:last-child{
+                        display: none;
+                    }
+                    .k-pager{
+                        bottom: 25px;
+                    }
+                  }
+            }
+          }
+    }
+}

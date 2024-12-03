@@ -1,0 +1,20 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    .k-menu-link{
+        display: flex;
+        gap: 10px;
+    }
+    
+    .file-btn-group{
+        min-width: 30px;
+        kendo-groupbutton{
+            .k-dropdown-button{
+                width: 28px;
+                .k-button{
+                    justify-content: center;
+                }
+            }
+        }
+    }
+}

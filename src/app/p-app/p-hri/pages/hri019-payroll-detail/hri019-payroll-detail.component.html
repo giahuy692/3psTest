@@ -1,0 +1,345 @@
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+<div class="app-hri019-payroll-detail">
+  <!-- Start: Header -->
+  <div class="header header-1">
+    <div class="breadcumb">
+      <app-p-kendo-breadcrumb (loadData)="loadPage()"></app-p-kendo-breadcrumb>
+    </div>
+    <div class="nav-crud">
+      <button
+        *ngFor="let i of listActBtnStatus"
+        kendoButton
+        iconClass="k-icon k-i-{{ i.code }}"
+        class="{{ i.class }} "
+        (click)="handleBtnStatus(i)"
+        title="{{i.title}}"
+      >
+        {{ i.text }}
+      </button>
+    </div>
+  </div>
+  <!-- End: Header-->
+
+  <!-- START BODY -->
+  <div class="main">
+    <div class="InfoPayroll">
+      <span class="Topic">
+        THÔNG TIN BẢNG LƯƠNG
+      </span>
+      <div class="containerInfo">
+        <div class="TimeAndStatus">
+          <div class="time">
+            <label class="label">Kỳ lương
+              <span class="symbol">(*)</span>
+            </label>
+            <p-kendo-dropdownlist [data]="ListPayroll" [valueField]="'Code'" [textField]="'Period'" [(ngModel)]="Payroll" [filterable]="true"  
+            (selectionChange)="selectionChangeDropdown($event)"  [popupSettings]="{ popupClass: 'customDropdownList'}"></p-kendo-dropdownlist>
+
+          </div>
+          <div class="time pt-2">
+            <label class="label">Thời gian hiển thị trên hệ thống
+              <span class="symbol">(*)</span>
+            </label>
+            <app-datetimepicker [format]="'d/M/yyyy HH:mm'" (blur)="onDateChange($event)" [readOnlyInput]="true"
+                [stepTime]="2" [(ngModel)]="PayrollEffDate" [placeholder]="'d/m/yyyy H:m'"
+                [readOnlyInput]="true" [disabled]="isLock ||  Payroll.Code <= 0"
+                [formatPlaceholder]="{ time: 'H:m', year: 'yyyy', month: 'M', day: 'd' }">
+            </app-datetimepicker>
+          </div>
+          <div class="status">
+            <label class="label" style="margin-top: 8px">Tình trạng</label>
+            <div #status [innerHTML]="Payroll.StatusName | colorStatus:Payroll.StatusID"></div>
+            
+          </div>
+          <p class="symbol fst-italic mt-2">(*) Trường bắt buộc nhập.</p>
+        </div>
+        <div class="infomation">
+          <div class="groupInput">
+            <label class="label">Tên bảng lương
+              <span class="symbol">(*)</span>
+            </label>
+            <app-p-textbox [propName]="'SalaryName'"
+                (blur)="APIUpdatePayroll(Payroll, ['SalaryName'],'tên bảng lương')"
+                [(ngModel)]="Payroll.SalaryName"
+                (keydownEnter)="$event.target.blur()"
+                [disabled]="isLock || Payroll.Code <= 0"
+            ></app-p-textbox>
+          </div>
+          <div class="groupInput" style="margin-top: 8px">
+            <label class="label">Mô tả bảng lương
+              <!-- <span class="symbol">(*)</span> -->
+            </label>
+            <app-p-textarea [propName]="'Remark'" class="w-100" name="Remark" 
+                (blur)="APIUpdatePayroll(Payroll, ['Remark'],'mô tả bảng lương')"
+              [(ngModel)]="Payroll.Remark" 
+              (keydown.Enter)="$event.target.blur()"
+              [readonly]="isLock || Payroll.Code <= 0"
+            ></app-p-textarea>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="PayrolllDetail">
+      <div class="header d-flex align-items-center justify-content-between border-0 pb-0">
+        <app-search-filter-group [disabled]="Payroll.Code <= 0" title="CHI TIẾT BẢNG LƯƠNG" placeholder="Tìm theo mã, tên nhân sự" (valueChange)="handleSearchEmployeeSalary($event)"></app-search-filter-group>
+        <div class="nav-file nav-btn d-flex align-items-center colGap10" *ngIf="!isLock">
+          <div class="file-btn-group">
+              <button
+              kendoButton
+              class="k-button btn-hachi hachi-warning"
+              [icon]="'delete'"
+              [disabled]="!isFilterActive || isLock || Payroll.Code <= 0"
+              (click)="deleteAllPayCheck()"
+            >XÓA TẤT CẢ</button>
+            <button
+              kendoButton
+              id="onUploadBtn"
+              class="k-button"
+              [icon]="'export'"
+              (click)="onImportExcel()"
+              [disabled]="!isFilterActive || isLock || Payroll.Code <= 0"
+            ></button>
+          </div>
+
+          <div class="file-btn-group">
+            <button
+              kendoButton
+              id="onDownloadBtn"
+              class="k-button"
+              [icon]="'import'"
+              (click)="onDownloadExcel()"
+              [disabled]="!isFilterActive || isLock || Payroll.Code <= 0"
+            >
+              Template
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="containerInfo">
+        <div class="grid-wrapper">
+          <app-p-kendo-grid
+            class="grid scrollable"
+            [data]="gridView | async"
+            [scrollable]="'none'"
+            [loading]="loading"
+            [pageable]="true"
+            [pageSizes]="pageSizes"
+            [pageSize]="pageSize"
+            [skip]="gridState.skip"
+            [take]="gridState.take"
+            [sortable]="true"
+            [sort]="gridState.sort"
+            [selectable]="selectable"
+            [onSortChangeCallback]="onSortChangeCallback"
+            [allowedMoreActionDropdown]="allowActionDropdown"
+            [getActionDropdownCallback]="getActionDropdownCallback"
+            [onActionDropdownClickCallback]="onActionDropdownClickCallback"
+            [onSelectCallback]="onSelectCallback"
+            [onPageChangeCallback]="onPageChangeCallback"
+            [total]="total"
+            [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+            [getSelectionPopupCallback]="getSelectionPopupCallback"
+          >
+            <kendo-grid-column
+              field="Fullname"
+              title="Họ và tên"
+              class="col_Fullname"
+              [headerClass]="'col_Fullname'"
+            >
+              <ng-template kendoGridCellTemplate let-dataItem>
+
+               <div class="d-flex align-items-center colGap10">
+                  <div class="img">
+                    <img loading="lazy" [src]="getImgRes(dataItem.ImageThumb)" alt="avatar" />
+                  </div>
+                  <div class="d-flex flex-column">
+                    <span class="title text-ellipsis font-weight-bold" [title]="dataItem.Fullname">{{ dataItem.Fullname }}</span>
+                    <div class="d-flex align-items-end colGap10">
+                      <span class="title text-ellipsis EmployeeID" [title]="dataItem.EmployeeID">{{ dataItem.EmployeeID }}</span>
+                      <span *ngIf="dataItem.EmployeeID && dataItem.PositionName" style="color: #BDC2D2;">|</span>
+                      <span class="title text-ellipsis PositionName" [title]="dataItem.PositionName">{{ dataItem.PositionName }}</span>
+                    </div>
+                  </div>
+               </div>
+              </ng-template>
+            </kendo-grid-column>
+      
+            <kendo-grid-column
+              field="DepartmentName"
+              title="Đơn vị công tác"
+              class="col_DepartmentName"
+              [headerClass]="'col_DepartmentName'"
+            >
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <span class="text-ellipsis" [title]="dataItem.DepartmentName">{{ dataItem.DepartmentName }}</span>
+              </ng-template>
+            </kendo-grid-column>
+      
+            <kendo-grid-column
+              field="LocationName"
+              title="Điểm làm việc"
+              class="col_LocationName"
+              [headerClass]="'col_LocationName'"
+
+            >
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <span class="text-ellipsis" [title]="dataItem.LocationName">{{ dataItem.LocationName }}</span>
+              </ng-template>
+            </kendo-grid-column>
+      
+            <kendo-grid-column
+              field="Gender"
+              title="Giới tính"
+              class="col_Gender"
+              [headerClass]="'col_Gender'"
+            >
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <span class="text-ellipsis" [title]="dataItem.Gender">
+                  {{ dataItem.Gender }}
+                </span>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column
+              field="BirthDate"
+              title="Năm sinh"
+              class="col_BirthDate"
+              [headerClass]="'col_BirthDate'"
+
+            >
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <span class="text-ellipsis" [title]="dataItem.BirthDate">
+                  {{ dataItem.BirthDate | date: 'dd/MM/yyyy' }}
+                </span>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column
+              field="JoinDate"
+              title="Ngày vào làm"
+              class="col_JoinDate"
+              [headerClass]="'col_JoinDate'"
+            >
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <span class="text-ellipsis"  [title]="dataItem.JoinDate">
+                  {{ dataItem.JoinDate | date: 'dd/MM/yyyy' }}
+                </span>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column
+              field="TypeDataName"
+              title="Loại nhân viên"
+              class="col_TypeDataName"
+              [headerClass]="'col_TypeDataName'"
+            >
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <span class="text-ellipsis" [title]="dataItem.TypeDataName">
+                  {{ dataItem.TypeDataName }}
+                </span>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column
+              field="TotalSal"
+              title="Lương thực nhận"
+              class="col_TotalSal"
+              format="n3"
+              [headerClass]="'col_TotalSal'"
+            >
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <span>
+                  {{ dataItem.TotalSal | number :'1.0-0' }}
+                </span>
+              </ng-template>
+            </kendo-grid-column>
+      
+            <kendo-grid-column
+              field="StatusName"
+              title="Tình trạng"
+              class="col_status"
+              headerClass="col_status"
+            >
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div
+                  [innerHTML]="dataItem.StatusName | colorStatus : dataItem.StatusID"
+                ></div>
+              </ng-template>
+            </kendo-grid-column>
+          </app-p-kendo-grid>
+        </div>
+          
+      </div>
+    </div>
+    <!-- End: CHI TIẾT KHUNG NĂNG LỰC -->
+    <!-- <p class="symbol fst-italic mt-2">(*) Trường bắt buộc nhập.</p> -->
+  </div>
+  <!-- END BODY -->
+
+
+  <!-- START DIALOG -->
+  <app-p-kendo-dialog *ngIf="openedDiaDeletePayroll" [title]="'XÓA BẢNG LƯƠNG'" [dialogType]="1" 
+    (handleButton)="deletePayRollDialog('yes')" (close)="closePayRollDialog()">
+    <div class="text-center">
+      <div class="content-primary">
+        <p>Bạn chắc chắn muốn xóa bảng lương:</p>
+        <strong>{{ Payroll.SalaryName }}</strong>
+      </div>
+      <p class="content-sub">
+        Bảng lương bị xóa sẽ <span style="color: red">KHÔNG</span> thể khôi phục lại.
+      </p>
+    </div>
+  </app-p-kendo-dialog>
+  
+  <app-p-kendo-dialog *ngIf="dialogMany" [title]="'XÓA BẢNG LƯƠNG'" [dialogType]="1" 
+    (handleButton)="onDeleteManyPaycheck()" (close)="closePayRollDialog()">
+    <div class="text-center">
+      <div class="content-primary">
+        <p>Bạn chắc chắn muốn xóa <strong>{{listDelete.length }}</strong> bảng lương</p>
+       
+      </div>
+      <p class="content-sub">
+        Bảng lương bị xóa sẽ <span style="color: red">KHÔNG</span> thể khôi phục lại.
+      </p>
+    </div>
+  </app-p-kendo-dialog>
+
+  <app-p-kendo-dialog *ngIf="openedDiaDeletePayrollAll" [title]="'XÓA TẤT CẢ BẢNG LƯƠNG'" [dialogType]="1" 
+    (close)="closePayRollDialog()" (handleButton)="onDeleteAllPaycheck()">
+    <div class="text-center">
+      <div class="content-primary">
+        <p>Bạn chắc chắn muốn xóa tất cả bảng lương</p>
+      </div>
+      <p class="content-sub">
+        Bảng lương bị xóa sẽ <span style="color: red">KHÔNG</span> thể khôi phục lại.
+      </p>
+    </div>
+  </app-p-kendo-dialog>
+
+
+
+  <app-p-kendo-dialog *ngIf="openedDiaDeletePaycheck" [title]="'XÓA PHIẾU LƯƠNG'" 
+    [dialogType]="1" (handleButton)="handleDeletePaycheck('yes')" (close)="onCloseDeletePaycheck()">
+    <div class="text-center">
+      <div class="content-primary">
+        <p>Bạn chắc chắn muốn xóa phiếu lương của nhân sự:</p>
+        <strong>{{ Paycheck.Fullname }}</strong>
+      </div>
+      <p class="content-sub">
+        Phiếu lương bị xóa sẽ <span style="color: red">KHÔNG</span> thể khôi phục lại.
+      </p>
+    </div>
+  </app-p-kendo-dialog>
+  <!-- END DIALOG -->
+
+
+</div>
+
+<!-- DIALOG IMPORT -->
+<app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>

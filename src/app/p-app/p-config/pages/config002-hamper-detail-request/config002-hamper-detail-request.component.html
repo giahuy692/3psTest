@@ -1,0 +1,44 @@
+<div class="config002-hamper-detail-request">
+    <div class="header header-1">
+        <app-p-kendo-breadcrumb *ngIf="product['TypeInfo'] !== 2" (loadData)="loadPage()"></app-p-kendo-breadcrumb>
+        <kendo-breadcrumb *ngIf="product['TypeInfo'] == 2"
+            class="myCustomBreadCrumb"
+            [items]="items"
+            [collapseMode]="'none'"
+        >
+            <ng-template kendoBreadCrumbItemTemplate let-item let-index="index" >
+                <span (click)="backPage(item)">{{ item.text }}</span>
+            </ng-template>
+        </kendo-breadcrumb>
+    </div>  
+
+    <div class="body">
+        <!-- THÔNG TIN HAMPER -->
+        <div *ngIf="product['TypeInfo'] !== 2">
+            <app-config-product-info [typeInfo]="5" [disable]="true" ></app-config-product-info>
+
+            <!-- THÔNG TIN ĐÓNG GÓI -->
+            <app-config-product-package-info [disable]="true"></app-config-product-package-info>
+
+            <!-- THÔNG TIN KHÁC -->
+            <app-config-product-other-info [disable]="true"></app-config-product-other-info>
+ 
+            <!-- DANH SÁCH SẢN PHẨM THUỘC HAMPER -->
+            <app-config-product-list [hasAction]="false"></app-config-product-list>
+        </div>
+        <div *ngIf="product['TypeInfo'] == 2">
+            <app-config-product-info [typeInfo]="4" [disable]="true" ></app-config-product-info>
+
+            <!-- THÔNG TIN ĐÓNG GÓI -->
+            <app-config-product-package-info [disable]="true"></app-config-product-package-info>
+
+            <!-- THÔNG TIN KHÁC -->
+            <app-config-product-other-info [disable]="true" [typeInfo]="4"></app-config-product-other-info>
+
+            <!-- DANH SÁCH SẢN PHẨM THUỘC HAMPER -->
+          
+        </div>
+        
+    </div>
+    
+</div>

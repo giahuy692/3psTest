@@ -1,0 +1,231 @@
+<div class="config007-cargo-status app-drawer-container">
+    <mat-drawer-container [hasBackdrop]="true" >
+  
+        <mat-drawer-content>
+
+    <div class="header header-1">
+        <app-p-kendo-breadcrumb (loadData)="loadData()"></app-p-kendo-breadcrumb>
+       <div class="list-Status">
+        <ng-container *ngFor="let item of listStatus; let i = index">
+            <div class="status">
+                <div class="label" [ngClass]="{'active': selectedStatus == item}">{{item.StatusName}}</div>
+                <input  kendoRadioButton type="radio" name="status" (click)="onClickRadio(item)" [checked]="selectedStatus === item && item.Code == 1">
+            </div>
+          </ng-container>
+          <div class="line"></div>
+       </div>
+    </div>
+    <div class="header header-2">
+        <app-search-filter-group placeholder="Tìm theo barcode, tên sản phẩm, thương hiệu"
+          (valueChange)="Search($event)" (onReset)="resetFilter()" [ignoreCase]="true" [label]="'Tìm kiếm sản phẩm'">
+        </app-search-filter-group>
+
+    </div>
+
+    <div class="body">
+        <div class="grid-wrapper">
+            <app-p-kendo-grid class="grid scrollable " [data]="gridView | async" [scrollable]="'none'"
+            [loading]="loading" [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize"
+            [skip]="gridState.skip" [take]="gridState.take" [sortable]="true"
+            [onPageChangeCallback]="onPageChangeCallback"
+            [getActionDropdownCallback]="getActionDropdownCallback"
+            [onActionDropdownClickCallback]="onActionDropdownClickCallback"
+            [onSelectCallback]="onSelectCallback" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+            [selectable]="selectable" [getSelectionPopupCallback]="getSelectionPopupCallback">
+
+            <kendo-grid-column title="Tên sản phẩm" field="" class="col_productInfo"
+                [headerClass]="'hdc_productInfo'" [width]="500">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="col-name">
+                        <img loading="lazy" [src]="getRes(dataItem.ProductImage,'image' + dataItem.Code)" 
+                        (error)="handleError('image' + dataItem.Code)"
+                        alt="" loading="lazy">
+                        <div class="product-name">
+                            <div class="label" [title]="dataItem.ProductName">{{dataItem.ProductName}}</div>
+                            <div class="bar-pos">
+                                <span *ngIf="dataItem.Poscode">{{dataItem.Poscode +  '  |'}}</span>
+                                <span>{{dataItem.Barcode}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column class="col_group" title="Phân nhóm" [width]="300">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="level1" *ngIf="dataItem.GroupID1">
+                       {{dataItem.GroupID1 + ': ' +dataItem.GroupName1}}
+                    </div>
+                    <div *ngIf="dataItem.GroupID2">  {{dataItem.GroupID2 + ': ' +dataItem.GroupName2}}</div>
+                    <div *ngIf="dataItem.GroupID3">  {{dataItem.GroupID3 + ': ' +dataItem.GroupName3}}</div>
+                    <div *ngIf="dataItem.GroupID4">  {{dataItem.GroupID4 + ': ' +dataItem.GroupName4}}</div>
+                    <div *ngIf="dataItem.GroupID">  {{dataItem.GroupID + ': ' +dataItem.GroupName5}}</div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Xuất xứ" field="lido" class="col_reasonRequest"
+                [width]="100">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <span>{{dataItem.OrginalName}}</span>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Thương hiệu" class="col_detailProd" [width]="200">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <span>{{dataItem.BrandName}}</span>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Tình trạng thông tin" field="Remark" class="statusInfo"
+              [headerClass]="selectedStatus.Code === 1 ? 'col_statusInfo' : 'col_infoMiss'"
+                [width]="300">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="flex" *ngIf="selectedStatus.Code == 1; else elseBlock">
+                        <div class="group-circle" *ngFor="let listName of listLabel ; let i = index">
+                            <div id="reverse" [className]="'reverse'+ i">
+                                <label>{{ listLabels[listName] }}</label>
+                                <div class="circle" [ngStyle]="calculateGradientStyle(dataItem, listName)">
+                                    <div class="line" *ngIf="i < listLabel.length - 1"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-template #elseBlock>
+                        <div class="group-label">
+                            <div class="label" *ngFor="let label of listOfGrid(dataItem[selectedStatus.ListStatus]).slice(0, 2)">
+                             Thiếu {{ label.Name }}
+                            </div>
+                            <div class="remaining-label" *ngIf="listOfGrid(dataItem[selectedStatus.ListStatus]).length > 2">
+                              + {{ listOfGrid(dataItem[selectedStatus.ListStatus]).length - 2 }}  điều kiện
+                            </div>
+                          </div>
+                    </ng-template>
+                    
+
+                    
+                </ng-template>
+            </kendo-grid-column>
+            
+        </app-p-kendo-grid>
+        </div>
+    </div>
+
+</mat-drawer-content>
+
+    <mat-drawer  #formDrawer [mode]="'over'" position="end" disableClose>
+        <form class="formCargoStatus k-form">
+            <ng-container>
+              <!-- API FORM -->
+                <fieldset [disabled]="false">
+                    <legend>TÌNH TRẠNG THÔNG TIN SẢN PHẨM</legend>
+                <div class="cargoStatus">
+                    <div class="form-item item1">
+                        <div class="infoProdct">
+                            <div class="label">Mã sản phẩm    <a class="detailInfo">(xem chi tiết sản phẩm)</a> </div> 
+                            <span>{{cargoStatus?.Barcode}} | {{cargoStatus?.Poscode}}</span>
+                        </div>
+                        <div class="imgProduct">
+                            <img [src]="getRes(cargoStatus.ProductImage,'image' + cargoStatus.Code)" 
+                            (error)="handleError('image' + cargoStatus.Code)" alt="" [width]="70" [height]="70">
+                        </div>
+                    </div>
+                    <div class="form-item item2">
+                        <div class="label">Tên sản phẩm</div> 
+                        <span>{{cargoStatus?.ProductName}} </span>
+                    </div>
+                    <div class="form-item item3">
+                        <div class="label">Thông tin đặt hàng
+                            <i> <a class="checkCondition"  (click)="showInfo(true,'isShowOrder')">{{ itemOfDrawer(cargoStatus?.ListOrder) > 0 ? '(' + itemOfDrawer(cargoStatus?.ListOrder)+ ' điều kiện chưa đáp ứng)' : '(đủ điều kiện điều phối)' }}</a></i>
+                              <span *ngIf="!isShowOrder" (click)="showInfo(true,'isShowOrder')" class="toggle"> <b> + </b> </span>
+                              <span *ngIf="isShowOrder" (click)="showInfo(false,'isShowOrder')" class="toggle minus"><b> - </b> </span> 
+                        </div> 
+                        <div *ngIf="isShowOrder">
+                        <ng-container *ngFor="let item of cargoStatus?.ListOrder">
+                            <div class="child">
+                                <span>{{item.Name}}</span>
+                                <input kendoCheckBox type="checkbox" [disabled]="true" [checked]="item.Choose == false">
+                            </div>
+                        </ng-container>
+                    </div>
+                        
+                    </div>
+                    <div class="form-item item4">
+                        <div class="label">Thông tin điều phối
+                            <i> <a class="checkCondition" (click)="showInfo(true,'isShowLog')">{{ itemOfDrawer(cargoStatus?.ListLGT) > 0 ? '(' + itemOfDrawer(cargoStatus?.ListLGT)+ ' điều kiện chưa đáp ứng)' : '(đủ điều kiện điều phối)' }}</a></i>
+                            <span *ngIf="!isShowLog" (click)="showInfo(true,'isShowLog')" class="toggle"> <b> + </b> </span>
+                            <span *ngIf="isShowLog" (click)="showInfo(false,'isShowLog')" class="toggle minus"><b> - </b> </span> 
+                         </div> 
+                         <div *ngIf="isShowLog">
+                             <ng-container *ngFor="let item of cargoStatus?.ListLGT">
+                                 <div class="child">
+                                     <span>{{item.Name}}</span>
+                                   <input kendoCheckBox type="checkbox" [disabled]="true" [checked]="item.Choose == false">
+                                 </div>
+                               </ng-container>
+                         </div>
+                      
+                    </div>
+                    <div class="form-item item5">
+                        <div class="label">Điều kiện onsite 
+                            <i> <a class="checkCondition" (click)="showInfo(true,'isShowOnsite')">{{ itemOfDrawer(cargoStatus?.ListOnsite) > 0 ? '(' + itemOfDrawer(cargoStatus?.ListOnsite)+ ' điều kiện chưa đáp ứng)' : '(đủ điều kiện onsite)' }}</a></i>
+                            <span *ngIf="!isShowOnsite" (click)="showInfo(true,'isShowOnsite')" class="toggle"> <b> + </b> </span>
+                            <span *ngIf="isShowOnsite" (click)="showInfo(false,'isShowOnsite')" class="toggle minus"><b> - </b> </span> 
+                        </div> 
+                        <div *ngIf="isShowOnsite">
+                            <ng-container *ngFor="let item of cargoStatus?.ListOnsite">
+                                <div class="child">
+                                    <span>{{item.Name}}</span>
+                                  <input kendoCheckBox type="checkbox" [disabled]="true" [checked]="item.Choose == false">
+                                </div>
+                              </ng-container>
+                        </div>
+                      
+                    </div>
+                    <div class="form-item item6">
+                        <div class="label">Thông tin bán sỉ
+                            <i> <a class="checkCondition" (click)="showInfo(true,'isShowSeller')">{{ itemOfDrawer(cargoStatus?.ListWholesale) > 0 ? '(' + itemOfDrawer(cargoStatus?.ListWholesale)+ ' điều kiện chưa đáp ứng)' : '(đủ điều kiện bán sỉ)' }}</a></i>
+                            <span *ngIf="!isShowSeller" (click)="showInfo(true,'isShowSeller')" class="toggle"> <b> + </b> </span>
+                            <span *ngIf="isShowSeller" (click)="showInfo(false,'isShowSeller')" class="toggle minus"><b> - </b> </span> 
+                        </div> 
+                        <div *ngIf="isShowSeller">
+                            <ng-container *ngFor="let item of cargoStatus?.ListWholesale">
+                                <div class="child">
+                                    <span>{{item.Name}}</span>
+                                  <input kendoCheckBox type="checkbox" [disabled]="true" [checked]="item.Choose == false">
+                                </div>
+                              </ng-container>
+                        </div>
+                      
+                    </div>
+                    <div class="form-item item7">
+                        <div class="label">Thông tin bán lẻ
+                            <i> <a class="checkCondition" (click)="showInfo(true,'isShowBase')">{{ itemOfDrawer(cargoStatus?.ListRetail) > 0 ? '(' + itemOfDrawer(cargoStatus?.ListRetail)+ ' điều kiện chưa đáp ứng)' : '(đủ điều kiện bán lẻ)' }}</a></i>
+                            <span *ngIf="!isShowBase" (click)="showInfo(true,'isShowBase')" class="toggle"> <b> + </b> </span>
+                            <span *ngIf="isShowBase" (click)="showInfo(false,'isShowBase')" class="toggle minus"><b> - </b> </span> 
+                        </div> 
+                        <div *ngIf="isShowBase">
+                            <ng-container *ngFor="let item of cargoStatus?.ListRetail">
+                                <div class="child">
+                                    <span>{{item.Name}}</span>
+                                  <input kendoCheckBox type="checkbox" [disabled]="true" [checked]="item.Choose == false">
+                                </div>
+                              </ng-container>
+                        </div>
+                    </div>
+
+                    <div class="k-form-buttons">
+                        <button kendoButton class="k-button btn-hachi closeBtn" (click)="closeDrawer()">
+                          Đóng
+                        </button>
+                    </div>
+                </div>
+                </fieldset>
+            </ng-container>
+        </form>
+    </mat-drawer>
+</mat-drawer-container>
+
+</div>

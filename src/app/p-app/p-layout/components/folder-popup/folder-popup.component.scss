@@ -1,0 +1,427 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+    #folderDialogPopup {
+        z-index: 7;
+
+        .k-dialog {
+            min-width: 900px;
+            max-width: 80vw;
+            height: 630px;
+            border-radius: 3px;
+
+            .k-dialog-titlebar {
+                color: white;
+                background-color: $dark-green;
+                text-transform: uppercase;
+                font-weight: 700;
+                padding: 14px;
+                border-radius: 3px 3px 0 0;
+
+                .k-dialog-title {
+                    justify-content: center;
+                    font-size: 20px;
+                }
+            }
+
+            .k-dialog-content.k-window-content {
+                display: flex;
+                flex-direction: column;
+                padding: 0;
+                overflow-y: hidden;
+                overflow: scroll; //tạm thêm cái này vì popup trong UI banner-detail bị che footer
+
+                #kendo-dialog-content-704779>div.row.body.ng-tns-c2161573109-17.ng-star-inserted {
+                    height: 500px;
+                }
+
+
+                #footer {
+                    text-align: right;
+                    padding: 16px;
+                    border-top: 1px solid $light-blue-gray;
+                    border-radius: 0 0 3px 3px;
+
+                    .k-button {
+                        min-width: 103px;
+                        min-height: 32px;
+                        margin-left: 15px;
+                        border-radius: 3px;
+                        font-weight: 700;
+                        font-size: 11px;
+                        background-image: none;
+                        box-shadow: 0px 1px 1px rgba(90, 98, 118, 0.502);
+
+                        span {
+                            text-transform: uppercase;
+                        }
+                    }
+
+                    #closeImportPopupBtn {
+                        color: $dark-green;
+                        margin: 0 16px;
+
+                        &:hover {
+                            border: 1px solid $dark-green;
+                        }
+                    }
+
+                    #pickFileBtn {
+                        color: white;
+                        background-color: $dark-green !important;
+
+                        &.disabled {
+                            background-color: rgba($dark-green, 0.5);
+                            // background-color: $worse-green;
+                            cursor: not-allowed;
+                        }
+                    }
+                }
+            }
+        }
+
+        #folderTreeDiv {
+            flex-direction: column;
+            display: flex;
+            padding: 0;
+            height: 500px;
+            overflow-y: auto;
+
+            .k-grid .k-grid-aria-root {
+                height: 416px;
+                overflow-y: auto;
+            }
+
+            #folderTree.k-grid {
+                flex-grow: 1;
+
+                tbody {
+                    tr:hover {
+                        background-color: rgba($dark-green, 0.4);
+                        position: relative;
+
+                        >td {
+                            &:first-child {
+                                border-left: 5px solid rgba($dark-green, 0.8);
+                            }
+
+                            &:last-child {
+                                .k-button {
+                                    display: initial;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                tr {
+
+                    &.k-state-selected,
+                    &.k-selected {
+                        // background-color: rgba($dark-green, 0.8);
+                        background-color: $worse-green;
+
+                        >td {
+                            color: white;
+                            background: none;
+
+                            &:first-child {
+                                border-left: 5px solid $dark-green;
+                            }
+                        }
+                    }
+
+                    th,
+                    td {
+                        border: none;
+                        background-color: none !important;
+
+                        &:last-child {
+                            position: absolute;
+                            right: 1px;
+                            padding: 3px 0;
+                            white-space: nowrap;
+                        }
+                    }
+
+                    .k-header {
+                        vertical-align: middle;
+                    }
+
+                    td {
+                        &:first-child {
+                            cursor: pointer;
+                        }
+
+                        &:last-child {
+                            .k-button {
+                                display: none;
+                            }
+                        }
+                    }
+
+                    &.k-state-selected,
+                    &.k-selected,
+                    &.k-grid-edit-row {
+                        td:last-child {
+                            .k-button {
+                                display: initial;
+                            }
+                        }
+                    }
+                }
+
+                .k-command-cell>.k-button {
+                    margin: 0;
+                    border-radius: 3px;
+                }
+
+                #addFolderBtn {
+                    background-color: $dark-green !important;
+                    border: none;
+                    color: white;
+                }
+            }
+        }
+
+        .row {
+            margin: 0;
+            flex-grow: 1;
+
+            #folderGridDiv {
+                flex-direction: column;
+                display: flex;
+                height: 500px;
+                overflow-y: auto;
+
+                #folderPath {
+                    height: 32px;
+                    text-align: left;
+                    display: flex;
+                    flex-direction: row;
+
+                    .label {
+                        font-weight: 700;
+                        font-size: 13px;
+                        color: $gray-600;
+                    }
+
+                    div {
+                        margin: auto 5px;
+                    }
+                }
+
+                .k-grid {
+                    max-height: 430px;
+                    min-height: 200px;
+                    tr {
+                        height: 32px;
+
+                        &:not(.k-grouping-row) td:first-child {
+                            padding-left: 0;
+                        }
+
+                        th {
+                            // border-bottom: 1px solid $gray-300;
+
+                            // &:first-child {
+                            &:nth-child(2) {
+                                // overflow: visible;
+                                position: unset;
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+
+                                .k-upload {
+                                    position: absolute;
+                                    right: 0;
+                                    // left: 470px;
+                                    // top: 5%;
+
+                                    .k-dropzone {
+                                        padding: 0;
+
+                                        .k-upload-button {
+                                            border: none;
+                                            background-color: $dark-green !important;
+                                            background-image: none;
+                                            color: white;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        td:last-child {
+                            padding: 2px;
+                        }
+                    }
+
+                    .col_file_img {
+                        max-width: 333px;
+                        width: 33%;
+
+                        img {
+                            max-width: 333px;
+                        }
+                    }
+
+                    .col_file_name {
+                        max-width: 444px;
+                        width: 88%;
+
+                        &.k-header {
+                            min-width: 350px;
+                            width: 100%;
+                        }
+
+                        .file_name {
+                            white-space: normal;
+                            /* These are technically the same, but use both */
+                            overflow-wrap: break-word;
+                            word-wrap: break-word;
+
+                            -ms-word-break: break-all;
+                            /* This is the dangerous one in WebKit, as it breaks things wherever */
+                            word-break: break-all;
+                            /* Instead use this non-standard one: */
+                            word-break: break-word;
+
+                            /* Adds a hyphen where the word breaks, if supported (No Blink) */
+                            -ms-hyphens: auto;
+                            -moz-hyphens: auto;
+                            -webkit-hyphens: auto;
+                            hyphens: auto;
+                        }
+
+                        .col_search {
+                            display: flex;
+                            margin-left: 10px;
+                            align-items: center;
+                            position: relative;
+                            width: 100%;
+
+                            .search-btn {
+                                width: 100%;
+                            }
+
+                            .k-i-search {
+                                position: absolute;
+                                height: 100%;
+                                width: 30px;
+                                z-index: 1;
+                            }
+
+                            .k-textbox {
+                                padding-left: 30px;
+                                min-width: fit-content;
+                                width: 100%;
+                            }
+                        }
+
+                        .k-upload {
+                            z-index: 99999; //hiện trên .k-window 10002
+                        }
+                    }
+
+                    tbody {
+                        tr {
+                            height: 64px;
+
+                            .file_img {
+                                max-width: 100%;
+                                max-height: 64px;
+                            }
+
+                            .file_name {
+                                padding-right: 10px;
+                            }
+                        }
+
+                        .action {
+                            // position: absolute !important;
+                            box-shadow: none !important;
+                        }
+                    }
+
+                    .k-grid-content {
+                        overflow-x: hidden;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// ::ng-deep {
+//     #folderDialogPopup {
+//         z-index: 7;
+
+//         .k-dialog {
+//             width: 900px;
+//             height: 580px;
+//             border-radius: 3px;
+
+//             .k-dialog-titlebar {
+//                 color: white;
+//                 background-color: $dark-green;
+//                 text-transform: uppercase;
+//                 font-weight: 700;
+//                 padding: 14px;
+//                 border-radius: 3px 3px 0 0;
+
+//                 .k-dialog-title {
+//                     justify-content: center;
+//                     font-size: 20px;
+//                 }
+//             }
+
+//             .k-dialog-content.k-window-content {
+//                 display: flex;
+//                 flex-direction: column;
+//                 padding: 0;
+
+//                 #footer {
+//                     text-align: right;
+//                     padding: 16px;
+//                     border-top: 1px solid $light-blue-gray;
+//                     border-radius: 0 0 3px 3px;
+
+//                     .k-button {
+//                         min-width: 103px;
+//                         min-height: 32px;
+//                         margin-left: 15px;
+//                         border-radius: 3px;
+//                         font-weight: 700;
+//                         font-size: 11px;
+//                         background-image: none;
+//                         box-shadow: 0px 1px 1px rgba(90, 98, 118, 0.502);
+
+//                         span {
+//                             text-transform: uppercase;
+//                         }
+//                     }
+
+//                     #closeImportPopupBtn {
+//                         color: $dark-green;
+//                         margin: 0 16px;
+
+//                         &:hover {
+//                             border: 1px solid $dark-green;
+//                         }
+//                     }
+
+//                     #pickFileBtn {
+//                         color: white;
+//                         background-color: $dark-green !important;
+
+//                         &.disabled {
+//                             // background-color: rgba($dark-green, 0.5);
+//                             background-color: $worse-green;
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }

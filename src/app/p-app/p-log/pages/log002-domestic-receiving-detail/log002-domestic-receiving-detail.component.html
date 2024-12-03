@@ -1,0 +1,1269 @@
+<div id="log002-domestic-receiving-detail" class="app-drawer-container">
+  <mat-drawer-container [hasBackdrop]="true">
+
+    <!-- START CONTENT -->
+    <mat-drawer-content>
+      
+      <!-- START HEADER  -->
+      <div class="header header-1">
+        <app-p-kendo-breadcrumb (loadData)="onLoadPage()"></app-p-kendo-breadcrumb>
+        
+        <!-- Button group  -->
+        <div class="nav-crud">
+          <!-- file-button-group  -->
+          <app-p-file-button-group [disable]="!isFilterActive"></app-p-file-button-group>
+          
+          <button kendoButton [disabled]="!isFilterActive"
+            class="k-button btn-hachi hachi-primary hachi-secondary btn-aplication" (click)="onClickView('follow')"
+            *ngIf="!isDetailOrder">
+            CHI TIẾT ĐƠN HÀNG
+          </button>
+
+          <button kendoButton [disabled]="!isFilterActive"
+            class="k-button btn-hachi hachi-primary hachi-secondary btn-follow" (click)="onClickView('order')"
+            *ngIf="isDetailOrder && DomesticOrder.StatusID >= 6">
+            THEO DÕI NHẬN HÀNG
+          </button>
+
+          <button kendoButton [disabled]="!isFilterActive"
+            class="k-button btn-hachi hachi-primary" (click)="APIUpdateDomesticOrdersStatus([DomesticOrder],{'StatusID': 8},{'OrderTypeID': 3})"
+            *ngIf="hasAllInvoiceComplete() && (DomesticOrder.StatusID == 6 || DomesticOrder.StatusID == 7)">
+            HOÀN TẤT NHẬN HÀNG
+          </button>
+        </div>
+      </div>
+      <!-- END HEADER  -->
+
+      <!-- START BODY  -->
+      <div class="body">
+        <!-- Block Thông tin đặt hàng  -->
+        <div class="title">
+          THÔNG TIN ĐẶT HÀNG
+        </div>
+        <div class="position-relative">
+          <p-loading-spinner [isLoading]="loadingDomesticOrder"></p-loading-spinner>
+          <div class="layout block block-info columnGap-15px position-relative"
+            ngClass="{{DomesticOrder.StatusID >= 6 ? 'gridmode2': 'gridmode1'}}">
+  
+            <div class="info1">
+              <div class="label color5A6276">Mã đơn hàng (PO)</div>
+              <strong class="greenText OrderNo" title="{{DomesticOrder?.OrderNo}}">{{DomesticOrder?.OrderNo}}</strong>
+            </div>
+  
+            <div class="info{{DomesticOrder.StatusID >= 6 && ishasOrderDelivery ? '3': '1'}}"
+              *ngIf="DomesticOrder.StatusID >= 6 && ishasOrderDelivery">
+              <div class="label color5A6276">Phiếu giao hàng</div>
+              <strong class="greenText DONo" title="{{OrderDelivery?.DONo}}">{{OrderDelivery?.DONo}}</strong>
+            </div>
+  
+            <div class="info2">
+              <div class="label color5A6276">Nhà cung cấp</div>
+              <b class="d-flex align-items-center columnGap-5">
+                <span title="{{DomesticOrder?.SupplierID}}" class="SupplierID">{{DomesticOrder?.SupplierID}}</span>
+                <div *ngIf="DomesticOrder?.SupplierID != null && DomesticOrder?.SupplierName != ''" style="color:#BDC2D2;"
+                  class="line"></div>
+                <div title="{{DomesticOrder?.SupplierName}}" class="SupplierName">{{DomesticOrder?.SupplierName}}</div>
+              </b>
+            </div>
+            
+            <div class="info{{DomesticOrder.StatusID >= 6 && ishasOrderDelivery ? '5': '3'}}">
+              <div class="label color5A6276">Thời gian Hachi gửi đơn hàng</div>
+              <div class="item2_v1 OrderedTime" title="{{DomesticOrder?.OrderedTime | date: 'dd/MM/yyyy hh:mm'}}">
+                {{DomesticOrder?.OrderedTime | date: 'dd/MM/yyyy hh:mm'}}
+              </div>
+            </div>
+  
+            <div class="info4 d-flex align-items-start columnGap-80">
+              <div class="width-166">
+                <div class="label color5A6276">{{DomesticOrder.StatusID == 3 ? 'Từ chối đơn hàng' : 'Chấp nhận đơn hàng'}}</div>
+                <div>
+                  <span class="pr-2" *ngIf="DomesticOrder.StatusID == 2 || DomesticOrder?.StatusID == 4">trước</span>
+                  <span class="pr-3" *ngIf="(DomesticOrder?.StatusID >= 6 && DomesticOrder?.AcceptedTime) || DomesticOrder?.StatusID == 3">vào lúc</span>
+                  <span *ngIf="DomesticOrder?.StatusID == 3" title="{{DomesticOrder.RefusedTime 
+                    | date: 'dd/MM/yyyy hh:mm'}}" class="RefusedTime ">{{DomesticOrder.RefusedTime | date:
+                  'dd/MM/yyyy hh:mm'}}</span>
+                  <span *ngIf="DomesticOrder?.StatusID == 2 || DomesticOrder?.StatusID == 4 || DomesticOrder?.StatusID == 5" title="{{DomesticOrder.AcceptedBeforeTime 
+                      | date: 'dd/MM/yyyy hh:mm'}}" class="AcceptedBeforeTime ">{{DomesticOrder.AcceptedBeforeTime | date:
+                    'dd/MM/yyyy hh:mm'}}</span>
+                  <span *ngIf="DomesticOrder?.StatusID >= 6" class="AcceptedTime"
+                    title="{{DomesticOrder?.AcceptedTime | date: 'dd/MM/yyyy hh:mm'}}">{{DomesticOrder?.AcceptedTime |
+                    date: 'dd/MM/yyyy hh:mm'}}</span>
+                </div>
+              </div>
+  
+              <div>
+                <div class=" d-flex align-items-center columnGap-5">
+                  <div class="label color5A6276 p-0">Kế hoạch giao hàng</div> <span class="line pr-1"> </span>
+                  <b style="color:#26282E;" class="font-weight-bold"
+                    title="{{DomesticOrder?.MultiDelivery == false ? 'một lần' : 'nhiều lần'}}">{{DomesticOrder?.MultiDelivery
+                    == false ? 'một lần' : 'nhiều lần'}}</b>
+                </div>
+                <div class="d-flex align-items-center columnGap-10">
+                  <span class="start">bắt đầu <span class="colorF1802E" title="{{DomesticOrder?.ReceivingStart | date:
+                    'dd/MM/yyyy'}}" class="ReceivingStart">{{DomesticOrder?.ReceivingStart | date:
+                      'dd/MM/yyyy'}}</span></span>
+                  <span class="end">kết thúc <span class="colorF1802E" title="{{DomesticOrder?.ReceivingEnd | date:
+                    'dd/MM/yyyy'}}" class="ReceivingEnd">{{DomesticOrder?.ReceivingEnd | date:
+                      'dd/MM/yyyy'}}</span></span>
+                </div>
+              </div>
+  
+              <div class="pr-4">
+                <div class="label color5A6276">Liên hệ giao hàng</div>
+                <div class="contactContainer d-flex align-items-center columnGap-5 position-relative">
+                  <div class="position-relative d-flex align-items-center">
+                    <div class="d-flex align-items-center columnGap-5">
+                      <app-p-textbox
+                        *ngIf="DomesticOrder?.OrderTypeID == 1 && (DomesticOrder?.StatusID == 2 || DomesticOrder?.StatusID == 4) && isEditPersonalContact"
+                        [propName]="'Contact'" [(ngModel)]="DomesticOrder.Contact"
+                        (blur)="isEditPersonalContact = !isEditPersonalContact; onUpdateTestFierd('Contact')"></app-p-textbox>
+                      <span class="Contact" *ngIf="!isEditPersonalContact" 
+                        [ngClass]="{'BlueText': DomesticOrder?.OrderTypeID == 1 && (DomesticOrder?.StatusID == 2 || DomesticOrder?.StatusID == 4)}"
+                        title="{{DomesticOrder?.Contact}}">{{DomesticOrder?.Contact}}</span>
+                      <button class="contant-btn"
+                        *ngIf="DomesticOrder?.OrderTypeID == 1 && (DomesticOrder?.StatusID == 2 || DomesticOrder?.StatusID == 4)"
+                        kendoButton icon="pencil" (click)="onEdit(1 ,'isEditPersonalContact')"></button>
+                      <div class="line" *ngIf="DomesticOrder?.Contact && DomesticOrder?.ContactPhone"></div>
+                    </div>
+                  </div>
+  
+                  <div class="position-relative d-flex align-items-center">
+                    <app-p-masked-textbox mask="000 000 0000" [prompt]="'z'" [propName]="'ContactPhone'"
+                      [hidden]="!(DomesticOrder?.OrderTypeID == 1 && (DomesticOrder?.StatusID == 2 || DomesticOrder?.StatusID == 4) && isEditPersonalContactPhone)"
+                      [(ngModel)]="DomesticOrder.ContactPhone" class="w-100"
+                      (onBlurCallback)="isEditPersonalContactPhone = !isEditPersonalContactPhone; onUpdateTestFierd('ContactPhone')"></app-p-masked-textbox>
+                    <span class="ContactPhone" *ngIf="!isEditPersonalContactPhone"
+                    [ngClass]="{'BlueText': DomesticOrder?.OrderTypeID == 1 && (DomesticOrder?.StatusID == 2 || DomesticOrder?.StatusID == 4)}"
+                      title="{{insertSpacesInPhoneNumber(DomesticOrder?.ContactPhone)}}">{{insertSpacesInPhoneNumber(DomesticOrder?.ContactPhone)}}</span>
+                    <button class="contant-btn"
+                      *ngIf="DomesticOrder?.OrderTypeID == 1 && (DomesticOrder?.StatusID == 2 || DomesticOrder?.StatusID == 4)"
+                      kendoButton icon="pencil" (click)="onEdit(1 ,'isEditPersonalContactPhone')"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="info{{DomesticOrder.StatusID >= 6 && ishasOrderDelivery ? '7': '5'}}">
+              <div class="label">Tình trạng</div>
+              <div>
+                <b class="FontText OrderStatus" title="{{DomesticOrder?.OrderTypeName}}"
+                  [style.color]="getColor(DomesticOrder?.OrderTypeID, 'OrderTypeID')">{{DomesticOrder?.OrderTypeName}}</b>
+                <div class="FontText StatusName" title="{{DomesticOrder?.StatusName}}"
+                  [innerHTML]="DomesticOrder?.StatusName | colorStatus: DomesticOrder?.StatusID:14 ">
+                </div>
+              </div>
+            </div>
+  
+            <div class="info6 d-flex columnGap-80">
+              <div class="WHName width-166" *ngIf="DomesticOrder.StatusID == 3">
+                <div class="label color5A6276">Lý do từ chối</div>
+                <span class="columnGap-0 Oregen font-weight-bold" title="{{DomesticOrder?.RefuseReason ? DomesticOrder?.RefuseReason : DomesticOrder?.RefuseReasonName}}">{{DomesticOrder?.RefuseReason ? DomesticOrder?.RefuseReason : DomesticOrder?.RefuseReasonName}}</span>
+              </div>
+              <div class="WHName">
+                <div class="label color5A6276">Địa chỉ giao hàng</div>
+                <span class="columnGap-0" title="{{DomesticOrder?.WHName}}{{' ,' + DomesticOrder?.DeliveryAddress}}">
+                  <span class="pr-1" title="{{DomesticOrder?.WHName}}"
+                    *ngIf="DomesticOrder?.WHName && DomesticOrder?.DeliveryAddress">{{DomesticOrder?.WHName}},</span>
+                  {{DomesticOrder?.DeliveryAddress}}</span>
+              </div>
+            </div>
+            <div class="info8 d-flex flex-column rowGap-10">
+              <div class="RemarkSupplier">
+                <div class="label color5A6276">Ghi chú cho nhà cung cấp</div>
+                <span class="RemarkSupplier_Content"
+                  title="{{DomesticOrder?.RemarkSupplier}}">{{DomesticOrder?.RemarkSupplier}}</span>
+              </div>
+              <div class="RemarkWarehouse">
+                <div class="label color5A6276">Ghi chú cho LGT</div>
+                <span class="RemarkWarehouse_Content colorF1802E" title="{{DomesticOrder?.RemarkWarehouse}}">
+                  {{DomesticOrder?.RemarkWarehouse}}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Block đăng ký giao hàng  -->
+        <div class="tbt_DangKiGiaoHang sections" *ngIf="DomesticOrder?.StatusID >= 6 && ishasOrderDelivery">
+
+          <div class="title">ĐĂNG KÝ GIAO HÀNG</div>
+
+          <div class="layoutDeli block position-relative">
+            <p-loading-spinner [isLoading]="loadingDeliveryOrder"></p-loading-spinner>
+
+            <!-- ĐĂNG KÝ GIAO HÀNG - Mã phiếu giao hàng (DO) -->
+            <div class="deli1">
+              <kendo-label class="color5A6276 d-block" text="Mã phiếu giao hàng (DO)"></kendo-label>
+              <kendo-label class="greenText" title="{{OrderDelivery?.DONo}}"
+                text="{{OrderDelivery?.DONo}}"></kendo-label>
+            </div>
+
+            <!-- ĐĂNG KÝ GIAO HÀNG - Tình trạng -->
+            <div class="deli2">
+              <div>
+                <kendo-label class="color5A6276 d-block" text="Tình trạng"></kendo-label>
+                <span class="contentItem" title="{{OrderDelivery?.StatusName}}"
+                  [innerHTML]="OrderDelivery?.StatusName | colorStatus: OrderDelivery?.StatusID:14 "></span>
+              </div>
+            </div>
+
+            <!-- ĐĂNG KÝ GIAO HÀNG - Ghi chú cho đợt giao hàng -->
+            <div class="deli7">
+              <span class="FontIntal  d-block" *ngIf="OrderDelivery.RemarkFromSupplier == null 
+                  || OrderDelivery.RemarkFromSupplier == ''">Ghi chú cho đợt giao hàng</span>
+              <span title="Ghi chú cho đợt giao hàng{{': ' + OrderDelivery.RemarkFromSupplier}}">
+                {{OrderDelivery.RemarkFromSupplier}}</span>
+            </div>
+
+            <!-- ĐĂNG KÝ GIAO HÀNG - Ngày giao hàng -->
+            <div class="deli3">
+              <kendo-label class="color5A6276 d-block" text="Ngày giao hàng"></kendo-label>
+              <div class="d-flex align-items-center columnGap-3">
+                <span title="{{OrderDelivery?.DeliveryDate | date: 'dd/MM/yyyy'}}">{{OrderDelivery?.DeliveryDate | date:
+                  'dd/MM/yyyy'}}</span>
+                <span *ngIf="OrderDelivery?.DeliveryDate && OrderDelivery?.DeliveryPeriod" class="line"></span>
+                <span title="{{OrderDelivery?.DeliveryPeriod}}">{{OrderDelivery?.DeliveryPeriod}}</span>
+              </div>
+            </div>
+
+            <!-- ĐĂNG KÝ GIAO HÀNG - Người giao hàng -->
+            <div class="deli4">
+              <kendo-label class="color5A6276 d-block" text="Người giao hàng"></kendo-label>
+              <span class="contentItem" title="{{OrderDelivery?.Deliver}}">{{OrderDelivery?.Deliver}}</span>
+            </div>
+
+            <!-- ĐĂNG KÝ GIAO HÀNG - Điện thoại -->
+            <div class="deli5">
+              <kendo-label class="color5A6276 d-block" text="Điện thoại"></kendo-label>
+              <span class="contentItem"
+                title="{{insertSpacesInPhoneNumber(OrderDelivery?.DeliverPhone)}}">{{insertSpacesInPhoneNumber(OrderDelivery?.DeliverPhone)}}</span>
+            </div>
+
+            <!-- ĐĂNG KÝ GIAO HÀNG - Hóa đơn -->
+            <div class="deli6">
+              <kendo-label class="color5A6276 d-block" text="Hóa đơn"></kendo-label>
+              <span *ngIf="OrderDelivery?.ListInvoice?.length <= 0" class="FontIntal">chưa có hóa đơn</span>
+              <div class="deli6-content">
+                <div *ngFor="let Invoice of OrderDelivery?.ListInvoice" class="contentItem BlueText" title="{{Invoice?.InvoiceNo}}"
+                  (click)="!isDetailOrder ? null : onClickView('order')">
+                  {{Invoice?.InvoiceNo}}
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+        <!-- Block 'GIÁ TRỊ GIAO HÀNG': 'GIÁ TRỊ ĐẶT HÀNG'   -->
+        <div class="tbt_GiaTriDatHang sections" *ngIf="isDetailOrder">
+
+          <div class="title">{{DomesticOrder?.StatusID >= 6 || DomesticOrder?.StatusID == 4 ? 'GIÁ TRỊ GIAO HÀNG'
+            : 'GIÁ TRỊ ĐẶT HÀNG'}}</div>
+
+          <div class="section-grid position-relative">
+            <p-loading-spinner [isLoading]="loadingDomesticOrder"></p-loading-spinner>
+
+            <div class="grid-item item1">
+
+              <!-- 'GIÁ TRỊ GIAO HÀNG': 'GIÁ TRỊ ĐẶT HÀNG' - Sản phẩm -->
+              <div class="FirstCol">
+                <kendo-label class="color5A6276" text="Sản phẩm"></kendo-label>
+                <div class="contentItem">
+                  <div class="Quantity">
+                    <span class="contenttitle">SKU</span>
+                    <span>:</span>
+                    <span *ngIf="DomesticOrder?.StatusID >= 6 && DomesticOrder?.ConfirmedSKU !== null"
+                      class="ConfirmText"
+                      title="SL xác nhận: {{ DomesticOrder?.ConfirmedSKU == null ? 0 : DomesticOrder?.ConfirmedSKU | number: '1.0-0'}}">
+                      {{ DomesticOrder?.ConfirmedSKU == null ? 0 : DomesticOrder?.ConfirmedSKU | number: '1.0-0'}}
+                    </span>
+                    <span *ngIf="DomesticOrder?.ConfirmedSKU != null && DomesticOrder?.StatusID >= 6">/</span>
+                    <span
+                      title="SL đặt: {{DomesticOrder?.SKU == null? 0 : DomesticOrder?.SKU | number: '1.0-0'}}">{{DomesticOrder?.SKU
+                      == null? 0 : DomesticOrder?.SKU | number: '1.0-0'}}</span>
+                  </div>
+                  <div class="Quantity">
+                    <span class="contenttitle">Tổng Số Lượng</span>
+                    <span>:</span>
+                    <span class="ConfirmText"
+                      *ngIf="DomesticOrder?.StatusID >= 6 && DomesticOrder?.ConfirmedQuantity !== null"
+                      title="SL xác nhận: {{ DomesticOrder?.ConfirmedQuantity == null ? 0 : DomesticOrder?.ConfirmedQuantity | number: '1.0-0'}}">
+                      {{ DomesticOrder?.ConfirmedQuantity == null ? 0 : DomesticOrder?.ConfirmedQuantity | number:
+                      '1.0-0'}} </span>
+                    <span *ngIf="DomesticOrder?.ConfirmedQuantity != null && DomesticOrder?.StatusID >= 6">/</span>
+                    <span
+                      title="SL đặt: {{DomesticOrder?.TotalQuantity == null ? 0 : DomesticOrder?.TotalQuantity | number: '1.0-0'}}">
+                      {{DomesticOrder?.TotalQuantity == null ? 0 : DomesticOrder?.TotalQuantity | number:
+                      '1.0-0'}}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 'GIÁ TRỊ GIAO HÀNG': 'GIÁ TRỊ ĐẶT HÀNG' - Thành tiền trước thuế (-VAT) -->
+              <div class="SecondCol">
+                <kendo-label class="color5A6276" text="Thành tiền trước thuế (-VAT)"></kendo-label>
+                <span class="contentItem ConfirmText"
+                  title="{{DomesticOrder?.ConfirmedBeforeVAT == null ? 0 : DomesticOrder?.ConfirmedBeforeVAT | integerPart }}"
+                  *ngIf="DomesticOrder?.StatusID >= 6 && DomesticOrder?.ConfirmedBeforeVAT !== null">{{DomesticOrder?.ConfirmedBeforeVAT
+                  == null ? 0 : DomesticOrder?.ConfirmedBeforeVAT | integerPart }} </span>
+                <span class="contentItem"
+                  title="{{DomesticOrder?.AmountBeforeVAT == null ? 0 : DomesticOrder?.AmountBeforeVAT | integerPart }}"
+                  [ngClass]="{'lineText': DomesticOrder?.StatusID >= 6 && DomesticOrder?.ConfirmedBeforeVAT !== null}">{{DomesticOrder?.AmountBeforeVAT
+                  ==
+                  null ? 0 : DomesticOrder?.AmountBeforeVAT | integerPart }}</span>
+              </div>
+
+              <!-- 'GIÁ TRỊ GIAO HÀNG': 'GIÁ TRỊ ĐẶT HÀNG' - Chiết khấu -->
+              <div class="ThirdCol">
+                <kendo-label class="color5A6276" text="Chiết khấu"></kendo-label>
+                <div class="contentItem">
+
+                  <div class="Quantity">
+                    <span class="width-136">Chiết khấu sản phẩm</span>
+                    <span>:</span>
+                    <span class="ConfirmText"
+                      title="{{ DomesticOrder?.ConfirmedDiscountItem == null ? 0 : DomesticOrder?.ConfirmedDiscountItem  | integerPart}}"
+                      *ngIf="DomesticOrder?.StatusID >= 6 && DomesticOrder?.ConfirmedDiscountItem !== null">
+                      {{ DomesticOrder?.ConfirmedDiscountItem == null ? 0 : DomesticOrder?.ConfirmedDiscountItem |
+                      integerPart}}</span>
+                    <span
+                      title="{{DomesticOrder?.DiscountItemAmount == null ? 0 : DomesticOrder?.DiscountItemAmount | integerPart}}"
+                      [ngClass]="{'lineText': DomesticOrder?.StatusID >= 6 && DomesticOrder?.ConfirmedDiscountItem !== null}">{{DomesticOrder?.DiscountItemAmount
+                      == null ? 0 : DomesticOrder?.DiscountItemAmount | integerPart}}</span>
+                  </div>
+
+                  <!-- 'GIÁ TRỊ GIAO HÀNG': 'GIÁ TRỊ ĐẶT HÀNG' - Chiết khấu đơn hàng -->
+                  <div class="Quantity">
+                    <span class="width-136">Chiết khấu đơn hàng</span>
+                    <span>:</span>
+                    <div class="discountPO d-flex align-items-center columnGap-5">
+                      <span class="pr-1"
+                        title="{{DomesticOrder?.DiscountPOPercent == null ? 0 : DomesticOrder?.DiscountPOPercent | integerPart}} %">
+                        {{DomesticOrder?.DiscountPOPercent == null ? 0 : DomesticOrder?.DiscountPOPercent |
+                        integerPart}} %</span>
+                      <span class="line pr-1"></span>
+                      <span class="ConfirmText pr-1"
+                        *ngIf="DomesticOrder?.StatusID >= 6 && DomesticOrder?.ConfirmedDiscountPO !== null"
+                        title="{{ DomesticOrder?.ConfirmedDiscountPO == null ? 0 : DomesticOrder?.ConfirmedDiscountPO | integerPart}}">
+                        {{ DomesticOrder?.ConfirmedDiscountPO == null ? 0 : DomesticOrder?.ConfirmedDiscountPO |
+                        integerPart}}</span>
+                      <span
+                        title="{{ DomesticOrder?.DiscountPOAmount == null ? 0 : DomesticOrder?.DiscountPOAmount | integerPart}}"
+                        [ngClass]="{'lineText': DomesticOrder?.StatusID >= 6 && DomesticOrder?.ConfirmedDiscountPO  !== null}">{{
+                        DomesticOrder?.DiscountPOAmount == null ? 0 : DomesticOrder?.DiscountPOAmount |
+                        integerPart}}</span>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="FourCol">
+                <kendo-label class="color5A6276" text="Tổng thuế VAT"></kendo-label>
+                <span class="contentItem ConfirmText text-right"
+                  title="{{ DomesticOrder?.ConfirmedVAT == null ? 0 : DomesticOrder?.ConfirmedVAT | integerPart}}"
+                  *ngIf="DomesticOrder?.StatusID >= 6 && DomesticOrder?.ConfirmedVAT !== null">{{
+                  DomesticOrder?.ConfirmedVAT == null ? 0 : DomesticOrder?.ConfirmedVAT | integerPart}}</span>
+                <span class="contentItem text-right"
+                  title="{{DomesticOrder?.VATAmount == null ? 0 : DomesticOrder?.VATAmount | integerPart}}"
+                  [ngClass]="{'lineText': DomesticOrder?.StatusID >= 6 && DomesticOrder?.ConfirmedVAT  !== null}">{{DomesticOrder?.VATAmount
+                  ==
+                  null ? 0 : DomesticOrder?.VATAmount | integerPart}}</span>
+              </div>
+
+              <div class="FiveCol">
+                <kendo-label class="color5A6276" text="Thành tiền đơn hàng (+ VAT)"></kendo-label>
+                <span class="contentItem fontWeight ConfirmText"
+                  title="{{ DomesticOrder?.ConfirmedAfterVAT == null ? 0 : DomesticOrder?.ConfirmedAfterVAT | integerPart }}"
+                  *ngIf="DomesticOrder?.StatusID >= 6 && DomesticOrder?.ConfirmedAfterVAT !== null">{{
+                  DomesticOrder?.ConfirmedAfterVAT == null ? 0 : DomesticOrder?.ConfirmedAfterVAT | integerPart
+                  }}</span>
+                <span class="contentItem greenText fontWeight" title="{{DomesticOrder?.AmountAfterVAT ==
+                  null ? 0 : DomesticOrder?.AmountAfterVAT | integerPart}}"
+                  [ngClass]="{'lineText': DomesticOrder?.StatusID >= 6 && DomesticOrder?.ConfirmedAfterVAT !== null}">{{DomesticOrder?.AmountAfterVAT
+                  ==
+                  null ? 0 : DomesticOrder?.AmountAfterVAT | integerPart}}</span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Block 'CHI TIẾT SẢN PHẨM GIAO HÀNG' : 'CHI TIẾT SẢN PHẨM ĐẶT HÀNG'  -->
+        <div class="header searchGrid" *ngIf="isDetailOrder">
+          <div class="title title-prod">
+            {{DomesticOrder?.StatusID < 6 ? 'CHI TIẾT SẢN PHẨM ĐẶT HÀNG' : DomesticOrder?.StatusID>= 6 && isDetailOrder
+              ? 'CHI TIẾT SẢN PHẨM GIAO HÀNG' : 'CHI TIẾT SẢN PHẨM ĐẶT HÀNG' }} </div>
+          <div class="searchGroup">
+            <app-search-filter-group placeholder="Tìm theo barcode, poscode, tên sản phẩm" [disabled]="!isFilterActive"
+              (filterChange)="handleSearch($event)" [fields]="['ProductName', 'Barcode', 'Poscode']"
+              [clearButton]="true"></app-search-filter-group>
+          </div>
+        </div>
+
+        <div class="navCrud-order d-flex align-items-center justify-content-between" *ngIf="!isDetailOrder">
+          <div class="title title-prod">
+            HÓA ĐƠN PHÁT HÀNH
+          </div>
+          <div class="btnGroup">
+            <button [hidden]="!(DomesticOrder.OrderTypeID == 1 && (DomesticOrder.StatusID == 6 || DomesticOrder.StatusID == 7))" kendoButton
+              class="k-button btn-hachi hachi-primary hachi-secondary width-40 minWidthAuto" icon="import"
+              (click)="onDownloadExcelPromotionHamperDetail('PromotionHamperTemplate.xlsx')"
+              title="Download Excel"></button>
+            <button [hidden]="!(DomesticOrder.OrderTypeID == 1 && (DomesticOrder.StatusID == 6 || DomesticOrder.StatusID == 7))" kendoButton
+              class="k-button btn-hachi hachi-primary hachi-secondary" icon="export" (click)="onImportExcel()"
+              title="Import Excel">IMPORT HÓA ĐƠN</button>
+            <button [hidden]="!(DomesticOrder.OrderTypeID == 1 && (DomesticOrder.StatusID == 6 || DomesticOrder.StatusID == 7))" kendoButton
+              class="k-button btn-hachi hachi-primary hachi-secondary" icon="plus" (click)="APIGenerateInvoice()"
+              title="TẠO 1 HÓA ĐƠN TỪ DO">
+              TẠO 1 HÓA ĐƠN TỪ DO</button>
+            <button [hidden]="!(DomesticOrder.OrderTypeID == 1 && (DomesticOrder.StatusID == 6 || DomesticOrder.StatusID == 7))" kendoButton
+              class="k-button btn-hachi hachi-primary hachi-secondary" icon="plus" title="TÁCH HÓA ĐƠN TỪ DO THEO %VAT"
+              (click)="APIGenerateInvoiceByVAT()">TÁCH HÓA ĐƠN TỪ DO THEO %VAT</button>
+            <button [hidden]="!(DomesticOrder.OrderTypeID == 1 && (DomesticOrder.StatusID == 6 || DomesticOrder.StatusID == 7))" kendoButton
+              class="k-button btn-hachi hachi-primary hachi-secondary" icon="plus" title="TẠO HÓA ĐƠN"
+              (click)="this.InvoiceCode = null; openDialogAddProduct(0)">TẠO HÓA
+              ĐƠN</button>
+          </div>
+        </div>
+
+        <!-- CHI TIẾT SẢN PHẨM ĐẶT HÀNG -->
+        <div class="grid-wrapper " *ngIf="isDetailOrder">
+          <app-p-kendo-grid class="grid scrollable" [data]="gridView | async" [scrollable]="'none'" [loading]="loading"
+            [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize" [skip]="gridState.skip"
+            [take]="gridState.take" [sortable]="true" [sort]="gridState.sort"
+            [onPageChangeCallback]="onPageChangeCallback" [allowedMoreActionDropdown]="allowActionDropdown"
+            [getActionDropdownCallback]="getActionDropdownCallback" [selectable]="selectable"
+            [onActionDropdownClickCallback]="onActionDropdownClickCallback" [onSelectCallback]="onSelectCallback"
+            [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback" [autoHeight]="false"
+            [showCheckbox]="!areAllItemsInLockInvTrue(ListDetailPOProduct) && DomesticOrder.OrderTypeID == 1 && DomesticOrder.StatusID >= 6"
+            [getSelectionPopupCallback]="getSelectionPopupCallback">
+
+            <!-- CHI TIẾT SẢN PHẨM ĐẶT HÀNG - Tên sản phẩm  -->
+            <kendo-grid-column field="VNName" title="Tên sản phẩm" class="col_tensanpham">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="Img_Name" [ngClass]="{hiddenCheckbox: dataItem.InLockInv}">
+                  <img loading="lazy"
+                    [src]="dataItem.ImageThumb && getResImg(dataItem?.ImageThumb,'imageOrderProduct'+ dataItem?.Code)"
+                    class="ImgProduct" (error)="dataItem.ImageThumb && handleError('imageOrderProduct'+ dataItem.Code)">
+                  <div class="Name d-flex flex-column justify-content-between">
+                    <div class="NameProduct pl-2" title="{{dataItem?.ProductName}}">{{dataItem?.ProductName}}</div>
+                    <div class="Barcode pl-2 d-flex align-items-center columnGap-5 align-self-start">
+                      <span class="defautText Text p-0" title="{{dataItem?.Barcode}}">{{dataItem?.Barcode}}</span>
+                      <span *ngIf="dataItem?.DateMin != null" class="line colorBDC2D2 p-0"></span>
+                      <span class="Oregen Text p-0" *ngIf="dataItem?.DateMin != null"
+                        title="{{dataItem?.DateMin | date: 'dd/MM/yyyy'}}"> Date tối thiểu : {{dataItem?.DateMin | date:
+                        'dd/MM/yyyy'}}</span>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <!-- CHI TIẾT SẢN PHẨM ĐẶT HÀNG - Đơn vị  -->
+            <kendo-grid-column field="VNName" title="Đơn vị" class="col_Unit">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <span class="unit" title="{{dataItem?.UnitName}}">{{dataItem?.UnitName}}</span>
+              </ng-template>
+            </kendo-grid-column>
+
+            <!-- CHI TIẾT SẢN PHẨM ĐẶT HÀNG - Số lượng  -->
+            <kendo-grid-column field="VNName" title="Số lượng" class="col_Quantity" [headerClass]="'headerQuantity'">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="Width1 justify-content-between">
+                  <div class="quantity text-left"
+                    title="{{dataItem?.Quantity == null ? 0 : dataItem?.Quantity | number: '1.0-0'}}">SL đặt mua</div>
+                  <div class="text-right"
+                    title="{{dataItem?.Quantity == null ? 0 : dataItem?.Quantity | number: '1.0-0'}}">
+                    {{dataItem?.Quantity == null ? 0 : dataItem?.Quantity | number: '1.0-0'}}</div>
+                </div>
+                <div class="Width1 justify-content-between"
+                  [ngClass]="{'colorWorse-red': dataItem?.ConfirmedQuantity != dataItem?.Quantity && dataItem?.ConfirmedQuantity!= null}">
+                  <div class="quantity text-left"
+                    title="{{dataItem?.ConfirmedQuantity == null ? 0 : dataItem?.ConfirmedQuantity | number: '1.0-0'}}">
+                    SL xác nhận</div>
+                  <div class="text-right" [ngClass]="{'font-weight-bold': dataItem?.ConfirmedQuantity != dataItem?.Quantity && dataItem?.ConfirmedQuantity!= null}"
+                    title="{{dataItem?.ConfirmedQuantity == null ? 0 : dataItem?.ConfirmedQuantity | number: '1.0-0'}}">
+                    {{dataItem?.ConfirmedQuantity == null ? 0 : dataItem?.ConfirmedQuantity | number: '1.0-0'}}</div>
+                </div>
+                <div class="Width1 justify-content-between">
+                  <div class="quantity text-left" title="{{dataItem?.ReceivedQuantity == null? 0 
+                    : dataItem?.ReceivedQuantity | number: '1.0-0'}}">SL đã nhận</div>
+                  <div class="text-right"
+                    title="{{dataItem?.ReceivedQuantity == null? 0 : dataItem?.ReceivedQuantity | number: '1.0-0'}}">
+                    {{dataItem?.ReceivedQuantity == null? 0 : dataItem?.ReceivedQuantity | number: '1.0-0'}}
+                  </div>
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <!-- CHI TIẾT SẢN PHẨM ĐẶT HÀNG - Đơn giá  -->
+            <kendo-grid-column field="VNName" title="Đơn giá" class="col_UnitPrice"
+              [headerClass]="'headerEndCustomClass'">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="UnitPrice">
+                  <!-- giái khuyến mãi là Price -->
+                  <div title="{{dataItem?.Price == null ? 0 : dataItem?.Price | integerPart}}" class="overPrice">
+                    {{dataItem?.Price == null ? 0 :
+                    dataItem?.Price | integerPart}}
+                  </div>
+                  <div [ngClass]="{'lineText': DomesticOrder?.StatusID >= 6 && dataItem?.Price != dataItem?.BasePrice}"
+                    title="{{dataItem?.BasePrice == null ? 0 : dataItem?.BasePrice | integerPart}}">
+                    <!-- giá gốc là BasePrice -->
+                    {{dataItem?.BasePrice == null ? 0 : dataItem?.BasePrice | integerPart}}
+                  </div>
+                </div>
+                <!-- Bid mình sẽ dùng trong drawer để cảnh báo vướt giấ trần thôi -->
+              </ng-template>
+            </kendo-grid-column>
+
+            <!-- CHI TIẾT SẢN PHẨM ĐẶT HÀNG - Thành tiền (-VAT)  -->
+            <kendo-grid-column field="VNName" title="Thành tiền (-VAT)" class="col_BasePrice"
+              [headerClass]="'headerCustomClass'">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div [ngClass]="{'colorWorse-red': dataItem?.ConfirmedQuantity != dataItem?.Quantity && dataItem?.ConfirmedQuantity!= null}"
+                  style="text-align: center;"
+                  title="{{dataItem?.AmountBeforeVAT == null ? 0 : dataItem?.AmountBeforeVAT | integerPart }}">
+                  {{dataItem?.AmountBeforeVAT == null ? 0 : dataItem?.AmountBeforeVAT | integerPart }}</div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <!-- CHI TIẾT SẢN PHẨM ĐẶT HÀNG - Chiết khấu  -->
+            <kendo-grid-column field="VNName" title="CK" class="col_BasePrice" [headerClass]="'headerCK'">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <span style="text-align: center; display: flex; justify-content: center;"
+                  title="{{dataItem?.Discount == null ? 0 : dataItem?.Discount | integerPart}}%">
+                  {{dataItem?.Discount == null ? 0 : dataItem?.Discount | integerPart}}%
+                </span>
+              </ng-template>
+            </kendo-grid-column>
+
+            <!-- CHI TIẾT SẢN PHẨM ĐẶT HÀNG - VAT  -->
+            <kendo-grid-column field="VNName" title="VAT" class="col_BasePrice" [headerClass]="">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <span style="text-align: center;  display: flex; justify-content: center;"
+                  title="{{dataItem?.VAT == null ? 0 : dataItem?.VAT | integerPart}}%">
+                  {{dataItem?.VAT == null ? 0 : dataItem?.VAT | integerPart}}%
+                </span>
+              </ng-template>
+            </kendo-grid-column>
+
+            <!-- CHI TIẾT SẢN PHẨM ĐẶT HÀNG - Thành tiền (+VAT)  -->
+            <kendo-grid-column field="VNName" title="Thành tiền (+VAT)" class="col_BasePrice"
+              [headerClass]="'headerCustomClass'">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div style="text-align: center;"
+                  title="{{dataItem?.AmountAfterVAT == null ? 0 : dataItem?.AmountAfterVAT | integerPart }}"
+                  [ngClass]="{'colorWorse-red': dataItem?.ConfirmedQuantity != dataItem?.Quantity && dataItem?.ConfirmedQuantity!= null}">
+                  {{dataItem?.AmountAfterVAT == null ? 0 : dataItem?.AmountAfterVAT | integerPart }}</div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <!-- CHI TIẾT SẢN PHẨM ĐẶT HÀNG - Ghi chú NCC  -->
+            <kendo-grid-column field="VNName" title="Ghi chú NCC" class="col_ghiChuNCC">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div title="{{dataItem?.RemarkSupplier}}" class="TextArea">{{dataItem?.RemarkSupplier}}</div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <!-- CHI TIẾT SẢN PHẨM ĐẶT HÀNG - Ghi chú LGT  -->
+            <kendo-grid-column field="VNName" title="Ghi chú LGT" class="col_ghiChuLGT">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div title="{{dataItem?.RemarkWarehouse}}" class="TextArea">{{dataItem?.RemarkWarehouse}}</div>
+              </ng-template>
+            </kendo-grid-column>
+
+          </app-p-kendo-grid>
+        </div>
+
+        <!-- HÓA ĐƠN PHÁT HÀNH -->
+        <div class="grid-wrapper Grid_Invo" *ngIf="!isDetailOrder">
+
+          <kendo-grid class="grid scrollable myCustomGrid " [data]="gridViewInfo | async" [scrollable]="'none'"
+            kendoGridFocusable [loading]="loadingOrderInvoice">
+            <!-- HÓA ĐƠN PHÁT HÀNH - Số hóa đơn  -->
+            <kendo-grid-column class="col_SoHoaDon">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="Info">
+                  <div class="Icon">
+                    <img src="assets/img/icon/icon_Order.svg" alt="" width="30">
+                  </div>
+                  <div class="Info_content">
+                    <kendo-label text="Số hóa đơn"></kendo-label>
+
+                    <div class="content height32px">
+                      <app-p-textbox *ngIf="dataItem.isEditInvoiceNo" [propName]="'InvoiceNo'"
+                        [(ngModel)]="dataItem.InvoiceNo"
+                        (blur)="dataItem.isEditInvoiceNo = false; onBlurInvoice(dataItem)">
+                      </app-p-textbox>
+                      <span class="text-nowrap" title="{{dataItem.InvoiceNo}}" [ngClass]="{'BlueText': DomesticOrder.OrderTypeID == 1 && dataItem.StatusID == 1}"
+                        *ngIf="!dataItem.isEditInvoiceNo">
+                        {{dataItem.InvoiceNo}}
+                      </span>
+                      <kendo-icon class="k-icon k-i-pencil greenText cursorPointer"
+                        *ngIf="DomesticOrder.OrderTypeID == 1 && dataItem.StatusID == 1"
+                        (click)="dataItem.isEditInvoiceNo = !dataItem.isEditInvoiceNo">
+                      </kendo-icon>
+                    </div>
+
+                  </div>
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <!-- HÓA ĐƠN PHÁT HÀNH - Ngày phát hàng  -->
+            <kendo-grid-column class="col_NgayPhatHanh">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="Info_content">
+                  <kendo-label text="Ngày phát hành"></kendo-label>
+                  <div class="content height32px">
+                    <app-datepicker [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'"
+                      [(ngModel)]="dataItem.InvoiceDate" [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                      *ngIf="dataItem.isEditDate" [readOnlyInput]="true"
+                      (blur)="dataItem.isEditDate = false; onDatepickerChange($event , dataItem)"
+                      (keydown.Enter)="$event.target.blur()" [min]="DomesticOrder.ReceivingStart | convertToDate" 
+                      [max]="DomesticOrder.ReceivingEnd | convertToDate" [disabledDates]="disabledDates"
+                      [popupSetting]="{animate:true, appendTo: 'root',popupClass:'popupLayoutCpnDatePicker'}"></app-datepicker>
+                    <div class="d-flex align-items-center">
+                      <div *ngIf="!dataItem.isEditDate"
+                        [ngClass]="{'BlueText': DomesticOrder.OrderTypeID == 1 && dataItem.StatusID == 1}"
+                        class="d-flex align-items-center k-cursor-default text-nowrap"
+                        title="{{dataItem.InvoiceDate | date: 'dd/MM/yyyy'}}">
+                        <kendo-icon class="k-icon k-i-calendar pr-2"></kendo-icon> {{dataItem.InvoiceDate | date:
+                        'dd/MM/yyyy'}}
+                      </div>
+                      <kendo-icon class="k-icon k-i-pencil greenText cursorPointer pl-2"
+                        *ngIf="DomesticOrder.OrderTypeID == 1 && dataItem.StatusID == 1"
+                        (click)="dataItem.isEditDate = !dataItem.isEditDate"></kendo-icon>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <!-- HÓA ĐƠN PHÁT HÀNH - Số lượng  -->
+            <kendo-grid-column class="col_SoLuong">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <!-- SKU -->
+                <div class="ReceivingTimeFrom">
+                  <span class="sku" title="{{dataItem.SKU == null ? 0 : dataItem.SKU | number:'1.0-0'}}">SKU</span>
+                  <span class="pr-1">:</span>
+                  <span title="{{dataItem.SKU == null ? 0 : dataItem.SKU | number:'1.0-0'}}">{{dataItem.SKU == null ? 0
+                    : dataItem.SKU | number:'1.0-0'}}</span>
+                </div>
+                <!-- SL  -->
+                <div class="ReceivingTimeFrom height32px align-items-center">
+                  <span class="sku"
+                    title="{{dataItem.Quantity == null ? 0 : dataItem.Quantity | number: '1.0-0'}}">SL</span>
+                  <span class="pr-1">:</span>
+                  <span title="{{dataItem.Quantity == null ? 0 : dataItem.Quantity | number: '1.0-0'}}">
+                    {{dataItem.Quantity == null ? 0 : dataItem.Quantity | number: '1.0-0'}}</span>
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <!-- HÓA ĐƠN PHÁT HÀNH - Tổng tiền trước thuế  -->
+            <kendo-grid-column class="col_tongTienTruocthue">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="Info_content">
+                  <kendo-label text="Tổng tiền hàng (-VAT)"></kendo-label>
+                  <div class="content height32px lineheight32px" title="{{ dataItem.AmountBeforeVAT == null ? 0 :
+                    dataItem.AmountBeforeVAT | integerPart}}">
+                    {{ dataItem.AmountBeforeVAT == null ? 0 : dataItem.AmountBeforeVAT | integerPart}}
+                  </div>
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <!-- HÓA ĐƠN PHÁT HÀNH - Chiết khấu  -->
+            <kendo-grid-column class="col_Chietkhau">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="Info_content">
+                  <kendo-label text="Chiết khấu"
+                    title="{{ dataItem.DiscountItemAmount == null ? 0 : dataItem.DiscountItemAmount | integerPart}}"></kendo-label>
+                  <div class="content height32px lineheight32px"
+                    title="{{ dataItem.DiscountItemAmount == null ? 0 : dataItem.DiscountItemAmount | integerPart}}">
+                    {{ dataItem.DiscountItemAmount == null ? 0 : dataItem.DiscountItemAmount | integerPart}}
+                  </div>
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <!-- HÓA ĐƠN PHÁT HÀNH - Thuế VAT  -->
+            <kendo-grid-column class="col_thueVAT">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="Info_content">
+                  <kendo-label text="Thuế VAT"
+                    title="{{ dataItem.VATAmount == null ? 0 : dataItem.VATAmount | integerPart}}"></kendo-label>
+                  <div class="content height32px lineheight32px"
+                    title="{{ dataItem.VATAmount == null ? 0 : dataItem.VATAmount | integerPart}}">
+                    {{ dataItem.VATAmount == null ? 0 : dataItem.VATAmount | integerPart}}
+                  </div>
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <!-- HÓA ĐƠN PHÁT HÀNH - Tổng tiền sau thuế  -->
+            <kendo-grid-column class="col_tongTienSauthue">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="Info_content">
+                  <kendo-label text="Tổng tiền hàng (+VAT)"
+                    title="{{ dataItem.AmountAfterVAT == null ? 0 : dataItem.AmountAfterVAT | integerPart}}">
+                  </kendo-label>
+                  <div class="greenText FontTotal content height32px lineheight32px"
+                    title="{{ dataItem.AmountAfterVAT == null ? 0 : dataItem.AmountAfterVAT | integerPart}}">
+                    {{ dataItem.AmountAfterVAT == null ? 0 : dataItem.AmountAfterVAT | integerPart}}</div>
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <!-- HÓA ĐƠN PHÁT HÀNH - Tình trạng  -->
+            <kendo-grid-column class="col_tinhTrang">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="status">
+                  <div class="customFont text-nowrap" title="{{dataItem.StatusName}}"
+                    [ngStyle]="{'color': getColor(dataItem.StatusID, 'invoiceStatus')}">{{dataItem.StatusName}}</div>
+                  <!-- <img *ngFor="let i of displayStatusBtn(dataItem)" class="{{ i.code }} {{i.class}} cursorPointer"
+                      src="{{ i.image }}" fillMode="flat" title="{{ i.text }}" (click)="HandleActionIconList(i, dataItem)"> -->
+                  <!-- Không dùng hàm để render button là vì nó sẽ gọi hàm liên tục làm web bị đơn -->
+                  <!-- Nút thêm  -->
+                  <img *ngIf="dataItem.StatusID == 1 || dataItem.StatusID == 4"
+                    class="k-icon k-i-plus greenText cursorPointer" fillMode="flat" title="Thêm sản phẩm"
+                    (click)="HandleActionIconList({link: 0, type: 'add'}, dataItem)">
+
+                  <!-- Nút gửi hóa đơn  -->
+                  <img *ngIf="dataItem.StatusID == 1 || dataItem.StatusID == 4" fillMode="flat" title="Gửi hóa đơn"
+                    src="assets/img/icon/icon_sendOrange.svg" class="cursorPointer"
+                    (click)="HandleActionIconList({link: 2, type: 'send'}, dataItem)">
+
+                  <!-- Nút trả hóa đơn  -->
+                  <img *ngIf="!(dataItem.StatusID == 1 || dataItem.StatusID == 4 || dataItem.StatusID == 6)"
+                    fillMode="flat" title="Trả hóa đơn" class="k-icon k-i-undo greenText cursorPointer"
+                    (click)="HandleActionIconList({link: 4, type: 'return'}, dataItem)">
+
+                  <!-- Nút hoàn tất hóa đơn  -->
+                  <img *ngIf="!(dataItem.StatusID == 1 || dataItem.StatusID == 4 || dataItem.StatusID == 6)"
+                    fillMode="flat" title="Hoàn tất nhận hàng hóa đơn"
+                    class="k-icon k-i-check-outline greenText cursorPointer"
+                    (click)="HandleActionIconList({link: 6, type: 'succes'}, dataItem)">
+                </div>
+
+                <div *ngIf="dataItem.StatusID == 6">
+                  Phiếu nhập kho
+                  <span class="BlueText"></span>
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <!-- Grid Detail  -->
+            <div *kendoGridDetailTemplate="let dataItem" class="ListChile">
+
+              <kendo-grid class="myCustomChileGrid" [data]="dataItem.ListProduct" [scrollable]="'none'">
+
+                <!-- Sản phẩm trong hóa đơn - STT  -->
+                <kendo-grid-column title="STT" class="col-Stt" headerClass="header-Stt">
+                  <ng-template kendoGridCellTemplate let-dataItemProduct let-rowIndex="rowIndex">
+                    <div class="defautText text-center" [ngClass]="{'HasDetail': !isHasListDetail(dataItemProduct)}">{{
+                      rowIndex + 1 }}
+                    </div>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <!-- Sản phẩm trong hóa đơn - Tên sản phẩm  -->
+                <kendo-grid-column title="Tên sản phẩm" class="col_productName" headerClass="header_productName">
+                  <ng-template kendoGridCellTemplate let-dataItemProduct>
+                    <div class="Img_Name">
+                      <img loading="lazy"
+                        [src]="dataItemProduct.ImageThumb && getResImg(dataItemProduct.ImageThumb,'imageInvoiceDetail'+ dataItemProduct.Code)"
+                        class="ImgProduct"
+                        (error)=" dataItemProduct.ImageThumb && handleError('imageInvoiceDetail'+ dataItemProduct.Code)">
+                      <div class="Name">
+                        <div class="NameProduct" title="{{dataItemProduct.VNName}}">
+                          {{dataItemProduct.VNName}}</div>
+                        <div class="Barcode">
+                          <span class="defautText Text"
+                            title="{{dataItemProduct.Barcode}}">{{dataItemProduct.Barcode}}</span>
+                          <span class="colorBDC2D2" *ngIf="dataItemProduct.DateMin != null">|</span>
+                          <span class="Oregen" *ngIf="dataItemProduct.DateMin != null"
+                            title="{{dataItemProduct.DateMin | date: 'dd/MM/yyyy'}}"> Date tối thiểu :
+                            {{dataItemProduct.DateMin | date: 'dd/MM/yyyy'}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <!-- Sản phẩm trong hóa đơn - Đơn vị  -->
+                <kendo-grid-column title="Đơn vị" class="col_Unit" headerClass="header_Unit">
+                  <ng-template kendoGridCellTemplate let-dataItemProduct>
+                    <span title="{{dataItemProduct.UnitName}}">{{dataItemProduct.UnitName}}</span>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <!-- Sản phẩm trong hóa đơn - Số lượng  -->
+                <kendo-grid-column title="Số lượng" class="col_Quantity" headerClass="header_Quantity">
+                  <ng-template kendoGridCellTemplate let-dataItemProduct>
+                    <div class="Width1 flex-column">
+                      <div class="d-flex align-items-center position-relative">
+                        <app-p-numeric-textbox *ngIf="isEditQuanity[dataItemProduct.Code]" [format]="'n0'" [min]="1"
+                          [max]="dataItemProduct.ConfirmedQuantity" [spinners]="false" propName="Quantity"
+                          [(ngModel)]="dataItemProduct.Quantity"
+                          (blur)="isEditQuanity[dataItemProduct.Code] = false; onBlurInvoiceProduct(dataItemProduct)">
+                        </app-p-numeric-textbox>
+                        <div *ngIf="!isEditQuanity[dataItemProduct.Code]"
+                          title="{{ dataItemProduct.Quantity == null ? 0 : dataItemProduct.Quantity | number: '1.0-0' }}"
+                          [ngClass]="{'colorF1802E font-weight-bold': dataItemProduct.Quantity < dataItemProduct.ConfirmedQuantity}">
+                          {{ dataItemProduct.Quantity == null ? 0 : dataItemProduct.Quantity | number: '1.0-0' }}</div>
+                        <kendo-icon
+                          class="k-icon k-i-pencil greenText pl-2 cursorPointer position-absolute left-100percent"
+                          *ngIf="(DomesticOrder.OrderTypeID == 1 && dataItem.StatusID == 1) "
+                          (click)="onEdit(2, 'isEditQuanity', dataItemProduct.Code)"></kendo-icon>
+                      </div>
+
+                      <div *ngIf="dataItemProduct.Quantity < dataItemProduct.ConfirmedQuantity"
+                        class="BlueText d-block k-cursor-default" title="{{ dataItemProduct.ConfirmedQuantity == null ? 0 : dataItemProduct.ConfirmedQuantity | number:
+                        '1.0-0' }}"
+                        [ngClass]="{'lineText': dataItemProduct.Quantity < dataItemProduct.ConfirmedQuantity}">
+                        {{ dataItemProduct.ConfirmedQuantity == null ? 0 : dataItemProduct.ConfirmedQuantity | number:
+                        '1.0-0' }}</div>
+                      <i *ngIf="dataItemProduct.Quantity < dataItemProduct.ConfirmedQuantity"
+                        class="color5A6276 d-block">(Số lượng xác nhận)</i>
+
+
+                    </div>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <!-- Sản phẩm trong hóa đơn - đơn giá  -->
+                <kendo-grid-column title="Đơn giá" class="col_UnitPrice" headerClass="header_UnitPrice">
+                  <ng-template kendoGridCellTemplate let-dataItemProduct>
+                    <div class="UnitPrice">
+                      <div [ngClass]="{'overPrice': dataItemProduct.Price <= dataItemProduct.Bid }"
+                        title="{{dataItemProduct.Price == null ? 0 : dataItemProduct.Price | integerPart}}">
+                        {{dataItemProduct.Price == null ? 0 : dataItemProduct.Price | integerPart}}</div>
+                      <div *ngIf="dataItemProduct.Price <= dataItemProduct.Bid" class="lineText"
+                        title="{{ dataItemProduct.Bid == null ? 0 : dataItemProduct.Bid | integerPart}}">
+                        {{ dataItemProduct.Bid == null ? 0 : dataItemProduct.Bid | integerPart}}</div>
+                    </div>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <!-- Sản phẩm trong hóa đơn - Thành tiền (- VAT)  -->
+                <kendo-grid-column title="Thành tiền (-VAT)" class="col_AmountBeforeVAT"
+                  headerClass="header_AmountBeforeVAT" [headerClass]="'headerCustomClass'">
+                  <ng-template kendoGridCellTemplate let-dataItemProduct>
+                    <div style="text-align: center;"
+                      title="{{ dataItemProduct.TotalAmount == null ? 0 : dataItemProduct.TotalAmount | integerPart }}"
+                      [ngClass]="{'colorF1802E': dataItemProduct.Quantity < dataItemProduct.ConfirmedQuantity}">
+                      {{ dataItemProduct.TotalAmount == null ? 0 : dataItemProduct.TotalAmount | integerPart }}</div>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <!-- Sản phẩm trong hóa đơn - CK  -->
+                <kendo-grid-column title="CK" class="col_BasePrice" [headerClass]="'headerCenterCustomClass'">
+                  <ng-template kendoGridCellTemplate let-dataItemProduct>
+                    <span style="text-align: center; display: flex; justify-content: center;"
+                      title="{{dataItemProduct.Discount == null ? 0 : dataItemProduct.Discount | integerPart}}%">
+                      {{dataItemProduct.Discount == null ? 0 : dataItemProduct.Discount | integerPart}}%
+                    </span>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <!-- Sản phẩm trong hóa đơn - VAT  -->
+                <kendo-grid-column title="VAT" class="col_BasePrice" [headerClass]="'headerCenterCustomClass'">
+                  <ng-template kendoGridCellTemplate let-dataItemProduct>
+                    <span style="text-align: center;  display: flex; justify-content: center;"
+                      title="{{ dataItemProduct.VAT == null ? 0 : dataItemProduct.VAT | integerPart}}%">
+                      {{ dataItemProduct.VAT == null ? 0 : dataItemProduct.VAT | integerPart}}%
+                    </span>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <!-- Sản phẩm trong hóa đơn - Thành tiền (+VAT)  -->
+                <kendo-grid-column title="Thành tiền (+VAT)" class="col_UnitPrice" headerClass="header_UnitPrice">
+                  <ng-template kendoGridCellTemplate let-dataItemProduct>
+                    <div [ngClass]="{'colorF1802E': dataItemProduct.Quantity < dataItemProduct.ConfirmedQuantity}"
+                      title="{{ dataItemProduct.TotalAmountWithVAT == null ? 0 : dataItemProduct.TotalAmountWithVAT | integerPart }}">
+                      {{ dataItemProduct.TotalAmountWithVAT == null ? 0 : dataItemProduct.TotalAmountWithVAT |
+                      integerPart }}
+                    </div>
+                  </ng-template>
+                </kendo-grid-column>
+
+              </kendo-grid>
+
+            </div>
+            <!-- End Grid Detail -->
+
+            <kendo-grid-column class="dontshow">
+              <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+              </ng-template>
+            </kendo-grid-column>
+
+          </kendo-grid>
+
+        </div>
+
+        <app-p-kendo-dialog class="dialogAddProduct" *ngIf="dialogAddProduct" [title]="'THÊM HÀNG HÓA VÀO HÓA ĐƠN'"
+          (close)="closeDialog()">
+          <div class="grid-wrapper">
+            <app-p-kendo-grid class="grid scrollable" [data]="gridPopup | async" [scrollable]="'none'" [autoHeight]="false"
+              [loading]="loadingOrderInvoice" [selectable]="selectable" (getSelectedRowitem)="getSelectedRowitem($event)">
+
+              <!-- Popup thêm hàng hóa vào hóa đơn - Tên sản phẩm -->
+              <kendo-grid-column field="VNName" title="Tên sản phẩm" class="col_tensanpham">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                  <div class="Img_Name">
+                    <img loading="lazy"
+                      [src]="dataItem.ImageThumb && getResImg(dataItem.ImageThumb,'imagePopup'+ dataItem.Code)"
+                      class="ImgProduct" (error)="dataItem.ImageThumb && handleError('imagePopup'+ dataItem.Code)">
+                    <div class="Name">
+                      <div class="NameProduct" title="{{dataItem.VNName}}">{{dataItem.VNName}}</div>
+                      <div class="Barcode d-flex align-items-center ">
+                        <span class="defautText Text" title="{{dataItem.Barcode}}">{{dataItem.Barcode}}</span>
+                        <span class="line colorBDC2D2" *ngIf="dataItem.isHasMiniDate"></span>
+                        <span class="Oregen" *ngIf="dataItem.isHasMiniDate" title="{{dataItem.MiniDate}}">
+                          Date tối thiểu : {{dataItem.MiniDate}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </kendo-grid-column>
+
+              <kendo-grid-column field="VNName" title="Đơn vị" class="col_Quantity">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                  <span title="{{dataItem.UnitName}}">{{dataItem.UnitName}}</span>
+                </ng-template>
+              </kendo-grid-column>
+
+              <kendo-grid-column field="VNName" title="Số lượng" class="col_Quantity" [headerClass]="'headerQuantity'">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                  <div class="Width1 justify-content-between">
+                    <div title="{{dataItem.Quantity == null ? 0 : dataItem.Quantity | number: '1.0-0'}}">
+                      SL xác nhận</div>
+                    <div title="{{dataItem.Quantity == null ? 0 : dataItem.Quantity | number: '1.0-0'}}">
+                      {{dataItem.Quantity == null ? 0 : dataItem.Quantity | number: '1.0-0'}}</div>
+                  </div>
+                  <div class="Width1 justify-content-between ">
+                    <div title="{{dataItem.QuantityInvoice == null ? 0 : dataItem.QuantityInvoice | number: '1.0-0'}}">
+                      SL
+                      đã xuất</div>
+                    <div title="{{dataItem.QuantityInvoice == null ? 0 : dataItem.QuantityInvoice | number: '1.0-0'}}">
+                      {{dataItem.QuantityInvoice == null ? 0 : dataItem.QuantityInvoice | number: '1.0-0'}}
+                    </div>
+                  </div>
+                </ng-template>
+              </kendo-grid-column>
+
+              <kendo-grid-column field="VNName" title="Đơn giá" class="col_UnitPrice"
+                [headerClass]="'headerEndCustomClass'">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                  <div class="UnitPrice" title="{{ dataItem.Price == null ? 0 : dataItem.Price | integerPart }}">
+                    <div style="color: #26282E;">{{ dataItem.Price == null ? 0 : dataItem.Price | integerPart }}</div>
+                  </div>
+                </ng-template>
+              </kendo-grid-column>
+            </app-p-kendo-grid>
+          </div>
+          <div class="footer-grid">
+            <div class="group-btn">
+              <button kendoButton class="k-button k-button btn-hachi hachi-primary hachi-secondary"
+                (click)="closeDialog()" [disabled]="!isFilterActive">
+                Đóng
+              </button>
+              <button kendoButton class="k-button k-button btn-hachi hachi-primary"
+                (click)="onComfirmAddInvoiceProduct(OrderDelivery?.Code, InvoiceCode)">Xác nhận
+              </button>
+            </div>
+          </div>
+        </app-p-kendo-dialog>
+
+      </div>
+      <!-- END BODY  -->
+
+    </mat-drawer-content>
+    <!-- END CONTENT -->
+
+    <!-- START FORM DRAWER -->
+    <mat-drawer #formDrawer [mode]="'over'" position="end" disableClose>
+      <div class="ContetDrawer">
+        <!-- header -->
+        <div class="headerDrawer">
+          <div class="title">{{DomesticOrder.StatusID <= 5 ? 'SẢN PHẨM ĐẶT HÀNG' : 'SẢN PHẨM GIAO HÀNG' }}</div>
+          </div>
+          <!-- Content form -->
+          <form class="formInfoPartner k-form" (keydown)="onKeyDown($event)" [formGroup]="orderProductForm">
+            <div class="formOrderProduct">
+
+              <div class="form-item item1">
+                <div class="label-input">
+
+                  <div class="label">Nhập mã sản phẩm</div>
+
+                  <div class="text-barcodeProduct mt-1" *ngIf="DomesticOrder.StatusID != 1"
+                    title="{{orderProductForm.controls['Barcode'].value}}">
+                    {{orderProductForm.controls['Barcode'].value}}
+                  </div>
+
+                </div>
+                <div class="img-product">
+                  <img
+                    [src]="orderProductForm.controls['ImageThumb'].value && getResImg(orderProductForm.controls['ImageThumb'].value, 'imageDrawer'+ ProductOrder.Code) "
+                    (error)="orderProductForm.controls['ImageThumb'].value && handleError('imageDrawer'+ ProductOrder.Code)"
+                    alt="{{orderProductForm.controls['ProductName'].value}}" loading="lazy">
+                </div>
+              </div>
+
+              <div class="form-item item2">
+                <div class="label">
+
+                  <span class="lable-nameproduct">Tên sản phẩm</span>
+                  <span class="lable-line" *ngIf="orderProductForm.controls['Poscode'].value"></span>
+                  <span class="label-poscodeproduct" title="{{orderProductForm.controls['Poscode'].value}}">
+                    {{orderProductForm.controls['Poscode'].value}}
+                  </span>
+
+                </div>
+
+                <div title="{{orderProductForm.controls['ProductName'].value}}" class="text-nameproduct">
+                  {{orderProductForm.controls['ProductName'].value}}
+                </div>
+
+              </div>
+
+              <div class="form-item item3">
+
+                <div class="quanity-Order">
+
+                  <div class="label">Số lượng giao hàng</div>
+
+                  <div class="GroupQuantity Text d-flex align-items-center" *ngIf="DomesticOrder.StatusID != 1">
+                    <div class="font-weight-bold">
+                        <!-- SL GIAO HÀNG(giá trị trước dấu | - SL giao nhận -->
+                      <div *ngIf="DomesticOrder.StatusID == 7 && isDetailOrder" title="Số lượng giao: {{orderProductForm.controls['ReceivedQuantity'].value == null ? 0 :
+                        orderProductForm.controls['ReceivedQuantity'].value | number:'1.0-0'}}">
+                        {{orderProductForm.controls['ReceivedQuantity'].value == null ? 0 :
+                        orderProductForm.controls['ReceivedQuantity'].value | number:'1.0-0'}}</div>
+                        
+                        <!-- SL GIAO HÀNG(giá trị trước dấu | - SL xác nhận -->
+                      <div *ngIf="DomesticOrder.StatusID == 6 && isDetailOrder" title="Số lượng xác nhận: {{orderProductForm.controls['ConfirmedQuantity'].value == null ? 0 :
+                        orderProductForm.controls['ConfirmedQuantity'].value | number:'1.0-0'}}">
+                        {{orderProductForm.controls['ConfirmedQuantity'].value == null ? 0 :
+                        orderProductForm.controls['ConfirmedQuantity'].value | number:'1.0-0'}}</div>
+                        
+                        <!-- SL GIAO HÀNG(giá trị trước dấu |) - SL đặt mua -->
+                      <div *ngIf="DomesticOrder.StatusID < 6" title="Số lượng đặt mua: {{orderProductForm.controls['Quantity'].value == null ? 0
+                        : orderProductForm.controls['Quantity'].value | number:'1.0-0'}}">
+                        {{orderProductForm.controls['Quantity'].value == null ? 0
+                        : orderProductForm.controls['Quantity'].value | number:'1.0-0'}}</div>
+                    </div>
+                    <div class="color959DB3 line" [hidden]="DomesticOrder.StatusID < 6"></div>
+                        <!-- SL GIAO HÀNG(giá trị sau dấu |) - SL xác nhận -->
+                    <div *ngIf="DomesticOrder.StatusID > 6 && isDetailOrder" title="Số lượng xác nhận: {{orderProductForm.controls['ConfirmedQuantity'].value == null ? 0 :
+                      orderProductForm.controls['ConfirmedQuantity'].value | number:'1.0-0'}}">
+                      {{orderProductForm.controls['ConfirmedQuantity'].value == null ? 0 :
+                      orderProductForm.controls['ConfirmedQuantity'].value | number:'1.0-0'}}</div>
+
+                        <!-- SL GIAO HÀNG(giá trị sau dấu |) - SL đặt mua -->
+                    <div class="colorgray-850" *ngIf="DomesticOrder.StatusID >= 6 && isDetailOrder" title="Số lượng đặt mua: {{ orderProductForm.controls['Quantity'].value
+                      == null ? 0 : orderProductForm.controls['Quantity'].value | number:'1.0-0'}}">{{
+                      orderProductForm.controls['Quantity'].value
+                      == null ? 0 : orderProductForm.controls['Quantity'].value | number:'1.0-0'}}</div>
+                  </div>
+
+                </div>
+
+                <div class="priceBuy"
+                  [ngClass]="{'overPrice': orderProductForm.controls['BasePrice'].value > orderProductForm.controls['Bid'].value}">
+
+                  <div class="label">Giá mua hàng</div>
+
+                  <div *ngIf="DomesticOrder.StatusID != 1" title="{{orderProductForm.controls['BasePrice'].value == null ? 0 :
+                    orderProductForm.controls['BasePrice'].value | integerPart}}">
+                    {{orderProductForm.controls['BasePrice'].value == null ? 0 :
+                    orderProductForm.controls['BasePrice'].value | integerPart}}
+                  </div>
+
+                </div>
+
+                <div class="moneyBeforeVAT">
+
+                  <div class="label">
+                    Thành tiền (-VAT)
+                  </div>
+                  <div class="font-weight-bold" *ngIf="DomesticOrder.StatusID != 1" title="{{ orderProductForm.controls['AmountBeforeVAT'].value == null ? 0 :
+                    orderProductForm.controls['AmountBeforeVAT'].value | integerPart }}">
+                    {{ orderProductForm.controls['AmountBeforeVAT'].value == null ? 0 :
+                    orderProductForm.controls['AmountBeforeVAT'].value | integerPart }}</div>
+
+                </div>
+
+              </div>
+
+              <div *ngIf="orderProductForm.controls['BasePrice'].value > orderProductForm.controls['Bid'].value"
+                class="Orgen">
+                Giá mua không được vượt quá {{ orderProductForm.controls['Bid'].value ? 0 :
+                orderProductForm.controls['Bid'].value | integerPart}}
+              </div>
+
+              <div class="form-item item4">
+                <div class="ProductDiscount">
+                  <div class="label">
+                    Chiết khấu sản phẩm
+                  </div>
+
+                  <span class="ProductDiscountContent Text d-flex align-items-center"
+                    *ngIf="DomesticOrder.StatusID != 1">
+                    <div title="{{orderProductForm.controls['Discount'].value == null ? 0 :
+                      orderProductForm.controls['Discount'].value | integerPart}} %">
+                      {{orderProductForm.controls['Discount'].value == null ? 0 :
+                      orderProductForm.controls['Discount'].value | integerPart}} %
+                    </div>
+                    <span class="line"></span>
+                    <span title="{{orderProductForm.controls['DiscountAmount'].value == null ? 0 :
+                    orderProductForm.controls['DiscountAmount'].value | integerPart}}">
+                      {{orderProductForm.controls['DiscountAmount'].value == null ? 0 :
+                      orderProductForm.controls['DiscountAmount'].value | integerPart}}
+                    </span>
+                  </span>
+                </div>
+              </div>
+
+              <div class="form-item item5">
+                <div class="vat">
+                  <div class="label">
+                    Thuế VAT
+                  </div>
+
+                  <span class="VatContent Text d-flex align-items-center" *ngIf="DomesticOrder.StatusID != 1">
+                    <div title="{{orderProductForm.controls['VAT'].value == null ? 0 : orderProductForm.controls['VAT'].value |
+                      number: '1.0-2'}} %">
+                      {{orderProductForm.controls['VAT'].value == null ? 0 : orderProductForm.controls['VAT'].value |
+                      number: '1.0-2'}} %
+                    </div>
+                    <span class="line"></span>
+                    <span title="{{orderProductForm.controls['VATAmount'].value == null ? 0 :
+                    orderProductForm.controls['VATAmount'].value | integerPart}}">
+                      {{orderProductForm.controls['VATAmount'].value == null ? 0 :
+                      orderProductForm.controls['VATAmount'].value | integerPart}}
+                    </span>
+                  </span>
+
+                </div>
+
+                <div *ngIf="DomesticOrder.StatusID != 1 " class="width-88"></div>
+
+                <div class="moneyAfterVAT">
+
+                  <div class="label">
+                    Thành tiền (+VAT)
+                  </div>
+
+                  <span class="text-moneyAfterVAT font-weight-bold" *ngIf="DomesticOrder.StatusID != 1 "
+                    title="{{orderProductForm.controls['AmountAfterVAT'].value == null ? 0 : orderProductForm.controls['AmountAfterVAT'].value | integerPart }}">
+                    {{orderProductForm.controls['AmountAfterVAT'].value == null ? 0 :
+                    orderProductForm.controls['AmountAfterVAT'].value | integerPart }}
+                  </span>
+
+                </div>
+
+              </div>
+
+              <div class="form-item item5-1">
+
+                <div class="MiniDate">
+                  <div class="label">
+                    <label class="p-0">Yêu cầu date tối thiểu</label>
+                  </div>
+
+                  <span class="MiniDatetContent Text">
+                    <div title="{{orderProductForm.controls['DatePercent'].value == null ? 0 :
+                      orderProductForm.controls['DatePercent'].value | number: '1.0-2'}} %">
+                      {{orderProductForm.controls['DatePercent'].value == null ? 0 :
+                      orderProductForm.controls['DatePercent'].value | number: '1.0-2'}} %
+                    </div>
+                    <span class="line" title="{{orderProductForm.controls['DateMin'].value | date:'dd/MM/yyyy'}}"
+                      *ngIf="orderProductForm.controls['DatePercent'].value && orderProductForm.controls['DateMin'].value"></span>
+                    {{orderProductForm.controls['DateMin'].value | date:'dd/MM/yyyy'}}
+                  </span>
+                </div>
+
+              </div>
+
+              <div class="form-item item7">
+                <div class="label"> Ghi chú cho LGT</div>
+
+                <div class="text-noteLGT" title="{{orderProductForm.controls['RemarkWarehouse'].value}}">
+                  {{orderProductForm.controls['RemarkWarehouse'].value}}
+                </div>
+              </div>
+
+              <div class="form-item item8">
+                <div class="label">Dự kiến chia hàng</div>
+                <div class="grid">
+                  <div class="label-grid">
+                    <span class="label-left">Cửa hàng/Kho hàng</span>
+                    <span class="label-right">Số lượng chia</span>
+                  </div>
+                  <div class="main-grid">
+                    <div class="item-grid" *ngFor="let item of listWareHouse">
+                      <div class="content-item-left" title="{{item.WHName}}">{{item.WHName}}</div>
+                      <div
+                        *ngIf="DomesticOrder.OrderTypeID == 1 && !(DomesticOrder.StatusID == 3 || DomesticOrder.StatusID == 5)"
+                        class="GroupEdit">
+                        <kendo-numerictextbox [min]="0" [spinners]="false" [format]="'n0'" class="content-item-right"
+                          [ngClass]="{ 'contentRightChange' : isEditQuantityDivision == true && item.WHName == itemCurrGrid.WHName}"
+                          title="{{item.Quantity}}" [propName]="''" [(value)]="item.Quantity"
+                          (blur)="blurInputGrid(listWareHouse,item)"
+                          [disabled]="!(isEditQuantityDivision == true && item.WHName == itemCurrGrid.WHName)">
+                        </kendo-numerictextbox>
+                        <kendo-icon class="k-icon k-i-pencil blueText"
+                          *ngIf="!(isEditQuantityDivision == true && item.WHName == itemCurrGrid.WHName) && !(DomesticOrder.StatusID == 3 || DomesticOrder.StatusID == 5)"
+                          (click)="onEditQuantityDivision(item)"></kendo-icon>
+                      </div>
+                      <div *ngIf="DomesticOrder.OrderTypeID != 1 || DomesticOrder.StatusID == 3">{{item.Quantity}}</div>
+                    </div>
+                    <div class="notice-grid" *ngIf="!listWareHouse || listWareHouse.length === 0">
+                      <span>
+                        Không có dữ liệu để hiển thị</span>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <span class="impose">(*) Thông tin bắt buộc nhập </span>
+            </div>
+          </form>
+
+          <!-- Group btn -->
+          <div class="k-form-buttons">
+            <button kendoButton class="k-button btn-hachi hachi-primary hachi-secondary" (click)="closeDrawer()">
+              Đóng
+            </button>
+
+            <button kendoButton *ngIf="DomesticOrder.OrderTypeID == 1 && ![3, 5, 8, 9].includes(DomesticOrder.StatusID)"
+              class="k-button btn-hachi hachi-primary hachi-primary" (click)="onUpdateForm()">
+              <span>Cập nhật</span>
+            </button>
+          </div>
+        </div>
+    </mat-drawer>
+    <!-- END FORM DRAWER -->
+  </mat-drawer-container>
+</div>
+
+<!-- Popup TẠO HÓA ĐƠN VAT  -->
+<app-p-kendo-dialog class="dialogConfirmAddProduct" *ngIf="dialogConfirmAddProduct" [title]="'TẠO HÓA ĐƠN VAT'" (handleButton)="handleSelectedDialogBtnClick(productsAdd)"
+(close)="closeDialog()">
+  <h6 class="align-items-center justify-content-center text-nowrap">
+    {{productsInInvoice.length > 1 ? 'Các sản phẩm' : 'Sản phẩm'}} <span class="pl-1 text-danger font-weight-bold text-nowrap" *ngFor="let product of productsInInvoice; let i = index">{{product.ProductName || product.VNName}}<span *ngIf="i < productsInInvoice.length - 1">, </span></span>
+  </h6>
+  <div class="text-justify">Đã tồn tại trong một hóa đơn khác, nếu bạn vẫn muốn tạo hoá đơn với các sản phẩm này thì những hoá đơn chưa được gửi đi chứa sản phẩm này sẽ <span class="font-weight-bold text-danger">bị mất</span>!</div>
+</app-p-kendo-dialog>
+
+<!-- Popup IMPORT -->
+<app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>

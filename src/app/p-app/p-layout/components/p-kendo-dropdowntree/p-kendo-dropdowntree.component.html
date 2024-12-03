@@ -1,0 +1,76 @@
+<kendo-dropdowntree #DropDowntreRef kendoDropDownTreeExpandable [data]="filterable ? parsedData : data" [(ngModel)]="curSelected"
+    [textField]="textField" [valueField]="valueField" [hasChildren]="hasChildren" [fetchChildren]="fetchChildren" [dataItem]="dataItem"
+    [class]="customClasses" [popupSettings]="_popupSettings" [loading]="loading" [valuePrimitive]="valuePrimitive"
+    [clearButton]="clearButton" [filterable]="filterable" [disabled]="disabled" (filterChange)="handleFilter($event)"
+    [itemDisabled]="itemDisabled"
+    (valueChange)="handleValueChange($event)">
+    <!-- <ng-template kendoDropDownTreeValueTemplate let-dataItem>
+        <img *ngIf="!!imgItemTemplate" loading="lazy" [src]="imgItemTemplate" loading="lazy" />
+        <img *ngIf="icon.includes('assets/img/icon')" loading="lazy" [src]="icon" loading="lazy" />
+        <i *ngIf="!icon.includes('assets/img/icon')" class="{{icon}}"></i>
+        <span *ngIf="!!beforeContentValueTemplate" class="p-2">{{beforeContentValueTemplate}}</span>
+        <ng-tempalte *ngIf="FieldViewBinding.length > 0">
+            <span *ngFor="let field of FieldViewBinding" class="p-2">{{dataItem[field]}}</span>
+        </ng-tempalte>
+        <ng-tempalte *ngIf="FieldViewBinding.length == 0">
+            <span class="p-2" *ngIf="!!dataItem[textField]">{{dataItem[textField]}}</span>
+        </ng-tempalte>
+        <span *ngIf="!!afterContenttValueTemplate" class="p-2">{{afterContenttValueTemplate}}</span>
+    </ng-template> -->
+    <ng-template kendoDropDownTreeHeaderTemplate let-dataItem let-index="index">
+        <ng-container *ngIf="customHeaderTemplate">
+            <ng-container *ngTemplateOutlet="customHeaderTemplate; context: { $implicit: dataItem, index: index }"></ng-container>
+        </ng-container>
+    </ng-template>
+
+    <ng-template kendoDropDownTreeValueTemplate let-dataItem let-index="index">
+        <ng-container *ngIf="customValueTemplate else defaultValueTemplate">
+            <ng-container *ngTemplateOutlet="customValueTemplate; context: { $implicit: dataItem, index: index }"></ng-container>
+        </ng-container>
+        <ng-template #defaultValueTemplate>
+            <span *ngIf="!!dataItem">{{dataItem[textField]}}</span>
+        </ng-template>
+    </ng-template>
+
+    <ng-template kendoDropDownTreeNodeTemplate let-dataItem let-index="index">
+        <ng-container *ngIf="customNodeTemplate; else defaultNodeTemplate">
+            <ng-container *ngTemplateOutlet="customNodeTemplate; context: { $implicit: dataItem, index: index }"></ng-container>
+        </ng-container>
+        <!-- <i class="fa fa-solid fa-location-dot"></i> -->
+         <ng-template #defaultNodeTemplate>
+            <div class="d-flex align-items-center p-1 customClassDropdownTree">
+                <img *ngIf="!!imgItemTemplate" loading="lazy" [src]="imgItemTemplate" loading="lazy" />
+                <img *ngIf="icon.includes('assets/img/icon')" loading="lazy" [src]="icon" loading="lazy" />
+                <i *ngIf="!icon.includes('assets/img/icon')" class="{{icon}}"></i>
+                <span *ngIf="!!beforeContentItemTemplate" class="p-2">{{beforeContentItemTemplate}}</span>
+                <ng-tempalte *ngIf="FieldViewBinding.length > 0">
+                    <span *ngFor="let field of FieldViewBinding" class="p-2">{{dataItem[field]}}</span>
+                </ng-tempalte>
+                <ng-tempalte *ngIf="FieldViewBinding.length == 0">
+                    <span class="p-2" *ngIf="!!dataItem[textField]">{{dataItem[textField]}}</span>
+                </ng-tempalte>
+                <span *ngIf="!!afterContentItemTemplate" class="p-2">{{afterContentItemTemplate}}</span>
+            </div>
+         </ng-template>   
+        <!-- <div class="d-flex align-items-center p-1 customClassDropdownTree" [ngClass]="{'itemDisabled': isItemDisableCheck(dataItem)}">
+            <img *ngIf="!!imgItemTemplate" loading="lazy" [src]="imgItemTemplate" loading="lazy" />
+            <img *ngIf="icon.includes('assets/img/icon')" loading="lazy" [src]="icon" loading="lazy" />
+            <i *ngIf="!icon.includes('assets/img/icon')" class="{{icon}}"></i>
+            <span *ngIf="!!beforeContentItemTemplate" class="p-2">{{beforeContentItemTemplate}}</span>
+            <ng-tempalte *ngIf="FieldViewBinding.length > 0">
+                <span *ngFor="let field of FieldViewBinding" class="p-2">{{dataItem[field]}}</span>
+            </ng-tempalte>
+            <ng-tempalte *ngIf="FieldViewBinding.length == 0">
+                <span class="p-2" *ngIf="!!dataItem[textField]">{{dataItem[textField]}}</span>
+            </ng-tempalte>
+            <span *ngIf="!!afterContentItemTemplate" class="p-2">{{afterContentItemTemplate}}</span>
+        </div> -->
+    </ng-template>
+
+    <ng-template kendoDropDownTreeFooterTemplate let-dataItem let-index="index">
+        <ng-container *ngIf="customFooterTemplate">
+            <ng-container *ngTemplateOutlet="customFooterTemplate; context: { $implicit: dataItem, index: index }"></ng-container>
+        </ng-container>
+    </ng-template>
+
+</kendo-dropdowntree>

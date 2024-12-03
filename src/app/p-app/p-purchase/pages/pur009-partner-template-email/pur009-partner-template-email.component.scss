@@ -1,0 +1,77 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+  app-pur009-partner-template-email {
+
+    // header-1 
+    .header-1 {
+      height: 52px;
+      padding-left: 5px !important;
+      padding-right: 20px !important;
+    }
+
+    // header-1 
+
+    // main
+    .main {
+      overflow-y: hidden;
+      display: grid;
+      grid-template-columns: 172px 7fr;
+      column-gap: 15px;
+
+      .main-left {
+
+        background-color: #FFF;
+        width: 100%;
+        height: 100%;
+
+
+      }
+
+      .main-right {
+        padding: 15px 15px 5px 15px;
+        overflow-x: hidden;
+        height: calc(100vh - 136px);
+        background-color: #FFF;
+
+        .block-templateEmail {
+          display: flex;
+          flex-direction: column;
+
+          kendo-label {
+            display: flex;
+            flex-direction: column;
+            color: #959DB3;
+            font-weight: 700;
+            font-size: 13px;
+            padding-bottom: 10px;
+
+            app-p-textbox {
+              padding-top: 5px;
+
+              kendo-textbox {
+                width: 100%;
+              }
+            }
+
+            app-p-kendo-editor {
+              padding-top: 5px;
+
+              #editor {
+                kendo-editor {
+                  height: 656px !important;
+                }
+              }
+            }
+          }
+
+          .content-email {
+            padding-top: 30px;
+          }
+        }
+      }
+    }
+
+    // main
+  }
+}

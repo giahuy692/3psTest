@@ -1,0 +1,8 @@
+<button kendoButton class="k-button checkbox-btn-group" [toggleable]="!disabled" [disabled]="disabled"
+    (selectedChange)="onSelectedChange($event)" [selected]="checked">
+    <ng-container *ngIf="count > 0">
+        {{ count | number: '1.' }} -
+    </ng-container>
+    {{ title }}
+    <input type="checkbox" class="k-checkbox" disabled [checked]="checked" />
+</button>

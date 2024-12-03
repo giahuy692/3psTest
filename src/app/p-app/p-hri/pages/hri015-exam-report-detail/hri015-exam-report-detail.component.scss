@@ -1,0 +1,99 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+    .hri015-exam-report-detail {
+        height: calc(100vh - #{$footer-height});
+        display: flex;
+        flex-direction: column;
+        .header {
+            padding: 15px !important;
+            min-height: 40px;
+        }
+        .header-1 {
+            justify-content: space-between;
+            .myCustomBreadCrumb{
+                width: 650px;
+            }
+            .file-btn-group{
+                min-width: 100px;
+            }
+        }
+        .header-2 {
+            min-height: 70px;
+            .filter1 {
+                display: flex;
+                flex-direction: column;
+                margin-right: 30px;
+                .k-dropdownlist {
+                    width: 400px;
+                }
+            }
+            .filter-btn-group.clear-btn-group {
+                display: none;
+            }
+        }
+        .body {
+            padding: 0 20px;
+            .grid {
+                .k-grid-aria-root {
+                    padding-bottom: 30px;
+                    .k-table{
+                        .k-grid-header{
+                            position: sticky;
+                            top: 0;
+                            z-index: 1;
+                            background-color: $gray-100;
+                            border-spacing: 0 !important
+                        }
+                        th{
+                            border-spacing: 0 !important
+                        }
+                    }
+                }
+                th.col_name {
+                    span.k-link {
+                        margin-left: 25px;
+                    }
+                }
+                .col_FinalDuration{
+                    text-align: center;
+                    .info {
+                        display: block;
+                        color: #c0392b;
+                        text-align: center;
+                        font-size: 25px;
+                        font-weight: 700;
+                        line-height: 1;
+                      }
+                }
+                .col_NoOfAllWrong{
+                    text-align: center;
+                }
+                .col_NoOfQuestion{
+                    text-align: center; 
+                }
+                .img_tennhanvien_manhanvien {
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: nowrap;
+                    align-items: center;
+                    img {
+                        border-radius: 50%;
+                    }
+                    .tennhanvien_manhanvien {
+                        margin-left: 10px;
+                        .tennhanvien {
+                            font-weight: 700;
+                            color: #5a6276;
+                        }
+                    }
+                }
+                tr:has(.noExam) {
+                    .action {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}

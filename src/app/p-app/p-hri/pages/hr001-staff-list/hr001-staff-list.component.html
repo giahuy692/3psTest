@@ -1,0 +1,137 @@
+<div class="app-hr001-staff-list">
+
+    <!-- START HEADER -->
+    <div class="header header-1">
+        <div class="breadcumb">
+            <app-p-kendo-breadcrumb (loadData)="loadPage()"></app-p-kendo-breadcrumb>
+        </div>
+        
+    <!-- START FILTER -->
+        <app-checkbox-button-group [disabled]="!isFilterActive"
+            (selectedChange)="selectedBtnChange($event, 'danglamviec_checked')" [selected]="danglamviec_checked"
+            title="Đang làm việc" [checked]="danglamviec_checked">
+        </app-checkbox-button-group>
+
+        <app-checkbox-button-group [disabled]="!isFilterActive"
+            (selectedChange)="selectedBtnChange($event, 'thutucnghiviec_checked')" [selected]="thutucnghiviec_checked"
+            title="Thủ tục nghỉ việc" [checked]="thutucnghiviec_checked">
+        </app-checkbox-button-group>
+
+        <app-checkbox-button-group [disabled]="!isFilterActive"
+            (selectedChange)="selectedBtnChange($event, 'danghiviec_checked')" [selected]="danghiviec_checked"
+            title="Đã nghỉ việc" [checked]="danghiviec_checked">
+        </app-checkbox-button-group>
+
+    <!-- END FILTER -->
+
+        <div class="nav-btn nav-crud" *ngIf="isToanQuyen || isAllowedToCreate">
+            <div class="nav-file nav-btn">
+                <div class="file-btn-group">
+                <button kendoButton id="onUploadBtn" class="k-button" [icon]="'export'" (click)="onImportExcel()" [disabled]="!isFilterActive"
+                    ></button>
+                </div>
+        
+                <div class="file-btn-group">
+                <button kendoButton id="onDownloadBtn" class="k-button" [icon]="'import'" (click)="onDownloadExcel()" [disabled]="!isFilterActive"
+                    >Template</button>
+                </div>
+            </div>
+            <!-- <button kendoButton class="k-button onAddBtn" [icon]="'plus'" (click)="onOpenDetail(true)"
+                [disabled]="!isFilterActive">
+                TẠO MỚI
+            </button> -->
+        </div>
+    </div>
+
+    <div class="header  header-2">
+        <app-search-filter-group [placeholder]="placeholder" [disabled]="!isFilterActive"
+            [fields]="['FirstName', 'MiddleName', 'LastName', 'StaffID', 'Position', 'FullName']"
+            (filterChange)="handleSearch($event)" (onReset)="resetFilter()"></app-search-filter-group>
+    </div>
+    <!-- END HEADER -->
+
+    <!-- START GRID -->
+    <div class="grid-wrapper">
+        <app-p-kendo-grid class="grid scrollable " [data]="gridView | async" [scrollable]="'none'" [loading]="loading"
+            [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize" [skip]="gridState.skip"
+            [take]="gridState.take" [sortable]="true" [onPageChangeCallback]="onPageChangeCallback"
+            [allowedMoreActionDropdown]="allowActionDropdown" [getActionDropdownCallback]="getActionDropdownCallback"
+            [onActionDropdownClickCallback]="onActionDropdownClickCallback" [selectable]="selectable"
+            [onSelectCallback]="onSelectCallback" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+            [getSelectionPopupCallback]="getSelectionPopupCallback">
+
+
+            <kendo-grid-column title="Họ và tên" [headerClass]="'headerhoVatenCustomClass'" class="col_hoVaten">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="img_tennhanvien_manhanvien">
+                        <img loading="lazy" src="{{dataItem.ImageThumb == null ? 'assets/img/icon/icon-nonImageThumb.svg' : dataItem.ImageThumb}}" width="40" height="40" class="avata">
+                        <div class="tennhanvien_manhanvien">
+                            <div class="tennhanvien">
+                                <span *ngIf="dataItem.LastName != null">{{dataItem.LastName +' '}}</span> <span *ngIf="dataItem.MiddleName != null">{{dataItem.MiddleName +' '}}</span> <span *ngIf="dataItem.FirstName != null">{{dataItem.FirstName +' '}}</span>
+                            </div>
+                            <div>
+                                {{dataItem.StaffID}}<span *ngIf="dataItem.Position != null">{{' | '+dataItem.Position}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Đơn vị công tác" field="DepartmentName" class="col_donViCongTac"></kendo-grid-column>
+
+            <kendo-grid-column title="Điểm làm việc" field="LocationName" class="col_diemLamViec">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="testCenter">
+                        <div class="">{{ dataItem.LocationName }}</div>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Giới tính" field="GenderName" [headerClass]="'headerCenterCustomClass'" class="col_gioiTinh">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="testCenter">
+                        <div class="">{{ dataItem.GenderName }}</div>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Năm sinh" field="BirthDate" [headerClass]="'headerCenterCustomClass'" class="col_nawmSinh">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="testCenter">
+                        <div class="date">{{ dataItem.BirthDate | date: 'dd/MM/yyyy'}}</div>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Ngày vào làm" field="JoinDate" [headerClass]="'headerCenterCustomClass'" class="col_ngayVaoLam">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="testCenter">
+                        <div class="date">{{ dataItem.JoinDate | date: 'dd/MM/yyyy'}}</div>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Loại nhân viên" field="TypeDataName" [headerClass]="'headerCenterCustomClass'" class="col_loaiNhanVien">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="testCenter">
+                        <div class="date">{{ dataItem.TypeDataName}}</div>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Tình trạng" field="StatusName" class="col_tinhTrang" [headerClass]="'headerCustomClass'">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="Status">
+                        <div [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID">
+                        </div>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+        </app-p-kendo-grid>
+    </div>
+    <!-- START GRID -->
+
+    <!-- START POPUP IMPORT -->
+    <app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>
+    <!-- END POPUP IMPORT -->
+</div>

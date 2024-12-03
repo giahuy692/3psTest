@@ -1,0 +1,43 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    .myCustomBreadCrumb.k-breadcrumb{
+        height: 100%;
+        background-color: unset;
+        font-size: 13px;
+        font-weight: 700;
+        min-width: max-content;
+
+        .disabled {
+            pointer-events: none; /* Vô hiệu hóa tất cả các sự kiện chuột */
+            opacity: 0.5; /* (Tùy chọn) Làm mờ để hiển thị trạng thái bị vô hiệu hóa */
+        }
+        .k-breadcrumb-container{
+          padding-left: 10px;
+            li{
+                cursor: pointer;
+                margin-right: 10px;
+                color: #959DB3;
+                text-transform: uppercase;
+                &:first-child{
+                    cursor: default;
+                    color: $dark-green;
+                }
+                span.active{
+                    color: $dark-green; 
+                }
+                .clickable {
+                    cursor: pointer;
+                }
+                .k-breadcrumb-delimiter-icon{
+                    margin-left: 10px;
+                    .k-i-chevron-right.k-icon-xs{
+                        color: $dark-green;
+                        font-size: 20px;
+                        font-weight: 900;
+                    }
+                }
+            }
+        }
+    }
+}

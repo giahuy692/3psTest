@@ -1,0 +1,188 @@
+<div class="app-partner-drawer-container">
+    <kendo-drawer-container>
+        <!-- DRAWER -->
+        <kendo-drawer #drawerRight mode="overlay" [(expanded)]="expandedRight" 
+         fillMode="flat" [position]="'end'">
+        
+            <ng-template kendoDrawerTemplate let-item>
+        
+                <div class="headerDrawer">
+                    <div class="title">{{DrawerHearder}}</div>
+                </div>
+
+                <div class="bodyDrawer">
+                    <div class="content">
+                        <div class="ProductTitle">
+                            <div class="Title">Tên sản phẩm</div>
+                            <div class="Product">{{ChangeHistory.ProductName}}</div> 
+                        </div>
+                        <img loading="lazy" src="{{ChangeHistory.URLImage}}" alt="">
+                    </div>
+
+                    <div class="grid-wrapper">
+                        <app-p-kendo-grid class="grid scrollable" [data]="gridViewDrawer | async" [scrollable]="'none'" [loading]="loading"  [hasMoreAction]="isOpenDetail" 
+                        [pageable]="true" [pageSizes]="pageSizesDrawer" [pageSize]="pageSizeDrawer"[skip]="gridStateDrawer.skip" [take]="gridStateDrawer.take" 
+                        [onPageChangeCallback]="onPageChangeDrawerCallback">
+
+                            <kendo-grid-column title="{{columnTitle1}}" class="col_ProductName">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <div class="Col1">
+                                        <div *ngIf="!isBuy" >
+                                            {{dataItem.EffDate | date: 'dd/MM/yyyy'}}
+                                        </div>
+                                        <div *ngIf="isBuy" class="Text">
+                                            {{dataItem.POID}}
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+
+                            <kendo-grid-column title="{{columnTitle2}}" class="col_ProductName"  [headerClass]="'headerCenterCustomClass'">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <div class="Col2">
+                                        <div *ngIf="!isBuy">
+                                            {{dataItem.ApprovedBy}}
+                                        </div>
+                                        <div *ngIf="isBuy" class="Text">
+                                            {{dataItem.EffDate | date: 'dd/MM/yyyy'}}
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+
+                            <kendo-grid-column title="{{columnTitle3}}" class="col_ProductName" [headerClass]="'headerCenterCustomClass'">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    {{dataItem.BuyedPrice}}
+                                </ng-template>
+                            </kendo-grid-column>
+
+                        </app-p-kendo-grid>
+
+                    </div>
+                </div>
+
+                <div class="footerDrawer">
+                    <div class="groupButton">
+                        <button kendoButton class="k-button btn-hachi hachi-primary hachi-secondary" (click)="onCloseDrawer()">
+                            Đóng
+                        </button>
+                    </div>
+                </div>
+
+            </ng-template>
+        </kendo-drawer>
+
+        <!-- CONTENT -->
+        <kendo-drawer-content>
+
+            <div class="pur007-partner-product">
+
+                <!-- header-1 -->
+                <div class="header header-1">
+
+                    <app-p-kendo-breadcrumb (loadData)="onLoadPage()"></app-p-kendo-breadcrumb>
+
+                </div>
+                
+                <div class="content">
+
+                    <!-- MENU SIDE -->
+                    <div class="Menu">
+                        <app-pur-menu-supplier-info [Link]="'pur007-partner-product'"></app-pur-menu-supplier-info>
+                    </div>
+
+                    <div class="main">
+                        <!-- header-2 -->
+                        <div class="header header-2">
+
+                            <app-search-filter-group [placeholder]="'Tìm theo barcode, poscode, tên sản phẩm'" 
+                            [fields]="['Barcode', 'Poscode', 'ProductName']"
+                            (filterChange)="handleSearch($event)" (onReset)="onResetFilter()">
+                            </app-search-filter-group>
+        
+                        </div>
+
+                        <!-- GRID -->
+                        <div class="grid-wrapper">
+
+                            <app-p-kendo-grid class="grid scrollable" [data]="gridView | async" [scrollable]="'none'" [loading]="loading"
+                            [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize"[skip]="gridState.skip" [take]="gridState.take" 
+                            [onPageChangeCallback]="onPageChangeCallback" [allowedMoreActionDropdown]="allowActionDropdown" 
+                            [getActionDropdownCallback]="getActionDropdownCallback" [onActionDropdownClickCallback]="onActionDropdownClickCallback">
+
+                            <kendo-grid-column title="Tên sản phẩm" class="col_ProductName" [headerClass]="'headerPaddingCustomClass'">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                   <div class="ProductContainer">
+                                     <img loading="lazy" src="{{dataItem.URLImage}}" alt="">
+                                     <div class="ProductContent">
+                                        <div class="Name">{{dataItem.ProductName}}</div>
+                                        <div class="GroupSub"><span class="Sup">{{dataItem.Poscode}}</span> <span *ngIf="dataItem.Poscode != null">|</span> <span class="Sup">{{dataItem.Barcode}}</span><span *ngIf="dataItem.LastPO != null"> | </span><span class="Date">{{ dataItem.LastPO | date: 'dd/MM/yyyy'}}</span></div>
+                                     </div>
+                                   </div>
+                                </ng-template>
+                            </kendo-grid-column>
+
+                            <kendo-grid-column title="Phân nhóm" class="col_GroupName" [headerClass]="'headerPaddingCustomClass'">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                   <div class="GroupName">
+                                    <span class="Group1">{{dataItem.GroupName1}}</span>
+                                    <span class="Group2">{{dataItem.GroupName2}}</span>
+                                    <span class="Group3">{{dataItem.GroupName3}}</span>
+                                   </div>
+                                </ng-template>
+                            </kendo-grid-column>
+
+                            <kendo-grid-column title="Xuất xứ" class="col_originName" [headerClass]="'headerCenterCustomClass'">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <div class="TextCenter">
+                                        {{dataItem.OriginName}}
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+
+                            <kendo-grid-column title="Thương hiệu" class="col_BrandName" [headerClass]="'headerCenterCustomClass'">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <div class="TextCenter">
+                                        {{dataItem.BrandName}}
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+
+                            <kendo-grid-column title="Giá bán lẻ" class="col_RetailPrice" [headerClass]="'headerCenterCustomClass'">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <div class="TextCenter">
+                                        {{dataItem.UniPrice}}
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+
+                            <kendo-grid-column title="Giá mua" class="col_PurchasePrice" [headerClass]="'headerCenterCustomClass'">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                   <div class="PurchasePrice TextCenter">
+                                    <span> {{dataItem.Bid}}</span>
+                                    <span class="GreenText"> {{dataItem.LastBid}}</span>
+                                   </div>
+                                </ng-template>
+                            </kendo-grid-column>
+
+                            <kendo-grid-column title="Tình trạng" class="col_Status" [headerClass]="'headerRightCustomClass'">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <div class="TextRight">
+                                        {{dataItem.StatusName}}
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+
+                            </app-p-kendo-grid>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </kendo-drawer-content>
+
+    </kendo-drawer-container>
+</div>

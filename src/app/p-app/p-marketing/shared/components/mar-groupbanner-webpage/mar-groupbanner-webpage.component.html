@@ -1,0 +1,29 @@
+<kendo-dialog #folderDialogPopup title="Group Banner hiển thị ở các trang" [style.display]="webpageDialogDisplay()"
+  (close)="closeWebpageDialog()" id="webpageDialogPopup">
+
+  <div id="body">
+    <div class="label">Tên nhóm banner</div>
+    <kendo-textbox id="BannerGroup" [value]="groupBanner.BannerGroup" disabled></kendo-textbox>
+
+    <div class="label">Hiển thị ở các trang</div>
+
+    <div class="grid-container">
+      <div *ngFor="let item of listWebpage" class="grid-item">
+        <div class="checkbox-div">
+          <input type="checkbox" class="k-checkbox" [checked]="item.Active" disabled />
+        </div>
+
+        <div class="text">{{ item.WebPage }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer">
+    <button kendoButton id="closeWebpagePopupBtn" (click)="closeWebpageDialog()" class="k-button">
+      <span>Đóng</span>
+    </button>
+    <!-- <button kendoButton class="k-button">
+      <span>Chọn</span>
+    </button> -->
+  </div>
+</kendo-dialog>

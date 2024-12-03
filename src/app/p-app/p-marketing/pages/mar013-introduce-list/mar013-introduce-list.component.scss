@@ -1,0 +1,97 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+    .app-mar013-introduce-list {
+        height: calc(100vh - #{$footer-height});
+        padding: 0 15px 35px 20px;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: scroll;
+
+        .header.header-2 {
+            align-items: stretch;
+            column-gap: 2%;
+
+            .searchBtn {
+                margin-top: auto;
+            }
+        }
+
+        .myCustomGrid.k-grid tr td {
+            white-space: normal;
+        }
+        .col_tieude {
+            width: 200px;
+            max-width: 300px;
+
+            .tieude {
+                width: max-content;
+                max-width: 300px;
+
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
+        }
+        .col_image {
+            max-width: 80px;
+            max-height: 80px;
+            height: 80px;
+        }
+        .myCustomGrid.k-grid tr td img {
+            max-width: 80px;
+            max-height: 80px;
+            width: 100%;
+        }
+        // .col_noidung {
+        //     width: 500px;
+        //     max-width: 500px;
+
+        //     .noidung {
+        //         // width: max-content;
+        //         max-width: 500px;
+
+        //         overflow: hidden;
+        //         display: -webkit-box;
+        //         -webkit-line-clamp: 3;
+        //         -webkit-box-orient: vertical;
+        //     }
+        // }
+        .col_quotes {
+            width: 500px;
+            max-width: 500px;
+
+            .quotes {
+                // width: 250px;
+                max-width: 500px;
+
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+            }
+        }
+        .col_tinhTrang {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        .red {
+            color: red;
+        }
+        .yellow {
+            color: rgb(255, 123, 0);
+        }
+        .green {
+            color: green;
+        }
+        .k-list-container .k-button:hover,
+        .k-list-container .k-button {
+            background-color: transparent;
+        }
+    }
+}

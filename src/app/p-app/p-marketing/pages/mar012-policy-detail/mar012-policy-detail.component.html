@@ -1,0 +1,98 @@
+<div class="mar012-policy-detail">
+    <div class="header header-1">
+        <div class="nav-btn nav-breadcrumb">
+            <div class="breadcrumb-item">
+                <!-- (click)="gotoOnlineOrderList()" -->
+                CHÍNH SÁCH
+            </div>
+            <div class="breadcrumb-chevron">
+                <span class="k-icon k-i-arrow-chevron-right"></span>
+            </div>
+            <div class="breadcrumb-item">
+                {{ isLockAll ? 'CHI TIẾT' : 'CHỈNH SỬA' }} CHÍNH SÁCH
+            </div>
+        </div>
+
+        <div class="nav-btn nav-crud" style="flex-grow: 1;">
+            <!-- <button kendoButton style="background-color: #1A6634; color: white;"
+                *ngIf="!isLockAll"
+                class="crud-btn k-button udateStatusBtn" (click)="savePolicyDetail()" [icon]="'save'">
+                LƯU
+            </button> -->
+
+            <button kendoButton
+                *ngIf="(isMaster || isCreator) && !isAdd && (Policy.StatusID == 0 || Policy.StatusID == 4)"
+                (click)="onClickChangeStatus(1)" style="color: green;" class="crud-btn k-button udateStatusBtn"
+                [icon]="'redo'">
+                GỬI DUYỆT
+            </button>
+
+            <button kendoButton
+                *ngIf="(isMaster || isApprover) && !isAdd && (Policy.StatusID == 1 || Policy.StatusID == 3)"
+                (click)="onClickChangeStatus(2)" style="color: green;" class="crud-btn k-button udateStatusBtn"
+                [icon]="'check-outline'">
+                PHÊ DUYỆT
+            </button>
+
+            <button kendoButton *ngIf="(isMaster || isApprover) && !isAdd && Policy.StatusID == 3"
+                (click)="onClickChangeStatus(4)" style="color: #FF5230;" class="crud-btn k-button udateStatusBtn"
+                [icon]="'undo'">
+                TRẢ VỀ
+            </button>
+
+            <button kendoButton *ngIf="(isMaster || isApprover) && !isAdd && Policy.StatusID == 2"
+                (click)="onClickChangeStatus(3)" style="color: #FF5230;" class="crud-btn k-button updateStatusBtn"
+                [icon]="'minus-outline'">
+                NGƯNG HIỂN THỊ
+            </button>
+        </div>
+    </div>
+
+    <div class="body">
+        <div class="sections">
+            <div class="section" id="baivietsanphamTbl">
+                <div class="title">
+                    {{ Policy.NewsCategoryName }}
+                    <span class="languages" style="margin-left: auto;">
+                        <span class="borderRight vietnamese" [ngClass]="{'active': curLanguages == 0 }"
+                            (click)="changeLanguage(0)">
+                            Tiếng Việt
+                        </span>
+            
+                        <span class="borderRight japanese" [ngClass]="{'active': curLanguages == 1 }"
+                            (click)="changeLanguage(1)">
+                            日本語
+                        </span>
+            
+                        <span class="english" [ngClass]="{'active': curLanguages == 2 }"
+                        (click)="changeLanguage(2)">
+                            English
+                        </span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="" id="editor">
+                <app-p-kendo-editor id="myeditor" style="height: 100vh;" [readonly]="isLockAll ? true : null"
+                    [content]="curLanguages == 0 ? webContent.WebContentVN : curLanguages == 1 ? webContent.WebContentJP : webContent.WebContentEN"
+                    (valueChange)="onValueChange($event)" (saveEvent)="savePolicyDetail()">
+                </app-p-kendo-editor>
+            </div>
+        </div>
+    </div>
+</div>
+
+<kendo-dialog #dialog class="deleteDialog" title="Xóa nội dung Bài viết" [hidden]="!showCancelDialog"
+    (close)="showCancelDialog = false" [minWidth]="250">
+    <p style="margin: 30px; text-align: center;">
+        Nội dung sẽ <b><span style="color: red;">không</span></b> được lưu.<br>
+        Bạn có chắc chắn muốn đóng ?</p>
+    <div class="dialog-footer">
+        <button kendoButton class="btn-hachi hachi-secondary" (click)="showCancelDialog = false"
+            [icon]="'close'">Không</button>
+        <button kendoButton class="btn-hachi hachi-warning" (click)="onCloseDetail()" [icon]="'trash'">Có</button>
+    </div>
+</kendo-dialog>
+
+<app-folder-popup [pickFileCallback]="pickFileCallback" [GetFolderCallback]="getFolderCallback" [canResize]="true">
+</app-folder-popup>

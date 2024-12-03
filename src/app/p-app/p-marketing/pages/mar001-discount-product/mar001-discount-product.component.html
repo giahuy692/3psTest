@@ -1,0 +1,196 @@
+<div class="app-mar001-discount-product">
+
+  <div class="header header-1">
+    <kendo-dropdownlist [data]="listChuongTrinh" [value]="currentChuongTrinh" [textField]="'text'"
+      [valueField]="'value'" (valueChange)="onDropdownlistClick($event, 'currentChuongTrinh')"
+      [disabled]="!isFilterActive" [defaultItem]="defaultChuongTrinh" [itemDisabled]="isItemDisabled"
+      [popupSettings]="{appendTo:'component'}">
+      <ng-template kendoDropDownListValueTemplate let-dataItem>
+        <span class="value" [ngStyle]="{'color': dataItem.value == -1 ? '#73818f' : 'initial'}">{{ dataItem.text
+          }}</span>
+      </ng-template>
+    </kendo-dropdownlist>
+
+    <kendo-dropdownlist [data]="listDonVi" [value]="currentDonVi == null ? defaultDonVi : currentDonVi"
+      [textField]="'text'" [valueField]="'value'" (valueChange)="onDropdownlistClick($event, 'currentDonVi')"
+      [disabled]="!isFilterActive" [defaultItem]="defaultDonVi" [itemDisabled]="isItemDisabled"
+      [popupSettings]="{appendTo:'component'}">
+      <ng-template kendoDropDownListValueTemplate let-dataItem>
+        <span class="value" [ngStyle]="{'color': dataItem.value == -1 ? '#73818f' : 'initial'}">
+          {{ dataItem.text }}</span>
+      </ng-template>
+      <ng-template kendoDropDownListItemTemplate let-dataItem>
+        <span class="value" [ngClass]="{ 'dropdownDonVi_subitem': dataItem.sub }">{{ dataItem.text }}</span>
+      </ng-template>
+    </kendo-dropdownlist>
+
+    <button kendoButton class="k-button checkbox-btn-group dangHieuLuc_btn" [toggleable]="isFilterActive"
+      (selectedChange)="selectedBtnChange($event, 'dangHieuLuc_checked')" [selected]="dangHieuLuc_checked">
+      {{ dangHieuLuc_count }} - Đang hiệu lực
+      <input type="checkbox" class="k-checkbox" disabled [checked]="dangHieuLuc_checked" />
+    </button>
+
+    <button kendoButton class="k-button checkbox-btn-group hetHieuLuc_btn" [toggleable]="isFilterActive"
+      (selectedChange)="selectedBtnChange($event, 'hetHieuLuc_checked')" [selected]="hetHieuLuc_checked">
+      Hết hiệu lực
+      <input type="checkbox" class="k-checkbox" disabled [checked]="hetHieuLuc_checked" />
+    </button>
+
+    <div class="nav-btn nav-crud" *ngIf="isToanQuyen || isAllowedToCreate">
+      <kendo-dropdownbutton *ngIf="listTaoMoi != null && listTaoMoi.length > 0" [data]="listTaoMoi" textField="text"
+        buttonClass="btn-hachi hachi-primary onAddBtn" [disabled]="!isFilterActive"
+        (itemClick)="onDropdownlistClick($event, 'currentTaoMoi')"
+        [popupSettings]="{ animate: true, appendTo: 'component', align: 'right' }">
+        <span class="k-icon k-i-plus"></span>
+        Tạo mới khuyến mãi
+        <span class="k-icon k-i-chevron-down"></span>
+      </kendo-dropdownbutton>
+    </div>
+  </div>
+
+  <div class="header header-2">
+    <div class="nav-filter nav-btn">
+      <div class="filter-btn-group clear-btn-group">
+        <div class="label">
+          <span class="k-icon k-i-filter"></span>Lọc dữ liệu
+        </div>
+        <button kendoButton class="k-button clear-filter-btn" (click)="resetFilter()">Reset bộ lọc</button>
+      </div>
+
+      <form style="display: flex; flex-grow: 1;" [formGroup]="searchForm">
+        <div class="filter-btn-group search-btn-group">
+          <div class="label">
+            Tìm kiếm
+          </div>
+          <div class="search-btn">
+            <span class="k-icon k-i-search"></span>
+            <kendo-textbox formControlName="SearchQuery" type="text" class="k-textbox"
+              placeholder="Tìm theo chương trình khuyến mãi">
+            </kendo-textbox>
+          </div>
+        </div>
+
+        <button kendoButton class="k-button searchBtn" [icon]="'search'" (click)="search()"
+          [disabled]="!isFilterActive">TÌM</button>
+      </form>
+
+    </div>
+
+    <button kendoButton class="k-button checkbox-btn-group dangHieuLuc_btn" [toggleable]="isFilterActive"
+      (selectedChange)="selectedBtnChange($event, 'dangSoanThao')" [selected]="dangSoanThao">
+      Đang soạn thảo
+      <input type="checkbox" class="k-checkbox" disabled [checked]="dangSoanThao" />
+    </button>
+
+    <button kendoButton class="k-button checkbox-btn-group hetHieuLuc_btn" [toggleable]="isFilterActive"
+      (selectedChange)="selectedBtnChange($event, 'guiDuyet')" [selected]="guiDuyet">
+      Gửi duyệt
+      <input type="checkbox" class="k-checkbox" disabled [checked]="guiDuyet" />
+    </button>
+
+    <button kendoButton class="k-button checkbox-btn-group dangHieuLuc_btn" [toggleable]="isFilterActive"
+      (selectedChange)="selectedBtnChange($event, 'daDuyet')" [selected]="daDuyet">
+      Đã duyệt
+      <input type="checkbox" class="k-checkbox" disabled [checked]="daDuyet" />
+    </button>
+
+    <button kendoButton class="k-button checkbox-btn-group hetHieuLuc_btn" [toggleable]="isFilterActive"
+      (selectedChange)="selectedBtnChange($event, 'ngungHienThi')" [selected]="ngungHienThi">
+      Ngưng hiển thị
+      <input type="checkbox" class="k-checkbox" disabled [checked]="ngungHienThi" />
+    </button>
+  </div>
+
+  <div class="grid-wrapper">
+    <app-p-kendo-grid class="grid scrollable" [data]="gridDSView | async" [scrollable]="'none'" [loading]="loading"
+      [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize" [skip]="gridDSState.skip" [take]="gridDSState.take"
+      [sortable]="true" [sort]="gridDSState.sort" [onPageChangeCallback]="onPageChangeCallback"
+      [onSortChangeCallback]="onSortChangeCallback" [allowedMoreActionDropdown]="allowActionDropdown"
+      [getActionDropdownCallback]="getActionDropdownCallback"
+      [onActionDropdownClickCallback]="onActionDropdownClickCallback" [selectable]="selectable"
+      [onSelectCallback]="onSelectCallback" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+      [getSelectionPopupCallback]="getSelectionPopupCallback">
+  
+      <kendo-grid-column field="PromotionName" title="Chương trình khuyến mãi" class="img_chuongtrinhkhuyenmai">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div class="img" title="{{dataItem.PromotionName}}"
+            [ngClass]="{'noImg': dataItem.ImageSetting1 == null || dataItem.ImageSetting1 == '' || dataItem.ImageSetting1 == resIP }">
+            <img loading="lazy" src="{{dataItem.ImageSetting1}}" alt="">
+            <div class="tenchuongtrinh">{{dataItem.PromotionName}}</div>
+          </div>
+          <div class="chuongtrinhkhuyenmai d-flex justify-content-between">
+            <div class="apdung" [ngClass]="{'red': dataItem.StatusID == 3 || dataItem.StatusID == 4, 
+              'yellow': dataItem.StatusID == 1, 'green': dataItem.StatusID == 2}"><b>
+                {{ dataItem.StatusName }}
+              </b></div>
+            <div class="makhuyenmai"><b>{{ dataItem.PromotionNo }}</b></div>
+            <div class="sosanpham"><b>{{ dataItem.TotalSKU }} sản phẩm khuyến mãi</b></div>
+          </div>
+        </ng-template>
+      </kendo-grid-column>
+  
+      <kendo-grid-column field="CategoryName" title="Phân loại chương trình" class="phanloaichuongtrinh">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div class="phanloaichuongtrinh">
+            <div class="chuongtrinh"><b>{{ dataItem.CategoryName }}</b></div>
+            <div class="phannhom">{{ dataItem.PromotionTypeName }}</div>
+          </div>
+        </ng-template>
+      </kendo-grid-column>
+  
+      <kendo-grid-column field="StartDate" title="Ngày bắt đầu" class="ngaybatdau">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div>{{ dataItem.StartDate | date: 'dd/MM/yyyy' }}</div>
+          <div class="conlai invisible"></div>
+        </ng-template>
+      </kendo-grid-column>
+  
+      <kendo-grid-column field="EndDate" title="Ngày kết thúc" class="ngayketthuc">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div>{{ dataItem.EndDate | date: 'dd/MM/yyyy' }}</div>
+          <div class="conlai" [ngClass]="{'invisible': dataItem.RemainDay < 0}">{{ dataItem.RemainDay }} ngày</div>
+        </ng-template>
+      </kendo-grid-column>
+  
+      <kendo-grid-column field="TotalStore" title="Đơn vị áp dụng" class="donviapdung">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div>{{ dataItem.IsAllApplied ? 'Tất cả' : dataItem.TotalStore + ' đơn vị' }}</div>
+        </ng-template>
+      </kendo-grid-column>
+  
+      <kendo-grid-column field="Summary" title="Mô tả" class="mota">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div title={{dataItem.Summary}}>{{ dataItem.Summary != null && dataItem.Summary.length > 88 ?
+            (dataItem.Summary | slice:0:88) + '...' : dataItem.Summary}}
+          </div>
+        </ng-template>
+      </kendo-grid-column>
+    </app-p-kendo-grid>
+  </div>
+
+  <kendo-dialog #dialog class="deleteDialog" title="Xóa Khuyến mãi" [hidden]="!deleteDialogOpened"
+    (close)="closeDeleteDialog()" [minWidth]="250">
+    <p style="margin: 30px; text-align: center;">
+      Bạn chắc chắn muốn xóa vĩnh viễn Khuyến mãi&nbsp;
+      "{{ curPromotion.PromotionName }}"&nbsp;này?</p>
+    <div class="dialog-footer">
+      <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteDialog()"
+        [icon]="'close'">Không</button>
+      <button kendoButton class="btn-hachi hachi-warning" (click)="delete()" [icon]="'trash'">Có</button>
+    </div>
+  </kendo-dialog>
+
+  <kendo-dialog #dialog class="deleteDialog" title="Xóa các Khuyến mãi đã chọn" [hidden]="!deleteManyDialogOpened"
+    (close)="closeDeleteDialog()" [minWidth]="250">
+    <div style="margin: 30px; text-align: center;">
+      Bạn chắc chắn muốn xóa vĩnh viễn {{ deleteList.length }} Khuyến mãi này?
+    </div>
+    <div class="dialog-footer">
+      <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteManyDialog()"
+        [icon]="'close'">Không</button>
+      <button kendoButton class="btn-hachi hachi-warning" (click)="deleteMany()" [icon]="'trash'">Có</button>
+    </div>
+  </kendo-dialog>
+
+
+</div>

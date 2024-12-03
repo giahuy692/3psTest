@@ -1,0 +1,355 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+    .log002-domestic-receiving-list {
+
+        padding: 0 15px;
+
+        .blueColorStatus,
+        .blue {
+            color: #008cd7;
+        }
+
+        .greenColorStatus {
+            color: #316e00;
+        }
+
+        .redColorStatus {
+            color: #EB273A;
+        }
+
+        .yellowColor {
+            color: #FFB900;
+        }
+
+        .orangeColor {
+            color: #F1802E;
+        }
+
+        .darkgreenColor {
+            color: $darkgreen;
+        }
+
+        .grayColor {
+            color: #5A6276;
+        }
+
+        .blueGray {
+            color: $light-blue-gray;
+        }
+
+
+        .he-20 {
+            height: 20px;
+        }
+
+        @mixin layoutInfo($width: 108px) {
+            .layoutContent {
+                display: grid;
+                grid-template-columns: $width auto;
+                column-gap: 10px;
+            }
+        }
+
+        .header-1 {
+            gap: 50px !important;
+
+            .filter-group {
+                display: flex;
+                gap: 10px;
+            }
+
+            .myCustomBreadCrumb.k-breadcrumb .k-breadcrumb-container {
+                padding: 0;
+            }
+
+            .header1-left {
+                display: flex;
+                align-items: center;
+                column-gap: 25px;
+            }
+        }
+
+        .header-2 {
+            padding-left: 10px;
+            gap: 20px !important;
+            overflow-x: auto;
+
+            .multi-supplier {
+                .k-multiselect {
+                    width: 300px;
+                }
+            }
+
+            .filter-dropdown-list {
+                display: flex;
+                column-gap: 5px;
+                height: fit-content;
+                align-self: end;
+
+                .filter-by-date {
+                    .dropdownlistCustom {
+                        width: fit-content;
+                    }
+                }
+
+                .delivery-time-range {
+                    .dropdownlistCustom {
+                        width: 115px;
+                    }
+                }
+            }
+
+            .filter-checkbox {
+                align-self: center;
+                display: flex;
+                align-items: center;
+                margin-left: 20px;
+                
+                .k-checkbox-label {
+                    text-wrap: nowrap;
+                }
+            }
+        }
+
+        .body {
+            .grid-wrapper {
+                .k-grid {
+                    .k-touch-action-auto {
+                        padding-left: 12px !important;
+                    }
+
+                    .header_supplier {
+                        max-width: 300px;
+                        min-width: 100px;
+
+                        .k-cell-inner {
+                            .k-link {
+                                max-width: 300px;
+                                min-width: 100px;
+                            }
+                        }
+                    }
+
+                    .col_supplier {
+                        width: 300px;
+
+                        .nameOrder {
+                            max-width: 300px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+
+                        .inforGroup {
+                            max-width: 300px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+
+                    .header_deliveryPlan {
+                        width: 250px;
+
+                        .k-cell-inner {
+                            .k-link {
+                                width: 250px;
+                            }
+                        }
+                    }
+
+                    .col_deliveryPlan {
+                        @include layoutInfo();
+                        color: #5A6276;
+                    }
+
+                    .header_orderValue {
+                        width: 150px;
+
+                        .k-cell-inner {
+                            .k-link {
+                                width: 150px;
+                            }
+                        }
+                    }
+
+                    .col_orderValue {
+                        @include layoutInfo(52px);
+                        color: #5A6276;
+
+                    }
+
+                    .header_reasonRequest {
+                        max-width: 260px;
+                        min-width: 50px;
+
+                        .k-cell-inner {
+                            align-items: center;
+                            justify-content: flex-end;
+                            .k-link {
+                                min-width: 50px;
+                                max-width: 260px;
+                                justify-content: flex-end;
+
+                                span {
+                                    justify-content: flex-end;
+                                    text-align: end;
+                                }
+                            }
+                        }
+                    }
+
+                    .col_reasonRequest {
+                        text-align: end;
+                    }
+
+                    .header_noteOrder {
+                        max-width: 15vw;
+                        min-width: 50px;
+
+                        .k-cell-inner {
+                            .k-link {
+                                max-width: 15vw;
+                                min-width: 50px;
+                            }
+                        }
+                    }
+
+                    .col_noteOrder {
+
+                        .Note {
+                            max-width: 15vw;
+                            min-width: 50px;
+                            color: #5A6276 !important;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+
+
+                    .header_Status {
+                        width: 115px;
+
+                        .k-cell-inner {
+                            .k-link {
+                                justify-content: flex-end;
+
+                                span {
+                                    justify-content: flex-end;
+                                    text-align: end;
+                                }
+
+                                .k-dropdown-button {
+                                    width: 100%;
+
+                                    .k-button {
+                                        width: 115px;
+                                        background-color: transparent;
+                                        box-shadow: none;
+                                        border: none;
+                                    }
+
+                                    .k-menu-group .k-item:focus {
+                                        box-shadow: none;
+                                    }
+
+                                    .k-item {
+                                        font-weight: 500;
+                                    }
+
+                                    .k-menu-item:has(.activeMenu) {
+                                        background-color: $darkgreen;
+                                        color: $white;
+                                    }
+
+                                    .k-button-text {
+                                        color: $dark-blue;
+                                        font-weight: 700;
+                                    }
+
+                                    .k-i-arrow-chevron-down::before {
+                                        width: 13px;
+                                    }
+
+                                    .k-animation-container {
+                                        .k-child-animation-container {
+                                            .popupClassStatusGridLog002 {
+                                                kendo-button-list {
+                                                    .k-menu-group {
+                                                        .k-item {
+                                                            .k-link {
+                                                                justify-content: flex-start;
+                                                                text-align: left;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .k-dropdownlist {
+                                    min-width: 190px;
+                                    background: none;
+                                    border: none;
+                                    box-shadow: none;
+
+                                    .k-input-inner {
+                                        .k-input-value-text {
+                                            justify-content: right;
+                                        }
+                                    }
+
+
+                                    .k-input-button {
+                                        height: 29px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .col_Status {
+                        text-align: end;
+                    }
+                }
+
+                .DeliveriedTime {
+                    color: #F1802E;
+                    font-weight: 700;
+                }
+
+
+            }
+        }
+    }
+    
+    .popupClassStatusGridLog002{
+        border: 1px solid $dark-green;  
+        .k-list-filter{
+            position: sticky;
+            top: 0;
+            background-color: $white;
+            .k-searchbox{
+                column-gap: 10px;
+            }
+        } 
+        input{
+            border: none !important;
+        }
+
+        .k-list{
+            .k-list-optionlabel{
+                height: 32px;
+                &:hover,
+                &.k-hover {
+                color: white;
+                background-color: $dark-green;
+                }
+            }
+        }
+    }
+}

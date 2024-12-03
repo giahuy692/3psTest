@@ -1,0 +1,384 @@
+@import "../../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+  app-hr-exam-question {
+    .colorBlueGray{
+      color: $blue-gray;
+    }
+    .question-item-container {
+      
+      label{
+        margin: 0;
+      }
+      .question-index {
+        display: flex;
+        align-items: center;
+
+        .answered{
+          background-color: $dark-green !important;
+          color: $white !important;
+
+        }
+        
+        .appealed{
+          background-color: #D99D00 !important;
+          color: $white !important;
+        }
+
+        .index-text {
+          background: $white;
+          border-top: 1px solid rgba(149, 157, 179, 0.3);
+          border-right: 1px solid rgba(149, 157, 179, 0.3);
+          border-left: 1px solid rgba(149, 157, 179, 0.3);
+          width: fit-content;
+          min-width: 57px;
+          color: #5a6276;
+          text-align: center;
+          align-self: flex-end;
+          padding: 4px;
+        }
+
+        .answered-question-wrapper {
+          display: flex;
+          align-items: center;
+          padding-left: 7px;
+
+        }
+        .answered-quantity {
+          color: #c0392b;
+          font-size: 13px;
+          font-weight: 700;
+        }
+
+        .total-question {
+          font-size: 13px;
+          font-weight: 700;
+          color: $dark-green;
+          white-space: nowrap;
+        }
+
+        .btnAppeal {
+          background-color: #D99D00;
+          height: 22px;
+          color: #ffffff;
+          margin-left: 25px;
+          position: relative;
+          clip-path: polygon(10% 0%, 100% 0%, 100% 450%, 0% 54%);
+          font-style: italic;
+
+          &:hover{
+            border-color: transparent; 
+          }
+
+          .k-button-text{
+            padding-left: 14px;
+          }
+        }
+
+        .markAppeal{
+          display: flex;
+          margin-left: 34px;
+          .title{
+            color: #D99D00;
+            margin-right: 10px;
+            font-weight: 700;
+          }
+        }
+        .markOld{
+          .answered-quantity, .total-question{
+            color: #5A6276 !important;
+            text-decoration-line: line-through;
+          }
+        }
+      }
+
+      .examQuestion {
+        border: 1px solid transparent;
+        box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
+        background-color: $white;
+        padding: 13px 9px;
+        border-bottom: 1px solid rgba(149, 157, 179, 0.3);
+        border-right: 1px solid rgba(149, 157, 179, 0.3);
+        border-left: 1px solid rgba(149, 157, 179, 0.3);
+
+        .question-info {
+          display: flex;
+          flex-direction: column;
+          padding-bottom: 10px;
+
+          .fst-italic{
+            font-style: italic;
+          }
+
+          .answerLength{
+            color: $light-blue-gray;
+            font-weight: 700;
+          }
+
+          img{
+            max-width: 100% !important;
+            height: auto !important;
+          }
+
+          .title {
+            color: #26282e;
+            font-size: 13px;
+            font-weight: 700;
+          }
+
+          .answer-list {
+            .answer-item {
+              display: flex;
+              align-items: center;
+              margin-top: 10px;
+              position: relative;
+
+              .checkbox-icon {
+                border: unset;
+                background-color: unset;
+                box-shadow: none;
+                height: 10px;
+                position: absolute;
+              }
+
+              .selection-wrapper {
+                padding-left: 30px;
+
+                .k-checkbox,.k-radio{
+                  flex-basis: 16px;
+                }
+                .answer-name {
+                  flex: 1;
+                  margin-left: 12px;
+                }
+              }
+
+
+              .essay-answer-input {
+                width: 100%;
+
+                .k-textarea {
+                  height: fit-content;
+                  width: 100%;
+
+                  .k-input-inner {
+                    &::placeholder {
+                      color: $light-blue-gray;
+                    }
+                  }
+                }
+              }
+
+              .reponseQuizMarking{
+                display: block;
+                margin-left: 20px;
+                .title{
+                  color: $gray-850;
+                  font-size: 13px;
+                  font-style: italic;
+                  font-weight: 700;
+                }
+
+                .comments{
+                  margin-left: 20px;
+                  color: #5A6276;
+                  font-size: 13px;
+                  font-style: italic;
+                  font-weight: 600;
+                }
+              }
+            }
+          }
+        }
+
+        
+
+        .appealWapper {
+          padding: 10px 30px 0 30px;
+          border-top: 1px solid $gray-300;
+
+          .title {
+            color: $gray-850;
+            font-size: 13px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+          }
+
+          .time {
+            color: rgba(0, 0, 0, 0.50);
+            font-size: 13px;
+            font-style: italic;
+            font-weight: 400;
+            line-height: normal;
+          }
+
+          .appealHeader {
+            column-gap: 20px;
+          }
+
+          .btnEditAppeal{
+            display: none;
+          }
+
+          // .web{
+          //   display: block;
+          // }
+
+          // .mobile{
+          //   display: none;
+          // }
+
+          .appealTextBox {
+
+            .borderAppeal{
+              
+              &:read-only {
+                border: 1px solid rgba(0, 0, 0, 0.08);
+              }
+            }
+
+            .customized-textarea,
+            &.k-textarea {
+              width: 100%;
+              height: fit-content;
+
+              // &.double-clicked {
+              //   border: 1px solid $gray-400 !important;
+              //   box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2) !important;
+              //   outline: none;
+              // }
+              
+              // &:read-only {
+              //   background-color: transparent;
+              //   box-shadow: none;
+              //   border-color: transparent;
+              // }
+            }
+
+            // .non-event{
+            //   pointer-events: none;
+
+            // }
+
+            // textarea:read-only,
+            // .k-textarea:read-only {
+            //   background-color: transparent;
+            //   box-shadow: none;
+            //   border-color: transparent;
+            // }
+          }
+
+        }
+
+        @media (max-width: 768px) {
+          .appealWapper {
+            padding: 0;
+            .btnEditAppeal{
+              display: block;
+              box-shadow: none;
+              border-color: transparent;
+            }
+
+            // .web{
+            //   display: none;
+            // }
+
+            // .mobile{
+            //   display: block;
+            // }
+          }
+          .question-item-container .question-index .markAppeal{
+            margin-left: auto !important;
+          }
+        }
+      }
+    }
+
+    .answer-list {
+      .answer-item {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+        position: relative;
+
+        .checkbox-icon {
+          border: unset;
+          background-color: unset;
+          box-shadow: none;
+          height: 10px;
+          position: absolute;
+        }
+
+        .selection-wrapper {
+          // padding-left: 30px;
+
+          .k-checkbox,.k-radio{
+            flex-basis: 16px;
+          }
+          .answer-name {
+            flex: 1;
+            margin-left: 12px;
+          }
+        }
+
+
+        .essay-answer-input {
+          width: 100%;
+
+          .k-textarea {
+            height: fit-content;
+            width: 100%;
+
+            .k-input-inner {
+              &::placeholder {
+                color: $light-blue-gray;
+              }
+            }
+          }
+        }
+
+        .reponseQuizMarking{
+          display: block;
+          margin-left: 20px;
+          .title{
+            color: $gray-850;
+            font-size: 13px;
+            font-style: italic;
+            font-weight: 700;
+          }
+
+          .comments{
+            margin-left: 20px;
+            color: #5A6276;
+            font-size: 13px;
+            font-style: italic;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+    @media (max-width: 740px) {
+      // Ở phiên bản điện thoại tất cả các input sẽ có font chữ là 16px
+      // Để nếu dung ip thì sẽ không bị zoom hư UI
+      input[type="color"],
+      input[type="date"],
+      input[type="datetime"],
+      input[type="datetime-local"],
+      input[type="email"],
+      input[type="month"],
+      input[type="number"],
+      input[type="password"],
+      input[type="search"],
+      input[type="tel"],
+      input[type="text"],
+      input[type="time"],
+      input[type="url"],
+      input[type="week"],
+      select:focus,
+      textarea {
+        font-size: 16px !important;
+      }
+    }
+  }
+}

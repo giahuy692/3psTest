@@ -1,0 +1,68 @@
+<kendo-grid class="myCustomGrid" #myCustomGrid [data]="data" [scrollable]="scrollable"
+  [loading]="loading" (sortChange)="sortChange($event)" [sort]="sort" [sortable]="sortable"
+  (pageChange)="pageChange($event)" [pageable]="pageable" [pageSize]="pageSize" [skip]="skip" [take]="take"
+  (filterChange)="filterChange($event)" [filterable]="filterable" [filter]="filter" [selectable]="selectable"
+  (selectionChange)="onSelectionChange($event)" [kendoGridSelectBy]="id" [selectedKeys]="selectedKeys"  
+  [groupable]="groupable" [ngClass]="{'noAction': !hasMoreAction, 'isDetailGrid': typeMasterDetail == 1,}">
+  <!-- (edit)="editHandler($event)" (cancel)="cancelHandler($event)"  (dataStateChange)="onDataStateChange($event)"
+  (save)="saveHandler($event)" (remove)="removeHandler($event)" -->
+  <kendo-grid-checkbox-column width="48" [hidden]="!selectable.enabled || !showCheckbox" showSelectAll="true">
+    <ng-template let-idx="rowIndex" let-dataItem>
+      <input type="checkbox" class="k-checkbox" [kendoGridSelectionCheckbox]="idx" />
+    </ng-template>
+  </kendo-grid-checkbox-column>
+
+  <ng-content></ng-content>
+
+  <kendo-grid-column [headerStyle]="{'position': 'sticky'}" class="action" [headerClass]="!hasMoreAction && 'hidden'">
+    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+      <div class="btnCell" [ngClass]="{'hidden': !hasMoreAction}">
+        <button kendoButton #anchor (click)="togglePopup(rowIndex, dataItem, anchor)" class="k-button k-button-icon togglePopup"
+          icon="more-horizontal" [disabled]="selectedRowitemDialogOpened"></button>
+      </div>
+    </ng-template>
+  </kendo-grid-column>
+
+  <ng-container *ngIf="typeMasterDetail > 0">
+    <div *kendoGridDetailTemplate="let dataItem" class="master-detail">
+      <ng-container *ngTemplateOutlet="detailTemplate; context: {$implicit: dataItem}"></ng-container>
+      <!-- <ng-content></ng-content> -->
+    </div>
+  </ng-container>
+
+
+  <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage" *ngIf="pagingMode == 1">
+    <div class="label">Hiển thị mỗi trang</div>
+    <kendo-pager-page-sizes [pageSizes]="pageSizes"></kendo-pager-page-sizes>
+    <div class="total" [hidden]="!(total > 0)">Tổng cộng: <span>{{total | number:'1.0-2'}}</span></div>
+    <kendo-pager-prev-buttons class="k-pager-nav-btn"></kendo-pager-prev-buttons>
+    <kendo-pager-numeric-buttons [buttonCount]="4"></kendo-pager-numeric-buttons>
+    <kendo-pager-next-buttons class="k-pager-nav-btn"></kendo-pager-next-buttons>
+   
+  </ng-template>
+
+  <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage" *ngIf="pagingMode == 2">
+    
+    <!-- <kendo-pager-page-sizes [pageSizes]="pageSizes"></kendo-pager-page-sizes> -->
+    <kendo-pager-prev-buttons class="k-pager-nav-btn"></kendo-pager-prev-buttons>
+    <!-- <kendo-pager-numeric-buttons [buttonCount]="4"></kendo-pager-numeric-buttons> -->
+    <kendo-pager-next-buttons class="k-pager-nav-btn"></kendo-pager-next-buttons>
+  </ng-template>
+
+  <kendo-grid-messages [pagerItemsPerPage]="''"></kendo-grid-messages>
+
+ 
+</kendo-grid>
+
+<kendo-popup #rowMoreActionPopup class="rowMoreActionPopup" [style.visibility]="isPopupVisible()" [anchor]="getAnchor()"
+  [anchorAlign]="{ horizontal:'left', vertical: 'top'}" [popupAlign]="{ horizontal:'right', vertical: 'top'}">
+
+  <div *ngFor="let item of getActionDropdown(); let i = index" class="popup-item" (click)="onClickMoreActionItem(item)">
+    <span class="k-icon k-i-{{ item.Code }}"></span>
+    <span class="popup-item-text">{{ item.Name }}</span>
+  </div>
+</kendo-popup>
+
+<app-selected-rowitem-popup [count]="count" [selectedRowitemDialogOpened]="selectedRowitemDialogOpened"
+  [btnList]="btnList" [clearSelectedRowitemCallback]="clearSelectedRowitemCallback"
+  [selectedRowitemPopupCallback]="selectedRowitemPopupCallback"></app-selected-rowitem-popup>

@@ -1,0 +1,42 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    .hri015-exam-report{
+        height: calc(100vh - #{$footer-height});
+        display: flex;
+        flex-direction: column;
+        .header{
+            padding: 15px !important;
+            min-height: 40px;
+        }
+        .header-2{
+            min-height: 70px;
+        }
+        .body{
+            margin-top: 0 20px;
+            .grid{
+                th.k-header{
+                    span.k-link{
+                        color: #5A6276;
+                    }
+                }
+                th.col_code{
+                    span.k-link{
+                        margin-left: 20px;
+                    }
+                }
+                tbody{
+                    td.col_code{
+                        font-weight: 700;
+                        color: #5A6276;
+                    }
+                    td.col_reportname{
+                        font-weight: 700;
+                    }
+                }
+            }
+        }
+       
+    }
+
+}

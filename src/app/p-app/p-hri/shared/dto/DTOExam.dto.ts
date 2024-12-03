@@ -1,0 +1,23 @@
+export class DTOExam {
+    QuizSessionID: string  = null;
+    StaffID: number = null;
+    StatusName: string = null;
+    QuizSessionName: string = null;
+    TypeOfSession: number = null;
+    TypeOfSessionName: string = null;
+    StartDate: string = null;
+    EndDate: string = null;
+    RemainDuration: number  = null;
+    Code: number = 0;
+    QuizSession: number = null;
+    StaffInRoleID: number = null;
+    Duration: number = null;
+    BeginTime: string = null;
+    EndTime: string = null;
+    FinalMark: number = null;
+    StatusID: number = null;
+    CreateBy: string  = null;
+    CreateTime: string  = null;
+    LastModifiedBy: string = null;
+    LastModifiedTime: string = null;
+}

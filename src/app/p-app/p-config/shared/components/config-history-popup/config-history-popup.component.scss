@@ -1,0 +1,94 @@
+@import "./../../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    .HistoryDialogPopup{
+        .k-dialog-titlebar{
+            background-color: $dark-green !important;   
+            .k-window-title{
+                text-align: center;
+                justify-content: center;
+            }
+        }
+        .k-window-content{
+            .body_dialog{
+                overflow: hidden;
+                height: 100% !important;
+                .info-Product{
+                    display: flex;
+                    .info{
+                        display: flex;
+                        flex-direction: column;
+                        .title_Product{
+                            color: #959DB3;
+                            margin-bottom: 4px;
+                        }
+                        .Barcode_Product{
+                            font-weight: 700;
+                            margin-bottom: 12px;
+                        }
+                        .content{
+                            margin-left: 10px;
+                            margin-right: 5px;
+                        }
+                    }
+                    .Product-img{
+                        min-width: 170px;
+                        min-height: 130px;
+                    }
+                }
+                .Content{
+                    color: #5A6276;
+                    font-size: 13px;
+                    font-weight: 700;
+                }
+                .grid-wrapper{
+                    height: calc(100vh - 360px);
+                    app-p-kendo-grid{
+                        .k-grid-header{
+                            .k-header{
+                                color: #5A6276 !important;
+                            }
+                        } 
+                        .myCustomGrid.k-grid{
+                            background-color: #ffffff;
+                            font-size: 13px !important;
+                            height: calc(100vh - 360px) !important;
+                            table{
+                                min-width: 560px !important;
+                            }
+                            tbody {
+                                tr{
+                                    background-color: #EDEFF3;
+                                }
+                                tr:not(.k-grouping-row) td:first-child{
+                                    padding-left: 5px;
+                                    width: 100%;
+                                }
+                                tr:not(.k-grouping-row) td:not(:first-child){
+                                    text-align: center;
+                                }
+                            }
+                            .LabelName{
+                                min-width: 250px;
+                                white-space: initial;      
+                                overflow: hidden;
+                                display: -webkit-box;
+                                -webkit-line-clamp: 2;
+                                -webkit-box-orient: vertical;
+                                text-overflow: ellipsis;
+                            }
+                            
+                        }
+                        .headerCustomClass:not(:first-child) .k-cell-inner > .k-link{
+                            justify-content: center;
+                        }
+                    }
+                    .k-grid-pager{
+                        display: none;
+                    }
+                }
+            }
+        }
+        
+    }
+}

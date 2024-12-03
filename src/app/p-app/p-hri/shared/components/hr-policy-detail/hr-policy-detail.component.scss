@@ -1,0 +1,949 @@
+@import "../../../../../../assets/scss/variables/colors";
+
+::ng-deep {
+    app-hr-policy-detail {
+        .drawer-container {
+            position: relative;
+            height: 100vh;
+
+            .clickable {
+                cursor: default !important;
+            }
+
+            .drawer {
+                z-index: 10000;
+                height: calc(100vh - 85px);
+                margin-top: 55px;
+
+                app-p-numeric-textbox,
+                kendo-textbox,
+                kendo-textarea {
+                    &.readonly-field {
+                        input {
+                            background-color: #f0f3f5;
+                            border: 1px solid rgba(0, 0, 0, 0.08);
+                        }
+                    }
+                }
+
+                kendo-multiselect {
+                    height: fit-content;
+
+                    kendo-taglist {
+                        max-height: 96px !important;
+                    }
+
+                    &.readonly-field {
+
+                        kendo-taglist,
+                        kendo-searchbar input {
+                            background-color: #f0f3f5;
+                        }
+                    }
+                }
+
+                .k-drawer-wrapper {
+                    width: 420px !important;
+                    height: 100%;
+                    scrollbar-color: unset !important;
+                }
+
+                .add-position-area {
+
+                    // TITLE CONTROL
+                    .title {
+                        height: 40px;
+                        border-bottom: 1px solid $gray-300;
+                        color: $dark-green;
+                        font-size: 13px;
+                        font-weight: 700;
+                        padding-left: 15px;
+                        display: flex;
+                        align-items: center;
+                        text-transform: uppercase;
+                        gap: 10px;
+                        box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+                    }
+
+                    .info-position-area,
+                    .info-task {
+                        height: calc(100vh - 170px);
+
+                        &_block {
+                            height: calc(100% - 30px);
+                            overflow-y: auto;
+                            display: flex;
+                            flex-direction: column;
+                            gap: 20px;
+                            padding: 10px;
+
+                            .block-assignee,
+                            .block-approved {
+                                kendo-dropdownlist {
+                                    width: 100%;
+                                }
+
+                                .field-text {
+                                    display: flex;
+                                    justify-content: space-between;
+                                    align-items: center;
+
+                                    .checkbox-area {
+                                        display: flex;
+                                        gap: 4px;
+                                        align-items: center;
+
+                                        .title-checkbox {
+                                            cursor: pointer;
+                                        }
+
+                                        .disabled-field {
+                                            pointer-events: none;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .note {
+                            height: 30px;
+                            font-style: italic;
+                            color: #eb273a;
+                            display: flex;
+                            align-items: center;
+                            padding: 0 10px;
+                        }
+
+                        .block {
+                            width: 100%;
+
+                            .important {
+                                margin-left: 5px;
+                                color: $bad-red;
+                            }
+
+                            .box-area {
+                                display: flex;
+                                flex-direction: column;
+                                gap: 4px;
+
+                                .label {
+                                    font-weight: bold;
+                                }
+
+                                .k-textbox {
+                                    width: 100%;
+                                }
+
+                                // .k-textbox:read-only{
+                                //   background-color: #D9D9D9;
+                                // }
+
+                                .multiselect-custom {
+                                    span.k-clear-value {
+                                        display: none !important;
+                                    }
+
+                                    &::after {
+                                        right: 0 !important;
+                                        text-align: center;
+                                        font-size: 16px;
+                                        font-weight: 600;
+                                    }
+
+                                    kendo-searchbar {
+                                        margin-right: 0;
+                                    }
+
+                                    kendo-taglist {
+                                        .k-chip {
+                                            background-color: #dbdee7;
+                                            color: #000;
+
+                                            .k-chip-actions {
+                                                kendo-icon {
+                                                    &.k-i-x-circle {
+                                                        &::before {
+                                                            margin-bottom: 1px;
+                                                            content: "\e11b";
+                                                            color: #959db3;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .task-system {
+                                    padding-left: 10px;
+                                }
+                            }
+
+                            &.block-description-task {
+                                kendo-textarea {
+                                    min-height: 100px;
+                                    padding: 0 !important;
+                                    width: 100%;
+                                }
+                            }
+
+                            &.block-duration,
+                            &.block-orderby {
+                                kendo-numerictextbox {
+                                    width: 100%;
+
+                                    input {
+                                        text-align: left;
+                                    }
+
+                                    .k-input-spinner {
+                                        button {
+                                            display: none;
+                                        }
+                                    }
+                                }
+                            }
+
+                            &.block-add-exception {
+                                .label {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 6px;
+
+                                    span {
+                                        color: #1a6634;
+
+                                        &:hover {
+                                            cursor: pointer;
+                                        }
+                                    }
+                                }
+
+                                // custom treelist
+                                .treelist-container {
+
+                                    .k-grid-header,
+                                    .k-header,
+                                    th.k-header,
+                                    .k-grid-header-wrap,
+                                    .k-grouping-header,
+                                    .k-grouping-header .k-group-indicator,
+                                    .k-grid td,
+                                    .k-grid-footer,
+                                    .k-grid-footer-wrap,
+                                    .k-grid-content-locked,
+                                    .k-grid-footer-locked,
+                                    .k-grid-header-locked,
+                                    .k-filter-row>td,
+                                    .k-filter-row>th {
+                                        border: none !important;
+                                    }
+
+                                    .bold-text {
+                                        font-weight: 600;
+                                    }
+
+                                    .underline-text {
+                                        text-decoration: underline;
+                                    }
+
+
+                                    // height: 400px;
+                                    overflow-y: auto;
+
+                                    kendo-treelist.treelist-custom {
+                                        border: none;
+
+                                        kendo-treelist-list{
+                                            max-height: fit-content;
+                                        }
+
+                                        .status-name{
+                                            font-size: 12px;
+                                        }
+
+                                        //Header tree list
+                                        thead {
+                                            tr.k-table-row {
+                                                display: none;
+                                            }
+                                        }
+
+                                        .k-grid-header {
+                                            display: none;
+                                        }
+
+                                        // Body tree list
+                                        .k-grid-content {
+                                            background-color: #fff !important;
+
+                                            table.k-table {
+                                                border-spacing: 0 4px;
+
+                                                tbody {
+                                                    .row-level-1 {
+                                                        td {
+                                                            border-top: 1px solid #000 !important;
+                                                        }
+                                                    }
+
+                                                    .row-level-1:first-child {
+                                                        td {
+                                                            border-top: none !important;
+                                                        }
+                                                    }
+
+                                                    tr.k-table-row {
+                                                        background-color: #fff;
+                                                        box-shadow: none !important;
+
+                                                        td.k-table-td {
+                                                            height: 46px !important;
+                                                            box-shadow: none !important;
+                                                            color: #5a6276;
+
+                                                            &:first-child {
+                                                                display: flex;
+                                                                align-items: center;
+                                                                gap: 10px;
+                                                                height: 46px !important;
+                                                                padding-left: 0px !important;
+
+                                                                kendo-icon {
+                                                                    cursor: pointer;
+                                                                }
+
+                                                                .k-icon {
+                                                                    font-size: 18px;
+                                                                }
+                                                            }
+
+                                                            &:last-child {
+                                                                .icon {
+                                                                    display: flex;
+                                                                    align-items: center;
+                                                                    justify-content: center;
+
+                                                                    span {
+                                                                        color: #eb273a;
+                                                                        cursor: pointer;
+                                                                        font-size: 20px;
+                                                                    }
+                                                                }
+                                                            }
+
+                                                            &[aria-colindex="1"] {
+                                                                text-wrap: wrap !important;
+                                                            }
+
+                                                            &[aria-colindex="2"] {
+                                                                text-align: end;
+                                                            }
+
+                                                            .name {
+                                                                display: flex;
+                                                                // flex-direction: column;
+                                                                gap: 4px;
+                                                                overflow: hidden;
+
+                                                                span {
+                                                                    text-wrap: nowrap;
+                                                                    text-overflow: ellipsis;
+                                                                    overflow: hidden;
+                                                                }
+                                                            }
+                                                        }
+
+                                                        background-color: #fff;
+                                                        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+                                                        &:hover {
+                                                            background: none !important;
+
+                                                            &>td {
+                                                                background: none !important;
+                                                            }
+
+                                                            &>td:last-child {
+                                                                background: none !important;
+                                                            }
+                                                        }
+
+                                                        .role {
+                                                            display: flex;
+                                                            gap: 9px;
+                                                            align-items: center;
+
+                                                            .bar {
+                                                                width: 1px;
+                                                                height: 16px;
+                                                                background-color: #5a6276;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .block-1 {
+                            display: flex;
+                            justify-content: space-between;
+
+                            .box-area {
+                                .label {
+                                    font-weight: bold;
+                                }
+
+                                .k-textbox {
+                                    min-width: 193px;
+                                }
+
+                                .checkbox-area {
+                                    display: flex;
+                                    gap: 10px;
+                                    align-items: center;
+                                }
+                            }
+
+                            .box-right {
+                                margin-top: 18px;
+                            }
+                        }
+
+                        .block-4 {
+                            .label {
+                                font-weight: bold;
+                            }
+
+                            .list-location {
+                                height: 100%;
+                                // margin-bottom: 50px;
+                                // overflow-y: auto;
+                                // overflow-x: hidden;
+
+                                .block-area {
+                                    height: 30px;
+                                    width: 100%;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: space-between;
+                                    // cursor: pointer;
+
+                                    .checkbox {
+                                        width: 50px;
+                                    }
+
+                                    .position-name {
+                                        cursor: pointer;
+                                        width: 150px;
+                                        white-space: nowrap;
+                                        text-overflow: ellipsis;
+                                        overflow: hidden;
+                                    }
+
+                                    .disable-position-name {
+                                        cursor: default;
+                                        // pointer-events: none;
+                                        width: 150px;
+                                        white-space: nowrap;
+                                        text-overflow: ellipsis;
+                                        overflow: hidden;
+                                    }
+
+                                    .position-id {
+                                        cursor: pointer;
+                                        width: 60px;
+                                        white-space: nowrap;
+                                        text-overflow: ellipsis;
+                                        overflow: hidden;
+                                    }
+
+                                    .disable-position-id {
+                                        cursor: default;
+                                        // pointer-events: none;
+                                        width: 60px;
+                                        white-space: nowrap;
+                                        text-overflow: ellipsis;
+                                        overflow: hidden;
+                                    }
+
+                                    .position-status-name {
+                                        cursor: pointer;
+                                        width: 120px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: right;
+                                        white-space: nowrap;
+                                        text-overflow: ellipsis;
+                                        overflow: hidden;
+                                        padding-right: 5px;
+                                    }
+
+                                    .disable-position-status-name {
+                                        cursor: default;
+                                        // pointer-events: none;
+                                        width: 120px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: right;
+                                        white-space: nowrap;
+                                        text-overflow: ellipsis;
+                                        overflow: hidden;
+                                        padding-right: 5px;
+                                    }
+
+                                    .icon-area {
+                                        width: 20px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+
+                                        .icon {
+                                            font-size: 20px;
+                                            color: red;
+                                            cursor: pointer;
+
+                                            &:hover {
+                                                opacity: 0.7;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .btnControl {
+                    background-color: $white;
+                    position: absolute;
+                    bottom: 0;
+                    height: 45px;
+                    padding: 0 10px;
+                    width: 100%;
+                    z-index: 100;
+                    display: flex;
+                    align-items: center;
+                    border-top: 1px solid $gray-300;
+                    box-shadow: 1px 3px 6px 6px rgba(143, 155, 166, 0.2);
+
+                    button {
+                        width: 95px;
+                        margin-right: 10px;
+                    }
+                }
+            }
+
+            .drawer-content {
+                height: calc(100vh - 85px);
+                width: 100%;
+                // overflow-y: auto;
+
+                .main {
+                    height: 100%;
+                    // overflow-y: auto;
+                    overflow-x: hidden;
+
+                    .area {
+                        // margin: 0 10px;
+
+                        .disable-block {
+                            pointer-events: none;
+                            opacity: 0.7;
+                        }
+
+                        .header-1 {
+                            min-height: 51px;
+                            display: flex;
+                            justify-content: space-between;
+                            margin: 0 10px 0 0;
+
+                            .nav-crud {
+                                display: flex;
+                                margin-left: auto;
+
+                                .onAddBtn {
+                                    height: 32px;
+                                    margin-top: auto;
+                                    background-color: $dark-green !important;
+                                    color: white;
+                                    font-size: 11px;
+                                    font-weight: bold;
+                                }
+
+                                .btn-aplication {
+                                    width: fit-content;
+                                    height: 32px;
+                                    background-color: $white;
+                                    color: $dark-green;
+                                    box-shadow: 0 0 8px $lightgray;
+                                    font-weight: 700;
+                                    font-size: 11px;
+                                }
+
+                                .btn-delete {
+                                    width: fit-content;
+                                    height: 32px;
+                                    background-color: $gray-1;
+                                    color: $white;
+                                    box-shadow: 0 0 8px $lightgray;
+                                    font-weight: 700;
+                                    font-size: 11px;
+                                }
+
+                                .btn-addition {
+                                    width: fit-content;
+                                    height: 32px;
+                                    background-color: $dark-green;
+                                    color: $white;
+                                    box-shadow: 0 0 8px $lightgray;
+                                    font-weight: 700;
+                                    font-size: 11px;
+                                }
+
+                                .btnGuiDuyet {
+                                    width: fit-content;
+                                    height: 32px;
+                                    background-color: $white;
+                                    color: $dark-green;
+                                    border: 1px solid $dark-green;
+                                    box-shadow: 0 0 8px $lightgray;
+                                    font-weight: 700;
+                                    font-size: 11px;
+                                }
+
+                                .btnTraVe {
+                                    width: fit-content;
+                                    height: 32px;
+                                    background-color: $white;
+                                    color: $bad-red;
+                                    border: 1px solid $bad-red;
+                                    box-shadow: 0 0 8px $lightgray;
+                                    font-weight: 700;
+                                    font-size: 11px;
+                                }
+
+                                .btnNgunghienthi {
+                                    width: fit-content;
+                                    height: 32px;
+                                    background-color: $bad-red;
+                                    color: $white;
+                                    border: 1px solid $white;
+                                    box-shadow: 0 0 8px $lightgray;
+                                    font-weight: 700;
+                                    font-size: 11px;
+                                }
+                            }
+                        }
+
+                        .content {
+                            height: calc(100vh - 148px);
+                            padding: 0 10px;
+                            display: flex;
+                            overflow-y: auto;
+                            flex-direction: column;
+                            // gap: 30px;
+
+                            .position-list {
+                                margin-top: 30px;
+                            }
+
+                            .task-list {
+                                margin-top: 30px;
+                            }
+
+                            .disable-block {
+                                pointer-events: none;
+                                opacity: 0.7;
+                            }
+
+                            .disable-position-list {
+                                display: none;
+                            }
+
+                            .task-list {
+                                .grid-custom {
+                                    height: calc(100vh - 210px - 51px) !important;
+                                }
+                            }
+
+                            .disable-position {
+
+                                // margin-top: -30px;
+                                .grid-custom {
+                                    height: calc(100vh - 210px - 51px) !important;
+                                }
+                            }
+
+                            .footer {
+                                margin-top: 20px;
+                            }
+                        }
+
+                        .content-add {
+                            height: calc(100vh - 148px);
+                            padding: 0 10px;
+                            display: flex;
+                            overflow-y: auto;
+                            flex-direction: column;
+                            gap: 0;
+                        }
+
+                        .footer {
+                            height: 30px;
+                            font-style: italic;
+                            color: #eb273a;
+                            display: flex;
+                            align-items: center;
+                            padding: 0 10px;
+                        }
+
+                        .footer-add-new {
+                            height: 30px;
+                            font-style: italic;
+                            color: #eb273a;
+                            display: flex;
+                            align-items: center;
+                            padding: 0 10px;
+                            margin-top: -30px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .popup-confirm-custom {
+            .dialog-header {
+                color: #fd7676;
+                font-size: 15px !important;
+                font-weight: 600;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-transform: uppercase;
+                padding: 15px 10px;
+                border-bottom: 1px solid #dbdee7;
+                border-top-left-radius: 3px;
+                border-top-right-radius: 3px;
+                gap: 10px;
+
+                .k-icon {
+                    font-size: 22px;
+                }
+
+                div {
+                    padding-top: 3px;
+                }
+            }
+
+            .dialog-content {
+                height: calc(100% - 53px - 53px);
+
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                text-align: center;
+                padding: 20px 10px;
+                color: #26282e;
+                border-radius: 3px;
+                z-index: 999;
+
+                .text-confirm {
+                    max-width: 350px;
+                    display: flex;
+                    flex-direction: column;
+                    align-self: center;
+                    gap: 5px;
+
+                    .policy-name-text {
+                        font-weight: 600;
+                        color: #36c8cf;
+                        overflow: hidden;
+                        text-wrap: nowrap;
+                        text-overflow: ellipsis;
+                    }
+                }
+
+                .warning {
+                    gap: 3px;
+                    justify-content: center;
+
+                    div {
+                        display: flex;
+                        text-align: center;
+                        justify-content: center;
+                    }
+                }
+            }
+
+            .dialog-footer {
+                height: 53px;
+                border-bottom-left-radius: 3px;
+                border-bottom-right-radius: 3px;
+
+                button {
+                    height: 100%;
+                    width: 50%;
+                    text-transform: uppercase;
+                    font-weight: 600;
+                    color: #959db3;
+                }
+
+                .btn-delete {
+                    background-color: #fd7676;
+                    color: #fff;
+
+                    .k-i-trash {
+                        display: flex;
+                        align-items: center;
+                        font-size: 18px;
+                    }
+                }
+            }
+
+            .k-window {
+                border-radius: 3px;
+            }
+
+            .k-window-content {
+                padding: 0 !important;
+            }
+        }
+
+        // Popup confirm xóa công việc
+        .popup-confirm-task-custom {
+            .dialog-header {
+                color: #fd7676;
+                font-size: 15px !important;
+                font-weight: 600;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-transform: uppercase;
+                padding: 15px 10px;
+                border-bottom: 1px solid #dbdee7;
+                gap: 10px;
+
+                .k-icon {
+                    font-size: 22px;
+                }
+
+                div {
+                    padding-top: 3px;
+                }
+            }
+
+            .dialog-content {
+                height: calc(100% - 53px - 53px);
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                text-align: center;
+                padding: 20px 10px;
+                color: #26282e;
+
+                .text-confirm {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+                    max-width: 350px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    margin: 0 auto;
+
+                    .task,
+                    .task-of-list {
+                        font-weight: 600;
+                        color: #36c8cf;
+                        text-wrap: nowrap;
+                    }
+
+                    .task-of-list {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+
+                .warning {
+                    display: flex;
+                    gap: 3px;
+                    justify-content: center;
+                }
+            }
+
+            .dialog-footer {
+                height: 53px;
+
+                button {
+                    height: 100%;
+                    width: 50%;
+                    text-transform: uppercase;
+                    font-weight: 600;
+                    color: #959db3;
+                }
+
+                .btn-delete {
+                    background-color: #fd7676;
+                    color: #fff;
+
+                    kendo-icon-wrapper {
+                        display: flex;
+                        font-size: 22px;
+
+                        kendo-icon::before {
+                            font-size: 18px;
+                        }
+                    }
+                }
+            }
+
+            .k-window-content {
+                padding: 0 !important;
+            }
+        }
+
+        .popup-confirm-close-custom {
+            .k-dialog {
+                min-height: 150px !important;
+            }
+
+            .header {
+                text-align: center;
+                width: 400px;
+                height: 75px;
+                display: flex;
+                align-items: end;
+                color: #26282e;
+                border: none;
+            }
+
+            .footer {
+                height: 75px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 20px;
+            }
+        }
+
+        // DRAWER CONTAINER RIGHT EXPANDED
+        #drawerContainerRight.k-drawer-expanded {
+
+            // pointer-events: none;
+            .k-drawer {
+                pointer-events: all;
+                width: 420px;
+            }
+
+            .k-overlay {
+                position: absolute;
+                z-index: 1;
+            }
+        }
+    }
+}

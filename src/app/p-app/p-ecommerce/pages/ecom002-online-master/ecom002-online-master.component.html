@@ -1,0 +1,427 @@
+<div id="app-drawer-container">
+  <mat-drawer-container [hasBackdrop]="true">
+    <mat-drawer #drawer [mode]="'over'" position="end">
+      <!-- form banner -->
+      <form class="k-form" (keydown.Enter)="keydownEnter($event)">
+        <fieldset class="k-form-fieldset">
+          <legend class="k-form-legend">Danh sách Đơn hàng</legend>
+
+          <div class="k-label">
+            <span>Đơn hàng</span>
+            <span>SL đặt</span>
+          </div>
+
+          <div class="order-list">
+            <div class="order-item" *ngFor="let item of orderList">
+              <div class="cartNo_statusName">
+                <div class="cartNo" (click)="openOnlineOrderDetail(item)"
+                  [ngClass]="{'tinhtrang_treo': item.OrderTypeID == 14 }">{{ item.CartNo }}</div>
+                <div class="statusName">{{ item.StatusName }}</div>
+              </div>
+              <div class="receivedBy">{{ item.ReceivedBy }}</div>
+              <div class="fullAddress" title="{{ item.FullAddress }}">
+                {{ (item.FullAddress.length > 35) ? (item.FullAddress | slice:0:35) + '...' : (item.FullAddress) }}
+              </div>
+              <div class="totalAmount">{{ item.TotalAmount | number : '1.' }}</div>
+            </div>
+          </div>
+
+          <div class="k-label SLdat-label">
+            <span class="SL_lbl">Tổng SL đặt</span>
+            <span class="SL">
+              <div class="line"></div>
+              <div>{{ tongSLDat | number : '1.' }}</div>
+            </span>
+          </div>
+
+          <div class="k-label SLthieu-label">
+            <span class="SL_lbl">SL thiếu</span>
+            <span class="SL">{{ sanPhamCanTaoDon.NU03 | number : '1.' }}</span>
+          </div>
+
+          <div class="k-form-buttons">
+            <button kendoButton class="k-button closeBtn" (click)="closeForm()">Đóng</button>
+            <!-- <button kendoButton class="k-button updateBtn"  [ngClass]="{'addBtn': isAdd}"
+              (click)="updateCartGift()" [disabled]="!isBillFormValid">
+              Cập nhật</button> -->
+          </div>
+        </fieldset>
+      </form>
+    </mat-drawer>
+    <!-- center content -->
+    <mat-drawer-content>
+      <div class="app-ecom002-online-master">
+
+        <div class="header header-1">
+          <kendo-dropdownlist [data]="listModeArray" [value]="currentListMode" [textField]="'text'"
+            [valueField]="'value'" (valueChange)="onDropdownlistClick($event)" [disabled]="!isFilterActive"
+            [popupSettings]="{appendTo:'component'}">
+            <ng-template kendoDropDownListValueTemplate let-dataItem>
+              <span class="k-icon k-i-chart-column-stacked"></span>
+              <span class="value">{{ dataItem.text }}</span>
+            </ng-template>
+          </kendo-dropdownlist>
+
+          <button kendoButton class="k-button checkbox-btn-group sanPhamChuaTaoDon_btn" [toggleable]="isFilterActive"
+            (selectedChange)="selectedBtnChange($event, 'sanPhamChuaTaoDon_btn')"
+            [selected]="sanPhamChuaTaoDon_checked">
+            {{ sanPhamChuaTaoDon_count }} - Sản phẩm chưa tạo đơn
+            <input type="checkbox" class="k-checkbox" disabled [checked]="sanPhamChuaTaoDon_checked" />
+          </button>
+
+          <button kendoButton class="k-button checkbox-btn-group sanPhamDaTaoDon_btn" [toggleable]="isFilterActive"
+            (selectedChange)="selectedBtnChange($event, 'sanPhamDaTaoDon_btn')" [selected]="sanPhamDaTaoDon_checked"
+            [hidden]="!currentListMode.value">
+            {{ sanPhamDaTaoDon_count }} - Sản phẩm đã tạo đơn
+            <input type="checkbox" class="k-checkbox" disabled [checked]="sanPhamDaTaoDon_checked" />
+          </button>
+
+          <button kendoButton class="k-button checkbox-btn-group donHangDaTao_btn" [toggleable]="isFilterActive"
+            (selectedChange)="selectedBtnChange($event, 'donHangDaTao_btn')" [selected]="donHangDaTao_checked"
+            [hidden]="currentListMode.value">
+            {{ donHangDaTao_count }} - Đơn hàng đã tạo
+            <input type="checkbox" class="k-checkbox" disabled [checked]="donHangDaTao_checked" />
+          </button>
+
+          <div class="nav-btn nav-crud">
+            <button kendoButton class="k-button onAddBtn" [icon]="'plus'"
+              [disabled]="listSanPhamChuaTaoDonSelected.length == 0" (click)="createOrderMaster()">
+              TẠO ĐƠN HÀNG MASTER
+            </button>
+
+            <div class="border-center"></div>
+          </div>
+
+          <div class="nav-file nav-btn">
+            <div class="file-btn-group">
+              <button kendoButton id="onImportBtn" class="k-button" [icon]="'import'" (click)="p_ExportCurrentMaster()">
+              </button>
+              <button kendoButton class="k-button k-btn-xlsx" imageUrl="assets\img\logo\xlsx.svg"
+                (click)="p_ExportCurrentMaster()"></button>
+              <div class="border-center"></div>
+              <span class="k-icon k-i-arrow-chevron-down"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="header header-2">
+          <div class="nav-filter nav-btn">
+            <div class="filter-btn-group clear-btn-group">
+              <div class="label">
+                <span class="k-icon k-i-filter"></span>Lọc dữ liệu
+              </div>
+              <button kendoButton class="k-button clear-filter-btn" (click)="resetFilter()">Reset bộ lọc</button>
+            </div>
+
+            <form style="display: flex; flex-grow: 1;" [formGroup]="searchForm">
+              <div class="filter-btn-group search-btn-group">
+                <div class="label">
+                  Tìm kiếm Đơn hàng
+                </div>
+                <div class="search-btn">
+                  <span class="k-icon k-i-search"></span>
+                  <kendo-textbox formControlName="SearchOrder" type="text" class="k-textbox"
+                    placeholder="Tìm kiếm sản phẩm, ngành hàng và đơn hàng">
+                  </kendo-textbox>
+                </div>
+              </div>
+
+              <button kendoButton class="k-button searchBtn" [icon]="'search'" (click)="search()"
+                [disabled]="!isFilterActive">TÌM</button>
+            </form>
+
+            <div class="filter-btn-group date-btn-group">
+              <div class="label">
+                Ngày tạo đơn hàng
+              </div>
+              <div class="search-btn">
+                <kendo-datepicker [format]="'dd/MM/yyyy'" placeholder="dd/mm/yyyy"
+                  [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }" (keydown.Enter)="$event.target.blur()"
+                  (blur)="onDatepickerChange('EffDate')" [(ngModel)]="effDate" [disabled]="!isFilterActive">
+                </kendo-datepicker>
+              </div>
+            </div>
+
+            <div class="filter-btn-group" [hidden]="SKU_KGV_hidden">
+              <div class="label">Điểm lấy hàng</div>
+              <button kendoButton class="k-button checkbox-btn-group SKU_KGV_btn" [toggleable]="isFilterActive"
+                (selectedChange)="selectedBtnChange($event, 'SKU_KGV_btn')" [selected]="SKU_KGV_checked">
+                {{ SKU_KGV_count }} SKU - Kho 42
+                <input type="checkbox" class="k-checkbox" disabled [checked]="SKU_KGV_checked" />
+              </button>
+            </div>
+
+            <div class="filter-btn-group" [hidden]="SKU_PVT_hidden">
+              <div class="label fake">Điểm lấy hàng</div>
+              <button kendoButton class="k-button checkbox-btn-group SKU_PVT_btn" [toggleable]="isFilterActive"
+                (selectedChange)="selectedBtnChange($event, 'SKU_PVT_btn')" [selected]="SKU_PVT_checked">
+                {{ SKU_PVT_count }} SKU - Kho NVT
+                <input type="checkbox" class="k-checkbox" disabled [checked]="SKU_PVT_checked" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grids">
+          <div class="gridGroup1 gridGroup" [hidden]="!sanPhamChuaTaoDon_checked">
+            <div class="grid-title">
+              <div class="grid-subtitle">SẢN PHẨM CẦN TẠO ĐƠN HÀNG MASTER</div>
+            </div>
+
+            <div class="grid-wrapper">
+              <app-p-kendo-grid class="grid1" [data]="gridDSView1 | async" [scrollable]="'none'" [loading]="loading"
+                [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize" [skip]="gridDSState1.skip"
+                [take]="gridDSState1.take" [sortable]="isFilterActive" [sort]="gridDSState1.sort"
+                [onSortChangeCallback]="onSortChangeCallback1" [onPageChangeCallback]="onPageChangeCallback1"
+                [selectable]="selectable" [onSelectCallback]="onSelectCallback1"
+                [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback1"
+                [getSelectionPopupCallback]="getSelectionPopupCallback1">
+  
+                <kendo-grid-column field="VNName" title="Tên sản phẩm" class="img_tensanpham_masanpham"
+                  headerClass="col_img_tensanpham_masanpham" [sortable]="false">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <img loading="lazy" src="{{dataItem.ImageSetting}}" alt="">
+                    <div class="tensanpham_masanpham">
+                      <div class="tensanpham">{{ dataItem.VNName }}</div>
+                      <div class="masanpham">{{ dataItem.Barcode }}</div>
+                    </div>
+                  </ng-template>
+                </kendo-grid-column>
+  
+                <kendo-grid-column field="Supplier" title="Nhà cung cấp" class="nhacungcap" [sortable]="false">
+                </kendo-grid-column>
+  
+                <kendo-grid-column field="Brand" title="Ngành hàng" class="nganhhang" [sortable]="false">
+                </kendo-grid-column>
+  
+                <kendo-grid-column-group>
+                  <ng-template kendoGridHeaderTemplate let-dataItem>
+                    <div class="slcandieuchuyen">SL CẦN ĐIỀU CHUYỂN</div>
+                  </ng-template>
+  
+                  <kendo-grid-column field="NU01" [headerStyle]="{'width': gridHeaderWidth}"
+                    [hidden]="!SKU_KGV_checked || SKU_KGV_hidden">
+                    <ng-template kendoGridHeaderTemplate let-dataItem>
+                      <div class="sldc_KGV">Kho 42</div>
+                    </ng-template>
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="sldc_KGV" (click)="viewSoLuongSanPhamCanTaoDon(dataItem)">
+                        {{ dataItem.NU01 | number : '1.' }}
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+  
+                  <kendo-grid-column field="NU02" [headerStyle]="{'width': gridHeaderWidth}"
+                    [hidden]="!SKU_PVT_checked || SKU_PVT_hidden">
+                    <ng-template kendoGridHeaderTemplate let-dataItem>
+                      <div class="sldc_PVT">Kho NVT</div>
+                    </ng-template>
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="sldc_PVT" (click)="viewSoLuongSanPhamCanTaoDon(dataItem)">
+                        {{ dataItem.NU02 | number : '1.' }}
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+  
+                  <kendo-grid-column field="NU03" [headerStyle]="{'width': gridHeaderWidth}" [sortable]="false">
+                    <ng-template kendoGridHeaderTemplate let-dataItem>
+                      <div class="sldc_thieu">Thiếu</div>
+                    </ng-template>
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="sldc_thieu" (click)="viewSoLuongSanPhamCanTaoDon(dataItem)">
+                        {{ dataItem.NU03 | number : '1.' }}
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+                </kendo-grid-column-group>
+  
+                <kendo-grid-column-group>
+                  <ng-template kendoGridHeaderTemplate let-dataItem>
+                    <div class="tonkho">TỒN KHO</div>
+                  </ng-template>
+  
+                  <kendo-grid-column [headerStyle]="{'width': gridHeaderWidth}"
+                    [hidden]="!SKU_KGV_checked || SKU_KGV_hidden">
+                    <ng-template kendoGridHeaderTemplate let-dataItem>
+                      <div class="slt_KGV">Kho 42</div>
+                    </ng-template>
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="slt_KGV">{{ dataItem.NU04 | number : '1.' }}</div>
+                    </ng-template>
+                  </kendo-grid-column>
+  
+                  <kendo-grid-column [headerStyle]="{'width': gridHeaderWidth}"
+                    [hidden]="!SKU_PVT_checked || SKU_PVT_hidden">
+                    <ng-template kendoGridHeaderTemplate let-dataItem>
+                      <div class="slt_PVT">Kho NVT</div>
+                    </ng-template>
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="slt_PVT">{{ dataItem.NU05 | number : '1.' }}</div>
+                    </ng-template>
+                  </kendo-grid-column>
+                </kendo-grid-column-group>
+              </app-p-kendo-grid>
+            </div>
+          </div>
+
+          <div class="gridGroup2 gridGroup" [hidden]="!sanPhamDaTaoDon_checked || !currentListMode.value">
+            <div class="grid-title">
+              <div class="grid-subtitle">SẢN PHẨM ĐÃ TẠO ĐƠN HÀNG MASTER</div>
+            </div>
+
+            <div class="grid-wrapper">
+              <app-p-kendo-grid class="grid2" [data]="gridDSView2 | async" [scrollable]="'none'" [loading]="loading"
+                [pageable]="true" [pageSizes]="pageSizes2" [pageSize]="pageSize2" [skip]="gridDSState2.skip"
+                [take]="gridDSState2.take" [sortable]="isFilterActive" [sort]="gridDSState2.sort"
+                [onSortChangeCallback]="onSortChangeCallback2" [onPageChangeCallback]="onPageChangeCallback2"
+                [selectable]="selectable">
+  
+                <kendo-grid-column #columns2 title="Tên sản phẩm" class="col_img_tensanpham_masanpham"
+                  headerClass="col_img_tensanpham_masanpham" [sortable]="false">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="img_tensanpham_masanpham">
+                      <img loading="lazy" src="{{dataItem.ImageSetting}}" alt="">
+                      <div class="tensanpham_masanpham">
+                        <div class="tensanpham">{{ dataItem.VNName }}</div>
+                        <div class="masanpham">{{ dataItem.Barcode }}</div>
+                      </div>
+                    </div>
+                  </ng-template>
+                </kendo-grid-column>
+  
+                <kendo-grid-column #columns2 field="Supplier" title="Nhà cung cấp" class="nhacungcap" [sortable]="false">
+                </kendo-grid-column>
+  
+                <kendo-grid-column #columns2 field="Brand" title="Ngành hàng" class="nganhhang" [sortable]="false">
+                </kendo-grid-column>
+  
+                <kendo-grid-column-group #columns2>
+                  <ng-template kendoGridHeaderTemplate let-dataItem>
+                    <div class="slcandieuchuyen">SL CẦN ĐIỀU CHUYỂN</div>
+                  </ng-template>
+  
+                  <kendo-grid-column field="NU01" [headerStyle]="{'width': gridHeaderWidth}"
+                    [hidden]="!SKU_KGV_checked || SKU_KGV_hidden">
+                    <ng-template kendoGridHeaderTemplate let-dataItem>
+                      <div class="sldc_KGV">Kho 42</div>
+                    </ng-template>
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="sldc_KGV">{{ dataItem.NU01 | number : '1.' }}</div>
+                    </ng-template>
+                  </kendo-grid-column>
+  
+                  <kendo-grid-column field="NU02" [headerStyle]="{'width': gridHeaderWidth}"
+                    [hidden]="!SKU_PVT_checked || SKU_PVT_hidden">
+                    <ng-template kendoGridHeaderTemplate let-dataItem>
+                      <div class="sldc_PVT">Kho NVT</div>
+                    </ng-template>
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="sldc_PVT">{{ dataItem.NU02 | number : '1.' }}</div>
+                    </ng-template>
+                  </kendo-grid-column>
+  
+                  <kendo-grid-column field="NU03" [headerStyle]="{'width': gridHeaderWidth}" [sortable]="false">
+                    <ng-template kendoGridHeaderTemplate let-dataItem>
+                      <div class="sldc_thieu">Thiếu</div>
+                    </ng-template>
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="sldc_thieu">{{ dataItem.NU03 | number : '1.' }}</div>
+                    </ng-template>
+                  </kendo-grid-column>
+                </kendo-grid-column-group>
+  
+                <kendo-grid-column #columns2 title="Mã đơn hàng" class="madonhang" [sortable]="false">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <div *ngFor="let dh of dataItem.ListOfOrders" class="madonhang" [ngStyle]="{'color': dh.Color}">
+                      {{ dh.OrderNo }}
+                    </div>
+                  </ng-template>
+                </kendo-grid-column>
+              </app-p-kendo-grid>
+            </div>
+          </div>
+
+          <div class="gridGroup3 gridGroup" [hidden]="!donHangDaTao_checked || currentListMode.value">
+            <div class="grid-title">
+              <div class="grid-subtitle">DANH SÁCH ĐƠN HÀNG MASTER</div>
+            </div>
+
+            <div class="grid-wrapper">
+              <app-p-kendo-grid class="grid3" [data]="gridDSView3 | async" [scrollable]="'none'" [loading]="loading"
+                [pageable]="true" [pageSizes]="pageSizes3" [pageSize]="pageSize3" [skip]="gridDSState3.skip"
+                [take]="gridDSState3.take" [onPageChangeCallback]="onPageChangeCallback3" [allowedMoreActionDropdown]="[]"
+                [getActionDropdownCallback]="getActionDropdownCallback3"
+                [onActionDropdownClickCallback]="onActionDropdownClickCallback3" [selectable]="selectable"
+                [rowClass]="rowCallback3" [onSelectCallback]="onSelectCallback3"
+                [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback3"
+                [getSelectionPopupCallback]="getSelectionPopupCallback3">
+  
+                <kendo-grid-column #columns2 title="Mã đơn hàng" class="madonhang">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="madonhang" [ngStyle]="{'color': dataItem.Color}">{{ dataItem.DocumentNo }}</div>
+                    <div *ngIf="dataItem.RefNo != null" class="refno" [ngStyle]="{'color': dataItem.Color}">({{
+                      dataItem.RefNo }})</div>
+                  </ng-template>
+                </kendo-grid-column>
+  
+                <kendo-grid-column #columns2 field="StatusName" title="Tình trạng" class="tinhtrang">
+                </kendo-grid-column>
+  
+                <kendo-grid-column #columns2 field="FromWarehouseName" title="Điểm lấy hàng" class="diemlayhang">
+                </kendo-grid-column>
+  
+                <kendo-grid-column-group #columns2>
+                  <ng-template kendoGridHeaderTemplate let-dataItem>
+                    <div class="thoigianxuly">Thời gian xử lý</div>
+                  </ng-template>
+  
+                  <kendo-grid-column [headerStyle]="{'width': '150px'}">
+                    <ng-template kendoGridHeaderTemplate let-dataItem>
+                      <div class="taodonhang">Tạo đơn hàng</div>
+                    </ng-template>
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="taodonhang date">{{ dataItem.RequestDate | date : 'd/M/yyyy' }}</div>
+                      <div class="taodonhang time">{{ dataItem.RequestDate | date : 'H:mm' }}</div>
+                    </ng-template>
+                  </kendo-grid-column>
+  
+                  <kendo-grid-column [headerStyle]="{'width': '150px'}">
+                    <ng-template kendoGridHeaderTemplate let-dataItem>
+                      <div class="hoantatgiaohang">Hoàn tất giao hàng</div>
+                    </ng-template>
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="hoantatgiaohang date">{{ dataItem.DeliveredDate | date : 'd/M/yyyy' }}</div>
+                      <div class="hoantatgiaohang time">{{ dataItem.DeliveredDate | date : 'H:mm' }}</div>
+                    </ng-template>
+                  </kendo-grid-column>
+                </kendo-grid-column-group>
+  
+                <kendo-grid-column #columns2 [headerStyle]="{'width': gridHeaderWidth}">
+                  <ng-template kendoGridHeaderTemplate let-dataItem>
+                    <div class="sosku">Số SKU</div>
+                  </ng-template>
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="sosku">{{ dataItem.SKUNo | number : '1.' }}</div>
+                  </ng-template>
+                </kendo-grid-column>
+  
+                <kendo-grid-column #columns2 [headerStyle]="{'width': gridHeaderWidth}">
+                  <ng-template kendoGridHeaderTemplate let-dataItem>
+                    <div class="soluongsp">Số lượng SP</div>
+                  </ng-template>
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="soluongsp">{{ dataItem.TotalProduct | number : '1.' }}</div>
+                  </ng-template>
+                </kendo-grid-column>
+  
+                <kendo-grid-column #columns2 field="CreateBy" title="Nhân sự tạo đơn hàng" class="nhansutao">
+                </kendo-grid-column>
+              </app-p-kendo-grid>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>

@@ -1,0 +1,90 @@
+::ng-deep .app-mar016-hashtag-list {
+  height: calc(93vh - 30px);
+  padding: 0 15px 35px 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+::ng-deep .app-mar016-hashtag-list .header.header-2 .nav-btn {
+  align-items: stretch;
+  column-gap: 2%;
+}
+
+::ng-deep .app-mar016-hashtag-list .header.header-2 .nav-btn .searchBtn {
+  margin-top: auto;
+}
+
+::ng-deep .app-mar016-hashtag-list .header.header-2 .nav-btn .k-multiselect {
+  width: 400px;
+  height: fit-content;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
+  background-color: white;
+  cursor: pointer;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+}
+
+::ng-deep .app-mar016-hashtag-list .header.header-2 .nav-btn .k-multiselect::after {
+  content: "\25BC";
+  position: absolute;
+  right: 10px;
+  top: 20%;
+  pointer-events: none;
+}
+
+::ng-deep .app-mar016-hashtag-list .header.header-2 .nav-btn .k-multiselect .k-multiselect-wrap {
+  width: 100%;
+  height: 100%;
+  padding: 2px 5px;
+  border: none;
+}
+
+::ng-deep .app-mar016-hashtag-list .header.header-2 .nav-btn .k-multiselect .k-multiselect-wrap li.k-button {
+  padding: 2px 5px;
+}
+
+::ng-deep .app-mar016-hashtag-list .header.header-2 .nav-btn .k-multiselect .k-searchbar {
+  pointer-events: none;
+}
+
+::ng-deep .app-mar016-hashtag-list .header.header-2 .nav-btn .k-multiselect .k-clear-value {
+  height: 100%;
+  margin-right: 25px;
+}
+
+::ng-deep .app-mar016-hashtag-list .myCustomGrid.k-grid tr td {
+  white-space: normal;
+}
+
+::ng-deep .app-mar016-hashtag-list .myCustomGrid.k-grid tr td img {
+  max-height: unset;
+}
+
+::ng-deep .app-mar016-hashtag-list .app-p-kendo-grid .red {
+  color: #EB273A;
+}
+
+::ng-deep .app-mar016-hashtag-list .app-p-kendo-grid .yellow {
+  color: #FFB900;
+}
+
+::ng-deep .app-mar016-hashtag-list .app-p-kendo-grid .green {
+  color: #1a6634;
+}
+
+::ng-deep .k-list-container .k-button:hover,
+::ng-deep .k-list-container .k-button {
+  background-color: transparent;
+}
+
+::ng-deep .popupClass .category-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 20px auto 30px;
+  align-items: center;
+}

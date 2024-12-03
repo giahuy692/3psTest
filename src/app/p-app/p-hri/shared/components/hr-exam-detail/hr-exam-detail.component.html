@@ -1,0 +1,665 @@
+<div class="exam-detail-wrapper" id="examDetailWrapper">
+  <div #staffInfo>
+    <div *ngIf="moduleName !== 'portal'" class="staff-info-wrapper" id="staff-info-wrapper" >
+      <p class="title">THÔNG TIN NHÂN SỰ LÀM BÀI</p>
+      <div class="info-box-container">
+        <div class="left-box">
+          <div class="info-row">
+            <p class="row-title">Đợt đánh giá</p>
+            <p class="info">: {{ examInfo?.QuizSessionName }}</p>
+          </div>
+          <div class="info-row">
+            <p class="row-title">Nhân sự làm bài</p>
+            <p class="info">: {{ examInfo?.StaffName }}</p>
+          </div>
+          <div class="info-row" *ngIf="examInfo?.DepartmentName">
+            <p class="row-title">Đơn vị công tác</p>
+            <p class="info light-color">: {{ examInfo?.DepartmentName }}</p>
+          </div>
+        </div>
+        <div class="right-box">
+          <p class="status-label">Tình trạng</p>
+          <p class="status-text">{{ examInfo?.StatusName }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row-wrapper" #rowWrapper 
+    [ngClass]="{ 
+      'widthStatus1': (examInfo?.StatusID >= 1 && examInfo?.StatusID <= 3 || examInfo?.SessionStatusID == 3 || examInfo?.SessionStatusID == 4) && this.windowSize > 768 , 
+      'widthStatus2': !(examInfo?.StatusID >= 1 && examInfo?.StatusID <= 3 || examInfo?.SessionStatusID >= 3) && this.windowSize > 768 || examInfo?.SessionStatusID == 1 && examInfo?.StatusID == 2 && this.windowSize > 768,
+      'widthStatus3': examInfo?.SessionStatusID == 5 && (examInfo?.StatusID >= 1 && examInfo?.StatusID <= 3) && this.windowSize > 768 
+    }">
+    <div class="question-status-wrapper">
+      <div class="general-info-wrapper">
+        <p class="label-titlte">
+          <span imageUrl="assets/img/icon/icon_title.svg" kendoButton></span>
+          TÌNH TRẠNG TRẢ LỜI CÂU HỎI
+        </p>
+        <div class="view-transform-btn-group">
+          <span
+            [style.color]="!isSorted ? '#1A6634' : '#959DB3'"
+            class="k-icon k-i-grid-layout pointer-style"
+            (click)="onRestoreItemsOrder()"
+            title="Hiển thị theo thứ tự câu hỏi"
+          ></span>
+          <span
+            *ngIf="!isSorted"
+            class="view-change-icon"
+            kendoButton
+            imageUrl="assets/img/icon/icon_questionGroupPink.svg"
+            (click)="onSortItemsBySelection()"
+            title="Hiển thị các câu hỏi chưa được làm đầu tiên"
+          ></span>
+          <span
+            *ngIf="isSorted"
+            class="view-change-icon"
+            kendoButton
+            imageUrl="assets/img/icon/icon_questionGroupGreen.svg"
+            title="Hiển thị các câu hỏi chưa được làm đầu tiên"
+          ></span>
+        </div>
+        <div
+          class="answered-question-wrapper"
+          *ngIf="moduleName === 'portal' && examInfo?.StatusID === 1"
+        >
+          <p class="answered-quantity">
+            {{ answeredQuestion ? answeredQuestion : 0 }}
+          </p>
+          <p class="total-question">
+            /{{ listExamQuestion?.length }} câu hỏi đã trả lời
+          </p>
+        </div>
+        <div
+          class="statusAppeal no-wrap-text ml-1"
+          *ngIf="
+            examInfo?.SessionStatusID >= 3 &&
+            examInfo?.StatusID == 2 &&
+            examInfo?.TypeOfSession != 1
+          "
+        >
+          <div>
+            <span class="countAppeal">{{
+              answeredQuestion ? answeredQuestion : 0
+            }}</span
+            ><span class="totalAppeal"
+              >/{{ listExamQuestion.length }} câu hỏi phúc khảo</span
+            >
+          </div>
+          <div class="dateAppeal d-flex">
+            <div
+              *ngIf="statusAppeal != 4"
+              class="appealSentDate d-flex align-item-center"
+              title="{{ statusAppeal == 0 ? 'Hạn chốt thí sinh gửi y/c phúc khảo' : 'Ngày thí sinh gửi y/c phúc khảo' }}" >
+                <span class="progressname pr-1"[ngStyle]="{ 'color': (statusAppeal == 0) ? '#D99D00' : (statusAppeal == null) ? '#EB273A': '#5A6276' }">Gửi yêu cầu:</span>
+                <span>{{ dateSentAppeal | date : "dd/MM/yyyy HH:mm" : "Indochina Time" : "vi_VN" }}</span>
+            </div>
+            <div
+              *ngIf="statusAppeal == 4"
+              class="appealReturnDate d-flex align-item-center"
+              title="Ngày thí sinh được trả y/c phúc khảo về để chỉnh sửa" >
+              <span class="progressname pr-1" [ngStyle]="{ 'color': (statusAppeal == 4) ? '#D99D00' : '#5A6276' }">Trả về:</span> 
+              <span>{{ dateSentAppeal | date : "dd/MM/yyyy HH:mm" : "Indochina Time" : "vi_VN" }}</span>
+            </div>
+            <div class="completeDate d-flex align-items-center" *ngIf="statusAppeal == 3">
+              <p class="line pr-1">|</p>
+              <div title="Ngày hoàn tất chấm y/c phúc khảo của thí sinh">
+                <span class="progressname pr-1" [ngStyle]="{ 'color': (statusAppeal == 3) ? '#D99D00' : '#5A6276' }">Hoàn tất:</span> 
+                <span>{{ dateFinishAppeal
+                    | date : "dd/MM/yyyy HH:mm" : "Indochina Time" : "vi_VN" }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Start: Header mobile -->
+      <div class="header-wrapper align-items-center" *ngIf="moduleName === 'portal'">
+        <div class="left-side">
+          <!-- Start: logo hachihachi (mobile)-->
+          <img loading="lazy" class="logo-icon" (click)="examInfo?.StatusID !== 1 ? onNavigatePage(0): null" src="assets/img/icon/hachi_bee.svg" />
+          <!-- End: logo hachihachi -->
+
+          <!-- Start: breadcrum (Mobile) -->
+          <div class="navigation-wrapper">
+            <!-- <p class="title">KIỂM TRA NĂNG LỰC</p>
+                        <p class="title sub-nav"> {{ExamSession.QuizSessionName}} </p> -->
+            <app-p-kendo-breadcrumb></app-p-kendo-breadcrumb>
+          </div>
+          <!-- End: breadcrum (Mobile) -->
+        </div>
+
+        <div class="d-flex col-gap-10">
+          <!-- Start: Thời gian làm bài còn lại (Mobile)  -->
+            <div
+            class="exam-info-wrapper rest-time-wrapper text-center"
+            *ngIf="
+              examInfo?.SessionStatusID == 1 &&
+              examInfo?.StatusID === 1 &&
+              examInfo?.RemainDuration !== null
+            "
+          >
+            <div class="webkit-center"><p class="title">Thời gian còn lại</p></div>
+            <div>
+              <p class="info">
+                {{ examInfo?.RemainDuration | convertMinuteToString }}
+              </p>
+            </div>
+          </div>
+          <!-- End: Thời gian làm bài còn lại (Mobile)  -->
+
+          <!-- Start: Lý do dừng phúc khảo (Mobile) -->
+          <kendo-button iconClass="k-icon k-i-warning color-red" *ngIf="examInfo?.StatusID === 3" (click)="isStopReason = true"></kendo-button>
+          <!-- End: Lý do dừng phúc khảo (Mobile) -->
+
+          <!-- Start: Thời gian làm bài (Mobile)  -->
+          <div class="exam-info-wrapper rest-time-wrapper"
+            *ngIf="(examInfo?.SessionStatusID == 3 || examInfo?.SessionStatusID == 4) && examInfo?.StatusID === 2"
+          >
+            <div class="webkit-center"><p class="title">Thời gian làm bài</p></div>
+            <div>
+              <p class="info">
+                {{ isReport ? examInfo?.FinalDuration : examInfo?.Duration | convertMinuteToString }}
+              </p>
+            </div>
+          </div>
+          <!-- End: Thời gian làm bài (Mobile)  -->
+
+          <!-- Start: Điểm tổng của bài thi (Mobile) -->
+          <div
+            class="exam-info-wrapper points-wrapper"
+            *ngIf="
+              (examInfo?.EvaluationView == 0 && examInfo?.StatusID == 2) && examInfo?.SessionStatusID >= 3 ||
+              (examInfo?.EvaluationView == 1 && examInfo?.SessionStatusID >= 3)
+            "
+          >
+            <span class="title text-center">Điểm đánh giá</span>
+            <div
+              class="d-flex align-content-center col-gap-10 k-justify-content-evenly"
+            >
+              <span
+                class="info"
+                [ngClass]="{
+                  markOld:
+                    examInfo?.SessionStatusID === 5 &&
+                    examInfo?.TypeOfSession !== 1 &&
+                    (examInfo?.EvaluationView == 0 ||
+                      examInfo?.EvaluationView == 1)
+                }"
+                >{{ (examInfo?.FinalMark | number: '1.2-2') || 0 }}</span
+              >
+              <span
+                class="info"
+                *ngIf="
+                  examInfo?.SessionStatusID === 5 &&
+                  examInfo?.TypeOfSession !== 1 &&
+                  (examInfo?.EvaluationView == 0 || examInfo?.EvaluationView == 1)
+                "
+                >{{ (examInfo?.ReEvalMark | number: '1.2-2') || 0 }}</span
+              >
+            </div>
+          </div>
+          <!-- End: Điểm tổng của bài thi  -->
+          
+         
+        </div>
+      </div>
+      <!-- End: Header mobile -->
+
+      <!-- slide câu hỏi -->
+      <div
+        class="question-quantity-slide"
+        #questionSliderWrapper
+        >
+        <div
+          class="statusAppeal"
+          *ngIf="
+            examInfo?.SessionStatusID >= 3 &&
+            examInfo?.StatusID == 2 &&
+            examInfo?.TypeOfSession != 1
+          "
+        >
+          <!-- Start: Số câu hỏi được phúc khảo -->
+          <div class="d-flex col-gap-10 justify-content-between align-items-center">
+            <div>
+              <span class="countAppeal">{{ answeredQuestion ? answeredQuestion : 0 }}</span>
+              <span class="totalAppeal">/{{ listExamQuestion.length }} câu hỏi phúc khảo</span>
+            </div>
+
+            <!-- Start: Thời gian làm bài thi (Mobile) -->
+            <div *ngIf="examInfo?.SessionStatusID == 5 && examInfo?.StatusID === 2">
+              <span class="titleTimeDuration">Thời gian làm bài thi: </span>
+              <span class="timeDuration">{{ examInfo?.Duration | convertMinuteToString }}</span>
+            </div>
+            <!-- End: Thời gian làm bài thi (Mobile) -->
+          </div>
+          <!-- End: Số câu hỏi được phúc khảo -->
+
+          <div ></div>
+          <!-- Start: Giai đoạn gửi phúc khảo mobile -->
+          <div class="dateAppeal d-flex">
+            <div
+              *ngIf="statusAppeal != 4"
+              class="appealSentDate d-flex align-item-center"
+              title="{{ statusAppeal == 0 ? 'Hạn chốt thí sinh gửi y/c phúc khảo' : 'Ngày thí sinh gửi y/c phúc khảo' }}" >
+                <span class="progressname pr-1"[ngStyle]="{ 'color': (statusAppeal == 0) ? '#D99D00' : (statusAppeal == null) ? '#EB273A': '#5A6276' }">Gửi y/c:</span>
+                <span>{{ dateSentAppeal | date : "dd/MM/yyyy HH:mm" : "Indochina Time" : "vi_VN" }}</span>
+            </div>
+            <div
+              *ngIf="statusAppeal == 4"
+              class="appealReturnDate d-flex align-item-center"
+              title="Ngày thí sinh được trả y/c phúc khảo về để chỉnh sửa" >
+              <span class="progressname pr-1" [ngStyle]="{ 'color': (statusAppeal == 4) ? '#D99D00' : '#5A6276' }">Trả về:</span> 
+              <span>{{ dateSentAppeal | date : "dd/MM/yyyy HH:mm" : "Indochina Time" : "vi_VN" }}</span>
+            </div>
+            <p class="line pr-1" *ngIf="statusAppeal == 3">|</p>
+            <div class="completeDate d-flex align-items-center" *ngIf="statusAppeal == 3">
+              <div title="Ngày hoàn tất chấm y/c phúc khảo của thí sinh">
+                <span class="progressname pr-1" [ngStyle]="{ 'color': (statusAppeal == 3) ? '#D99D00' : '#5A6276' }">Hoàn tất:</span> 
+                <span>{{ dateFinishAppeal
+                    | date : "dd/MM/yyyy HH:mm" : "Indochina Time" : "vi_VN" }}</span>
+              </div>
+            </div>
+          </div>
+          <!-- End: Giai đoạn gửi phúc khảo  -->
+        </div>
+        <div class="Question">
+          <kendo-button
+            class="reverse-button"
+            iconClass="k-icon k-i-arrow-60-left"
+            (click)="onPrevPaginate()"
+            title="Trang trước"
+          ></kendo-button>
+          <div
+            class="navigationPanel"
+            id="navigationPanel"
+            #questionSliderbutton
+          >
+            <div class="page-button">
+              <div
+                *ngFor="let item of visibleQuestions"
+                class="btn"
+                [ngClass]="{
+                  'selectedQuestion': selectedQuestion === item.OrderBy,
+                  'answered': onIsQuestionSelected(item),
+                  'appealed': onIsQuestionApealed(item)
+                }"
+                (click)="onSortByCodeAndMoveToTop(item.OrderBy)"
+              >
+                <span class="text">{{ item.OrderBy }}</span>
+              </div>
+            </div>
+          </div>
+          <kendo-button
+            class="next-button"
+            iconClass="k-icon k-i-arrow-60-right"
+            (click)="onNextPaginate()"
+            title="Trang sau"
+          ></kendo-button>
+        </div>
+      </div>
+    </div>
+    <div class="right-row-wrapper justify-content-center flex-column">
+      <!-- Start: Nút gửi phúc khảo (web)-->
+      <div *ngIf=" examInfo?.SessionStatusID == 3 &&
+        examInfo?.EvaluationView !== 2 && windowSize > 768 &&
+        isShowSentAppeal && (statusAppeal == 0 || statusAppeal == 4) && examInfo?.TypeOfSession !== 1 &&
+        moduleName === 'portal'" class="btnSentAppeal" class="text-center align-self-center"
+      >
+        <button
+          kendoButton iconClass="k-icon k-i-redo" class="btnGuiDuyet"
+          (click)="openDialogAppealExam()" [disabled]="answeredQuestion == 0"
+        > GỬI PHÚC KHẢO </button>
+      </div>
+      <!-- End: Nút gửi phúc khảo (web)-->
+      <div class="d-flex justify-content-center col-gap-10 heightRight">
+
+        <!-- Start: Nút nộp bài làm (web) -->
+        <div
+          class="submit-btn"
+          *ngIf="
+            examInfo?.SessionStatusID == 1 &&
+            examInfo?.StatusID === 1 &&
+            moduleName === 'portal'
+          "
+        >
+          <button
+            kendoButton
+            imageUrl="assets/img/icon/icon_check_white.svg"
+            (click)="onOpenDialogExam()"
+          >
+            NỘP BÀI LÀM
+          </button>
+        </div>
+        <!-- End: Nút nộp bài làm (web) -->
+  
+        <!-- Start: Lý do dừng bài thi (web) -->
+        <div class="text-center" *ngIf="examInfo?.StatusID === 3">
+          <p class="font-weight-bold text-uppercase color-red">Dừng bài thi</p>
+          <p class="mt-2 text-ellipsis cursor-pointer" title="{{examInfo?.StopReason}}" (click)="isStopReason = true">{{examInfo?.StopReason}}</p>
+        </div>
+        <!-- End: Lý do dừng bài thi (web) -->
+  
+        <!-- Start: Thời gian còn lại (web) -->
+        <div
+          class="exam-info-wrapper rest-time-wrapper text-center"
+          *ngIf="examInfo?.SessionStatusID == 1 && examInfo?.StatusID === 1"
+        >
+          <div class="webkit-center"><p class="title">Thời gian còn lại</p></div>
+          <div>
+            <p class="info">
+              {{ examInfo?.RemainDuration | convertMinuteToString }}
+            </p>
+          </div>
+        </div>
+        <!-- End: Thời gian còn lại (web) -->
+  
+        <!-- Start: Thời gian làm bài (web) -->
+        <div
+          class="exam-info-wrapper rest-time-wrapper text-center"
+          *ngIf="examInfo?.SessionStatusID >= 3 && examInfo?.StatusID === 2"
+        >
+          <div class="webkit-center"><p class="title">Thời gian làm bài</p></div>
+          <div>
+            <p class="info">
+              {{ examInfo?.Duration | convertMinuteToString }}
+            </p>
+          </div>
+        </div>
+        <!-- End: Thời gian làm bài (web) -->
+  
+        <!-- Start: Điểm đánh giá (web) -->
+        <div
+          class="exam-info-wrapper points-wrapper"
+          *ngIf="
+          (examInfo?.EvaluationView == 0 && examInfo?.StatusID == 2) && examInfo?.SessionStatusID >= 3 ||
+          (examInfo?.EvaluationView == 1 && examInfo?.SessionStatusID >= 3) || examInfo?.EvaluationView == 2 && moduleName == 'hri' && examInfo?.StatusID == 2 && examInfo?.SessionStatusID >= 3
+          "
+        >
+          <span class="title">Điểm đánh giá</span>
+          <span
+            class="info"
+            [ngClass]="{
+              markOld:
+                examInfo?.SessionStatusID === 5 &&
+                (examInfo?.EvaluationView == 0 ||
+                  examInfo?.EvaluationView == 1) &&
+                examInfo?.TypeOfSession !== 1
+            }"
+            >{{ (examInfo?.FinalMark | number: '1.2-2') || 0 }}</span
+          >
+        </div>
+        <!-- End: Điểm đánh giá (web) -->
+  
+        <!-- Start: Điểm Phúc Khảo (web) -->
+        <div
+          class="exam-info-wrapper points-wrapper"
+          *ngIf="
+            examInfo?.SessionStatusID === 5 &&
+            ((examInfo?.EvaluationView == 0 || examInfo?.EvaluationView == 1) && examInfo?.TypeOfSession !== 1) ||
+            (examInfo?.EvaluationView == 2 && moduleName == 'hri' && (examInfo?.StatusID == 2 || examInfo?.SessionStatusID >= 3))
+          "
+        >
+          <span class="title">Điểm Phúc Khảo</span>
+          <span class="info">{{
+            (examInfo?.ReEvalMark | number: '1.2-2') || 0
+          }}</span>
+        </div>
+        <!-- End: Điểm Phúc Khảo (web) -->
+      </div>
+    </div>
+  </div>
+  <!-- {{windowSize}} - {{heightRowWrapper}} - {{heightButtonWrapper}} - {{windownHeight}} -->
+  <div class="ListQuestion" id="ListQuestion">
+    <!-- Start: danh sách câu hỏi  -->
+    <div class="question-list-wrapper">
+      <div
+        class="question-item-container"
+        *ngFor="let item of listExamQuestion"
+        id="question-{{ item.OrderBy }}"
+      >
+        <app-hr-exam-question
+          [index]="item.OrderBy"
+          [question]="item"
+          [listAnswerQuestion]="item.ListAnswers"
+          [isShowFinalMarkQuestion]="
+              (examInfo?.EvaluationView == 0 && examInfo?.StatusID == 2) && examInfo?.SessionStatusID >= 3 ||
+              (examInfo?.EvaluationView == 1 && examInfo?.SessionStatusID >= 3) || examInfo?.EvaluationView == 2 && moduleName == 'hri' && examInfo?.StatusID == 2 && examInfo?.SessionStatusID >= 3
+          "
+          [readonlyEssay]="
+            (examInfo?.StatusID !== 1 && moduleName === 'portal') ||
+            moduleName === 'hri'
+          "
+          [disabledMultiple]="
+            (examInfo?.StatusID !== 1 && moduleName === 'portal') ||
+            moduleName === 'hri'
+          "
+          [disabledOneChoice]="
+            (examInfo?.StatusID !== 1 && moduleName === 'portal') ||
+            moduleName === 'hri'
+          "
+          [isViewCorrect]="
+              (examInfo?.EvaluationView == 0 && examInfo?.StatusID == 2) && examInfo?.SessionStatusID >= 3 ||
+              (examInfo?.EvaluationView == 1 && examInfo?.SessionStatusID >= 3) || examInfo?.EvaluationView == 2 && moduleName == 'hri' && (examInfo?.StatusID == 2 || examInfo?.SessionStatusID >= 3)
+          "
+          [isViewInCorrect]="
+              (examInfo?.EvaluationView == 0 && examInfo?.StatusID == 2) && examInfo?.SessionStatusID >= 3 ||
+              (examInfo?.EvaluationView == 1 && examInfo?.SessionStatusID >= 3) || examInfo?.EvaluationView == 2 && moduleName == 'hri' && (examInfo?.StatusID == 2 || examInfo?.SessionStatusID >= 3)
+          "
+          [isQuestionReviewed]="onIsQuestionApealed(item)"
+          [isQuestionSelectedAnswer]="onIsQuestionSelected(item)"
+          (selectAnswer)="onUpdateQuestion($event)"
+          (valueChangeEssay)="windowSize <= 500 ? onValueChangeEssay($event) : null"
+          [isShowFinalMarkAppeal]="
+            examInfo?.SessionStatusID === 5 &&
+            (examInfo?.EvaluationView == 0 || examInfo?.EvaluationView == 1) &&
+            examInfo?.TypeOfSession !== 1
+          "
+          [isQuestionAppeal]="
+            examInfo?.SessionStatusID == 3 && moduleName === 'portal' &&
+            examInfo?.TypeOfSession !== 1 && examInfo?.EvaluationView !== 2 &&
+            isShowSentAppeal && (item.ListReEval[0]?.Reason === ''|| statusAppeal == 0 || statusAppeal == 4)
+          "
+          [readOnlyQuestionAppeal]="!isShowSentAppeal || isShowSentAppeal && 1 <= statusAppeal && statusAppeal <= 3 ||
+            examInfo?.SessionStatusID >= 4 || 1 <= statusAppeal && statusAppeal <= 3 || moduleName !== 'portal'
+          "
+          (blurAppeal)="windowSize > 500 ? onBlurAppeal($event, item) : null"
+          (valueChangeAppeal)="windowSize <= 500 ? onValueChangeAppeal($event, item):null"
+          (buttonAppealClick)="onLoopCheckItemDefaultReEval(item)"
+        ></app-hr-exam-question>
+  
+        
+        <!-- Thứ tự câu hỏi -->
+        <!-- <div class="question-index">
+                  <p class="index-text"
+                      [ngStyle]="{'background': isQuestionSelected(item) ? '#1A6634' : '#FFF', 'color': isQuestionSelected(item) ? '#FFF' : '#5A6276'}"
+                      >
+                      Câu {{item.OrderBy}}
+                  </p>
+                  <div class="answered-question-wrapper" 
+                      *ngIf="examInfo?.StatusID === 2 && examInfo?.EvaluationView === 0 ||
+                              examInfo?.StatusID === 2 && examInfo?.EvaluationView === 1 && examInfo?.SessionStatusID == 2
+                  ">
+                      <p class="answered-quantity">({{item?.Mark ? item?.Mark : 0}}</p>
+                      <p class="total-question">/{{item?.MaxMark ? item?.Mark : 0}} đ)</p>
+                  </div>
+              </div>
+              <div class="question-info">
+                  <div [innerHTML]="item.Remark" ></div>
+                  <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(item.Question)"></div>
+                  <div class="answer-list">
+                      <ng-container *ngFor="let answer of item.ListAnswers">  -->
+        <!-- One choice -->
+        <!-- <div class="answer-item" *ngIf="item.TypeOfQuestion === 1 || item.TypeOfQuestion === 4">
+                              <span kendoButton *ngIf="(examInfo?.StatusID === 2 && examInfo?.EvaluationView === 0 ||
+                              examInfo?.StatusID === 2 && examInfo?.EvaluationView === 1 && examInfo?.SessionStatusID == 2) && answer.Selected && answer.IsRight" class="checkbox-icon" imageUrl="assets/img/icon/icon_check_right.svg"></span>
+                              <span kendoButton *ngIf="(examInfo?.StatusID === 2 && examInfo?.EvaluationView === 0 ||
+                              examInfo?.StatusID === 2 && examInfo?.EvaluationView === 1 && examInfo?.SessionStatusID == 2) && answer.Selected && !answer.IsRight"  class="checkbox-icon" imageUrl="assets/img/icon/icon_check_wrong.svg"></span>
+                              <div class="selection-wrapper d-flex align-items-center">
+                                  <input
+                                      type="radio" 
+                                      [disabled]="examInfo?.StatusID !== 1 && moduleName === 'portal' || moduleName === 'hri'" type="radio" 
+                                      [checked]="answer.Selected"
+                                      [name]="item.Code"
+                                      (change)="selectRadioAnswer(answer.AnswerID, item.ListAnswers)"
+                                      class="k-radio k-radio-md" 
+                                      id="radioButtonName"
+                                  />
+                                  <p class="answer-name">{{answer.Answer}}</p>
+                              </div>
+                          </div> -->
+        <!-- Multiple choices -->
+        <!-- <div class="answer-item" *ngIf="item.TypeOfQuestion === 2">
+                              <span kendoButton *ngIf="(examInfo?.StatusID === 2 && examInfo?.EvaluationView === 0 ||
+                              examInfo?.StatusID === 2 && examInfo?.EvaluationView === 1 && examInfo?.SessionStatusID == 2) && answer.Selected && answer.IsRight" class="checkbox-icon" imageUrl="assets/img/icon/icon_check_right.svg"></span>
+                              <span kendoButton *ngIf="(examInfo?.StatusID === 2 && examInfo?.EvaluationView === 0 ||
+                              examInfo?.StatusID === 2 && examInfo?.EvaluationView === 1 && examInfo?.SessionStatusID == 2) && answer.Selected && !answer.IsRight"  class="checkbox-icon" imageUrl="assets/img/icon/icon_check_wrong.svg"></span>
+                              <div class="selection-wrapper d-flex  align-items-center"> 
+                                  <input type="checkbox" 
+                                      [disabled]="examInfo?.StatusID !== 1 && moduleName === 'portal' || moduleName === 'hri'" 
+                                      type="checkbox" 
+                                      kendoCheckBox 
+                                      [(ngModel)]="answer.Selected"
+                                      (change)="selectCheckboxAnswer(answer.AnswerID, item.ListAnswers)"
+                                  />
+                                  <p class="answer-name">{{answer.Answer}}</p>
+                              </div>
+                          </div>
+                      </ng-container> -->
+        <!-- Essay -->
+        <!-- <div class="answer-item" *ngIf="item.TypeOfQuestion === 3">
+                          <app-p-textarea class="essay-answer-input" 
+                          (blur)="essayAnswerChanged(item)" [readonly]="examInfo?.StatusID !== 1 && moduleName === 'portal' || moduleName === 'hri'" 
+                          [(ngModel)]="item.Answer" 
+                          [placeHolder]="item.RefAnswer"
+                          [propName]="'Answer'"></app-p-textarea>
+                      </div>
+                  </div>  
+              </div> -->
+      </div>
+    </div>
+    <!-- End: danh sách câu hỏi  -->
+  </div>
+
+ <div class="wrapper-button" #wrapperButton >
+    <!-- Start: Nút Nộp bài và nút gửi phúc khảo  -->
+    <div *ngIf="windowSize <= 771">
+      <!-- Start: Nút nộp bài (mobile) -->
+      <div
+      class="submit-btn"
+      *ngIf="
+        examInfo?.SessionStatusID == 1 &&
+        examInfo?.StatusID === 1 &&
+        moduleName === 'portal'
+      "
+      >
+      <button
+        kendoButton
+        imageUrl="assets/img/icon/icon_check_white.svg"
+        (click)="onOpenDialogExam()"
+      >
+        NỘP BÀI LÀM
+      </button>
+      </div>
+      <!-- End: Nút nộp bài (mobile) -->
+  
+      <!-- Start: Nút gửi phúc khảo (Mobile) -->
+      <div
+      class="submit-btn"
+      *ngIf="
+        examInfo?.SessionStatusID == 3 &&
+        examInfo?.TypeOfSession !== 1 &&
+        moduleName === 'portal' &&
+        isShowSentAppeal &&
+        (statusAppeal == 0 || statusAppeal == 4)
+      "
+      >
+      <button
+        kendoButton
+        iconClass="k-icon k-i-redo"
+        (click)="onOpenDialogExam()"
+        [disabled]="answeredQuestion == 0"
+      >
+        GỬI PHÚC KHẢO
+      </button>
+      </div>
+      <!-- End: Nút gửi phúc khảo (Mobile) -->
+ </div>
+  </div>
+</div>
+
+<!-- Start: Dialog -->
+<kendo-dialog
+  class="dialog"
+  [minHeight]="146"
+  [minWidth]="400"
+  *ngIf="showDialog"
+>
+  <div class="dialog-content">
+    <div class="firstContent" *ngIf="examInfo?.StatusID === 1">
+      Bạn chắc chắn muốn NỘP BÀI LÀM <br />
+      hay không?<span *ngIf="falseItems != 0"
+        >(hiện bạn còn
+        <span class="err"
+          ><span class="err" *ngIf="falseItems < 10">0</span
+          >{{ falseItems }} câu chưa làm</span
+        >)</span
+      >
+    </div>
+    <div
+      class="firstContent"
+      *ngIf="examInfo?.EvaluationView !== 2 && examInfo?.SessionStatusID === 3"
+    >
+      Số câu phúc khảo đã chọn:
+      <span class="suss"
+        ><span class="err">{{ answeredQuestion ? answeredQuestion : 0 }}</span>
+        / {{ listExamQuestion.length }}</span
+      ><br /><br />
+      Bạn chắc chắn muốn GỬI PHÚC KHẢO hay không?
+    </div>
+  </div>
+
+  <div class="dialog-footer">
+    <button
+      kendoButton
+      (click)="
+        examInfo?.SessionStatusID === 1 && examInfo?.StatusID === 1
+          ? onSubmit(true)
+          : examInfo?.SessionStatusID === 3
+          ? onAppealExam(true)
+          : null
+      "
+      *ngIf="
+        (examInfo?.SessionStatusID === 1 &&
+          examInfo?.StatusID === 1 &&
+          falseItems == 0) ||
+        examInfo?.SessionStatusID === 3
+      "
+    >
+      ĐỒNG Ý
+    </button>
+    <button
+      *ngIf="examInfo?.SessionStatusID === 1 && examInfo?.StatusID === 1"
+      kendoButton
+      (click)="onSubmit(false)"
+    >
+      {{ falseItems === 0 ? "HỦY" : "ĐÓNG" }}
+    </button>
+    <button
+      *ngIf="examInfo?.SessionStatusID === 3"
+      kendoButton
+      (click)="onAppealExam(false)"
+    >
+      ĐÓNG
+    </button>
+  </div>
+</kendo-dialog>
+
+<app-p-kendo-dialog *ngIf="isStopReason" [width]="334" [iconTitle]="'k-icon k-i-warning'" [cancelText]="'ĐÓNG'" [title]="'Bài thi của bạn đã bị dừng!'" (close)="closeStopReason()" [dialogType]="dialogWarning">
+    <div class="text-center" >
+      <p class="font-weight-bold text-uppercase color-red">Lý do dừng bài thi</p>
+      <p class="mt-2">{{examInfo?.StopReason}}</p>
+    </div>
+</app-p-kendo-dialog>
+<!-- End: Dialog  -->

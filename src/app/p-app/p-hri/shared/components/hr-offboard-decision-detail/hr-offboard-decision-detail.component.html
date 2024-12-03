@@ -1,0 +1,966 @@
+<kendo-drawer-container id="drawerContainerRight" class="drawer-container">
+    <kendo-drawer id="drawerRight" #drawerRight position="end" mode="overlay" [(expanded)]="isOpenDrawer" class="drawer"
+        [autoCollapse]="false">
+        <ng-template kendoDrawerHeaderTemplate>
+            <div class="drawer-profile">
+                <div class="title">
+                    THÔNG TIN CÔNG VIỆC
+                </div>
+
+                <div class="profile-container">
+                
+                    <div class="info-task_block">
+                        <div class="block">
+                            <div class="box-area">
+                                <div class="label">
+                                    Tên công việc<span class="important">(*)</span>
+                                </div>
+                                <app-p-textbox [(ngModel)]="taskItem.TaskName" [propName]="['TaskName']"
+                                    [disabled]="isSeeDetail"></app-p-textbox>
+                            </div>
+                        </div>
+                
+                
+                        <div class="block block-description-task">
+                            <div class="box-area">
+                                <div class="label">
+                                    Mô tả công việc
+                                </div>
+                                <app-p-textarea #reasonDesInput [(ngModel)]="taskItem.Description" class="text-area"
+                                    (keydownEnter)="reasonDesInput.onBlur('e')" [propName]="['Description']"
+                                    [disabled]="isSeeDetail"></app-p-textarea>
+                            </div>
+                        </div>
+                
+                
+                        <div class="block block-orderby">
+                            <div class="box-area">
+                                <div class="label">
+                                    Thứ tự thực hiện
+                                </div>
+                                <app-p-numeric-textbox propName="" [(ngModel)]="taskItem.OrderBy" [min]="1" [disabled]="isSeeDetail">
+                                </app-p-numeric-textbox>
+                            </div>
+                        </div>
+                
+                        <div class="block block-assignee">
+                            <div class="box-area">
+                                <div class="label">
+                                    Thực hiện bởi <span class="important">(*)</span>
+                                </div>
+                                <p-kendo-dropdownlist (opened)="onStyleForApplyHR()" [hasValueNull]="true" [filterable]="true"
+                                    [data]="listApprover" [textField]="'PositionName'" [valueField]="'Position'"
+                                    [searchFields]="['PositionName']" (valueChange)="onValueChanged(['curPositionAssignee'], 2, $event)"
+                                    [(ngModel)]="curPositionAssignee" [disabled]="isSeeDetail">
+                                </p-kendo-dropdownlist>
+                            </div>
+                        </div>
+                
+                
+                        <div class="block block-duration">
+                            <div class="box-area">
+                                <div class="label">
+                                    Thời gian hoàn tất (ngày)<span class="important">(*)</span>
+                                </div>
+                                <app-p-numeric-textbox propName="DateDuration" [(ngModel)]="taskItem.DateDuration" [min]="1"
+                                    [disabled]="isSeeDetail">
+                                </app-p-numeric-textbox>
+                            </div>
+                        </div>
+                
+                
+                        <div class="block">
+                            <div class="box-area">
+                                <div class="label">
+                                    Loại nhân sự áp dụng
+                                </div>
+                                <p-kendo-dropdownlist [hasValueNull]="true" [filterable]="true" [searchFields]="['ListName']"
+                                    [data]="listAssignee" [textField]="'ListName'" [valueField]="'OrderBy'" [disabled]="true"
+                                    [(ngModel)]="curTypeAssignee">
+                                </p-kendo-dropdownlist>
+                            </div>
+                        </div>
+                
+                
+                
+                
+                        <div class="block block-approved">
+                            <div class="box-area">
+                                <div class="label field-text">
+                                    <span>
+                                        Duyệt bởi <span class="important">(*)</span>
+                                    </span>
+                
+                                    <div class="checkbox-area">
+                                        <input (click)="onCheckedLeader(taskItem)" type="checkbox" class="k-checkbox"
+                                            [disabled]="isSeeDetail" />
+                                        <div class="title-checkbox" [ngClass]="{'disable' : isSeeDetail}">Trưởng đơn vị, Q.lý điểm
+                                            làm việc</div>
+                                    </div>
+                                </div>
+                                <p-kendo-dropdownlist [hasValueNull]="true" [filterable]="true" [data]="listApprover2"
+                                    [(ngModel)]="curPositionApprove" [textField]="'PositionName'" [valueField]="'Position'"
+                                    [searchFields]="['PositionName']" (valueChange)="onValueChanged(['curPositionApprove'], 2, $event)"
+                                    [disabled]="isSeeDetail || taskItem.IsLeaderMonitor">
+                                </p-kendo-dropdownlist>
+                            </div>
+                        </div>
+                
+                        <div class="block">
+                            <div class="box-area">
+                                <div class="label">
+                                    Ghi chú
+                                </div>
+                                <app-p-textarea class="text-area" [(ngModel)]="taskItem.Remark" [disabled]="isSeeDetail"
+                                    [propName]="['Remark']"></app-p-textarea>
+                            </div>
+                        </div>
+                
+
+                
+                        <!-- LÝ DO KHÔNG THỰC HIỆN-->
+                        <!-- <div *ngIf="shouldShowElement()" class="block block-approved">
+                            <div class="box-area">
+                                <div class="label field-text">
+                                    <span> Lý do {{titleReason.toLowerCase()}} </span>
+                                </div>
+                                <p-kendo-dropdownlist [value]="handleGetHR(MultiForm.get('ListOfTypeStaff').value)"
+                                    [disabled]="isView || !resquestChangeStatus" [hasValueNull]="true" [filterable]="true"
+                                    [searchFields]="['ListName']" [data]="listReason" [textField]="'ListName'" [valueField]="'Code'"
+                                    [defaultItem]="defaultHR" [valuePrimitive]="true" formControlName="Reason"
+                                    (valueChange)="onDropdownClick($event,'Reason')">
+                                    <ng-template kendoDropDownListItemTemplate let-dataItem>
+                                        <span>{{ dataItem.ListName }}</span>
+                                    </ng-template>
+                                </p-kendo-dropdownlist>
+                            </div>
+                        </div> -->
+                
+                        <!-- Mô tả lý do -->
+                        <!-- <div *ngIf="shouldShowElement()" class="block block-description-task">
+                            <div class="box-area">
+                                <div class="label">Mô tả lý do</div>
+                                <app-p-textarea [disabled]="isView || !resquestChangeStatus" class="Description" [resizable]="'none'"
+                                    propName="ReasonDescription" formControlName="ReasonDescription">
+                                </app-p-textarea>
+                            </div>
+                        </div> -->
+                    </div>
+                    <!-- Lưu ý -->
+                <div class="important">(*) Trường bắt buộc nhập</div>
+                </div>
+
+                <div class="btn-wrapper">
+                    <button kendoButton class="btn-hachi hachi-primary hachi-secondary" (click)="onToggleDrawer(false)">ĐÓNG</button>
+                    
+                    <button kendoButton class="btn-hachi hachi-primary" *ngIf="taskItem.Code == 0" (click)="onDrawerBtnClick('Add')">
+                        THÊM MỚI
+                    </button>
+                    
+                    <button kendoButton class="btn-hachi hachi-primary"
+                        *ngIf="petition.Status != 4 && taskItem.Code != 0 && isEdit && taskItem.ListHRDecisionTaskLog[0].Status != 6"
+                        (click)="onDrawerBtnClick('update')">
+                        CẬP NHẬT
+                    </button>
+                    
+                    <button kendoButton class="btn-hachi hachi-warning" 
+                    *ngIf="petition.Status != 4 && taskItem.Code != 0 && taskItem.ListHRDecisionTaskLog[0].Status == 1 
+                                        && taskItem.TypeData == 4" (click)="onDrawerBtnClick('delete')">
+                        XÓA
+                    </button>
+
+                </div>
+            </div>
+        </ng-template>
+    </kendo-drawer>
+
+    <kendo-drawer-content class="drawer-content">
+
+        <div class="hr-offboarding-decision-detail">
+
+            <div class="header header-1" [ngClass]="{'disable': isFilterDisable}">
+
+                <app-p-kendo-breadcrumb (loadData)="onBreadCrumbClick()"></app-p-kendo-breadcrumb>
+
+                <div class="btnWrapper">
+                    <button *ngFor="let i of arrBtnStatus" kendoButton iconClass="k-icon k-i-{{ i.code }}"
+                        class="{{ i.class }} " (click)="onHeaderBtnClick(i.type, i.link)">
+                        {{ i.text }}
+                    </button>
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <div class="hr-profile-block">
+            
+                    <div class="Topic flex">
+                        <span>THÔNG TIN NHÂN SỰ</span>
+                        <span class="detail-profile" (click)="onSeeInfoClick()" *ngIf="petition.Staff">Xem thông tin gốc</span>
+                    </div>
+                    <div class="input-container">
+                        <p-loading-spinner class="loading-spiner" [isLoading]="isInformationBlockLoading"></p-loading-spinner>
+                        <div class="flex">
+                            <div class="left-block">
+                                <div class="avatar-container">
+                                    <img [src]="getResImg(petition.ImageThumb, 'image' + petition.Code)"
+                                        (error)="handleError('image'+ petition.Code)" loading="lazy" [width]="163" [height]="163"
+                                        class="img-avatar">
+                                </div>
+                            </div>
+                            <div class="right-block">
+                                <div class="column-block column-block-1">
+                                    <div class="box-area">
+                                        <div class="label">
+                                            Mã nhân sự <span class="important" *ngIf="petition.Status == 1">(*)</span>
+                                        </div>
+                                        <app-p-textbox #staffTextbox [(ngModel)]="petition.StaffID" [propName]="['DecisionID']"
+                                            (keydownEnter)="staffTextbox.onBlur('e')"
+                                            [disabled]="(petition.Status != 1 ||(!isAllowedToCreate && !isMaster)) || isLockAll || petition.Code != 0"
+                                            *ngIf="petition.Status == 1" (blur)="onValueChanged(['StaffID'], 0)"></app-p-textbox>
+                                        <span class="box-text" *ngIf="petition.Status != 1" [title]="petition.StaffID || '(trống)'"
+                                            [ngClass]="{'emptyText': !petition.StaffID}">
+                                            {{petition.StaffID || '(trống)'}}
+                                        </span>
+                                    </div>
+                            
+                                    <div class="box-area" *ngIf="petition.Staff">
+                                        <div class="label">
+                                            Họ và tên
+                                        </div>
+                                        <span class="box-text" [title]="petition.FullName || '(trống)'"
+                                            [ngClass]="{'emptyText': !petition.FullName}">
+                                            {{petition.FullName || '(trống)'}}
+                                        </span>
+                                    </div>
+                            
+                                    <div class="box-area" *ngIf="petition.Staff">
+                                        <div class="label">
+                                            Giới tính
+                                        </div>
+                                        <span class="box-text" [title]="petition.GenderName || '(trống)'"
+                                            [ngClass]="{'emptyText': !petition.GenderName}">
+                                            {{petition.GenderName || '(trống)'}}
+                                        </span>
+                                    </div>
+                            
+                                    <div class="box-area" *ngIf="petition.Staff">
+                                        <div class="label">
+                                            Năm sinh
+                                        </div>
+                                        <span class="box-text" [title]="petition.BirthDate ? (petition.BirthDate | date: 'dd/MM/yyyy') : '(trống)'"
+                                            [ngClass]="{'emptyText': !petition.BirthDate}">
+                                            {{petition.BirthDate ? (petition.BirthDate | date: 'dd/MM/yyyy') : '(trống)'}}
+                                        </span>
+                                    </div>
+                                </div>
+                            
+                                <div class="column-block column-block-2" *ngIf="petition.Staff">
+                                    <div class="box-area">
+                                        <div class="label">
+                                            Đơn vị công tác
+                                        </div>
+                                        <span class="box-text" [title]="petition.DepartmentName || '(trống)'"
+                                            [ngClass]="{'emptyText': !petition.DepartmentName}">
+                                            {{petition.DepartmentName || '(trống)'}}
+                                        </span>
+                                    </div>
+                            
+                                    <div class="box-area">
+                                        <div class="label">
+                                            Điểm làm việc
+                                        </div>
+                                        <span class="box-text" [title]="petition.LocationName || '(trống)'"
+                                            [ngClass]="{'emptyText': !petition.LocationName}">
+                                            {{petition.LocationName || '(trống)'}}
+                                        </span>
+                                    </div>
+                            
+                                    <div class="box-area">
+                                        <div class="label">
+                                            Chức danh
+                                        </div>
+                                        <span class="box-text" [title]="petition.PositionName || '(trống)'"
+                                            [ngClass]="{'emptyText': !petition.PositionName}">
+                                            {{petition.PositionName || '(trống)'}}
+                                        </span>
+                                    </div>
+                                </div>
+                            
+                                <div class="column-block column-block-3" *ngIf="petition.Staff">
+                                    <div class="box-area typeStaff" *ngIf="TypeData == PetitionENUM">
+                                        <div class="label">
+                                            Loại nhân sự
+                                        </div>
+                                        <span class="box-text" [title]="petition.TypeStaffName || '(trống)'"
+                                            [ngClass]="{'emptyText': !petition.TypeStaffName}">
+                                            {{petition.TypeStaffName || '(trống)'}}
+                                        </span>
+                                    </div>
+                            
+                                    <div class="box-area">
+                                        <div class="label">
+                                            Ngày vào làm
+                                        </div>
+                                        <span class="box-text" [title]="petition.JoinDate ? (petition.JoinDate | date: 'dd/MM/yyyy') : '(trống)'"
+                                            [ngClass]="{'emptyText': !petition.JoinDate}">
+                                            {{petition.JoinDate ? (petition.JoinDate | date: 'dd/MM/yyyy') : '(trống)'}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="decision-detail-block" *ngIf="TypeData != PetitionENUM && petition.Staff">
+                    <span class="Topic backgrounded">
+                        {{TypeData == ResignationENUM ? 'CHI TIẾT QUYẾT ĐỊNH NGHỈ VIỆC' : 'CHI TIẾT QUYẾT ĐỊNH SA THẢI'}}
+                    </span>
+            
+                    <div class="input-container">
+                        <p-loading-spinner class="loading-spiner" [isLoading]="isInformationBlockLoading"></p-loading-spinner>
+                        <div class="flex">
+                            <div class="left-block">
+                                <div class="box-area">
+                                    <div class="label">
+                                        Mã quyết định
+                                    </div>
+                                    <app-p-textbox class="input-id" [(ngModel)]="decision.DecisionID" [propName]="['DecisionID']"
+                                        [disabled]="true"></app-p-textbox>
+                                </div>
+            
+                                <div class="box-area">
+                                    <div class="label">
+                                        Thời gian hiệu lực <span class="important">(*)</span>
+                                    </div>
+                                    <app-datepicker [(ngModel)]="decision.EffDate" [min]="currentDate" [format]="'dd/MM/yyyy'"
+                                        [placeholder]="'dd/MM/yyyy'" [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                                        [disabled]="isLockAll" [readOnlyInput]="true" class="datepicker"
+                                        (valueChange)="onValueChanged(['EffDate'], 3)"></app-datepicker>
+                                </div>
+            
+                                <div class="box-area" *ngIf="TypeData == TerminationENUM">
+                                    <div class="label">
+                                        Người lập
+                                    </div>
+                                    <span class="box-text">
+                                        {{decision.CreatedBy + ' - ' + (decision.CreatedTime | date: 'dd/MM/yyyy')}}
+                                    </span>
+                                </div>
+            
+                                <div class="box-area" *ngIf="TypeData == TerminationENUM && decision.Status == 2">
+                                    <div class="label">
+                                        Người duyệt
+                                    </div>
+                                    <span class="box-text">
+                                        {{decision.ApprovedBy + ' - ' + (decision.ApprovedTime | date: 'dd/MM/yyyy')}}
+                                    </span>
+                                </div>
+            
+                                <div class="box-area">
+                                    <div class="label">
+                                        Tình trạng
+                                    </div>
+                                    <span class="box-text status-name"
+                                        [innerHTML]="decision.StatusName | colorStatus: decision.Status"></span>
+                                </div>
+                            </div>
+                            <div class="right-block">
+                                <div class="box-area">
+                                    <div class="label">
+                                        Lý do {{TypeData == ResignationENUM ? 'nghỉ việc' : 'sa thải'}} <span class="important"
+                                            *ngIf="TypeData == TerminationENUM">(*)</span>
+                                    </div>
+                                    <p-kendo-dropdownlist #nameInput class="reason-dropdown" [data]="listResignReason"
+                                        [(ngModel)]="curReason" [propName]="['Reason']" [textField]="'ListName'"
+                                        [valueField]="'Code'" [disabled]="isLockAll || (!isAllowedToCreate && !isMaster)"
+                                        (valueChange)="onValueChanged(['Reason'], 1, $event)" [hasValueNull]="true"
+                                        *ngIf="TypeData == TerminationENUM"></p-kendo-dropdownlist>
+                                    <div class="reason-text" *ngIf="TypeData == ResignationENUM">
+                                        {{petition.ReasonName}}
+                                    </div>
+            
+                                </div>
+            
+                                <div class="box-area">
+                                    <div class="label">
+                                        {{TypeData == ResignationENUM ? 'Mô tả lý do nghỉ việc' : 'Mô tả chi tiết lý do'}} <span
+                                            class="important" *ngIf="TypeData == TerminationENUM">(*)</span>
+                                    </div>
+                                    <app-p-textarea #reasonDesInput [(ngModel)]="petition.ReasonDescription" class="input-area"
+                                        (keydownEnter)="reasonDesInput.onBlur('e')"
+                                        (blur)="onValueChanged(['ReasonDescription'], 0, $event)" [disabled]="isLockAll"
+                                        [propName]="['StaffID']" *ngIf="TypeData == TerminationENUM"></app-p-textarea>
+                                    <div class="box-text reason-des" *ngIf="TypeData == ResignationENUM">
+                                        {{petition.ReasonDescription}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                    </div>
+                </div>
+            
+                <div class="resignation-detail-block" *ngIf="TypeData == PetitionENUM && this.petition.FullName">
+            
+                    <span class="Topic backgrounded">
+                        CHI TIẾT YÊU CẦU NGHỈ VIỆC
+                    </span>
+            
+                    <div class="input-container" [ngClass]="{'onlyText': petition.Status != 1}">
+                        <p-loading-spinner class="loading-spiner" [isLoading]="isInformationBlockLoading"></p-loading-spinner>
+                        <div class="flex">
+                            <div class="left-block">
+                                <div class="box-area">
+                                    <div class="label">
+                                        Ngày gửi đơn
+                                    </div>
+                                    <app-datepicker [(ngModel)]="petition.SentDate" [format]="'dd/MM/yyyy'"
+                                        [placeholder]="'dd/MM/yyyy'" [min]="JoinDate"
+                                        [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }" [readOnlyInput]="true"
+                                        class="datepicker" [disabledDates]="disabledDates" *ngIf="petition.Status == 1"
+                                        [disabled]="!isAllowedToCreate && !isMaster"
+                                        (valueChange)="onValueChanged(['SentDate'], 0, $event)"></app-datepicker>
+                                    <div class="box-text pl-2" *ngIf="petition.Status != 1">
+                                        {{petition.SentDate | date:"dd/MM/yyyy"}}
+                                    </div>
+                                </div>
+            
+                                <div class="box-area">
+                                    <div class="label">
+                                        Ngày dự kiến nghỉ việc <span class="important" *ngIf="petition.Status == 1">(*)</span>
+                                    </div>
+                                    <app-datepicker [(ngModel)]="petition.LeaveDate" [min]="curSentDate" [format]="'dd/MM/yyyy'"
+                                        [placeholder]="'dd/MM/yyyy'" [disabledDates]="disabledDates"
+                                        [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }" [readOnlyInput]="true"
+                                        class="datepicker" *ngIf="petition.Status == 1" [disabled]="!isAllowedToCreate && !isMaster"
+                                        (valueChange)="onValueChanged(['LeaveDate'], 0)"></app-datepicker>
+                                    <div class="box-text pl-2" *ngIf="petition.Status != 1">
+                                        {{petition.LeaveDate | date:"dd/MM/yyyy"}}
+                                    </div>
+                                </div>
+            
+                                <div class="box-area">
+                                    <div class="label">
+                                        Tình trạng
+                                    </div>
+                                    <span class="status-name box-text"
+                                        [innerHTML]="petition.StatusName | colorStatus: petition.Status : 15"></span>
+                                </div>
+                            </div>
+                            <div class="right-block">
+                                <div class="box-area">
+                                    <div class="label">
+                                        Lý do nghỉ việc <span class="important" *ngIf="petition.Status == 1">(*)</span>
+                                    </div>
+                                    <p-kendo-dropdownlist class="reason-dropdown" [data]="listResignReason" [(ngModel)]="curReason"
+                                        [propName]="['Reason']" [textField]="'ListName'" [valueField]="'Code'"
+                                        [disabled]="!isAllowedToCreate && !isMaster"
+                                        (valueChange)="onValueChanged(['Reason'], 1, $event)" [hasValueNull]="true"
+                                        *ngIf="petition.Status == 1"></p-kendo-dropdownlist>
+                                    <div class="reason-text pl-2" *ngIf="petition.Status != 1">
+                                        {{petition.ReasonName}}
+                                    </div>
+            
+                                </div>
+            
+                                <div class="box-area">
+                                    <div class="label">
+                                        Mô tả chi tiết lý do <span class="important" *ngIf="petition.Status == 1">(*)</span>
+                                    </div>
+                                    <app-p-textarea #reasonDesInput [(ngModel)]="petition.ReasonDescription" class="input-area"
+                                        (keydownEnter)="reasonDesInput.onBlur('e')" [disabled]="!isAllowedToCreate && !isMaster"
+                                        [propName]="['ReasonDescription']" *ngIf="petition.Status == 1"
+                                        (blur)="onValueChanged(['ReasonDescription'], 0)"></app-p-textarea>
+                                    <div class="box-text area-scroll pl-2" *ngIf="petition.Status != 1">
+                                        {{petition.ReasonDescription}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                    </div>
+                </div>
+            
+                <div class="desist-detail-block" *ngIf="TypeData == PetitionENUM && petition.Status == 3 ">
+            
+                    <span class="Topic">
+                        CHI TIẾT RÚT ĐƠN
+                    </span>
+            
+                    <div class="input-container">
+                        <p-loading-spinner class="loading-spiner" [isLoading]="isInformationBlockLoading"></p-loading-spinner>
+                        <div class="flex">
+                            <div class="box-area">
+                                <div class="label">
+                                    Lý do rút đề nghị
+                                </div>
+                                <span class="box-text">
+                                    {{petition.ReasonStatusName}}
+                                </span>
+                            </div>
+            
+                            <div class="box-area">
+                                <div class="label">
+                                    Mô tả lý do rút đề nghị
+                                </div>
+                                <span class="box-text area-scroll">
+                                    {{petition.ReasonStatusDescription}}
+                                </span>
+                            </div>
+            
+                            <div class="box-area">
+                                <div class="label">
+                                    Ngày rút đề nghị
+                                </div>
+                                <span class="box-text">
+                                    {{petition.LastModifiedStatusTime}}
+                                </span>
+                            </div>
+                        </div>
+            
+                    </div>
+                </div>
+            
+                <!-- <div class="recovered-resource-block" *ngIf="TypeData != ResignationENUM && this.petition.FullName">
+                                            <span class="Topic">
+                                                TÀI NGUYÊN CẦN THU HỒI
+                                            </span>
+                        
+                                            <div class="input-container">
+                                                <div class="title-block block">
+                                                    <div class="label">Tài nguyên</div>
+                                                    <div class="label">Giá trị</div>
+                                                    <div class="label center type">Loại tài nguyên</div>
+                                                    <span class="icon"></span>
+                                                </div>
+                        
+                                                <div class="title-block block">
+                                                    <div class="text">Phần mềm Microsoft Office 365 Licensen</div>
+                                                    <div class="text">50.000.000</div>
+                                                    <div class="text center type">Loại tài nguyên</div>
+                                                    <span class="icon k-icon k-i-link-vertical"></span>
+                                                </div>
+                                            </div>
+                                        </div> -->
+            
+                <div class="approve-block"
+                    *ngIf="TypeData == PetitionENUM && (isMaster || isAllowedToVerify) && (petition.Status != 1 && petition.Status != 3)">
+            
+            
+                    <span class="Topic backgrounded">
+                        PHÊ DUYỆT
+                    </span>
+            
+                    <div class="input-container">
+                        <p-loading-spinner class="loading-spiner" [isLoading]="isInformationBlockLoading"></p-loading-spinner>
+                        <div class="flex">
+                            <div class="left-block">
+                                <div class="box-area">
+                                    <div class="label">
+                                        Quyết định phê duyệt <span class="important"
+                                            *ngIf="petition.Status == 2 && approveStatus.Code == 4">(*)</span>
+                                    </div>
+                                    <p-kendo-dropdownlist #nameInput class="approve-dropdown" [data]="listStatusApprove"
+                                        [(ngModel)]="approveStatus" textField="Text" valueField="Code" [hasValueNull]="false"
+                                        [propName]="['Status']"
+                                        [disabled]="(!isAllowedToVerify && !isMaster) || petition.Status != 2"
+                                        (valueChange)="onValueChanged(['approveStatus'], 1, $event)"></p-kendo-dropdownlist>
+                                </div>
+            
+                                <div class="box-area" *ngIf="approveStatus.Code == 4">
+                                    <div class="label">
+                                        Ngày nghỉ việc được phê duyệt <span class="important"
+                                            *ngIf="petition.Status == 2">(*)</span>
+                                    </div>
+                                    <app-datepicker [(ngModel)]="petition.LeaveDateApproved" [min]="currentDate"
+                                        [disabledDates]="disabledDates" [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'"
+                                        [disabled]="(!isAllowedToVerify && !isMaster) || petition.Status != 2"
+                                        [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                                        (valueChange)="onValueChanged(['LeaveDateApproved'], 0)" [readOnlyInput]="true"
+                                        class="datepicker"></app-datepicker>
+                                </div>
+            
+                            </div>
+                            <div class="right-block">
+                                <div class="box-area" *ngIf="approveStatus.Code == 4">
+                                    <div class="label">
+                                        Điều kiện nghỉ việc <span class="important" *ngIf="petition.Status == 2">(*)</span>
+                                    </div>
+                                    <app-p-kendo-editor [height]="'490px'"
+                                        (saveEvent)="onValueChanged(['ReasonStatusDescription'], 0, $event)"
+                                        [readonly]="(!isAllowedToVerify && !isMaster) || petition.Status != 2 "
+                                        (toggleFolderDialog)="onUploadImg()"
+                                        [(ngModel)]="petition.ReasonStatusDescription"></app-p-kendo-editor>
+                                </div>
+                                <div class="box-area" *ngIf="approveStatus.Code == 5">
+                                    <div class="label">
+                                        Lý do từ chối đề nghị
+                                    </div>
+                                    <p-kendo-dropdownlist #nameInput class="reason-dropdown" [data]="listDeclineReason"
+                                        [(ngModel)]="reasonStatus" textField="ListName" valueField="Code"
+                                        [propName]="['ReasonStatus']" (keydownEnter)="nameInput.onBlur('e')"
+                                        [disabled]="(!isAllowedToVerify && !isMaster) || petition.Status != 2"
+                                        (valueChange)="onValueChanged(['ReasonStatus'], 1, $event)"></p-kendo-dropdownlist>
+                                </div>
+            
+                                <div class="box-area" *ngIf="approveStatus.Code == 5">
+                                    <div class="label">
+                                        Mô tả chi tiết lý do
+                                    </div>
+                                    <app-p-textarea #reasonDesInput [(ngModel)]="petition.ReasonStatusDescription"
+                                        class="input-area" (keydownEnter)="reasonDesInput.onBlur('e')"
+                                        [disabled]="(!isAllowedToVerify && !isMaster) || petition.Status != 2"
+                                        [propName]="['ReasonStatusDescription']"></app-p-textarea>
+                                </div>
+                            </div>
+                        </div>
+            
+                    </div>
+                </div>
+            
+                <div class="respond-block" *ngIf="TypeData == ResignationENUM">
+            
+                    <span class="Topic">
+                        PHẢN HỒI ĐỀ NGHỊ NGHỈ VIỆC
+                    </span>
+            
+                    <div class="input-container">
+                        <p-loading-spinner class="loading-spiner" [isLoading]="isInformationBlockLoading"></p-loading-spinner>
+                        <div class="flex">
+                            <div class="left-block">
+                                <div class="box-area">
+                                    <div class="label">
+                                        Người duyệt
+                                    </div>
+                                    <span class="box-text">
+                                        {{decision.ApprovedBy ? decision.ApprovedBy : '' + ' - ' + decision.ApprovedTime ?
+                                        (decision.ApprovedTime | date: 'dd/MM/yyyy'): '' }}
+                                    </span>
+                                </div>
+            
+                                <div class="box-area">
+                                    <div class="label">
+                                        Ngày nghỉ việc được phê duyệt
+                                    </div>
+                                    <span class="box-text">
+                                        {{petition.LeaveDateApproved | date: 'dd/MM/yyyy'}}
+                                    </span>
+                                </div>
+            
+                            </div>
+                            <div class="right-block">
+                                <div class="box-area">
+                                    <div class="label">
+                                        Điều kiện nghỉ việc
+                                    </div>
+                                    <div class="box-text">
+                                        {{petition.ReasonStatusDescription}}
+                                    </div>
+                                </div>
+                                <!-- <div class="box-area">
+                                                        <div class="label">
+                                                            Lý do từ chối đề nghị <span class="important">(*)</span>
+                                                        </div>
+                                                        <p-kendo-dropdownlist #nameInput class="reason-dropdown" [(ngModel)]="petition.Reason"
+                                                            [propName]="['DecisionName']"
+                                                            (keydownEnter)="nameInput.onBlur('e')"></p-kendo-dropdownlist>
+                                                    </div>
+                        
+                                                    <div class="box-area">
+                                                        <div class="label">
+                                                            Mô tả chi tiết lý do <span class="important">(*)</span>
+                                                        </div>
+                                                        <app-p-textarea #reasonDesInput [(ngModel)]="petition.ReasonDescription"
+                                                            class="input-area" (keydownEnter)="reasonDesInput.onBlur('e')"
+                                                            [propName]="['StaffID']"></app-p-textarea>
+                                                    </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="task-list"
+                    *ngIf="TypeData == ResignationENUM || (this.TypeData == this.PetitionENUM && this.approveStatus.Code == 4 && this.petition.Status != 3 && this.petition.Status != 1 && this.petition.FullName)">
+                    <div class="filter-container header header-2" [ngClass]="{'disable': isFilterDisable}">
+                        <div class="title-search-container">
+                            <span class="Topic">
+                                DANH SÁCH CÔNG VIỆC
+                            </span>
+            
+                            <app-search-filter-group [clearButton]="true" title="" [disabled]="isFilterDisable"
+                                placeholder="Tìm theo tên công việc, mô tả" [fields]="['TaskName', 'Description']"
+                                (filterChange)="onFilterChange($event)">
+                            </app-search-filter-group>
+                        </div>
+            
+                        <div class="button-container">
+                            <!-- Button thêm công việc -->
+                            <button kendoButton iconClass="k-icon k-i-plus" class="k-button btn-hachi hachi-primary"
+                                (click)="onAddNewTask()" *ngIf="this.petition.Status == 2 && (isMaster || isAllowedToVerify)">
+                                Thêm mới
+                            </button>
+                        </div>
+                    </div>
+            
+                    <div class="grid-wrapper">
+                        <app-p-kendo-grid class="grid scrollable grid-custom" [ngClass]="{'pagerDisable': isFilterDisable}"
+                            [data]="gridView | async" [scrollable]="'none'" [loading]="isLoading" [selectable]="selectable"
+                            [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize" [take]="gridState.take"
+                            [skip]="gridState.skip" [sort]="gridState.sort" [onPageChangeCallback]="onPageChangeCallback"
+                            [getActionDropdownCallback]="getActionDropdownCallback"
+                            [onActionDropdownClickCallback]="onActionDropDownClickCallback" [onSelectCallback]="onSelectCallback"
+                            [showCheckbox]="!isLockAll" [showCheckbox]="petition.Status >= 2 && petition.Status < 4">
+            
+                            <!-- Tên công việc -->
+                            <kendo-grid-column title="Tên công việc" [width]="210" headerClass="name-col"
+                                class="name-col overflow-col">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <div class="col-name overflow-col" [title]="dataItem.Description">
+                                        {{dataItem.TaskName}}
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+            
+                            <!-- Mô tả -->
+                            <kendo-grid-column title="Mô tả" headerClass="description-col" class="description-col overflow-col"
+                                [width]="330">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <div class="description-text overflow-col" [title]="dataItem.Description">
+                                        {{dataItem.Description}}
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+            
+                            <!-- Thực hiện bởi -->
+                            <kendo-grid-column title="Thực hiện bởi" headerClass="assignee-col" class="overflow-col">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <span *ngIf="dataItem.TypeAssignee !== 2" [style]="onCheckAssigneeBy(dataItem.AssigneeBy)"
+                                        [title]="dataItem.AssigneeBy">{{
+                                        dataItem.AssigneeBy }}</span>
+                                
+                                    <div *ngIf="dataItem.TypeAssignee == 2" class="box-assignee overflow-col">
+                                        <span class="assignee-name" *ngIf="dataItem.AssigneeName" [title]="dataItem.AssigneeName">
+                                            {{dataItem.AssigneeName}}
+                                        </span>
+                                        <div class="box-assignee-detail">
+                                            <span *ngIf="dataItem.AsigneeStaffID" [title]="dataItem.AsigneeStaffID">
+                                                {{dataItem.AsigneeStaffID}}
+                                            </span>
+                                            <div class="line-space" *ngIf="dataItem.AsigneeStaffID && dataItem.AssigneeName"></div>
+                                            <span *ngIf="dataItem.AssigneeBy" [title]="dataItem.AssigneeBy">
+                                                {{dataItem.AssigneeBy}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                
+                                </ng-template>
+                            </kendo-grid-column>
+            
+                            <!-- Duyệt bởi -->
+                            <kendo-grid-column title="Duyệt bởi" class="position-col overflow-col">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <div *ngIf="dataItem.TypeAssignee == 2" class="box-assignee overflow-col">
+                                        <span class="assignee-name" *ngIf="dataItem?.ApprovedName" [title]="dataItem?.ApprovedName">
+                                            {{dataItem?.ApprovedName}}
+                                        </span>
+                                        <div class="box-assignee-detail">
+                                            <span *ngIf="dataItem?.ApprovedID" [title]="dataItem?.ApprovedID">
+                                                {{dataItem?.ApprovedID}}
+                                            </span>
+                                            <div class="line-space" *ngIf="dataItem?.ApprovedID && dataItem?.ApprovedPositionName"></div>
+                                            <span *ngIf="dataItem.ApprovedID" [title]="dataItem?.ApprovedPositionName">
+                                                {{dataItem?.ApprovedPositionName}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+            
+                            <!-- Thứ tự -->
+                            <kendo-grid-column title="Thứ tự" headerClass="center-col" class="overflow-col">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <div class="center-col">
+                                        <span [title]="dataItem.OrderBy">{{ dataItem.OrderBy }}</span>
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+            
+            
+                            <!-- Thời gian thực hiện -->
+                            <kendo-grid-column title="Thời gian thực hiện" [width]="200"
+                                [headerClass]="{'status-col': TypeData === ResignationENUM, 'center-col': TypeData === PetitionENUM}"
+                                class="duration-col overflow-col">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <div class="col-date" *ngIf="TypeData == ResignationENUM"
+                                        [ngStyle]="{'color': getColorExpired(dataItem.EndDate)}">
+                                        <fa-icon *ngIf="getExpired(dataItem.EndDate)"
+                                            [icon]="['fas', 'triangle-exclamation']"></fa-icon>
+                                        <div class="box-duration">
+                                            <span [title]="'Gửi duyệt: '+dataItem.SentDate">Gửi duyệt: {{dataItem?.SentDate | date :
+                                                'dd/MM/yyyy' : 'Indochina Time' : 'vi_VN'}}</span>
+                                            <span
+                                                [title]="'Hoàn tất: '+dataItem?.DoneDate | date : 'dd/MM/yyyy' : 'Indochina Time' : 'vi_VN'">Hoàn
+                                                tất: {{dataItem?.DoneDate | date : 'dd/MM/yyyy' : 'Indochina Time' :
+                                                'vi_VN'}}</span>
+                                        </div>
+            
+                                    </div>
+            
+                                    <div class="center-col" *ngIf="TypeData == PetitionENUM">
+                                        <span class="date-duration" [title]="dataItem.DateDuration">{{dataItem.DateDuration}}
+                                            ngày</span>
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+            
+                            <!-- Tình trạng -->
+                            <kendo-grid-column title="Tình trạng" headerClass="header-joindate status-col"
+                                class="status-col overflow-col" *ngIf="petition.Status != 2">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <span [title]="dataItem?.ListHRDecisionTaskLog[0]?.StatusName" class="status-name" [innerHTML]="dataItem?.ListHRDecisionTaskLog[0]?.StatusName
+                                                                        | colorStatus: dataItem?.ListHRDecisionTaskLog[0]?.Status : 17"></span>
+                                    <span [title]="dataItem?.ListHRDecisionTaskLog[1]?.StatusName" 
+                                     *ngIf="dataItem?.ListHRDecisionTaskLog[0]?.Status == 2 || dataItem?.ListHRDecisionTaskLog[0]?.Status == 5"
+                                        class="subStatusName">{{dataItem?.ListHRDecisionTaskLog[1]?.StatusName}}</span>
+                                </ng-template>
+                            </kendo-grid-column>
+            
+                            <!-- Xem chi tiết -->
+                            <kendo-grid-column headerClass="center-col action-col" class="center-col action-col view-col">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <fa-icon *ngIf="petition.Status == 4" class="k-icon k-i-eye icon-view m-1"
+                                        (click)="onActionTask('see', dataItem)"></fa-icon>
+                                    <fa-icon *ngIf="petition.Status != 4" class="k-icon k-i-pencil icon-view m-1"
+                                        (click)="onActionTask('edit', dataItem)"></fa-icon>
+                                    <fa-icon *ngIf="petition.Status != 4 && (dataItem?.ListHRDecisionTaskLog[0]?.Status == 1) && dataItem.TypeData == 4"
+                                        class="k-icon k-i-trash icon-view m-1 color_red" (click)="onActionTask('trash', dataItem)"></fa-icon>
+                                </ng-template>
+                            </kendo-grid-column>
+                            
+            
+                        </app-p-kendo-grid>
+                    </div>
+                </div>
+            
+                <div class="footer-function">
+                    <div class="span-important">(*) Trường bắt buộc</div>
+                    <div class="btn-wrapper">
+                        <button kendoButton iconClass="k-icon k-i-check-outline" class="btn-hachi hachi-primary"
+                            (click)="onHeaderBtnClick('status', 4)"
+                            *ngIf="approveStatus.Code == 4 && this.petition.Status == 2 && (isMaster || isAllowedToVerify)">
+                            CHẤP NHẬN
+                        </button>
+            
+                        <button kendoButton iconClass="k-icon k-i-check-outline" class="btn-hachi hachi-warning"
+                            (click)="onHeaderBtnClick('status', 5)"
+                            *ngIf="approveStatus.Code == 5 && this.petition.Status == 2 && (isMaster || isAllowedToVerify)">
+                            TỪ CHỐI
+                        </button>
+                    </div>
+                </div>
+            
+            </div>
+
+        </div>
+
+        <app-folder-popup [pickFileCallback]="pickFileCallback" [serviceIndex]="0"
+        [GetFolderCallback]="GetFolderCallback" [canResize]="true"></app-folder-popup>
+
+        <!-- POPUP CONFIRM DELETE TASK -->
+        <kendo-dialog class="dialog-delete popup-confirm-custom" [minHeight]="250" [minWidth]="400" *ngIf="isDeleteTaskDialogShow">
+            <!-- HEADER -->
+            <div class="dialog-header">
+                <span class="k-icon k-i-warning"></span>
+                <div>XOÁ CÔNG VIỆC</div>
+            </div>
+
+            <!-- CONTENT -->
+            <div class="dialog-content">
+                <div class="text-confirm">
+                    <span>Bạn có chắc chắn muốn xoá công việc</span>
+                    <div class="policy-name-text">
+                        <span title="{{taskItem.TaskName}}">
+                            {{taskItem.TaskName}}
+                        </span>
+                    </div>
+                </div>
+                <div class="warning"> 
+                    <span>Công việc bị xoá sẽ</span>  
+                    <span style="color: #FD7676;">KHÔNG</span> 
+                    <span>thể khôi phục lại.</span>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="dialog-footer">
+                <button kendoButton (click)="toggleDialog(2)" class="cancel-button">Không xóa</button>
+                <button kendoButton icon="trash" class="btn-delete" (click)="onDiaglogConfirm(2)">xóa</button>
+            </div>
+        </kendo-dialog>
+
+        <!-- POPUP CONFIRM DELETE PROFILE -->
+        <kendo-dialog class="dialog-delete popup-confirm-custom" [minHeight]="250" [minWidth]="400" *ngIf="isDeleteDecisionDialogShow">
+            <!-- HEADER -->
+            <div class="dialog-header">
+                <span class="k-icon k-i-warning"></span>
+                <div *ngIf="!isPetition">XOÁ QUYẾT ĐỊNH</div>
+                <div *ngIf="isPetition">XOÁ ĐƠN ĐỀ NGHỊ</div>
+            </div>
+
+            <!-- CONTENT -->
+            <div class="dialog-content">
+                <div class="text-confirm">
+                    <span *ngIf="!isPetition">Bạn có chắc chắn muốn xoá quyết định</span>
+                    <span *ngIf="isPetition">Bạn có chắc chắn muốn xoá đơn đề nghị của</span>
+                    <div class="policy-name-text">
+                        <span *ngIf="!isPetition" title="{{decision.DecisionID}}">
+                            {{decision.DecisionID}}
+                        </span>
+                        <span *ngIf="isPetition" title="{{petition.FullName}}">
+                            {{petition.FullName}}
+                        </span>
+                    </div>
+                </div>
+                <div class="warning"> 
+                    <span *ngIf="!isPetition">Quyết định bị xoá sẽ</span> 
+                    <span *ngIf="isPetition">Đơn bị xoá sẽ</span>  
+                    <span style="color: #FD7676;">KHÔNG</span> 
+                    <span>thể khôi phục lại.</span>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="dialog-footer">
+                <button kendoButton (click)="toggleDialog(0)" class="cancel-button">Không xóa</button>
+                <button kendoButton icon="trash" class="btn-delete" (click)="onDiaglogConfirm(0)">xóa</button>
+            </div>
+        </kendo-dialog>
+
+        <!-- POPUP CONFIRM APPROVE -->
+        <kendo-dialog class="dialog-approve popup-confirm-custom" [minHeight]="250" [minWidth]="450" *ngIf="isConfirmApproveDialogShow">
+            <!-- HEADER -->
+            <div class="dialog-header">
+                <div>QUYẾT ĐỊNH {{TypeData == TerminationENUM ? 'SA THẢI' : 'NGHỈ VIỆC'}}</div>
+            </div>
+
+            <!-- CONTENT -->
+            <div class="dialog-content">
+                <div class="text-confirm">
+                    <span>Bạn có chắc chắn muốn đưa ra quyết định {{TypeData == TerminationENUM ? 'sa thải' : 'nghỉ việc'}} đối với nhân sự <span style="color: #0D99FF; font-weight: bold;">{{petition.FullName}}</span>?</span>
+                </div>
+                <div class="warning"> 
+                    <span>Sau khi xác nhận, nhân sự sẽ chính thức kết thúc công việc tại </span>
+                    <span>công ty theo ngày cuối cùng làm việc đã được xác định</span>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="dialog-footer">
+                <button kendoButton (click)="toggleDialog(1)" class="cancel-button">huỷ bỏ</button>
+                <button kendoButton class="btn-delete" (click)="onDiaglogConfirm(1)">đồng ý</button>
+            </div>
+        </kendo-dialog>
+    </kendo-drawer-content>
+</kendo-drawer-container>

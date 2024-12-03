@@ -1,0 +1,9 @@
+@import "../../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+  cart-search-product-popup {
+    #searchProductPopup {
+      z-index: 6;
+    }
+  }
+}

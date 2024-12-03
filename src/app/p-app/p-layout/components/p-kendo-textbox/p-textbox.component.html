@@ -1,0 +1,14 @@
+<kendo-textbox [style.width.px]="width" [disabled]="disabled" [readonly]="readonly" ngDefaultControl [(ngModel)]="input"
+    [maxlength]="maxlength" [clearButton]="clearButton" [showSuccessIcon]="successValidation"
+    [showErrorIcon]="errorValidation" (ngModelChange)="onInputValueChange($event)" [placeholder]="placeHolder"
+    [required]="required" (blur)="onBlur($event)" (focus)="onFocus()" (keydown.Enter)="onKeyDownEnter($event)">
+    <ng-template kendoTextBoxPrefixTemplate>
+        <span *ngIf="spanPrefixIcon" class="k-icon {{spanPrefixIcon}}"></span>
+        <kendo-svg-icon *ngIf="svgPrefixIcon" [icon]="svgPrefixIcon"></kendo-svg-icon>
+    </ng-template>
+    <ng-template kendoTextBoxSuffixTemplate>
+        <span *ngIf="maxlength" class="counter">{{ counterString }}</span>
+        <span *ngIf="spanSuffixIcon" class="k-icon {{spanSuffixIcon}}"></span>
+        <kendo-svg-icon *ngIf="svgSuffixIcon" [icon]="svgSuffixIcon"></kendo-svg-icon>
+    </ng-template>
+</kendo-textbox>

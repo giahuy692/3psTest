@@ -1,0 +1,24 @@
+::ng-deep form .WHPickup_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 9px;
+}
+
+::ng-deep form .WHPickup_row label {
+  margin: 0;
+  color: #26282e;
+  cursor: pointer;
+}
+
+::ng-deep form .WHPickup_row .hachi-radio {
+  order: 1;
+}
+
+::ng-deep form .WHPickup_row:hover label {
+  color: #1a6634;
+}
+
+::ng-deep form .WHPickup_row:hover input {
+  background-color: #1a6634;
+}

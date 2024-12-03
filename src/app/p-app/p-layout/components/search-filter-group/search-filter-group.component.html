@@ -1,0 +1,27 @@
+<div class="title" *ngIf="title != ''">{{title}}</div>
+<div class="nav-filter nav-btn">
+    <div class="filter-btn-group clear-btn-group" *ngIf="title == ''">
+        <div class="label">
+            <span class="k-icon k-i-filter"></span>LỌC DỮ LIỆU
+        </div>
+        <button kendoButton class="k-button clear-filter-btn" (click)="resetFilter()" [disabled]="disabled" [loading]="loading">
+            Reset bộ lọc</button>
+    </div>
+
+    <div style="display: flex; flex-grow: 1;">
+        <div class="filter-btn-group search-btn-group">
+            <div class="label" *ngIf="title == ''">{{label}}</div>
+            <div class="search-btn">
+                <span class="k-icon k-i-search" (click)="search()" [disabled]="disabled"></span>
+                <kendo-textbox type="text" class="k-textbox" [placeholder]="placeholder" [(value)]="value"
+                    (keydown.Enter)="search()" [disabled]="disabled" [title]="placeholder" [loading]="loading">
+                </kendo-textbox>
+                <!--  ;$event.target.blur() đổi sang #temp.onBlur.emit() hoặc gọi hàm giống (blur)="search()" -->
+                <span class="k-icon k-i-error" (click)="clear()" *ngIf="clearButton && isValidValue()"></span>
+            </div>
+        </div>
+
+        <button kendoButton class="k-button searchBtn" [icon]="'search'" (click)="search()" [disabled]="disabled"
+            [loading]="loading">TÌM</button>
+    </div>
+</div>

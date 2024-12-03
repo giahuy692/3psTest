@@ -1,0 +1,444 @@
+<div class="app-drawer-container">
+  <mat-drawer-container [hasBackdrop]="true">
+    <mat-drawer-content>
+      <div class="app-mar016-hashtag-detail">
+        <div class="header header-1">
+          <div class="nav-btn nav-breadcrumb">
+            <div class="breadcrumb-item">
+              DANH SÁCH HASHTAG
+            </div>
+            <div class="breadcrumb-chevron">
+              <span class="k-icon k-i-arrow-chevron-right"></span>
+            </div>
+            <div class="breadcrumb-item" (click)="GetHashtag()">CHI TIẾT HASHTAG</div>
+          </div>
+
+          <div class="nav-btn nav-crud" style="flex-grow: 1">
+            <button kendoButton *ngIf="
+                (Hashtag.StatusID == 0 || Hashtag.StatusID == 3 || Hashtag.StatusID == 4) && (isMaster || isApprover)
+              " (click)="onClickChangeStatus(2)" class="btn-hachi hachi-secondary" [icon]="'check-outline'">
+              ÁP DỤNG
+            </button>
+
+            <button kendoButton *ngIf="
+                (isMaster || isApprover) && Hashtag.StatusID == 3
+              " (click)="onClickChangeStatus(4)" class="btn-hachi hachi-warning hachi-secondary" [icon]="'undo'">
+              TRẢ VỀ
+            </button>
+
+            <button kendoButton *ngIf="
+                (isMaster || isApprover) && Hashtag.StatusID == 2
+              " (click)="onClickChangeStatus(3)" class="btn-hachi hachi-warning hachi-secondary"
+              [icon]="'minus-outline'">
+              NGƯNG ÁP DỤNG
+            </button>
+
+            <button kendoButton class="btn-hachi hachi-warning" (click)="openDeleteHashtagDialog()" [icon]="'trash'"
+              *ngIf="(isMaster || isApprover) && Hashtag.StatusID == 0 && !isAdd">
+              XÓA HASHTAG
+            </button>
+
+            <button kendoButton *ngIf="isMaster || isCreator" class="btn-hachi hachi-primary"
+              (click)="onRefreshHashTagData()" [icon]="'plus'">
+              TẠO MỚI
+            </button>
+          </div>
+        </div>
+
+        <div class="body">
+          <div class="sections">
+            <div class="section">
+              <div class="title">THÔNG TIN HASHTAG</div>
+
+              <div class="section-grid">
+                <div class="grid-item item1_1">
+                  <kendo-label class="label" [for]="TagCode">Mã hashtag</kendo-label>
+                  <kendo-textbox [(ngModel)]="Hashtag.TagCode" #TagCode (blur)="UpdateHashtag(['TagCode'])"
+                    [disabled]="isLockTag || loading">
+                  </kendo-textbox>
+                </div>
+                <div class="grid-item item1_2">
+                  <kendo-label class="label" [for]="TagName">Tên hashtag</kendo-label>
+                  <kendo-textbox [(ngModel)]="Hashtag.TagName" #TagName (blur)="UpdateHashtag(['TagName'])"
+                    [disabled]="isLockTag || loading">
+                  </kendo-textbox>
+                </div>
+                <div class="grid-item item1_4">
+                  <kendo-label class="label">Số lượt chọn hashtag</kendo-label>
+                  <kendo-label class="txt">
+                    {{ Hashtag.NoOfProduct + Hashtag.NoOfPost | number : '1.' }}
+                  </kendo-label>
+                </div>
+                <div class="grid-item item1_5">
+                  <kendo-label class="label">Rating</kendo-label>
+                  <kendo-label class="txt">{{ Hashtag.Rating | number : "1." }} /
+                    {{
+                    Hashtag.TotalRating | number : "1."
+                    }}</kendo-label>
+                </div>
+                <div class="grid-item item2_1">
+                  <kendo-label class="label">Tình trạng</kendo-label>
+                  <kendo-label class="txt">
+                    <div [innerHTML]="Hashtag.StatusName | colorStatus:Hashtag.StatusID">
+                    </div>
+                  </kendo-label>
+                </div>
+                <div class="grid-item item2_2">
+                  <kendo-label class="label">Sản phẩm gắn hashtag</kendo-label>
+                  <kendo-label class="txt">{{ Hashtag.NoOfProduct | number : "1." }} /
+                    {{ Hashtag.NoOfTotalProduct | number : "1." }}</kendo-label>
+                </div>
+                <div class="grid-item item2_3">
+                  <kendo-label class="label">Bài viết gắn hashtag</kendo-label>
+                  <kendo-label class="txt">{{ Hashtag.NoOfPost | number : "1." }} /
+                    {{ Hashtag.NoOfTotalPost | number : "1." }}</kendo-label>
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="header header-2">
+                <app-search-filter-group title="DANH SÁCH SẢN PHẨM GẮN HASHTAG"
+                  placeholder="Tìm theo barcode, poscode, tên sản phẩm" [disabled]="!isFilterActive || isAdd"
+                  (valueChange)="search(true, $event)">
+                </app-search-filter-group>
+
+                <div class="nav-file nav-btn" *ngIf="isAllowedToCreateProd || isMaster" style="margin-left: auto;">
+                  <div class="file-btn-group">
+                    <button kendoButton id="onUploadBtn" class="k-button" [icon]="'export'" (click)="onImportExcel()"
+                      [disabled]="isLockProd || !isFilterActive"></button>
+                  </div>
+
+                  <div class="file-btn-group">
+                    <button kendoButton id="onDownloadBtn" class="k-button" [icon]="'import'"
+                      (click)="downloadExcel(true)">
+                      Template
+                    </button>
+                  </div>
+                </div>
+
+                <div class="nav-btn nav-crud" *ngIf="isAllowedToCreateProd || isMaster">
+                  <button kendoButton class="k-button onAddBtn" [icon]="'plus'" (click)="openDetail(true)"
+                    [disabled]="isLockProd || !isFilterActive || isAdd">
+                    THÊM MỚI
+                  </button>
+                </div>
+              </div>
+
+              <div class="grid-wrapper">
+                <app-p-kendo-grid class="grid1 scrollable" [data]="gridViewSP | async" [scrollable]="'none'"
+                  [loading]="loading" [pageable]="true" [pageSizes]="pageSizesSP" [pageSize]="pageSizeSP"
+                  [hasMoreAction]="isAllowedToCreateProd || isMaster" [skip]="gridStateSP.skip" [take]="gridStateSP.take"
+                  [onPageChangeCallback]="onPageChangeCallbackSP" [allowedMoreActionDropdown]="allowActionDropdownSP"
+                  [onActionDropdownClickCallback]="onActionDropdownClickCallbackSP"
+                  [getActionDropdownCallback]="getActionDropdownCallbackSP" [selectable]="selectableSP"
+                  [onSelectCallback]="onSelectCallbackSP" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallbackSP"
+                  [getSelectionPopupCallback]="getSelectionPopupCallbackSP">
+  
+                  <kendo-grid-column field="ProductName" title="Tên sản phẩm" class="col_img_tensanpham_masanpham"
+                    headerClass="col_img_tensanpham_masanpham">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="img_tensanpham_masanpham">
+                        <div class="img">
+                          <img loading="lazy" *ngIf="validImg(dataItem.ImageSetting)" src="{{ dataItem.ImageSetting }}" alt="" />
+                        </div>
+                        <div class="tensanpham_masanpham">
+                          <div class="tensanpham">{{ dataItem.ProductName }}</div>
+                          <div class="masanpham">
+                            <b>
+                              {{dataItem.Poscode != null ? dataItem.Poscode + " | " : ""}}{{dataItem.Barcode}}
+                            </b>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+  
+                  <kendo-grid-column field="GroupIDCode1" title="Phân nhóm" class="col_phanNhom">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="group1" *ngIf="dataItem.GroupIDCode1 != null && dataItem.GroupIDCode1 != ''">
+                        <b>{{ dataItem.GroupIDCode1 }} :
+                          {{ dataItem.GroupIDName1 }}</b>
+                      </div>
+                      <div class="group2" *ngIf="dataItem.GroupIDCode2 != null && dataItem.GroupIDCode2 != ''">
+                        {{ dataItem.GroupIDCode2 }} : {{ dataItem.GroupIDName2 }}
+                      </div>
+                      <div class="group3" *ngIf="dataItem.GroupIDCode3 != null && dataItem.GroupIDCode3 != ''">
+                        <i>{{ dataItem.GroupIDCode3 }} :
+                          {{ dataItem.GroupIDName3 }}</i>
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+  
+                  <kendo-grid-column field="OriginName" title="Xuất xứ" class="col_xuatXu" headerClass="col_xuatXu">
+                  </kendo-grid-column>
+  
+                  <kendo-grid-column field="BrandName" title="Thương hiệu" class="col_thuonghieu">
+                  </kendo-grid-column>
+  
+                  <kendo-grid-column field="UnitPrice" title="Giá bán lẻ" class="col_giaBanLe" headerClass="col_giaBanLe">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      {{ dataItem.UnitPrice | number : "1." }}
+                    </ng-template>
+                  </kendo-grid-column>
+                </app-p-kendo-grid>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="header header-2">
+                <app-search-filter-group title="DANH SÁCH BÀI VIẾT GẮN HASHTAG"
+                  placeholder="Tìm theo tiêu đề, tóm tắt bài viết" [disabled]="!isFilterActive || isAdd"
+                  (valueChange)="search(false, $event)">
+                </app-search-filter-group>
+
+                <div class="nav-btn nav-crud" *ngIf="isAllowedToCreatePost || isMaster" style="margin-left: auto;">
+                  <button kendoButton class="k-button onAddBtn" [icon]="'plus'" (click)="openDetail(false)"
+                    [disabled]="isLockPost || !isFilterActive || isAdd">
+                    THÊM MỚI
+                  </button>
+                </div>
+              </div>
+
+              <div class="grid-wrapper">
+                <app-p-kendo-grid class="grid1 scrollable" [data]="gridViewBV | async" [scrollable]="'none'"
+                  [loading]="loading" [pageable]="true" [pageSizes]="pageSizesBV" [pageSize]="pageSizeBV"
+                  [hasMoreAction]="isAllowedToCreatePost || isMaster" [skip]="gridStateBV.skip" [take]="gridStateBV.take"
+                  [onPageChangeCallback]="onPageChangeCallbackBV" [allowedMoreActionDropdown]="allowActionDropdownBV"
+                  [onActionDropdownClickCallback]="onActionDropdownClickCallbackBV"
+                  [getActionDropdownCallback]="getActionDropdownCallbackBV" [selectable]="selectableBV"
+                  [onSelectCallback]="onSelectCallbackBV" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallbackBV"
+                  [getSelectionPopupCallback]="getSelectionPopupCallbackBV">
+  
+                  <kendo-grid-column class="col_img_tensanpham_masanpham" title="Blog"
+                    headerClass="col_img_tensanpham_masanpham" field="TitleVN">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="img_tensanpham_masanpham">
+                        <div><img loading="lazy" src="{{ dataItem.ImageSetting3 }}" alt="" /></div>
+  
+                        <div class="tensanpham_masanpham">
+                          <div class="tensanpham">
+                            <b>{{ dataItem.TitleVN }}</b>
+                          </div>
+  
+                          <div class="tomtatsanpham">
+                            {{ dataItem.SummaryVN != null ? dataItem.SummaaryVN : ""}}
+                          </div>
+  
+                          <div class="masanpham">
+                            <b>Phân nhóm:</b> {{dataItem.NewsCategoryName != null ? dataItem.NewsCategoryName : ""}}
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+  
+                  <kendo-grid-column class="col_nguoiTao" title="Người khởi tạo" field="CreateTime">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div>{{ dataItem.CreateBy }}</div>
+                      <div *ngIf="dataItem.CreateTime != null && dataItem.CreateTime != ''">
+                        Ngày tạo: {{ dataItem.CreateTime | date : "d/M/yyyy" }}
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+  
+                  <kendo-grid-column title="Thông tin phê duyệt" class="col_date" field="LastModifiedTime">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div>{{ dataItem.LastModifiedBy }}</div>
+                      <div *ngIf="dataItem.LastModifiedTime != null && dataItem.LastModifiedTime != ''">
+                        Ngày duyệt: {{ dataItem.LastModifiedTime | date : "d/M/yyyy" }}
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+  
+                  <kendo-grid-column class="col_tinhTrang" field="StatusID" title="Tình trạng"
+                    headerClass="col_tinhTrang">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID">
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+                </app-p-kendo-grid>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-drawer-content>
+
+    <mat-drawer #formDrawer [mode]="'over'" position="end">
+      <form class="formSanpham k-form" [formGroup]="isProduct ? formProduct : formPost"
+        (keydown.Enter)="keydownEnter($event)">
+        <ng-container *ngIf="isProduct; else postForm">
+          <!-- PRODUCT FROM -->
+          <fieldset>
+            <legend>SẢN PHẨM GẮN HASHTAG</legend>
+            <div class="formProduct">
+              <kendo-formfield class="formfield-item item1_1">
+                <kendo-label text="Nhập mã sản phẩm" [for]="Barcode"></kendo-label>
+                <kendo-textbox formControlName="Barcode" #Barcode (blur)="GetProduct()"></kendo-textbox>
+              </kendo-formfield>
+
+              <div class="txtGroup item2_1">
+                <kendo-label text="Tên sản phẩm"></kendo-label>
+                <div>
+                  {{ Product?.ProductName }}
+                </div>
+              </div>
+
+              <div class="txtGroup item3_1">
+                <kendo-label text="Giá bán lẻ"></kendo-label>
+                <div>
+                  {{ Product?.UnitPrice }}
+                </div>
+              </div>
+
+              <div class="txtGroup item4_1">
+                <kendo-label text="Thương hiệu"></kendo-label>
+                <div>
+                  {{ Product?.BrandName }}
+                </div>
+              </div>
+
+              <div class="txtGroup item5_1">
+                <kendo-label text="Xuất xứ"></kendo-label>
+                <div>
+                  {{ Product?.OriginName }}
+                </div>
+              </div>
+              <div class="imgGroup item3_2" [hidden]="Product?.ImageSetting == undefined">
+                <img loading="lazy" width="auto" height="auto" [src]="Product?.ImageSetting" />
+              </div>
+              <div class="k-form-buttons">
+                <button kendoButton class="k-button closeBtn" (click)="closeForm()">
+                  Đóng
+                </button>
+                <button kendoButton class="k-button updateBtn" [ngClass]="{ addBtn: isAdd }" (click)="onUpdateTag(1)">
+                  Thêm mới
+                </button>
+              </div>
+            </div>
+          </fieldset>
+        </ng-container>
+        <!-- POST FORM -->
+        <ng-template #postForm>
+          <fieldset>
+            <legend>BÀI VIẾT GẮN HASHTAG</legend>
+            <div class="formProduct">
+              <kendo-formfield class="formfield-item item1_1">
+                <kendo-label text="Nhập tiêu đề bài viết" [for]="TitleVN"></kendo-label>
+                <kendo-textbox formControlName="TitleVN" #TitleVN (blur)="GetPost()"></kendo-textbox>
+              </kendo-formfield>
+
+              <ng-container *ngIf="nonHashtagPostList.length > 0">
+                <div class="non-hashtag-post-list">
+                  <div style="display: flex; gap: 20px; align-items: center; margin: 10px 0;">
+                    <input type="checkbox" class="post-checkbox" formControlName="isNonHashtagPostCheckAll"
+                      kendoCheckBox (click)="onSelectAllNonHashtagPost()" />
+                    <p style="margin-bottom: unset;">Chọn tất cả bài viết</p>
+                  </div>
+                  <!-- this.formPost.controls['isNonHashtagPostCheckAll'].value -->
+                  <div class="post-wrapper" (click)="onSelectSingleNonHashtagPost(post)"
+                    [ngClass]="{'selected-post': isPostSelected(post)}" *ngFor="let post of nonHashtagPostList">
+                    <div class="checkbox-wrapper">
+                      <!-- <input type="checkbox" class="post-checkbox" kendoCheckBox
+                        [indeterminate]="!isNonHashtagPostCheckedAll" (click)="onSelectSingleNonHashtagPost(post)" /> -->
+                    </div>
+                    <img loading="lazy" class="post-img" [src]="post.ImageSetting3">
+                    <div class="post-info">
+                      <p class="post-title">{{post.TitleVN}}</p>
+                      <div class="post-detail">
+                        <p class="post-category">{{post.NewsCategoryName != null ? post.NewsCategoryName : ""}}</p>
+                        <p class="post-create-time">{{post.CreateTime | date : "dd/MM/yyyy"}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+
+              <div class="k-form-buttons">
+                <button kendoButton class="k-button closeBtn" (click)="closeForm()">
+                  Đóng
+                </button>
+                <button kendoButton class="k-button updateBtn" [ngClass]="{ addBtn: isAdd }" (click)="onUpdateTag(2)">
+                  Thêm mới
+                </button>
+              </div>
+            </div>
+          </fieldset>
+        </ng-template>
+      </form>
+    </mat-drawer>
+  </mat-drawer-container>
+
+  <app-folder-popup [pickFileCallback]="pickFileCallback" [GetFolderCallback]="getFolderCallback" [canResize]="false">
+  </app-folder-popup>
+
+  <!-- DIALOG XOA 1 Product or Post -->
+  <kendo-dialog #dialog class="deleteDialog" title="Xóa hashtag" [hidden]="!deleteDialogOpened"
+    (close)="closeDeleteDialog()" [minWidth]="250">
+    <p style="margin: 30px; text-align: center">
+      Bạn chắc chắn muốn xóa vĩnh viễn Tag của
+      <b>{{
+        selectedListProduct.length > 0
+        ? " sản phẩm " + selectedListProduct[0]?.ProductName + " "
+        : " bài viết " + selectedListPost[0]?.TitleVN + " "
+        }}</b>
+      <!-- <b>{{
+        " sản phẩm " + selectedListProduct[0].ProductName + " " ||
+          " bài viết" + selectedListPost[0].TitleVN + " "
+      }}</b> -->
+      này?
+    </p>
+    <div class="dialog-footer">
+      <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteDialog()" [icon]="'close'">
+        Không
+      </button>
+      <button kendoButton class="btn-hachi hachi-warning" (click)="deleteProductHashTag()" [icon]="'trash'">
+        Có
+      </button>
+    </div>
+  </kendo-dialog>
+
+  <!-- DIALOG XOA NHIEU POST VA SAN PHAM -->
+  <kendo-dialog #dialog class="deleteDialog" title="Xóa các hashtag đã chọn" [hidden]="!deleteManyDialogOpened"
+    [minWidth]="250" (close)="closeDeleteManyDialog()">
+    <div style="margin: 30px; text-align: center">
+      Hashtag của
+      {{
+      selectedListProduct?.length + "sản phẩm " ||
+      selectedListPost?.length + "bài viết "
+      }}
+      bị xóa<br />
+      sẽ <b><span style="color: #fd7676">KHÔNG</span></b> thể khôi phục lại
+    </div>
+    <div class="dialog-footer">
+      <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteManyDialog()" [icon]="'close'">
+        Không
+      </button>
+      <button kendoButton class="btn-hachi hachi-warning" (click)="deleteMany()" [icon]="'trash'">
+        Có
+      </button>
+    </div>
+  </kendo-dialog>
+
+  <!-- DIALOG DELETE HASHTAG -->
+  <kendo-dialog #deleteHastagDialog class="deleteDialog" title="Xóa hashtag" [hidden]="!deleteHashtagDialogOpened"
+    (close)="deleteHashtagDialogOpened = false" [minWidth]="250">
+    <p style="margin: 30px; text-align: center">
+      Bạn chắc chắn muốn xóa vĩnh viễn Tag <b>{{ Hashtag.TagName }}</b> này?
+    </p>
+    <div class="dialog-footer">
+      <button kendoButton class="btn-hachi hachi-secondary" (click)="deleteHashtagDialogOpened = false"
+        [icon]="'close'">
+        Không
+      </button>
+      <button kendoButton class="btn-hachi hachi-warning" (click)="DeleteHashtag()" [icon]="'trash'">
+        Có
+      </button>
+    </div>
+  </kendo-dialog>
+
+
+</div>
+<app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>

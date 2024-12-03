@@ -1,0 +1,32 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep .input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+
+    .k-label {
+        font-size: 13px;
+        color: #959db3;
+        font-weight: 700;
+    }
+
+    .k-textbox {
+        width: 200px border;
+        border: 2px solid $gray-200;
+        border-radius: 3px;
+    }
+
+    .k-numerictextbox {
+
+        input {
+            text-align: left !important;
+        }
+
+        .k-select {
+            display: none;
+        }
+    }
+
+}

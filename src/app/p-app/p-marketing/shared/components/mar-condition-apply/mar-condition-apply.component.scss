@@ -1,0 +1,156 @@
+@import "../../../../../../assets/scss/variable.scss";
+::ng-deep {
+    app-mar-condition-apply {
+        .symbol{
+            color: $dark-red !important;
+          }
+        #condition-apply{
+            .label {
+                margin-bottom: 6px;
+                font-weight: bold;
+                color: $gray-500;
+          
+                &.thick-label {
+                  color: $gray-900;
+          
+                  +.number {
+                    font-weight: bold;
+                  }
+          
+                  +.k-numerictextbox {
+                    input {
+                      font-weight: bold;
+                    }
+                  }
+                }
+          
+                &.thin-label {
+                  font-weight: normal;
+                  color: $gray-800;
+                }
+              }
+            .sections {
+                .section {
+                    .title {
+                        margin: 12px 0;
+                        font-weight: bold;
+                        font-size: 16px;
+                        display: flex;
+                        justify-content: space-between;
+                    }
+    
+                    .crud-btn {
+                        height: 32px;
+                        font-size: 11px;
+                        font-weight: bold;
+                        background-color: $dark-green !important;
+                        color: white;
+                    }
+    
+                    .section-grid {
+                        display: grid;
+                        column-gap: 27px;
+                        row-gap: 10px;
+                        background-color: white;
+                        padding: 15px;
+    
+                        .grid-item {
+                            display: flex;
+                            flex-direction: column;
+                        }
+    
+                        .k-textbox {
+                            flex-grow: 1;
+                            width: auto;
+                        }
+    
+                        .k-numerictextbox {
+                            flex-grow: 1;
+                            width: auto;
+    
+                            &.red-color input {
+                                color: $bad-red;
+                            }
+                        }
+    
+                        .k-dropdownlist {
+                            flex-grow: 1;
+                            width: auto;
+                        }
+    
+                        .k-datepicker {
+                            flex-grow: 1;
+                            width: auto;
+                        }
+    
+                        .k-timepicker {
+                            flex-grow: 1;
+                            width: auto;
+    
+                            .k-input {
+                                width: 70px;
+                            }
+                        }
+    
+                        .k-checkbox {
+                            margin-right: 10px;
+                        }
+    
+                        textarea {
+                            resize: none;
+                            border-radius: 3px;
+                            border-color: rgba(0, 0, 0, 0.08);
+                            outline: none;
+                            height: 100%;
+                            padding: 4px 8px;
+    
+                            &:hover,
+                            &:focus-visible {
+                                border-color: $dark-green;
+                            }
+                        }
+    
+                        label {
+                            margin-bottom: 0;
+                            // cursor: pointer;
+                        }
+    
+                        .input_label {
+                            margin-bottom: 10px;
+                        }
+    
+                        .row {
+                            align-items: center;
+                            margin-bottom: 7px;
+                        }
+    
+                        .subrow {
+                            margin-left: 20px;
+                        }
+                    }
+                }
+            }
+    
+            .section-grid {
+                grid-template-columns: 250px 390px 412px;
+                column-gap: 60px;
+    
+                .item1 {
+                    grid-column: 1;
+                }
+    
+                .item2 {
+                    grid-column: 2;
+                }
+    
+                .item3 {
+                    grid-column: 3;
+    
+                    .sublabel {
+                        color: $light-blue-gray;
+                    }
+                }
+            }
+        }
+    }
+}

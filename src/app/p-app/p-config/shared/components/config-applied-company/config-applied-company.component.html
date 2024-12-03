@@ -1,0 +1,80 @@
+<div class="config-applied-company">
+    <div class="title">
+        <span>CÔNG TY ÁP DỤNG</span>
+    </div>
+
+    <div class="block-applied-company">
+      <div class="content">
+        <div *ngFor="let company of companies, let i = index" class="layout">
+            <div class="companyName">
+              <input type="checkbox" kendoCheckBox [disabled]="disable" [checked]="company.Selected" (change)="onCheckboxChange($event,company)">
+              <span>{{i == 0 ? "Áp dụng tại công ty TNHH Việt Hạ Chí"
+                : i == 1 ? "Áp dụng tại công ty TNHH TMDV Lập Sơn"
+                : i == 2 ? "Áp dụng tại công ty TNHH Kyn" 
+                :""}}   <span class="impose" *ngIf="i == 0"> (*)</span></span>
+            </div>
+            <div class="groupLV">
+              <div class="item1">
+                <div class="label">Phân nhóm cấp 1</div>
+                <p-kendo-dropdownlist [data]="companyData[company.Company]?.level1"
+                 valueField="Code" textField="GroupName" (valueChange)="onDropdownlistClick($event, ['GroupID1'],company.Company)"
+                 [disabled]="disable || !companyDropdownStates[company.Company]" [(ngModel)]="currentGroupWeb1[company.Company]"
+                 [filterable]="true" (open)="openDropdown(company,1)"
+                 ></p-kendo-dropdownlist>
+              </div>
+              <div class="item2">
+                <div class="label">Phân nhóm cấp 2</div>
+                <p-kendo-dropdownlist #dropdown2 [data]="companyData[company.Company]?.level2"
+                 valueField="Code" textField="GroupName" (valueChange)="onDropdownlistClick($event, ['GroupID2'],company.Company)"
+                 [disabled]="disable || !companyDropdownStates[company.Company] || !currentGroupWeb1[company.Company]" [(ngModel)]="currentGroupWeb2[company.Company]" 
+                 [filterable]="true" (open)="openDropdown(company,2)"></p-kendo-dropdownlist>
+              </div>
+              <div class="item3">
+                <div class="label">Phân nhóm cấp 3</div>
+                <p-kendo-dropdownlist #dropdown3 [data]="companyData[company.Company]?.level3"
+                 valueField="Code" textField="GroupName" (valueChange)="onDropdownlistClick($event, ['GroupID3'],company.Company)"
+                 [disabled]="disable|| !companyDropdownStates[company.Company] || !currentGroupWeb2[company.Company]" [(ngModel)]="currentGroupWeb3[company.Company]"
+                 [filterable]="true" (open)="openDropdown(company,3)"></p-kendo-dropdownlist>
+              </div>
+              <div class="item4">
+                <div class="label">Phân nhóm cấp 4</div>
+                <p-kendo-dropdownlist #dropdown4 [data]="companyData[company.Company]?.level4"
+                 valueField="Code" textField="GroupName" (valueChange)="onDropdownlistClick($event, ['GroupID4'],company.Company)"
+                 [disabled]="disable || !companyDropdownStates[company.Company] || !currentGroupWeb3[company.Company] " [(ngModel)]="currentGroupWeb4[company.Company]"
+                 [filterable]="true" (open)="openDropdown(company,4)"></p-kendo-dropdownlist>
+              </div>
+              <div class="item5">
+                <div class="label">Phân nhóm cấp 5</div>
+                <p-kendo-dropdownlist #dropdown5 [data]="companyData[company.Company]?.level5"
+                 valueField="Code" textField="GroupName" (valueChange)="onDropdownlistClick($event, ['GroupID'],company.Company)"
+                 [disabled]="disable || !companyDropdownStates[company.Company] || !currentGroupWeb4[company.Company] " [(ngModel)]="currentGroupWeb5[company.Company]"
+                 [filterable]="true" (open)="openDropdown(company,5)"></p-kendo-dropdownlist>
+              </div>
+              <div class="item6">
+                <div class="label">Giá bán lẻ (bao gồm VAT)</div>
+                <div class="item-group">
+                  <app-p-numeric-textbox [propName]="'currentUnitPrice'"  [format]="'n0'"  [spinners]="false" [min]="0"
+                  [ngModel]="currentUnitPrice[company.Company] === undefined ? 0 : currentUnitPrice[company.Company]"
+                  (ngModelChange)="currentUnitPrice[company.Company] = $event"
+                [disabled]="true"></app-p-numeric-textbox >
+              <p-kendo-dropdownlist [data]="listCurrency" valueField="Code" textField="CurrencyID" [disabled]="true"
+              [ngModel]="getCurrencyItem(company.Currency)" >
+              </p-kendo-dropdownlist>
+                </div>
+              </div>
+            </div>
+          
+            </div>
+        <app-p-kendo-dialog *ngIf="dialogOpen" [title]="'Xác nhận hủy áp dụng'"
+        (close)="closeDialog()" (handleButton)="onDeleteCompany()"
+        [cancelText]="'KHÔNG'"
+        [actionText]="'Có'"
+        [dialogType]="1"
+        >
+          <p>Bạn có chắc chắn muốn Hủy áp dụng công ty này? </p>
+         
+        </app-p-kendo-dialog>
+      
+      </div>
+    </div>
+</div>

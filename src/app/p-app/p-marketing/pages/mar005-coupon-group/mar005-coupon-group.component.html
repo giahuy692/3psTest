@@ -1,0 +1,224 @@
+<div class="app-drawer-container">
+    <mat-drawer-container [hasBackdrop]="true">
+        <mat-drawer #drawer [mode]="'over'" position="end">
+
+            <form class="formSanpham k-form" [formGroup]="form" (keydown.Enter)="keydownEnter($event)">
+                <fieldset>
+                    <legend>{{ isAdd ? 'PHÂN NHÓM' : 'CẬP NHẬT'}} PHIẾU MUA HÀNG [COUPON]</legend>
+                    <!-- <kendo-formfield>
+                        <kendo-label text="Nhập mã sản phẩm" [for]="Barcode">
+                            <span class="symbol">(*)</span>
+                        </kendo-label>
+                        <kendo-textbox formControlName="Barcode" #Barcode (inputBlur)="onTextboxLoseFocus('Barcode')"
+                            (keydown.Enter)="$event.target.blur()" [(value)]="Store.Barcode"
+                            [disabled]="!isAddItem">
+                        </kendo-textbox>
+                    </kendo-formfield> -->
+
+                    <kendo-label text="Loại phân nhóm" style="margin-top: 1em;"></kendo-label>
+                    <div class="RadioGroup" style="column-gap: 50px;">
+                        <kendo-formfield class="formfield-item">
+                            <div class="RadioGroup">
+                                <input type="radio" #TypeData kendoRadioButton formControlName="TypeData" [value]="2"
+                                    [ngModel]="CouponGroup.TypeData" (click)="getCouponGroupDropdown(2)" checked />
+                                <kendo-label text="Phiếu mua hàng" [for]="TypeData"></kendo-label>
+                            </div>
+                        </kendo-formfield>
+
+                        <kendo-formfield class="formfield-item">
+                            <div class="RadioGroup">
+                                <input type="radio" #TypeData kendoRadioButton formControlName="TypeData" [value]="1"
+                                    [ngModel]="CouponGroup.TypeData" (click)="getCouponGroupDropdown(1)" />
+                                <kendo-label text="Coupon" [for]="TypeData"></kendo-label>
+                            </div>
+                        </kendo-formfield>
+                    </div>
+
+                    <kendo-formfield class="formfield-item">
+                        <kendo-label text="Tên phân nhóm" [for]="VoucherType"></kendo-label>
+                        <kendo-textbox formControlName="VoucherType" #VoucherType [(ngModel)]="CouponGroup.VoucherType">
+                        </kendo-textbox>
+                    </kendo-formfield>
+
+                    <kendo-formfield class="formfield-item">
+                        <kendo-label text="Phân nhóm cấp cha" [for]="ParentID"></kendo-label>
+                        <kendo-dropdownlist [data]="listAllCouponGroup" formControlName="ParentID" #ParentID
+                            [textField]="'VoucherType'" [valueField]="'Code'" [value]="currentParentCouponGroup"
+                            (valueChange)="onDropdownValueChange($event, 'ParentID')" style="min-width: 100%;"
+                            [popupSettings]="{appendTo:'component'}">
+                        </kendo-dropdownlist>
+                    </kendo-formfield>
+
+                    <div class="prefix-form">
+                        <kendo-formfield class="formfield-item">
+                            <kendo-label text="Tiếp đầu ngữ" [for]="ParentPrefix"></kendo-label>
+                            <kendo-textbox formControlName="ParentPrefix" #ParentPrefix
+                                [(ngModel)]="CouponGroup.ParentPrefix" style="width: 100px;"></kendo-textbox>
+                        </kendo-formfield>
+
+                        <kendo-formfield class="formfield-item" style="width: 100%;">
+                            <kendo-textbox formControlName="Prefix" #Prefix [(ngModel)]="CouponGroup.Prefix">
+                            </kendo-textbox>
+                        </kendo-formfield>
+                    </div>
+
+                    <kendo-formfield class="formfield-item">
+                        <kendo-label text="Giá trị PMH [COUPON]" [for]="DefaultAmount"></kendo-label>
+                        <kendo-textbox formControlName="DefaultAmount" #DefaultAmount
+                            [(ngModel)]="CouponGroup.DefaultAmount"></kendo-textbox>
+                    </kendo-formfield>
+
+                    <kendo-formfield class="formfield-item">
+                        <kendo-label text="Ghi chú" [for]="Remark"></kendo-label>
+                        <textarea formControlName="Remark" #Remark style="width: 100%; resize: none;"
+                            [(ngModel)]="CouponGroup.Remark" rows="6"></textarea>
+                    </kendo-formfield>
+
+                    <div class="k-form-buttons">
+                        <button kendoButton class="k-button closeBtn" (click)="closeForm()">Đóng</button>
+                        <button kendoButton class="k-button updateBtn" [ngClass]="{'addBtn': isAdd}"
+                            (click)="onUpdate()">{{ isAdd ? 'TẠO' : 'CẬP NHẬT'}} </button>
+                    </div>
+                </fieldset>
+            </form>
+        </mat-drawer>
+        <!-- center content -->
+        <mat-drawer-content>
+            <div class="app-mar005-coupon-group">
+                <!-- Header 2 -->
+                <div class="header header-1">
+                    <!-- <div class="title">
+                        DANH SÁCH HỆ THỐNG CỬA HÀNG
+                    </div> -->
+                    <ng-container *ngFor="let item of listTypeData; let  i = index">
+                        <button kendoButton class="k-button checkbox-btn-group" [togglable]="isFilterActive"
+                            [selected]="item.isChecked" (selectedChange)="selectedBtnChange($event, i)">
+                            {{ item.Name }}
+                            <input type="checkbox" class="k-checkbox" [checked]="item.isChecked" disabled>
+                        </button>
+                    </ng-container>
+
+
+                    <div class="nav-btn nav-crud" style="flex-grow: 1;" *ngIf="isMaster || isCreator">
+                        <button kendoButton class="crud-btn btn-hachi hachi-primary" (click)="onAdd(true)"
+                            [icon]="'plus'">
+                            TẠO MỚI
+                        </button>
+                    </div>
+                </div>
+                <div class="header header-2">
+                    <div class="nav-filter nav-btn">
+                        <!-- Filter (column 1) -->
+                        <div class="filter-btn-group clear-btn-group">
+                            <div class="label">
+                                <span class="k-icon k-i-filter"></span>Lọc dữ liệu
+                            </div>
+
+                            <button kendoButton class="k-button clear-filter-btn" (click)="resetFilter()">
+                                Reset bộ lọc
+                            </button>
+                        </div>
+
+                        <!-- Search (column 2) -->
+                        <form [formGroup]="searchForm" style="display: flex;">
+                            <div class="filter-btn-group search-btn-group">
+                                <div class="label">
+                                    Tìm kiếm
+                                </div>
+
+                                <div class="search-btn">
+                                    <span class="k-icon k-i-search"></span>
+
+                                    <kendo-textbox formControlName="SearchQuery" #SearchQuery type="text"
+                                        class="k-textbox" placeholder="Tìm theo tên phân nhóm, tiếp đầu ngữ"
+                                        [clearButton]="true">
+                                    </kendo-textbox>
+                                </div>
+                            </div>
+
+                            <button kendoButton class="k-button searchBtn" [icon]="'search'" (click)="search()"
+                                [disabled]="!isFilterActive">
+                                TÌM
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <!-- Body -->
+                <div class="grid-wrapper">
+                    <app-p-kendo-grid class="grid scrollable" [data]="gridView | async" [scrollable]="'none'"
+                        [loading]="isLoading" [skip]="gridState.skip" [take]="gridState.take" [sort]="gridState.sort"
+                        [getActionDropdownCallback]="getActionDropdownCallback" [selectable]="selectable"
+                        [onActionDropdownClickCallback]="onActionDropdownClickCallback"
+                        [hasMoreAction]="isMaster || isCreator" [onPageChangeCallback]="onPageChangeCallback"
+                        [onSortChangeCallback]="onSortChangeCallback" [onSelectCallback]="onSelectCallback"
+                        [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+                        [getSelectionPopupCallback]="getSelectionPopupCallback" [sortable]="true">
+    
+                        <kendo-grid-column class="col_name" title="Phân nhóm">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="name">
+                                    <div><b>{{ dataItem.VoucherType }}</b></div>
+                                    Phân nhóm cha:
+                                    <b>{{ getParentVoucherType(dataItem.ParentID) }}</b>
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+    
+                        <kendo-grid-column field="Prefix" class="col_prefix" title="Tiếp đầu ngữ">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="prefix">
+                                    <div><b>{{ dataItem.Prefix }}</b></div>
+                                    {{ dataItem.ParentPrefix }}
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+    
+                        <kendo-grid-column field="DefaultAmount" class="col_amount" title="Giá trị PM/Coupon">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="amount">
+                                    <b>{{ dataItem.DefaultAmount }}</b>
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+    
+                        <kendo-grid-column field="Remark" class="col_Remark" title="Diễn giải">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                {{ dataItem.Remark }}
+                            </ng-template>
+                        </kendo-grid-column>
+    
+                    </app-p-kendo-grid>
+                </div>
+
+                <kendo-dialog #dialog class="deleteDialog" title="Xóa phân nhóm phiếu mua hàng"
+                    [hidden]="!deleteDialogOpened" (close)="deleteDialogOpened = false" [minWidth]="250">
+                    <p style="margin: 30px; text-align: center;">
+                        Bạn chắc chắn muốn xóa cửa hàng <b>{{ CouponGroup.VoucherType }}</b> ?
+                    </p>
+                    <div class="dialog-footer">
+                        <button kendoButton class="btn-hachi hachi-secondary" (click)="deleteDialogOpened = false"
+                            [icon]="'close'">Không</button>
+                        <button kendoButton class="btn-hachi hachi-warning" (click)="onDeleteCouponGroup([CouponGroup])"
+                            [icon]="'trash'">Có</button>
+                    </div>
+                </kendo-dialog>
+
+                <kendo-dialog #dialog class="deleteDialog" title="Xóa các phân nhóm phiếu mua hàng đã chọn"
+                    [hidden]="!deleteManyDialogOpened" [minWidth]="250" (close)="deleteManyDialogOpened = false">
+                    <div style="margin: 30px; text-align: center;">
+                        {{ deleteList.length }} phân nhóm phiếu mua hàng bị xóa<br>
+                        sẽ <b><span style="color: #FD7676">KHÔNG</span></b> thể khôi phục lại
+                    </div>
+                    <div class="dialog-footer">
+                        <button kendoButton class="btn-hachi hachi-secondary" (click)="deleteManyDialogOpened = false"
+                            [icon]="'close'">Không</button>
+                        <button kendoButton class="btn-hachi hachi-warning" (click)="onDeleteSelected()"
+                            [icon]="'trash'">Có</button>
+                    </div>
+                </kendo-dialog>
+            </div>
+        </mat-drawer-content>
+    </mat-drawer-container>
+
+
+</div>

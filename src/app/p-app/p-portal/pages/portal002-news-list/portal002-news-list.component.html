@@ -1,0 +1,30 @@
+<div class="app-portal002-new-list">
+  <div class="header header-2">
+    <app-search-filter-group [placeholder]="placeholder" [disabled]="!isFilterActive"
+      (filterChange)="handleSearch($event)" (onReset)="resetFilter()"
+      [fields]="['TitleVN','TitleEN', 'TitleJP', 'SummaryVN', 'SummaryEN', 'SummaryJP', 'NewsCategoryName']">
+    </app-search-filter-group>
+  </div>
+
+  <div class="main" *ngIf="categorizedNews.length >= 1">
+
+    <div class="block-policy" *ngFor="let category of categorizedNews">
+      <kendo-label class="title-block-policy" [text]="category.category"></kendo-label>
+      <div class="content-policy-1">
+        <div class="content" *ngFor="let new of category.new; let i = index">
+          <kendo-label class="title-policy title-item-1" [text]="(i + 1)+'.'+' '+ new.TitleVN"
+            (click)="openDetail(new)">
+          </kendo-label>
+          <div class="text-policy">
+            <p>{{new.SummaryVN}}</p>
+          </div>
+        </div>
+        <span class="btnExpandCollapse" *ngIf="category.new.length >= 5 && category.new.length !== category.total"
+          (click)="expandcopllapeToogle(category.new[0].NewsCategory)">{{textExpandCollapse}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="no-articles-message" *ngIf="categorizedNews.length === 0">
+    Không có bài viết để hiển thị
+  </div>
+</div>

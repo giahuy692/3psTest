@@ -1,0 +1,228 @@
+<div id="config005-enterprise-permission">
+    <div class="header header-1">
+        <app-p-kendo-breadcrumb (loadData)="loadDateBreadcrumb()"></app-p-kendo-breadcrumb>
+    </div>
+    <div class="header header-2">
+        <div class="title_filter">
+            <div class="title">
+                <span class="k-icon k-i-filter"></span>
+                <span>LỌC DỮ LIỆU</span>
+            </div>
+        </div>
+        <div class="filter_group">
+            <div class="filter_item">
+                <span class="title">Công ty</span>
+                <p-kendo-dropdownlist [data]="ListCompany" (selectionChange)="handleSelectedCurrentCompany($event)"
+                     [(ngModel)]="curCompany.Code" [valuePrimitive]="true" [loading]="loading" [disabled]="loadingTree"
+                     [filterable]="true" [textField]="'Bieft'" [valueField]="'Code'"></p-kendo-dropdownlist> 
+            </div>
+
+            <div class="filter_item Bps">
+                <span class="title">Phân hệ</span>
+                <!-- <kendo-dropdowntree
+                    kendoDropDownTreeExpandable
+                    [data]="parsedDataModule"
+                    [loading]="loading"
+                    [(ngModel)]="curModule"
+                    [fetchChildren]="childrenModule"
+                    [hasChildren]="hasChildrenModule"
+                    textField="Vietnamese"
+                    valueField="Code"
+                    [clearButton]="false"
+                    [popupSettings]="{ appendTo: 'root',animate: true, popupClass:'Bps CustomPopupTreeAtRoot'}"
+                    (valueChange)="handleSelectedCurrentModule($event)"
+                    [disabled]="loadingTree"
+                    [filterable]="true" 
+                    (filterChange)="handleFilterModule($event)"
+                >
+                    <ng-template kendoDropDownTreeNodeTemplate let-dataItem let-index="index">
+                        <div class="d-flex align-items-center p-1">
+                            <img loading="lazy" src="assets/img/icon/icon_departmentGray.svg" />
+                            <span class="p-2">{{dataItem.Vietnamese}}</span>
+                        </div>
+                    </ng-template>
+                </kendo-dropdowntree> -->
+                <p-kendo-dropdowntree [loading]="loading" [disabled]="loadingTree" [data]="parsedDataModule" [listSearchField]="['Vietnamese']"
+                [textField]="'Vietnamese'" [valueField]="'Code'" [(ngModel)]="curModule" [filterable]="true" [childrenFields]="['ListGroup']"
+                [icon]="'assets/img/icon/icon_departmentGray.svg'" (valueChange)="handleSelectedCurrentModule($event)"></p-kendo-dropdowntree>
+            </div>
+
+            <div class="filter_item">
+                <span class="title">Bộ phận</span>
+                <kendo-multiselecttree
+                    #DepartmentMultiselect
+                  kendoMultiSelectTreeExpandable
+                  [data]="parsedDataDepartment"
+                  [hasChildren]="hasChildrenDepartment"
+                  [fetchChildren]="fetchChildrenDepartment"
+                  textField="Department"
+                  valueField="Code"
+                  [(ngModel)]="curDepartment"
+                  [popupSettings]="{ appendTo: 'root',animate: true, popupClass:'Bps CustomPopupTreeAtRoot'}"
+                  [clearButton]="false"
+                  [filterable]="true"
+                  [loading]="loading"
+                  placeholder="-- Chọn --"
+                  (valueChange)="handleValueChangeDepartment($event)"
+                  (filterChange)="handleFilterDepartment($event)"
+                  [disabled]="loadingTree"
+                >
+                </kendo-multiselecttree>
+            </div>
+
+            <div class="filter_item">
+                <span class="title">Vai trò</span>
+                <kendo-multiselect
+                    #multiselectRole
+                    [data]="ListRole"
+                    [(ngModel)]="curRole"
+                    [loading]="loading"
+                    [popupSettings]="{ appendTo: 'root',animate: true, popupClass:'Bps CustomPopupTreeAtRoot'}"
+                    textField="RoleName"
+                    valueField="Code"
+                    placeholder="-- Chọn --"
+                    [clearButton]="false"
+                    (valueChange)="handleValueChangeRole($event)"
+                    [disabled]="loadingTree"
+                    [filterable]="true"
+                    [kendoDropDownFilter]="filterSettings"
+                  >
+                
+                </kendo-multiselect>
+            </div>
+        </div>
+    </div>
+
+    <div class="treelist-wrapper">
+        <kendo-treelist
+            [kendoTreeListFlatBinding]="listSysStructurePermissionTree"
+            kendoTreeListExpandable  [initiallyExpanded]="true"
+            [virtualColumns]="true" [fetchChildren]="fetchChildren" [loading]="loadingTree"
+            [hasChildren]="hasChildren" [initiallyExpanded]="true" kendoTreeListExpandable [virtualColumns]="true"
+        >
+            <kendo-treelist-column [expandable]="true" [width]="350" [locked]="columns.length > 0" headerClass="firstHeader" [style]="{'background-color': 'rgba(26, 102, 52, 0.2)'}">
+                <ng-template
+                    kendoTreeListHeaderTemplate
+                    let-column
+                    
+                >
+                   Chức năng phân quyền
+                </ng-template>
+                <ng-template kendoTreeListCellTemplate let-dataItem>
+                    <div class="colNameTree colNameTreeBold d-flex align-items-center" *ngIf="onCheckUniqueFieldsType(dataItem) == 'module'">
+                        <img loading="lazy" class="colName-icon" src="assets/img/icon/icon_departmentGray.svg" />
+                        <div class="text-name text-ellipsis">
+                            <span [title]="dataItem.Vietnamese"> {{ dataItem.Vietnamese }} </span>
+                        </div>
+                    </div>
+    
+                    
+                    <div class="colNameTree d-flex align-items-center text-ellipsis" *ngIf="onCheckUniqueFieldsType(dataItem) == 'function'">
+                        <img loading="lazy" class="colName-icon" src="assets/img/icon/icon_serverGray.svg" />
+                        <p class="text-name" [title]="dataItem.Vietnamese"> {{ dataItem.Vietnamese }}</p>
+                    </div>
+    
+    
+                    <div class="colNameTree d-flex align-items-center text-ellipsis" *ngIf="onCheckUniqueFieldsType(dataItem) == 'action'">
+                        <img loading="lazy" class="colName-icon" src="assets/img/icon/icon_share.svg" />
+                        <p class="text-name" [title]="dataItem.ActionName"> {{ dataItem.ActionName }} </p>
+                    </div>
+                </ng-template>
+            </kendo-treelist-column>
+            <kendo-treelist-column
+                *ngFor="let column of columns; let index = index"
+                [field]="column.RoleID"
+                [width]="column.width"
+                [expandable]="false"
+                [style]="index % 2 != 0 ? {'background-color': 'rgba(217, 217, 217, 0.3)'} : null"
+            >
+                <ng-template
+                    kendoTreeListHeaderTemplate
+                >
+                    <span class="text-ellipsis d-block" [title]="column.RoleID">{{column.RoleID}}</span> <br />
+                    <span class="text-ellipsis d-block" [title]="column.RoleName">{{column.RoleName}}</span>
+                   
+                </ng-template>
+                <ng-template
+                    kendoTreeListCellTemplate
+                    let-dataItem
+                    let-rowIndex="rowIndex"
+                    
+                >
+                    <div class="text-center" *ngIf="dataItem.ActionName">
+                        <input type="checkbox" class="k-checkbox" [checked]="getPermission(column, dataItem).IsSelected" (change)="hanldePerssion($event,column,dataItem)">
+                        <div class="btn_permission text-center">
+                            <span class="cursorPointer" *ngIf="dataItem.TypeDataFunction == 4 && getPermission(column,dataItem).Code !== 0 && getPermission(column,dataItem).Permitted 
+                             || dataItem.TypeDataFunction == 5 && getPermission(column,dataItem).Code !== 0 && getPermission(column,dataItem).Permitted " (click)="opendDialogPermission(getPermission(column, dataItem))">Đã phân quyền dữ liệu </span>
+                            <span class="cursorPointer" *ngIf="dataItem.TypeDataFunction == 4 && getPermission(column,dataItem).Code !== 0 && !getPermission(column,dataItem).Permitted 
+                                || dataItem.TypeDataFunction == 5 && getPermission(column,dataItem).Code !== 0 && !getPermission(column,dataItem).Permitted" (click)="opendDialogPermission(getPermission(column, dataItem))">Phân quyền dữ liệu</span>
+                        </div>
+                    </div>
+                </ng-template>
+            </kendo-treelist-column>
+        </kendo-treelist>
+    </div>
+</div>
+
+<app-p-kendo-dialog *ngIf="openedPermission" [dialogType]="2"
+    (close)="handleCloseDialogPer()"
+    [title]="typeDialog === 4 ? 'PHÂN QUYỀN DỮ LIỆU' : typeDialog === 5 ? 'PHÂN QUYỀN TÍNH NĂNG CHI TIẾT DỮ LIỆU': null">
+    <div>
+        <div class="d-block">
+            <span class="title d-block font-weight-bold">Tính năng</span>
+            <span [title]="curPermission.FunctionName" class="pl-3 font-weight-bold d-block text-ellipsis">{{curPermission.FunctionName}}</span>
+        </div>
+        <div class="d-block pt-2">
+            <span class="title d-block font-weight-bold">Chức năng</span>
+            <span [title]="curPermission.ActionName" class="pl-3 font-weight-bold d-block text-ellipsis">{{curPermission.ActionName}}</span>
+        </div>
+        <div class="d-block pt-2" *ngIf="typeDialog === 4 && curPermission.ListDataPermission && curPermission.ListDataPermission.length > 0">
+            <span class="title d-block pb-3  font-weight-bold">Dữ liệu được truy xuất</span>
+            <div class="listDataPermission">
+                <div class="p-1 pl-3" *ngFor="let item of curPermission.ListDataPermission; let i = index">
+                    <div class="d-block d-flex align-items-center col-gap-10 selection-wrapper">
+                        <input [id]="'checkbox' + item.Code + item.name + i" type="checkbox" class="k-checkbox"  [(ngModel)]="item.IsSelected" (change)="handleUpdateSubFunction(item,curPermission)">
+                        <label [title]="item.Name" [for]="'checkbox' + item.Code + item.name + i" class="pl-2 m-0 text-ellipsis per-name">{{item.Name}}</label>
+                    </div>
+                    <div *ngIf="item.ListDataPermission">
+                        <ng-container *ngTemplateOutlet="recursiveFunction; context:{ $implicit: item.ListDataPermission, level: 1 }"></ng-container>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="d-block pt-2" *ngIf="typeDialog === 5 && curPermission.ListSubFunction && curPermission.ListSubFunction.length > 0">
+            <span class="title d-block font-weight-bold">Tính năng chi tiết</span>
+            <div class="pt-1 d-block listDataPermission">
+                
+                <kendo-panelbar>
+                    <kendo-panelbar-item [expanded]="false" *ngFor="let item of curPermission.ListSubFunction; let i = index">
+                        <ng-template kendoPanelBarItemTitle>
+                            <div class="d-flex align-items-center col-gap-10 selection-wrapper">
+                                <input [id]="'checkbox' + item.Code + item.DataName + i" type="checkbox" class="k-checkbox" [(ngModel)]="item.IsSelected" (change)="handleUpdateSubFunction(item, curPermission, item)">
+                                <label [title]="item.DataName" [for]="'checkbox' + item.Code + item.DataName + i" class="color-black m-0 text-ellipsis per-name mt-0">{{item.DataName}}</label>
+                                <span class="symbol" title="Những dữ liệu bên trong tính năng chỉ được lưu khi tính năng được chọn">(*)</span>
+                            </div>
+                        </ng-template>
+                        <ng-template kendoPanelBarContent *ngIf="item.ListDataPermission">
+                            <ng-container *ngTemplateOutlet="recursiveFunction; context:{ $implicit: item.ListDataPermission, level: 1 , parent: item}"></ng-container>
+                        </ng-template>
+                    </kendo-panelbar-item>
+                </kendo-panelbar>
+            </div>
+        </div>
+
+        <!-- Đoạn mã đệ quy -->
+        <ng-template #recursiveFunction let-listSubFunction let-level="level" let-parent="parent">
+            <div *ngFor="let i of listSubFunction; let x = index" [style.marginLeft.px]="level * 10">
+                <p class="pl-3 py-2 m-0 d-flex align-items-center col-gap-10 selection-wrapper" >
+                    <input [id]="'subCheckbox' + i.Code + i.name + level" type="checkbox" class="k-checkbox " [(ngModel)]="i.IsSelected" (change)="handleUpdateSubFunction(i,curPermission, parent)">
+                    <label [title]="i.Name" [for]="'subCheckbox' + i.Code + i.name + level" class="pl-2 m-0 text-ellipsis per-name">{{i.Name}}</label>
+                </p>
+                <ng-container *ngTemplateOutlet="recursiveFunction; context:{ $implicit: i.ListDataPermission, level: level + 1, parent: parent }"></ng-container>
+            </div>
+        </ng-template>
+        
+    </div>
+</app-p-kendo-dialog>

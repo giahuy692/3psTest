@@ -1,0 +1,31 @@
+@import "../../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+  form {
+    .WHPickup_row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 9px;
+
+      label {
+        margin: 0;
+        color: $gray-850;
+        cursor: pointer;
+      }
+
+      .hachi-radio {
+        order: 1;
+      }
+
+      &:hover {
+        label {
+          color: $dark-green;
+        }
+        input {
+          background-color: $dark-green;
+        }
+      }
+    }
+  }
+}

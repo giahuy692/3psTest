@@ -1,0 +1,319 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+  
+    .pur008-price-product-detail {
+        display: flex;
+        flex-direction: column;
+        .header{
+            justify-content: space-between;
+            .nav-crud{
+                margin-right: 10px;
+                display: flex;
+                gap: 10px;
+                .btn-aplication {
+                    width: fit-content;
+                    height: 32px;
+                    background-color: $white;
+                    color: $dark-green;
+                    box-shadow: 0 0 8px $lightgray;
+                    font-weight: 700;
+                    font-size: 11px;
+                    margin: 0 5px;
+                  }
+                  .btnNgunghienthi {
+                    width: fit-content;
+                    height: 32px;
+                    background-color: $bad-red;
+                    color: $white;
+                    border: 1px solid $white;
+                    box-shadow: 0 0 8px $lightgray;
+                    font-weight: 700;
+                    font-size: 11px;
+                  }
+            }
+        }
+        .dialogPrice{
+            .k-dialog-content {
+              font-size: 16px;
+              height: 150px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              text-align: center;
+            }
+          }
+        .body{
+            height: calc(83vh - #{$footer-height}) !important;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            padding: 9px 10px!important;
+            .impose{
+                color: $bad-red;
+            }
+            .block{
+                .title{
+                    font-weight: 700;
+                    font-size: 16px;
+                    padding: 5px 0;
+                }
+                .section{
+                    background-color: $white;
+                    padding: 10px;
+                    display: flex;
+                    overflow-y: hidden;
+                    overflow-x: scroll;
+                    .label{
+                        font-weight: 700;
+                        color: #959DB3;
+                        padding: 5px 0;
+                    }
+                    .k-textbox,.k-dropdown,.k-numerictextbox{
+                        width: 100%;
+                    }
+                }
+            }
+            .block-request{
+                .section{
+                   gap: 20px;
+                    .column1{
+                        width: 25%;
+
+                    }
+                    .column2{
+                        width: 75%;
+                    }
+                }
+            }
+            .block-product{
+                .section{
+                    gap: 20px;
+                    .nullBarcode,.nullProductName{
+                        kendo-textbox{
+                            border-color: $bad-red !important;
+                        }
+                    }
+                    .column1{
+                        width: 30%;
+                        min-width: max-content;
+                        .pencil{
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            button{
+                                width: 0;
+                                height: 0;
+                                border: none;
+                                box-shadow: none;
+                                margin-right: 10px;
+                            }
+
+                        }
+                        .barcode,.type_name{
+                            font-weight: 700;
+                            color: $dark-green;
+                            margin-left: 10px;
+                        }
+                        .barcode{
+                            margin-left: 10px;
+                        }
+                    }
+                    .column2{
+                        width: 50%;
+                        min-width: max-content;
+                        .poscode{
+                            margin-left: 10px;
+                            display: flex;
+                            flex-direction: column;
+                            gap: 5px;
+                        }
+                    }
+                    .column3{
+                        width: 20%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        min-width: max-content;
+                        img{
+                            max-width: 200px;
+                            max-height: 200px;
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+
+            .block-purchase{
+                .section{
+                    // gap: 20px;
+                    flex-direction: column;
+                    .row-item{
+                        display: flex;
+                        flex-direction: row;
+                        gap: 20px;
+                        min-width: max-content;
+                        .k-numerictextbox{
+                            .k-input-inner{
+                                text-align: left;
+                            }
+                        }
+                       .item1, .item3{
+                            width: 210px;
+                       }
+                       .item2{
+                            // min-width: max-content;
+                            width: 155px;
+                       }
+                       .item4{
+                            min-width: max-content;
+                            width: 120px;
+                       }
+                       .item5,.item6{
+                            min-width: max-content;
+                            width: 145px;
+                            .margin{
+                                font-weight: 700;
+                                color: $dark-green;
+                                margin-left: 10px;
+                                position: relative;
+                                top: 7px;
+                            }
+                       }
+                      
+                    }
+                    .row2{
+                        .item5{
+                            width: 230px;
+                        }
+                    }
+                    .row4{
+                        .item4{
+                            min-width: 125px !important;
+                        }
+                        .item5{
+                            min-width: 150px !important;
+                        }
+                       
+                    }
+                    .row5{
+                        .item2,.item3{
+                            width: 252px;
+                            .item_date{
+                                display: flex;
+                                gap: 5px;
+                            }
+                        }.item3{
+                            padding-left: 20px;
+                        }
+                    }
+                    .row6{
+                       .item{
+                            width: 100%;
+                            .customized-textarea{
+                                height: 60px;
+                            }
+                       }
+                    }
+                }
+            }
+            .block-sales{
+                .section{
+                    flex-direction: column;
+                    font-weight: 700;
+                    .without{
+                        padding-left: 10px;
+                        span{
+                            margin-left: 10px;
+                            cursor: pointer;
+                        }
+                        .withoutStoreList{
+                            display: grid;
+                            grid-template-columns: repeat(4, 1fr); /* 4 cột */
+                            grid-template-rows: auto; /* Chiều cao tự động */
+                            grid-gap: 10px;
+                            padding: 5px 0;
+                            margin-left: 60px;
+                           
+                        }
+                    }
+                }
+            }
+
+            .block-attribute{
+                .section{
+                    gap: 10px;
+                    .column1{
+                        min-width: 270px;
+                        width: 377px;
+                    }.column3{
+                        min-width: max-content;
+                        width: 377px;
+                    }
+                    .column2{
+                        min-width: max-content;
+                        width: 420px;
+                        .item{
+                           
+                            .item_grid{
+                                display: flex;
+                                gap: 17px;
+                                .k-numerictextbox{
+                                    width: 75px;
+                                    .k-input-inner{
+                                        text-align: center;
+                                    }
+                                }
+                                .item_item4{
+                                    .k-numerictextbox{
+                                        width: 135px;
+                                    } 
+                                }
+                            }
+                        }
+                        .item7{
+                            padding: 15px 0px;
+                            .hsd{
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                .k-checkbox{
+                                    margin-left: 10px;
+                                }
+                                label{
+                                    margin-bottom: 0px;
+                                }
+                            }
+                            .k-numerictextbox{
+                                width: 100%;
+                            }
+                        }
+                    }
+                    .column3{
+                        .item1_1{
+                            display: flex;
+                            // justify-content: space-between;
+                            align-items: center;
+                            gap: 10px;
+                            padding-bottom: 5px;
+                            .label{
+                                width: 60px;
+                            }
+                            b{
+                                // margin-left: 20px;
+                                font-weight: 700;
+                                color: #959DB3;
+                            }
+                            app-p-numeric-textbox{
+                                width: 160px;
+                            }
+                        }
+                        .item2{
+                            margin-top: 44px;
+                        }
+                    }
+                }
+            }
+        }
+    }   
+
+}

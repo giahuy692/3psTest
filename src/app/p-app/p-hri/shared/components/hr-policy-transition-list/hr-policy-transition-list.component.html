@@ -1,0 +1,164 @@
+<div class="app-hr-policy-trans-list">
+    <div class="header header-1">
+        <!-- BREADCRUMB -->
+        <app-p-kendo-breadcrumb (loadData)="LoadFilter()" [ngClass]="{'pointerDisable' : isFilterDisable}"></app-p-kendo-breadcrumb>
+        <!-- FILTER BUTTON GROUP -->
+        <div class="button-group">
+            <app-checkbox-button-group title="Đang soạn thảo" [field]="'Status'" [value]="0"
+                [disabled]="isFilterDisable" [checked]="isDraft" (selectedChange)="onFilterChange($event, 'isDraft', false)"
+                (filterChange)="onFilterChange($event, 'draftDescriptor')">
+            </app-checkbox-button-group>
+            <app-checkbox-button-group title="Gửi duyệt" [field]="'Status'" [value]="1" [disabled]="isFilterDisable"
+                [checked]="isSent" (selectedChange)="onFilterChange($event, 'isSent', false)"
+                (filterChange)="onFilterChange($event, 'sentDescriptor')">
+            </app-checkbox-button-group>
+            <app-checkbox-button-group title="Đã duyệt" [field]="'Status'" [value]="2" [disabled]="isFilterDisable"
+                [checked]="isApproved" (selectedChange)="onFilterChange($event, 'isApproved', false)"
+                (filterChange)="onFilterChange($event, 'approvedDescriptor')">
+            </app-checkbox-button-group>
+            <app-checkbox-button-group title="Ngưng áp dụng" [field]="'Status'" [value]="3" [disabled]="isFilterDisable"
+                [checked]="isSuspended" (selectedChange)="onFilterChange($event, 'isSuspended', false)"
+                (filterChange)="onFilterChange($event, 'suspendedDescriptor')">
+            </app-checkbox-button-group>
+        </div>
+        <!-- FUNCTION BUTTON WRAPPER -->
+        <div class="btnWrapper">
+            <button kendoButton iconClass="k-icon k-i-plus" [disabled]="isFilterDisable" class="btn-hachi hachi-primary"
+                (click)="openDetail(true)" *ngIf="isToanQuyen || isAllowedToCreate">
+                THÊM MỚI
+            </button>
+        </div>
+    </div>
+
+    <div class="header header-2">
+        <!-- FILTER BY TERM -->
+        <app-search-filter-group placeholder="{{this.curTypeApplyFilterValue.OrderBy == 1 ? 'Tìm theo mã, tên, mô tả, chức danh thuộc chính sách' : 'Tìm theo mã, tên, mô tả thuộc chính sách'}}"
+            [fields]="['PolicyID', 'PolicyName', 'Description']" (filterChange)="onFilterChange($event, 'SearchTermComposite')" (onReset)="resetFilter()"
+            [disabled]="isFilterDisable">
+        </app-search-filter-group>
+
+        <!-- FILTER EFFDATE -->
+        <kendo-label text="Ngày hiệu lực">
+            <div class="in-label">
+                <p-kendo-dropdownlist class="filter-by-date" [data]="ListDateFilterOperator" textField="TypeFilter"
+                    valueField="ValueFilter" [(ngModel)]="curDateFilterOperator"
+                    (selectionChange)="onFilterChange($event, 'curDateFilterOperator')" [hasValueNull]="false"
+                    [disabled]="isFilterDisable">
+                </p-kendo-dropdownlist>
+                <app-datepicker [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'" [(ngModel)]="curDateFilterValue"
+                    [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                    (valueChange)="onFilterChange($event,'curDateFilterValue')"
+                    [disabled]="isFilterDisable"></app-datepicker>
+            </div>
+        </kendo-label>
+        <!-- FILTER TYPE APPLY -->
+        <kendo-label text="Phạm vi áp dụng">
+            <div class="in-label">
+                <p-kendo-dropdownlist class="filter-by-typeapply" [data]="ListTypeApplyFilter" textField="ListName"
+                    valueField="Code" [(ngModel)]="curTypeApplyFilterValue"
+                    (selectionChange)="onFilterChange($event, 'curTypeApplyFilterValue')" [hasValueNull]="false"
+                    [disabled]="isFilterDisable">
+                </p-kendo-dropdownlist>
+            </div>
+        </kendo-label>
+    </div>
+
+    <div class="grid-wrapper">
+        <app-p-kendo-grid class="grid scrollable" [ngClass]="{'pagerDisable': isFilterDisable}" [data]="gridView | async" [scrollable]="'none'" [loading]="isLoading"
+            [selectable]="selectable" [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize"
+            [take]="gridState.take" [skip]="gridState.skip" [sortable]="true" [sort]="gridState.sort"
+            [onPageChangeCallback]="onPageChangeCallback" [getActionDropdownCallback]="getActionDropdownCallback"
+            [onActionDropdownClickCallback]="onActionDropDownClickCallback"
+            [getSelectionPopupCallback]="getSelectionPopupCallback"
+            [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+            [onSelectCallback]="onSelectCallback">
+
+            <!-- COL-1 -->
+            <kendo-grid-column field="PolicyName" title="Tên chính sách" class="policy-col"
+                [width]="360">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <span class="policy-name" [title]="dataItem?.PolicyName">{{dataItem?.PolicyName}}</span>
+                    <div class="id-seperate-block">
+                        <span class="policy-id" title="{{dataItem?.PolicyID}}">{{dataItem?.PolicyID}}</span>
+                        <div class="seperate-bar">|</div>
+                        <span title="{{dataItem?.EffDate | date : 'dd/MM/yyyy' : 'Indochina Time' : 'vi_VN'}}">{{dataItem?.EffDate | date : "dd/MM/yyyy" : "Indochina Time" : "vi_VN"}}</span>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <!-- COL-2 -->
+            <kendo-grid-column field="NumOfTask" title="Công việc" headerClass="flex-center-col" class="flex-center-col"
+                [width]="200">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <span>{{dataItem?.NumOfTask ?? 0}} công việc</span>
+                </ng-template>
+            </kendo-grid-column>
+
+            <!-- COL-3 -->
+            <kendo-grid-column field="Description" title="Mô tả" class="overflow-text-2" [width]="450">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <span class="description-text" [title]="hasValueString(dataItem?.Description) ? dataItem?.Description : 'Chưa có mô tả'">{{hasValueString(dataItem?.Description) ? dataItem?.Description : 'Chưa có mô tả'}}</span>
+                </ng-template>
+            </kendo-grid-column>
+
+
+            <!-- COL-4  Sẽ bị ẩn đi nếu phạm vi áp dụng là toàn bộ chức danh-->
+            <kendo-grid-column field="ListPositionName" title="Chức danh áp dụng" headerClass="flex-end-col"
+                class="flex-end-col" [hidden]="this.curTypeApplyFilterValue.OrderBy != 1" [width]="250">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <ng-container *ngIf="dataItem.ListPositionName">
+                        <div class="position-apply-container"
+                            *ngFor="let item of dataItem.ListPositionName; let i = index">
+                            <span *ngIf="i == 0" title="{{item}}">
+                                {{item}}
+                            </span>
+                            <span class="title-more" *ngIf="i > 0 && i <= 1 && item"
+                                title="{{dataItem.ListPositionName.slice(1).join(',\n')}}">+
+                                {{dataItem.ListPositionName.length - 1}} chức danh</span>
+                        </div>
+                    </ng-container>
+                </ng-template>
+            </kendo-grid-column>
+
+            <!-- COL-5 -->
+            <kendo-grid-column field="StatusName" title="Tình trạng" headerClass="flex-end-col" class="flex-end-col">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <span class="status-name" [innerHTML]="dataItem.StatusName | colorStatus: dataItem.Status"></span>
+                </ng-template>
+            </kendo-grid-column>
+        </app-p-kendo-grid>
+    </div>
+
+    <!-- POPUP CONFIRM DELETE POLICY -->
+    <kendo-dialog class="dialog-delete popup-confirm-custom" [minHeight]="250" [minWidth]="400" *ngIf="isDialogShow">
+        <!-- HEADER -->
+        <div class="dialog-header">
+            <span class="k-icon k-i-warning"></span>
+            <div>Xóa chính sách</div>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="dialog-content">
+            <div class="text-confirm">
+                <span>Bạn có chắc chắn muốn xoá {{ListDeletePolicyReq?.length > 1 ? ListDeletePolicyReq?.length : ''}} chính sách</span>
+                <div *ngFor="let item of ListDeletePolicyReq; let i = index" class="policy-name-text">
+                    <span *ngIf="i >= 0 && i < 2" title="{{item.PolicyName}}">
+                        {{item.PolicyName}}
+                    </span>
+                    <span *ngIf="i == 2" title="{{getRemainingPolicyNames()}}"> + {{this.ListDeletePolicyReq.slice(2)?.length}} chính sách</span>
+                </div>
+            </div>
+            <div class="warning">
+                <span>Chính sách bị xoá sẽ</span>  
+                <span style="color: #FD7676;">KHÔNG</span> 
+                <span>thể khôi phục lại.</span>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="dialog-footer">
+            <button kendoButton (click)="closeDialog()" class="cancel-button">Không xóa</button>
+            <button kendoButton icon="trash" class="btn-delete" (click)="onDeleteRequest()">xóa</button>
+        </div>
+    </kendo-dialog>
+</div>

@@ -1,0 +1,479 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+  .text-light-blue-gray {
+    color: $light-blue-gray;
+  }
+
+  @mixin text-light-blue-gray() {
+    color: $light-blue-gray;
+  }
+
+  @mixin text-5A6276() {
+    color: #5a6276;
+  }
+
+  .text-dark-green {
+    color: $dark-green;
+  }
+  .app-hri012-quiz-marking {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: -webkit-fill-available;
+
+    .colgap-20{
+      column-gap: 20px;
+    }
+
+    .bread-crumb-block {
+      display: flex;
+      height: 40px;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #bdc2d2;
+      background-color: #f0f3f5;
+      padding-left: 20px;
+    
+      app-p-kendo-breadcrumb {
+        .k-breadcrumb {
+          .k-breadcrumb-container {
+            padding-left: 0;
+          }
+        }
+      }
+    }
+    #selectedRowitemDialog{
+      z-index: 3;
+    }
+    .title {
+      padding: 10px 0;
+      h1 {
+        font-size: 16px;
+        font-weight: 700;
+        color: $gray-850;
+        text-transform: uppercase;
+        margin: 0;
+      }
+      // span {
+      //   font-style: italic;
+      //   color: $blue;
+      // }
+    }
+
+
+
+    .customsSessionInfo {
+      .colFirst {
+        kendo-label:nth-of-type(2),
+        kendo-label:nth-of-type(3),
+        kendo-label:nth-of-type(4),
+        kendo-label:nth-of-type(5),
+        kendo-label:nth-of-type(6),
+        kendo-label:nth-of-type(7) {
+          display: none !important;
+        }
+      }
+
+      .colLast {
+        kendo-label:nth-of-type(2),
+        app-p-textarea {
+          display: none !important;
+        }
+      }
+    }
+
+    .QuestionInfo {
+      .info {
+        padding: 12px 18px;
+        background-color: $white;
+      }
+    }
+    .wrapper-dialog {
+      .k-dialog {
+        .k-dialog-titlebar {
+          display: flex;
+          align-items: center;
+          background-color: #1a6634;
+          color: $white;
+  
+          .k-dialog-title {
+            justify-content: center;
+            align-items: center;
+            .title-delete{
+              column-gap: 10px;
+              span{
+                font-weight: 700;
+              }
+              .k-button {
+                background-color: white;
+                padding: 0;
+                background-image: none;
+                width: fit-content;
+                height: fit-content;
+                border: none;
+              }
+            }
+          }
+          .k-dialog-titlebar-actions {
+            display: none;
+          }
+        }
+  
+        .k-dialog-content {
+          text-align: center;
+          padding: 0;
+  
+          .body_dialog {
+            width: 100%;
+            position: absolute;
+            top: 34%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px;
+            .content-primary {
+              p {
+                margin: 0;
+                font-size: 16px;
+                font-weight: 700;
+              }
+              strong {
+                color: $primary;
+                font-size: 16px;
+                font-weight: 700;
+              }
+            }
+            .content-sub {
+              margin: 16px 0 0 0;
+            }
+          }
+        }
+  
+        .k-dialog-actions {
+          display: flex;
+          width: 100%;
+          padding: 0;
+          column-gap: 0;
+          position: absolute;
+          bottom: 0;
+          .delete{
+            background: #1a6634;
+            color: #fff;
+          }
+          .update{
+            background: $dark-green;
+            color: #fff;
+          }
+          .cancel{
+            background: $white;
+            color: #959DB3;
+          }
+          button {
+            width: 50%;
+            height: 53px;
+            border-radius: 0;
+            font-weight: 700;
+            
+            .k-button-icon {
+              width: 20px;
+              img {
+                width: 20px;
+              }
+            }
+          }
+        }
+      }
+    }
+      //End: dialog
+
+    #evaluationSupervisionInfo {
+      padding: 15px 0 0 0;
+
+      .formContainer {
+        .k-datepicker {
+          &.k-disabled {
+            .k-input-button {
+              background-color: unset;
+            }
+          }
+        }
+      }
+
+      .quizz-time-group {
+        app-p-numeric-textbox {
+          .customized-input {
+            &.k-disabled {
+              .k-input-spinner {
+                .k-icon-button {
+                  background-color: unset;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    // Css cho grid question
+    .grid-wrapper{
+      // height: calc(100vh - 350px) !important;
+      .myCustomGrid {
+        .k-grid-aria-root {
+          background-color: $white;
+          // height: calc(100vh - 350px)  !important;
+          overflow-y: scroll;
+  
+          .k-table {
+            border-spacing: unset;
+            .k-grid-header {
+              position: sticky;
+              top: 0;
+              background-color: $white;
+              z-index: 2;
+              // .k-table-row {
+              //   .k-header {
+              //   }
+              // }
+            }
+            .k-table-tbody {
+              .k-master-row {
+                .k-table-td {
+                  color: $gray-850;
+                  &:first-child{
+                    span{
+                    margin-left: 15px;
+                    }
+                  }
+                  &.action {
+                    box-shadow: none;
+                    border-left: 1px solid $light-blue-gray;
+                    .btnCell {
+                      .k-button {
+                        border-color: transparent;
+                        box-shadow: none;
+                      }
+                    }
+                  }
+                }
+                .action {
+                  width: 60px;
+                }
+              }
+            }
+          }
+        }
+  
+        .k-pager {
+          border-color: transparent;
+          background-color: $white;
+        }
+      }
+    }
+    .main {
+      padding: 0 15px 15px 20px;
+      height: calc(100vh - 135px);
+      overflow-y: scroll;
+
+      .QuestionListWrapper {
+        .titleC {
+          overflow-x: auto;
+          justify-content: space-between;
+          font-size: 16px;
+          font-weight: 700;
+          .title{
+            min-width: 300px
+          }
+          .group-search {
+            display: flex;
+            flex-wrap: nowrap;
+            app-p-textbox {
+              .k-textbox {
+                width: 400px;
+              }
+            }
+          }
+        }
+        .QuestionsListMain {
+          .k-header {
+            &:first-child {
+              padding-left: 30px;
+            }
+          }
+          .headerQuestionColumn1 {
+            text-align: left;
+            .k-cell-inner {
+              .k-link {
+                @include text-5A6276();
+              }
+            }
+          }
+
+          .cellQuestionColumn1 {
+            text-align: left;
+            max-width: 400px;
+            height: 60px;
+            padding-left: 12px;
+            white-space: normal;
+
+            span {
+              overflow: hidden;
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+              word-wrap: ceil($number: 2);
+            }
+          }
+          .headerQuestionColumn2 {
+            text-align: center;
+            .k-cell-inner {
+              .k-link {
+                justify-content: center;
+                @include text-5A6276();
+              }
+            }
+          }
+          .cellQuestionColumn2 {
+            text-align: center;
+          }
+          .headerQuestionColumn3 {
+            justify-content: center;
+            .k-cell-inner {
+              .k-link {
+                text-align: center;
+                justify-content: center;
+                @include text-5A6276();
+              }
+            }
+          }
+          .cellQuestionColumn3 {
+            text-align: center;
+            .k-link {
+              justify-content: center;
+            }
+          }
+          .headerQuestionColumn4 {
+            text-align: left;
+            .k-cell-inner {
+              .k-link {
+                @include text-5A6276();
+              }
+            }
+          }
+          .cellQuestionColumn4 {
+            text-align: left;
+
+            .k-dropdownlist {
+              width: 80%;
+              .k-button {
+                height: unset;
+              }
+            }
+          }
+
+          .k-touch-action-auto {
+            .btnCell {
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+
+    // css cho grid answer
+    .AnsweListMain {
+      .title {
+        overflow-x: auto;
+        justify-content: space-between;
+        .topic {
+          width: 260px;
+        }
+        .group-search {
+          display: flex;
+          flex-wrap: nowrap;
+          app-p-textbox {
+            .k-textbox {
+              width: 400px;
+            }
+          }
+        }
+      }
+      .headerAnswerColumn1 {
+        text-align: left;
+        width: 500px;
+        .k-cell-inner {
+          .k-link {
+            padding-left: 28px;
+            @include text-5A6276();
+          }
+        }
+      }
+
+      .cellAnswerColumn1 {
+        text-align: left;
+        max-width: 500px;
+        height: 60px;
+        padding-left: 12px !important;
+        white-space: normal;
+
+        span {
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          word-wrap: ceil($number: 2);
+        }
+      }
+
+      .headerAnswerColumn2 {
+        width: 120px;
+        .k-cell-inner {
+          .k-link {
+            @include text-5A6276();
+          }
+        }
+      }
+
+      .cellAnswerColumn2 {
+        app-p-numeric-textbox {
+          .customized-input {
+            width: 60px;
+          }
+        }
+      }
+
+      .headerAnswerColumn3 {
+        .k-cell-inner {
+          .k-link {
+            @include text-5A6276();
+          }
+        }
+      }
+
+      .cellAnswerColumn3 {
+        .Remark {
+          .k-textbox {
+            width: 100%;
+          }
+        }
+      }
+
+      .headerAnswerColumn4 {
+        width: 130px;
+        .k-cell-inner {
+          text-align: center;
+          .k-link {
+            justify-content: center;
+            @include text-5A6276();
+          }
+        }
+      }
+      .cellAnswerColumn4{
+        text-align: center;
+      }
+
+      .action,
+      .k-header:last-child {
+        display: none;
+      }
+    }
+  }
+}

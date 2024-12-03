@@ -1,0 +1,238 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+  #ecom001-online-order {
+    // height: calc(100vh - #{$footer-height});
+    // padding: 0 15px 35px 20px;
+    padding: 0 15px 0 20px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    .header {
+      .nav-filter {
+        flex-grow: 1;
+
+        .filter-btn-group {
+          flex-grow: 1;
+
+          &.hachi24-btn-group {
+            flex-grow: 0;
+
+            #hachi_24_btn {
+              border: none;
+              background: none;
+              box-shadow: none;
+              padding-left: 0;
+              height: 32px;
+
+              .k-checkbox {
+                margin-left: 0;
+                margin-right: 8px;
+              }
+              img {
+                height: 18px;
+              }
+            }
+          }
+
+          .channel-btn-group {
+            display: flex;
+            column-gap: 10px;
+            flex-grow: 1;
+          }
+
+          .k-multiselect {
+            height: 32px;
+
+            .value {
+              display: flex;
+              align-items: center;
+              column-gap: 10px;
+            }
+
+            .img {
+              width: 32px;
+              height: 32px;
+
+              img {
+                height: 100%;
+                max-height: 32px;
+                max-width: 32px;
+              }
+            }
+            .k-animation-container,
+            .k-animation-container-shown {
+              .k-list li {
+                img {
+                  filter: none;
+                }
+
+                &.k-selected,
+                &.k-hover,
+                &:hover {
+                  background-color: rgba($dark-green, 0.6);
+
+                  img {
+                    filter: none;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .nav-crud {
+        flex-grow: 1;
+
+        .k-dropdown-button {
+          li {
+            &:hover,
+            &.k-hover {
+              background-color: rgba($dark-green, 0.6);
+              color: white;
+            }
+          }
+        }
+      }
+      .nav-file {
+        flex-grow: 0;
+      }
+    }
+
+    .k-grid {
+      //scroll horizontal
+      .k-grid-aria-root {
+        table {
+          // width: 1800px;
+        }
+      }
+      //đặt lại more action btn absolute theo table relative
+      // tr {
+      //   position: initial;
+
+      //   td,
+      //   th {
+      //     &:last-child {
+      //       position: absolute;
+      //       top: initial;
+      //       margin-top: calc(1% - 10px);
+      //     }
+      //   }
+      // }
+
+      .madonhang {
+        padding: 0;
+        max-width: 200px;
+        width: 200px;
+
+        .tinhtrang_treo {
+          color: $bad-red;
+        }
+        .orderdate {
+          font-size: 12px;
+          display: flex;
+          column-gap: 5px;
+        }
+        img {
+          height: 15px;
+        }
+      }
+      .tinhtrang {
+        max-width: 110px;
+        width: 110px;
+        color: $good-green;
+        white-space: normal;
+      }
+      .donvixuly {
+        max-width: 150px;
+        width: 150px;
+        white-space: normal;
+      }
+      .thoigianxuly {
+        max-width: 130px;
+        width: 130px;
+
+        .ProcessFrom {
+          color: $dark-green;
+        }
+        .ProcessTime {
+          margin-left: 5px;
+        }
+      }
+      .thongtingiaohang {
+        padding: 0;
+        max-width: 500px;
+
+        @media screen and (max-width: 1400px) {
+          max-width: 300px;
+          width: 300px;
+        }
+
+        .ReceivedBy {
+          font-weight: bold;
+        }
+        .FullAddress {
+          color: $gray-600;
+          white-space: normal;
+        }
+      }
+      .ChannelImage {
+        padding: 0 0 0 5px;
+      }
+      .giatrigiohang {
+        padding-left: 0;
+        max-width: 100px;
+        width: 100px;
+        text-align: center;
+
+        .VATCode {
+          color: $bad-red;
+        }
+      }
+      .phuongthucthanhtoan {
+        max-width: 100px;
+        // width: 100px;
+        padding-right: 40px;
+        white-space: normal;
+      }
+      &:not(.k-grouping-row) {
+        td:first-child {
+          padding-left: 10px;
+        }
+      }
+    }
+  }
+
+  app-ecom001-online-order {
+    #syncOrderDialog {
+      form {
+        padding-bottom: 24px;
+
+        .label {
+          margin: 0;
+          color: $gray-850;
+          font-weight: bold;
+          padding-top: 7px;
+          padding-bottom: 7px;
+        }
+
+        .k-dropdownlist,
+        .k-textbox {
+          min-width: 251px;
+          width: 100%;
+        }
+
+        .error {
+          padding-top: 7px;
+          color: $bad-red;
+        }
+      }
+
+      .k-dialog-content {
+        overflow: visible;
+      }
+    }
+  }
+}

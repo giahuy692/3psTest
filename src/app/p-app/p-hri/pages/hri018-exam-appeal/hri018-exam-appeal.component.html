@@ -1,0 +1,8 @@
+<div class="exam-monitor-wrapper">
+    <div class="breadcrumbs-wrapper d-flex justify-content-between align-items-center">
+        <app-p-kendo-breadcrumb></app-p-kendo-breadcrumb>
+        <kendo-button *ngIf="moduleName == 'hri'"  iconClass="k-icon k-i-undo" class="btn-hachi hachi-secondary" (click)="openDetail()">Danh sách y/c phúc khảo</kendo-button>
+    </div>
+
+    <app-hr-exam-detail [isAppeal]="true" [staffQuizInfo]="staffQuizInfo" ></app-hr-exam-detail>
+</div>

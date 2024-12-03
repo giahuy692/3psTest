@@ -1,0 +1,151 @@
+<div [style.visibility]="isCheckVisibilityDialog()">
+    <app-p-kendo-dialog class="customDialog" [title]="title" [width]="1191" [dialogType]="3" (close)="onCloseDialog(0)">
+        <div class="task-add-body">
+            <div class="body-filter">
+                <div class="header header-2">
+
+                    <div class="filter-dropdown-group">
+                        <label class="label-text">Chính sách</label>
+                        <p-kendo-dropdownlist [data]="ListPolicy" class="customDropdownList" [textField]="'PolicyName'"
+                            [valueField]="'Code'" [(ngModel)]="currentPolicy" [hasValueNull]="false"
+                            (valueChange)="onDropdownlistClick($event)" [filterable]="true" [hasValueNull]="false"
+                            (opened)="styleForSystem()">
+                        </p-kendo-dropdownlist>
+                    </div>
+                    <app-search-filter-group #search class="filter-search-group"
+                        [placeholder]="'Tìm theo tên, mô tả, chức danh thực hiện công việc'"
+                        [title]="'Tìm kiếm công việc'" [fields]="FilterFields" (filterChange)="handleSearch($event)"
+                        [clearButton]="true">
+                    </app-search-filter-group>
+                </div>
+                <div class="grid-wrapper" *ngIf="!hiddenTask">
+                    <app-p-kendo-grid [data]="gridView | async" [take]="gridState.take" [loading]="isLoading"
+                        [pageable]="true" [pageSize]="pageSize" [pageSizes]="pageSizes" [skip]="gridState.skip"
+                        [take]="gridState.take" [selectable]=" selectable" [hasMoreAction]="false"
+                        [onPageChangeCallback]="onPageChangeCallback" [sortable]="true" [sort]="gridState.sort"
+                        [onSelectCallback]="" (getSelectedRowitem)="getSelectedRowitem($event)" class="customGrid"
+                        #grid>
+
+
+                        <!-- task name -->
+
+                        <kendo-grid-column field="TaskName" title="Tên công việc" class="name-col"
+                            [headerClass]="'TaskName-header'" [width]="260">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span class="text-name text-bold">{{dataItem.TaskName}}</span>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <!-- description -->
+                        <kendo-grid-column field="Description" title="Mô tả" class="description-col"
+                            [headerClass]="'Description'" [width]="190">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span class="text-name">{{dataItem.Description}}</span>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <!-- assigneeby -->
+                        <kendo-grid-column [hidden]="hiddenTask" field="AssigneeBy" title="Thực hiện bởi"
+                            [headerClass]="'AssigneeBy-header'" class="assignned-col" [width]="150">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span [style]="checkAssigneeBy(dataItem.AssigneeBy)" [title]="dataItem.AssigneeBy">{{
+                                    dataItem.AssigneeBy }}</span>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <!-- order by -->
+                        <kendo-grid-column field="OrderBy" title="Thứ tự thực hiện" class="orderBy-col"
+                            [headerClass]="'OrderBy-header'" [width]="150">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span class="text-name">{{dataItem.OrderBy}}</span>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <!-- date duration -->
+                        <kendo-grid-column field="DateDuration" title="Thời gian hoàn tất" class="dateDuration-col"
+                            [headerClass]="'DateDuration'" [width]="150">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span *ngIf="dataItem.DateDuration > 0 || dataItem.DateDuration != null"
+                                    class="text-name text-bold">{{dataItem.DateDuration}} ngày</span>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <!-- list stafftype -->
+                        <kendo-grid-column [hidden]="hiddenTask" field="ListStaffType" title="Loại nhân sự áp dụng"
+                            [headerClass]="'ListStaffType'" class="listStaff-col" [width]="197">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="listStaff-text" *ngIf="dataItem.ListStaffType?.length > 1">
+                                    <span class="text-name">{{dataItem.ListStaffType[0]?.TypeStaffName}}</span>
+                                    <span class="numOfStaff blue-text">+{{dataItem.ListStaffType?.length -
+                                        1}}</span>
+                                </div>
+                                <div class="listStaff-text" *ngIf="dataItem.ListStaffType?.length === 1">
+                                    <span class="text-name">{{dataItem.ListStaffType[0]?.TypeStaffName}}</span>
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                    </app-p-kendo-grid>
+                </div>
+
+                <div class="grid-wrapper" *ngIf="hiddenTask">
+                    <app-p-kendo-grid [data]="gridView | async" [take]="gridState.take" [loading]="isLoading"
+                        [pageable]="true" [pageSize]="pageSize" [pageSizes]="pageSizes" [skip]="gridState.skip"
+                        [selectable]="selectable" [hasMoreAction]="false" [onPageChangeCallback]="onPageChangeCallback"
+                        [sortable]="true" [sort]="gridState.sort" (getSelectedRowitem)="getSelectedRowitem($event)"
+                        class="customGrid" #grid>
+
+
+                        <!-- task name -->
+
+                        <kendo-grid-column field="TaskName" title="Tên công việc" class="name-col"
+                            [headerClass]="'TaskName-header'" [width]="370">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span class="text-name text-bold">{{dataItem.TaskName}}</span>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <!-- description -->
+                        <kendo-grid-column field="Description" title="Mô tả" class="description-col"
+                            [headerClass]="'Description'" [width]="250">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span class="text-name">{{dataItem.Description}}</span>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <!-- assigneeby -->
+
+
+                        <!-- order by -->
+                        <kendo-grid-column field="OrderBy" title="Thứ tự thực hiện" class="orderBy-col"
+                            [headerClass]="'OrderBy-header'" [width]="240">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span class="text-name">{{dataItem.OrderBy}}</span>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <!-- date duration -->
+                        <kendo-grid-column field="DateDuration" title="Thời gian hoàn tất" class="dateDuration-col"
+                            [headerClass]="'DateDuration-header'" [width]="236">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span *ngIf="dataItem.DateDuration > 0 || dataItem.DateDuration != null"
+                                    class="text-name text-bold">{{dataItem.DateDuration}} ngày</span>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <!-- list stafftype -->
+
+                    </app-p-kendo-grid>
+                </div>
+
+            </div>
+            <div class="button-group">
+                <button kendoButton class="k-button closeBtn" (click)="onCloseDialog(0)">Đóng</button>
+                <button [disabled]="isButtonDisabled()" kendoButton class="k-button updateBtn"
+                    (click)="onUpdateTask()">Thêm công việc</button>
+                <button kendoButton [disabled]="ListDataBiding.length==0" class="k-button updateBtn"
+                    (click)="onUpdateAll()">Thêm
+                    tất cả công việc</button>
+            </div>
+        </div>
+    </app-p-kendo-dialog>
+</div>

@@ -1,0 +1,500 @@
+::ng-deep .mat-drawer .formfield-grid {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  column-gap: 5px;
+}
+
+::ng-deep .mat-drawer .formfield-grid .item1_1 {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+::ng-deep .mat-drawer .formfield-grid .item1_2 {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+::ng-deep .mat-drawer .formfield-grid .item1_3 {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+::ng-deep .mat-drawer .formfield-grid .item2 {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+}
+
+::ng-deep .mat-drawer .formfield-grid .item2 img {
+  width: 100%;
+}
+
+::ng-deep .app-mar006-bestprice-list {
+  height: calc(93vh - 30px);
+  padding: 0 15px 35px 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+::ng-deep .app-mar006-bestprice-list .header {
+  display: flex;
+  column-gap: 10px;
+  padding: 9px 0;
+  margin-bottom: 0;
+  border-bottom: 1px solid rgba(143, 155, 166, 0.4);
+}
+
+::ng-deep .app-mar006-bestprice-list .header.header-1 .k-dropdown {
+  width: 222px;
+}
+
+::ng-deep .app-mar006-bestprice-list .header.header-1 .k-dropdown .k-input {
+  column-gap: 5px;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .checkbox-btn-group {
+  border-radius: 15px;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .checkbox-btn-group:hover, ::ng-deep .app-mar006-bestprice-list .header .checkbox-btn-group.active, ::ng-deep .app-mar006-bestprice-list .header .checkbox-btn-group.k-state-active {
+  border: 1px solid #1a6634;
+  background-image: none;
+  background-color: white;
+  color: initial;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .checkbox-btn-group:hover .k-checkbox, ::ng-deep .app-mar006-bestprice-list .header .checkbox-btn-group.active .k-checkbox, ::ng-deep .app-mar006-bestprice-list .header .checkbox-btn-group.k-state-active .k-checkbox {
+  background-color: #1a6634;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .checkbox-btn-group .k-checkbox {
+  margin-left: 8px;
+  border-color: #1a6634;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .label {
+  margin-bottom: 6px;
+  font-weight: 700;
+  font-size: 13px;
+  color: #5c6873;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .label.fake {
+  visibility: hidden;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .nav-btn {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .nav-filter {
+  column-gap: 10px;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .nav-filter .filter-btn-group.clear-btn-group .label {
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .nav-filter .filter-btn-group.clear-btn-group .clear-filter-btn {
+  color: #5CB800;
+  border: none;
+  background: none;
+  text-decoration: underline;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .nav-filter .filter-btn-group.search-btn-group {
+  margin-right: 5px;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .nav-filter .filter-btn-group.search-btn-group .search-btn {
+  position: relative;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .nav-filter .filter-btn-group.search-btn-group .search-btn .k-i-search {
+  position: absolute;
+  height: 100%;
+  width: 30px;
+  z-index: 1;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .nav-filter .filter-btn-group.search-btn-group .search-btn .k-textbox {
+  padding-left: 30px;
+  min-width: fit-content;
+  width: 333px;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .nav-filter .filter-btn-group.date-btn-group {
+  flex-grow: 1;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .nav-filter .searchBtn {
+  height: 31px;
+  margin-bottom: 1px;
+  margin-top: auto;
+  background-color: #1a6634 !important;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .nav-crud {
+  flex-grow: 0;
+  justify-content: flex-end;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .nav-crud .onAddBtn {
+  height: 32px;
+  background-color: #1a6634 !important;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .nav-crud .border-center {
+  margin: auto 0 1px 10px;
+  border-right: 1px solid #c8ced3;
+  height: 31px;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .nav-file {
+  flex-grow: 0;
+  column-gap: 10px;
+  margin-left: auto;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .nav-file .file-btn-group {
+  background: white;
+  box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+  border-radius: 3px;
+  color: #8f9ba6;
+  min-width: fit-content;
+  height: 32px;
+  display: flex;
+  cursor: pointer;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .nav-file .file-btn-group span.text {
+  margin: auto;
+  padding-right: 9px;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .nav-file .file-btn-group .onImportBtn {
+  width: 64px;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .nav-file .file-btn-group .onImportBtn .excel-ic {
+  width: 32px;
+  height: 100%;
+  margin-left: 2px;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .nav-file .file-btn-group .border-center {
+  align-self: center;
+  height: 90%;
+  border-right: 1px solid #8f9ba6;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .nav-file .file-btn-group .k-i-arrow-chevron-down {
+  text-align: center;
+  padding: 7px 0;
+  width: 32px;
+  height: 100%;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .nav-file .file-btn-group .k-i-arrow-chevron-down:before {
+  font-size: 20px;
+}
+
+::ng-deep .app-mar006-bestprice-list .header .title {
+  margin: 12px 0;
+  font-weight: bold;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+::ng-deep .app-mar006-bestprice-list .header.header-2 .title {
+  font-size: 13px;
+}
+
+::ng-deep .app-mar006-bestprice-list .body .sections .section .title {
+  margin: 12px 0;
+  font-weight: bold;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+::ng-deep .app-mar006-bestprice-list .body .sections .section .crud-btn {
+  height: 32px;
+  font-size: 11px;
+  font-weight: bold;
+  background-color: #1a6634 !important;
+  color: white;
+}
+
+::ng-deep .app-mar006-bestprice-list .body .sections .section .section-grid {
+  display: grid;
+  column-gap: 27px;
+  row-gap: 10px;
+  background-color: white;
+  padding: 15px;
+}
+
+::ng-deep .app-mar006-bestprice-list .body .sections .section .section-grid .grid-item {
+  display: flex;
+  flex-direction: column;
+}
+
+::ng-deep .app-mar006-bestprice-list .body .sections .section .section-grid .k-textbox {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .app-mar006-bestprice-list .body .sections .section .section-grid .k-numerictextbox {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .app-mar006-bestprice-list .body .sections .section .section-grid .k-numerictextbox.red-color input {
+  color: #EB273A;
+}
+
+::ng-deep .app-mar006-bestprice-list .body .sections .section .section-grid .k-dropdown {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .app-mar006-bestprice-list .body .sections .section .section-grid .k-datepicker {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .app-mar006-bestprice-list .body .sections .section .section-grid .k-timepicker {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .app-mar006-bestprice-list .body .sections .section .section-grid .k-timepicker .k-input {
+  width: 70px;
+}
+
+::ng-deep .app-mar006-bestprice-list .body .sections .section .section-grid .k-checkbox {
+  margin-right: 10px;
+}
+
+::ng-deep .app-mar006-bestprice-list .body .sections .section .section-grid textarea {
+  resize: none;
+  border-radius: 3px;
+  border-color: rgba(0, 0, 0, 0.08);
+  outline: none;
+  height: 100%;
+  padding: 4px 8px;
+}
+
+::ng-deep .app-mar006-bestprice-list .body .sections .section .section-grid textarea:hover, ::ng-deep .app-mar006-bestprice-list .body .sections .section .section-grid textarea:focus-visible {
+  border-color: #1a6634;
+}
+
+::ng-deep .app-mar006-bestprice-list .body .sections .section .section-grid label {
+  margin-bottom: 0;
+}
+
+::ng-deep .app-mar006-bestprice-list .body .sections .section .section-grid .input_label {
+  margin-bottom: 10px;
+}
+
+::ng-deep .app-mar006-bestprice-list .body .sections .section .section-grid .row {
+  align-items: center;
+  margin-bottom: 7px;
+}
+
+::ng-deep .app-mar006-bestprice-list .body .sections .section .section-grid .subrow {
+  margin-left: 20px;
+}
+
+::ng-deep .app-mar006-bestprice-list #thongtinkhuyenmaiTbl .title {
+  justify-content: flex-start;
+  column-gap: 15px;
+}
+
+::ng-deep .app-mar006-bestprice-list #thongtinkhuyenmaiTbl .title .languages {
+  margin-left: auto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 20px;
+  color: #bbc0bb;
+}
+
+::ng-deep .app-mar006-bestprice-list #thongtinkhuyenmaiTbl .title .languages .active,
+::ng-deep .app-mar006-bestprice-list #thongtinkhuyenmaiTbl .title .languages :hover {
+  color: #626662;
+  cursor: pointer;
+}
+
+::ng-deep .app-mar006-bestprice-list #thongtinkhuyenmaiTbl .title .languages .borderRight {
+  border-right: 1px solid #bbc0bb;
+  padding-right: 5px;
+  margin-right: 5px;
+}
+
+::ng-deep .app-mar006-bestprice-list #thongtinkhuyenmaiTbl .section-grid {
+  grid-template-columns: 260px auto;
+}
+
+::ng-deep .app-mar006-bestprice-list #thongtinkhuyenmaiTbl .section-grid .item1_1 {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+
+::ng-deep .app-mar006-bestprice-list #thongtinkhuyenmaiTbl .section-grid .item1_1 .k-icon {
+  margin-left: 20px;
+  margin-top: -7px;
+  font-weight: 500;
+  font-size: 20px;
+  color: #1a6634;
+  cursor: pointer;
+}
+
+::ng-deep .app-mar006-bestprice-list #thongtinkhuyenmaiTbl .section-grid .item1_2 {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+::ng-deep .app-mar006-bestprice-list #thongtinkhuyenmaiTbl .section-grid .item1_2 .green {
+  color: #1a6634;
+}
+
+::ng-deep .app-mar006-bestprice-list #thongtinkhuyenmaiTbl .section-grid .item1_2 .red {
+  color: #EB273A;
+}
+
+::ng-deep .app-mar006-bestprice-list #thongtinkhuyenmaiTbl .section-grid .item1_2 .yellow {
+  color: #FFB900;
+}
+
+::ng-deep .app-mar006-bestprice-list #thongtinkhuyenmaiTbl .section-grid .item2_1 {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+::ng-deep .app-mar006-bestprice-list #thongtinkhuyenmaiTbl .section-grid .item2_2 {
+  grid-column: 2;
+  grid-row: 2 / span 2;
+}
+
+::ng-deep .app-mar006-bestprice-list app-p-kendo-grid.scrollable .k-grid .k-grid-aria-root {
+  overflow-x: auto;
+}
+
+::ng-deep .app-mar006-bestprice-list app-p-kendo-grid.scrollable .k-grid table {
+  width: 1370px;
+}
+
+::ng-deep .app-mar006-bestprice-list app-p-kendo-grid.scrollable .k-grid tr {
+  position: initial;
+}
+
+::ng-deep .app-mar006-bestprice-list app-p-kendo-grid.scrollable .k-grid tr td:last-child,
+::ng-deep .app-mar006-bestprice-list app-p-kendo-grid.scrollable .k-grid tr th:last-child {
+  position: absolute;
+  top: initial;
+  margin-top: calc(1% - 10px);
+}
+
+::ng-deep .app-mar006-bestprice-list .k-grid thead tr {
+  height: fit-content !important;
+}
+
+::ng-deep .app-mar006-bestprice-list .k-grid thead tr th {
+  padding: 0 12px;
+  height: 13px;
+}
+
+::ng-deep .app-mar006-bestprice-list .k-grid tr:not(.k-grouping-row) td:first-child {
+  padding-left: 10px !important;
+}
+
+::ng-deep .app-mar006-bestprice-list .k-grid .col_img_tensanpham_masanpham {
+  max-width: 400px;
+  width: 400px;
+}
+
+::ng-deep .app-mar006-bestprice-list .k-grid .img_tensanpham_masanpham {
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .app-mar006-bestprice-list .k-grid .img_tensanpham_masanpham img {
+  max-height: 64px;
+  max-width: 64px;
+  width: 100%;
+  margin-right: 10px;
+}
+
+::ng-deep .app-mar006-bestprice-list .k-grid .img_tensanpham_masanpham .tensanpham_masanpham {
+  height: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+::ng-deep .app-mar006-bestprice-list .k-grid .img_tensanpham_masanpham .tensanpham_masanpham .tensanpham {
+  white-space: normal;
+}
+
+::ng-deep .app-mar006-bestprice-list .k-grid .img_tensanpham_masanpham .tensanpham_masanpham .masanpham {
+  color: #5c6873;
+}
+
+::ng-deep .app-mar006-bestprice-list .k-grid .img_tensanpham_masanpham .tensanpham_masanpham .tinhtrang.red {
+  color: #EB273A;
+}
+
+::ng-deep .app-mar006-bestprice-list .k-grid .img_tensanpham_masanpham .tensanpham_masanpham .tinhtrang.green {
+  color: #1a6634;
+}
+
+::ng-deep .app-mar006-bestprice-list .k-grid .col_nguoiBan,
+::ng-deep .app-mar006-bestprice-list .k-grid .col_xuatXu,
+::ng-deep .app-mar006-bestprice-list .k-grid .col_dieuKien {
+  text-align: center;
+}
+
+::ng-deep .app-mar006-bestprice-list .k-grid .col_nguoiBan > .k-link,
+::ng-deep .app-mar006-bestprice-list .k-grid .col_xuatXu > .k-link,
+::ng-deep .app-mar006-bestprice-list .k-grid .col_dieuKien > .k-link {
+  justify-content: center;
+}
+
+::ng-deep .app-mar006-bestprice-list .k-grid .col_giaBanLe {
+  padding-right: 50px;
+}
+
+::ng-deep .app-mar006-bestprice-list .label {
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #8f9ba6;
+}
+
+::ng-deep .app-mar006-bestprice-list .label.thick-label {
+  color: #23282c;
+}
+
+::ng-deep .app-mar006-bestprice-list .label.thick-label + .number {
+  font-weight: bold;
+}
+
+::ng-deep .app-mar006-bestprice-list .label.thick-label + .k-numerictextbox input {
+  font-weight: bold;
+}
+
+::ng-deep .app-mar006-bestprice-list .label.thin-label {
+  font-weight: normal;
+  color: #2f353a;
+}

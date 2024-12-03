@@ -1,0 +1,781 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+  app-dev001-company-list {
+    $primaryERP-color: rgba(26, 102, 52);
+    $primaryErp-selected-color: rgba(26, 102, 52, 0.8);
+    $primaryErp-hover-color: rgba(26, 102, 52, 0.4);
+    $primaryText: #5a6276;
+    $icon-color: #959db3;
+    $dark-grey: #26282e;
+    $bluish-gray: #bdc2d2;
+    $deep-green: #1a6634;
+    $filter-deep-green: brightness(0) saturate(100%) invert(65%) sepia(100%) saturate(5100%) hue-rotate(113deg) brightness(56%) contrast(110%);
+
+
+    @mixin read-only {
+      opacity: 1 !important;
+      background-color: $gray-100 !important;
+      cursor: not-allowed !important;
+      pointer-events: none !important;
+    }
+
+    .text-ellipsis {
+      // max-height: 1.4em;
+      line-height: 1.2em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      white-space: normal;
+    }
+
+    // START GENERAL
+    .disableInput {
+      &.k-textbox {
+        .k-input-inner {
+          @include read-only();
+        }
+      }
+
+      &.k-dropdownlist {
+        &:read-only {
+          @include read-only()
+        }
+      }
+    }
+
+    .k-treeview-leaf {
+      padding-left: 13px;
+
+      i {
+        padding-right: 13px;
+      }
+    }
+
+    .d-flex_around {
+      display: flex !important;
+      justify-content: space-around !important;
+      align-items: center !important;
+    }
+
+    .d-flex_between {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+    }
+
+    .font-w {
+      font-weight: 700;
+    }
+
+    .d-flex {
+      display: flex !important;
+      align-items: center;
+    }
+
+    .f-wrap {
+      flex-wrap: wrap;
+    }
+
+    .row-gap {
+      row-gap: 5px;
+    }
+
+    .col-gap {
+      column-gap: 5px;
+    }
+
+    .d-flex_both {
+      display: flex !important;
+      align-items: center !important;
+      column-gap: 5px;
+    }
+
+    .d-flex_column {
+      display: flex !important;
+      flex-direction: column !important;
+      row-gap: 5px;
+    }
+
+    .mt-10 {
+      margin-top: 10px;
+    }
+
+    .pr-30 {
+      padding-left: 30px;
+    }
+
+    .d-block {
+      display: block;
+    }
+
+    .custom-gap {
+      column-gap: 5px;
+    }
+
+    // END GENERAL
+
+
+
+
+    // START MAIN BODY
+    .Drawer-right {
+      position: relative;
+      height: 100vh;
+      // height: calc(100vh - 30px);
+      padding: 0 15px 10px 15px;
+
+      .k-drawer-container {
+        display: block;
+
+        // START DRAWER
+        .k-drawer {
+          z-index: 4;
+
+          .k-drawer-wrapper {
+
+            .wrapper-drawer-right {
+
+
+              .header-drawer-right {
+                display: flex;
+                align-items: center;
+                padding: 10px 16px 10px 16px;
+                height: 40px;
+                border-bottom: 1px solid #000;
+                column-gap: 10px;
+
+
+                h3 {
+                  margin: 0;
+                  color: $deep-green;
+                  font-size: 13px;
+                  font-weight: 700;
+                }
+              }
+
+              .content-drawer-right {
+                height: calc(100vh - 176px);
+                overflow: hidden;
+                overflow-y: scroll;
+                padding: 10px 16px 10px 16px;
+
+
+                .customLabel:has(.VNNameRequire .ng-invalid.ng-touched, .VNNameRequire .ng-invalid.ng-dirty) {
+                  .lable {
+                    .name {
+                      color: red;
+                    }
+                  }
+                }
+
+                .customLabel:has(.BieftRequire .ng-invalid.ng-touched, .BieftRequire .ng-invalid.ng-dirty) {
+                  .lable {
+                    .name {
+                      color: red;
+                    }
+                  }
+                }
+
+                .customLabel {
+
+                  .lable {
+                    margin-bottom: 5px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    .labelName {
+                      font-weight: 700;
+                      color: #343A40;
+
+                      .symbol {
+                        padding-left: 5px;
+                        color: $dark-red;
+                        font-weight: bold;
+                      }
+
+                      .line {
+                        font-size: 17px;
+                      }
+
+                      .codeCompany {
+                        color: #1A6634;
+                        font-weight: 700;
+                      }
+                    }
+
+                    .labelSystem {
+                      .isSystem {
+                        font-weight: 700;
+                        color: #343A40;
+                      }
+                    }
+                  }
+
+
+                  .k-textarea {
+                    textarea {
+                      min-height: 68px !important;
+                    }
+                  }
+                }
+
+                kendo-label {
+                  display: block;
+
+                  .k-label {
+                    margin-bottom: 5px;
+                    font-weight: 700;
+                  }
+                }
+
+                .nCLogo {
+                  display: flex;
+
+                  .left {
+                    flex: 40%;
+                    min-width: 144px;
+                  }
+
+                  .right {
+                    flex: 60%;
+                    padding-left: 26px;
+
+                    .Logo {
+
+                      .labelImg {
+                        font-weight: 700;
+                        color: #343A40;
+                        gap: 5px;
+
+                        .k-i-export {
+                          margin-top: -3.5px;
+                          padding-left: 20px;
+                        }
+
+                        .k-icon {
+                          font-size: 19px;
+                          cursor: pointer;
+
+                          &.k-i-export {
+                            color: $dark-green;
+                          }
+
+                          &.k-i-minus-outline {
+                            color: $bad-red;
+                            position: absolute;
+                            right: 0;
+                            top: 40px;
+                          }
+                        }
+
+                        .symbol {
+                          padding-left: 5px;
+                          color: $dark-red;
+                          font-weight: bold;
+                        }
+                      }
+
+                      .imgCompany {
+                        position: relative;
+
+                        .k-icon {
+                          font-size: 19px;
+                          cursor: pointer;
+
+                          &.k-i-export {
+                            color: $dark-green;
+                          }
+
+                          &.k-i-minus-outline {
+                            color: $bad-red;
+                            position: absolute;
+                            right: 0;
+                            top: 0px;
+                          }
+                        }
+
+                        .img {
+                          margin: 10px 0 0 10px;
+                          width: 178px;
+                          height: 73px;
+                        }
+                      }
+                    }
+                  }
+                }
+
+
+
+                .k-dropdowntree {
+                  .k-clear-value {
+                    display: none;
+                  }
+
+                  .nullItem {
+                    font-style: italic;
+                    font-size: 10px;
+                    font-weight: normal;
+
+                    i {
+                      display: none;
+                    }
+
+                    .k-i-arrow-chevron-up,
+                    img {
+                      display: none;
+                    }
+                  }
+                }
+
+                .k-textarea {
+                  background-color: #fff;
+                }
+
+                kendo-dropdownlist {
+                  width: 100% !important;
+                  margin-top: 5px;
+                  border: 1px solid #dbdee7 !important;
+
+                  // &:read-only{
+                  //   @include read-only()
+                  // }
+                  .k-animation-container {
+                    .k-child-animation-container {
+
+                      .k-popup,
+                      .k-list-container {
+                        overflow-x: hidden;
+                        overflow-y: hidden;
+
+                        .k-list {
+                          overflow-x: hidden;
+                          overflow-y: auto;
+
+                        }
+                      }
+                    }
+                  }
+                }
+
+                .optionlabel {
+                  .k-animation-container {
+                    .k-popup {
+                      .k-list {
+                        .k-list-optionlabel {
+                          display: none;
+                        }
+                      }
+                    }
+                  }
+                }
+
+                kendo-textarea {
+                  height: 100%;
+                  max-height: unset;
+                  padding: 0;
+
+                  textarea {
+                    min-height: 100px;
+                  }
+                }
+
+                .k-animation-container-shown,
+                .k-animation-container>.k-popup {
+                  box-shadow: none;
+                }
+
+
+              }
+
+              .footer-drawer-right {
+                display: flex;
+                align-items: center;
+                height: 50px;
+                padding: 10px 16px 10px 16px;
+                column-gap: 10px;
+                border-top: 1px solid $primaryText;
+              }
+            }
+
+
+          }
+        }
+
+        .k-drawer-end {
+          width: 240px;
+          height: 100vh;
+        }
+
+
+        // Body content
+        .k-drawer-content {
+          .developer001-company-list {
+
+            // START HEADER
+            .header-1 {
+              display: flex;
+              justify-content: space-between;
+              padding-right: 10px;
+              padding-left: 5px;
+
+            }
+
+            .header-2 {
+              padding-left: 15px !important;
+            }
+
+            .header {
+              .nav-crud {
+                margin-left: auto;
+
+                .onAddBtn {
+                  height: 32px;
+                  margin-top: auto;
+                  background-color: $deep-green !important;
+                  color: white;
+                  font-size: 11px;
+                  font-weight: bold;
+                  min-width: 78px;
+                }
+              }
+            }
+
+            // END HEADER
+
+
+            // START GRID
+            .grid-wrapper {
+              margin-top: 0;
+
+              app-p-kendo-grid {
+                .myCustomGrid {
+                  .k-grid-aria-root {
+                    overflow-x: auto;
+
+                    .k-table {
+                      .k-grid-header {
+                        .k-table-row {
+                          .k-header {
+                            color: #3c3c3d !important;
+
+
+                          }
+
+
+                          .col_country,
+                          .col_classify {
+                            .k-cell-inner {
+                              .k-link {
+                                justify-content: center;
+                              }
+                            }
+                          }
+
+                        }
+
+
+                      }
+
+                      .k-table-tbody {
+                        .k-table-row {
+                          .col_address {
+
+                            // max-width: 169px;
+                            // /* max-height: 3.2em; */
+                            // /* overflow: hidden; */
+                            // /* text-overflow: ellipsis; */
+                            // display: -webkit-box;
+                            // -webkit-line-clamp: 2;
+                            // white-space: break-spaces;
+
+                            // .AddressCompany {
+                            //   max-height: 3.2em !important;
+                            //   overflow: hidden !important;
+                            //   text-overflow: ellipsis !important;
+                            //   /* Thêm dấu '...' khi văn bản bị cắt */
+                            //   display: -webkit-box !important;
+                            //   -webkit-line-clamp: 2 !important;
+                            //   /* Số dòng tối đa */
+                            //   -webkit-box-orient: vertical !important;
+                            // }
+                          }
+                        }
+                      }
+
+                      tbody tr>td:nth-last-child(1) {
+                        width: 40px;
+                      }
+
+                      tr:not(.k-grouping-row) td:first-child {
+                        padding-left: 5px;
+                      }
+
+                      .col_nameCompany {
+                        display: flex;
+                        justify-content: center;
+
+                        .Image_NameCompany {
+                          display: flex;
+                          align-items: center;
+
+                          .PaddingImg {
+                            width: 140px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                          }
+
+                          .ImageCompany {
+                            min-width: 100px;
+                            min-height: 50px;
+                            max-width: 120px !important;
+                          }
+
+                          .inforCompany {
+                            padding-left: 5px;
+
+                            .NameCompany {
+                              line-height: 20px;
+                              font-weight: 700;
+                              width: 210px;
+                              white-space: nowrap;
+                              overflow: hidden;
+                              text-overflow: ellipsis;
+                            }
+
+                            .infor {
+                              white-space: nowrap;
+                              overflow: hidden;
+                              text-overflow: ellipsis;
+                              width: 210px;
+                              color: #5A6276;
+                            }
+                          }
+                        }
+
+                        .AddressCompany {
+                          white-space: initial;
+                          overflow: hidden;
+                          display: -webkit-inline-box;
+                          -webkit-line-clamp: 2;
+                          -webkit-box-orient: vertical;
+                          text-overflow: ellipsis;
+                          width: 300px;
+                          max-height: 40px;
+                          line-height: 20px;
+                        }
+                      }
+
+                      .col_address {
+                        color: #5A6276;
+
+                        .AddressCompany {
+
+                          max-height: 3.2em;
+                          /* Độ cao tối đa tương ứng với 2 dòng văn bản */
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          /* Thêm dấu '...' khi văn bản bị cắt */
+                          display: -webkit-box;
+                          -webkit-line-clamp: 2;
+                          /* Số dòng tối đa */
+                          -webkit-box-orient: vertical;
+                        }
+                      }
+
+                      .col_country,
+                      .col_classify {
+                        color: #5A6276;
+                        justify-content: center;
+                        text-align: center;
+                      }
+
+
+                    }
+                  }
+                }
+              }
+            }
+
+            // END GRID 
+
+          }
+        }
+
+        app-p-kendo-dialog {
+          .k-dialog-wrapper {
+            .k-dialog {
+              .k-dialog-titlebar {
+                .k-dialog-title {
+                  .titleCustom {
+                    display: flex;
+                    align-items: center;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+
+        // START DIALOG
+        .wrapper-dialog {
+          z-index: 10050;
+
+          .k-dialog {
+            .k-dialog-titlebar {
+              display: flex;
+              align-items: center;
+              background-color: $white;
+              color: #fd7676;
+
+              .k-dialog-title {
+                justify-content: center;
+                align-items: center;
+
+                .title-delete {
+
+                  .uppercaseChar {
+                    text-transform: uppercase;
+                  }
+
+                  column-gap: 10px;
+
+                  span {
+                    font-weight: 700;
+                  }
+
+                  .k-button {
+                    background-color: white;
+                    padding: 0;
+                    background-image: none;
+                    width: fit-content;
+                    height: fit-content;
+                    border: none;
+                  }
+                }
+              }
+
+              .k-dialog-titlebar-actions {
+                display: none;
+              }
+            }
+
+            .k-dialog-content {
+              text-align: center;
+              padding: 0;
+
+              .body_dialog {
+                width: 100%;
+                position: absolute;
+                top: 34%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                padding: 10px;
+
+                .content-primary {
+                  p {
+                    margin: 0;
+                    font-size: 16px;
+                    font-weight: 700;
+                  }
+
+                  strong {
+                    color: $primary;
+                    font-size: 16px;
+                    font-weight: 700;
+                  }
+                }
+
+                .content-sub {
+                  margin: 16px 0 0 0;
+                }
+              }
+            }
+
+            .k-dialog-actions {
+              display: flex;
+              width: 100%;
+              padding: 0;
+              column-gap: 0;
+              position: absolute;
+              bottom: 0;
+
+              .delete {
+                background: #FD7676;
+                color: #fff;
+              }
+
+              .cancel {
+                background: $white;
+                color: #959DB3;
+              }
+
+              button {
+                width: 50%;
+                height: 53px;
+                border-radius: 0;
+                font-weight: 700;
+
+                .k-button-icon {
+                  width: 20px;
+
+                  img {
+                    width: 20px;
+                  }
+                }
+              }
+            }
+          }
+
+          //End: dialog
+
+        }
+      }
+
+      .k-drawer-overlay {
+        .k-overlay {
+
+          z-index: 3;
+        }
+
+        .k-drawer-end {
+          display: none;
+          transform: translateX(77%) !important;
+        }
+      }
+
+      .k-drawer-expanded {
+        .k-overlay {
+          position: absolute;
+        }
+
+        kendo-drawer-container {
+          position: fixed;
+          width: 100%;
+          height: 100%;
+        }
+
+        .k-drawer-end {
+          display: block;
+          position: absolute;
+          // top: 50px;
+          right: 321px;
+          width: 417px !important;
+          background-color: $white;
+          // height: 100vh;
+        }
+
+        .k-drawer-wrapper {
+          width: 100% !important;
+        }
+      }
+    }
+
+    // END MAIN BODY
+  }
+}

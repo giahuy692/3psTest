@@ -1,0 +1,501 @@
+<kendo-drawer-container id="drawerContainerRight" class="drawer-container">
+    <kendo-drawer id="drawerRight" #drawerRight position="end" mode="overlay" [(expanded)]="isOpenDrawer" class="drawer"
+        [autoCollapse]="false">
+        <ng-template kendoDrawerHeaderTemplate>
+            <div class="add-position-area">
+                <!-- TITLE CONTROL-->
+                <div class="title">
+                    {{handleGetTypeOfDrawer(statusDrawer)?.Name | uppercase}}
+                </div>
+
+                <!-- INPUT FORM -->
+                <div class="info-position-area" *ngIf="handleGetTypeOfDrawer(statusDrawer)?.Type === 0">
+                    <div class="info-position-area_block">
+                        <div class="block-1 block">
+                            <div class="box-area">
+                                <div class="label">
+                                    Mã chức danh<span class="important">(*)</span>
+                                </div>
+                                <kendo-textbox (keydown.enter)="onBlurPositionID()" (inputBlur)="onBlurPositionID()"
+                                    [(value)]="dataHRPolicyPosition.PositionID" type="text"
+                                    [disabled]="statusDrawer == 1 || statusDrawer == 3" class="k-textbox">
+                                </kendo-textbox>
+                            </div>
+
+                            <div class="box-area box-right">
+                                <div class="checkbox-area">
+                                    <input [disabled]="isDisableCheckbox" [checked]="dataHRPolicyPosition.IsLeader"
+                                        type="checkbox" class="k-checkbox" />
+                                    <div class="title-checkbox">Là trưởng đơn vị</div>
+                                </div>
+                                <div class="checkbox-area">
+                                    <input [disabled]="isDisableCheckbox" [checked]="dataHRPolicyPosition.IsSupervivor"
+                                        type="checkbox" class="k-checkbox" />
+                                    <div class="title-checkbox">Là q.lý điểm làm việc</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="block-2 block">
+                            <div class="box-area">
+                                <div class="label">
+                                    Tên chức danh
+                                </div>
+                                <kendo-textbox [value]="dataHRPolicyPosition.PositionName" [disabled]="true" type="text"
+                                    class="k-textbox">
+                                </kendo-textbox>
+                            </div>
+
+                        </div>
+
+                        <div class="block-3 block">
+                            <div class="box-area">
+                                <div class="label">
+                                    Đơn vị trực thuộc
+                                </div>
+                                <kendo-textbox [value]="dataHRPolicyPosition.DepartmentName" [disabled]="true"
+                                    type="text" class="k-textbox">
+                                </kendo-textbox>
+                            </div>
+
+                        </div>
+
+                        <div class="block-4 block">
+                            <div class="label">
+                                Điểm làm việc<span class="important">(*)</span>
+                            </div>
+                            <div class="list-location">
+                                <div *ngFor="let item of dataHRPolicyPosition.ListLocation">
+                                    <div class="block-area">
+                                        <input
+                                            [disabled]="handleCheckInputLocation(item) || dataHrPolicyMaster.Status == 2 || dataHrPolicyMaster.Status == 3 || handleCheckDisableApproverEdit()"
+                                            [(ngModel)]="item.IsChecked" type="checkbox" class="k-checkbox" />
+                                        <div (click)="(handleCheckInputLocation(item) || dataHrPolicyMaster.Status == 2 || dataHrPolicyMaster.Status == 3 || handleCheckDisableApproverEdit()) ? $event.stopImmediatePropagation() : item.IsChecked = !item.IsChecked"
+                                            [title]="item.LocationName"
+                                            [ngClass]="handleCheckInputLocation(item) || dataHrPolicyMaster.Status == 2 || dataHrPolicyMaster.Status == 3 || handleCheckDisableApproverEdit() ? 'disable-position-name' : 'position-name'">
+                                            {{ item?.LocationName }}
+                                        </div>
+                                        <div [ngClass]="handleCheckInputLocation(item) || dataHrPolicyMaster.Status == 2 || dataHrPolicyMaster.Status == 3 || handleCheckDisableApproverEdit() ? 'disable-position-id' : 'position-id'"
+                                            (click)="(handleCheckInputLocation(item) || dataHrPolicyMaster.Status == 2 || dataHrPolicyMaster.Status == 3 || handleCheckDisableApproverEdit()) ? $event.stopImmediatePropagation() : item.IsChecked = !item.IsChecked"
+                                            [title]="item.LocationID">
+                                            {{ item?.LocationID }}
+                                        </div>
+                                        <div [ngClass]="handleCheckInputLocation(item) || dataHrPolicyMaster.Status == 2 || dataHrPolicyMaster.Status == 3 || handleCheckDisableApproverEdit() ? 'disable-position-status-name' : 'position-status-name'"
+                                            (click)="(handleCheckInputLocation(item) || dataHrPolicyMaster.Status == 2 || dataHrPolicyMaster.Status == 3 || handleCheckDisableApproverEdit()) ? $event.stopImmediatePropagation() : item.IsChecked = !item.IsChecked">
+                                            <span class="status-name"
+                                                [innerHTML]="item.StatusName | colorStatus: item.Status"></span>
+                                        </div>
+
+                                        <div *ngIf="dataHrPolicyMaster.Status == 2 && !isCreator && !isViewer()">
+                                            <div class="icon-area">
+                                                <div (click)="handleChangeStatusLocation(item)" class="icon">
+                                                    <kendo-svg-icon *ngIf="item.Status == 2 " class="icon"
+                                                        [icon]="icons.minusOutline"></kendo-svg-icon>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lưu ý -->
+                    <div class="note">(*) Trường bắt buộc nhập</div>
+                </div>
+
+                <!-- INPUT FORM CÔNG VIỆC -->
+                <div class="info-task" *ngIf="handleGetTypeOfDrawer(statusDrawer)?.Type === 1">
+                    <div class="info-task_block">
+                        <!-- Tên công việc -->
+                        <div class="block">
+                            <div class="box-area">
+                                <div class="label">
+                                    Tên công việc<span class="important">(*)</span>
+                                </div>
+                                <kendo-textbox [readonly]="onCheckReadOnlyInputPolicyTask('TaskName')"
+                                    [ngClass]="{'readonly-field' : onCheckReadOnlyInputPolicyTask('TaskName')}"
+                                    [(value)]="dataHRPolicyTaskHandler.TaskName" type="text"
+                                    class="k-textbox"></kendo-textbox>
+                            </div>
+                        </div>
+
+                        <!-- Mô tả công việc -->
+                        <div class="block block-description-task">
+                            <div class="box-area">
+                                <div class="label">
+                                    Mô tả công việc
+                                </div>
+                                <kendo-textarea [readonly]="onCheckReadOnlyInputPolicyTask('Description')"
+                                    [ngClass]="{'readonly-field' : onCheckReadOnlyInputPolicyTask('Description')}"
+                                    [(value)]="dataHRPolicyTaskHandler.Description" [resizable]="'none'"
+                                    (valueChange)="handleGetValueTaskFromInput($event, 'description')">
+                                </kendo-textarea>
+                            </div>
+                        </div>
+
+                        <!-- Thực hiện bởi -->
+                        <div class="block block-assignee">
+                            <div class="box-area">
+                                <div class="label">
+                                    Thực hiện bởi <span class="important">(*)</span>
+                                </div>
+                                <p-kendo-dropdownlist *ngIf="!isSystemTask" (opened)="onStyleForApplyHR()"
+                                    [hasValueNull]="true" [disabled]="onCheckReadOnlyInputPolicyTask('AssigneeBy')"
+                                    [filterable]="true"
+                                    [ngClass]="{'readonly-field' : onCheckReadOnlyInputPolicyTask('AssigneeBy')}"
+                                    [searchFields]="['PositionName']" [data]="currentListPosition"
+                                    [textField]="'PositionName'" [valueField]="'Code'" [(ngModel)]="selectedPosition"
+                                    (selectionChange)="handleGetValueTaskFromInput($event, 'assigneeby')">
+                                </p-kendo-dropdownlist>
+                                <div class="task-system" *ngIf="isSystemTask">Hệ thống</div>
+                            </div>
+                        </div>
+
+                        <!-- Thời gian hoàn tất -->
+                        <div class="block block-duration">
+                            <div class="box-area">
+                                <div class="label">
+                                    Thời gian hoàn tất (ngày)<span class="important">(*)</span>
+                                </div>
+                                <app-p-numeric-textbox [readonly]="onCheckReadOnlyInputPolicyTask('DateDuration')"
+                                    [ngClass]="{'readonly-field' : onCheckReadOnlyInputPolicyTask('DateDuration')}"
+                                    propName="" [(ngModel)]="dataHRPolicyTaskHandler.DateDuration" [min]="1">
+                                </app-p-numeric-textbox>
+                            </div>
+                        </div>
+
+                        <!-- Loại nhân sự áp dụng -->
+                        <div class="block" *ngIf="typeApplyPolicyMaster == 1">
+                            <div class="box-area">
+                                <div class="label">
+                                    Loại nhân sự áp dụng <span class="important">(*)</span>
+                                </div>
+                                <kendo-multiselect [readonly]="onCheckReadOnlyInputPolicyTask('TypeStaffName')"
+                                    [ngClass]="{'readonly-field' : onCheckReadOnlyInputPolicyTask('TypeStaffName')}"
+                                    class="multiselect-custom" [filterable]="true" [placeholder]="'-- Chọn --'"
+                                    [data]="listHRFiltered" [textField]="'ListName'" [valueField]="'Code'"
+                                    [(ngModel)]="selectedListStaffType" (filterChange)="onFilterListHR($event)"
+                                    (valueChange)="handleGetValueTaskFromInput($event, 'liststafftype')">
+                                </kendo-multiselect>
+                            </div>
+                        </div>
+
+                        <!-- Thứ tự thực hiện -->
+                        <div class="block block-orderby">
+                            <div class="box-area">
+                                <div class="label">
+                                    Thứ tự thực hiện
+                                </div>
+                                <app-p-numeric-textbox [readonly]="onCheckReadOnlyInputPolicyTask('OrderBy')"
+                                    [ngClass]="{'readonly-field' : onCheckReadOnlyInputPolicyTask('OrderBy')}"
+                                    propName="" [(ngModel)]="dataHRPolicyTaskHandler.OrderBy" [min]="1">
+                                </app-p-numeric-textbox>
+                            </div>
+                        </div>
+
+                        <!-- Duyệt bởi -->
+                        <div class="block block-approved" *ngIf="typeDataPolicyMaster === 2">
+                            <div class="box-area">
+                                <div class="label field-text">
+                                    <span>
+                                        Duyệt bởi <span class="important">(*)</span>
+                                    </span>
+
+                                    <div class="checkbox-area">
+                                        <input [disabled]="onCheckReadOnlyInputPolicyTask('ApprovedBy')"
+                                            [(ngModel)]="isLeaderMonitor" type="checkbox" class="k-checkbox" />
+                                        <div class="title-checkbox"
+                                            [ngClass]="{'disabled-field' : onCheckReadOnlyInputPolicyTask('ApprovedBy')}"
+                                            (click)="isLeaderMonitor = !isLeaderMonitor">Là trưởng đơn vị, Q.lý điểm làm
+                                            việc</div>
+                                    </div>
+                                </div>
+                                <p-kendo-dropdownlist *ngIf="!isSystemTask" [hasValueNull]="true"
+                                    [disabled]="onCheckReadOnlyInputPolicyTask('dropdownApprovedBy')"
+                                    [filterable]="true"
+                                    [ngClass]="{'readonly-field' : onCheckReadOnlyInputPolicyTask('dropdownApprovedBy')}"
+                                    [searchFields]="['PositionName']" [data]="currentListApprovedPosition"
+                                    [textField]="'PositionName'" [valueField]="'Code'" [(ngModel)]="selectedApproved"
+                                    (selectionChange)="handleGetValueTaskFromInput($event, 'approvedBy')">
+                                </p-kendo-dropdownlist>
+                            </div>
+                        </div>
+
+                        <!-- Thêm ngoại lệ -->
+                        <div class="block block-add-exception" *ngIf="typeApplyPolicyMaster == 2">
+                            <div class="box-area">
+                                <div class="label">
+                                    Ngoại lệ
+                                    <span *ngIf="handleCheckAddException()" class="k-i-plus k-icon"
+                                        (click)="handleOpenDialogAddException()"></span>
+                                </div>
+
+                                <div class="treelist-container">
+                                    <kendo-treelist #treeException class="treelist-custom" [selectable]="false"
+                                        [loading]="isLoadingTreeException" [data]="listExceptionLocal"
+                                        [fetchChildren]="fetchChildren" [hasChildren]="hasChildren"
+                                        [initiallyExpanded]="initiallyExpanded" kendoTreeListSelectable
+                                        kendoTreeListExpandable [rowClass]="handleSetClassRowTreeList">
+
+                                        <!-- Col-1: Tên -->
+                                        <kendo-treelist-column [expandable]="isExpanded" headerClass="col-treelist-name"
+                                            [width]="200">
+                                            <ng-template kendoTreeListCellTemplate let-dataItem>
+                                                <div style="display: flex; align-items: center; gap: 8px">
+                                                    <fa-icon [icon]="['fas', getIconByDTO(dataItem)]"></fa-icon>
+
+                                                    <div class="name-container">
+                                                        <div class="name" [ngClass]="{
+                                                            'bold-text': onIdentifyDTO(dataItem) === 'DTOHRPolicyLocation',
+                                                            'underline-text': onIdentifyDTO(dataItem) === 'DTOHRPolicyPosition'
+                                                          }">
+                                                            <span style="max-width: 220px;"
+                                                                title="{{dataItem.PositionName || dataItem.LocationName || dataItem.TypeStaffName}}">
+                                                                {{dataItem.PositionName || dataItem.LocationName ||
+                                                                dataItem.TypeStaffName}}
+                                                            </span>
+
+                                                            <span
+                                                                *ngIf="dataItem.PositionID || dataItem.LocationID">|</span>
+
+                                                            <span *ngIf="dataItem.PositionID || dataItem.LocationID"
+                                                                style="max-width: 29px;"
+                                                                title="{{dataItem.PositionID || dataItem.LocationID}}">
+                                                                {{dataItem.PositionID || dataItem.LocationID}}
+                                                            </span>
+                                                        </div>
+
+                                                        <span class="status-name" [title]="dataItem.StatusName"
+                                                            [innerHTML]="dataItem.StatusName | colorStatus: dataItem.Status"></span>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </kendo-treelist-column>
+
+                                        <!-- Col-5: Trạng thái -->
+                                        <!-- <kendo-treelist-column headerClass="col-treelist-status">
+                                            <ng-template kendoTreeListCellTemplate let-dataItem>
+                                                <span class="status-name" [title]="dataItem.StatusName"
+                                                    [innerHTML]="dataItem.StatusName | colorStatus: dataItem.Status"></span>
+                                            </ng-template>
+                                        </kendo-treelist-column> -->
+
+                                        <!-- Col-6: Button xóa -->
+                                        <kendo-treelist-column headerClass="col-treelist-button-delete" [width]="40">
+                                            <ng-template kendoTreeListCellTemplate let-dataItem>
+                                                <div class="icon">
+                                                    <ng-container
+                                                        *ngIf="dataHrPolicyMaster.Status === 0 || dataHrPolicyMaster.Status === 1 || dataHrPolicyMaster.Status === 4">
+                                                        <span title="Xóa ngoại lệ"
+                                                            (click)="handleRemoveObjectByTempId(listExceptionLocal, dataItem['tempId']); onReFetchTreeList()"
+                                                            *ngIf="handleCheckDeletable(dataItem)"
+                                                            class="k-icon k-i-trash"></span>
+                                                    </ng-container>
+
+                                                    <ng-container
+                                                        *ngIf="dataHrPolicyMaster.Status === 2 && dataItem?.Status === 2">
+                                                        <span title="Ngưng áp dụng"
+                                                            (click)="handleToogleButtonPolicyTaskLimit(dataItem, 'stop')"
+                                                            class="k-icon k-i-minus-outline"></span>
+                                                    </ng-container>
+                                                </div>
+                                            </ng-template>
+                                        </kendo-treelist-column>
+                                    </kendo-treelist>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lưu ý -->
+                    <div class="note">(*) Trường bắt buộc nhập</div>
+                </div>
+            </div>
+
+            <!-- BUTTON CONTROL -->
+            <div class="btnControl">
+                <button (click)="handleCloseDrawer()" kendoButton
+                    class="btn-hachi hachi-primary hachi-secondary">đóng</button>
+                <div (click)="handleAddNewPosition()">
+                    <button *ngIf="statusDrawer == 2 || statusDrawer == 12" kendoButton class="btn-hachi hachi-primary">
+                        THÊM MỚI
+                    </button>
+                </div>
+
+                <div (click)="handleUpdatePosition()">
+                    <button *ngIf="statusDrawer == 3 || statusDrawer == 13" kendoButton class="btn-hachi hachi-primary">
+                        CẬP NHẬT
+                    </button>
+                </div>
+
+                <div (click)="handleDeletePosition()">
+                    <button *ngIf="statusDrawer == 3 || (statusDrawer == 13 && statusPolicyMaster == 0)" kendoButton
+                        class="btn-hachi hachi-warning">
+                        XÓA
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+    </kendo-drawer>
+
+    <kendo-drawer-content class="drawer-content">
+        <div class="main">
+            <div class="area">
+                <div class="header header-1" [ngClass]="{'disable-block': isDisableBlock}">
+                    <!-- BREADCRUMB -->
+                    <app-p-kendo-breadcrumb (loadData)="handleLoadBreadCrumb()"></app-p-kendo-breadcrumb>
+
+                    <!-- FUNCTION BUTTON WRAPPER -->
+                    <div class="btnWrapper">
+                        <div class="nav-btn nav-crud">
+                            <div class="nav-file nav-btn">
+                                <button (click)=" handleOpenDialog()" kendoButton class="btn-hachi btnNgunghienthi"
+                                    icon="trash" *ngIf="(dataHrPolicyMaster?.Code !== 0 && dataHrPolicyMaster?.Status == 0 && (isCreator || isMaster) ) 
+                                    ">XÓA
+                                    CHÍNH
+                                    SÁCH</button>
+                            </div>
+                            <div class="nav-crud StatusBtn">
+                                <button *ngFor="let i of arrBtnStatus" kendoButton iconClass="k-icon k-i-{{ i.code }}"
+                                    class="{{ i.class }} " (click)="handleUpdateStatusPolicy(i.link)">
+                                    {{ i.text }}
+                                </button>
+                            </div>
+
+
+                            <div (click)="handleAddNewClick()" class="nav-file nav-btn">
+                                <button *ngIf="(isCreator || isMaster) && dataHrPolicyMaster.Code != 0" kendoButton
+                                    class="k-button onAddBtn" [icon]="'plus'">THÊM
+                                    MỚI</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="content" [ngClass]="dataHrPolicyMaster.Code != 0 ? 'content': 'content-add'">
+                    <!-- SHOW COMPONENT -->
+                    <div class="block-info block-content" [ngClass]="{'disable-block': isDisableBlock}">
+                        <app-hr-policy-transition-info [numOfTask]="dataHrPolicyMaster?.NumOfTask"
+                            [data]="dataHrPolicyMaster" [typeHrPolicy]="typeData" [dataPosition]="listHRPolicyApply"
+                            (created)="handleGetStatusCreate($event)"
+                            (hrChange)="handleGetValueAfterChangeTypeData($event)"
+                            (openedDropdownApply)="getNumOfTask($event)"
+                            [loadData]="requestLoadInfoBlock"></app-hr-policy-transition-info>
+                    </div>
+                    <div class="position-list block-content" *ngIf="dataHrPolicyMaster.Code != 0"
+                        [ngClass]="{'disable-block': isDisableBlock}">
+                        <app-hr-applicable-position-list #listPostitionApply [loadData]="requestLoadListPosition"
+                            (outListHRPolicyApply)="handleGetListHRPolicyApply($event)" [reqCreate]="requestCreate"
+                            [location]="dataLocation"
+                            [show]="dataHrPolicyMaster.Code != 0 && dataHrPolicyMaster.TypeApply == 1"
+                            (reloadParent)="handleloadData($event)" [reqDelete]="requestDelete"
+                            [reqChangeStatus]="requestChangeStatus" (actionPosition)="handleGiveAction($event)"
+                            (ListNewPosition)="getListNewPosition($event)"
+                            [dataHRPolicyMaster]="dataHrPolicyMaster"></app-hr-applicable-position-list>
+                    </div>
+                    <div class=" block-content" *ngIf="dataHrPolicyMaster.Code != 0"
+                        [ngClass]="dataHrPolicyMaster.Code != 0 && dataHrPolicyMaster.TypeApply == 1 ? 'task-list': 'disable-position'">
+                        <app-hr-task-list #gridTaskList [policyMaster]="dataHrPolicyMaster" [typeList]="1"
+                            [typeApplyPosition]="dataHrPolicyMaster.TypeApply" (onClickButtonAdd)="handleGiveAction($event)"
+                            (onClickToolBox)="handleGiveAction($event)" (isSelectingGrid)="onCheckSelectingGrid($event)"
+                            (addedTask)="handleCheckAddedTask($event)"
+                            (numOfTaskAfterChangeData)="handleGetNumOfTaskAfterChangeData($event)"></app-hr-task-list>
+                    </div>
+                    <div [ngClass]="dataHrPolicyMaster?.PolicyID == 0 ? 'footer-add-new' : 'footer'">
+                        <div><span class="important">(*) </span>Trường bắt buộc nhập</div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- POPUP CONFIRM DELETE POLICY -->
+        <kendo-dialog class="dialog-delete popup-confirm-custom" [minHeight]="250" [minWidth]="400"
+            *ngIf="isDialogShow">
+            <!-- HEADER -->
+            <div class="dialog-header">
+                <span class="k-icon k-i-warning"></span>
+                <div>Xóa chính sách</div>
+            </div>
+
+            <!-- CONTENT -->
+            <div class="dialog-content">
+                <div class="text-confirm">
+                    <span>Bạn có chắc chắn muốn chính sách</span>
+                    <div class="policy-name-text">
+                        {{dataHrPolicyMaster.PolicyID}}
+                    </div>
+                </div>
+
+                <div class="warning">
+                    <span>Chính sách bị xóa sẽ <span style="color: #FD7676;">KHÔNG</span> thể khôi phục lại</span>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="dialog-footer">
+                <button kendoButton (click)="handleCloseDialog()" class="cancel-button">Không xóa</button>
+                <button kendoButton (click)="handleDeletePolicy()" icon="trash" class="btn-delete">xóa</button>
+            </div>
+        </kendo-dialog>
+
+        <!-- DIALOG CONFIRM DELETE TASK -->
+        <kendo-dialog class="dialog-delete popup-confirm-task-custom" [minHeight]="250" [minWidth]="400"
+            *ngIf="isOpenPopupConfirmDelete">
+            <!-- HEADER -->
+            <div class="dialog-header">
+                <span class="k-icon k-i-warning"></span>
+                <div>{{selectedPolicyTaskLimit ? 'Xóa ngoại lệ' : 'Xóa công việc'}}</div>
+            </div>
+
+            <!-- CONTENT -->
+            <div class="dialog-content">
+                <div class="text-confirm">
+                    <span>Bạn chắc chắn muốn xóa {{selectedPolicyTaskLimit ? 'ngoại lệ' : 'công việc'}}</span>
+                    <span class="task" *ngIf="seletedTaskToDelete">{{seletedTaskToDelete.TaskName}}</span>
+                    <span class="task" *ngIf="selectedPolicyTaskLimit">{{handleGetNameDTO()}}</span>
+                </div>
+                <div class="warning">
+                    <span>{{selectedPolicyTaskLimit ? 'Ngoại lệ bị xóa sẽ' : 'Công việc bị xóa sẽ'}}</span>
+                    <span style="color: #FD7676;">KHÔNG</span>
+                    <span>thể khôi phục lại.</span>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="dialog-footer">
+                <button kendoButton (click)="handleClosePopupConfirmDeleteTask()">Không xóa</button>
+                <button *ngIf="seletedTaskToDelete" kendoButton icon="trash" class="btn-delete"
+                    (click)="handleDeleteListPolicyTask()">xóa</button>
+                <button *ngIf="selectedPolicyTaskLimit" kendoButton icon="trash" class="btn-delete"
+                    (click)="APIDeleteHRPolicyLimit(selectedPolicyTaskLimit)">xóa</button>
+            </div>
+        </kendo-dialog>
+
+        <!-- DIALOG CONFIRM CLOSE DRAWER -->
+        <kendo-dialog class="dialog-delete popup-confirm-close-custom" [minHeight]="250" [minWidth]="400"
+            *ngIf="isDialogConfirmClose && !isAfterEdit">
+            <div class="dialog-confirm-close">
+                <div class="header">
+                    Bạn đã nhập thông tin vào form nhưng chưa cập nhật. Nếu bạn đóng mà không lưu, tất cả thay đổi sẽ bị
+                    mất. Bạn
+                    có muốn tiếp tục không?
+                </div>
+                <div class="footer">
+                    <button (click)="handleCloseDrawer()" kendoButton class="btn-hachi hachi-primary"> ĐỒNG Ý </button>
+                    <button (click)="isDialogConfirmClose = false" kendoButton class="btn-hachi hachi-primary"> ĐÓNG
+                    </button>
+                </div>
+            </div>
+        </kendo-dialog>
+
+        <!-- DIALOG THÊM NGOẠI LỆ -->
+        <app-hr-exception-adder [Policy]="dataHrPolicyMaster" [PolicyTask]="dataHRPolicyTaskHandler"
+            (data)="handleGetDataListException($event)" (closed)="handleCloseDialogException()"
+            [isOpenDialog]="isOpenDialogAddException"></app-hr-exception-adder>
+    </kendo-drawer-content>
+</kendo-drawer-container>

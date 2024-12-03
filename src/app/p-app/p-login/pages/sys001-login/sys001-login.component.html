@@ -1,0 +1,192 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div *ngIf="isLoggedIn == false" class="sys001-login">
+    <div class="left-half">
+        <kendo-scrollview #scrollView [data]="scrollViewList" [width]="'100%'" [height]="'100%'" [arrows]="true"
+            [pageable]="true" [endless]="true">
+            <ng-template let-item="item">
+                <img loading="lazy" src='{{item.url}}' alt='{{item.desc}}' draggable="true" />
+                <div class="carousel-caption">
+                    <span class="text-title">{{item.title}}</span>
+                    <br>
+                    <span>{{item.desc}}</span>
+                </div>
+            </ng-template>
+        </kendo-scrollview>
+    </div>
+    <div class="right-half">
+        <div class="article">
+            <img loading="lazy" src="../../../../assets/img/logo/logo.svg" alt="3ps" class="img-logo">
+            <div class="login">
+                <span class="dang-nhap" *ngIf="tabActived !== 'forgot-pwd' && tabActived !== 'OTP' 
+                    && tabActived !== 'newPwd'" (click)="showUI('login', true)"
+                    [class.actived]="tabActived == 'login'">Đăng nhập</span>
+                <span class="dang-ky" *ngIf="tabActived !== 'forgot-pwd' && tabActived !== 'OTP' 
+                    && tabActived !== 'newPwd'" (click)="showUI('register', true)"
+                    [class.actived]="tabActived == 'register'">Đăng ký</span>
+                <span class="dang-ky" *ngIf="tabActived == 'forgot-pwd'"
+                    [class.actived]="tabActived == 'forgot-pwd'">Thiết lập lại mật khẩu</span>
+                <span class="dang-ky" *ngIf="tabActived == 'OTP'"
+                    [class.actived]="tabActived == 'OTP'">Nhập mã xác nhận</span>
+                <span class="dang-ky" *ngIf="tabActived == 'newPwd'"
+                    [class.actived]="tabActived == 'newPwd'">Nhập mật khẩu mới </span>
+            </div>
+            <div class="line-login" *ngIf="tabActived == 'login'"></div>
+            <div class="line-register" *ngIf="tabActived == 'register'"></div>
+            <div class="line-forgotFwd" *ngIf="tabActived == 'forgot-pwd' || tabActived == 'OTP' || tabActived == 'newPwd'"></div>
+            <div class="hpanel">
+                <div class="panel-body">
+                    <form [formGroup]="tabActived == 'login' ? loginForm 
+                                    : tabActived == 'register' ? registerForm
+                                    : tabActived == 'forgot-pwd' ? forgetForm
+                                    : tabActived == 'OTP' ? OTPForm
+                                    : newFwdForm" 
+                        (ngSubmit)="tabActived == 'login' ? onSubmit() 
+                                    : tabActived == 'register' ? onSubmitRegister() 
+                                    : tabActived == 'forgot-pwd' ? onSubmitForgotPwd()
+                                    : tabActived == 'OTP' ? onSubmitOTP()
+                                    :  onSubmitNewPwd()">
+                                    
+                        <!-- Start: Đăng ký -->
+                        <kendo-formfield *ngIf="tabActived == 'register'">
+                            <div class="form-group">
+                                <kendo-svg-icon class="icon-left" [icon]="icons.envelopIcon" [size]="'medium'"></kendo-svg-icon>
+                                <input type="email" formControlName="email" class="form-control k-textbox"
+                                    placeholder="Email" required title="Nhập email" value="" />
+                                </div>
+                                <div *ngIf="submitted && f.email?.errors" class="invalid-feedback">
+                                    <div *ngIf="f.email?.errors?.required">Email không hợp lệ</div>
+                                </div>
+                        </kendo-formfield>
+
+                        <!-- Start: Đăng nhập -->
+                        <kendo-formfield *ngIf="tabActived !== 'OTP' && tabActived !== 'newPwd'">
+                            <div class="form-group">
+                                <kendo-svg-icon class="icon-left" [icon]="icons.envelopIcon" [size]="'medium'">
+                                </kendo-svg-icon>
+                                <input type="text" autofocus formControlName="username" class="form-control k-textbox"
+                                    [placeholder]="tabActived !== 'forgot-pwd' ? 'Tài khoản' : 'Nhập tài khoản'"
+                                    required title="Nhập tài khoản" value=""
+                                    [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                            </div>
+                            <div *ngIf="submitted && f.username?.errors" class="invalid-feedback">
+                                <div *ngIf="f.username?.errors?.required">Tên đăng nhập không tồn tại</div>
+                            </div>
+                        </kendo-formfield>
+                        <kendo-formfield *ngIf="tabActived !== 'forgot-pwd' && tabActived !== 'OTP' && tabActived !== 'newPwd'">
+                            <div class="form-group">
+                                <kendo-svg-icon class="icon-left" [icon]="icons.lockIcon" [size]="'medium'">
+                                </kendo-svg-icon>
+                                <input #inputPassword type="password" formControlName="password"
+                                    class="form-control k-textbox plPass" placeholder="Mật khẩu" required title="Nhập mật khẩu"
+                                    value="" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                                <kendo-svg-icon class="icon-right" [icon]="icons.eyeIcon" [size]="'medium'"
+                                    [style.right]="submitted && f.password?.errors" #eyeIconPassword
+                                    (click)="togglePassword('inputPassword','eyeIconPassword')">
+                                </kendo-svg-icon>
+                            </div>
+                            <div *ngIf="submitted && f.password?.errors" class="invalid-feedback">
+                                <div *ngIf="f.password?.errors?.required">Mật khẩu không tồn tại</div>
+                            </div>
+                        </kendo-formfield>
+                        <!-- End: Đăng nhập -->
+                        <kendo-formfield *ngIf="tabActived == 'register'">
+                            <div class="form-group">
+                                <!-- <kendo-svg-icon class="icon-left" [icon]="icons.tellAFriendIcon" [size]="'medium'">
+                                    </kendo-svg-icon> -->
+                                <i class="icon-left fa fa-phone"></i>
+                                <input type="tel" pattern="[0-9]{9,12}" formControlName="phoneNumber"
+                                    class="form-control k-textbox" placeholder="Số điện thoại" required
+                                    title="Nhập số điện thoại" value="" />
+                            </div>
+                            <div *ngIf="submitted && f.phoneNumber?.errors" class="invalid-feedback">
+                                <div *ngIf="f.phoneNumber?.errors?.required">Số điện thoại không hợp lệ</div>
+                            </div>
+                        </kendo-formfield>
+                        <kendo-formfield *ngIf="tabActived == 'register'">
+                            <div class="form-group">
+                                <kendo-svg-icon class="icon-left" [icon]="icons.user" [size]="'medium'">
+                                </kendo-svg-icon>
+                                <input type="text" autofocus formControlName="fullName" class="form-control k-textbox"
+                                    placeholder="Họ và tên" required title="Nhập họ và tên" value=""
+                                    [ngClass]="{ 'is-invalid': submitted && f.fullName.errors }" />
+                            </div>
+                            <div *ngIf="submitted && f.fullName?.errors" class="invalid-feedback">
+                                <div *ngIf="f.fullName?.errors?.required">Vui lòng nhập họ và tên</div>
+                            </div>
+                        </kendo-formfield>
+                        <!-- End: Đăng ký -->
+
+                        <!-- Start: Nhập mã OTP -->
+                        <kendo-formfield *ngIf="tabActived == 'OTP'">
+                            <div class="form-group d-flex justify-content-between">
+                                <input type="number" autofocus formControlName="n1" min="0" max="9" class="form-control k-textbox"
+                                    value="" />
+                                <input type="number"  formControlName="n2" min="0" max="9" class="form-control k-textbox"
+                                value="" />
+                                <input type="number" formControlName="n3" min="0" max="9" class="form-control k-textbox"
+                                value="" />
+                                <input type="number" formControlName="n4" min="0" max="9" class="form-control k-textbox"
+                                value="" />
+                                <input type="number" formControlName="n5" min="0" max="9" class="form-control k-textbox"
+                                value="" />
+                                <input type="number" formControlName="n6" min="0" max="9" class="form-control k-textbox"
+                                value="" />
+                            </div>
+                            <div class="form-group d-flex justify-content-between align-items-center">
+                                <span *ngIf="!OTPExpired" class="duration textError">Thời gian còn lại {{ formatTimeLeft() }}</span>
+                                <span *ngIf="OTPExpired" class="forgot-pwd font-weight-bold mt-0 cursor-pointer" (click)="onGetOTP()">Gửi lại mã xác nhận</span>
+                            </div>
+                        </kendo-formfield>
+                        <!-- End: Nhập mã OTP -->
+
+                        <!-- Start: New Password -->
+                        <kendo-formfield *ngIf="tabActived == 'newPwd'">
+                            <div class="form-group">
+                                <kendo-svg-icon class="icon-left" [icon]="icons.lockIcon" [size]="'medium'">
+                                </kendo-svg-icon>
+                                <input #inputNewPassword type="password" formControlName="newPassword"
+                                    class="form-control k-textbox plPass" placeholder="Nhập mật khẩu mới" required title="Nhập mật khẩu mới"
+                                    value="" [ngClass]="{ 'is-invalid': submitted && f.newPassword.errors }" />
+                                <kendo-svg-icon class="icon-right" [icon]="icons.eyeIcon" [size]="'medium'"
+                                    [style.right]="submitted && f.newPassword?.errors" #eyeIconNewPassword
+                                    (click)="togglePassword('inputNewPassword','eyeIconNewPassword')">
+                                </kendo-svg-icon>
+                            </div>
+                        </kendo-formfield>
+                        <kendo-formfield *ngIf="tabActived == 'newPwd'">
+                            <div class="form-group">
+                                <kendo-svg-icon class="icon-left" [icon]="icons.lockIcon" [size]="'medium'">
+                                </kendo-svg-icon>
+                                <input #inputReNewPassword type="password" formControlName="reNewPassword"
+                                    class="form-control k-textbox plPass" placeholder="Xác nhận lại mật khẩu" required title="Xác nhận lại mật khẩu"
+                                    value="" [ngClass]="{ 'is-invalid': submitted && f.reNewPassword.errors }" />
+                                <kendo-svg-icon class="icon-right" [icon]="icons.eyeIcon" [size]="'medium'"
+                                    [style.right]="submitted && f.reNewPassword?.errors" #eyeIconReNewPassword
+                                    (click)="togglePassword('inputReNewPassword','eyeIconReNewPassword')">
+                                </kendo-svg-icon>
+                            </div>
+                        </kendo-formfield>
+                        
+                        <!-- End: New Password -->
+
+
+                        <button [disabled]="loading" class="btn" id="loginBtn">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                            {{tabActived == 'login' ? 'Đăng nhập' : tabActived == 'register' ? 'Đăng ký' :  tabActived == 'newPwd' ? 'THIẾT LẬP MẬT KHẨU' : 'Tiếp theo'}}
+                        </button>
+                        <div *ngIf="submitted && tabActived == 'OTP' && g" class="invalid-feedback k-text-left">
+                            <div *ngIf="g">Mã xác nhận không chính xác. Vui lòng kiểm tra lại</div>
+                        </div>
+                        <div *ngIf="submitted && tabActived == 'newPwd' && notiNewPwd != ''" class="invalid-feedback k-text-left">
+                            <div *ngIf="notiNewPwd != ''">Mật khẩu không trùng khớp. Vui lòng kiểm tra lại</div>
+                        </div>
+                    </form>
+                    <a *ngIf="tabActived == 'login'" class="forgot-pwd cursor-pointer"
+                        (click)="showUI('forgot-pwd', true)">Quên mật khẩu?</a>
+                    <a *ngIf="tabActived == 'forgot-pwd'" class="forgot-pwd cursor-pointer"
+                        (click)="showUI('login', true)">Đăng nhập</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

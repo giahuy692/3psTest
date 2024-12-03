@@ -1,0 +1,507 @@
+<div class="app-hr-paycheck-detail">
+    <!-- Header Web -->
+    <div *ngIf="!hasHiddenPaycheck">
+    <div class="hriHeader header header-1" *ngIf="moduleName === 'hri'">
+
+        <app-p-kendo-breadcrumb (loadData)="reloadData()"></app-p-kendo-breadcrumb>
+
+        <div class="nav-btn nav-crud">
+            <button kendoButton class="k-button onAddBtn" [icon]="'undo'" (click)="onReturn()">
+                QUAY VỀ
+            </button>
+        </div>
+    </div>
+    
+    <div class="portalHeader header header-1" *ngIf="moduleName === 'portal' && !isMobile">
+        <div class="GroupDropdown">
+            <span class="TitleDropdown">Kỳ lương:</span>
+            <kendo-dropdownlist
+            [data]="ListPayrollFilter"
+            [popupSettings]="{appendTo:'component'}"
+            textField="Period" valueField="Code"
+            [(ngModel)]="SelectedPeriod"
+            (valueChange)="onDropdownlistClick($event)"
+            (filterChange)="handleFilterDropdownlist($event)"
+            [filterable]="true"
+            ></kendo-dropdownlist>
+        </div>
+    </div>
+
+    <!-- Header mobile -->
+    <div class="headerMobile" *ngIf="moduleName === 'portal' && isMobile">
+        <div class="GroupImgAndhearder">
+            <div>
+                <img loading="lazy" class="logo-icon" (click)="onOpenDrawer()" src="assets/img/icon/hachi_bee.svg" />
+            </div>
+            <div class="HeaderProtalMobile">
+                <div class="Title" (click)="reloadData()">
+                    PHIẾU LƯƠNG
+                </div>
+                <div class="GroupDropdown">
+                    <span class="Title TitleDropdown">Kỳ lương:</span>
+                    <kendo-dropdownlist
+                    [data]="ListPayrollFilter"
+                    [popupSettings]="{appendTo:'component'}"
+                    textField="Period" valueField="Code"
+                    [(ngModel)]="SelectedPeriod"
+                    (valueChange)="onDropdownlistClick($event)"
+                    (filterChange)="handleFilterDropdownlist($event)"
+                    [filterable]="true"
+                    ></kendo-dropdownlist>
+                </div>
+            </div>
+        </div>
+        <div class="TextcolorOrgen">
+            {{SalaryInfo.PaymentSal | number: '1.0-0'}}
+        </div>
+    </div>
+
+    <div class="Main" *ngIf="!ishavePeriod">
+
+        <div class="tbt_ThongTinNhanSu sections">
+            <div class="Title colorGreen">
+                <span class="lable">
+                    THÔNG TIN NHÂN SỰ
+                </span>
+            </div>
+            <div class="section-grid">
+                <div class="grid-item item1">
+                    <div class="FirstCol">Họ và tên</div>
+                    <div class="SecondCol">
+                        <div>:</div>
+                        <span class="Padding">{{Employees.FullName}}</span>
+                        <div class="Padding" *ngIf="!isMobile">
+                            <span class="Padding">Mã nhân sự</span>
+                            <span>: {{Employees.StaffID}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-item item2" *ngIf="isMobile"><div class="FirstCol">Mã nhân sự</div><div class="SecondCol"><span>:</span><span class="Padding">{{Employees.StaffID}}</span></div></div>
+                <div class="grid-item item3"><div class="FirstCol">Chức danh</div><div class="SecondCol"><span>:</span><span class="Padding" >{{Employees.CurrentPositionName}}</span></div></div>
+                <div class="grid-item item4" ><div class="FirstCol">Công ty</div><div class="SecondCol"><span>:</span><span class="Padding">{{SalaryInfo.CompanyName}}</span></div></div>
+                <div class="grid-item item5"><div class="FirstCol">Đơn vị công tác</div><div class="SecondCol"><span>:</span><span class="Padding">{{Employees.DepartmentName}}</span></div></div>
+                <div class="grid-item item6" ><div class="FirstCol">Điểm làm việc</div><div class="SecondCol"><span>:</span><span class="Padding">{{Employees.LocationName}}</span></div></div>
+                <div class="grid-item item7"><div class="FirstCol">Ngày vào làm</div><div class="SecondCol"><span>:</span><span class="Padding">{{Employees.JoinDate | date: 'dd/MM/yyyy'}}</span></div></div>
+            </div>
+        </div>
+
+        <div class="tbt_NgayCong sections">
+            <div class="Title colorGreen">
+                <span class="lable">
+                    NGÀY CÔNG
+                </span>
+            </div>
+            <div class="section-grid" [ngClass]="{'scroll': !isMobile}" >
+                <div class="grid-item">
+                    <div class="col_1">
+                        <div class="grid-item item1">
+                            <div class="TextBold grid-item FirstCol"><span>NGÀY CÔNG CHUẨN</span><span class="Text10">(a)</span></div>
+                            <div class="SecondCol">
+                                <span class="TextBold TextcolorGreen Text10">:</span>
+                                <span class="Padding TextBold TextcolorGreen">{{SalaryInfo.WDStandard}}</span>
+                            </div>
+                        </div>
+                        <div class="grid-item item2">
+                            <div class="TextBold grid-item FirstCol"><span>TỒNG CÔNG QUY ĐỔI</span><span class="Text10">(b)+(c)=(0)</span></div>
+                            <div class="SecondCol">
+                                <span class="TextBold TextcolorGreen Text10">:</span>
+                                <span class="Padding TextBold TextcolorGreen">{{SalaryInfo.WDTotal}}</span>
+                            </div>
+                        </div>
+                        <div class="grid-item item3 FontItalic">
+                            <div class="grid-item-Child grid-item" [ngClass]="{'Explan': explanListWDDetail}">
+                                <div class="grid-item itemChil1">
+                                    <div class="FirstCol grid-item Padding"><span>Ngày công thường hưởng lương </span>
+                                        <div class="CustomRow">
+                                            <span 
+                                            class="Text10 Textcolorblue" 
+                                            *ngIf="isMobile" 
+                                            (click)="Explan('explanListWDDetail')">
+                                            {{explanListWDDetail == false ? 'Chi tiết' : 'Thu gọn'}}
+                                            </span>
+                                            <span class="Text10">
+                                                (b)
+                                            </span>
+                                        </div>
+                                    </div>                                
+                                    <div class="SecondCol">
+                                        <span class="">:</span>
+                                        <span class="Padding">{{SalaryInfo.WorkDate}}</span>
+                                    </div>
+                                </div>
+                                <div *ngFor="let item of ListDayOff" class="grid-item itemChil2">
+                                    <span *ngIf="explanListWDDetail && isMobile" class="Padding FirstCol"><span class="Padding">{{item.SalaryElement}}</span></span>
+                                    <span *ngIf="explanListWDDetail && isMobile" class="SecondCol"><span>:</span><span class="Padding">{{(item.Workday == 0 || item.Workday == null) ? "" :  item.Workday}}</span></span>
+                                </div>
+                                <div class="TextBold Padding" *ngIf="explanListWDDetail && isMobile"><span class="Padding">PHÉP NĂM</span></div>
+                                <div *ngFor="let item of ListYearOff" class="grid-item itemChil2">
+                                    <span *ngIf="explanListWDDetail && isMobile" class="Padding FirstCol"><span class="Padding">{{item.SalaryElement}}</span></span>
+                                    <span *ngIf="explanListWDDetail && isMobile" class="SecondCol"><span>:</span><span class="Padding">{{item.Workday}}</span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid-item item4 FontItalic">
+                            <div class="grid-item-Child grid-item" [ngClass]="{'Explan': explanListWDOTDetail}">
+                                <div class="grid-item itemChil1">
+                                    <div class="FirstCol grid-item Padding"><span>Tổng ngày công tăng ca</span>
+                                        <div class="CustomRow">
+                                            <span 
+                                            class="Text10 Textcolorblue" 
+                                            *ngIf="isMobile" 
+                                            (click)="Explan('explanListWDOTDetail')">
+                                            {{explanListWDOTDetail == false ? 'Chi tiết' : 'Thu gọn'}}
+                                            </span>
+                                            <span class="Text10">
+                                                (c)
+                                            </span>
+                                        </div>
+                                    </div>                                
+                                    <div class="SecondCol">
+                                        <span class="">:</span>
+                                        <span class="Padding">{{SalaryInfo.OTDate}}</span>
+                                    </div>
+                                </div>
+                                <div class="grid-item itemChil2 Padding" *ngIf="explanListWDOTDetail && isMobile">
+                                    <div class="grid-item Chil1 Padding">
+                                        <div class="first"></div>
+                                        <div class="second">Số giờ OT</div>
+                                        <div class="third">Hệ số</div>
+                                        <div class="fourth">Ngày</div>
+                                    </div>
+                                </div>
+                                <div *ngFor="let item of SalaryInfo.ListWDOTDetail" class="grid-item itemChil3 Padding">
+                                    <div class="first Padding" *ngIf="explanListWDOTDetail && isMobile">{{item.SalaryElement}}</div>
+                                    <div class="second" *ngIf="explanListWDOTDetail && isMobile">{{(item.WorkHour == 0 || item.WorkHour == null) ? "" :  item.WorkHour}}</div>
+                                    <div class="third" *ngIf="explanListWDOTDetail && isMobile">{{(item.Rate == 0 || item.Rate == null) ? "" :  item.Rate}}</div>
+                                    <div class="fourth" *ngIf="explanListWDOTDetail && isMobile">{{(item.Workday == 0 || item.Workday == null) ? "" :  item.Workday}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col_2" *ngIf="!isMobile">
+                        <div class="backGroudGray" *ngIf="!isMobile">
+                            <div class="table table1">
+                                <div class="TextRight">Ngày</div>
+                                <div class="workday">
+                                    <div class="space" >   
+                                        <div class="col_1">
+                                            <span *ngFor="let item of ListDayOff" class="FontItalic">{{item.SalaryElement}}</span>
+                                        </div>
+                                        <div class="col_2">
+                                            <span *ngFor="let item of ListDayOff"  class="FontItalic">{{(item.Workday == 0 || item.Workday == null) ? "" :  item.Workday}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="Year">
+                                    <div class="TextBold">PHÉP NĂM</div>
+                                    <div class="space">
+                                        <div class="col_1">
+                                            <span *ngFor="let item of ListYearOff" class="FontItalic">{{item.SalaryElement}}</span>
+                                        </div>
+                                        <div class="col_2">
+                                            <span *ngFor="let item of ListYearOff"  class="FontItalic">{{item.Workday}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col_3" *ngIf="!isMobile">
+                        <div class="backGroudGray" *ngIf="!isMobile">
+                            <div class="table table2">
+                                <table>
+                                    <td class="First">
+                                        <tr *ngFor="let item of SalaryInfo.ListWDOTDetail" class="FontItalic">{{item.SalaryElement}}</tr>
+                                    </td>
+                                    <td class="TextCenter">
+                                        Số giờ OT
+                                        <tr *ngFor="let item of SalaryInfo.ListWDOTDetail" class="FontItalic">{{(item.WorkHour == 0 || item.WorkHour == null) ? "" :  item.WorkHour}}</tr>
+                                    </td>
+                                    <td class="TextCenter">
+                                        Hệ số
+                                        <tr *ngFor="let item of SalaryInfo.ListWDOTDetail" class="FontItalic">{{(item.Rate == 0 || item.Rate == null) ? "" :  item.Rate}}</tr>
+                                    </td>
+                                    <td class="last TextCenter">
+                                        Ngày công quy đổi
+                                        <tr *ngFor="let item of SalaryInfo.ListWDOTDetail" class="FontItalic">{{(item.Workday == 0 || item.Workday == null) ? "" :  item.Workday}} </tr>
+                                    </td>
+                                    
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tbt_KhungLuong sections">
+            <div class="Title colorGreen">
+                <span class="lable">
+                    KHUNG LƯƠNG
+                </span>
+            </div>
+            <div class="section-grid">
+                <div class="grid-item item1">
+                    <div class="grid-item FirstCol"><span>Lương chính (lương đóng BHXH)</span><span class="Text10">(1):</span></div>
+                    <div class="SecondCol">
+                        <span class="Padding">{{SalaryInfo.NetSalary | number: '1.0-0'}}</span>
+                        <div class="Padding" *ngIf="!isMobile">
+                            <span>Ngạch</span>
+                            <span>: {{SalaryInfo.SalaryRange}}</span>
+                        </div>
+                        <div class="Padding" *ngIf="!isMobile">
+                            <span>Bậc</span>
+                            <span>: {{SalaryInfo.SalaryRate}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="FontItalic item2 FontItalic" *ngIf="isMobile">
+                    <span style="padding-left: 16px;">
+                        <span>Ngạch</span>
+                        <span>: {{SalaryInfo.SalaryRange}}</span>
+                    </span>
+                    <span style="padding-left: 16px;">
+                        <span>Bậc</span>
+                        <span>: {{SalaryInfo.SalaryRate}}</span>
+                    </span>
+                </div>
+                <div class="grid-item item3">
+                    <div class="grid-item FirstCol">
+                        <span>Các khoản phụ, trợ cấp</span>
+                        <span class="Text10">
+                            <span *ngIf="moduleName === 'hri'">{{NocationTroCap}}<span *ngIf="NocationTroCap != ''">=</span></span>(2):
+                        </span>
+                    </div>
+                    <div class="SecondCol">
+                        <span class="Padding" >{{SalaryInfo.NetAllowance | number: '1.0-0'}}</span>
+                    </div>
+                </div>
+                <div class="grid-item item4" *ngFor="let item of SalaryInfo.ListAllowanceDetail">
+                    <div class="grid-item FirstCol Padding" *ngIf="moduleName === 'hri'">
+                        <span class="FontItalic">{{item.SalaryElement}}</span>
+                        <span class="Text10 FontItalic">{{item.Notation}}:</span>
+                    </div>
+                    <div class="SecondCol" *ngIf="moduleName === 'hri'">
+                        <span class="Padding">{{item.WDAmount | number: '1.0-0'}}</span>
+                    </div>
+                </div>
+                <div class="grid-item item5">
+                    <div class="grid-item FirstCol">
+                        <span>LƯƠNG THỎA THUẬN (NET)</span>
+                        <span class="Text10">
+                            (1)+(2)=(3):
+                        </span>
+                    </div>
+                    <div class="SecondCol">
+                        <span class="Padding TextcolorGreen" >{{SalaryInfo.SalaryNegotiable | number: '1.0-0'}}</span>
+                    </div>
+                </div>            
+            </div>
+        </div>
+
+        <div class="tbt_TinhLuongThang sections">
+            <div class="Title colorGreen">
+                <span class="lable">
+                    TÍNH LƯƠNG THÁNG
+                </span>
+            </div>
+            <div class="section-grid">
+                <div class="grid-item item1">
+                    <div class="grid-item FirstCol"><span>Lương tăng ca</span><span class="Text10">(3)*(c)/(a)=(4):</span></div>
+                    <div class="SecondCol">
+                        <span class="Padding">{{SalaryInfo.OTSalary | number: '1.0-0'}}</span>
+                    </div>
+                </div>
+                <div class="grid-item item2">
+                    <div class="grid-item FirstCol"><span>Lương tháng</span><span class="Text10">(4)+(3)*(b)/(a)=(5):</span></div>
+                    <div class="SecondCol">
+                        <span class="Padding">{{SalaryInfo.Salary | number: '1.0-0'}}</span>
+                    </div>
+                </div>
+                <div class="grid-item item3">
+                    <div class="grid-item FirstCol">
+                        <span>Phụ cấp ngoài OT</span>
+                        <span class="Text10">
+                            <span *ngIf="moduleName === 'hri'">{{NocationPhuCap}}<span *ngIf="NocationPhuCap != ''">=</span></span>(6):
+                        </span>
+                    </div>
+                    <div class="SecondCol">
+                        <span class="Padding" >{{SalaryInfo.PlusException | number: '1.0-0'}}</span>
+                    </div>
+                </div>
+                <div *ngIf="moduleName === 'hri'" class="ListPlusException" [ngClass]="{'display': NocationPhuCap == ''}">
+                    <div class="grid-item item4" *ngFor="let item of SalaryInfo.ListPlusExceptionDetail">
+                        <div class="grid-item FirstCol Padding">
+                            <span class="FontItalic">{{item.SalaryElement}}</span>
+                            <span class="Text10 FontItalic">{{item.Notation}}:</span>
+                        </div>
+                        <div class="SecondCol">
+                            <span class="Padding">{{item.WDAmount | number: '1.0-0'}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-item item5">
+                    <div class="grid-item FirstCol">
+                        <div>
+                            <span>Thưởng hiệu suất</span>
+                            <span *ngIf="SalaryInfo.KPI != 0">
+                                <span class="line"></span>
+                                <span><span class="TextBold">KPI </span><span>tháng : {{SalaryInfo.KPI}}%</span></span>    
+                            </span>
+                        </div>
+                        <span class="Text10">
+                            (7a):
+                        </span>
+                    </div>
+                    <div class="SecondCol">
+                        <span class="Padding TextcolorGreen" >{{SalaryInfo.KPIBonus | number: '1.0-0'}}</span>
+                    </div>
+                </div>   
+                <div class="grid-item item6">
+                    <div class="grid-item FirstCol"><span>Thưởng Tết Dương lịch</span><span class="Text10">(7b):</span></div>
+                    <div class="SecondCol">
+                        <span class="Padding">{{SalaryInfo.Bonus | number: '1.0-0'}}</span>
+                    </div>
+                </div>
+                <div class="grid-item item7">
+                    <div class="grid-item FirstCol"><span>TỔNG LƯƠNG THÁNG</span><span class="Text10" [ngClass]="{'row':isMinWWidth}"><span *ngIf="!isMinWWidth">(5)+(6)+(7a)+(7b)=</span><span>(8):</span><span *ngIf="isMinWWidth">=(5)+(6)+(7a)+(7b)</span></span></div>
+                    <div class="SecondCol">
+                        <span class="Padding">{{SalaryInfo.TotalSal | number: '1.0-0'}}</span>
+                    </div>
+                </div>
+                <div class="grid-item item8">
+                    <div class="grid-item FirstCol"><span>Các khoản trừ trong tháng</span><span class="Text10">(9):</span></div>
+                    <div class="SecondCol">
+                        <span class="Padding">{{SalaryInfo.MinuException | number: '1.0-0'}}</span>
+                    </div>
+                </div>         
+            </div>
+        </div>
+
+        <div class="tbt_ThanhToan sections">
+            <div class="Title colorGreen">
+                <span class="lable">
+                    THANH TOÁN
+                </span>
+            </div>
+            <div class="section-grid">
+                <div class="grid-item item1">
+                    <div class="grid-item FirstCol"><span>LƯƠNG THANH TOÁN</span><span class="Text10">(8)-(9)=(10):</span></div>
+                    <div class="SecondCol">
+                        <span class="Padding TextcolorOrgen TextBold">{{SalaryInfo.PaymentSal | number: '1.0-0'}}</span>
+                    </div>
+                </div>
+                <div class="grid-item item2" *ngIf="hasBank">
+                    <div class="grid-item FirstCol"><span>Chuyển khoản vào tài khoản số</span><span>:</span></div>
+                    <div class="SecondCol">
+                        <span class="Padding" style="padding-left: 16px;"><span *ngIf="!isMobile">{{SalaryInfo.BankNumber}} tại {{SalaryInfo.BankName}}</span></span>
+                    </div>
+                </div>
+                <div *ngIf="isMobile && hasBank" style="text-align: center;">
+                    {{SalaryInfo.BankNumber}} tại {{SalaryInfo.BankName}}
+                </div>
+                <div class="grid-item item3" *ngIf="!hasBank">
+                    <div class="grid-item FirstCol">
+                        <span>Tiền mặt</span>
+                        <span>:</span>
+                    </div>
+                    <div class="SecondCol">
+                        <span class="Padding" >x</span>
+                    </div>
+                </div>
+                <div class="grid-item item4">
+                    <div>Ghi chú : {{SalaryInfo.Note}}</div>
+                </div>       
+            </div>
+        </div>
+
+        <div class="tbt_ChiPhiLuong sections">
+            <div class="Title colorOrgen">
+                <span class="lable">
+                    CHI PHÍ LƯƠNG
+                </span>
+            </div>
+            <div class="section-grid">
+                <div class="grid-item item1">
+                    <div class="grid-item FirstCol"><span>CHI PHÍ LƯƠNG</span><span class="Text10">(8)+(11)+(12)+(13)=(14):</span></div>
+                    <div class="SecondCol">
+                        <span class="Padding TextcolorGreen TextBold">{{SalaryInfo.SalaryExpense | number: '1.0-0'}}</span>
+                    </div>
+                </div>
+                <div class="grid-item item2">
+                    <div class="grid-item FirstCol"><span>BHXH công ty đóng 21.5%</span><span class="Text10" [ngClass]="{'row':isMinWWidth}"><span *ngIf="!isMinWWidth">(1)*21.5% =</span><span>(12):</span><span *ngIf="isMinWWidth">=(1)*21.5%</span></span></div>
+                    <div class="SecondCol">
+                        <span class="Padding">{{SalaryInfo.SIC | number: '1.0-0'}}</span>
+                    </div>
+                </div>
+                <div class="grid-item item3">
+                    <div class="grid-item FirstCol"><span>BHXH cá nhân đóng 10.5%</span><span class="Text10" [ngClass]="{'row':isMinWWidth}"> <span *ngIf="!isMinWWidth">(1)*10.5% =</span><span>(11):</span><span *ngIf="isMinWWidth">=(1)*10.5%</span></span></div>
+                    <div class="SecondCol">
+                        <span class="Padding">{{SalaryInfo.SIP | number: '1.0-0'}}</span>
+                    </div>
+                </div>
+                <div class="grid-item item4">
+                    <div class="grid-item FirstCol"><span>Thuế TNCN</span><span class="Text10">(13):</span></div>
+                    <div class="SecondCol">
+                        <span class="Padding">{{SalaryInfo.PIT | number: '1.0-0'}}</span>
+                    </div>
+                </div>   
+                <div *ngIf="!isMobile" class="FontItalic">
+                    Nhân viên mới chưa đóng BHXH, nhân viên đang nghỉ chế độ không đóng BHXH
+                </div>    
+            </div>
+        </div>
+    
+        <div *ngIf="isMobile">
+            <div style="text-align: center;" class="FontItalic">
+                Nhân viên mới chưa đóng BHXH, nhân viên đang nghỉ chế độ không đóng BHXH
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="paycheck-login" *ngIf="hasHiddenPaycheck">
+    <div class="right-half">
+        <div class="article">
+            <img loading="lazy" src="../../../../assets/img/logo/logo.svg" alt="3ps" class="img-logo">
+            <div class="login">
+                <span>Đăng nhập</span>
+            </div>
+        </div>
+    <div class="body-login">
+        <form [formGroup]="loginForm" >
+            <kendo-formfield>
+                <div class="form-group">
+                    <kendo-svg-icon class="icon-left" [icon]="icons.envelopIcon" [size]="'medium'">
+                    </kendo-svg-icon>
+                    <input type="text"  formControlName="username" class="form-control k-textbox"
+                        [placeholder]="'Nhập tài khoản'" autocomplete="off" autofocus
+                        required title="Nhập tài khoản" value="" 
+                        />
+                </div>
+                <div *ngIf="f.username?.errors" class="invalid-feedback">
+                    <div *ngIf="f.username?.errors?.required">Tên đăng nhập không tồn tại</div>
+                </div>
+            </kendo-formfield>
+            <kendo-formfield>
+                <div class="form-group">
+                    <kendo-svg-icon class="icon-left" [icon]="icons.lockIcon" [size]="'medium'">
+                    </kendo-svg-icon>
+                    <input #inputPassword type="password" formControlName="password" autocomplete="off"
+                        class="form-control k-textbox plPass" placeholder="Mật khẩu" required title="Nhập mật khẩu"
+                        value="" />
+                    <kendo-svg-icon class="icon-right" [style.right]="f.password?.errors" [icon]="icons.eyeIcon" [size]="'medium'"  #eyeIconPassword
+                    (click)="togglePassword('inputPassword','eyeIconPassword')">
+                    </kendo-svg-icon>
+                </div>
+                <div *ngIf="f.password?.errors" class="invalid-feedback">
+                    <div *ngIf="f.password?.errors?.required">Mật khẩu không tồn tại</div>
+                </div>
+            </kendo-formfield>
+
+            <button kendoButton (click)="onSubmit()" class="k-button btn-hachi AddBtn"> Đăng nhập</button>
+        </form>
+    </div>
+</div>
+</div>
+</div>

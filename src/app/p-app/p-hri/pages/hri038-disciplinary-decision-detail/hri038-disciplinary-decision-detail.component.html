@@ -1,0 +1,343 @@
+<div class="hr-offboarding-DecisionProfile-detail">
+
+    <div class="header header-1">
+
+        <app-p-kendo-breadcrumb (loadData)="onLoadDataBreadcumb()"></app-p-kendo-breadcrumb>
+
+        <div class="btnWrapper">
+            <button *ngFor="let i of listActBtnStatus" kendoButton iconClass="k-icon k-i-{{ i.code }}"
+                class="{{ i.class }} " (click)="onHeaderBtnClick(i)">
+                {{ i.text }}
+            </button>
+        </div>
+    </div>
+
+    <div class="content-wrapper">
+        <div class="hr-profile-block">
+            <div class="Topic flex">
+                <span>THÔNG TIN NHÂN SỰ</span>
+            </div>
+            <div class="input-container">
+                <p-loading-spinner class="loading-spiner" [isLoading]="isLoading"></p-loading-spinner>
+                <div class="flex">
+                    <div class="left-block">
+                        <div class="avatar-container">
+                            <img [src]="getResImg(DecisionProfile?.ImageThumb, 'image' + DecisionProfile?.Code)"
+                                (error)="handleError('image'+ DecisionProfile?.Code)" loading="lazy" [width]="163" [height]="163"
+                                class="img-avatar">
+                        </div>
+                    </div>
+                    <div class="right-block">
+                        <div class="column-block column-block-1">
+                            <div class="box-area" *ngIf="DecisionProfile?.Staff">
+                                <div class="label">
+                                    Mã nhân sự
+                                </div>
+                                <span class="box-text" *ngIf="DecisionProfile?.Status != 1" [title]="DecisionProfile?.StaffID || '(trống)'"
+                                    [ngClass]="{'emptyText': !DecisionProfile?.StaffID}">
+                                    {{DecisionProfile?.StaffID || '(trống)'}}
+                                </span>
+                            </div>
+                    
+                            <div class="box-area" *ngIf="DecisionProfile?.Staff">
+                                <div class="label">
+                                    Họ và tên
+                                </div>
+                                <span class="box-text" [title]="DecisionProfile?.FullName || '(trống)'"
+                                    [ngClass]="{'emptyText': !DecisionProfile?.FullName}">
+                                    {{DecisionProfile?.FullName || '(trống)'}}
+                                </span>
+                            </div>
+                    
+                            <div class="box-area" *ngIf="DecisionProfile?.Staff">
+                                <div class="label">
+                                    Giới tính
+                                </div>
+                                <span class="box-text" [title]="DecisionProfile?.GenderName || '(trống)'"
+                                    [ngClass]="{'emptyText': !DecisionProfile?.GenderName}">
+                                    {{DecisionProfile?.GenderName || '(trống)'}}
+                                </span>
+                            </div>
+                        </div>
+                    
+                        <div class="column-block column-block-2" *ngIf="DecisionProfile?.Staff">
+                            <div class="box-area">
+                                <div class="label">
+                                    Đơn vị công tác
+                                </div>
+                                <span class="box-text" [title]="DecisionProfile?.CurrentDepartmentName || '(trống)'"
+                                    [ngClass]="{'emptyText': !DecisionProfile?.CurrentDepartmentName}">
+                                    {{DecisionProfile?.CurrentDepartmentName || '(trống)'}}
+                                </span>
+                            </div>
+                    
+                            <div class="box-area">
+                                <div class="label">
+                                    Chức danh
+                                </div>
+                                <span class="box-text" [title]="DecisionProfile?.CurrentPositionName || '(trống)'"
+                                    [ngClass]="{'emptyText': !DecisionProfile?.CurrentPositionName}">
+                                    {{DecisionProfile?.CurrentPositionName || '(trống)'}}
+                                </span>
+                            </div>
+
+                            <div class="box-area">
+                                <div class="label">
+                                    Điểm làm việc
+                                </div>
+                                <span class="box-text" [title]="DecisionProfile?.CurrentLocationName || '(trống)'"
+                                    [ngClass]="{'emptyText': !DecisionProfile?.CurrentLocationName}">
+                                    {{DecisionProfile?.CurrentLocationName || '(trống)'}}
+                                </span>
+                            </div>
+                        </div>
+                    
+                        <div class="column-block column-block-3" *ngIf="DecisionProfile?.Staff">
+                            <div class="box-area typeStaff">
+                                <div class="label">
+                                    Loại nhân sự
+                                </div>
+                                <span class="box-text" [title]="DecisionProfile?.TypeStaffName || '(trống)'"
+                                    [ngClass]="{'emptyText': !DecisionProfile?.TypeStaffName}">
+                                    {{DecisionProfile?.TypeStaffName || '(trống)'}}
+                                </span>
+                            </div>
+                    
+                            <div class="box-area">
+                                <div class="label">
+                                    Ngày vào làm
+                                </div>
+                                <span class="box-text" [title]="DecisionProfile?.JoinDate ? (DecisionProfile?.JoinDate | date: 'dd/MM/yyyy') : '(trống)'"
+                                    [ngClass]="{'emptyText': !DecisionProfile?.JoinDate}">
+                                    {{DecisionProfile?.JoinDate ? (DecisionProfile?.JoinDate | date: 'dd/MM/yyyy') : '(trống)'}}
+                                </span>
+                            </div>
+
+                            <div class="box-area" *ngIf="DecisionProfile?.Staff">
+                                <div class="label">
+                                    Năm sinh
+                                </div>
+                                <span class="box-text" [title]="DecisionProfile?.BirthDate ? (DecisionProfile?.BirthDate | date: 'dd/MM/yyyy') : '(trống)'"
+                                    [ngClass]="{'emptyText': !DecisionProfile?.BirthDate}">
+                                    {{DecisionProfile?.BirthDate ? (DecisionProfile?.BirthDate | date: 'dd/MM/yyyy') : '(trống)'}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    
+        <div class="DecisionProfile-detail-block" >
+            <span class="Topic backgrounded">
+                CHI TIẾT QUYẾT ĐỊNH KỶ LUẬT
+            </span>
+    
+            <div class="input-container">
+                <p-loading-spinner class="loading-spiner" [isLoading]="isLoading"></p-loading-spinner>
+                <div class="flex">
+                    <div class="left-block">
+                        <div class="box-area">
+                            <div class="label">
+                                Mã quyết định
+                            </div>
+                            <app-p-textbox class="input-id" [(ngModel)]="DecisionMaster.DecisionID" [propName]="['DecisionProfileID']"
+                                [disabled]="true"></app-p-textbox>
+                        </div>
+    
+                        <div class="box-area">
+                            <div class="label">
+                                Thời gian hiệu lực <span class="important">(*)</span>
+                            </div>
+                            <app-datepicker [(ngModel)]="DecisionMaster.EffDate" [min]="currentDate" [format]="'dd/MM/yyyy'"
+                                [placeholder]="'dd/MM/yyyy'" [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                                [disabled]="isLockAll" [readOnlyInput]="true" class="datepicker"
+                                (valueChange)="onValueChanged('EffDate')"></app-datepicker>
+                        </div>
+
+    
+                        <div class="box-area">
+                            <div class="label">
+                                Tình trạng
+                            </div>
+                            <span class="box-text status-name"
+                                [innerHTML]="DecisionMaster?.StatusName | colorStatus: DecisionMaster?.Status"></span>
+                        </div>
+                    </div>
+
+                    <div class="right-block">
+                        <div class="right-block-1">
+
+                            <!-- Chọn hình thức kỷ luật cho quyết định kỷ luật của nhân sự này  -->
+                            <div class="box-area">
+                                <div class="label text-nowrap">
+                                    Áp dụng hình thức xử lý <span class="important">(*)</span>
+                                </div>
+                                <p-kendo-dropdownlist [data]="ListDisciplinary" class="CustomDropdownlist"  [textField]="'ListName'" [valueField]="'OrderBy'" 
+                                [(ngModel)]="DecisionProfile.DisciplinaryForm" [filterable]="true" [valuePrimitive]="true"
+                                (selectionChange)="onUpdateProperties('DisciplinaryForm', $event)"
+                                [customItemTemplate]="myCustomItemTemplate">
+                                    <ng-template #myCustomItemTemplate let-dataItem let-index="index">
+                                            <div>{{dataItem?.ListName}}</div>
+                                    </ng-template>
+                                </p-kendo-dropdownlist>
+                            </div>
+
+                            <!-- Nếu là hình thức kéo dài thời gian nâng lương thì cần nhập số thời gian xử lý kỷ luật này  -->
+                            <div class="box-area" *ngIf="DecisionProfile.DisciplinaryForm == 3">
+                                <div class="label">
+                                    Thời gian kỷ luật <span class="important">(*)</span>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <app-p-numeric-textbox [propName]="'TimeHandle'" [(ngModel)]="DecisionProfile.TimeHandle" [format]="'# ngày'"
+                                        [spinners]="false" (blur)="onUpdateProperties('TimeHandle')" [width]="100" [min]="1"></app-p-numeric-textbox>
+                                    <span class="pl-2 text-nowrap" *ngIf="DecisionProfile.TimeHandle !== null">| Đến hết ngày
+                                        {{onUpdateFormattedTimeHandle()}}</span>
+                                </div>
+                            </div>
+
+                            <!-- Nếu là hình thức cách chức chọn vị trí cách chức -->
+                            <div class="d-flex column-gap-10" *ngIf="DecisionProfile.DisciplinaryForm == 4">
+                                <div class="box-area flex-1 flex-grow-1 ">
+                                    <div class="label">
+                                        Đơn vị <span class="important">(*)</span>
+                                    </div>
+                                    <p-kendo-dropdowntree [data]="ListDepartment"
+                                        [textField]="'Department'" [loading]="isListDepartmentLoading"
+                                        [valueField]="'Code'" [childrenFields]="['ListDepartment']"
+                                        [(ngModel)]="DecisionProfile" [filterable]="true"
+                                        [popupSettings]="{appendTo: 'root', popupClass: 'Bps CustomPopupTreeAtRoot CustomPopupTreeAtRootHri038Disciplinary'}"
+                                        [listSearchField]="['Department']" [clearButton]="false"
+                                        [disabled]="DecisionMaster.Status == 2" [itemDisabled]="isTreeItemDisable"
+                                        [customNodeTemplate]="myCustomNodeTemplate"  [customValueTemplate]="myCustomValueTemplate"
+                                        [dataItem]="DecisionProfile"
+                                        (valueChange)="onUpdateProperties('Department', $event)">
+                                        <ng-template #myCustomValueTemplate let-dataItem let-index="index">
+                                            {{dataItem.DepartmentName}}
+                                        </ng-template>
+                                        <ng-template #myCustomNodeTemplate let-dataItem let-index="index">
+                                            <div class="treeItem">
+                                                <div class="item-name">{{dataItem.Department}}</div>
+                                                <div class="item-status" *ngIf="dataItem.StatusID != 2">
+                                                    {{dataItem.StatusName}}</div>
+                                            </div>
+                                        </ng-template>
+
+                                    </p-kendo-dropdowntree>
+                                    <!-- <p-kendo-dropdownlist [data]="ListDepartment" class="CustomDropdownlistDisciplinaryForm4" [textField]="'Department'"
+                                        [valueField]="'Code'" [(ngModel)]="DecisionProfile.Department" [filterable]="true"  [valuePrimitive]="true"
+                                        [searchFields]="['Department','DepartmentID']" [customItemTemplate]="ListDepartmentTemplate"
+                                        (selectionChange)="onUpdateProperties('Department', $event)">
+                                        <ng-template #ListDepartmentTemplate let-dataItem let-index="index">
+                                            <div>{{dataItem.Department}} <b *ngIf="dataItem.DepartmentID">| {{dataItem.DepartmentID}}</b></div>
+                                        </ng-template>
+                                    </p-kendo-dropdownlist> -->
+                                </div>
+
+                                <div class="box-area flex-1 flex-grow-1 ">
+                                    <div class="label">
+                                        Chức danh <span class="important">(*)</span>
+                                    </div>
+                                    <p-kendo-dropdownlist [data]="ListPosition" class="CustomDropdownlistDisciplinaryForm4" [textField]="'Position'"
+                                        [valueField]="'Code'" [(ngModel)]="DecisionProfile.Position" [filterable]="true" [disabled]="DecisionProfile.Department == null"
+                                        [searchFields]="['Position','PositionID']" [customItemTemplate]="myCustomItemTemplate" [valuePrimitive]="true"
+                                        (selectionChange)="onUpdateProperties('Position', $event)" [itemDisabled]="isItemDisable">
+                                        <ng-template #myCustomItemTemplate let-dataItem let-index="index">
+                                            <div>{{dataItem.Position}} <b *ngIf="dataItem.PositionID">| {{dataItem.PositionID}}</b></div>
+                                        </ng-template>
+                                    </p-kendo-dropdownlist>
+                                </div>
+                                
+                                <div class="box-area flex-1 flex-grow-1 ">
+                                    <div class="label">
+                                        Điểm làm việc <span class="important">(*)</span>
+                                    </div>
+                                    <p-kendo-dropdowntree class="classRemoveDropdowntree" [data]="ListLocation"
+                                        [textField]="'LocationName'" [loading]="isListDepartmentLoading"
+                                        [valueField]="'Code'" [childrenFields]="['ListChild']" [(ngModel)]="DecisionProfile"
+                                        [filterable]="true" [dataItem]="DecisionProfile"
+                                        [popupSettings]="{appendTo: 'root', popupClass: 'Bps CustomPopupTreeAtRoot CustomPopupTreeAtRootHri038Disciplinary'}"
+                                        [listSearchField]="['LocationName']" [clearButton]="false"
+                                        [disabled]="DecisionMaster.Status == 2 || DecisionProfile.Position == null"
+                                        [itemDisabled]="isTreeItemDisable"
+                                        [customNodeTemplate]="locationCustomNodeTemplate"
+                                        (valueChange)="onUpdateProperties('Location', $event)">
+                                        <ng-template #locationCustomNodeTemplate let-dataItem let-index="index">
+                                            <div class="treeItem" [ngClass]="{'disableChoice': dataItem.StatusID != 2}">
+                                                <div class="item-name">{{dataItem.LocationName}}</div>
+                                                <div class="item-status" *ngIf="dataItem.StatusID != 2">
+                                                    {{dataItem.StatusName}}</div>
+                                            </div>
+                                        </ng-template>
+                                    </p-kendo-dropdowntree>
+                                    <!-- <p-kendo-dropdownlist [data]="ListLocation" class="CustomDropdownlistDisciplinaryForm4" [textField]="'LocationName'"
+                                        [valueField]="'Code'" [(ngModel)]="DecisionProfile.Location" [customItemTemplate]="myCustomItemTemplate" 
+                                        [disabled]="DecisionProfile.Position == null" [filterable]="true" [valuePrimitive]="true"
+                                        [searchFields]="['LocationName','LocationID']">
+                                        <ng-template #myCustomItemTemplate let-dataItem let-index="index">
+                                            {{dataItem}}
+                                            <div>{{dataItem.LocationName}} <b *ngIf="dataItem.LocationID">| {{dataItem.LocationID}}</b></div>
+                                        </ng-template>
+                                    </p-kendo-dropdownlist> -->
+                                </div>
+
+                               
+                            </div>
+
+                            <!-- Tài liệu đính kèm của nhân sự này từ những bước trước trong quá trình nhân sự bị xử lý kỷ luật  -->
+                            <div class="box-area">
+                                <div class="label">
+                                    Tài liệu đính kèm
+                                </div>
+                                <div class="ListOfAttached">
+                                    <div class="emptyText" *ngIf="!DecisionProfile?.ListOfAttached || DecisionProfile.ListOfAttached.length === 0">(Trống)</div>
+                                    <div class="itemAttached" *ngFor="let item of DecisionProfile.ListOfAttached; let i = index">
+                                        <div class="d-flex align-items-center">
+                                            <span class="pr-1">{{i}}.</span>
+                                            <span title="{{item.fileName}}">{{item.fileName}}</span>
+                                        </div>
+                                        <span class="k-icon k-i-import"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Các hình thức xử lý kỷ luật trước đó của nhân sự này   -->
+                         <!-- Cho phép chọn và xem được tài liệu đính kém của hình thức trước đó chọn  -->
+                        <div class="right-block-2">
+                            <div class="box-area">
+                                <div class="label">
+                                    Hình thức xử lý kỷ luật trước đó
+                                </div>
+                                <p-kendo-dropdownlist [data]="ListPreDisciplinary" class="CustomDropdownlist CustomDropdownlistPreDisciplinary"
+                                    [textField]="'DisciplinaryFormName'" [valueField]="'DisciplinaryForm'" [(ngModel)]="valuePreDisciplinary" 
+                                    (valueChange)="onUpdateProperties('PreDisciplinary', $event)">
+                                </p-kendo-dropdownlist>
+                            </div>
+
+                            <!-- Tài liệu đính kèm của hình thức trước đó được chọn  -->
+                            <div class="box-area">
+                                <div class="label">
+                                    Tài liệu đính kèm
+                                </div>
+                                <div class="ListOfAttached">
+                                    <div class="emptyText" *ngIf="!valuePreDisciplinary?.ListOfAttached || valuePreDisciplinary.ListOfAttached.length === 0">(Trống)</div>
+                                    <div class="itemAttached" *ngFor="let item of valuePreDisciplinary.ListOfAttached; let i = index">
+                                        <div class="d-flex align-items-center">
+                                            <span class="pr-1">{{i}}.</span>
+                                            <span title="{{item.fileName}}">{{item.fileName}}</span>
+                                        </div>
+                                        <span class="k-icon k-i-import"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+
+</div>

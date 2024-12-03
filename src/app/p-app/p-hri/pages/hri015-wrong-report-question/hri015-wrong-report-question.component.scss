@@ -1,0 +1,330 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    .hri015-analysis-report-question{
+        height: calc(100vh - #{$footer-height});
+        display: flex;
+        flex-direction: column;
+
+        .layoutNumber{
+            width: 100%;
+            .layoutNumberMain{
+                width: 100% !important;
+                display: block;
+                width: 88px;
+            }
+            .layoutNumberMainAmount{
+                display: block;
+                width: 50%;
+                text-align: center;
+            }
+            .layoutNumberMainPercent{
+                display: block;
+                width: 50%;
+                text-align: center;
+            }
+        }
+        .header{
+            padding: 15px !important;
+            min-height: 40px;
+        }
+        
+        .header-1{
+            justify-content: space-between;
+            .myCustomBreadCrumb{
+                width: 650px;
+            }
+            .file-btn-group{
+                min-width: 100px;
+            }
+        }
+        .header-2{
+            min-height: 70px;
+            .filter1{
+                display: flex;
+                flex-direction: column;
+                margin-right: 30px;
+                .k-dropdownlist{
+                    width: 400px;
+                }
+            }
+            .filter-btn-group.clear-btn-group{
+                display: none;
+            }
+        }
+        .body{
+            padding: 0 20px;
+            .grid{
+                .k-grid-aria-root{
+                    padding-bottom: 30px;
+
+                    .k-table{
+                        .k-grid-header{
+                            position: sticky;
+                            top: 0;
+                            z-index: 1;
+                            background-color: $gray-100;
+                            border-spacing: 0 !important
+                        }
+                        th{
+                            border-spacing: 0 !important
+                        }
+                        
+                    }
+                }
+
+                .k-table-row:nth-child(2){
+                    th:nth-child(1){
+                        &:nth-child(1){
+                            span.k-link{
+                                justify-content: center;
+                                span{
+                                    text-align: center;
+                                }
+                            }
+                        }
+                        &:nth-child(2){
+                            span.k-link{
+                                justify-content: center;
+                                span{
+                                    text-align: center;
+                                }
+                            }
+                        }
+                    }
+                    th:nth-child(2){
+                        &:nth-child(2){
+                            span.k-link{
+                                justify-content: center;
+                                span{
+                                    text-align: center;
+                                }
+                            }
+                        }
+                    }
+                    th:nth-child(3){
+                        &:nth-child(3){
+                            span.k-link{
+                                justify-content: center;
+                                span{
+                                    text-align: center;
+                                }
+                            }
+                        }
+                    }
+                    th:nth-child(4){
+                        &:nth-child(4){
+                            span.k-link{
+                                justify-content: center;
+                                span{
+                                    text-align: center;
+                                }
+                            }
+                        }
+                    }
+                }
+                th.col_question{
+                    span.k-link{
+                        width: 340px;
+                        margin-left: 25px;
+                    }
+                }
+
+                th.col_category{
+                    span.k-link{
+                        width: 140px;
+                        justify-content: center;
+                        span{
+                            text-align: center;
+                        }
+                    }
+                }
+
+                th.col_CategoryLevel{
+                    span.k-link{
+                        width: 140px;
+                        justify-content: center;
+                        span{
+                            text-align: center;
+                        }
+                    }
+                }
+
+                th.col_Competence{
+                    span.k-link{
+                        width: 140px;
+                        justify-content: center;
+                        span{
+                            text-align: center;
+                        }
+                    }
+                }
+
+                th.col_TotalQuantity{
+                    span.k-link{
+                        width: 140px;
+                        justify-content: center;
+                        span{
+                            text-align: center;
+                        }
+                    }
+                }
+
+                th.col_AnwerCorrect{
+                    span.k-link{
+                        width: fit-content;
+                    }
+                }
+
+                th.col_Wrong{
+                    span.k-link{
+                        width: 140px;
+                        justify-content: center;
+                        span{
+                            text-align: center;
+                        }
+                    }
+                }
+
+                th.col_Correct{
+                    span.k-link{
+                        width: 140px;
+                        justify-content: center;
+                        span{
+                            text-align: center;
+                        }
+                    }
+
+                  
+                }
+
+                th.col_CorrectQuantity{
+                    span.k-link{
+                        // width: 140px;
+                        justify-content: center;
+                        span{
+                            text-align: center;
+                        }
+                    }
+                }
+
+                th.col_CorrectPercent{
+                    span.k-link{
+                        // width: 140px;
+                        justify-content: center;
+                        span{
+                            text-align: center;
+                        }
+                    }
+                }
+                
+                
+                .col_Correct{
+                    span.k-link{
+                        // margin-left: 10px;
+                    }
+                }
+
+                .col_CategoryLevel{
+                    text-align: center;
+                }
+                span.k-link{
+                    // padding-right: 30px;
+                }
+               
+                td.k-table-td:first-child{
+                    height: 60px;
+                    width: 500px;
+                    max-width: 400px;
+                    white-space: normal;
+                    padding-left: 38px;
+                }
+                td.k-table-td:nth-child(2){
+                    width: 230px;
+                    max-width: 200px;
+                    white-space: normal;
+                    text-align:center;
+                }
+                td.k-table-td:nth-child(3){
+                    width: 200px;
+                    text-align:center;
+                }
+                @for $i from 4 through 11 {
+                    td.k-table-td:nth-child(#{$i}) {
+                      text-align: center;
+                    }
+                  }
+                td.k-table-td:nth-child(8) {
+                text-align: left;
+                }
+                td.k-table-td:last-child{
+                    display: none;
+                }
+              }
+          }
+
+          .answer-list {
+            .answer-item {
+              display: flex;
+              align-items: self-start;
+              margin-top: 10px;
+              position: relative;
+      
+              .checkbox-icon {
+                border: unset;
+                background-color: unset;
+                box-shadow: none;
+                height: 10px;
+                position: absolute;
+              }
+      
+              .selection-wrapper {
+                // padding-left: 30px;
+      
+                .k-checkbox,.k-radio{
+                  flex-basis: 16px;
+                }
+                .answer-name {
+                  flex: 1;
+                  margin-left: 12px;
+                }
+              }
+      
+      
+              .essay-answer-input {
+                width: 100%;
+      
+                .k-textarea {
+                  height: 130px;
+                  width: 100%;
+      
+                  .k-input-inner {
+                    &::placeholder {
+                      color: $light-blue-gray;
+                    }
+                  }
+                }
+              }
+      
+              .reponseQuizMarking{
+                display: block;
+                margin-left: 20px;
+                .title{
+                  color: $gray-850;
+                  font-size: 13px;
+                  font-style: italic;
+                  font-weight: 700;
+                }
+      
+                .comments{
+                  margin-left: 20px;
+                  color: #5A6276;
+                  font-size: 13px;
+                  font-style: italic;
+                  font-weight: 600;
+                }
+              }
+            }
+          }
+    }
+}

@@ -1,0 +1,189 @@
+.color-white {
+  color: #ffffff;
+}
+
+.color-darkblue {
+  color: #39579a;
+}
+
+.color-blue {
+  color: #008cd7;
+}
+
+.color-lightblue {
+  color: #46b1ff;
+}
+
+.color-darkgreen {
+  color: #316e00;
+}
+
+.color-green {
+  color: #649e0f;
+}
+
+.color-lightgreen {
+  color: #8dc63f;
+}
+
+.color-yellowgreen {
+  color: #c1d72e;
+}
+
+.color-yellow {
+  color: #ffc400;
+}
+
+.color-orangeyellow {
+  color: #ffab00;
+}
+
+.color-lightorange {
+  color: #ff5230;
+}
+
+.color-lightpink {
+  color: #dc3545;
+}
+
+.color-red {
+  color: #d82c12;
+}
+
+.hachi-color-primary-1 {
+  color: #353935;
+}
+
+.hachi-color-primary-2 {
+  color: #868b86;
+}
+
+.hachi-color-primary-3 {
+  color: #8dc63f;
+}
+
+.hachi-color-primary-4 {
+  color: #c1d72e;
+}
+
+.hachi-color-primary-5 {
+  color: #ffffff;
+}
+
+.hachi-color-secondary-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-1 {
+  color: #46b1ff;
+}
+
+.hachi-color-text-2 {
+  color: #868b86;
+}
+
+.hachi-color-text-3 {
+  color: #008cd7;
+}
+
+.hachi-color-text-4 {
+  color: #d82c12;
+}
+
+.hachi-color-text-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-6 {
+  color: #ffffff;
+}
+
+.hachi-color-text-7 {
+  color: #8dc63f;
+}
+
+.hachi-color-text-8 {
+  color: #626662;
+}
+
+.hachi-color-text-10 {
+  color: #ff5230;
+}
+
+.hachi-color-text-9 {
+  color: #bbc0bb;
+}
+
+.hachi-color-text-11 {
+  color: #dc3545;
+}
+
+.hachi-color-text-12 {
+  color: #828282;
+}
+
+#pageBody {
+  overflow: hidden;
+  /* width */
+  /* Track */
+  /* Handle */
+  /* Handle on hover */
+}
+
+#pageBody ::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+#pageBody ::-webkit-scrollbar-track {
+  border-radius: 0.25rem;
+}
+
+#pageBody ::-webkit-scrollbar-thumb {
+  background: #bdc2d2;
+  border-radius: 0.25rem;
+}
+
+#pageBody ::-webkit-scrollbar-thumb:hover {
+  background: #959db3;
+}
+
+#pageBody * {
+  /* width */
+  /* Track */
+  /* Handle */
+  /* Handle on hover */
+}
+
+#pageBody * ::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  background-color: transparent;
+}
+
+#pageBody * ::-webkit-scrollbar-track {
+  border-radius: 2px;
+}
+
+#pageBody * ::-webkit-scrollbar-thumb {
+  background-color: #1a6634;
+  border-radius: 2px;
+}
+
+#pageBody * ::-webkit-scrollbar-thumb:hover {
+  background: rgba(26, 102, 52, 0.5);
+}
+
+.app-body {
+  height: calc(100vh - 85px);
+  display: flex;
+  background: #e4e7ea;
+}
+
+.px-2.py-1 {
+  width: 100%;
+  overflow: hidden;
+  font-size: 13px;
+  background-color: #f0f3f5;
+  padding: 0 !important;
+}

@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <title>3Ps-ERP</title>
+    <base href="/">
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Mulish:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel='stylesheet' type='text/css' media='all' href='assets/font/font_icon_hachi/style.css'>
+    <link rel='stylesheet' type='text/css' media='all' href='assets/font/font_nunito/font_nunito.css'>
+    <link rel='stylesheet' type='text/css' media='all' href='assets/font/font_roboto/font_roboto.css'>
+    <link rel='stylesheet' type='text/css' media='all' href='assets/loading.css'>
+
+    <script type="text/javascript">
+        document["myparam"] = function () {
+            var strMyParam = '{}';
+            var resultMyParam = {};
+            var url = window.location.href;
+            //#region Dùng chung
+            resultMyParam.urlLogin = "/login"
+            resultMyParam.res = "http://172.16.10.251:89/"
+            resultMyParam.apires = "http://172.16.10.251:89/api/"
+            resultMyParam.apisyn = "https://hachihachi.com.vn/api/"//"http://172.16.10.86:75/syn/api/"//
+
+            resultMyParam.apiecHachi = "https://ecom.hachihachi.com.vn/"//"http://localhost:2030/"//
+            resultMyParam.apihisHachi = "https://history.hachihachi.com.vn/api/"
+            resultMyParam.apiHachi = "https://hachihachi.com.vn/api/"//"http://localhost:2030/api/"//"http://172.16.10.86:8080/api/"//
+            resultMyParam.apiidHachi = "https://identity.hachihachi.com.vn/"
+            //#endregion Dùng chung
+
+            if (url.includes(':74/') || url.includes('localhost')) {
+                //#region Test
+                resultMyParam.apiid = "http://172.16.10.86:5001/"
+                resultMyParam.apiec = "http://172.16.10.86:75/eco/api/"
+                resultMyParam.apicnb = "http://172.16.10.86:75/hri/api/"
+                resultMyParam.apiconf = "http://172.16.10.86:75/conf/api/"
+                resultMyParam.apibi = "http://172.16.10.86:75/bi/api/"
+                resultMyParam.apimar = "http://172.16.10.86:75/mar/api/"
+                resultMyParam.apierp = "https://localhost:44385/erp/api/"
+                resultMyParam.apiwms = "http://172.16.10.86:75/wms/api/"
+                //#endregion Test
+            }
+            else {
+                //#region Production       
+                resultMyParam.apiid = "http://113.161.89.207:72/";
+                resultMyParam.apiec = "http://113.161.89.207:71/eco/api/";
+                resultMyParam.apicnb = "http://113.161.89.207:71/hri/api/";
+                resultMyParam.apiconf = "http://113.161.89.207:71/conf/api/";
+                resultMyParam.apibi = "http://113.161.89.207:71/bi/api/";
+                resultMyParam.apimar = "http://113.161.89.207:71/mar/api/";
+                resultMyParam.apierp = "http://113.161.89.207:71/erp/api/";
+                resultMyParam.apiwms = "http://113.161.89.207:71/wms/api/";
+                //#endregion Production           
+            }
+
+            document["apiConfig"] = function () {
+                let apiConfig = {}
+                apiConfig.marketing = {}
+                apiConfig.webhachi = {}
+                apiConfig.ecommerce = {}
+                apiConfig.config = {}
+                apiConfig.layout = {}
+                apiConfig.sales = {}
+                apiConfig.lgt = {}
+                apiConfig.purchase = {}
+                apiConfig.dashboard = {}
+                apiConfig.org = {}
+                apiConfig.hr = {}
+                apiConfig.developer = {}
+
+                //#region marketing
+
+                // //#region Group website -> Quản lý banner
+                // apiConfig.marketing.GetListBanner = resultMyParam.apimar + "webadmin/GetListBanner"
+                // apiConfig.marketing.GetBanner = resultMyParam.apimar + "webadmin/GetBanner"
+                // apiConfig.marketing.UpdateBanner = resultMyParam.apimar + "webadmin/UpdateBanner"
+                // apiConfig.marketing.UpdateBannerStatus = resultMyParam.apimar + "webadmin/UpdateBannerStatus"
+                // apiConfig.marketing.DeleteBanner = resultMyParam.apimar + "webadmin/DeleteBanner"
+                // apiConfig.marketing.GetListGroupBanner = resultMyParam.apimar + "webadmin/GetListGroupBanner"
+                // apiConfig.marketing.GetGroupBanner = resultMyParam.apimar + "webadmin/GetGroupBanner"
+                // apiConfig.marketing.GetBannerFolder = resultMyParam.apires + "res/GetBannerFolder"
+                // apiConfig.marketing.GetBannerFolderDrill = resultMyParam.apires + "res/GetBannerFolderDrill"
+                // apiConfig.marketing.GetBannerFolderWithFile = resultMyParam.apires + "res/GetBannerFolderWithFile"
+                // apiConfig.marketing.GetBannerFolderDrillWithFile = resultMyParam.apires + "res/GetBannerFolderDrillWithFile"
+                // apiConfig.marketing.CreateBannerFolder = resultMyParam.apires + "res/CreateBannerFolder"
+                // apiConfig.marketing.RenameBannerFolder = resultMyParam.apires + "res/RenameBannerFolder"
+                // apiConfig.marketing.DeleteBannerFolder = resultMyParam.apires + "res/DeleteBannerFolder"
+                // //#endregion end group
+
+                // //#region API dùng chung
+                // apiConfig.marketing.CropProductImage = resultMyParam.apires + "res/CropProductImage"
+                // apiConfig.marketing.CreateFolder = resultMyParam.apires + "res/CreateFolder"
+                // apiConfig.marketing.RenameFolder = resultMyParam.apires + "res/RenameFolder"
+                // apiConfig.marketing.DeleteFolder = resultMyParam.apires + "res/DeleteFolder"
+                // apiConfig.marketing.UploadBanner = resultMyParam.apires + "res/UploadBanner"
+                // apiConfig.marketing.UploadFile = resultMyParam.apires + "res/UploadFile"
+                // apiConfig.marketing.RenameFile = resultMyParam.apires + "res/RenameFile"
+                // apiConfig.marketing.DeleteFile = resultMyParam.apires + "res/DeleteFile"
+                // //#endregion end group
+
+                // //#region Group component mar-groupbanner
+                // apiConfig.marketing.GetListWebpage = resultMyParam.apimar + "webadmin/GetListWebpage"
+                // //#endregion end group
+
+                // //#region Group khuyến mãi -> dùng chung cho sản phẩm, hamper, combo - giftset
+                // apiConfig.marketing.GetListPromotion = resultMyParam.apierp + "promotion/GetListPromotion"
+                // apiConfig.marketing.GetPromotionByCode = resultMyParam.apierp + "promotion/GetPromotion"
+                // apiConfig.marketing.GetListPromotionType = resultMyParam.apiconf + "coadmin/GetListPromotionType"
+                // apiConfig.marketing.GetPromotionListGroupOfCard = resultMyParam.apierp + "promotion/GetPromotionListGroupOfCard"
+                // apiConfig.marketing.GetPromotionDayOfWeek = resultMyParam.apierp + "promotion/GetPromotionDayOfWeek"
+                // apiConfig.marketing.GetPromotionWareHouse = resultMyParam.apierp + "promotion/GetPromotionWareHouse"
+                // apiConfig.marketing.UpdatePromotion = resultMyParam.apierp + "promotion/UpdatePromotion"
+                // apiConfig.marketing.UpdatePromotionStatus = resultMyParam.apierp + "promotion/UpdatePromotionStatus"
+                // apiConfig.marketing.DeletePromotion = resultMyParam.apierp + "promotion/DeletePromotion"
+                // apiConfig.marketing.UpdatePromotionWH = resultMyParam.apierp + "promotion/UpdatePromotionWH"
+                // apiConfig.marketing.UpdatePromotionListOfCard = resultMyParam.apierp + "promotion/UpdatePromotionListOfCard"
+                // apiConfig.marketing.UpdatePromotionDayOfWeek = resultMyParam.apierp + "promotion/UpdatePromotionDayOfWeek"
+                // apiConfig.marketing.GetListPromotionDetail = resultMyParam.apierp + "promotion/GetPromotionListProduct"
+                // apiConfig.marketing.GetPromotionProduct = resultMyParam.apierp + "promotion/GetPromotionProduct"
+                // apiConfig.marketing.GetComboProduct = resultMyParam.apierp + "promotion/GetComboProduct"
+                // apiConfig.marketing.UpdatePromotionDetail = resultMyParam.apierp + "promotion/UpdatePromotionDetail"
+                // apiConfig.marketing.DeletePromotionDetail = resultMyParam.apierp + "promotion/DeletePromotionDetail"
+                // apiConfig.marketing.GetPromotionFolder = resultMyParam.apires + "res/GetPromotionFolder"
+                // apiConfig.marketing.GetPromotionFolderDrill = resultMyParam.apires + "res/GetPromotionFolderDrill"
+                // apiConfig.marketing.GetPromotionFolderWithFile = resultMyParam.apires + "res/GetPromotionFolderWithFile"
+                // apiConfig.marketing.GetPromotionFolderDrillWithFile = resultMyParam.apires + "res/GetPromotionFolderDrillWithFile"
+                // apiConfig.marketing.ImportExcelPromotionDetail = resultMyParam.apierp + "promotion/ImportExcelPromotionDetail"
+                // apiConfig.marketing.ExportListPromotionDetails = resultMyParam.apierp + "promotion/ExportListPromotionDetails"
+                // //#endregion end group
+
+                // //#region Group khuyến mãi -> Combo - Giftset
+                // apiConfig.marketing.GetListPromotionCombo = resultMyParam.apierp + "promotion/GetListPromotionCombo"
+                // apiConfig.marketing.GetPromotionCombo = resultMyParam.apierp + "promotion/GetPromotionCombo"
+                // apiConfig.marketing.UpdatePromotionCombo = resultMyParam.apierp + "promotion/UpdatePromotionCombo"
+                // apiConfig.marketing.DeletePromotionCombo = resultMyParam.apierp + "promotion/DeletePromotionCombo"
+                // apiConfig.marketing.DeleteCombo = resultMyParam.apierp + "promotion/DeleteCombo"
+                // apiConfig.marketing.ImportExcelListComboGiftset = resultMyParam.apierp + "promotion/ImportExcelListComboGiftset"
+                // apiConfig.marketing.ImportExcelComboGiftsetProduct = resultMyParam.apierp + "promotion/ImportExcelComboGiftsetProduct"
+                // apiConfig.marketing.GetPromotionInv = resultMyParam.apierp + "promotion/GetPromotionInv"
+                // apiConfig.marketing.UpdatePromotionInv = resultMyParam.apierp + "promotion/UpdatePromotionInv"
+                // apiConfig.marketing.DeletePromotionInv = resultMyParam.apierp + "promotion/DeletePromotionInv"
+                // //#endregion end group
+
+                // //#region Group khuyến mãi -> hamper
+                // apiConfig.marketing.GetListHamper = resultMyParam.apierp + "promotion/GetListHamper"
+                // apiConfig.marketing.GetHamperByBarcode = resultMyParam.apierp + "promotion/GetHamperByBarcode"
+                // apiConfig.marketing.ImportExcelPromotionHamper = resultMyParam.apierp + "promotion/ImportExcelPromotionHamper"
+                // apiConfig.marketing.ExportHamperPromotionReport = resultMyParam.apierp + "promotion/ExportHamperPromotionReport"
+                // //#endregion end group
+
+                // //#region Group website -> Bài viết sản phẩm
+                // apiConfig.marketing.GetListWebContent = resultMyParam.apiconf + "product/GetListWebContent"
+                // apiConfig.marketing.GetWebContent = resultMyParam.apiconf + "product/GetWebContent"
+                // apiConfig.marketing.GetWebContentByCode = resultMyParam.apiconf + "product/GetWebContentByCode"
+                // apiConfig.marketing.UpdateWebContent = resultMyParam.apiconf + "product/UpdateWebContent"
+                // apiConfig.marketing.UpdateWebContentStatus = resultMyParam.apiconf + "product/UpdateWebContentStatus"
+                // apiConfig.marketing.DeleteWebContent = resultMyParam.apiconf + "product/DeleteWebContent"
+                // apiConfig.marketing.GetFolderDrillWithFile = resultMyParam.apires + "res/GetFolderDrillWithFile"
+                // apiConfig.marketing.GetFolderWithFile = resultMyParam.apires + "res/GetFolderWithFile"
+                // //#endregion end group
+
+                // //#region Group chính sách -> coupon
+                // apiConfig.marketing.GetListCouponIssued = resultMyParam.apierp + "coupon/GetListCouponIssued"
+                // apiConfig.marketing.GetCouponIssuedByCode = resultMyParam.apierp + "coupon/GetCouponIssued"
+                // // apiConfig.marketing.UpdateCouponIssued = resultMyParam.apimar + "coupon/UpdateCouponIssued"
+                // // apiConfig.marketing.UpdateCouponIssuedStatus = resultMyParam.apimar + "coupon/UpdateCouponIssuedStatus"
+                // // apiConfig.marketing.UpdateCouponStatus = resultMyParam.apimar + "coupon/UpdateCouponStatus"
+                // apiConfig.marketing.UpdateCouponIssued = resultMyParam.apierp + "coupon/UpdateCouponIssued"
+                // apiConfig.marketing.UpdateCouponIssuedStatus = resultMyParam.apierp + "coupon/UpdateCouponIssuedStatus"
+                // apiConfig.marketing.UpdateCouponStatus = resultMyParam.apierp + "coupon/UpdateCouponStatus"
+                // apiConfig.marketing.DeleteCouponIssued = resultMyParam.apierp + "coupon/DeleteCouponIssued"
+                // apiConfig.marketing.GetCouponIssuedWareHouse = resultMyParam.apierp + "coupon/GetCouponIssuedWareHouse"
+                // apiConfig.marketing.UpdateCouponIssuedWH = resultMyParam.apierp + "coupon/UpdateCouponIssuedWH"
+                // apiConfig.marketing.GetListCouponIssuedMembership = resultMyParam.apierp + "coupon/GetCouponIssuedListMembership"
+                // apiConfig.marketing.GetCouponIssuedMembership = resultMyParam.apierp + "coupon/GetCouponIssuedMembership"
+                // apiConfig.marketing.GetMembershipByPhone = resultMyParam.apierp + "coupon/GetMembershipByPhone"
+                // apiConfig.marketing.UpdateCouponIssuedMembership = resultMyParam.apierp + "coupon/UpdateCouponIssuedMembership"
+                // apiConfig.marketing.DeleteCouponIssuedMembership = resultMyParam.apierp + "coupon/DeleteCouponIssuedMembership"
+                // apiConfig.marketing.GetListCouponIssuedProduct = resultMyParam.apierp + "coupon/GetCouponIssuedListProduct"
+                // apiConfig.marketing.GetCouponIssuedProduct = resultMyParam.apierp + "coupon/GetCouponIssuedProduct"
+                // apiConfig.marketing.UpdateCouponIssuedProduct = resultMyParam.apierp + "coupon/UpdateCouponIssuedProduct"
+                // apiConfig.marketing.DeleteCouponIssuedProduct = resultMyParam.apierp + "coupon/DeleteCouponIssuedProduct"
+                // apiConfig.marketing.UpdateCouponIssuedRounting = resultMyParam.apierp + "coupon/UpdateCouponIssuedRounting"
+                // apiConfig.marketing.DeleteCouponIssuedRounting = resultMyParam.apierp + "coupon/DeleteCouponIssuedRounting"
+                // apiConfig.marketing.GetListCoupon = resultMyParam.apierp + "coupon/GetListCoupon"
+                // apiConfig.marketing.ImportExcelCouponIssueMembership = resultMyParam.apierp + "coupon/ImportExcelCouponIssueMembership"
+                // apiConfig.marketing.ImportExcelCouponIssueProduct = resultMyParam.apierp + "coupon/ImportExcelCouponIssueProduct"
+                // apiConfig.marketing.ExportListCoupon = resultMyParam.apierp + "coupon/ExportListCoupon"
+                // //#endregion end group
+
+                // //#region Group chính sách -> Sản phẩm Best Price
+                // apiConfig.marketing.UpdateProductBestPriceByID = resultMyParam.apiconf + "product/UpdateProductBestPriceByID"
+                // apiConfig.marketing.DeleteProductBestPriceByID = resultMyParam.apiconf + "product/DeleteProductBestPriceByID"
+                // //#endregion end group
+
+                // //#region Group chính sách -> Sản phẩm độc đáo
+                // apiConfig.marketing.UpdateProductSpecialByID = resultMyParam.apiconf + "product/UpdateProductSpecialByID"
+                // apiConfig.marketing.DeleteProductSpecialByID = resultMyParam.apiconf + "product/DeleteProductSpecialByID"
+                // //#endregion end group
+
+                // //#region Group chính sách -> Chủ đề nổi bật
+                // apiConfig.marketing.GetListAlbum = resultMyParam.apiconf + "product/GetListAlbum"
+                // apiConfig.marketing.GetAlbum = resultMyParam.apiconf + "product/GetAlbum"
+                // apiConfig.marketing.UpdateAlbum = resultMyParam.apiconf + "product/UpdateAlbum"
+                // apiConfig.marketing.UpdateAlbumStatus = resultMyParam.apiconf + "product/UpdateAlbumStatus"
+                // apiConfig.marketing.DeleteAlbum = resultMyParam.apiconf + "product/DeleteAlbum"
+                // apiConfig.marketing.GetListAlbumDetails = resultMyParam.apiconf + "product/GetListAlbumDetails"
+                // apiConfig.marketing.GetAlbumDetails = resultMyParam.apiconf + "product/GetAlbumDetails"
+                // apiConfig.marketing.GetAlbumDetailsByBarcode = resultMyParam.apiconf + "product/GetAlbumDetailsByBarcode"
+                // apiConfig.marketing.UpdateAlbumDetails = resultMyParam.apiconf + "product/UpdateAlbumDetails"
+                // apiConfig.marketing.DeleteAlbumDetails = resultMyParam.apiconf + "product/DeleteAlbumDetails"
+                // //#endregion end group
+
+                // //#region Group website -> blog
+                // apiConfig.marketing.GetListBlog = resultMyParam.apierp + "webadmin/GetListBlog"
+                // apiConfig.marketing.GetBlog = resultMyParam.apierp + "webadmin/GetBlog"
+                // apiConfig.marketing.UpdateBlog = resultMyParam.apierp + "webadmin/UpdateBlog"
+                // apiConfig.marketing.UpdateBlogStatus = resultMyParam.apierp + "webadmin/UpdateBlogStatus"
+                // apiConfig.marketing.UpdateBlogCategory = resultMyParam.apierp + "webadmin/UpdateBlogCategory"
+                // apiConfig.marketing.DeleteBlog = resultMyParam.apierp + "webadmin/DeleteBlog"
+                // apiConfig.marketing.GetListBlogCategory = resultMyParam.apierp + "webadmin/GetListBlogCategory"
+                // //#endregion end group
+
+                // //#region Group website -> tin tức
+                // apiConfig.marketing.GetListNews = resultMyParam.apierp + "webadmin/GetListNews"
+                // apiConfig.marketing.GetListCMSNews = resultMyParam.apierp + "webadmin/GetListCMSNews"
+                // apiConfig.marketing.GetListCMSNewsCategory = resultMyParam.apierp + "webadmin/GetListCMSNewsCategory"
+                // apiConfig.marketing.GetNews = resultMyParam.apierp + "webadmin/GetNews"
+                // apiConfig.marketing.UpdateNews = resultMyParam.apierp + "webadmin/UpdateNews"
+                // apiConfig.marketing.GetCMSNews = resultMyParam.apierp + "webadmin/GetCMSNews"
+                // apiConfig.marketing.UpdateCMSNews = resultMyParam.apierp + "webadmin/UpdateCMSNews"
+                // apiConfig.marketing.UpdateNewsStatus = resultMyParam.apierp + "webadmin/UpdateNewsStatus"
+                // apiConfig.marketing.UpdateNewsCategory = resultMyParam.apierp + "webadmin/UpdateNewsCategory"
+                // apiConfig.marketing.DeleteNews = resultMyParam.apierp + "webadmin/DeleteNews"
+                // apiConfig.marketing.GetListNewsCategory = resultMyParam.apierp + "webadmin/GetListNewsCategory"
+                // //#endregion end group
+
+                // //#region Group website -> chính sách bán hàng
+                // apiConfig.marketing.GetListPolicy = resultMyParam.apierp + "webadmin/GetListPolicy"
+                // apiConfig.marketing.GetPolicy = resultMyParam.apierp + "webadmin/GetPolicy"
+                // apiConfig.marketing.UpdatePolicy = resultMyParam.apierp + "webadmin/UpdatePolicy"
+                // apiConfig.marketing.UpdatePolicyStatus = resultMyParam.apierp + "webadmin/UpdatePolicyStatus"
+                // apiConfig.marketing.UpdatePolicyCategory = resultMyParam.apierp + "webadmin/UpdatePolicyCategory"
+                // apiConfig.marketing.DeletePolicy = resultMyParam.apierp + "webadmin/DeletePolicy"
+                // apiConfig.marketing.GetListPolicyCategory = resultMyParam.apierp + "webadmin/GetListPolicyCategory"
+                // //#endregion end group
+
+                // //#region Group Giới thiệu -> giới thiệu chung
+                // apiConfig.marketing.GetListIntroduce = resultMyParam.apierp + "webadmin/GetListIntroduce"
+                // apiConfig.marketing.GetIntroduce = resultMyParam.apierp + "webadmin/GetIntroduce"
+                // apiConfig.marketing.UpdateIntroduce = resultMyParam.apierp + "webadmin/UpdateIntroduce"
+                // apiConfig.marketing.UpdateIntroduceStatus = resultMyParam.apierp + "webadmin/UpdateIntroduceStatus"
+                // apiConfig.marketing.UpdateIntroduceCategory = resultMyParam.apierp + "webadmin/UpdateIntroduceCategory"
+                // apiConfig.marketing.DeleteIntroduce = resultMyParam.apierp + "webadmin/DeleteIntroduce"
+                // apiConfig.marketing.GetListIntroduceCategory = resultMyParam.apierp + "webadmin/GetListIntroduceCategory"
+                // //#endregion end group
+
+                // //#region Group giới thiệu -> hệ thống cửu hàng
+                // apiConfig.marketing.GetListStore = resultMyParam.apierp + "conf/GetListStore"
+                // apiConfig.marketing.GetListCountry = resultMyParam.apierp + "conf/GetListCountry"
+                // apiConfig.marketing.GetListProvince = resultMyParam.apimar + "conf/GetListProvince"
+                // apiConfig.marketing.GetStore = resultMyParam.apimar + "conf/GetStore"
+                // apiConfig.marketing.UpdateStore = resultMyParam.apimar + "conf/UpdateStore"
+                // apiConfig.marketing.DeleteStore = resultMyParam.apimar + "conf/DeleteStore"
+                // //#endregion end group
+
+                //#region Group Giới thiệu -> câu hỏi thường gặp
+                // apiConfig.marketing.GetListQuestion = resultMyParam.apimar + "webadmin/GetListQuestion"
+                // apiConfig.marketing.GetQuestion = resultMyParam.apimar + "webadmin/GetQuestion"
+                // apiConfig.marketing.UpdateQuestion = resultMyParam.apimar + "webadmin/UpdateQuestion"
+                // apiConfig.marketing.UpdateQuestionStatus = resultMyParam.apimar + "webadmin/UpdateQuestionStatus"
+                // apiConfig.marketing.UpdateQuestionCategory = resultMyParam.apimar + "webadmin/UpdateQuestionCategory"
+                // apiConfig.marketing.DeleteQuestion = resultMyParam.apimar + "webadmin/DeleteQuestion"
+                // apiConfig.marketing.GetListQuestionCategory = resultMyParam.apimar + "webadmin/GetListQuestionCategory"
+                //#endregion end group
+
+                // //#region Group chính sách -> Phân nhóm PMH/Coupon
+                // apiConfig.marketing.GetListCouponGroup = resultMyParam.apierp + "coupon/GetListCouponGroup"
+                // apiConfig.marketing.GetCouponGroup = resultMyParam.apierp + "coupon/GetCouponGroup"
+                // apiConfig.marketing.UpdateCouponGroup = resultMyParam.apierp + "coupon/UpdateCouponGroup"
+                // apiConfig.marketing.DeleteCouponGroup = resultMyParam.apierp + "coupon/DeleteCouponGroup"
+                // //#endregion end group
+
+                // //#region Group WEBSITE -> Quản lý Hashtag
+                // apiConfig.marketing.GetListHashTag = resultMyParam.apierp + "webadmin/GetListHashTag"
+                // apiConfig.marketing.GetHashtag = resultMyParam.apierp + "webadmin/GetHashtag"
+                // apiConfig.marketing.UpdateHashTagStatus = resultMyParam.apierp + "webadmin/UpdateHashTagStatus"
+                // apiConfig.marketing.UpdateHashtag = resultMyParam.apierp + "webadmin/UpdateHashtag"
+                // apiConfig.marketing.DeleteHashtag = resultMyParam.apierp + "webadmin/DeleteHashtag"
+                // apiConfig.marketing.ImportExcelHashtag = resultMyParam.apierp + "webadmin/ImportExcelHashtag"
+                // apiConfig.marketing.ImportExcelHashtagProduct = resultMyParam.apierp + "webadmin/ImportExcelHashtagProduct"
+                // //#endregion end group
+
+                // //#region Group WEBSITE -> Phân nhóm Web
+                // apiConfig.marketing.GetListGroupWebTree = resultMyParam.apierp + "webadmin/GetListGroupWebTree"
+                // apiConfig.marketing.GetListGroupWeb = resultMyParam.apierp + "webadmin/GetListGroupWeb"
+                // apiConfig.marketing.GetGroupWeb = resultMyParam.apierp + "webadmin/GetGroupWeb"
+                // apiConfig.marketing.UpdateGroupWeb = resultMyParam.apierp + "webadmin/UpdateGroupWeb"
+                // apiConfig.marketing.DeleteGroupWeb = resultMyParam.apierp + "webadmin/DeleteGroupWeb"
+                // //#endregion end group
+
+                // //#region Group WEBSITE -> Từ khóa đề nghị
+                // apiConfig.marketing.GetListSearchKeyword = resultMyParam.apierp + "webadmin/GetListSearchKeyword"
+                // apiConfig.marketing.GetSearchKeyword = resultMyParam.apierp + "webadmin/GetSearchKeyword"
+                // apiConfig.marketing.UpdateStatusSearchKeyword = resultMyParam.apierp + "webadmin/UpdateStatusSearchKeyword"
+                // apiConfig.marketing.UpdateSearchKeyword = resultMyParam.apierp + "webadmin/UpdateSearchKeyword"
+                // apiConfig.marketing.DeleteSearchKeyword = resultMyParam.apierp + "webadmin/DeleteSearchKeyword"
+                // //#endregion end group
+
+                // //#region Group WEBSITE -> Quản lý Thẻ Meta
+                // apiConfig.marketing.UpdateProductMetaTag = resultMyParam.apierp + "webadmin/UpdateProductMetaTag"
+                // apiConfig.marketing.UpdateNewsMetaTag = resultMyParam.apierp + "webadmin/UpdateNewsMetaTag"
+                // apiConfig.marketing.UpdateProductMetaTagStatus = resultMyParam.apierp + "webadmin/UpdateProductMetaTagStatus "
+                // apiConfig.marketing.UpdateNewsMetaTagStatus = resultMyParam.apierp + "webadmin/UpdateNewsMetaTagStatus"
+
+                // apiConfig.marketing.GetListMetaTagCategory = resultMyParam.apierp + "webadmin/GetListMetaTagCategory"
+                // apiConfig.marketing.GetListMetaTag = resultMyParam.apierp + "webadmin/GetListMetaTag"
+                // apiConfig.marketing.UpdateMetaTag = resultMyParam.apierp + "webadmin/UpdateMetaTag"
+                // apiConfig.marketing.UpdateMetaTagStatus = resultMyParam.apierp + "webadmin/UpdateMetaTagStatus"
+                // //#endregion end group
+
+
+                //#endregion
+
+                // //#region ecom
+                // //#region Group Đơn hàng online
+                // apiConfig.ecommerce.GetListOrders = resultMyParam.apierp + "eorder/GetListOrders"
+                // apiConfig.ecommerce.GetListOrdersCount = resultMyParam.apierp + "eorder/GetListOrdersCount"
+                // apiConfig.ecommerce.GetListOrderStatus = resultMyParam.apiec + "onl/GetListOrderStatus"
+                // // apiConfig.ecommerce.GetListOrderWHPickup = resultMyParam.apiec + "onl/GetListOrderWHPickup"
+                // apiConfig.ecommerce.GetListOrderWHPickup = resultMyParam.apierp + "conf/GetListStore"
+                // apiConfig.ecommerce.GetListOrdersByProduct = resultMyParam.apierp + "eorder/GetListOrdersByProduct"
+                // apiConfig.ecommerce.GetOrder = resultMyParam.apierp + "eorder/GetOrderByCode"
+                // apiConfig.ecommerce.GetOrderStatus = resultMyParam.apierp + "eorder/GetOrderStatus"
+                // apiConfig.ecommerce.GetOrderDetails = resultMyParam.apierp + "eorder/GetOrderDetails"
+                // apiConfig.ecommerce.GetOrderDetailByID = resultMyParam.apierp + "eorder/GetOrderDetailByID"
+
+                // apiConfig.ecommerce.UpdateOrder = resultMyParam.apierp + "eorder/UpdateOrder"
+                // apiConfig.ecommerce.UpdateStatus = resultMyParam.apiec + "onl/UpdateStatus"
+                // // apiConfig.ecommerce.UpdateStatus = resultMyParam.apierp + "eorder/UpdateStatus"//cai này api lỗi
+                // apiConfig.ecommerce.UpdateListStatus = resultMyParam.apiec + "onl/UpdateListStatus"
+                // apiConfig.ecommerce.UpdateListOrderType = resultMyParam.apiec + "onl/UpdateListOrderType"
+                // apiConfig.ecommerce.SynOrder = resultMyParam.apiec + "eorder/SynOrder"
+
+                // apiConfig.ecommerce.CancelOrder = resultMyParam.apiec + "onl/CancelOrder"
+                // apiConfig.ecommerce.DeleteCart = resultMyParam.apiec + "onl/DeleteCart"
+
+                // apiConfig.ecommerce.GetListCartCoupon = resultMyParam.apiec + "onl/GetListCartCoupon"
+                // apiConfig.ecommerce.UpdateCartCoupon = resultMyParam.apiec + "onl/UpdateCartCoupon"
+                // apiConfig.ecommerce.DeleteCartCoupon = resultMyParam.apiec + "onl/DeleteCartCoupon"
+
+                // apiConfig.ecommerce.UpdateCartDetail = resultMyParam.apiec + "onl/UpdateCartDetail"
+                // apiConfig.ecommerce.DeleteCartDetail = resultMyParam.apiec + "onl/DeleteCartDetail"
+
+                // apiConfig.ecommerce.PrintPXK = resultMyParam.apiec + "onl/PrintPXK"
+                // apiConfig.ecommerce.PrintLabel = resultMyParam.apiec + "onl/PrintLabel"
+                // apiConfig.ecommerce.ExportShipper365 = resultMyParam.apiec + "onl/ExportShipper365"
+
+                // apiConfig.webhachi.SynOrder = resultMyParam.apiHachi + "cart/SynOrder"
+
+                // //#endregion end group
+
+                // //#region Group ĐH Master Online
+                // apiConfig.ecommerce.GetECOMWH = resultMyParam.apiconf + "coadmin/GetECOMWH"
+                // apiConfig.ecommerce.GetCurrentMaster = resultMyParam.apiec + "onl/GetCurrentMaster"
+                // apiConfig.ecommerce.GetONLTransferMater = resultMyParam.apiwms + "wh/GetONLTransferMater"
+                // apiConfig.ecommerce.GetONLListTransferMater = resultMyParam.apiwms + "wh/GetONLListTransferMater"
+                // apiConfig.ecommerce.ExportListOfMaster = resultMyParam.apiwms + "wh/ExportListOfMaster"
+                // apiConfig.ecommerce.CreateTransferMater = resultMyParam.apiwms + "wh/CreateTransferMater"
+
+                // apiConfig.ecommerce.ExportCurrentMaster = resultMyParam.apiec + "onl/ExportCurrentMaster"
+                // //#endregion end group
+
+                //#region Group dùng chung 
+                // apiConfig.ecommerce.GetAllProvinceInVietName = resultMyParam.apierp + "conf/GetAllProvinceInVietName"
+                apiConfig.ecommerce.GetAllProvinceInVietName = resultMyParam.apierp + "conf/GetListProvinceVietnam"
+                // apiConfig.ecommerce.GetAllDistrictInProvince = resultMyParam.apierp + "conf/GetAllDistrictInProvince"
+                apiConfig.ecommerce.GetAllDistrictInProvince = resultMyParam.apierp + "conf/GetListDistrictInProvince"
+                // apiConfig.ecommerce.GetAllWardInDistrict = resultMyParam.apierp + "conf/GetAllWardInDistrict"
+                apiConfig.ecommerce.GetAllWardInDistrict = resultMyParam.apierp + "conf/GetListWardInDistrict"
+                //#endregion end group
+
+                // //#region Group kênh bán hàng
+                // apiConfig.ecommerce.GetListChannel = resultMyParam.apierp + "channel/GetListChannel"
+                // //#endregion end group
+
+                //#region Group dùng chung 
+                apiConfig.ecommerce.GetAllShippers = resultMyParam.apierp + "partner/GetAllShippers"
+                apiConfig.ecommerce.GetAllTypeOfPayment = resultMyParam.apierp + "conf/GetAllTypeOfPayment"
+
+                apiConfig.ecommerce.GetProduct = resultMyParam.apiec + "onl/GetProduct"
+
+                apiConfig.ecommerce.GetOrderGift = resultMyParam.apiec + "onl/GetOrderGift"
+                apiConfig.ecommerce.GetGiftBill = resultMyParam.apiec + "onl/GetGiftBill"
+                apiConfig.ecommerce.GetGiftProduct = resultMyParam.apiec + "onl/GetGiftProduct"
+                apiConfig.ecommerce.UpdateCartGift = resultMyParam.apiec + "onl/UpdateCartGift"
+                apiConfig.ecommerce.DeleteCartGift = resultMyParam.apiec + "onl/DeleteCartGift"
+
+                apiConfig.webhachi.GetListProduct = resultMyParam.apiHachi + "cartstaff/GetListProduct"
+                apiConfig.webhachi.GetProductByBarcode = resultMyParam.apiHachi + "cartstaff/GetProductByBarcode"
+                apiConfig.webhachi.getuserbyphone = resultMyParam.apiidHachi + "identity/getuserbyphone"
+                //#endregion end group
+
+                // //#region Group component assignPickOrders
+                // apiConfig.ecommerce.AssignPickOrders = resultMyParam.apiec + "onl/AssignPickOrders"
+                // apiConfig.ecommerce.GetStaffOnline = resultMyParam.apiconf + "coadmin/GetStaffOnline"
+                // apiConfig.ecommerce.AssignUsers = resultMyParam.apiec + "onl/AssignUsers"
+                // apiConfig.webhachi.AssignCartStaff = resultMyParam.apiHachi + "cartstaff/AssignCartStaff"
+
+                // //#endregion end group
+
+                // //#region Group dead link
+                // apiConfig.ecommerce.GetListDeadLink = resultMyParam.apiec + "conf/GetListDeadLink"
+                // apiConfig.ecommerce.UpdateDeadLink = resultMyParam.apiec + "conf/UpdateDeadLink"
+                // apiConfig.ecommerce.DeleteDeadLink = resultMyParam.apiec + "conf/DeleteDeadLink"
+                // apiConfig.ecommerce.ImportDeadLink = resultMyParam.apiec + "conf/ImportDeadLink"
+                // //#endregion end group
+
+                // //#region Group kênh bán hàng
+                // apiConfig.ecommerce.GetChannelList = resultMyParam.apierp + "channel/GetListChannel"
+                // apiConfig.ecommerce.GetChannel = resultMyParam.apiec + "channel/GetChannel"
+                // apiConfig.ecommerce.UpdateChannelStatus = resultMyParam.apiec + "channel/UpdateChannelStatus"
+                // apiConfig.ecommerce.UpdateChannel = resultMyParam.apiec + "channel/UpdateChannel"
+                // apiConfig.ecommerce.DeleteChannel = resultMyParam.apiec + "channel/DeleteChannel"
+                // apiConfig.ecommerce.GetListChannelProduct = resultMyParam.apiec + "channel/GetListChannelProduct"
+                // apiConfig.ecommerce.GetChannelProduct = resultMyParam.apiec + "channel/GetChannelProduct"
+                // apiConfig.ecommerce.GetChannelProductByCode = resultMyParam.apiec + "channel/GetChannelProductByCode"
+                // apiConfig.ecommerce.UpdateStatusChannelProduct = resultMyParam.apiec + "channel/UpdateStatusChannelProduct"
+                // apiConfig.ecommerce.UpdateChannelProduct = resultMyParam.apiec + "channel/UpdateChannelProduct"
+                // apiConfig.ecommerce.DeleteChannelProduct = resultMyParam.apiec + "channel/DeleteChannelProduct"
+                // apiConfig.ecommerce.UpdateProductQuantity = "http://172.16.10.86:71/edi/api/edi/UpdateProductQuantity"
+                // apiConfig.ecommerce.ImportChannelProduct = resultMyParam.apiec + "channel/ImportChannelProduct"
+                // //#endregion end group
+
+                // apiConfig.ecommerce.GetListTransferReceive = resultMyParam.apiwms + "wh/GetListTransferReceive"
+                // apiConfig.ecommerce.GetTransferReceive = resultMyParam.apiwms + "wh/GetTransferReceive"
+                // apiConfig.ecommerce.UpdateStatusTransferReceive = resultMyParam.apiwms + "wh/UpdateStatusTransferReceive"
+                // apiConfig.ecommerce.UpdateTransferReceive = resultMyParam.apiwms + "wh/UpdateTransferReceive"
+                // apiConfig.ecommerce.UpdateTransferSent = resultMyParam.apiwms + "wh/UpdateTransferSent"
+                // apiConfig.ecommerce.DeleteTransferReceive = resultMyParam.apiwms + "wh/DeleteTransferReceive"
+                // apiConfig.ecommerce.GetListTransferReceiveDetail = resultMyParam.apiwms + "wh/GetListTransferReceiveDetail"
+                // apiConfig.ecommerce.GetTransferReceiveDetail = resultMyParam.apiwms + "wh/GetTransferReceiveDetail"
+                // apiConfig.ecommerce.GetTransferReceiveDetailByCode = resultMyParam.apiwms + "wh/GetTransferReceiveDetailByCode"
+                // apiConfig.ecommerce.UpdateTransferReceiveDetail = resultMyParam.apiwms + "wh/UpdateTransferReceiveDetail"
+                // apiConfig.ecommerce.DeleteTransferReceiveDetail = resultMyParam.apiwms + "wh/DeleteTransferReceiveDetail"
+                // apiConfig.ecommerce.ImportTransferReceiveDetail = resultMyParam.apiwms + "wh/ImportTransferReceiveDetail"
+
+                // //#region Group giỏ hàng khách
+                // apiConfig.ecommerce.GetListClientOrder = resultMyParam.apisyn + "cart/GetListClientOrder"
+                // apiConfig.ecommerce.GetClientOrder = resultMyParam.apisyn + "cart/GetClientOrder"
+                // apiConfig.ecommerce.UpdateClientOrder = resultMyParam.apisyn + "cart/UpdateClientOrder"
+                // apiConfig.ecommerce.GetSynOrderDetails = resultMyParam.apisyn + "cart/GetOrderDetails"
+                // apiConfig.ecommerce.GetSynOrderGift = resultMyParam.apisyn + "cart/GetOrderGift"
+                // apiConfig.ecommerce.GetListOrderCoupon = resultMyParam.apisyn + "cart/GetListCartCoupon"
+                // //#endregion end group
+
+
+                // //#region webhachi
+                // //#region Group giỏ tư vấn
+                // apiConfig.webhachi.GetListGenOrder = resultMyParam.apiHachi + "cartstaff/GetListGenOrder"
+                // apiConfig.webhachi.DeleteGenOrder = resultMyParam.apiHachi + "cartstaff/DeleteGenOrder"
+                // apiConfig.webhachi.GetCurrentCart = resultMyParam.apiHachi + "cartstaff/GetCurrentCart"
+                // apiConfig.webhachi.UpdateCart = resultMyParam.apiHachi + "cartstaff/UpdateCart"
+                // apiConfig.webhachi.CheckProductStock = resultMyParam.apiHachi + "cartstaff/CheckProductStock"
+                // apiConfig.webhachi.DeleteCartDetail = resultMyParam.apiHachi + "cartstaff/DeleteCartDetail"
+                // apiConfig.webhachi.AddCart = resultMyParam.apiHachi + "cartstaff/AddCart"
+                // apiConfig.webhachi.AddCoupon = resultMyParam.apiHachi + "cartstaff/AddCoupon"
+                // apiConfig.webhachi.DeleteCoupon = resultMyParam.apiHachi + "cartstaff/DeleteCoupon"
+                // apiConfig.webhachi.GetPayments = resultMyParam.apiHachi + "cartstaff/GetPayments"
+                // apiConfig.webhachi.PaymentCart = resultMyParam.apiHachi + "cartstaff/PaymentCart"
+                // apiConfig.webhachi.GetOrderGifts = resultMyParam.apiHachi + "cartstaff/GetOrderGifts"
+                // apiConfig.webhachi.UpdateCartGift = resultMyParam.apiec + "order/UpdateCartGift"//??
+                // apiConfig.webhachi.GetProvinces = resultMyParam.apiHachi + "config/GetProvinces"
+                // apiConfig.webhachi.GetDistricts = resultMyParam.apiHachi + "config/GetDistricts"
+                // apiConfig.webhachi.GetWards = resultMyParam.apiHachi + "config/GetWards"
+                // apiConfig.webhachi.ChangeCartDelivery = resultMyParam.apiHachi + "cartstaff/ChangeCartDelivery"
+                // apiConfig.webhachi.GetAllDelivery = resultMyParam.apiHachi + "profile/GetAllDelivery"
+                // apiConfig.webhachi.RemoveDelivery = resultMyParam.apiHachi + "profile/RemoveDelivery"
+                // apiConfig.webhachi.UpdateDelivery = resultMyParam.apiHachi + "profile/UpdateDelivery"
+                // apiConfig.webhachi.GetDelivery = resultMyParam.apiHachi + "profile/GetDelivery"
+                // apiConfig.webhachi.GetCardByStaff = resultMyParam.apihisHachi + "card/GetCardByStaff"
+                // //#endregion end group
+                // //#endregion
+
+                // //#region config
+                // //#region Group danh sách sản phẩm
+                // apiConfig.config.GetListProduct = resultMyParam.apierp + "product/GetListProduct"
+                // apiConfig.config.GetProduct = resultMyParam.apierp + "product/GetProduct"
+                // apiConfig.config.DeleteProduct = resultMyParam.apierp + "product/DeleteProduct"
+
+                // apiConfig.config.UpdateProductListTag = resultMyParam.apierp + "product/UpdateProductListTag"
+                // apiConfig.config.UpdateProduct = resultMyParam.apierp + "product/UpdateProduct"
+                // apiConfig.config.UpdateBaseProduct = resultMyParam.apierp + "product/UpdateBaseProduct"
+                // apiConfig.config.UpdateProductStatus = resultMyParam.apierp + "product/UpdateProductStatus"
+                // apiConfig.config.UpdateBaseProduct = resultMyParam.apierp + "product/UpdateBaseProduct"
+
+                // apiConfig.config.ImportExcelProduct = resultMyParam.apiconf + "product/ImportExcelProduct"
+                // apiConfig.config.ImportExcelProduct2 = resultMyParam.apierp + "product/ImportExcelProduct2"
+
+                // apiConfig.config.GetListProductSticker = resultMyParam.apierp + "product/GetListProductSticker"
+                // apiConfig.config.UpdateProductSticker = resultMyParam.apierp + "product/UpdateProductSticker"
+                // apiConfig.config.DeleteProductSticker = resultMyParam.apierp + "product/DeleteProductSticker"
+
+                // apiConfig.config.UpdateProductImage = resultMyParam.apierp + "product/UpdateProductImage"
+                // apiConfig.config.DeleteProductImage = resultMyParam.apierp + "product/DeleteProductImage"
+
+                // apiConfig.config.GetListGroup = resultMyParam.apierp + "product/GetListGroup"
+                // apiConfig.config.GetListPackingUnit = resultMyParam.apierp + "conf/GetListPackingUnit"
+                // apiConfig.config.GetListCurrency = resultMyParam.apierp + "conf/GetListCurrency"
+
+
+                // // tình trạng hàng hóa
+                // apiConfig.config.GetListProductStatus = resultMyParam.apierp + "product/GetListProductStatus"
+
+
+                // //#endregion end group
+                // //#endregion
+
+                // //#region hr
+
+                // //#region Group hồ sơ nhân sự -> Danh sách nhân sự
+                // apiConfig.hr.GetEmployee = resultMyParam.apicnb + "employee/GetEmployee"
+                // //#endregion end group
+
+                // //#region Group dùng chung
+                apiConfig.hr.GetCurrentEmployee = resultMyParam.apicnb + "employee/GetCurrentEmployee"
+                apiConfig.hr.GetWDStandard = resultMyParam.apicnb + "workday/GetWDStandard"
+                apiConfig.hr.GetWorkdayMonth = resultMyParam.apicnb + "workday/GetWorkdayMonth"
+                apiConfig.hr.GetPeriod = resultMyParam.apicnb + "workday/GetPeriod"
+                apiConfig.hr.GetPayslipList = resultMyParam.apicnb + "cnb/GetPayslipList"
+                apiConfig.hr.GetPayslipListByPeriod = resultMyParam.apicnb + "cnb/GetPayslipListByPeriod"
+                apiConfig.hr.GetCnBSalary = resultMyParam.apicnb + "cnb/GetCnBSalary"
+                apiConfig.hr.GetSalary = resultMyParam.apicnb + "cnb/GetSalary"
+                apiConfig.hr.GetAllowance = resultMyParam.apicnb + "cnb/GetAllowance"
+                apiConfig.hr.GetException = resultMyParam.apicnb + "cnb/GetException"
+                apiConfig.hr.UploadExcel = resultMyParam.apicnb + "upload/UploadExcel"
+                apiConfig.hr.GetExcelTemplate = resultMyParam.apicnb + "upload/GetExcelTemplate"
+                apiConfig.hr.GetFolderStructure = resultMyParam.apicnb + "ecom/GetFolderStructure"
+                apiConfig.hr.CreateFolder = resultMyParam.apicnb + "ecom/CreateFolder"
+                apiConfig.hr.LAY_DSNhanThan = resultMyParam.apiid + "identity/getuserinfo"
+                // //#endregion end group
+                // //#endregion
+
+                //#region layout
+                apiConfig.layout.RegisterAdmin = resultMyParam.apiid + "identity/RegisterAdmin"
+                // apiConfig.layout.GetCompany = resultMyParam.apiconf + "admin/GetCompany"
+                apiConfig.layout.GetCompany = resultMyParam.apierp + "conf/GetCompany"
+                // apiConfig.layout.GetModule = resultMyParam.apiconf + "admin/GetModule"
+                apiConfig.layout.GetModule = resultMyParam.apierp + "conf/GetModule"
+                // apiConfig.layout.GetPermission = resultMyParam.apiconf + "admin/GetPermission"
+                apiConfig.layout.GetPermission = resultMyParam.apierp + "conf/GetPermission"
+                // apiConfig.layout.GetPermissionDLL = resultMyParam.apiconf + "admin/GetPermissionDLL"
+                apiConfig.layout.GetPermissionDLL = resultMyParam.apierp + "conf/GetPermissionDLL"
+                apiConfig.config.GetListAPIByModuleFunction = resultMyParam.apierp + '/conf/GetListAPIByModuleFunction'
+
+                apiConfig.layout.GetWarehouse = resultMyParam.apiconf + "coadmin/GetWarehouse"
+                apiConfig.layout.GetListWarehouse = resultMyParam.apiwms + "wh/GetListWarehouse"
+                apiConfig.layout.GetListProduct = resultMyParam.apiconf + "product/GetListProduct"
+                apiConfig.layout.GetProductByCode = resultMyParam.apiconf + "product/GetProductByCode"
+                apiConfig.layout.GetStockInWareHouse = resultMyParam.apiconf + "product/GetStockInWareHouse"
+                apiConfig.layout.GetWebInCart = resultMyParam.apiconf + "product/GetWebInCart"
+                apiConfig.layout.UploadBanner = resultMyParam.apires + "res/UploadBanner"
+                apiConfig.layout.RenameFile = resultMyParam.apires + "res/RenameFile"
+                apiConfig.layout.DeleteFile = resultMyParam.apires + "res/DeleteFile"
+                apiConfig.layout.GetTemplate = resultMyParam.apires + "res/GetTemplate"
+                apiConfig.layout.ImportExcel = resultMyParam.apimar + "webadmin/ImportExcel"
+                apiConfig.layout.ImportExcelWithFunctionID = resultMyParam.apierp + "conf/ImportExcel"
+                apiConfig.layout.ImportExcelOrders = resultMyParam.apiec + "onl/ImportExcelOrders"//??
+                apiConfig.layout.GetListStatus = resultMyParam.apierp + "conf/GetListStatus"
+                apiConfig.layout.UpdateAPIServices = resultMyParam.apierp + "api/UpdateAPIServices"
+
+                apiConfig.layout.URLPortal = "http://113.161.89.207:73/#/login"
+                apiConfig.developer.GetListModuleAPITree = resultMyParam.apierp + 'api/GetListModuleAPITree'
+
+                //#endregion
+
+                // //#region logistic
+                // apiConfig.lgt.GetProductByBarcode = resultMyParam.apiconf + "product/GetProductByBarcode"
+                // apiConfig.lgt.UpdateProductHachi24hByID = resultMyParam.apiconf + "product/UpdateProductHachi24hByID"
+                // apiConfig.lgt.DeleteProductHachi24hByID = resultMyParam.apiconf + "product/DeleteProductHachi24hByID"
+                // apiConfig.lgt.ImportExcelAlbum = resultMyParam.apiconf + "product/ImportExcelAlbum"
+                // apiConfig.lgt.GetExcelAlbumn = resultMyParam.apiconf + "product/GetExcelAlbumn"
+                // //#endregion
+
+                // //#region purchase
+
+                // //#region Group chính sách -> Thương hiệu sản phẩm  
+                // apiConfig.purchase.GetListBrand = resultMyParam.apiconf + "brand/GetListBrand"
+                // apiConfig.purchase.GetBrand = resultMyParam.apiconf + "brand/GetBrand"
+                // apiConfig.purchase.UpdateBrand = resultMyParam.apiconf + "brand/UpdateBrand"
+                // apiConfig.purchase.DeleteBrand = resultMyParam.apiconf + "brand/DeleteBrand"
+                // apiConfig.purchase.UpdateBrandStatus = resultMyParam.apiconf + "brand/UpdateBrandStatus"
+                // apiConfig.purchase.MergeBrand = resultMyParam.apiconf + "brand/MergeBrand"
+                // apiConfig.purchase.GetReports = resultMyParam.apiconf + "coadmin/GetReports"
+                // apiConfig.purchase.ExportReport = resultMyParam.apibi + "excel/ExportReport"
+                // //#endregion end group
+
+                // //#region Group mua hàng -> PO nhà cung cấp  
+                // apiConfig.purchase.GetListReceiveOrder = resultMyParam.apiwms + "whpo/GetListReceiveOrder"
+                // //#endregion end group
+
+                // //#region Group không dùng ở trang nào
+                // apiConfig.purchase.GetReceiveOrder = resultMyParam.apiwms + "whpo/GetReceiveOrder"
+                // apiConfig.purchase.UpdateOrderReceiving = resultMyParam.apiwms + "whpo/UpdateOrderReceiving"
+                // apiConfig.purchase.GetListReceivePartner = resultMyParam.apiwms + "whpo/GetListReceivePartner"
+                // apiConfig.purchase.GetListReceiveInvoice = resultMyParam.apiwms + "whpo/GetListReceiveInvoice"
+                // apiConfig.purchase.GetReceiveInvoice = resultMyParam.apiwms + "whpo/GetReceiveInvoice"
+                // apiConfig.purchase.UpdateInvoiceReceiving = resultMyParam.apiwms + "whpo/UpdateInvoiceReceiving"
+                // apiConfig.purchase.GetListReceiveProduct = resultMyParam.apiwms + "whpo/GetListReceiveProduct"
+                // apiConfig.purchase.GetReceiveProduct = resultMyParam.apiwms + "whpo/GetReceiveProduct"
+                // apiConfig.purchase.UpdateProductReceiving = resultMyParam.apiwms + "whpo/UpdateProductReceiving"
+                // //#endregion end group
+                // //#endregion
+
+                // //#region sales
+                // //#region Group bán lẻ ->Thay đổi giá bán lẻ
+                // apiConfig.sales.GetListPOSPriceAdj = resultMyParam.apiconf + "product/GetListPOSPriceAdj"
+                // apiConfig.sales.GetPOSPriceAdj = resultMyParam.apiconf + "product/GetPOSPriceAdj"
+                // apiConfig.sales.UpdatePOSPriceAdj = resultMyParam.apiconf + "product/UpdatePOSPriceAdj"
+                // apiConfig.sales.UpdatePOSPriceAdjStatus = resultMyParam.apiconf + "product/UpdatePOSPriceAdjStatus"
+                // apiConfig.sales.DeletePOSPriceAdj = resultMyParam.apiconf + "product/DeletePOSPriceAdj"
+                // apiConfig.sales.GetListPOSPriceAdjDetails = resultMyParam.apiconf + "product/GetListPOSPriceAdjDetails"
+                // apiConfig.sales.GetPOSPriceAdjDetails = resultMyParam.apiconf + "product/GetPOSPriceAdjDetails"
+                // apiConfig.sales.GetPOSPriceAdjDetailsByBarcode = resultMyParam.apiconf + "product/GetPOSPriceAdjDetailsByBarcode"
+                // apiConfig.sales.UpdatePOSPriceAdjDetails = resultMyParam.apiconf + "product/UpdatePOSPriceAdjDetails"
+                // apiConfig.sales.DeletePOSPriceAdjDetails = resultMyParam.apiconf + "product/DeletePOSPriceAdjDetails"
+                // apiConfig.sales.ImportExcelPriceAdjDetails = resultMyParam.apiconf + "product/ImportExcelPriceAdjDetails"
+                // //#endregion end group
+
+                // //#region Group bán lẻ -> Phiếu mua hàng
+                // apiConfig.sales.GetListVoucher = resultMyParam.apierp + "coupon/GetListVoucher"
+                // apiConfig.sales.GetListVoucherType = resultMyParam.apierp + "coupon/GetListVoucherType"
+                // //#endregion end group
+                // //#endregion
+
+                //#region bi       
+                //#region Group dashboard
+                // apiConfig.dashboard.GetDashboardIndex = resultMyParam.apierp + 'bi/GetDashboardIndex'
+                //#endregion end group
+                //#endregion
+
+                // //#region organization  
+                // //department
+                // //#region Group cơ cấu tổ chức -> Cơ cấu tổ chức
+
+                // apiConfig.org.GetListDepartmentTree = resultMyParam.apierp + 'hr/GetListDepartmentTree2'
+                // apiConfig.org.GetListDepartment = resultMyParam.apierp + 'hr/GetListDepartment'
+                // apiConfig.org.UpdateDepartment = resultMyParam.apierp + 'hr/UpdateDepartment'
+                // apiConfig.org.DeleteDepartment = resultMyParam.apierp + 'hr/DeleteDepartment'
+                // apiConfig.org.ImportExcelDepartment = resultMyParam.apierp + 'hr/ImportExcelDepartment'
+
+                // //#endregion end group
+
+                // //#region Group cơ cấu tổ chức -> Điểm làm việc
+                // apiConfig.org.GetListLocationTree = resultMyParam.apierp + 'hr/GetListLocationTree'
+                // apiConfig.org.GetListLocation = resultMyParam.apierp + 'hr/GetListLocation'
+                // apiConfig.org.UpdateLocation = resultMyParam.apierp + 'hr/UpdateLocation'
+                // apiConfig.org.DeleteLocation = resultMyParam.apierp + 'hr/DeleteLocation'
+                // apiConfig.org.ImportExcelLocation = resultMyParam.apierp + 'hr/ImportExcelLocation'
+                // //#endregion end group
+
+                // //#region Group cơ cấu tổ chức -> Cơ cấu tổ chức (chức danh)
+
+                // apiConfig.org.GetListPositionTree = resultMyParam.apierp + 'hr/GetListPositionTree'
+                // apiConfig.org.GetListPosition = resultMyParam.apierp + 'hr/GetListPosition'
+                // apiConfig.org.GetListPositionQuiz = resultMyParam.apierp + 'hr/GetListPositionQuiz'
+                // apiConfig.org.GetListPositionIndirect = resultMyParam.apierp + 'hr/GetListPositionIndirect'
+                // apiConfig.org.GetListPositionGroup = resultMyParam.apierp + 'hr/GetListPositionGroup'
+                // apiConfig.org.UpdatePosition = resultMyParam.apierp + 'hr/UpdatePosition'
+                // apiConfig.org.DeletePosition = resultMyParam.apierp + 'hr/DeletePosition'
+                // apiConfig.org.ImportExcelPosition = resultMyParam.apierp + 'hr/ImportExcelPosition'
+                // apiConfig.org.GetListPositionRole = resultMyParam.apierp + 'staff/GetListPositionRole'
+                // apiConfig.org.AddPositionRole = resultMyParam.apierp + 'staff/AddPositionRole'
+
+                // //#endregion end group
+
+                // //#region Group hồ sơ nhân sự -> danh sách nhân sự ( hồ sơ nhân sự )
+                // apiConfig.hr.GetListEmployee = resultMyParam.apierp + 'staff/GetListEmployee'
+                // apiConfig.hr.GetListRole = resultMyParam.apierp + 'staff/GetListRole'
+                // apiConfig.hr.GetListHR = resultMyParam.apierp + 'staff/GetListHR'
+                // apiConfig.hr.AddEmployeeRole = resultMyParam.apierp + 'staff/AddEmployeeRole'
+                // apiConfig.hr.UpdateEmployeeInfo = resultMyParam.apierp + 'staff/UpdateEmployeeInfo'
+                // apiConfig.hr.DeleteEmployeeRole = resultMyParam.apierp + 'staff/DeleteEmployeeRole'
+                // apiConfig.hr.GetEmployeeInfo = resultMyParam.apierp + 'staff/GetEmployeeInfo'
+                // apiConfig.hr.UpdateEmployeeStatus = resultMyParam.apierp + 'staff/UpdateEmployeeStatus'
+                // apiConfig.org.ImportExcelEmployee = resultMyParam.apierp + 'staff/ImportExcelEmployee'
+                // //#endregion end group
+
+                // //#region Group hồ sơ nhân sự -> danh sách nhân sự ( thông tin cá nhân )
+                // apiConfig.hr.GetPersonalInfo = resultMyParam.apierp + 'staff/GetPersonalInfo'
+                // apiConfig.hr.GetPersonalCertificate = resultMyParam.apierp + 'staff/GetPersonalCertificate'
+                // apiConfig.hr.GetPersonalContact = resultMyParam.apierp + 'staff/GetPersonalContact'
+                // apiConfig.hr.GetPersonalAddress = resultMyParam.apierp + 'staff/GetPersonalAddress'
+                // apiConfig.hr.UpdatePersonalCertificate = resultMyParam.apierp + 'staff/UpdatePersonalCertificate'
+                // apiConfig.hr.UpdatePersonalInfo = resultMyParam.apierp + 'staff/UpdatePersonalInfo'
+                // apiConfig.hr.UpdatePersonalContact = resultMyParam.apierp + 'staff/UpdatePersonalContact'
+                // apiConfig.hr.UpdatePersonalAddress = resultMyParam.apierp + 'staff/UpdatePersonalAddress'
+                // //#endregion end group
+
+                // //address Group dùng chung
+                apiConfig.hr.GetListCountry = resultMyParam.apierp + 'conf/GetListCountry'
+                apiConfig.hr.GetListProvince = resultMyParam.apierp + 'conf/GetListProvince'
+                apiConfig.hr.GetListDistrict = resultMyParam.apierp + 'conf/GetListDistrict'
+                apiConfig.hr.GetListWard = resultMyParam.apierp + 'conf/GetListWard'
+                // //#endregion end group
+
+                // //#region Group đánh giá nhân sự -> Phân nhóm câu hỏi
+                // apiConfig.hr.GetListQuestionGroupTree = resultMyParam.apierp + 'question/GetListQuestionGroupTree'
+                // apiConfig.hr.GetListQuestionGroup = resultMyParam.apierp + 'question/GetListQuestionGroup'
+                // apiConfig.hr.UpdateQuestionGroup = resultMyParam.apierp + 'question/UpdateQuestionGroup'
+                // apiConfig.hr.DeleteQuestionGroup = resultMyParam.apierp + 'question/DeleteQuestionGroup'
+                // apiConfig.hr.ImportExcelQuestionCategory = resultMyParam.apierp + 'question/ImportExcelQuestionCategory'
+                // //#endregion end group
+
+                // //#region Group đánh giá nhân sự -> Ngân hàng câu hỏi ( câu hỏi )
+                // // apiConfig.hr.GetListQuestion = resultMyParam.apierp + 'question/GetListQuestion'
+                // // apiConfig.hr.GetQuestion = resultMyParam.apierp + 'question/GetQuestion'
+                // // apiConfig.hr.UpdateQuestion = resultMyParam.apierp + 'question/UpdateQuestion'
+                // // apiConfig.hr.UpdateQuestionStatus = resultMyParam.apierp + 'question/UpdateQuestionStatus'
+                // // apiConfig.hr.DeleteQuestion = resultMyParam.apierp + 'question/DeleteQuestion'
+                // // apiConfig.hr.ImportExcelQuestionBank = resultMyParam.apierp + 'question/ImportExcelQuestionBank'
+                // // apiConfig.hr.GetListQuestionType = resultMyParam.apierp + 'question/GetListQuestionType'
+                // // apiConfig.hr.GetListEvaluationType = resultMyParam.apierp + 'question/GetListEvaluationType'
+                // // apiConfig.hr.UpdateQuestionCompetence = resultMyParam.apierp + 'question/UpdateQuestionCompetence'
+                // // apiConfig.hr.DeleteQuestionCompetence = resultMyParam.apierp + 'question/DeleteQuestionCompetence'
+                // // apiConfig.hr.GetListCompetenceQuestion = resultMyParam.apierp + 'question/GetListCompetenceQuestion'
+                // //#endregion end group
+
+                // ////#region Group đánh giá nhân sự -> Ngân hàng câu hỏi ( đáp án )
+                // apiConfig.hr.GetListAnswer = resultMyParam.apierp + 'question/GetListAnswer'
+                // apiConfig.hr.UpdateAnswer = resultMyParam.apierp + 'question/UpdateAnswer'
+                // apiConfig.hr.DeleteAnswer = resultMyParam.apierp + 'question/DeleteAnswer'
+                // apiConfig.hr.UpdateMark = resultMyParam.apierp + 'question/UpdateMark'
+                // apiConfig.hr.DeleteMark = resultMyParam.apierp + 'question/DeleteMark'
+                // //#endregion end group 
+
+
+                // //#region Group đánh giá nhân sự -> đợt đánh giá
+                // apiConfig.hr.GetQuizSession = resultMyParam.apierp + 'quiz/GetQuizSession'
+                // apiConfig.hr.GetListQuizSession = resultMyParam.apierp + 'quiz/GetListQuizSession'
+                // apiConfig.hr.UpdateQuizSession = resultMyParam.apierp + 'quiz/UpdateQuizSession'
+                // apiConfig.hr.UpdateQuizSessionStatus = resultMyParam.apierp + 'quiz/UpdateQuizSessionStatus'
+                // apiConfig.hr.DeleteQuizSession = resultMyParam.apierp + 'quiz/DeleteQuizSession'
+                // apiConfig.hr.ImportExcelSession = resultMyParam.apierp + 'quiz/ImportExcelSession'
+
+                // apiConfig.hr.GetListQuizRole = resultMyParam.apierp + 'quiz/GetListQuizRole'
+                // apiConfig.hr.GetListQuizEmployee = resultMyParam.apierp + 'quiz/GetListQuizEmployee'
+                // apiConfig.hr.GetListQuizDepartment = resultMyParam.apierp + 'quiz/GetListQuizDepartment'
+                // apiConfig.hr.UpdateQuizRole = resultMyParam.apierp + 'quiz/UpdateQuizRole'
+                // apiConfig.hr.DeleteQuizRole = resultMyParam.apierp + 'quiz/DeleteQuizRole'
+                // apiConfig.hr.GenerateQuizRole = resultMyParam.apierp + 'quiz/GenerateQuizRole'
+
+                // apiConfig.hr.GetQuizQuestionReport = resultMyParam.apierp + 'quiz/GetQuizQuestionReport'
+                // apiConfig.hr.GetQuizExamineeReport = resultMyParam.apierp + 'quiz/GetQuizExamineeReport'
+                // apiConfig.hr.GetQuizWrongQuestionReport = resultMyParam.apierp + 'quiz/GetQuizWrongQuestionReport'
+                // apiConfig.hr.ExportExamDetailResultReport = resultMyParam.apierp + 'quiz/ExportExamDetailResultReport'
+                // apiConfig.hr.ExportQuestionAnalsisReport = resultMyParam.apierp + 'quiz/ExportQuestionAnalsisReport'
+                // apiConfig.hr.ExportWrongQuestionReport = resultMyParam.apierp + 'quiz/ExportWrongQuestionReport'
+
+                // //#region quiz config
+                // apiConfig.hr.GetListQuizConfig = resultMyParam.apierp + 'quiz/GetListQuizConfig'
+                // apiConfig.hr.GetListQuizConfigCompetence = resultMyParam.apierp + 'quiz/GetListQuizConfigCompetence'
+                // apiConfig.hr.GetListQuizConfigCategory = resultMyParam.apierp + 'quiz/GetListQuizConfigCategory'
+                // apiConfig.hr.UpdateQuizConfig = resultMyParam.apierp + 'quiz/UpdateQuizConfig'
+                // apiConfig.hr.DeleteQuizConfig = resultMyParam.apierp + 'quiz/DeleteQuizConfig'
+                // apiConfig.hr.UpdateListQuizConfig = resultMyParam.apierp + 'quiz/UpdateListQuizConfig'
+                // //#endregion
+
+                // //#endregion end group
+
+
+                // //#region Group đánh giá nhân sự -> từ điển năng lực
+                // apiConfig.hr.GetListCompetenceGuide = resultMyParam.apierp + 'competence/GetListCompetenceGuide'
+                // apiConfig.hr.UpdateCompetenceGuide = resultMyParam.apierp + 'competence/UpdateCompetenceGuide'
+                // apiConfig.hr.ImportExcelCompetenceCategory = resultMyParam.apierp + 'competence/ImportExcelCompetenceCategory'
+
+                // apiConfig.hr.GetListCompetenceCategory = resultMyParam.apierp + 'competence/GetListCompetenceCategory'
+                // apiConfig.hr.UpdateCompetenceCategory = resultMyParam.apierp + 'competence/UpdateCompetenceCategory'
+                // apiConfig.hr.UpdateCompetenceCategoryStatus = resultMyParam.apierp + 'competence/UpdateCompetenceCategoryStatus'
+                // apiConfig.hr.DeleteCompetenceCategory = resultMyParam.apierp + 'competence/DeleteCompetenceCategory'
+
+                // apiConfig.hr.GetListCompetenceBank = resultMyParam.apierp + 'competence/GetListCompetenceBank'
+                // apiConfig.hr.UpdateCompetenceBank = resultMyParam.apierp + 'competence/UpdateCompetenceBank'
+                // apiConfig.hr.UpdateCompetenceBankStatus = resultMyParam.apierp + 'competence/UpdateCompetenceBankStatus'
+                // apiConfig.hr.DeleteCompetenceBank = resultMyParam.apierp + 'competence/DeleteCompetenceBank'
+
+                // apiConfig.hr.GetListCompetenceSector = resultMyParam.apierp + 'competence/GetListCompetenceSector'
+                // apiConfig.hr.UpdateCompetenceSector = resultMyParam.apierp + 'competence/UpdateCompetenceSector'
+                // apiConfig.hr.GetListSectorQuestion = resultMyParam.apierp + 'competence/GetListSectorQuestion'
+                // apiConfig.hr.GetListQuestionCompetence = resultMyParam.apierp + 'competence/GetListQuestionCompetence'
+                // //#endregion end group
+
+                // //#region Group đánh giá nhân sự -> khung năng lực
+                // apiConfig.hr.GetCompetenceFramework = resultMyParam.apierp + 'competenceframework/GetCompetenceFramework'
+                // apiConfig.hr.GetListCompetenceFramework = resultMyParam.apierp + 'competenceframework/GetListCompetenceFramework'
+                // apiConfig.hr.UpdateCompetenceFramework = resultMyParam.apierp + 'competenceframework/UpdateCompetenceFramework'
+                // apiConfig.hr.UpdateStatusCompetenceFramework = resultMyParam.apierp + 'competenceframework/UpdateStatusCompetenceFramework'
+                // apiConfig.hr.DeleteCompetenceFramework = resultMyParam.apierp + 'competenceframework/DeleteCompetenceFramework'
+                // apiConfig.hr.ImportExcelFramework = resultMyParam.apierp + 'competenceframework/ImportExcelFramework'
+
+                // //framework detail
+                // apiConfig.hr.GetListCompetenceFrameworkDetails = resultMyParam.apierp + 'competenceframework/GetListCompetenceFrameworkDetails'
+                // apiConfig.hr.UpdateCompetenceFrameworkDetails = resultMyParam.apierp + 'competenceframework/UpdateCompetenceFrameworkDetails'
+                // apiConfig.hr.GetListFrameworkPosition = resultMyParam.apierp + 'hr/GetListFrameworkPosition'
+                // apiConfig.hr.GetListFrameworkCompetence = resultMyParam.apierp + 'competence/GetListFrameworkCompetence'
+                // apiConfig.hr.DeleteCompetenceFrameworkDetails = resultMyParam.apierp + 'competenceframework/DeleteCompetenceFrameworkDetails'
+                // apiConfig.hr.ImportExcelFrameworkDetail = resultMyParam.apierp + 'competenceframework/ImportExcelFrameworkDetail'
+                // //#endregion
+                // //#endregion end group
+
+                // //#region Exam
+                // apiConfig.hr.GetListExam = resultMyParam.apierp + 'exam/GetListExam'
+                // apiConfig.hr.GetListExamPortal = resultMyParam.apierp + 'exam/GetListExamPortal'
+                // apiConfig.hr.UpdateExamStatus = resultMyParam.apierp + 'exam/UpdateExamStatus'
+                // apiConfig.hr.DeleteExam = resultMyParam.apierp + 'exam/DeleteExam'
+
+                // apiConfig.hr.UpdateExamResult = resultMyParam.apierp + 'exam/UpdateExamResult'
+                // apiConfig.hr.DeleteExamResult = resultMyParam.apierp + 'exam/DeleteExamResult'
+
+                // apiConfig.hr.CalculateMarkQuiz = resultMyParam.apierp + 'exam/CalculateMarkQuiz'
+                // apiConfig.hr.CalculateMarkExam = resultMyParam.apierp + 'exam/CalculateMarkExam'
+                // //#endregion
+
+                // //#region Exam Question
+                // apiConfig.hr.GetListExamQuestion = resultMyParam.apierp + 'exam/GetListExamQuestion'
+                // apiConfig.hr.GetListExamEssayQuestion = resultMyParam.apierp + 'exam/GetListExamEssayQuestion'
+                // apiConfig.hr.GetListQuizEssayQuestion = resultMyParam.apierp + 'exam/GetListQuizEssayQuestion'
+                // apiConfig.hr.UpdateExamEssayQuestion = resultMyParam.apierp + 'exam/UpdateExamEssayQuestion'
+                // //#endregion
+
+                // //#region ReEvaluate
+                // apiConfig.hr.GetListRequestAppealQuestion = resultMyParam.apierp + 'reeval/GetListAppealQuestion'
+                // apiConfig.hr.GetListAppealInQuestion = resultMyParam.apierp + 'reeval/GetListAppealInQuestion'
+
+                // apiConfig.hr.GetListQuestionAppealRequest = resultMyParam.apierp + 'reeval/GetListQuestionAppeal'
+                // apiConfig.hr.GetListStaffReEval = resultMyParam.apierp + 'reeval/GetListStaffReEval'
+                // apiConfig.hr.GetListExamAppealRequest = resultMyParam.apierp + 'reeval/GetListExamAppeal'
+
+                // apiConfig.hr.UpdateReEval = resultMyParam.apierp + 'reeval/UpdateReEval'
+                // apiConfig.hr.UpdateMarkMultipleReEval = resultMyParam.apierp + 'reeval/UpdateMarkMultipleReEval'
+                // //#endregion
+
+                // //#region Hamper
+                // apiConfig.config.GetListHamperRequest = resultMyParam.apierp + 'hamper/GetListHamperRequest'
+                // apiConfig.config.GetHamperRequest = resultMyParam.apierp + 'hamper/GetHamperRequest'
+                // apiConfig.config.GetListProductHamper = resultMyParam.apierp + 'hamper/GetListProductHamper'
+                // apiConfig.config.GetListApplyCompany = resultMyParam.apierp + 'hamper/GetListApplyCompany'
+                // apiConfig.config.GetProductForHamper = resultMyParam.apierp + 'hamper/GetProductForHamper'
+                // apiConfig.config.GetListChangeHistory = resultMyParam.apierp + "product/GetListChangeHistory"
+
+                // apiConfig.config.ImportExcelProductForHamper = resultMyParam.apierp + "hamper/ImportExcelProductForHamper"
+                // apiConfig.config.ImportExcelHamper = resultMyParam.apierp + "hamper/ImportExcelHamper"
+                // apiConfig.config.UpdateHamperRequest = resultMyParam.apierp + "hamper/UpdateHamperRequest"
+                // apiConfig.config.UpdateBaseHamperProduct = resultMyParam.apierp + "hamper/UpdateBaseHamperProduct"
+                // apiConfig.config.DeleteHamperRequest = resultMyParam.apierp + "hamper/DeleteHamperRequest"
+                // apiConfig.config.DeleteHamperRequestProduct = resultMyParam.apierp + "hamper/DeleteHamperRequestProduct"
+
+                // apiConfig.config.GetListBaseProduct = resultMyParam.apierp + "product/GetListBaseProduct"
+                // apiConfig.config.GetBaseProduct = resultMyParam.apierp + "product/GetBaseProduct"
+                // //#endregion
+
+                // //#region Company
+                // apiConfig.developer.GetListCompany = resultMyParam.apierp + 'company/GetListCompany'
+                // apiConfig.developer.UpdateCompany = resultMyParam.apierp + 'company/UpdateCompany'
+                // apiConfig.developer.DeleteCompany = resultMyParam.apierp + 'company/DeleteCompany'
+                // //#endregion
+
+                // //#region System
+                // apiConfig.developer.GetListSysStructureTree = resultMyParam.apierp + 'sys/GetListSysStructureTree'
+                // apiConfig.developer.GetListModuleTree = resultMyParam.apierp + 'sys/GetListModuleTree'
+                // apiConfig.developer.UpdateModule = resultMyParam.apierp + 'sys/UpdateModule'
+                // apiConfig.developer.DeleteModule = resultMyParam.apierp + 'sys/DeleteModule'
+
+                // apiConfig.developer.UpdateFunction = resultMyParam.apierp + 'sys/UpdateFunction'
+                // apiConfig.developer.DeleteFunction = resultMyParam.apierp + 'sys/DeleteFunction'
+
+                // apiConfig.developer.GetListActionTree = resultMyParam.apierp + 'sys/GetListActionTree'
+                // apiConfig.developer.UpdateAction = resultMyParam.apierp + 'sys/UpdateAction'
+                // apiConfig.developer.DeleteAction = resultMyParam.apierp + 'sys/DeleteAction'
+
+                // apiConfig.developer.UpdateSupFunction = resultMyParam.apierp + 'sys/UpdateSubFunction'
+                // apiConfig.developer.DeleteSupFunction = resultMyParam.apierp + 'sys/DeleteSubFunction'
+                // //#endregion
+
+                // //#region API
+                // apiConfig.developer.UpdateAPI = resultMyParam.apierp + 'api/UpdateAPI'
+                // apiConfig.developer.DeleteAPI = resultMyParam.apierp + 'api/DeleteAPI'
+                // //#endregion
+
+                // //#region Role
+                // apiConfig.config.GetListRole = resultMyParam.apierp + 'roles/GetListRoles'
+                // apiConfig.config.UpdateRole = resultMyParam.apierp + 'roles/UpdateRoles'
+                // apiConfig.config.DeleteRole = resultMyParam.apierp + 'roles/DeleteRoles'
+                // //#endregion
+
+                // //#region permission
+                // apiConfig.config.GetListRoleByDepartment = resultMyParam.apierp + 'permission/GetListRoleByDepartment'
+                // apiConfig.config.GetListSysStructurePermissionTree = resultMyParam.apierp + 'permission/GetListSysStructurePermissionTree'
+                // apiConfig.config.GetPermission = resultMyParam.apierp + 'permission/GetPermission'
+                // apiConfig.config.UpdatePermission = resultMyParam.apierp + 'permission/UpdatePermission'
+                // apiConfig.config.DeletePermission = resultMyParam.apierp + 'permission/DeletePermission'
+                // //#endregion
+
+                // //#region partner
+                // apiConfig.config.GetListPartnerTree = resultMyParam.apierp + 'partner/GetListPartnerTree'
+                // apiConfig.config.UpdatePartner = resultMyParam.apierp + 'partner/UpdatePartner'
+                // apiConfig.config.DeletePartner = resultMyParam.apierp + 'partner/DeletePartner'
+                // apiConfig.config.GetListPartnerDropdown = resultMyParam.apierp + 'partner/GetListPartnerDropdown'
+                // apiConfig.config.GetPartner = resultMyParam.apierp + 'partner/GetPartner'
+                // //#endregion
+
+
+
+                // //#region nhà cung cấp
+                // apiConfig.purchase.GetSupplier = resultMyParam.apierp + 'partner/GetSupplier'
+                // apiConfig.purchase.GetListSupplier = resultMyParam.apierp + 'partner/GetListSupplier'
+                // apiConfig.purchase.GetListSupplierTree = resultMyParam.apierp + 'partner/GetListSupplierTree'
+                // apiConfig.purchase.UpdateSupplier = resultMyParam.apierp + 'partner/UpdateSupplier'
+                // apiConfig.purchase.DeleteSupplier = resultMyParam.apierp + 'partner/DeleteSupplier'
+                // apiConfig.purchase.GetListReason = resultMyParam.apierp + 'partner/GetListReason'
+                // apiConfig.purchase.GetTemplateEmail = resultMyParam.apierp + 'partner/GetTemplateEmail'
+                // apiConfig.purchase.UpdateTemplateEmail = resultMyParam.apierp + 'partner/UpdateTemplateEmail'
+                // //#endregion
+
+                // //#region người liên hệ
+                // apiConfig.purchase.GetListSupplierContact = resultMyParam.apierp + 'partner/GetListSupplierContact'
+                // apiConfig.purchase.UpdateSupplierContact = resultMyParam.apierp + 'partner/UpdateSupplierContact'
+                // apiConfig.purchase.DeleteSupplierContact = resultMyParam.apierp + 'partner/DeleteSupplierContact'
+                // //#endregion
+
+                // //#region sản phẩm đặt mua
+                // apiConfig.purchase.GetListPOProduct = resultMyParam.apierp + 'partner/GetListPOProduct'
+                // apiConfig.purchase.GetListChangePriceHistory = resultMyParam.apierp + 'partner/GetListChangePriceHistory'
+                // apiConfig.purchase.GetListBuyedHistory = resultMyParam.apierp + 'partner/GetListBuyedHistory'
+                // //#endregion
+
+                // //#region priceRequest
+                // apiConfig.purchase.GetListPriceRequest = resultMyParam.apierp + 'partnermaster/GetListPriceRequest'
+                // apiConfig.purchase.GetPriceRequest = resultMyParam.apierp + 'partnermaster/GetPriceRequest'
+                // apiConfig.purchase.UpdatePriceRequest = resultMyParam.apierp + 'partnermaster/UpdatePriceRequest'
+                // apiConfig.purchase.DeletePriceRequest = resultMyParam.apierp + 'partnermaster/DeletePriceRequest'
+                // apiConfig.purchase.UpdatePriceRequestStatus = resultMyParam.apierp + 'partnermaster/UpdatePriceRequestStatus'
+                // //#endregion
+
+                // //#region productRequest
+                // apiConfig.purchase.GetListProductPriceRequest = resultMyParam.apierp + 'partnermaster/GetListProductPriceRequest'
+                // apiConfig.purchase.GetProductPriceRequest = resultMyParam.apierp + 'partnermaster/GetProductPriceRequest'
+                // apiConfig.purchase.UpdateProductPriceRequest = resultMyParam.apierp + 'partnermaster/UpdateProductPriceRequest'
+                // apiConfig.purchase.UpdateProductPriceRequestStatus = resultMyParam.apierp + 'partnermaster/UpdateProductPriceRequestStatus'
+                // apiConfig.purchase.DeleteProductPriceRequest = resultMyParam.apierp + 'partnermaster/DeleteProductPriceRequest'
+                // apiConfig.purchase.GetProductPriceRequestByCode = resultMyParam.apierp + 'partnermaster/GetProductPriceRequestByCode'
+                // apiConfig.purchase.GetListCommercialTerm = resultMyParam.apierp + 'partnermaster/GetListCommercialTerm'
+                // apiConfig.purchase.ImportExcelProductPriceRequest = resultMyParam.apierp + 'partnermaster/ImportExcelProductPriceRequest'
+
+                // //#endregion
+
+                // //#region Payroll
+                // apiConfig.hr.GetListPayroll = resultMyParam.apierp + '/salary/GetListPayroll'
+                // apiConfig.hr.GetPayroll = resultMyParam.apierp + '/salary/GetPayroll'
+                // apiConfig.hr.UpdatePayrollStatus = resultMyParam.apierp + '/salary/UpdatePayrollStatus'
+                // apiConfig.hr.DeletePayroll = resultMyParam.apierp + '/salary/DeletePayroll'
+                // apiConfig.hr.UpdatePayroll = resultMyParam.apierp + '/salary/UpdatePayroll'
+                // apiConfig.hr.GetListPaycheck = resultMyParam.apierp + '/salary/GetListPaycheck'
+                // apiConfig.hr.UpdatePaycheckStatus = resultMyParam.apierp + '/salary/UpdatePaycheckStatus'
+                // apiConfig.hr.DeletePaycheck = resultMyParam.apierp + '/salary/DeletePaycheck'
+                // apiConfig.hr.ImportExcelPaycheck = resultMyParam.apierp + '/salary/ImportExcelPaycheck'
+                // apiConfig.hr.GetTemplate = resultMyParam.apierp + '/salary/GetTemplate'
+                // apiConfig.hr.GetPaycheck = resultMyParam.apierp + '/salary/GetPaycheck'
+                // apiConfig.hr.GetPaycheckPortal = resultMyParam.apierp + '/salary/GetPaycheckPortal'
+                // apiConfig.hr.GetListPeriodPortal = resultMyParam.apierp + '/salary/GetListPeriodPortal'
+                // apiConfig.hr.DeleteAllPaycheck = resultMyParam.apierp + '/salary/DeleteAllPaycheck'
+                // //#endregion
+
+                // //#region Mua hàng nội địa
+                // apiConfig.purchase.GetListDomesticOrders = resultMyParam.apierp + '/domesticorder/GetListDomesticOrders'
+                // apiConfig.purchase.UpdateDomesticOrdersStatus = resultMyParam.apierp + '/domesticorder/UpdateDomesticOrdersStatus'
+                // apiConfig.purchase.DeleteDemesticOrders = resultMyParam.apierp + '/domesticorder/DeleteDemesticOrders'
+                // apiConfig.purchase.ImportOrderProduct = resultMyParam.apierp + '/domesticorder/ImportOrderProduct'
+                // apiConfig.purchase.GetListOrderProduct = resultMyParam.apierp + '/domesticorder/GetListOrderProduct'
+                // apiConfig.purchase.UpdateOrderProduct = resultMyParam.apierp + '/domesticorder/UpdateOrderProduct'
+                // apiConfig.purchase.DeleteOrderProduct = resultMyParam.apierp + '/domesticorder/DeleteOrderProduct'
+                // apiConfig.purchase.GetDeliveryOrder = resultMyParam.apierp + '/domesticorder/GetDeliveryOrder'
+                // apiConfig.purchase.GetListOrderInvoice = resultMyParam.apierp + '/domesticorder/GetListOrderInvoice'
+                // apiConfig.purchase.GetOrderProduct = resultMyParam.apierp + '/domesticorder/GetOrderProduct'
+                // apiConfig.purchase.GetDomesticOrder = resultMyParam.apierp + '/domesticorder/GetDomesticOrder'
+                // apiConfig.purchase.UpdateDomesticOrder = resultMyParam.apierp + '/domesticorder/UpdateDomesticOrder'
+                // apiConfig.purchase.GetListWareHouse = resultMyParam.apierp + '/domesticorder/GetListWareHouse'
+                // apiConfig.purchase.DuplicatePOCancel = resultMyParam.apierp + '/domesticorder/DuplicatePOCancel'
+                // apiConfig.purchase.GenerateInvoice = resultMyParam.apierp + '/domesticorder/GenerateInvoice'
+                // apiConfig.purchase.GenerateInvoiceByVAT = resultMyParam.apierp + '/domesticorder/GenerateInvoiceByVAT'
+                // apiConfig.purchase.UpdateOrderInvoiceProduct = resultMyParam.apierp + '/domesticorder/UpdateOrderInvoiceProduct'
+
+                // apiConfig.purchase.GetListProductNotIncludedInvoice = resultMyParam.apierp + '/domesticorder/GetListProductNotIncludedInvoice'
+                // apiConfig.purchase.AddInvoiceProduct = resultMyParam.apierp + '/domesticorder/AddInvoiceProduct'
+                // apiConfig.purchase.UpdateInvoice = resultMyParam.apierp + '/domesticorder/UpdateInvoice'
+                // apiConfig.purchase.UpdateInvoiceStatus = resultMyParam.apierp + '/domesticorder/UpdateInvoiceStatus'
+                // apiConfig.purchase.UpdateInvoiceProduct = resultMyParam.apierp + '/domesticorder/UpdateInvoiceProduct'
+                // //#endregion
+
+                // //#region Nhóm kênh bán hàng
+                // apiConfig.ecommerce.GetListChannelGroup = resultMyParam.apierp + '/channelgroup/GetListChannelGroup'
+                // apiConfig.ecommerce.GetListChildChannelGroup = resultMyParam.apierp + '/channelgroup/GetListChildChannelGroup'
+                // apiConfig.ecommerce.GetListPriority = resultMyParam.apierp + '/channelgroup/GetListPriority'
+                // apiConfig.ecommerce.UpdateChannelGroup = resultMyParam.apierp + '/channelgroup/UpdateChannelGroup'
+                // apiConfig.ecommerce.DeleteChannelGroup = resultMyParam.apierp + '/channelgroup/DeleteChannelGroup'
+                // apiConfig.ecommerce.GetListChannelGroupTwoLevel = resultMyParam.apierp + '/channelgroup/GetListChannelGroupTwoLevel'
+                // apiConfig.ecommerce.GetListChannelGroupProduct = resultMyParam.apierp + '/channelgroup/GetListChannelGroupProduct'
+
+                // //#endregion
+
+                // //#region kênh bán hàng ERP
+                // apiConfig.ecommerce.GetListChannelNew = resultMyParam.apierp + '/channel/GetListChannelNew'
+                // apiConfig.ecommerce.GetListChannelInGroup = resultMyParam.apierp + '/channel/GetListChannelInGroup'
+                // apiConfig.ecommerce.ErpUpdateChannel = resultMyParam.apierp + '/channel/UpdateChannel'
+                // apiConfig.ecommerce.ErpUpdateChannelStatus = resultMyParam.apierp + '/channel/UpdateChannelStatus'
+                // apiConfig.ecommerce.ErpDeleteChannel = resultMyParam.apierp + '/channel/DeleteChannel'
+                // //#endregion
+
+                // //#region sản phẩm kênh bán hàng
+                // apiConfig.ecommerce.GetListProductChannelGroup = resultMyParam.apierp + '/channelgroupproduct/GetListProductChannelGroup'
+                // apiConfig.ecommerce.GetChannelGroupProduct = resultMyParam.apierp + '/channelgroupproduct/GetChannelGroupProduct'
+                // apiConfig.ecommerce.UpdateChannelGroupProduct = resultMyParam.apierp + '/channelgroupproduct/UpdateChannelGroupProduct'
+                // apiConfig.ecommerce.UpdateStatusChannelGroupProduct = resultMyParam.apierp + '/channelgroupproduct/UpdateStatusChannelGroupProduct'
+                // apiConfig.ecommerce.DeleteChannelGroupProduct = resultMyParam.apierp + '/channelgroupproduct/DeleteChannelGroupProduct'
+
+                // //#endregion
+
+                // //#region chính sách onboarding và offboardinng
+                // apiConfig.hr.GetListHRPolicy = resultMyParam.apierp + 'policy/GetListHRPolicy'
+                // apiConfig.hr.GetHRPolicy = resultMyParam.apierp + 'policy/GetHRPolicy'
+                // apiConfig.hr.GetListHRPolicyTask = resultMyParam.apierp + 'policy/GetListHRPolicyTask'
+                // apiConfig.hr.GetHRPolicyTask = resultMyParam.apierp + 'policy/GetHRPolicyTask'
+                // apiConfig.hr.GetListHRPolicyApply = resultMyParam.apierp + 'policy/GetListHRPolicyApply'
+                // apiConfig.hr.GetHRPolicyApply = resultMyParam.apierp + 'policy/GetHRPolicyApply'
+                // apiConfig.hr.GetHRPolicyPosition = resultMyParam.apierp + 'policy/GetHRPolicyPosition'
+                // apiConfig.hr.GetListHRPolicyPosition = resultMyParam.apierp + 'policy/GetListHRPolicyPosition'
+                // apiConfig.hr.GetListHRPolicyLocation = resultMyParam.apierp + 'policy/GetListHRPolicyLocation'
+                // apiConfig.hr.GetListHRTaskException = resultMyParam.apierp + 'policy/GetListHRTaskException'
+                // apiConfig.hr.GetListHRPolicySysTask = resultMyParam.apierp + 'policy/GetListHRPolicySysTask'
+                // apiConfig.hr.ImportHRPolicyApply = resultMyParam.apierp + 'policy/ImportHRPolicyApply'
+                // apiConfig.hr.ImportHRPolicyTask = resultMyParam.apierp + 'policy/ImportHRPolicyTask'
+                // apiConfig.hr.UpdateHRPolicy = resultMyParam.apierp + 'policy/UpdateHRPolicy'
+                // apiConfig.hr.UpdateHRPolicyStatus = resultMyParam.apierp + 'policy/UpdateHRPolicyStatus'
+                // apiConfig.hr.UpdateHRPolicyLimit = resultMyParam.apierp + 'policy/UpdateHRPolicyLimit'
+                // apiConfig.hr.UpdateHRPolicyTask = resultMyParam.apierp + 'policy/UpdateHRPolicyTask'
+                // apiConfig.hr.DeleteHRPolicy = resultMyParam.apierp + 'policy/DeleteHRPolicy'
+                // apiConfig.hr.DeleteHRPolicyTask = resultMyParam.apierp + 'policy/DeleteHRPolicyTask'
+                // apiConfig.hr.DeleteHRPolicyLimit = resultMyParam.apierp + 'policy/DeleteHRPolicyLimit'
+                // apiConfig.hr.UpdateHRListPolicyTask = resultMyParam.apierp + 'policy/UpdateHRListPolicyTask'
+                // apiConfig.hr.UpdateHRPolicyLimitStatus = resultMyParam.apierp + 'policy/UpdateHRPolicyLimitStatus'
+                // apiConfig.hr.GetListHR = resultMyParam.apierp + 'staff/GetListHR'
+                // apiConfig.hr.GetListSYSTaskInFunction = resultMyParam.apierp + 'sys/GetListSYSTaskInFunction'
+
+                // //#endregion
+
+                // //#region Personal Profile Enterprise
+                // apiConfig.config.GetListHRPersonalProfile = resultMyParam.apierp + "personal/GetListHRPersonalProfile"
+                // apiConfig.config.GetHRPersonalProfile = resultMyParam.apierp + "personal/GetHRPersonalProfile"
+                // apiConfig.config.UpdateHRPersonalProfile = resultMyParam.apierp + "personal/UpdateHRPersonalProfile"
+                // apiConfig.config.UpdateHRPersonalCertificate = resultMyParam.apierp + "personal/UpdateHRPersonalCertificate"
+                // apiConfig.config.UpdateHRPersonalContact = resultMyParam.apierp + "personal/UpdateHRPersonalContact"
+                // apiConfig.config.UpdateHRPersonalAddress = resultMyParam.apierp + "personal/UpdateHRPersonalAddress"
+                // //#endregion
+
+                // //#region Quyết định nhân sự
+                // apiConfig.hr.GetListHRDecisionMaster = resultMyParam.apierp + "decision/GetListHRDecisionMaster"
+                // apiConfig.hr.GetHRDecisionMaster = resultMyParam.apierp + "decision/GetHRDecisionMaster"  
+                // apiConfig.hr.GetListHRDecisionProfile = resultMyParam.apierp + "decision/GetListHRDecisionProfile"
+                // apiConfig.hr.GetHRDecisionProfile = resultMyParam.apierp + "decision/GetHRDecisionProfile"
+                // apiConfig.hr.GetListHRDecisionTask = resultMyParam.apierp + "decision/GetListHRDecisionTask"
+                // apiConfig.hr.GetHRDecisionTask = resultMyParam.apierp + "decision/GetHRDecisionTask"
+                // apiConfig.hr.GetListHRPetitionMaster = resultMyParam.apierp + "decision/GetListHRPetitionMaster"
+                // apiConfig.hr.GetHRPetitionMaster = resultMyParam.apierp + "decision/GetHRPetitionMaster"  
+                // apiConfig.hr.UpdateHRDecisionMaster = resultMyParam.apierp + "decision/UpdateHRDecisionMaster"
+                // apiConfig.hr.UpdateHRDecisionMasterStatus = resultMyParam.apierp + "decision/UpdateHRDecisionMasterStatus"
+                // apiConfig.hr.UpdateHRDecisionProfile = resultMyParam.apierp + "decision/UpdateHRDecisionProfile"
+                // apiConfig.hr.DeleteHRDecisionMaster = resultMyParam.apierp + "decision/DeleteHRDecisionMaster"
+                // apiConfig.hr.DeleteHRDecisionProfile = resultMyParam.apierp + "decision/DeleteHRDecisionProfile"
+                // apiConfig.hr.UpdateHRPetitionMaster = resultMyParam.apierp + "decision/UpdateHRPetitionMaster"
+                // apiConfig.hr.UpdateHRDecisionTask = resultMyParam.apierp + "decision/UpdateHRDecisionTask"
+                // apiConfig.hr.DeleteHRDecisionTask = resultMyParam.apierp + "decision/DeleteHRDecisionTask"
+                
+
+                // apiConfig.hr.GetHREmployeeByID = resultMyParam.apierp + "staff/GetHREmployeeByID"
+                // apiConfig.hr.GetListPositionDepartment = resultMyParam.apierp + "hr/GetListPositionDepartment"
+                // apiConfig.hr.GetListLocationDepartment = resultMyParam.apierp + "hr/GetListLocationDepartment"
+                // apiConfig.hr.GetHRPersonalProfileByCICN = resultMyParam.apierp + "personal/GetHRPersonalProfileByCICN"
+                
+
+                //#endregion
+
+                return apiConfig;
+            }
+
+            return resultMyParam;
+        }
+    </script>
+
+    <script id="myVersionJs" type="text/javascript" src="./assets/js/my-version.js?v=24"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body id="pageBody">
+    <div class="page-loading-index" id="pageLoadingIndex">
+        <div class="loading">
+            <svg src="assets/loading.svg"></svg>
+        </div>
+    </div>
+    <app-root></app-root>
+    <script src="runtime.js" type="module"></script>
+    <script src="polyfills.js" type="module"></script>
+    <script src="scripts.js" defer></script>
+    <script src="vendor.js" type="module"></script>
+    <script src="main.js" type="module"></script>
+</body>
+
+</html>

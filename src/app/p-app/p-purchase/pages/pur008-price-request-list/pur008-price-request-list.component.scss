@@ -1,0 +1,143 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    .pur008-price-request-list{
+
+        .dialogPrice{
+            .k-dialog-content {
+              font-size: 16px;
+              height: 150px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              text-align: center;
+            }
+          }
+
+        .header{
+            padding: 9px 10px !important;
+        }
+        .header-1{
+            display: flex;
+            justify-content: space-between;
+            .nav-btn-status,
+            kendo-buttongroup {
+                display: flex;
+                gap: 10px;
+            }
+        }
+        .header-2{
+            .date-price-request{
+                .group-filter{
+                    display: flex;
+                    gap: 10px;
+                    .dropdownlistCustom{
+                        width: 70px;
+                        height: 35px;
+                        min-width: unset;
+                        max-width: 70px !important;
+                        .k-input-inner{
+                            margin-top: 2px;
+                        }
+                    }
+
+                }
+            }
+        }
+
+        .body{
+            padding: 0 10px;
+            .grid-wrapper{
+                .k-grid{
+                    tbody{
+                        tr{
+                            td:first-child{
+                                padding-left: 12px;
+                                // display: flex;
+                                // width: 0px;
+                                // .expand-text{
+                                //     top: 50px;
+                                //     left: 50px;
+                                // }
+                            }
+                            td.k-hierarchy-cell{
+                                // a{
+                                //     position: relative;
+                                //     color: red !important;
+                                //     font-size: large;
+                                //     font-weight: 700;
+                                // }
+                                // .collapse-text{
+                                //     top: 22px;
+                                //     left: 68px;
+                                // }
+                            }
+                        }
+                        .no-expand .k-hierarchy-cell{
+                            visibility: hidden;
+                        }
+                    }
+                    .col_status{
+                        display: flex;
+                        justify-content: flex-end;
+                        
+                    }
+                    .col_supplier,.col_reasonRequest{
+                        min-width: 300px !important;
+                        max-width: 350px;
+                        .remark,.label{
+                            display: -webkit-box;
+                            -webkit-line-clamp: 2;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            word-wrap: break-word;
+                            white-space: normal;
+                        }
+                        .label{
+                            font-weight: 700;
+                        }
+                        .range-date{
+                            display: flex;
+                        }
+                    }
+                    .col_detailProd{
+                        .detail{
+                            display: flex;
+                            justify-content: space-between;
+                        }
+                    }
+                    .hdc_requester,.hdc_approver{
+                        .k-link{
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+                    }
+                    .col_requester,.col_approver{
+                        min-width: 200px;
+                        .request-name{
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
+                            .label{
+                                display: -webkit-box;
+                                -webkit-line-clamp: 1;
+                                -webkit-box-orient: vertical;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                word-wrap: break-word;
+                                white-space: normal;
+                            }
+                            .birth-date{
+                                text-align: center;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

@@ -1,0 +1,481 @@
+.color-white {
+  color: #ffffff;
+}
+
+.color-gray {
+  color: #23282c;
+}
+
+.color-darkblue {
+  color: #39579a;
+}
+
+.color-blue {
+  color: #008cd7;
+}
+
+.color-lightblue {
+  color: #46b1ff;
+}
+
+.color-darkgreen {
+  color: #316e00;
+}
+
+.color-green {
+  color: #649e0f;
+}
+
+.color-lightgreen {
+  color: #8dc63f;
+}
+
+.color-yellowgreen {
+  color: #c1d72e;
+}
+
+.color-yellow {
+  color: #ffc400;
+}
+
+.color-mediumyellow {
+  color: #FFB900;
+}
+
+.color-orangeyellow {
+  color: #ffab00;
+}
+
+.color-lightorange {
+  color: #ff5230;
+}
+
+.color-lightpink {
+  color: #dc3545;
+}
+
+.color-red {
+  color: #d82c12;
+}
+
+.color-badred {
+  color: #EB273A;
+}
+
+.hachi-color-primary-1 {
+  color: #353935;
+}
+
+.hachi-color-primary-2 {
+  color: #868b86;
+}
+
+.hachi-color-primary-3 {
+  color: #8dc63f;
+}
+
+.hachi-color-primary-4 {
+  color: #c1d72e;
+}
+
+.hachi-color-primary-5 {
+  color: #ffffff;
+}
+
+.hachi-color-secondary-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-1 {
+  color: #46b1ff;
+}
+
+.hachi-color-text-2 {
+  color: #868b86;
+}
+
+.hachi-color-text-3 {
+  color: #008cd7;
+}
+
+.hachi-color-text-4 {
+  color: #d82c12;
+}
+
+.hachi-color-text-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-6 {
+  color: #ffffff;
+}
+
+.hachi-color-text-7 {
+  color: #8dc63f;
+}
+
+.hachi-color-text-8 {
+  color: #626662;
+}
+
+.hachi-color-text-10 {
+  color: #ff5230;
+}
+
+.hachi-color-text-9 {
+  color: #bbc0bb;
+}
+
+.hachi-color-text-11 {
+  color: #dc3545;
+}
+
+.hachi-color-text-12 {
+  color: #828282;
+}
+
+::ng-deep .app-mar019-discount-hamper {
+  height: calc(93vh - 30px);
+  padding: 0 15px 35px 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+::ng-deep .app-mar019-discount-hamper .header {
+  display: flex;
+  column-gap: 10px;
+  padding: 9px 0;
+  margin-bottom: 0;
+  border-bottom: 1px solid rgba(143, 155, 166, 0.4);
+}
+
+::ng-deep .app-mar019-discount-hamper .header.header-1 .k-dropdownlist {
+  width: 300px;
+}
+
+::ng-deep .app-mar019-discount-hamper .header.header-1 .k-dropdownlist .k-input {
+  column-gap: 5px;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .checkbox-btn-group {
+  border-radius: 15px;
+  height: fit-content;
+  margin-top: auto;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .checkbox-btn-group:hover, ::ng-deep .app-mar019-discount-hamper .header .checkbox-btn-group.active, ::ng-deep .app-mar019-discount-hamper .header .checkbox-btn-group.k-state-active {
+  border: 1px solid #1a6634;
+  background-image: none;
+  background-color: white;
+  color: initial;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .checkbox-btn-group:hover .k-checkbox, ::ng-deep .app-mar019-discount-hamper .header .checkbox-btn-group.active .k-checkbox, ::ng-deep .app-mar019-discount-hamper .header .checkbox-btn-group.k-state-active .k-checkbox {
+  background-color: #1a6634;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .checkbox-btn-group .k-checkbox {
+  margin-left: 8px;
+  border-color: #1a6634;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .label {
+  margin-bottom: 6px;
+  font-weight: 700;
+  font-size: 13px;
+  color: #5c6873;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .label.fake {
+  visibility: hidden;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-btn {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-filter {
+  column-gap: 10px;
+  flex-grow: 0;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-filter .filter-btn-group.clear-btn-group .label {
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-filter .filter-btn-group.clear-btn-group .clear-filter-btn {
+  color: #5CB800;
+  border: none;
+  background: none;
+  text-decoration: underline;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-filter .filter-btn-group.search-btn-group {
+  margin-right: 5px;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-filter .filter-btn-group.search-btn-group .search-btn {
+  position: relative;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-filter .filter-btn-group.search-btn-group .search-btn .k-i-search {
+  position: absolute;
+  height: 100%;
+  width: 30px;
+  z-index: 1;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-filter .filter-btn-group.search-btn-group .search-btn .k-textbox {
+  padding-left: 30px;
+  min-width: fit-content;
+  width: 272px;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-filter .filter-btn-group.date-btn-group {
+  flex-grow: 1;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-filter .searchBtn {
+  height: 31px;
+  margin-bottom: 1px;
+  margin-top: auto;
+  background-color: #1a6634 !important;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-crud {
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-crud .onAddBtn {
+  height: 32px;
+  background-color: #1a6634 !important;
+  color: white;
+  font-weight: bold;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-crud .onAddBtn.k-dropdownlist {
+  width: fit-content;
+  width: -mozfit-content;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-crud .onAddBtn.k-dropdownlist .k-dropdown-wrap {
+  font-size: 11px;
+  background-color: #1a6634;
+  color: white;
+  border: none;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-crud .onAddBtn.k-dropdownlist .k-dropdown-wrap .k-input {
+  height: 100%;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-crud .onAddBtn.k-dropdownlist .k-state-focused {
+  width: 210px;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-crud .border-center {
+  margin: auto 0 1px 10px;
+  border-right: 1px solid #c8ced3;
+  height: 31px;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-file {
+  flex-grow: 0;
+  margin-left: auto;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-file .file-btn-group {
+  background: white;
+  box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+  border-radius: 3px;
+  color: #8f9ba6;
+  min-width: fit-content;
+  height: 32px;
+  display: flex;
+  margin-top: auto;
+  cursor: pointer;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-file .file-btn-group span.text {
+  margin: auto;
+  padding-right: 9px;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-file .file-btn-group .onImportBtn {
+  width: 64px;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-file .file-btn-group .onImportBtn .excel-ic {
+  width: 32px;
+  height: 100%;
+  margin-left: 2px;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-file .file-btn-group .border-center {
+  align-self: center;
+  height: 90%;
+  border-right: 1px solid #8f9ba6;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-file .file-btn-group .k-i-arrow-chevron-down {
+  text-align: center;
+  padding: 7px 0;
+  width: 32px;
+  height: 100%;
+}
+
+::ng-deep .app-mar019-discount-hamper .header .nav-file .file-btn-group .k-i-arrow-chevron-down:before {
+  font-size: 20px;
+}
+
+::ng-deep .app-mar019-discount-hamper .grid.scrollable .k-grid .k-grid-aria-root {
+  overflow-x: auto;
+}
+
+::ng-deep .app-mar019-discount-hamper .grid.scrollable .k-grid table {
+  width: 1370px;
+}
+
+::ng-deep .app-mar019-discount-hamper .grid.scrollable .k-grid tr {
+  position: initial;
+}
+
+::ng-deep .app-mar019-discount-hamper .grid.scrollable .k-grid tr td:last-child,
+::ng-deep .app-mar019-discount-hamper .grid.scrollable .k-grid tr th:last-child {
+  position: absolute;
+  top: initial;
+  margin-top: calc(1% - 10px);
+}
+
+::ng-deep .app-mar019-discount-hamper .k-grid {
+  color: #5c6873 !important;
+}
+
+::ng-deep .app-mar019-discount-hamper .k-grid .k-grid-header .k-header {
+  color: #5c6873 !important;
+}
+
+::ng-deep .app-mar019-discount-hamper .k-grid thead tr {
+  height: fit-content !important;
+}
+
+::ng-deep .app-mar019-discount-hamper .k-grid tr:not(.k-grouping-row) td:first-child {
+  padding-left: 10px !important;
+}
+
+::ng-deep .app-mar019-discount-hamper .k-grid tr {
+  color: #5c6873;
+}
+
+::ng-deep .app-mar019-discount-hamper .k-grid tr .img_chuongtrinhkhuyenmai {
+  max-width: 380px;
+  width: 380px;
+}
+
+::ng-deep .app-mar019-discount-hamper .k-grid tr .img_chuongtrinhkhuyenmai .img {
+  position: relative;
+  margin-bottom: 9px;
+}
+
+::ng-deep .app-mar019-discount-hamper .k-grid tr .img_chuongtrinhkhuyenmai .img img {
+  max-width: 100%;
+  border-radius: 3px;
+}
+
+::ng-deep .app-mar019-discount-hamper .k-grid tr .img_chuongtrinhkhuyenmai .img .tenchuongtrinh {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  padding: 3px;
+  font-weight: bold;
+}
+
+::ng-deep .app-mar019-discount-hamper .k-grid tr .img_chuongtrinhkhuyenmai .img:not(.noImg) .tenchuongtrinh {
+  color: white;
+}
+
+::ng-deep .app-mar019-discount-hamper .k-grid tr .img_chuongtrinhkhuyenmai .apdung {
+  color: #959db3;
+}
+
+::ng-deep .app-mar019-discount-hamper .k-grid tr .img_chuongtrinhkhuyenmai .apdung.green {
+  color: #008000;
+}
+
+::ng-deep .app-mar019-discount-hamper .k-grid tr .img_chuongtrinhkhuyenmai .apdung.red {
+  color: #EB273A;
+}
+
+::ng-deep .app-mar019-discount-hamper .k-grid tr .img_chuongtrinhkhuyenmai .apdung.yellow {
+  color: #FFB900;
+}
+
+::ng-deep .app-mar019-discount-hamper .k-grid tr .phanloaichuongtrinh .chuongtrinh {
+  margin-bottom: 5px;
+}
+
+::ng-deep .app-mar019-discount-hamper .k-grid tr .ngaybatdau,
+::ng-deep .app-mar019-discount-hamper .k-grid tr .ngayketthuc {
+  text-align: center;
+}
+
+::ng-deep .app-mar019-discount-hamper .k-grid tr .ngaybatdau .k-link,
+::ng-deep .app-mar019-discount-hamper .k-grid tr .ngayketthuc .k-link {
+  justify-content: center;
+}
+
+::ng-deep .app-mar019-discount-hamper .k-grid tr .mota {
+  min-width: 200px;
+}
+
+@media screen and (max-width: 1400px) {
+  ::ng-deep .app-mar019-discount-hamper .k-grid tr .mota {
+    min-width: 0;
+  }
+}
+
+::ng-deep .app-mar019-discount-hamper .k-grid tr .mota div {
+  max-height: 59px;
+}
+
+::ng-deep .app-mar019-discount-hamper .k-grid tr td {
+  padding: 3px 7px 5px;
+}
+
+::ng-deep .app-mar019-discount-hamper .k-grid tr td.ngaybatdau .conlai, ::ng-deep .app-mar019-discount-hamper .k-grid tr td.ngayketthuc .conlai {
+  font-weight: 500;
+  color: white;
+  background-color: #D82C12;
+  min-height: 26px;
+  min-width: 60px;
+  width: fit-content;
+  width: -moz-fit-content;
+  border-radius: 3px;
+  padding: 3px 0;
+  margin: 2px auto 0;
+}
+
+::ng-deep .app-mar019-discount-hamper .k-grid tr td.mota {
+  white-space: normal !important;
+  padding-right: 50px;
+}
+
+::ng-deep .app-mar019-discount-hamper .myCustomGrid.k-grid tr:not(.k-grouping-row) td:first-child {
+  padding-left: 0;
+}
+
+::ng-deep .dropdownDonVi_subitem {
+  padding-left: 20px;
+}

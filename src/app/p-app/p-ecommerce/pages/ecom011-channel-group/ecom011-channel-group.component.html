@@ -1,0 +1,418 @@
+<div class="app-drawer-container">
+
+    <mat-drawer-container [hasBackdrop]="true">
+
+
+        <!-- START CONTENT -->
+        <mat-drawer-content>
+            <div class="app-ecom011-channel-group">
+
+                <!-- START HEADER -->
+                <div class="header">
+                    <div class="breadcum">
+                        <app-p-kendo-breadcrumb (loadData)="reloadData()"></app-p-kendo-breadcrumb>
+                    </div>
+
+                    <div class="nav-btn nav-crud">
+                        <button kendoButton class="onAddBtn k-button btn-hachi hachi-primary"
+                            *ngIf="isShowAddGC && (isAllPers == true || isCanCreate == true)"
+                            (click)="onOpenDrawer('create',null,'sameLevel')"
+                            imageUrl="assets/img/icon/icon_site_map.svg">
+                            THÊM MỚI NHÓM
+                        </button>
+                        <button kendoButton class="onAddBtn k-button btn-hachi hachi-primary"
+                            *ngIf="isShowAddGCChild && (isAllPers == true || isCanCreate == true)"
+                            (click)="onOpenDrawer('create',null,'childLevel')"
+                            imageUrl="assets/img/icon/icon_site_map.svg">
+                            THÊM MỚI NHÓM CON
+                        </button>
+                    </div>
+                </div>
+                <!-- END HEADER -->
+
+
+                <!-- START TREE LIST -->
+                <div class="treelist-wrapper">
+                    <kendo-treelist #treeGroupChannel [data]="listChannelGroup" [fetchChildren]="fetchChildren"
+                        [loading]="isLoadingTree" [hasChildren]="hasChildren" kendoTreeListSelectable
+                        [hideHeader]="true" [selectable]="settings" (selectionChange)="selectionChange($event)"
+                        [isExpanded]="isExpanded" (expand)="onExpand($event)" (collapse)="onCollapse($event)"
+                        [initiallyExpanded]="true" kendoTreeListExpandable>
+
+                        <kendo-treelist-column [expandable]="true">
+                            <ng-template kendoTreeListCellTemplate let-dataItem>
+
+                                <div class="colNameTree colNameTreeBold" *ngIf="dataItem.ParentID  == null">
+                                    <img loading="lazy" class="colName-icon"
+                                        src="assets/img/icon/icon_departmentGray.svg" />
+
+                                    <div class="text-name">
+                                        <span title="{{dataItem.ChannelGroupName}}"> {{ dataItem.ChannelGroupName
+                                            }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="colNameTree " *ngIf="dataItem.ParentID">
+                                    <img loading="lazy" class="colName-icon"
+                                        src="assets/img/icon/icon_departmentGray.svg" />
+
+                                    <div class="text-name">
+                                        <span title="{{dataItem.ChannelGroupName}}"> {{ dataItem.ChannelGroupName
+                                            }}</span>
+                                    </div>
+                                </div>
+
+                            </ng-template>
+                        </kendo-treelist-column>
+
+                        <kendo-treelist-column>
+                            <ng-template kendoTreeListCellTemplate let-dataItem>
+                                <div class="colNameTree ">
+                                    <div class="text-name">
+                                        <span title="{{dataItem.ChannelGroupName}}"> {{ dataItem.ChannelGroupID
+                                            }}</span>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </kendo-treelist-column>
+
+
+                        <!-- COL IMG/COUNT -->
+                        <kendo-treelist-column>
+                            <ng-template kendoTreeListCellTemplate let-dataItem>
+                                <div class="colNameTree" *ngIf="dataItem.ListGroup">
+                                    <div class="text-name">
+                                        <span title="{{dataItem.ChannelGroupName}}"> {{ dataItem.ListGroup?.length }}
+                                            nhóm con</span>
+                                    </div>
+                                </div>
+
+                                <div class="colNameTree" *ngIf="dataItem.ListIcon.length > 0 && dataItem.TypeData == 2">
+
+                                    <div class="image-container">
+                                        <ng-container *ngFor="let i of dataItem.ListIcon; let index = index">
+                                            <div class="image-wrapper">
+                                                <img [src]="i" *ngIf="i && index < 3">
+                                                <div class="overlay"
+                                                    *ngIf="index === 2 && dataItem.ListIcon.length > 3 && i != ''">
+                                                    <span class="labelOverlay">
+                                                        + {{dataItem.ListIcon.length - 3}}</span>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+
+                                </div>
+
+                            </ng-template>
+                        </kendo-treelist-column>
+
+                        <!-- DROPDOWN ACTION -->
+                        <kendo-treelist-column field="id" [width]="50">
+                            <ng-template kendoTreeListCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                <kendo-button #anchor class="k-button k-button-icon togglePopup"
+                                    [ngClass]="{'opendPopup':popupShow}" icon="more-horizontal"
+                                    (click)="togglePopup(rowIndex, dataItem)"></kendo-button>
+                            </ng-template>
+                        </kendo-treelist-column>
+                    </kendo-treelist>
+                </div>
+                <!-- END TREE LIST -->
+
+
+            </div>
+        </mat-drawer-content>
+        <!-- END CONTENT -->
+
+
+        <!-- START DRAWER -->
+        <mat-drawer #Drawer [mode]="'over'" position="end" [hasBackdrop]="true" (keydown.Enter)="onKeydownEnter($event)"
+            [disableClose]='true'>
+
+            <div class="formModule">
+                <legend class="title-formChannel">NHÓM KÊNH BÁN HÀNG</legend>
+                <div class="container-form">
+                    <form class="formChannel" [formGroup]="MultiOOPForm">
+
+                        <!-- NAME CHANNEL -->
+                        <kendo-label class="k-form customLabel">
+                            <div class="label">
+                                <span class="labelName"> Nhóm kênh bán hàng
+                                    <span class="symbol">(*)</span>
+                                </span>
+                            </div>
+                            <app-p-textbox [propName]="'ChannelGroupName'" (blur)="onBlurForm('ChannelGroupName')"
+                                formControlName="ChannelGroupName" [disabled]="isCanApproved"></app-p-textbox>
+                        </kendo-label>
+
+
+                        <!-- ID CHANNEL -->
+                        <kendo-label class="k-form mt-10 customLabel">
+                            <div class="left">
+                                <div class="label">
+                                    <span class="labelName"><span class="name">Mã nhóm kênh</span>
+                                        <span class="symbol">(*)</span>
+                                    </span>
+                                </div>
+
+                                <app-p-textbox [propName]="'ChannelGroupID'" formControlName="ChannelGroupID"
+                                    (blur)="onBlurForm('ChannelGroupID')" class="codeGRC"
+                                    [disabled]="isCanApproved"></app-p-textbox>
+                            </div>
+
+                            <div class="right" *ngIf="currentDrawer == 'channel'">
+                                <div class="checkbox-item">
+                                    <label>
+                                        Trung tâm phân bổ tồn kho
+                                        <input type="checkbox" class="k-checkbox" formControlName="IsPoolStock"
+                                            (change)="onBlurForm('IsPoolStock')" [disabled]="isCanApproved" />
+                                    </label>
+                                </div>
+
+                                <div class="checkbox-item pt-10">
+                                    <label>
+                                        Không tham gia phân bổ tồn
+                                        <input type="checkbox" class="k-checkbox"
+                                            formControlName="IsOutDistributedStock"
+                                            (change)="onBlurForm('IsOutDistributedStock')" [disabled]="isCanApproved" />
+                                    </label>
+                                </div>
+                            </div>
+                        </kendo-label>
+
+
+                        <!-- DROPDOWN -->
+                        <kendo-label class="k-form mt-10 d-block customLabel">
+                            <div class="label">
+                                <span class="labelName">
+                                    <span class="name"> Nhóm kênh cấp cha </span>
+                                </span>
+                            </div>
+
+                            <kendo-dropdowntree kendoDropDownTreeExpandable
+                                [kendoDropDownTreeHierarchyBinding]="listParentChannel" textField="ChannelGroupName"
+                                valueField="Code" childrenField="ListGroup" [filterable]="true" [expandOnFilter]="true"
+                                (valueChange)="onSelectedDropdownList($event)" formControlName="ParentID"
+                                [popupSettings]=" { appendTo: 'component' }" [loading]="loadingDropdownTree"
+                                [disabled]="isCanApproved" [ngClass]="{'disable':isCanApproved}">
+                                <ng-template kendoDropDownTreeNodeTemplate let-dataItem let-index="index">
+                                    <div [ngClass]="{'nullItem': dataItem.Code === null}">
+                                        <img loading="lazy" class="colName-icon"
+                                            src="assets/img/icon/icon_departmentGray.svg" />
+                                        {{dataItem.ChannelGroupName }}
+                                    </div>
+                                </ng-template>
+                            </kendo-dropdowntree>
+
+
+                        </kendo-label>
+
+
+
+                        <!-- START CHANGED PART -->
+                        <kendo-label class="k-form ListChannel"
+                            *ngIf="currentDrawer == 'channel' || currentDrawer == 'channelGroup'">
+                            <div class="label">
+                                <div class="labelTitle">
+                                    {{currentDrawer == 'channelGroup' ? 'Nhóm cấp con': 'Kênh quản lý' }}
+                                    <span class="symbol">(*)</span>
+                                    <span class="ExpandListChild" (click)="onChangeCE(1)">
+                                        <span class="blueItalic">
+                                            ({{currentDrawer == 'channelGroup' ?
+                                            this.countGroup : this.countChannel}}
+                                            {{currentDrawer == 'channelGroup' ? 'nhóm con': 'kênh bán hàng'}})
+                                        </span>
+                                        <img loading="lazy" class="colName-icon"
+                                            src="assets/img/icon/icon_BoxCollapse.svg"
+                                            *ngIf="ExpandListChildGroupChannel == true" />
+                                        <img loading="lazy" class="colName-icon"
+                                            src="assets/img/icon/icon_BoxExpanded.svg"
+                                            *ngIf="ExpandListChildGroupChannel == false" />
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- List channelGroup -->
+                            <div class="listChild"
+                                *ngIf="ExpandListChildGroupChannel && currentDrawer == 'channelGroup'">
+                                <div *ngFor="let i of ListChildChannelGroup" class="listChild-item">
+                                    <div class="leftSide">
+                                        <label>
+                                            <input type="checkbox" class="k-checkbox" [checked]="i.IsChild"
+                                                (change)="onCheckboxChangeGroupChannel(i)" [disabled]="isCanApproved" />
+                                            <span class="labelName">{{i.ChannelGroupName}}</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- List channel -->
+                            <div class="listChild" *ngIf="ExpandListChildGroupChannel && currentDrawer == 'channel'">
+                                <div *ngFor="let i of ListChannelInGroup" class="listChild-item">
+                                    <div class="left">
+                                        <label>
+                                            <input type="checkbox" class="k-checkbox" [checked]="i.IsChild"
+                                                (change)="onCheckboxChangeChannel(i)" [disabled]="isCanApproved" />
+                                            <span class="labelName">{{i.ChannelName}}</span>
+                                        </label>
+
+                                    </div>
+
+                                    <div class="cover-Img">
+                                        <img loading="lazy" class="colName-icon" *ngIf="currentDrawer == 'channel'"
+                                            [src]="getRes(i.ImageSetting,'image' + i.Code)"
+                                            (error)="handleError('image' + i.Code)" />
+                                    </div>
+                                </div>
+                            </div>
+                        </kendo-label>
+
+                        <kendo-label class="k-form customLabel" *ngIf="currentDrawer == 'channel'">
+                            <div class="labelPri">
+                                <span class="labelNamePri">
+                                    <span class="leftSide">
+                                        Thứ tự phân bổ tồn kho
+                                        <span class="symbol">(*)</span>
+
+                                        <span class="ExpandListChild" (click)="onChangeCE(2)">
+                                            <span class="blueItalic"> {{positionGroupChannel !== null ?
+                                                positionGroupChannel: 0}} </span>
+                                            <img loading="lazy" class="colName-icon"
+                                                src="assets/img/icon/icon_BoxCollapse.svg"
+                                                *ngIf="ExpandListChildChannel == true" />
+                                            <img loading="lazy" class="colName-icon"
+                                                src="assets/img/icon/icon_BoxExpanded.svg"
+                                                *ngIf="ExpandListChildChannel == false" />
+                                        </span>
+                                    </span>
+                                    <span>
+                                        Thứ tự phân bổ
+                                    </span>
+                                </span>
+                            </div>
+
+                            <div class="main-grid" *ngIf="ExpandListChildChannel">
+                                <div class="item-grid" *ngFor="let item of ListPriority"
+                                    [ngClass]="{'currentItem': item.Code == this.MultiOOPForm.value.Code}">
+                                    <div class="content-item-left" title="{{item.ChannelGroupName}}">
+                                        {{item.ChannelGroupName}}</div>
+                                    <div class="content-item-mid">{{item.ChannelGroupID}}</div>
+                                    <div class="content-item-right">
+                                        <kendo-numerictextbox #numberic [spinners]="false" [format]="'n0'"
+                                            [min]="this.MultiOOPForm.value.Code != 0 ? 1 : 0" [autoCorrect]="true"
+                                            [propName]="''" [value]="item.Priority != null ? item.Priority : 0"
+                                            (blur)="onBlurPriority(item, numberic)"
+                                            [disabled]="isCanApproved"></kendo-numerictextbox>
+                                    </div>
+                                </div>
+
+
+                                <div class="notice-grid" *ngIf="!ListPriority || ListPriority.length === 0">
+                                    <span> Không có dữ liệu để hiển thị</span>
+                                </div>
+
+                            </div>
+                        </kendo-label>
+
+                        <kendo-label class="k-form customLabel" *ngIf="currentDrawer == 'channel'">
+                            <div class="label">
+                                <span class="labelName" *ngIf="this.MultiOOPForm.value.Code !== 0">
+                                    Sản phẩm kinh doanh
+                                    <span class="ExpandListChild">
+                                        <span class="blueItalic" (click)="onOpenPage(delItem)"
+                                            [ngClass]="{'hidden': dataItem.NumOfProducts == 0 ||  dataItem.NumOfProducts == null}">
+                                            {{dataItem.NumOfProducts}} sản phẩm đang kinh doanh
+                                        </span>
+                                    </span>
+
+
+                                </span>
+
+                                <span class="labelName" *ngIf="this.MultiOOPForm.value.Code === 0">
+                                    Sản phẩm kinh doanh
+                                    <span class="ExpandListChild">
+                                        <span class="nonPro">Chưa có sản phẩm nào</span>
+                                    </span>
+                                </span>
+                            </div>
+                        </kendo-label>
+                        <!-- END CHANGED PART -->
+
+
+                        <!-- CASE CREATE NEW -->
+                        <kendo-label class="k-form customLabel" *ngIf="currentDrawer == ''">
+                            <div class="labelcn">
+                                <span class="labelNamecn">
+                                    Nhóm cấp con
+                                    <span class="ExpandListChild" (click)="onTransDrawer('channelGroup')">
+                                        <span class="blueItalic"> (chưa thiết lập) </span>
+                                        <img loading="lazy" class="colName-icon"
+                                            src="assets/img/icon/icon_BoxExpanded.svg" />
+                                    </span>
+                                </span>
+                            </div>
+
+                            <div class="labelcn">
+                                <span class="labelNamecn">
+                                    Kênh quản lý
+                                    <span class="ExpandListChild" (click)="onTransDrawer('channel')">
+                                        <span class="blueItalic"> (chưa thiết lập) </span>
+                                        <img loading="lazy" class="colName-icon"
+                                            src="assets/img/icon/icon_BoxExpanded.svg" />
+                                    </span>
+                                </span>
+                            </div>
+                        </kendo-label>
+
+                        <kendo-formerror>(*) Trường bắt buộc nhập.</kendo-formerror>
+                    </form>
+                </div>
+
+
+                <div class="footer-formChannel">
+                    <button kendoButton class="k-button btn-hachi hachi-primary hachi-secondary"
+                        (click)="onCloseDrawer()">
+                        Đóng
+                    </button>
+                    <button kendoButton class="k-button btn-hachi hachi-primary" (click)="onSubmitForm()"
+                        *ngIf="isAllPers == true || isCanCreate == true">
+                        {{MultiOOPForm.get('Code').value !== 0 ? 'CẬP NHẬT' : 'TẠO MỚI'}}
+                    </button>
+                </div>
+
+            </div>
+
+        </mat-drawer>
+        <!-- END DRAWER -->
+
+    </mat-drawer-container>
+
+    <!-- START POPUP ACTION MORE -->
+    <kendo-popup #stylePopup class="stylePopup" [style.visibility]="isPopupVisible()" [anchor]="getAnchor()"
+        *ngIf="popupShow" [anchorAlign]="{ horizontal:'left', vertical: 'top'}"
+        [popupAlign]="{ horizontal:'right', vertical: 'top'}">
+        <div *ngFor="let item of OptionTool; let i = index" class="popup-item" (click)="onActionDropdownBtn(item)">
+
+            <img loading="lazy" *ngIf="item.imageUrl" src="{{item.imageUrl}}" class="imgUrl_popup imgwhite">
+            <kendo-icon *ngIf="item.icon" class="{{item.icon}} k-icon"></kendo-icon>
+            <span class="popup-item-text">{{ item.text }}</span>
+        </div>
+    </kendo-popup>
+    <!-- END POPUP ACTION MORE -->
+
+
+    <!-- START DIALOG DELETE -->
+    <app-p-kendo-dialog *ngIf="isOpenConfirm" [title]="'XÓA NHÓM KÊNH'" (close)="onToggleDialog()"
+        (handleButton)="onDeleteDialog('yes')" [iconButton]="'delete'" [dialogType]="1"
+        [iconTitle]="'k-icon k-i-warning'">
+        <div class="text-center">
+            Bạn có chắc chắn muốn xóa nhóm kênh <br> <strong> {{delItem.ChannelGroupName}} </strong>
+            <p class="content-sub">
+                bị xóa sẽ <span style="color: red">KHÔNG</span> thể khôi phục lại.
+            </p>
+        </div>
+    </app-p-kendo-dialog>
+    <!-- END DIALOG DELETE -->
+
+</div>

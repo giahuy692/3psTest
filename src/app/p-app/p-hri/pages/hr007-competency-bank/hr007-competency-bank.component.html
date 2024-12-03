@@ -1,0 +1,385 @@
+<div class="header header-2">
+    <app-search-filter-group placeholder="Tìm theo mã, tên năng lực" (valueChange)="search($event)"
+        (onReset)="resetFilter()">
+    </app-search-filter-group>
+
+    <app-checkbox-button-group *ngFor="let item of listStatus; index as i" [title]="item.StatusName"
+        [checked]="item.Checked" (selectedChange)="selectedBtnChange($event, i)" [disabled]="!isFilterActive">
+    </app-checkbox-button-group>
+
+    <div class="nav-file nav-btn">
+        <div class="file-btn-group">
+            <button kendoButton id="onUploadBtn" class="k-button" [icon]="'export'" (click)="onImportExcel()"
+                [disabled]="!isFilterActive"></button>
+        </div>
+
+        <div class="file-btn-group">
+            <button kendoButton id="onDownloadBtn" class="k-button" [icon]="'import'" (click)="DownloadExcel()"
+                [disabled]="!isFilterActive">Template</button>
+        </div>
+    </div>
+</div>
+
+<div class="maturity-list">
+    <div class="maturity-item" *ngFor="let item of maturityList; index as i" [ngClass]="{'col-left': i == 0}">
+        <div class="title" [style.backgroundColor]="item.Color">
+            {{item.Title}}
+            <ng-container *ngIf="i == 0">
+                <span class="k-icon k-i-arrow-chevron-up" (click)="maturityList[0].Expand=false"
+                    *ngIf="maturityList[0].Expand"></span>
+                <span class="k-icon k-i-arrow-chevron-down" (click)="maturityList[0].Expand=true"
+                    *ngIf="!maturityList[0].Expand"></span>
+            </ng-container>
+        </div>
+
+        <kendo-textarea class="remark" *ngIf="maturityList[0].Expand" placeholder="Mô tả mức trưởng thành"
+            [readonly]="true" resizable="auto" [(value)]="item.DescriptionGuide" #maturity
+            (dblclick)="onDoubleClick(0,maturity, item)" (blur)="onBlur(maturity, item, 1)"
+            [title]="item.DescriptionGuide">
+        </kendo-textarea>
+    </div>
+</div>
+
+<div class="header header-3">
+    <div class="col-left">
+        <div class="title">PHÂN NHÓM NĂNG LỰC</div>
+        <button kendoButton class="k-button btn-add-circle" (click)="onAddCategory()">
+            <span class="k-icon k-i-plus"></span>
+            Thêm mới
+        </button>
+    </div>
+    <div class="title">DANH SÁCH NĂNG LỰC</div>
+</div>
+
+<div class="competency-group-list">
+    <div class="competency-group-item" *ngFor="let categoryItem of listCategory; index as cateIndex">
+        <div class="col-left">
+            <div class="title">
+                <div class="title_top">
+                    <kendo-textbox class="group-order" [(value)]="categoryItem.OrderBy"
+                        [title]="'Thứ tự: ' + categoryItem.OrderBy" [readonly]="true" #categoryOrderBy
+                        [disabled]="categoryItem.StatusID != 0 && categoryItem.StatusID != 4"
+                        (dblclick)="onDoubleClick(1,categoryOrderBy, categoryItem)" placeholder="Thứ tự"
+                        (blur)="onBlur(categoryOrderBy, categoryItem, 2)">
+                    </kendo-textbox>
+
+                    <kendo-textbox class="group-code"
+                        [style.backgroundColor]="seriesColors[cateIndex] ?? seriesColors[seriesColors.length - 1]"
+                        [(value)]="categoryItem.CategoryID" [title]="categoryItem.CategoryID" [readonly]="true"
+                        [disabled]="categoryItem.StatusID != 0 && categoryItem.StatusID != 4" #categoryCode
+                        (dblclick)="onDoubleClick(1,categoryCode, categoryItem)" placeholder="Mã phân nhóm"
+                        (blur)="onBlur(categoryCode, categoryItem, 2)">
+                    </kendo-textbox>
+
+                    <div class="btn-group">
+                        <span class="k-icon k-i-trash button-icon" title="Xóa Phân nhóm"
+                            (click)="onDeleteCategory(categoryItem)" *ngIf="categoryItem.StatusID == 0"></span>
+
+                        <span class="k-icon k-i-redo button-icon" title="Gửi Duyệt Phân nhóm"
+                            (click)="onUpdateCategoryStatus(categoryItem, 1)"
+                            *ngIf="categoryItem.Code != 0 && (categoryItem.StatusID == 0 || categoryItem.StatusID == 4)"></span>
+
+                        <span class="k-icon k-i-check-outline button-icon" title="Áp dụng Phân nhóm"
+                            (click)="onUpdateCategoryStatus(categoryItem, 2)"
+                            *ngIf="categoryItem.Code != 0 && (categoryItem.StatusID == 1 || categoryItem.StatusID == 3)"></span>
+
+                        <span class="k-icon k-i-undo button-icon" title="Trả về"
+                            (click)="onUpdateCategoryStatus(categoryItem, 4)"
+                            *ngIf="categoryItem.Code != 0 && (categoryItem.StatusID == 2 || categoryItem.StatusID == 3)"></span>
+                    </div>
+
+                    <div class="group-number">{{categoryItem.ListCompetence.length | number: '1.'}} năng lực</div>
+
+                    <label [for]="'categoryItem'+cateIndex" (click)="toggleCategory(categoryItem, cateIndex)">
+                        <span class="k-icon k-i-arrow-chevron-up" *ngIf="categoryItem.Expand"></span>
+                        <span class="k-icon k-i-arrow-chevron-down" *ngIf="!categoryItem.Expand"></span>
+                    </label>
+                </div>
+
+                <kendo-textbox class="group-name" [(value)]="categoryItem.CategoryName" [readonly]="true"
+                    [disabled]="categoryItem.StatusID != 0 && categoryItem.StatusID != 4" #categoryName
+                    placeholder="Tên phân nhóm" (dblclick)="onDoubleClick(1,categoryName, categoryItem)"
+                    (blur)="onBlur(categoryName, categoryItem, 2)" [title]="categoryItem.CategoryName">
+                </kendo-textbox>
+            </div>
+
+            <kendo-textarea class="remark" placeholder="Mô tả phân nhóm" [readonly]="true" resizable="none"
+                [(value)]="categoryItem.Remark" #category (dblclick)="onDoubleClick(1,category, categoryItem)"
+                (blur)="onBlur(category, categoryItem, 2)" [title]="categoryItem.Remark">
+            </kendo-textarea>
+        </div>
+
+        <div class="competency-list"
+            [ngClass]="{'hasChild': categoryItem.ListCompetence != null && categoryItem.ListCompetence.length > 0, 'expand': categoryItem['Expand'], 'colapse': !categoryItem['Expand']}">
+            <button kendoButton class="k-button btn-add-circle" (click)="onAddCompetence(categoryItem)"
+                *ngIf="categoryItem.Code != 0">
+                <span class="k-icon k-i-plus"></span>
+                Thêm mới năng lực
+            </button>
+
+            <app-p-kendo-grid *ngIf="categoryItem.ListCompetence != null && categoryItem.ListCompetence.length > 0"
+                [data]="categoryItem.gridView" class="scrollable" [scrollable]="'none'" [loading]="loading"
+                [pageSize]="pageSize" [skip]="categoryItem.gridView.skip" [take]="categoryItem.gridView.take"
+                [pagingMode]="2" [pageable]="true" [onPageChangeCallback]="pageChangeCbComp"
+                [getActionDropdownCallback]="getActionDropdownCallback"
+                [onActionDropdownClickCallback]="onActionDropdownClickCallback" [autoHeight]="false"
+                (mouseenter)="mouseenterCategory(categoryItem)">
+                <!-- [selectable]="selectSetting" -->
+                <kendo-grid-column class="content">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <div class="title">
+                            <kendo-textbox class="group-order" [(value)]="dataItem.OrderBy"
+                                [title]="'Thứ tự: ' + dataItem.OrderBy" [readonly]="true" #competenceOrderBy
+                                [disabled]="dataItem.StatusID != 0 && dataItem.StatusID != 4"
+                                (dblclick)="onDoubleClick(2,competenceOrderBy, dataItem, categoryItem)"
+                                placeholder="Thứ tự" (blur)="onBlur(competenceOrderBy, dataItem, 3, categoryItem)">
+                            </kendo-textbox>
+
+                            <kendo-textbox class="group-code"
+                                [style.backgroundColor]="seriesColors[cateIndex] ?? seriesColors[seriesColors.length - 1]"
+                                [(value)]="dataItem.CompetenceID" [readonly]="true" #competenceCode
+                                [disabled]="dataItem.StatusID != 0 && dataItem.StatusID != 4"
+                                (dblclick)="onDoubleClick(2,competenceCode, dataItem, categoryItem)"
+                                (blur)="onBlur(competenceCode, dataItem, 3, categoryItem)"
+                                [title]="'Mã năng lực: ' + dataItem.CompetenceID" placeholder="Mã năng lực">
+                            </kendo-textbox>
+
+                            <label class="group-name" [for]="'categoryItem'+cateIndex+'_dataItem'+rowIndex">
+                                <kendo-textbox class="name" [(value)]="dataItem.Competence" [readonly]="true"
+                                    [disabled]="dataItem.StatusID != 0 && dataItem.StatusID != 4" #competenceName
+                                    (dblclick)="onDoubleClick(2,competenceName, dataItem, categoryItem)"
+                                    (blur)="onBlur(competenceName, dataItem, 3, categoryItem)"
+                                    placeholder="Tên năng lực" [title]="'Tên năng lực: ' + dataItem.Competence">
+                                </kendo-textbox>
+
+                                <span class="status">Tình trạng:
+                                    <span [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID">
+                                    </span>
+                                </span>
+                            </label>
+
+                            <div class="btn-group">
+                                <ng-container *ngIf="dataItem['Expand'] == true">
+                                    <span class="k-icon k-i-plus button-icon" title="Thêm Khía cạnh"
+                                        (click)="onAddAspect(dataItem)" *ngIf="dataItem.Code != 0"></span>
+                                </ng-container>
+
+                                <!-- <span class="k-icon k-i-save" title="Lưu Năng lực"
+                                    (click)="UpdateCompetenceBank(dataItem)"></span> -->
+
+                                <span class="k-icon k-i-trash button-icon" title="Xóa Năng lực"
+                                    *ngIf="dataItem.StatusID == 0" (click)="onDeleteCompetence(dataItem)"></span>
+
+                                <span class="k-icon k-i-redo button-icon" title="Gửi Duyệt Năng lực"
+                                    (click)="onUpdateCompetenceStatus(dataItem,1)"
+                                    *ngIf="dataItem.Code != 0 && (dataItem.StatusID == 0 || dataItem.StatusID == 4)"></span>
+
+                                <span class="k-icon k-i-check-outline button-icon" title="Áp dụng Năng lực"
+                                    (click)="onUpdateCompetenceStatus(dataItem,2)"
+                                    *ngIf="dataItem.Code != 0 && dataItem.StatusID == 1"></span>
+
+                                <span class="k-icon k-i-undo button-icon" title="Trả về"
+                                    (click)="onUpdateCompetenceStatus(dataItem, 4)"
+                                    *ngIf="dataItem.Code != 0 && (dataItem.StatusID == 2 || dataItem.StatusID == 1)"></span>
+                            </div>
+
+                            <kendo-textarea class="group-remark" [(value)]="dataItem.Remark" [readonly]="true"
+                                [disabled]="dataItem.StatusID != 0 && dataItem.StatusID != 4" #competenceRemark
+                                (dblclick)="onDoubleClick(2,competenceRemark, dataItem, categoryItem)"
+                                (blur)="onBlur(competenceRemark, dataItem, 3, categoryItem)" [title]="dataItem.Remark"
+                                placeholder="Định nghĩa năng lực" row="2" resizable="none">
+                            </kendo-textarea>
+
+                            <!-- <kendo-textarea class="remark" *ngIf="maturityList[0].Expand" placeholder="Mô tả mức trưởng thành"
+                        [readonly]="true" resizable="auto" [(value)]="item.DescriptionGuide" #maturity
+                        (dblclick)="onDoubleClick(0,maturity, item)" (blur)="onBlur(maturity, item, 1)"
+                        [title]="item.DescriptionGuide"> 
+                            </kendo-textarea>-->
+                        </div>
+
+                        <div class="details aspectList" *ngIf="dataItem['Expand'] == true">
+                            <div class="aspectItem" *ngFor="let aspectItem of dataItem.ListChild; index as aspectI">
+                                <div class="title">
+                                    <span (click)="toggleAspect(aspectItem, aspectI)">
+                                        <kendo-textbox class="orderby" [(value)]="aspectItem.OrderBy" [readonly]="true"
+                                            [disabled]="dataItem.StatusID != 0 && dataItem.StatusID != 4" #aspectOrderBy
+                                            placeholder="Thứ tự" [title]="'Thứ tự: ' + aspectItem.OrderBy"
+                                            (dblclick)="onDoubleClick(2,aspectOrderBy, aspectItem, dataItem, categoryItem)"
+                                            (blur)="onBlur(aspectOrderBy, aspectItem, 4, dataItem)">
+                                        </kendo-textbox>
+
+                                        <kendo-textbox class="code" [(value)]="aspectItem.CompetenceID"
+                                            [style.borderColor]="seriesColors[cateIndex] ?? seriesColors[seriesColors.length - 1]"
+                                            [readonly]="true" #aspectCode placeholder="Mã khía cạnh"
+                                            [disabled]="dataItem.StatusID != 0 && dataItem.StatusID != 4"
+                                            [title]="'Mã khía cạnh: ' + aspectItem.CompetenceID"
+                                            (dblclick)="onDoubleClick(2,aspectCode, aspectItem, dataItem, categoryItem)"
+                                            (blur)="onBlur(aspectCode, aspectItem, 4, dataItem)">
+                                        </kendo-textbox>
+
+                                        <kendo-textbox class="name" [(value)]="aspectItem.Competence" [readonly]="true"
+                                            #aspectName placeholder="Tên khía cạnh"
+                                            [disabled]="dataItem.StatusID != 0 && dataItem.StatusID != 4"
+                                            [title]="'Tên khía cạnh: ' + aspectItem.Competence"
+                                            (dblclick)="onDoubleClick(2,aspectName, aspectItem, dataItem, categoryItem)"
+                                            (blur)="onBlur(aspectName, aspectItem, 4, dataItem)">
+                                        </kendo-textbox>
+                                    </span>
+
+                                    <span class="k-icon k-i-trash button-icon" title="Xóa khía cạnh"
+                                        (click)="onDeleteAspect(aspectItem, dataItem)"
+                                        *ngIf="dataItem.StatusID == 0 || aspectItem.StatusID == 0"></span>
+                                </div>
+                                <div class="remarkList">
+                                    <div class="sectorItem"
+                                        *ngFor="let sectorItem of aspectItem?.ListSector?.slice(0,5); index as sectorIndex">
+                                        <kendo-textarea class="remark" [readonly]="true" resizable="none"
+                                            [(value)]="sectorItem.Description"
+                                            [style.border]="'1px solid '+maturityList[sectorIndex+1].Color"
+                                            [placeholder]="'Mô tả mức ' + (sectorIndex+1)" #sector
+                                            [title]="sectorItem.Description"
+                                            (dblclick)="onDoubleClick(3,sector, sectorItem, aspectItem, dataItem, categoryItem)"
+                                            (blur)="onBlur(sector, sectorItem, 5, aspectItem)">
+                                        </kendo-textarea>
+
+                                        <div class="question_percent">
+                                            <kendo-button class="question" [disabled]="sectorItem.Code == 0"
+                                                [style.border]="'1px solid '+maturityList[sectorIndex+1].Color"
+                                                (click)="toggleDialogQuestionList(true, sectorItem, aspectItem, dataItem, categoryItem)"
+                                                icon="list-bulleted">
+                                                <i>{{ sectorItem.ListQuestion ? sectorItem.ListQuestion.length : 0 |
+                                                    number: '1.' }} câu hỏi
+                                                </i>
+                                            </kendo-button>
+
+                                            <kendo-numerictextbox class="percent" [spinners]="false" format="#,0"
+                                                [style.border]="'1px solid '+maturityList[sectorIndex+1].Color"
+                                                placeholder="TỶ LỆ" [value]="getQuestionRatio(sectorItem, aspectItem)"
+                                                [disabled]="true"
+                                                [title]="'TỶ LỆ: ' + getQuestionRatio(sectorItem, aspectItem)">
+                                            </kendo-numerictextbox>
+                                        </div>
+
+                                        <div class="code_point">
+                                            <kendo-textbox class="code"
+                                                [style.border]="'1px solid '+maturityList[sectorIndex+1].Color"
+                                                placeholder="MÃ" [(value)]="sectorItem.SectorID" [readonly]="true"
+                                                [disabled]="dataItem.StatusID != 0 && dataItem.StatusID != 4"
+                                                #sectorCode
+                                                (dblclick)="onDoubleClick(3,sectorCode, sectorItem, aspectItem, dataItem, categoryItem)"
+                                                (blur)="onBlur(sectorCode, sectorItem, 5, aspectItem)"
+                                                [title]="'MÃ: ' + sectorItem.SectorID">
+                                            </kendo-textbox>
+
+                                            <kendo-numerictextbox class="point" [spinners]="false" format="#,0"
+                                                [style.border]="'1px solid '+maturityList[sectorIndex+1].Color"
+                                                placeholder="ĐIỂM" [(value)]="sectorItem.Mark" [readonly]="true"
+                                                [disabled]="dataItem.StatusID != 0 && dataItem.StatusID != 4"
+                                                #sectorMark
+                                                (dblclick)="onDoubleClick(3,sectorMark, sectorItem, aspectItem, dataItem, categoryItem)"
+                                                (blur)="onBlur(sectorMark, sectorItem, 5, aspectItem)"
+                                                [title]="'ĐIỂM: ' + sectorItem.Mark">
+                                            </kendo-numerictextbox>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+            </app-p-kendo-grid>
+        </div>
+    </div>
+</div>
+
+<kendo-dialog id="dialogQuestionList" title="DANH SÁCH CÂU HỎI ĐÁNH GIÁ" [hidden]="!isDialogQuestionList"
+    (close)="toggleDialogQuestionList(false)" [minWidth]="622" class="p-hachi-dialog" [loading]="loading">
+
+    <div class="competence">
+        <b>{{ Competence.OrderBy }}. {{ Competence.Competence }}</b>
+
+        <div class="aspect">
+            {{ Aspect.OrderBy }}. {{ Aspect.Competence }}
+
+            <div class="sector">
+                <b><u>Mức {{ Sector.LevelID }}: {{ Sector.Description }}</u></b>
+            </div>
+        </div>
+    </div>
+
+    <div class="search-btn">
+        <span class="k-icon k-i-search" (click)="searchQuestion()"></span>
+
+        <!-- <kendo-textbox type="text" class="k-textbox" placeholder="Chọn câu hỏi" (inputBlur)="searchQuestion()"
+            (keydown.Enter)="$event.target.blur()" [(value)]="queryQuestion">
+        </kendo-textbox> -->
+        <kendo-combobox #combobox [data]="listQuestion" valueField="Code" textField="QuestionID"
+            [value]="currentQuestion" placeholder="Chọn câu hỏi" [loading]="loading" (valueChange)="valueChange($event)"
+            (selectionChange)="selectChange($event)" [suggest]="true" [allowCustom]="true"
+            [valueNormalizer]="valueNormalizer" [filterable]="true" (filterChange)="filterChange($event)"
+            (click)="toggleCombobox($event)" (keydown.enter)="searchQuestion($event)">
+
+            <ng-template kendoComboBoxItemTemplate let-dataItem>
+                <div class="productItem">
+                    <div class="code">{{ dataItem.QuestionID }}</div>
+                    <div class="name">| {{ dataItem.CategoryName }}</div>
+                    <div class="name">| {{ dataItem.Remark }}</div>
+                </div>
+            </ng-template>
+        </kendo-combobox>
+
+        <button kendoButton class="k-button btn-hachi hachi-primary onAddBtn" [icon]="'plus'" (click)="addQuestion()">
+            THÊM</button>
+    </div>
+
+    <div class="grid-wrapper">
+        <app-p-kendo-grid [data]="Sector.ListQuestion" scrollable="scrollable" [autoHeight]="false"
+            [onPageChangeCallback]="pageChangeCbQuest">
+            <kendo-grid-column class="content_col">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <div class="content" [title]="dataItem.Remark">
+                        <div>
+                            <b>{{dataItem.Remark}}</b>
+                            <div>
+                                {{dataItem.QuestionID}} | {{dataItem.CategoryName}}
+                            </div>
+                        </div>
+                        <span class="k-icon k-i-trash button-icon" title="Xóa câu hỏi"
+                            (click)="onDeleteQuestion(dataItem)"></span>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+        </app-p-kendo-grid>
+    </div>
+</kendo-dialog>
+
+<kendo-dialog #dialog class="deleteDialog" title="Xác nhận Xóa" [hidden]="!deleteDialogShown"
+    (close)="deleteDialogShown = false" [minWidth]="250">
+
+    <p style="margin: 30px; text-align: center;" [ngSwitch]="deleteMode">
+        <ng-container *ngSwitchCase="1">
+            Bạn chắc chắn muốn Xóa Phân nhóm <b>{{Category.CategoryID }} | {{Category.CategoryName }}</b> này?
+        </ng-container>
+
+        <ng-container *ngSwitchCase="2">
+            Bạn chắc chắn muốn Xóa Năng lực <b>{{Competence.CompetenceID }} | {{Competence.Competence }}</b> này?
+        </ng-container>
+
+        <ng-container *ngSwitchCase="3">
+            Bạn chắc chắn muốn Xóa Khía cạnh <b>{{Aspect.CompetenceID }} | {{Aspect.Competence }}</b> này?
+        </ng-container>
+
+        <ng-container *ngSwitchCase="4">
+            Bạn chắc chắn muốn Xóa câu hỏi <b>{{Question.QuestionID }} | {{Question.Remark }}</b>
+            khỏi Năng lực {{ Competence.Competence }} | {{ Aspect.Competence }} này?
+        </ng-container>
+    </p>
+
+    <div class="dialog-footer">
+        <button kendoButton class="btn-hachi hachi-secondary" (click)="deleteDialogShown = false"
+            [icon]="'close'">Không</button>
+        <button kendoButton class="btn-hachi hachi-warning" (click)="Delete()" [icon]="'trash'">Có</button>
+    </div>
+</kendo-dialog>
+
+<app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>

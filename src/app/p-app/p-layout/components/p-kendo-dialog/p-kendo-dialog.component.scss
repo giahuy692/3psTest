@@ -1,0 +1,104 @@
+@import "../../../../../assets/scss/variable.scss";
+::ng-deep{
+    .dialog{
+        .k-dialog{
+            max-height: 90%;
+        }
+        .k-dialog-title{
+            justify-content: center;
+            font-weight: 700;
+            .titleCustom{
+                display: flex;
+                align-items: center;
+            }
+            .k-icon{
+                font-size: 22px;
+                margin-right: 10px;
+            }
+        }
+        .k-window-actions,.k-actions{
+            align-items: center;
+            margin: -0.55em 0;
+            padding: 0;
+            gap: 0;
+            kendo-icon.k-button-icon{
+                font-size: 20px;
+                margin-right: 5px;
+            }
+        }
+        .k-dialog-titlebar-actions{
+            .k-i-close.k-icon{
+                font-size: 20px;
+                color: $white;
+            }
+        }
+        .k-action-custom{
+            .k-button{
+                font-weight: 700;
+            }
+        }
+    }
+    &.confirm{
+        .k-dialog-titlebar{
+           background-color: $red;
+            .k-dialog-title{
+                color: $white;
+            }
+            .k-dialog-titlebar-actions{
+                .k-i-close.k-icon{
+                    font-size: 20px;
+                    color: $white;
+                }
+            }
+        }
+
+            .k-window-actions{
+                .k-button:first-child {
+                    color: #959DB3;
+                }
+                .k-button:last-child{
+                    background-color: $red;
+                    color: $white;
+                    &.btn-action{
+                        &:hover{
+                            border: 1px solid $red;
+                        }
+                    }
+                }
+            }
+        }
+    &.update{
+        .k-dialog-titlebar{
+            background-color: $dark-green;
+        }
+        .k-window-actions{
+            .k-button:first-child {
+                color: #959DB3;
+            }
+            .k-button:last-child {
+                background-color: $dark-green;
+                color: $white;
+            }
+        }
+    }
+    &.display{
+        .k-dialog-titlebar{
+            background-color: $lightblue;
+        }
+        .k-window-actions{
+            .k-button:first-child {
+                color: #959DB3;
+            }
+            .k-button:last-child {
+                background-color: $lightblue;
+                color: $white;
+                &.btn-action{
+                    &:hover{
+                        border: 1px solid $lightblue;
+                    }
+                }
+            }
+        }
+    }
+    
+}

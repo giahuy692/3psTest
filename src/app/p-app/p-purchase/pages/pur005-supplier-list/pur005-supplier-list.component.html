@@ -1,0 +1,220 @@
+<div class="app-pur005-supplier-list">
+
+    <!-- header 1 -->
+    <div class="header header-1">
+
+        <app-p-kendo-breadcrumb (loadData)="loadPage()"></app-p-kendo-breadcrumb>
+
+        <div class="search-btn checkbox-button-group">
+            
+            <app-checkbox-button-group 
+            (selectedChange)="selectedBtnChange($event, 'danghoptac_checked')" 
+            [selected]="danghoptac_checked"
+            title="Đang hợp tác"
+            [checked]="danghoptac_checked"> 
+            </app-checkbox-button-group>
+
+            <app-checkbox-button-group 
+            (selectedChange)="selectedBtnChange($event, 'ngunghoptac_checked')" 
+            [selected]="ngunghoptac_checked"
+            title="Ngưng hợp tác"
+            [checked]="ngunghoptac_checked"> 
+            </app-checkbox-button-group>
+
+        </div>
+
+        <div class="nav-btn nav-crud" *ngIf="isToanQuyen || isAllowedToCreate">
+            <div class="nav-file nav-btn">
+                <button kendoButton class="k-button onAddBtn" [icon]="'plus'" (click)="onOpenDialog()"
+                >TẠO MỚI</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- header 2 -->
+    <div class="header header-2">
+
+        <app-search-filter-group  [label]="'Tìm kiếm nhà cung cấp'" [placeholder]="'Tìm theo tên, mã NCC, mã số thuế '"  [fields]="['VNName', 'PartnerID', 'InvNo']"
+        (filterChange)="handleSearch($event)" (onReset)="resetFilter()" [ignoreCase]="true"></app-search-filter-group>
+    
+        <div class="search-btn Date-button-group">
+
+            <label class="label">Ngày đặt mua gần nhất</label>
+
+            <div class="button-group">
+                <kendo-dropdownlist 
+                [data]="ListFilter"
+                textField="text" 
+                valueField="value"
+                [(ngModel)]="currentFilterValue"
+                (valueChange)="onDropdownlistClick($event)"
+                ></kendo-dropdownlist>
+
+                <app-datepicker [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'"
+                [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                [(ngModel)]="filterDate"
+                (blur)="onDatepickerChange($event)"
+                (keydown.Enter)="$event.target.blur()" 
+                [popupSetting]="{animate:true, appendTo: 'root',popupClass:'popupLayoutCpnDatePicker'}"
+                ></app-datepicker>
+            </div>
+            
+        </div>
+
+    </div>
+
+    <!-- tree list -->
+    <div class="treelist-wrapper">
+        <kendo-treelist
+            [data]="treeListSupplierFilter"
+            [loading]="loading"
+            [fetchChildren]="fetchChildren"
+            [hasChildren]="hasChildren"
+            kendoTreeListExpandable
+            [initiallyExpanded]="true"
+            itemKey="Code"
+            scrollable="none"
+        >
+            <kendo-treelist-column field="VNName" [expandable]="true" title="Nhà cung cấp" class="col_VNName" >
+                <ng-template kendoTreeListCellTemplate let-dataItem>
+                  <div class="SupplierName">
+                    <div class="Title" title="{{dataItem.VNName}}">
+                        {{dataItem.VNName}}
+                    </div>
+                    <div>
+                        <span>{{dataItem.PartnerID}}</span> <span *ngIf="dataItem.PartnerID != null "> | </span> <span>{{dataItem.StatusName}}</span>
+                    </div>
+                  </div>  
+                </ng-template>
+            </kendo-treelist-column>
+
+            <kendo-treelist-column field="InvNo" title="Mã số thuế" [width]="150" class="col_InvNo">
+                <ng-template kendoTreeListCellTemplate let-dataItem>
+                    <div class="InvNo" title="{{dataItem.InvNo}}">
+                        {{dataItem.InvNo}}
+                    </div>  
+                </ng-template>
+            </kendo-treelist-column>
+
+            <kendo-treelist-column field="Address" title="Địa chỉ" class="col_Address">
+                <ng-template kendoTreeListCellTemplate let-dataItem>
+                    <div class="Address" title="{{dataItem.Address}}">
+                      {{dataItem.Address}}
+                    </div>  
+                </ng-template>
+            </kendo-treelist-column>
+
+            <kendo-treelist-column field="CountryName" title="Quốc gia" class="col_CountryName" [width]="150" [headerClass]="'headerCenterCustomClass'">
+                <ng-template kendoTreeListCellTemplate let-dataItem>
+                    <div class="CountryName">
+                      {{dataItem.CountryName}}
+                    </div>  
+                </ng-template>
+            </kendo-treelist-column>
+
+            <kendo-treelist-column field="LastPO" title="Đặt mua gần nhất" class="col_LastPO" [headerClass]="'headerCenterCustomClass'" [width]="200">
+                <ng-template kendoTreeListCellTemplate let-dataItem>
+                    <div>
+                      {{dataItem.LastPO | date: 'dd/MM/yyyy'}}
+                    </div>  
+                </ng-template>
+            </kendo-treelist-column>
+
+            <kendo-treelist-column [headerStyle]="{'position': 'sticky'}" [width]="50" class="col_tool">
+                <ng-template
+                  kendoTreeListCellTemplate
+                  let-dataItem
+                  let-rowIndex="rowIndex"
+                >
+                  <div class="treelist-tool tool" #containerPopup >
+                    <button kendoButton #anchor (click)="togglePopup(rowIndex, dataItem)" class="k-button k-button-icon togglePopup"
+                    icon="more-horizontal"></button>       
+                  </div>
+                </ng-template>
+            </kendo-treelist-column>
+        </kendo-treelist>
+           <!-- Popup của  button more-->
+        <kendo-popup #rowMoreActionPopup class="rowMoreActionPopup" [style.visibility]="isPopupVisible()" [anchor]="getAnchor()"
+        [anchorAlign]="{ horizontal:'left', vertical: 'top'}" [popupAlign]="{ horizontal:'right', vertical: 'top'}">
+
+            <div *ngFor="let item of OptionTool; let i = index" class="popup-item" (click)="HandleOpenDetail(item)">
+            <span class="k-icon k-i-{{ item.icon }}"></span>
+            <span class="popup-item-text">{{ item.text }}</span>
+            </div>
+
+        </kendo-popup> 
+    </div>
+
+    <!-- POPUP -->
+    <div class="CreateDialogPopup">
+        <app-p-kendo-dialog
+        *ngIf="opened" 
+        [dialogType]="3"
+        [width]="600"
+        [title]="'THÊM MỚI NHÀ CUNG CẤP'" 
+        (close)="onCloseDialog()" 
+        >
+            <div class="body_dialog">
+                <div class="header">
+                    <app-search-filter-group
+                    [label]="'Tìm kiếm đối tác'"
+                    placeholder="Tìm theo tên, mã số thuế "
+                    [fields]="['VNName', 'InvNo']"
+                    [clearButton]="true"
+                    (filterChange)="handleSearchPartner($event)" 
+                    [ignoreCase]="true"
+                    ></app-search-filter-group>
+                </div>
+
+                <div class="treelist-wrapper popup">
+                    <kendo-treelist
+                        #treelist
+                        [data]="treeListPartnerFilter"
+                        [loading]="loading"
+                        [fetchChildren]="fetchChildrenPopup"
+                        [hasChildren]="hasChildrenPopup"
+                        idField="Code"
+                        parentIdField="ParentID"
+                        kendoTreeListExpandable
+                        [initiallyExpanded]="true"
+                        scrollable="none"
+                    >
+
+                        <kendo-treelist-column field="VNName" [expandable]="true" title="Tên đối tác" class="col_VNName" [width]="150">
+                            <ng-template kendoTreeListCellTemplate let-dataItem>
+                                <div class="Title" title="{{dataItem.VNName}}">
+                                    {{dataItem.VNName}}
+                                </div>
+                            </ng-template>
+                        </kendo-treelist-column>
+
+                        <kendo-treelist-column field="InvNo" title="Mã số thuế" [width]="100" class="col_InvNo">
+                            <ng-template kendoTreeListCellTemplate let-dataItem>
+                                <div class="InvNoCustom" title="{{dataItem.InvNo}}">
+                                    {{dataItem.InvNo}}
+                                </div>  
+                            </ng-template>
+                        </kendo-treelist-column>
+
+                        <kendo-treelist-column field="Address" title="Địa chỉ" class="col_Address">
+                            <ng-template kendoTreeListCellTemplate let-dataItem>
+                                <div class="Address" title="{{dataItem.Address}}">
+                                  {{dataItem.Address}}
+                                </div>  
+                            </ng-template>
+                        </kendo-treelist-column>
+
+                        <kendo-treelist-column class="col_Address" [width]="70">
+                            <ng-template kendoTreeListCellTemplate let-dataItem>
+                                <button kendoButton class="k-button btn-hachi hachi-primary custom" (click)="onOpenDetail(true, dataItem)">
+                                    Thêm                                
+                                </button>
+                            </ng-template>
+                        </kendo-treelist-column>
+
+                    </kendo-treelist>
+                </div>
+            </div>
+        </app-p-kendo-dialog>
+    </div>
+</div>

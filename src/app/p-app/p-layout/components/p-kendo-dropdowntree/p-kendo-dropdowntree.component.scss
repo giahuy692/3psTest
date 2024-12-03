@@ -1,0 +1,63 @@
+@import "../../../../../assets/scss/variable.scss";
+::ng-deep{
+    p-kendo-dropdowntree{
+        .activeNode{
+            background-color: $dark-green !important;
+        }
+        .CustomPopupTreeAtRoot {
+            .k-treeview {
+                .k-treeview-group {
+
+                    .k-treeview-item:has(.k-treeview-top) {
+                        .k-treeview-top:has(.k-treeview-leaf) {
+                            .k-treeview-leaf:has(.k-treeview-leaf-text .itemDisabled) {
+                                pointer-events: none;
+                                cursor: default;
+                                filter: contrast(0.1);
+
+                                .bold {
+                                    font-weight: bold;
+                                }
+                            }
+                        }
+                    }
+
+                    .k-treeview-item:has(.k-treeview-mid) {
+                        .k-treeview-mid:has(.k-treeview-leaf) {
+                            .k-treeview-leaf:has(.k-treeview-leaf-text .itemDisabled) {
+                                pointer-events: none;
+                                cursor: default;
+                                filter: contrast(0.1);
+
+                                .bold {
+                                    font-weight: bold;
+                                }
+                            }
+                        }
+                    }
+
+                    .k-treeview-item:has(.k-treeview-bot) {
+                        .k-treeview-bot:has(.k-treeview-leaf) {
+                            .k-treeview-leaf:has(.k-treeview-leaf-text .itemDisabled) {
+                                pointer-events: none;
+                                cursor: default;
+                                filter: contrast(0.1);
+
+                                .bold {
+                                    font-weight: bold;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // .CustomPopupTreeAtRoot{
+    //     .k-treeview-item:has(.activeNode){
+    //             background-color: $dark-green !important;
+    //             color: $white !important;
+    //     }
+    // }
+}

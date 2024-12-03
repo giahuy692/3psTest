@@ -1,0 +1,293 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<div class="Drawer-right">
+  <kendo-drawer-container>
+
+    <!-- START DRAWER RIGHT -->
+    <kendo-drawer #drawerRight mode="overlay" [(expanded)]="expandedRight" fillMode="flat" [position]="'end'"
+      [(autoCollapse)]="isautoCollapse">
+      <ng-template kendoDrawerTemplate let-item let-dataItem>
+
+
+        <!-- <form [formGroup]="formData"> -->
+        <!-- <form [formGroup]="form"> -->
+        <div class="wrapper-drawer-right">
+          <div class="header-drawer-right">
+            <span class="icon-header-right"></span>
+            <h3>THÔNG TIN CÔNG TY</h3>
+          </div>
+
+          <div class="content-drawer-right">
+            <!--  -->
+
+            <kendo-label class="k-form customLabel">
+              <div class="lable">
+                <span class="labelName">
+                  <span class="name">Tên công ty</span>
+                  <span class="symbol">(*)</span>
+                  <span class="line"> |</span>
+                  <span class="codeCompany"> {{dataCompanyForm.Code}}</span>
+                </span>
+
+                <span class="labelSystem">
+                  <span class="isSystem"> Hệ thống </span>
+                  <input type="checkbox" class="k-checkbox" [checked]="this.dataCompanyForm.IsSystem"
+                    [(ngModel)]="dataCompanyForm.IsSystem" />
+                </span>
+
+              </div>
+
+              <!-- <kendo-textbox #VNName formControlName="VNName" name="VNName" kendoTextBox class="k-textbox"
+                    resizable="auto" required  ></kendo-textbox> -->
+
+              <app-p-textbox class=" VNNameRequire" [propName]="'VNName'" [(ngModel)]="dataCompanyForm.VNName" required>
+              </app-p-textbox>
+            </kendo-label>
+
+
+
+            <!--  -->
+            <div class="nCLogo">
+              <div class="left">
+
+
+                <kendo-label class="k-form mt-10 d-block customLabel">
+                  <div class="lable">
+                    <span class="labelName">
+                      <span class="name">Tên viết tắt</span>
+                      <span class="symbol">(*)</span>
+                    </span>
+                  </div>
+                  <!-- <kendo-textbox formControlName="Bieft" name="Bieft" #Bieft class="k-textbox" resizable="auto"
+                        [style.width.%]="100" required></kendo-textbox> -->
+                  <app-p-textbox class="BieftRequire" [propName]="'Bieft'" name="Bieft"
+                    [(ngModel)]="dataCompanyForm.Bieft" required>
+                  </app-p-textbox>
+                </kendo-label>
+
+
+
+                <kendo-label class="k-form mt-10 d-block customLabel">
+                  <div class="lable">
+                    <span class="labelName">
+                      <span class="name"> Mã công ty</span>
+                      <span class="symbol">(*)</span>
+                    </span>
+
+                  </div>
+                  <!-- <kendo-textbox formControlName="CompanyID" name="CompanyID" #CompanyID class="k-textbox"
+                      resizable="auto" [style.width.%]="100"></kendo-textbox> -->
+                  <app-p-textbox class="k-textbox" [propName]="'CompanyID'" name="CompanyID"
+                    [(ngModel)]="dataCompanyForm.CompanyID" required>
+
+
+                  </app-p-textbox>
+                </kendo-label>
+              </div>
+
+              <div class="right mt-10">
+
+                <div class="Logo">
+                  <div class="labelImg">
+                    <span class="name"> Logo</span> <span class="symbol">(*)</span>
+                    <span class="k-icon k-i-export" (click)="onUploadImg()"></span>
+                  </div>
+
+
+                  <div class="imgCompany" *ngIf="dataCompanyForm.URLLogo">
+
+                    <img loading="lazy" class="img" [src]="getRes(dataCompanyForm.URLLogo)" alt="Logo company">
+                    <span class="k-icon k-i-minus-outline" (click)="onDelImg()"></span>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+            <!--  -->
+
+            <kendo-label class="k-form mt-10 d-block customLabel">
+              <div class="lable">
+                <span class="labelName">Địa chỉ</span>
+              </div>
+              <!-- <kendo-textarea formControlName="Address" name="Address" kendoTextBox #Address class="k-textbox"
+                    resizable="auto"></kendo-textarea> -->
+              <app-p-textarea [(ngModel)]="dataCompanyForm.Address" name="Address"
+                [propName]="'Address'"></app-p-textarea>
+              <!-- <app-p-textarea [(ngModel)]="dataCompany.ConfigDesc" [propName]="'ConfigDesc'" ></app-p-textarea> -->
+            </kendo-label>
+
+
+            <!--  -->
+            <div id="AddressGroup">
+              <kendo-label text="Quốc gia" class="k-form mt-10 d-block" [for]="Country">
+                <kendo-dropdownlist #Country [loading]="loading" name="Country" [style.width.px]="200" fillMode="flat"
+                  [data]="listNationalityFilter" textField="VNName" valueField="Code"
+                  [(ngModel)]="dataCompanyForm.Country" [defaultItem]="{ VNName: '-- Chọn --', Code: null }"
+                  [filterable]="true" [valuePrimitive]="true" [popupSettings]="{appendTo:'component'}"
+                  (valueChange)=" selectionDropdownChange($event, 'Country')"
+                  (filterChange)="handleFilterNational($event)"></kendo-dropdownlist>
+              </kendo-label>
+
+              <kendo-label text="Tỉnh thành" class="k-form mt-10 d-block" [for]="Province">
+                <kendo-dropdownlist [loading]="loading" #Province name="Province" [style.width.px]="200" fillMode="flat"
+                  [data]="provinceListFilter" textField="VNProvince" valueField="Code"
+                  [(ngModel)]="dataCompanyForm.Province" [filterable]="true"
+                  [defaultItem]="{ VNProvince: '-- Chọn --', Code: null }" [valuePrimitive]="true"
+                  [popupSettings]="{ appendTo: 'component' }" [ngClass]=""
+                  (valueChange)=" selectionDropdownChange($event, 'Province')"
+                  (filterChange)="handleFilterProvince($event)"
+                  [ngClass]="{'disableInput': notSelectedProvince }"></kendo-dropdownlist>
+              </kendo-label>
+
+              <kendo-label class="k-form mt-10 d-block" text="Quận/huyện" [for]="District">
+                <kendo-dropdownlist #District [loading]="loading" [style.width.px]="200" [filterable]="true"
+                  fillMode="flat" name="District" [(ngModel)]="dataCompanyForm.District" [data]="districtListFilter"
+                  textField="VNDistrict" valueField="Code" [defaultItem]="{ VNDistrict: '-- Chọn --', Code: null }"
+                  [valuePrimitive]="true" [popupSettings]="{ appendTo: 'component' }" [ngClass]=" "
+                  (valueChange)=" selectionDropdownChange($event, 'District')"
+                  (filterChange)="handleFilterDistric($event)"
+                  [ngClass]="{'disableInput': notSelectedDistrict }"></kendo-dropdownlist>
+              </kendo-label>
+
+              <kendo-label class="k-form mt-10 d-block" text="Phường/xã" [for]="Ward">
+                <kendo-dropdownlist #Ward [loading]="loading" [style.width.px]="200" [filterable]="true" fillMode="flat"
+                  [(ngModel)]="dataCompanyForm.Ward" name="Ward" [data]="wardListFilter" textField="VNWard"
+                  valueField="Code" [defaultItem]="{ VNWard: '-- Chọn --', Code: null }" [valuePrimitive]="true"
+                  [popupSettings]="{ appendTo: 'component' }" [ngClass]=" "
+                  (valueChange)=" selectionDropdownChange($event, 'Ward')" (filterChange)="handleFilterWard($event)"
+                  [ngClass]="{'disableInput': notSelectedWard }"></kendo-dropdownlist>
+              </kendo-label>
+            </div>
+
+            <!--  -->
+            <kendo-label class="k-form mt-10 d-block customLabel">
+              <div class="lable">
+                <span class="labelName">Thiết lập thông số hệ thống </span>
+              </div>
+              <!-- <kendo-textarea formControlName="ConfigDesc" name="ConfigDesc" #ConfigDesc kendoTextArea
+                  class="k-textbox" [ngClass]=""  resizable="auto">
+                </kendo-textarea> -->
+
+              <app-p-textarea [(ngModel)]="dataCompanyForm.ConfigDesc" [propName]="'ConfigDesc'"
+                name="ConfigDesc"></app-p-textarea>
+            </kendo-label>
+
+            <kendo-formerror>(*) Trường bắt buộc nhập.</kendo-formerror>
+          </div>
+
+          <!-- FOOTER, BUTTON -->
+          <div class="footer-drawer-right d-flex col-gap">
+            <button class="btn-hachi hachi-secondary" kendoButton (click)=" onOpendDrawer(3)  ">
+              ĐÓNG
+            </button>
+            <button kendoButton class="btn-hachi hachi-primary" (click)="onUpdate_Add()">
+              {{isAction == 0 ? "THÊM CÔNG TY" : dataCompanyForm.IsSystem ? "CẬP NHẬT HỆ THỐNG" : "CẬP NHẬT CÔNG TY"}}
+            </button>
+          </div>
+        </div>
+        <!-- </form> -->
+      </ng-template>
+    </kendo-drawer>
+    <!-- END DRAWER RIGHT -->
+
+
+
+    <!-- START CONTENT -->
+    <kendo-drawer-content>
+      <div class="developer001-company-list">
+
+        <!-- HEADER 1: BREAD CUM AND BUTTON CREATE -->
+        <div class="header header-1">
+          <app-p-kendo-breadcrumb (loadData)="reloadData()"></app-p-kendo-breadcrumb>
+          <div class="nav-btn nav-crud">
+            <button kendoButton class=" onAddBtn k-button btn-hachi hachi-primary" [icon]="'plus'"
+              (click)="  onOpendDrawer(0)" [disabled]="">
+              TẠO MỚI
+            </button>
+
+          </div>
+        </div>
+
+        <!-- HEADER 2: SEARCH -->
+        <div class="header header-2">
+          <div id="functionbar">
+            <app-search-filter-group placeholder="Tìm theo tên công ty" [fields]="[ ]" (valueChange)="onSearch($event)"
+              (onReset)="onResetFilter()" [ignoreCase]="true" #search>
+            </app-search-filter-group>
+          </div>
+        </div>
+
+        <!-- GRID LIST COMPANY -->
+        <div class="grid-wrapper">
+          <app-p-kendo-grid class="grid" [data]="dataCompany_System" [scrollable]="'none'" [loading]="loading"
+            [pageable]="false" [getActionDropdownCallback]="getActionDropdownCallback"
+            [onActionDropdownClickCallback]="onActionDropdownClickCallback">
+
+            <kendo-grid-column field="VNName" title="Tên công ty" class="col_nameCompany" headerClass="col_nameCompany"
+              [width]="300">
+
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="Image_NameCompany">
+                  <div class="PaddingImg">
+                    <img loading="lazy" class="ImageCompany" src="{{dataItem.URLLogo}}" alt="">
+                  </div>
+
+                  <div class="inforCompany">
+                    <div class="NameCompany" title="{{dataItem.VNName}}">{{dataItem.VNName}}</div>
+
+                    <div class="infor">
+                      <span title="{{dataItem.Code}}"> {{dataItem.Code}} | </span>
+                      <span *ngIf="dataItem.CompanyID" title="{{dataItem.CompanyID}}">{{dataItem.CompanyID}} | </span>
+                      <span title="{{dataItem.Bieft}}"> {{dataItem.Bieft}}</span>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+
+
+            </kendo-grid-column>
+            <kendo-grid-column field="Address" title="Địa chỉ" class="col_address" headerClass="col_address"
+              [width]="500">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="text-ellipsis" title="{{dataItem.Address}}">{{dataItem.Address}}</div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column field="Country" title="Quốc gia" class="col_country" headerClass="col_country"
+              [width]="250">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="CountryCompany" title="{{dataItem.CountryName}}">{{dataItem.CountryName}}</div>
+              </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="TypeCompanyName" title="Phân loại" class="col_classify" headerClass="col_classify"
+              [width]="250">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="TypeCompany" title="{{dataItem.TypeCompanyName}}">{{dataItem.TypeCompanyName}}</div>
+
+              </ng-template>
+            </kendo-grid-column>
+          </app-p-kendo-grid>
+        </div>
+
+      </div>
+    </kendo-drawer-content>
+    <!-- END CONTENT -->
+
+
+    <!-- START DIALOG DELETE -->
+    <app-p-kendo-dialog *ngIf="opened" [title]="'XÓA CÔNG TY'" (close)="onCloseDialog()"
+      (handleButton)="onDeleteDialog('yes')" [iconButton]="'delete'" [dialogType]="1"
+      [iconTitle]="'k-icon k-i-warning'">
+      <div class="text-center">
+        Bạn có chắc chắn muốn xóa <br> <strong> {{dataCompany.TypeCompanyName}} {{dataCompany.VNName }}</strong>
+        <p class="content-sub">
+          bị xóa sẽ <span style="color: red">KHÔNG</span> thể khôi phục lại.
+        </p>
+      </div>
+    </app-p-kendo-dialog>
+    <!-- END DIALOG DELETE -->
+
+  </kendo-drawer-container>
+</div>
+<app-folder-popup [pickFileCallback]="pickFileCallback" [GetFolderCallback]="GetFolderCallback"></app-folder-popup>

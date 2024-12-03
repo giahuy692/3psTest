@@ -1,0 +1,899 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+    app-hr007-competency-bank {
+        display: block;
+        padding: 0 12px;
+        height: 100%;
+        overflow-x: auto;
+        // overflow-x: hidden;
+        overflow-y: hidden;
+
+        label {
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        app-checkbox-button-group {
+            margin-top: auto;
+        }
+
+        .nav-btn {
+            margin-top: auto;
+        }
+
+        .title {
+            color: #5a6276;
+            min-height: 41px;
+            align-items: center;
+        }
+        .col-left {
+            min-width: 292px;
+            max-width: 300px;
+            margin-right: 18px;
+            background-color: #fff;
+
+            .remark {
+                color: #5a6276;
+                background-color: #fff !important;
+                padding: 0;
+                width: 100%;
+                // box-shadow: 1px 3px 6px 1px rgba($gray-500, 0.2);
+
+                &:read-only {
+                    outline: none !important;
+                    border: none !important;
+                }
+
+                textarea {
+                    background-color: #fff !important;
+
+                    &:read-only {
+                        outline: none !important;
+                        border: none !important;
+                        box-shadow: none !important;
+                    }
+                }
+            }
+        }
+
+        .k-i-arrow-chevron-up,
+        .k-i-arrow-chevron-down {
+            cursor: pointer;
+
+            &:hover {
+                color: #5a6276;
+            }
+        }
+
+        .button-icon {
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+
+            &:hover {
+                border: 1px solid;
+            }
+        }
+
+        .k-i-plus,
+        .k-i-save,
+        .k-i-check-outline {
+            color: $dark-green;
+        }
+        .k-i-trash {
+            color: $bad-red;
+        }
+        .k-i-redo {
+            color: teal;
+        }
+        .k-i-undo {
+            color: $medium-yellow;
+        }
+
+        .maturity-list {
+            display: flex;
+            margin-top: 20px;
+
+            .maturity-item {
+                .title {
+                    color: #bbb;
+                    font-weight: bold;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .remark {
+                    color: #5a6276;
+                    background-color: #fff !important;
+                    padding: 0;
+                    width: 100%;
+                    height: 71px;
+                    max-height: 71px;
+                    min-height: 41px !important;
+                    overflow-y: auto;
+                    // box-shadow: 1px 3px 6px 1px rgba($gray-500, 0.2);
+
+                    &:read-only {
+                        outline: none !important;
+                        border: none !important;
+                    }
+
+                    textarea {
+                        background-color: #fff !important;
+
+                        &:read-only {
+                            outline: none !important;
+                            border: none !important;
+                            box-shadow: none !important;
+                        }
+                    }
+                }
+
+                &:not(.col-left) {
+                    width: 206px;
+                    margin-right: 4px;
+
+                    .title {
+                        width: 206px;
+                        color: #fff;
+                        clip-path: polygon(
+                            0 0,
+                            calc(100% - 28px) 0,
+                            100% 50%,
+                            calc(100% - 28px) 100%,
+                            0 100%,
+                            28px 50%
+                        );
+                    }
+
+                    .remark {
+                        width: 178px;
+                    }
+
+                    &:nth-child(2) {
+                        .title {
+                            clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 50%, calc(100% - 28px) 100%, 0 100%);
+                        }
+                    }
+                }
+            }
+        }
+
+        .k-button.btn-add-circle {
+            color: $dark-green;
+            background: none;
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+            margin: auto;
+
+            .k-icon {
+                width: 28px;
+                height: 28px;
+                border: 1px solid $dark-green;
+                border-radius: 50%;
+            }
+
+            &:hover {
+                font-weight: bold;
+
+                .k-icon {
+                    outline: $dark-green solid 1px;
+                }
+            }
+        }
+
+        .header {
+            .search-btn .k-textbox {
+                width: 202px !important;
+            }
+
+            &.header-3 {
+                font-size: 13px;
+                white-space: nowrap;
+                border: none;
+                padding: 0;
+                column-gap: 0;
+
+                .col-left {
+                    display: flex;
+                    background: none;
+                    margin-right: 0;
+                }
+                .title {
+                    font-size: 13px;
+                    margin: 0;
+                }
+            }
+        }
+
+        .competency-group-list {
+            overflow-y: scroll;
+            overflow-x: hidden;
+            height: 60%;
+            min-width: fit-content;
+            width: 100%;
+
+            .competency-group-item {
+                display: flex;
+                margin-bottom: 12px;
+                min-width: fit-content;
+                width: 100%;
+
+                // input[name="competencyGroupItem"] {
+                //     // display: none;
+
+                //     // ~ .col-left {
+                //     //     .remark {
+                //     //         display: none;
+                //     //     }
+                //     // }
+                //     // ~ .competency-list {
+                //     //     // display: none;
+
+                //     //     .k-grid {
+                //     //         display: none;
+                //     //     }
+
+                //     //     &.hasChild {
+                //     //         .btn-add-circle {
+                //     //             display: none;
+                //     //         }
+
+                //     //         .k-grid {
+                //     //             display: flex;
+
+                //     //             .k-grid-table {
+                //     //                 padding: 0;
+                //     //             }
+                //     //             tbody {
+                //     //                 tr {
+                //     //                     display: none;
+
+                //     //                     &:first-child {
+                //     //                         display: table-row;
+                //     //                     }
+                //     //                 }
+                //     //             }
+
+                //     //             .k-grid-pager {
+                //     //                 display: none;
+                //     //             }
+                //     //         }
+                //     //     }
+                //     // }
+
+                //     // &:checked,
+                //     // &[checked="true"] {
+                //     //     ~ .col-left {
+                //     //         .remark {
+                //     //             display: flex;
+                //     //         }
+                //     //     }
+                //     //     ~ .competency-list {
+                //     //         display: flex;
+
+                //     //         .btn-add-circle {
+                //     //             display: flex;
+                //     //         }
+
+                //     //         .k-grid {
+                //     //             display: flex;
+
+                //     //             .k-grid-table {
+                //     //                 padding: 29px 0;
+                //     //             }
+                //     //             tbody {
+                //     //                 tr {
+                //     //                     display: table-row;
+                //     //                 }
+                //     //             }
+                //     //             .k-grid-pager {
+                //     //                 display: flex;
+                //     //             }
+                //     //         }
+                //     //     }
+                //     // }
+                // }
+
+                .col-left {
+                    margin-right: 8px;
+                    display: flex;
+                    flex-direction: column;
+                    max-height: 355px;
+
+                    .title {
+                        // padding: 10px 12px;
+                        padding: 4px;
+
+                        .title_top {
+                            padding-bottom: 5px;
+                            display: flex;
+                            align-items: center;
+
+                            b,
+                            .group-order {
+                                font-size: 16px;
+                                width: 32px;
+                                box-shadow: none;
+                                border: none;
+                                background: none;
+
+                                input {
+                                    font-weight: bold;
+                                }
+                            }
+
+                            .group-code {
+                                width: 61px;
+                                height: 22px;
+                                margin-left: 4px;
+
+                                &:read-only {
+                                    border: none !important;
+                                    outline: none !important;
+                                }
+
+                                .k-input-inner {
+                                    width: 61px;
+                                    height: 22px;
+                                    font-weight: bold;
+                                    color: white;
+                                    font-size: 16px;
+                                    text-align: center;
+                                }
+                            }
+
+                            .btn-group {
+                                margin-left: auto;
+                                font-weight: bold;
+                                visibility: hidden;
+
+                                .k-icon {
+                                    margin-left: 6px;
+                                }
+                            }
+
+                            .group-number {
+                                margin-left: 6px;
+                                margin-right: 6px;
+                                padding-left: 6px;
+                                border-left: 2px solid #c4c4c4;
+                                // flex-grow: 1;
+                                white-space: nowrap;
+                            }
+
+                            &:hover {
+                                .btn-group {
+                                    visibility: visible;
+                                }
+                            }
+                        }
+
+                        .group-name {
+                            height: fit-content;
+                            margin-left: -5px;
+
+                            &:read-only {
+                                border: none !important;
+                                outline: none !important;
+                                box-shadow: none !important;
+                            }
+
+                            .k-input-inner {
+                                height: fit-content;
+                                font-weight: bold;
+                            }
+                        }
+                    }
+
+                    .remark {
+                        flex-grow: 1;
+                    }
+                }
+
+                .competency-list {
+                    display: flex;
+                    flex-direction: column;
+                    min-width: fit-content;
+                    width: 100%;
+
+                    .k-button.btn-add-circle {
+                        min-height: 41px;
+                        width: fit-content;
+                        margin-left: 482px;
+                    }
+
+                    .k-grid {
+                        .k-grid-aria-root {
+                            overflow-x: auto;
+                        }
+
+                        // &:has(input[name="competencyGroupItem_dataItem"]:checked) {
+                        //     .k-grid-table {
+                        //         padding: 0;
+                        //     }
+
+                        //     .k-grid-pager {
+                        //         display: none;
+                        //     }
+                        // }
+
+                        .k-grid-header {
+                            display: none;
+                        }
+                        .k-grid-content {
+                            background: none;
+                        }
+
+                        table {
+                            background-color: #f0f3f5;
+                            min-width: 1042px !important;
+
+                            &.k-grid-table {
+                                padding: 29px 0;
+                            }
+
+                            thead {
+                                display: none;
+                            }
+
+                            tr {
+                                height: 58px;
+                                max-height: 58px;
+
+                                td {
+                                    height: 58px;
+                                    max-height: 58px;
+
+                                    &:first-child:not(.content) {
+                                        display: none;
+                                    }
+                                    &.content {
+                                        padding-left: 10px;
+                                        // width: 90%;
+                                        width: 99%;
+                                    }
+                                    &.action {
+                                        top: 10px;
+                                        // right: 16%;
+                                        right: 5%;
+                                        box-shadow: none;
+                                        background: none;
+
+                                        .btnCell {
+                                            height: 100%;
+                                        }
+                                    }
+
+                                    .title {
+                                        display: flex;
+
+                                        .group-order {
+                                            width: 32px;
+                                            box-shadow: none;
+                                            border: none;
+                                            margin-right: 4px;
+                                            background: none;
+
+                                            input {
+                                                font-weight: bold;
+                                            }
+                                        }
+
+                                        .group-code {
+                                            height: 27px;
+                                            min-width: 44px;
+                                            // min-width: fit-content;
+                                            max-width: 103px;
+                                            width: fit-content;
+                                            margin-right: 15px;
+                                            display: flex;
+                                            align-items: center;
+
+                                            clip-path: polygon(
+                                                0 0,
+                                                calc(100% - 14px) 0,
+                                                100% 50%,
+                                                calc(100% - 14px) 100%,
+                                                0 100%
+                                            );
+
+                                            &:read-only {
+                                                border: none !important;
+                                                outline: none !important;
+                                            }
+
+                                            .k-input-inner {
+                                                // padding-left: 2px;
+                                                height: 27px;
+                                                // width: 44px;
+                                                // min-width: fit-content;
+                                                font-weight: bold;
+                                                color: white;
+                                            }
+                                        }
+
+                                        .orderby {
+                                            width: 32px;
+                                            border: none;
+                                            box-shadow: none;
+                                            margin-right: 4px;
+                                            background: none;
+
+                                            input {
+                                                font-weight: bold;
+                                            }
+                                        }
+
+                                        .group-name {
+                                            display: flex;
+                                            flex-direction: column;
+
+                                            .name {
+                                                height: fit-content;
+
+                                                &:read-only {
+                                                    border: none !important;
+                                                    outline: none !important;
+                                                    box-shadow: none !important;
+                                                    background: none !important;
+                                                }
+                                                .k-input-inner {
+                                                    font-weight: bold;
+                                                }
+                                            }
+                                            .status {
+                                                padding-left: 4px;
+
+                                                div {
+                                                    display: inline;
+                                                }
+                                            }
+                                        }
+
+                                        .btn-group {
+                                            font-weight: bold;
+                                            visibility: hidden;
+                                            margin-right: 6px;
+
+                                            .k-icon {
+                                                margin-left: 6px;
+                                            }
+                                        }
+
+                                        &:hover {
+                                            .btn-group {
+                                                visibility: visible;
+                                            }
+                                        }
+
+                                        .group-remark {
+                                            flex-grow: 1;
+                                            border: none;
+                                            box-shadow: none;
+                                            background: none;
+                                            height: 100%;
+                                        }
+                                    }
+
+                                    .aspectItem {
+                                        .title {
+                                            background-color: #edeff3;
+                                            padding: 9px 7px;
+                                            margin-top: 16px;
+                                            margin-bottom: 9px;
+                                            font-weight: bold;
+                                            cursor: pointer;
+
+                                            .code {
+                                                min-width: 44px;
+                                                // min-width: fit-content;
+                                                max-width: 103px;
+                                                margin-right: 15px;
+                                            }
+
+                                            .name {
+                                                &:read-only {
+                                                    box-shadow: none;
+                                                    border: none;
+                                                    background: none;
+                                                }
+                                            }
+
+                                            .k-i-trash {
+                                                margin-left: 6px;
+                                            }
+
+                                            .k-textbox {
+                                                .k-input-inner {
+                                                    background-color: #edeff3;
+                                                }
+                                            }
+                                        }
+
+                                        .remarkList {
+                                            display: flex;
+                                            column-gap: 32px;
+                                            width: 100%;
+                                            min-width: fit-content;
+
+                                            .sectorItem {
+                                                width: 178px;
+                                                display: flex;
+                                                flex-direction: column;
+
+                                                .k-textarea {
+                                                    padding: 5px;
+                                                    background-color: #edeff3;
+                                                    outline: none;
+                                                    box-shadow: none;
+                                                    width: 100%;
+                                                    height: 119px;
+                                                    resize: none;
+                                                    border-bottom: none !important;
+                                                }
+
+                                                .k-textbox,
+                                                .k-numerictextbox,
+                                                .k-numeric-wrap {
+                                                    background-color: #edeff3;
+                                                    outline: none;
+                                                    box-shadow: none;
+                                                    flex-grow: 1;
+                                                    min-width: 0;
+                                                    max-width: 100%;
+                                                    border-radius: 0;
+                                                    text-align: center;
+
+                                                    .k-input,
+                                                    .k-input-inner {
+                                                        text-align: center;
+                                                        box-shadow: none;
+                                                    }
+                                                }
+                                                .k-numerictextbox {
+                                                    border-left: none !important;
+                                                }
+
+                                                .question_percent {
+                                                    .question {
+                                                        color: $dark-green;
+                                                        width: 75%;
+                                                    }
+
+                                                    .percent {
+                                                        font-weight: bold;
+                                                        width: 25%;
+                                                    }
+                                                }
+
+                                                .code_point {
+                                                    .code,
+                                                    .point {
+                                                        width: 50%;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .k-grid-pager {
+                            height: 100%;
+                            width: fit-content;
+                            background: none;
+                            border: none;
+                            position: absolute;
+                            left: 550px;
+                            display: flex;
+                            flex-direction: column;
+                            // justify-content: space-between;
+                            align-items: center;
+                            overflow: visible;
+
+                            kendo-pager-prev-buttons {
+                                margin-top: -9px;
+
+                                .k-pager-first {
+                                    display: none;
+                                }
+
+                                .k-icon {
+                                    &::before {
+                                        content: "\e013" !important;
+                                    }
+                                }
+                            }
+                            kendo-pager-next-buttons {
+                                margin-bottom: -9px;
+                                margin-top: auto;
+
+                                .k-pager-last {
+                                    display: none;
+                                }
+                                .k-icon {
+                                    &::before {
+                                        content: "\e015" !important;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    &.colapse {
+                        .k-grid {
+                            display: none;
+                        }
+
+                        &.hasChild {
+                            .btn-add-circle {
+                                display: none;
+                            }
+
+                            .k-grid {
+                                display: flex;
+                                height: unset !important;
+
+                                .k-grid-table {
+                                    padding: 0;
+                                }
+                                tbody {
+                                    tr {
+                                        display: none;
+
+                                        &:first-child {
+                                            display: table-row;
+                                        }
+                                    }
+                                }
+
+                                .k-grid-pager {
+                                    display: none;
+                                }
+                            }
+                        }
+                    }
+
+                    &.expand {
+                        // display: flex;
+
+                        .btn-add-circle {
+                            display: flex;
+                        }
+
+                        .k-grid {
+                            display: flex;
+
+                            .k-grid-table {
+                                padding: 29px 0;
+                            }
+                            tbody {
+                                tr {
+                                    display: table-row;
+                                }
+                            }
+                            .k-grid-pager {
+                                display: flex;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        #dialogQuestionList {
+            .k-dialog {
+                max-height: 90%;
+            }
+            .k-dialog-content {
+                padding: 16px 0;
+
+                > div:not(.grid-wrapper) {
+                    margin: 0 16px;
+
+                    .aspect {
+                        margin-left: 18px;
+
+                        .sector {
+                            margin-left: 18px;
+                            margin-bottom: 18px;
+                        }
+                    }
+                }
+
+                .search-btn {
+                    display: flex;
+                    align-items: center;
+                    position: relative;
+                    margin-bottom: 20px;
+
+                    .k-i-search {
+                        width: 30px;
+                        height: 30px;
+                        cursor: pointer;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        z-index: 1;
+                    }
+                    .k-textbox,
+                    .k-combobox {
+                        flex-grow: 1;
+                        padding-left: 33px;
+                    }
+
+                    .onAddBtn {
+                        min-width: fit-content;
+                        margin-left: 6px;
+                    }
+                }
+
+                .k-grid {
+                    .k-grid-content {
+                        overflow-x: hidden;
+                        overflow-y: auto;
+                    }
+                    thead {
+                        display: none;
+                    }
+
+                    tbody {
+                        tr {
+                            td {
+                                &.content_col {
+                                    padding-left: 12px;
+                                    padding-right: 0;
+                                    min-width: fit-content;
+                                    width: 100%;
+                                    max-width: 100%;
+                                    font-size: 13px;
+
+                                    .content {
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: space-between;
+
+                                        > div {
+                                            max-width: 90%;
+
+                                            b {
+                                                white-space: normal;
+                                                overflow: hidden;
+                                                display: -webkit-box;
+                                                -webkit-line-clamp: 1;
+                                                -webkit-box-orient: vertical;
+                                            }
+                                        }
+                                    }
+                                }
+                                &:last-child {
+                                    display: none;
+                                }
+
+                                .k-i-trash {
+                                    height: 36px;
+                                    width: 36px;
+                                    margin-right: 12px;
+
+                                    &:hover {
+                                        border: 1px solid;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .k-grid-pager {
+                        position: initial;
+                        bottom: initial;
+                        margin-right: initial;
+                    }
+                }
+            }
+        }
+    }
+}

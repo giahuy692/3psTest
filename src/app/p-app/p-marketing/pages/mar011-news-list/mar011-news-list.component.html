@@ -1,0 +1,227 @@
+<div class="app-mar011-news-list">
+    <!-- Header 1 -->
+    <div class="header header-1">
+        <!-- Button for status filter -->
+        <ng-container *ngFor="let item of listStatusID.slice(0, 4); let  i = index">
+            <button kendoButton class="k-button checkbox-btn-group" [togglable]="isFilterActive"
+                [selected]="item.isChecked" (selectedChange)="selectedBtnChange($event, i)">
+                {{item.status}}
+                <input type="checkbox" class="k-checkbox" [checked]="item.isChecked" disabled>
+            </button>
+        </ng-container>
+
+        <div class="nav-btn nav-crud" style="flex-grow: 1;">
+            <button kendoButton class="k-button btn-hachi hachi-primary" [disabled]="!isFilterActive" [icon]="'plus'"
+                *ngIf="isMaster || isCreator" (click)="openDetail(true)">
+                TẠO MỚI
+            </button>
+        </div>
+    </div>
+
+    <!-- Header 2 -->
+    <div class="header header-2">
+        <div class="nav-filter nav-btn">
+            <!-- Filter (column 1) -->
+            <div class="filter-btn-group clear-btn-group">
+                <div class="label">
+                    <span class="k-icon k-i-filter"></span>Lọc dữ liệu
+                </div>
+
+                <button kendoButton class="k-button clear-filter-btn" (click)="resetFilter()">
+                    Reset bộ lọc
+                </button>
+            </div>
+
+            <!-- Search (column 2) -->
+            <form [formGroup]="searchForm" style="display: flex;">
+                <div class="filter-btn-group search-btn-group">
+                    <div class="label">
+                        Tìm kiếm
+                    </div>
+
+                    <div class="search-btn">
+                        <span class="k-icon k-i-search"></span>
+
+                        <kendo-textbox formControlName="SearchQuery" #SearchQuery type="text" class="k-textbox"
+                            placeholder="Tìm theo tiêu đề, miêu tả" [clearButton]="true">
+                        </kendo-textbox>
+                    </div>
+                </div>
+
+                <button kendoButton class="k-button searchBtn" [icon]="'search'" (click)="search()"
+                    [disabled]="!isFilterActive">
+                    TÌM
+                </button>
+            </form>
+
+            <!-- Dropdown (column 3) -->
+            <div class="filter-btn-group">
+                <div class="label">
+                    Phân nhóm tin tức
+                </div>
+
+                <kendo-multiselect [checkboxes]="true" [autoClose]="false" [kendoMultiSelectSummaryTag]="2"
+                    [kendoDropDownFilter]="filterSettings" [data]="listFilterNewsCategory"
+                    [placeholder]="'Chọn phân nhóm'" [textField]="'NewsCategory'" [valueField]="'Code'"
+                    [(ngModel)]="currentCategory" (valueChange)="selectedBtnChange()"
+                    [popupSettings]="{width: 'auto', appendTo: 'component', popupClass: 'popupClass'}"
+                    style="margin-top: auto; width: 420px;" [filterable]="true" #multiSelect [loading]="loading">
+
+                    <ng-template kendoMultiSelectTagTemplate let-dataItem>
+                        <span class="value">{{ dataItem.NewsCategory }}</span>
+                    </ng-template>
+
+                    <ng-template kendoMultiSelectItemTemplate let-dataItem>
+                        <div class="category-container">
+                            <!-- <input class="categoryCheckbox" type="checkbox"
+                                [checked]="currentCategory.includes(dataItem)" style="pointer-events: none;"> -->
+
+                            <span class="template">
+                                {{ dataItem.NewsCategory }}
+                            </span>
+
+                            <button kendoButton class="categoryBtn"
+                                (click)="editCategoryDialog(dataItem);$event.stopPropagation()"
+                                [icon]="'pencil'"></button>
+                        </div>
+                    </ng-template>
+                    <ng-template kendoMultiSelectGroupTagTemplate let-dataItems>
+                        +{{ dataItems.length }}
+                    </ng-template>
+                </kendo-multiselect>
+            </div>
+        </div>
+    </div>
+
+    <!-- Body -->
+    <div class="grid-wrapper">
+        <app-p-kendo-grid class="grid scrollable" [data]="gridView | async" [scrollable]="'none'" [loading]="loading"
+            [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize" [onPageChangeCallback]="onPageChangeCallback"
+            [skip]="gridState.skip" [take]="gridState.take" [selectable]="selectable"
+            [getActionDropdownCallback]="getActionDropdownCallback"
+            [onActionDropdownClickCallback]="onActionDropdownClickCallback" [selectable]="selectable"
+            [onSelectCallback]="onSelectCallback" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+            [getSelectionPopupCallback]="getSelectionPopupCallback" [sortable]="true" [sort]="gridState.sort"
+            [onSortChangeCallback]="onSortChangeCallback">
+    
+            <kendo-grid-column class="col_img_tieudebaiviet_tomtatbaiviet" title="Tin tức"
+                headerClass="col_img_tieudebaiviet_tomtatbaiviet" field="TitleVN">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="img_tieudebaiviet_tomtatbaiviet">
+    
+                        <img loading="lazy" src="{{dataItem.ImageSetting3}}" alt="">
+    
+                        <div class="tieudebaiviet_tomtatbaiviet">
+                            <div class="tenbaiviet"><b>{{ dataItem.TitleVN == null? dataItem.TitleJP == null ?
+                                    dataItem.TitleEN : dataItem.TitleJP : dataItem.TitleEN == null ? dataItem.TitleVN :
+                                    dataItem.TitleVN }}</b></div>
+    
+                            <div class="tomtatbaiviet">{{ dataItem.SummaryVN == null? dataItem.SummaryJP == null ?
+                                dataItem.SummaryEN : dataItem.SummaryJP : dataItem.SummaryEN == null ? dataItem.SummaryVN :
+                                dataItem.SummaryVN }}</div>
+    
+                            <div class="mabaiviet">
+                                <b>Phân nhóm:</b> {{ dataItem.NewsCategoryName }}
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+    
+            <kendo-grid-column class="col_nguoiTao" title="Người khởi tạo" field="CreateTime">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div>{{ dataItem.CreateBy }}</div>
+                    <div *ngIf="dataItem.CreateTime != null && dataItem.CreateTime != ''">
+                        Ngày tạo: {{ dataItem.CreateTime | date: 'dd/MM/yyyy' }}</div>
+                </ng-template>
+            </kendo-grid-column>
+    
+            <kendo-grid-column title="Thông tin phê duyệt" class="col_date" field="LastModifiedTime">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div>{{ dataItem.LastModifiedBy }}</div>
+                    <div *ngIf="dataItem.LastModifiedTime != null && dataItem.LastModifiedTime != ''">
+                        Ngày duyệt: {{ dataItem.LastModifiedTime | date: 'dd/MM/yyyy' }}</div>
+                </ng-template>
+            </kendo-grid-column>
+    
+            <kendo-grid-column class="col_tinhTrang" field="StatusID" title="Tình trạng" headerClass="col_tinhTrang">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div [ngClass]="{'yellow': dataItem.StatusID == 1, 
+                'green': dataItem.StatusID == 2, 'red': dataItem.StatusID == 3 || dataItem.StatusID == 4}">{{
+                        dataItem.StatusName }}</div>
+                </ng-template>
+            </kendo-grid-column>
+        </app-p-kendo-grid>
+    </div>
+
+    <!-- Remove Dialog -->
+    <kendo-dialog #dialog class="deleteDialog" title="Xóa tin tức" [hidden]="!deleteDialogOpened"
+        (close)="deleteDialogOpened = false" [minWidth]="250">
+        <p style="margin: 30px; text-align: center;">
+            Bạn chắc chắn muốn xóa vĩnh viễn tin tức có <b>ID: {{news.Code}}</b> này?</p>
+        <div class="dialog-footer">
+            <button kendoButton class="btn-hachi hachi-secondary" (click)="deleteDialogOpened = false"
+                [icon]="'close'">Không</button>
+            <button kendoButton class="btn-hachi hachi-warning" (click)="onDeleteNews(listUpdateNews)"
+                [icon]="'trash'">Có</button>
+        </div>
+    </kendo-dialog>
+
+    <kendo-dialog #dialog class="deleteDialog" title="Xóa các tin tức đã chọn" [hidden]="!deleteManyDialogOpened"
+        [minWidth]="250" (close)="deleteManyDialogOpened = false">
+        <div style="margin: 30px; text-align: center;">
+            {{ listUpdateNews.length }} tin tức bị xóa<br>
+            sẽ <b><span style="color: #FD7676">KHÔNG</span></b> thể khôi phục lại
+        </div>
+        <div class="dialog-footer">
+            <button kendoButton class="btn-hachi hachi-secondary" (click)="deleteManyDialogOpened = false"
+                [icon]="'close'">Không</button>
+            <button kendoButton class="btn-hachi hachi-warning" (click)="onDeleteNews(listUpdateNews)"
+                [icon]="'trash'">Có</button>
+        </div>
+    </kendo-dialog>
+
+    <!-- Edit Category Dialog -->
+    <kendo-dialog #dialog class="editCategoryDialog" title="Chỉnh sửa chi tiết phân nhóm" [hidden]="!editCategory"
+        [minWidth]="250" (close)="editCategory = false">
+        <div class="category-name">
+            <div class="label"><b>Phân nhóm</b></div>
+            <input type="text" class="category-name input" [(ngModel)]="categoryName"
+                style="width: 100%; padding: 5px;">
+        </div>
+
+        <div class="container">
+            <div class="img-group">
+                <div class="btn-group">
+                    <div class="label item1_1">
+                        <b>Hình đại diện</b>
+                    </div>
+                    <span class="k-icon k-i-export" (click)="onUploadFile()"
+                        style="margin-bottom: 5px; cursor:pointer"></span>
+                    <!-- <span class="k-icon k-i-trash" (click)="onRemoveImg()" style="cursor:pointer"></span> -->
+                </div>
+
+                <img loading="lazy" [src]="categoryImageThumb" [style.width.px]="140" [style.height.px]="100">
+            </div>
+
+            <div class="info-container">
+                <div class="info">
+                    <div class="label"><b>{{ total }} bài viết cùng phân nhóm</b></div>
+                </div>
+                <div class="action">
+                    <button class="updateBtn" (click)="updateCategory()">
+                        <b>CẬP NHẬT</b>
+                    </button>
+
+                    <button class="closeBtn" (click)="editCategory = false">
+                        <b>ĐÓNG</b>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </kendo-dialog>
+
+    <app-folder-popup style="z-index: 10001;" [pickFileCallback]="pickFileCallback"
+        [GetFolderCallback]="GetFolderCallback">
+    </app-folder-popup>
+</div>

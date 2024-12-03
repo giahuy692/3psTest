@@ -1,0 +1,1330 @@
+.color-white {
+  color: #ffffff;
+}
+
+.color-gray {
+  color: #23282c;
+}
+
+.color-darkblue {
+  color: #39579a;
+}
+
+.color-blue {
+  color: #008cd7;
+}
+
+.color-lightblue {
+  color: #46b1ff;
+}
+
+.color-darkgreen {
+  color: #316e00;
+}
+
+.color-green {
+  color: #649e0f;
+}
+
+.color-lightgreen {
+  color: #8dc63f;
+}
+
+.color-yellowgreen {
+  color: #c1d72e;
+}
+
+.color-yellow {
+  color: #ffc400;
+}
+
+.color-mediumyellow {
+  color: #FFB900;
+}
+
+.color-orangeyellow {
+  color: #ffab00;
+}
+
+.color-lightorange {
+  color: #ff5230;
+}
+
+.color-lightpink {
+  color: #dc3545;
+}
+
+.color-red {
+  color: #d82c12;
+}
+
+.color-badred {
+  color: #EB273A;
+}
+
+.hachi-color-primary-1 {
+  color: #353935;
+}
+
+.hachi-color-primary-2 {
+  color: #868b86;
+}
+
+.hachi-color-primary-3 {
+  color: #8dc63f;
+}
+
+.hachi-color-primary-4 {
+  color: #c1d72e;
+}
+
+.hachi-color-primary-5 {
+  color: #ffffff;
+}
+
+.hachi-color-secondary-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-1 {
+  color: #46b1ff;
+}
+
+.hachi-color-text-2 {
+  color: #868b86;
+}
+
+.hachi-color-text-3 {
+  color: #008cd7;
+}
+
+.hachi-color-text-4 {
+  color: #d82c12;
+}
+
+.hachi-color-text-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-6 {
+  color: #ffffff;
+}
+
+.hachi-color-text-7 {
+  color: #8dc63f;
+}
+
+.hachi-color-text-8 {
+  color: #626662;
+}
+
+.hachi-color-text-10 {
+  color: #ff5230;
+}
+
+.hachi-color-text-9 {
+  color: #bbc0bb;
+}
+
+.hachi-color-text-11 {
+  color: #dc3545;
+}
+
+.hachi-color-text-12 {
+  color: #828282;
+}
+
+::ng-deep #app-drawer-container {
+  height: 100%;
+}
+
+::ng-deep #app-drawer-container .mat-drawer-container {
+  height: 100%;
+}
+
+::ng-deep #app-drawer-container .mat-drawer-container .mat-drawer-content {
+  overflow: hidden;
+}
+
+::ng-deep #app-drawer-container .mat-drawer-container .mat-drawer-backdrop {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+::ng-deep #app-drawer-container .mat-drawer {
+  width: 400px;
+  padding: 10px;
+  padding-right: 0.25rem;
+  /* width */
+}
+
+::ng-deep #app-drawer-container .mat-drawer form {
+  width: 100%;
+  padding: 0 10px;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form fieldset {
+  margin-right: 5px;
+  padding-bottom: 35px;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form fieldset .k-form-field-disabled .k-label {
+  opacity: 1;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form legend {
+  margin: 0;
+  padding-bottom: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #1a6634;
+  border-bottom: 1px solid #1a6634;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .k-label {
+  font-weight: bold;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .k-label #folderPath {
+  padding: 0 5px;
+  margin-top: 5px;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .symbol {
+  padding-left: 5px;
+  color: #891828;
+  flex-grow: 1;
+  font-weight: bold;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .text {
+  display: flex;
+  color: #17a2b8;
+  cursor: pointer;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .k-textbox:focus, ::ng-deep #app-drawer-container .mat-drawer form .k-textbox:hover {
+  border: 1px solid #1a6634;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .k-textbox[formControlName="ThanhTien"] {
+  font-weight: bold;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .k-dropdownlist {
+  border-radius: 3px;
+  border: 1px solid transparent;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .k-dropdownlist:focus, ::ng-deep #app-drawer-container .mat-drawer form .k-dropdownlist:hover {
+  border: 1px solid #1a6634 !important;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .k-checkbox {
+  border-radius: 3px;
+  border-color: #1a6634;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .k-checkbox:checked, ::ng-deep #app-drawer-container .mat-drawer form .k-checkbox:hover {
+  background-color: #1a6634;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .k-checkbox:checked:before, ::ng-deep #app-drawer-container .mat-drawer form .k-checkbox:hover:before {
+  font-size: 13px;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form div img {
+  background-color: transparent;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form div img.img-hachi24 {
+  height: 16px;
+  margin-left: 10px;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .formfield-grid {
+  display: grid;
+  grid-template-columns: auto 50%;
+  column-gap: 32px;
+  margin-top: 8px;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .formfield-grid.hasNoImage {
+  row-gap: 15px;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .formfield-grid .formfield-item {
+  margin-top: 0;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .formfield-grid .item1,
+::ng-deep #app-drawer-container .mat-drawer form .formfield-grid .item3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .formfield-grid .item2 {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  width: 100%;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .formfield-grid .item5 .k-label {
+  visibility: hidden;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .formfield-grid .item5 .red-color {
+  text-decoration: line-through;
+  color: red;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .k-form-buttons {
+  position: fixed;
+  bottom: 36px;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .k-form-buttons .k-button {
+  height: 32px;
+  width: 103px;
+  border-radius: 3px;
+  border: 1px solid;
+  background-color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 11px;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .k-form-buttons .k-button:hover {
+  background-color: #464e61;
+  color: white;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .k-form-buttons .k-button.updateBtn {
+  background-color: #1a6634;
+  border: none;
+  color: white;
+}
+
+::ng-deep #app-drawer-container .mat-drawer form .k-form-buttons .k-button.updateBtn:hover {
+  background-color: #008000;
+  border: 1px solid;
+}
+
+::ng-deep #app-drawer-container .mat-drawer .formSanpham .tensanpham {
+  margin-top: 1rem;
+}
+
+::ng-deep #app-drawer-container .mat-drawer .formSanpham .tensanpham .VNName {
+  min-height: 32px;
+}
+
+::ng-deep #app-drawer-container .mat-drawer .formQuatang .groupQuatang {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  margin-top: 10px;
+}
+
+::ng-deep #app-drawer-container .mat-drawer .formQuatang .groupQuatang .groupName {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1a6634;
+}
+
+::ng-deep #app-drawer-container .mat-drawer .formQuatang .groupQuatang .sanpham {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+::ng-deep #app-drawer-container .mat-drawer .formQuatang .groupQuatang .sanphamName {
+  font-weight: bold;
+  color: #008cd7;
+  display: flex;
+  column-gap: 5px;
+  align-items: center;
+}
+
+::ng-deep #app-drawer-container .mat-drawer .formQuatang .groupQuatang .sanphamName img {
+  max-height: 40px;
+  max-width: 40px;
+}
+
+::ng-deep #app-drawer-container .mat-drawer .formQuatang .groupQuatang .quatang-list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+}
+
+::ng-deep #app-drawer-container .mat-drawer .formQuatang .groupQuatang .quatang-list .quatang-item {
+  display: grid;
+  grid-template-columns: auto 30% auto auto;
+  column-gap: 10px;
+}
+
+::ng-deep #app-drawer-container .mat-drawer .formQuatang .groupQuatang .quatang-list .quatang-item .k-checkbox {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  margin-top: 10px;
+}
+
+::ng-deep #app-drawer-container .mat-drawer .formQuatang .groupQuatang .quatang-list .quatang-item .item2 {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  width: 100%;
+}
+
+::ng-deep #app-drawer-container .mat-drawer .formQuatang .groupQuatang .quatang-list .quatang-item .tenquatang_maquatang {
+  grid-row: 1;
+  grid-column: 3 / span 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+::ng-deep #app-drawer-container .mat-drawer .formQuatang .groupQuatang .quatang-list .quatang-item .soluongquatang {
+  grid-row: 2;
+  grid-column: 3 / span 2;
+  display: flex;
+  white-space: nowrap;
+  align-items: center;
+  column-gap: 20px;
+}
+
+::ng-deep #app-drawer-container .mat-drawer .formQuatang .groupQuatang .quatang-list .quatang-item .soluongquatang .soluong {
+  font-weight: bold;
+}
+
+::ng-deep #app-drawer-container .mat-drawer ::-webkit-scrollbar {
+  width: 0.75rem;
+}
+
+::ng-deep #app-drawer-container .mat-drawer.mat-drawer-opened {
+  background-color: white;
+}
+
+::ng-deep #ecom001-online-order-detail {
+  height: calc(93vh - 30px);
+  padding: 0 15px 35px 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+::ng-deep #ecom001-online-order-detail .header {
+  display: flex;
+  padding: 9px 0;
+  margin-bottom: 0;
+  border-bottom: 1px solid rgba(143, 155, 166, 0.4);
+}
+
+@media screen and (max-width: 480px) {
+  ::ng-deep #ecom001-online-order-detail .header {
+    display: none;
+  }
+}
+
+::ng-deep #ecom001-online-order-detail .header.header-1 .checkbox-btn-group {
+  margin-right: 10px;
+}
+
+::ng-deep #ecom001-online-order-detail .header .label {
+  margin-bottom: 6px;
+  font-weight: 700;
+  font-size: 13px;
+  color: #5c6873;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-btn {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-breadcrumb {
+  font-weight: bold;
+  color: #8f9ba6;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-breadcrumb .breadcrumb-item {
+  cursor: pointer;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-breadcrumb .breadcrumb-item:first-child {
+  color: #1a6634;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-breadcrumb .breadcrumb-chevron {
+  display: flex;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-crud {
+  flex-grow: 0;
+  justify-content: flex-end;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-crud .crud-btn {
+  height: 32px;
+  margin-top: auto;
+  font-size: 11px;
+  font-weight: bold;
+  background-color: white !important;
+  box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2) !important;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-crud #reloadBtn {
+  color: #8f9ba6;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-crud #updateOrderType_Treo_Btn {
+  color: #EB273A;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-crud .updateStatusBtn {
+  text-transform: uppercase;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-crud .updateStatusBtn.gray {
+  color: #959db3;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-crud .updateStatusBtn.yellow {
+  color: #FFB900;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-crud .updateStatusBtn.green {
+  color: #1a6634;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-crud .updateStatusBtn.red {
+  color: #EB273A;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-crud .onDeleteBtn {
+  background-color: #8f9ba6 !important;
+  color: white;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-crud #onAddBtn {
+  background-color: #1a6634 !important;
+  color: white;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-crud .border-center {
+  margin: auto 0 1px 0;
+  border-right: 1px solid #c8ced3;
+  height: 31px;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-file {
+  flex-grow: 0;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-file .file-btn-group {
+  background: white;
+  box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+  border-radius: 3px;
+  color: #8f9ba6;
+  min-width: fit-content;
+  height: 32px;
+  display: flex;
+  margin-top: auto;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-file .file-btn-group span.text {
+  margin: auto;
+  padding-right: 9px;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-file .file-btn-group #onUploadBtn {
+  width: 32px;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-file .file-btn-group #onImportBtn {
+  width: 64px;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-file .file-btn-group #onImportBtn .excel-ic {
+  width: 32px;
+  height: 100%;
+  margin-left: 2px;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-file .file-btn-group .border-center {
+  align-self: center;
+  height: 90%;
+  border-right: 1px solid #8f9ba6;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-file .file-btn-group .k-i-arrow-chevron-down {
+  text-align: center;
+  padding: 7px 0;
+  width: 32px;
+  height: 100%;
+}
+
+::ng-deep #ecom001-online-order-detail .header .nav-file .file-btn-group .k-i-arrow-chevron-down:before {
+  font-size: 20px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section .title {
+  margin: 12px 0;
+  font-weight: bold;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section .crud-btn {
+  height: 32px;
+  font-size: 11px;
+  font-weight: bold;
+  background-color: #1a6634 !important;
+  color: white;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section .section-grid {
+  display: grid;
+  column-gap: 26px;
+  row-gap: 10px;
+  background-color: white;
+  padding: 15px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section .section-grid .grid-item {
+  display: flex;
+  flex-direction: column;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section .section-grid .grid-item .itemNull {
+  display: none !important;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section .section-grid .k-textbox {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section .section-grid .k-numerictextbox {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section .section-grid .k-numerictextbox.red-color input {
+  color: #EB273A;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section .section-grid .k-dropdownlist {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section .section-grid .k-datepicker {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .title {
+  justify-content: flex-start;
+  column-gap: 15px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .title span.red {
+  color: #EB273A;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .title span.red img {
+  margin-top: -7px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .title .orderType {
+  color: #8f9ba6;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .title .orderType.red {
+  color: #EB273A;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .title .orderType.green {
+  color: #1a6634;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .title .syncStatusBtn {
+  cursor: pointer;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .section-grid {
+  grid-template-columns: 240px auto auto auto;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .section-grid .item1 .label {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .section-grid .item1 .label .tinhtrang {
+  color: #5CB800;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .section-grid .item7 .label {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .section-grid .item7 .label .nguoimuahang {
+  color: #5CB800;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .section-grid .item9 {
+  grid-row: 1 / span 2;
+  grid-column: 4 / span 2;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .section-grid .item9 textarea {
+  resize: none;
+  border-radius: 3px;
+  border-color: rgba(0, 0, 0, 0.08);
+  outline: none;
+  height: 100%;
+  padding: 4px 8px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .section-grid .item9 textarea:hover, ::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .section-grid .item9 textarea:focus-visible {
+  border-color: #1a6634;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .section-grid .item10 #phanloaidonhangBtn {
+  color: #23282c;
+  font-weight: bold;
+  display: flex;
+  justify-content: flex-start;
+  border: none;
+  box-shadow: none;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .section-grid .item10 #phanloaidonhangBtn:focus, ::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .section-grid .item10 #phanloaidonhangBtn:active {
+  box-shadow: none;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .section-grid .item10 #phanloaidonhangBtn .k-checkbox {
+  margin-right: 9px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .section-grid .item12 {
+  grid-row: 3;
+  grid-column: 3 / span 3;
+  flex-direction: row;
+  display: flex;
+  column-gap: 10px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .section-grid .item12 .address-item {
+  display: flex;
+  flex-direction: column;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .section-grid .item12 .address-item.address {
+  flex-grow: 1;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .section-grid .item12 .address-item.address-province {
+  width: 144px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .section-grid .item12 .address-item.address-district {
+  width: 115px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonhangTbl .section-grid .item12 .address-item.address-ward {
+  width: 115px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid {
+  grid-template-columns: 240px auto auto;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item1 .suffixTextbox,
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item2 .suffixTextbox {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+  color: #acb4bc;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item1 .k-textbox,
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item2 .k-textbox {
+  width: 215px;
+  flex-grow: 0;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item1 {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item2 {
+  grid-column: 1;
+  grid-row: 2;
+  row-gap: 10px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item3 {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item3 .label + div {
+  display: flex;
+  column-gap: 8px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item3 .label + div .k-numerictextbox {
+  width: 108px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item3 .label + div .k-numerictextbox:first-child {
+  max-width: 125px;
+  min-width: 125px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item4 {
+  grid-column: 2;
+  grid-row: 2;
+  flex-direction: row;
+  column-gap: 8px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item4 .item4_1,
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item4 .item4_2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 10px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item4 .item4_1 .k-numerictextbox {
+  max-width: 125px;
+  min-width: 125px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item4 .item4_2 {
+  flex-grow: 1;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item4 .item4_2 .k-textbox {
+  width: 100%;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item5 {
+  grid-column: 3;
+  grid-row: 1;
+  flex-direction: row;
+  column-gap: 26px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item5 .item5_1 {
+  flex-grow: 1;
+  white-space: nowrap;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item5 .item5_1 .k-dropdownlist {
+  width: 100%;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item5 .item5_1 .channelName {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  color: #5cb800;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item5 .item5_2 .label {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item5 .item5_2 .label .k-button {
+  height: 16px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtindonggoi_giaohangTbl .section-grid .item6 {
+  padding-top: 10px;
+  justify-content: space-between;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid {
+  grid-template-columns: auto 300px 330px;
+  row-gap: 7px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item1 {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item2 {
+  grid-column: 1;
+  grid-row: 3 / span 2;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item2 div {
+  display: flex;
+  column-gap: 12px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item3 {
+  grid-column: 1;
+  grid-row: 5 / span 3;
+  justify-content: space-evenly;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item3 .k-textbox {
+  margin-bottom: 7px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item3 .k-textbox:last-child {
+  margin-bottom: 0;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item4 {
+  grid-row: 1;
+  grid-column: 2 / span 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 10px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item4 .label {
+  margin-bottom: 0;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item4 .k-textbox {
+  flex-grow: 0;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item5 {
+  grid-column: 2 / span 1;
+  grid-row: 2 / span 6;
+  column-gap: 40px;
+  row-gap: 10px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item5 .item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item5 .item .k-i-trash {
+  color: #EB273A;
+  cursor: pointer;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item6,
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item7,
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item8 {
+  justify-content: space-between;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item6 .item,
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item7 .item,
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item8 .item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item6 .item .label,
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item7 .item .label,
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item8 .item .label {
+  flex-grow: 1;
+  margin-bottom: 0;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item6 .item .k-numerictextbox,
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item7 .item .k-numerictextbox,
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item8 .item .k-numerictextbox {
+  max-width: 50%;
+  max-height: 24px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item6 {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item7 {
+  grid-column: 3;
+  grid-row: 3 / span 2;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item8 {
+  grid-column: 3;
+  grid-row: 5 / span 2;
+  justify-content: space-around;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item9 {
+  grid-column: 3;
+  grid-row: 7;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item9 .label {
+  color: #23282c;
+  margin-bottom: 0;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinthanhtoanTbl .section-grid .item9 .number {
+  color: #008cd7;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .title {
+  margin-bottom: 0;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .grid-title {
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .grid-title .grid-subtitle {
+  font-weight: bold;
+  font-size: 15px;
+  margin: 0 15px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .grid-title img {
+  height: 17px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .gridGroup.gridNull {
+  display: none;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .grid1 .grid-subtitle {
+  color: #5CB800;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .grid2 .grid-subtitle {
+  color: #008cd7;
+  margin-top: 12px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .k-grid th .hachi24 {
+  height: 15px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .k-grid th:nth-child(3), ::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .k-grid th:nth-child(4), ::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .k-grid th:nth-child(5) {
+  text-align: center;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .k-grid th:nth-last-child(2) {
+  text-align: center;
+  border-right: 40px solid transparent;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .k-grid tr:not(.k-grouping-row) td:first-child {
+  padding-left: 10px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .k-grid tr:not(.k-grouping-row) td:nth-last-child(2) {
+  border-right: 40px solid transparent;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .k-grid .isHachi24,
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .k-grid .soluong,
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .k-grid .dongia {
+  max-width: 100px;
+  width: 100px;
+  text-align: center;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .k-grid .tensanpham {
+  display: flex;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .k-grid .tensanpham img {
+  max-height: 64px;
+  margin-right: 20px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .k-grid .tensanpham .tensanpham_masanpham {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .k-grid .tensanpham .tensanpham_masanpham .tensanpham {
+  white-space: normal;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .k-grid .tensanpham .tensanpham_masanpham .masanpham {
+  color: #5c6873;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .k-grid .dongia .BasePrice {
+  color: #EB273A;
+  text-decoration: line-through #EB273A;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#thongtinchitietdonhangTbl .grids .k-grid .thanhtien {
+  max-width: 130px;
+  width: 130px;
+  text-align: center;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#quatangTbl .quatang-list {
+  display: grid;
+  grid-template-columns: 18% 18% 18% 18%;
+  column-gap: 9%;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#quatangTbl .quatang-list .quatang-item {
+  padding: 5px;
+  border-radius: 3px;
+  width: 250px;
+  height: 110px;
+  background-color: white;
+  position: relative;
+  display: grid;
+  grid-template-columns: 30% auto;
+  column-gap: 10px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#quatangTbl .quatang-list .quatang-item:hover {
+  box-shadow: 0 0 0 1px #1a6634;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#quatangTbl .quatang-list .quatang-item .k-i-trash {
+  color: #EB273A;
+  cursor: pointer;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#quatangTbl .quatang-list .quatang-item .hinhanh {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#quatangTbl .quatang-list .quatang-item .hinhanh img {
+  border-radius: 3px;
+  width: 100%;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#quatangTbl .quatang-list .quatang-item .tenquatang_maquatang {
+  grid-column: 2 / span 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#quatangTbl .quatang-list .quatang-item .soluongquatang {
+  grid-column: 2 / span 2;
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#quatangTbl .quatang-list .quatang-item .soluongquatang .soluong {
+  font-weight: bold;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#lichsuxulydonhangTbl .title {
+  margin-bottom: 0;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#lichsuxulydonhangTbl .k-grid tr:not(.k-grouping-row) td:first-child {
+  padding-left: 10px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#lichsuxulydonhangTbl .k-grid tr:not(.k-grouping-row) td:last-child {
+  display: none;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#lichsuxulydonhangTbl .k-grid .thoidiemxuly {
+  display: flex;
+  column-gap: 5px;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#chukybengiaonhanTbl {
+  display: flex;
+  flex-direction: column;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#chukybengiaonhanTbl .chuky-bg {
+  max-height: 600px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  flex-grow: 1;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#chukybengiaonhanTbl .chuky-bg.empty {
+  height: auto;
+}
+
+::ng-deep #ecom001-online-order-detail .body .sections .section#chukybengiaonhanTbl .chuky-bg img {
+  max-width: auto;
+  max-height: 100%;
+}
+
+::ng-deep #ecom001-online-order-detail .label {
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #8f9ba6;
+}
+
+::ng-deep #ecom001-online-order-detail .label.thick-label {
+  color: #23282c;
+}
+
+::ng-deep #ecom001-online-order-detail .label.thick-label + .number {
+  font-weight: bold;
+}
+
+::ng-deep #ecom001-online-order-detail .label.thick-label + .k-numerictextbox input {
+  font-weight: bold;
+}
+
+::ng-deep #ecom001-online-order-detail .label.thin-label {
+  font-weight: normal;
+  color: #2f353a;
+}
+
+::ng-deep #app-drawer-container #WHPickupDialog {
+  z-index: 7;
+}
+
+::ng-deep #app-drawer-container #WHPickupDialog .k-dialog {
+  width: 360px;
+  border-radius: 3px;
+}
+
+::ng-deep #app-drawer-container #WHPickupDialog .k-dialog .k-dialog-titlebar {
+  color: white;
+  background-color: #1a6634;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 14px;
+  border-radius: 3px 3px 0 0;
+}
+
+::ng-deep #app-drawer-container #WHPickupDialog .k-dialog .k-dialog-titlebar .k-dialog-title {
+  justify-content: center;
+  font-size: 20px;
+}
+
+::ng-deep #app-drawer-container #WHPickupDialog .k-dialog .k-dialog-content.k-window-content {
+  padding: 22px 35px;
+  overflow: hidden;
+}
+
+::ng-deep #app-drawer-container #WHPickupDialog .k-dialog .k-dialog-content.k-window-content .WHPickup_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 9px;
+}
+
+::ng-deep #app-drawer-container #WHPickupDialog .k-dialog .k-dialog-content.k-window-content .WHPickup_row label {
+  margin: 0;
+  color: #26282e;
+  cursor: pointer;
+}
+
+::ng-deep #app-drawer-container #WHPickupDialog .k-dialog .k-dialog-content.k-window-content .WHPickup_row input {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  order: 1;
+  border-color: green;
+  box-shadow: none;
+}
+
+::ng-deep #app-drawer-container #WHPickupDialog .k-dialog .k-dialog-content.k-window-content .WHPickup_row input:checked {
+  background-color: green;
+}
+
+::ng-deep #app-drawer-container #WHPickupDialog .k-dialog .k-dialog-content.k-window-content .WHPickup_row input:checked::before {
+  display: none;
+}
+
+::ng-deep #app-drawer-container #WHPickupDialog .k-dialog .k-dialog-content.k-window-content .WHPickup_row input:checked::after {
+  width: 100%;
+  height: 100%;
+  content: "\2713";
+  font-weight: 700;
+  font-size: 13px;
+  position: absolute;
+  top: -1px;
+  left: 13%;
+}
+
+::ng-deep #app-drawer-container #WHPickupDialog .k-dialog .k-dialog-content.k-window-content .WHPickup_row input:checked + label {
+  color: #1a6634;
+}
+
+::ng-deep #app-drawer-container #WHPickupDialog .k-dialog .k-dialog-content.k-window-content .WHPickup_row:hover label {
+  color: #1a6634;
+}
+
+::ng-deep #app-drawer-container #WHPickupDialog .k-dialog .k-dialog-content.k-window-content .WHPickup_row:hover input {
+  background-color: green;
+}
+
+::ng-deep #app-drawer-container #WHPickupDialog .k-dialog .k-dialog-content.k-window-content .k-button {
+  background-image: none;
+  border-radius: 3px;
+  max-width: 94px;
+  padding: 0;
+  height: 33px;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+::ng-deep #app-drawer-container #WHPickupDialog .k-dialog .k-dialog-content.k-window-content .k-button:hover {
+  box-shadow: 0px 3px 3px rgba(90, 98, 118, 0.502);
+}
+
+::ng-deep #app-drawer-container #WHPickupDialog .k-dialog .k-dialog-content.k-window-content .closeDialogBtn {
+  color: #1a6634;
+  border: 1px solid #1a6634;
+}
+
+::ng-deep #app-drawer-container #WHPickupDialog .k-dialog .k-dialog-content.k-window-content #pickBtn {
+  color: white;
+  background-color: #1a6634 !important;
+}
+
+::ng-deep #app-drawer-container #WHPickupDialog .k-dialog .k-dialog-content.k-window-content #pickBtn.disabled {
+  background-color: #008000;
+}
+
+::ng-deep #app-drawer-container #WHPickupDialog .k-dialog .k-dialog-content.k-window-content .k-dialog-buttongroup {
+  border: none;
+  display: flex;
+  justify-content: center;
+  column-gap: 7px;
+}

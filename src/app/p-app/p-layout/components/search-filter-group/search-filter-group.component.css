@@ -1,0 +1,6 @@
+::ng-deep app-search-filter-group {
+  display: flex;
+  align-items: center;
+  -moz-column-gap: 10px;
+  column-gap: 10px;
+}

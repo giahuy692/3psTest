@@ -1,0 +1,244 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+  app-header-portal {
+    .header-portal {
+      display: flex;
+      height: 55px;
+
+      .iconMenu {
+        display: none;
+      }
+
+      .btn-portal {
+        box-shadow: none;
+
+        &.hachi-primary {
+          border: transparent;
+          .k-button-icon {
+            color: $dark-green;
+          }
+
+          .k-button-text {
+            color: $dark-green;
+            font-weight: 700;
+          }
+
+          &:hover {
+            border: transparent;
+            .k-button-icon {
+              color: $worse-green;
+            }
+
+            .k-button-text {
+              color: $worse-green;
+            }
+          }
+        }
+
+        &.hachi-secondary {
+          border: transparent;
+          .k-button-icon {
+            color: $light-blue-gray;
+          }
+
+          .k-button-text {
+            color: $light-blue-gray;
+          }
+
+          &:hover {
+            border: transparent;
+            .k-button-icon {
+              color: $medium-blue-gray;
+            }
+
+            .k-button-text {
+              color: $medium-blue-gray;
+            }
+          }
+        }
+      }
+
+      .headerLeft {
+        width: 220px;
+        border-right: 1px solid #959db34d;
+        padding: 0 10px;
+        display: flex;
+        column-gap: 10px;
+        align-items: center;
+        border-bottom: 1px solid #959db34d;
+        .logoHachiPortal {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          .logoHachi{
+            background-image: url(../../../../../assets//img/logo/hachi_logo1.svg);
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 100%;
+            background-position: left;
+          }
+        }
+      }
+
+      .headerRight {
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+        padding: 0 25px;
+        align-items: center;
+      }
+    }
+
+    // responsive
+    @media (max-width: 1025px) {
+      .header-portal {
+        .headerLeft {
+        }
+        .headerRight {
+        }
+      }
+    }
+    @media (max-width: 1024px) {
+      .header-portal {
+        .headerLeft {
+        }
+        .headerRight {
+        }
+      }
+    }
+    @media (max-width: 768px) {
+      .header-portal {
+        .headerLeft {
+          border: none;
+          width: 90px;
+          justify-content: space-between;
+          column-gap: 0;
+          
+          .iconMenu {
+            display: block;
+            background-color: transparent;
+          }
+          .logoHachiPortal {
+            width: 40px;
+            .logoHachi{
+              background-image: url(../../../../../assets//img/logo/HachiHachiLogo1.svg);
+              transition: all 0.3s ease-in-out;
+              -webkit-transition: all 0.3s ease-in-out;
+              -moz-transition: all 0.3s ease-in-out;
+              -ms-transition: all 0.3s ease-in-out;
+              -o-transition: all 0.3s ease-in-out;
+            }
+            transition: all 0.3s ease-in-out;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -ms-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+          }
+        }
+        .headerRight {
+          width: 100%;
+          padding: 0 10px;
+          overflow-x: auto;
+          display: flex;
+
+          .wrapper-header-user {
+            display: flex;
+            align-items: center;
+            // padding-left: 22px;
+            margin-left: auto;
+            .btnHome {
+              display: none;
+            }
+          }
+        }
+
+        &.isExpandedTrue{
+          .headerLeft {
+            width: 100% !important;
+            justify-content: space-between;
+            .logoHachiPortal {
+              width: 50%;
+              transition: all 0.3s ease-in-out;
+              -webkit-transition: all 0.3s ease-in-out;
+              -moz-transition: all 0.3s ease-in-out;
+              -ms-transition: all 0.3s ease-in-out;
+              -o-transition: all 0.3s ease-in-out;
+              .logoHachi{
+                background-image: url(../../../../../assets//img/logo/hachi_logo1.svg);
+                transition: all 0.3s ease-in-out;
+                -webkit-transition: all 0.3s ease-in-out;
+                -moz-transition: all 0.3s ease-in-out;
+                -ms-transition: all 0.3s ease-in-out;
+                -o-transition: all 0.3s ease-in-out;
+              }
+            }
+            .iconMenu{
+              border: 1px solid #F1802E;
+              border-radius: 50%;
+              padding: 0px;
+              width: 26px;
+              height: 26px;
+              .k-button-icon{
+                color: #F1802E;
+                font-size: 14px;
+                &::before{
+                  content: "✖";
+                }
+              }
+            }
+          }
+          .headerRight{
+            display: none;
+          }
+        }
+      }
+    }
+
+    // //-------------------
+    // @media (min-height: 1025px) {
+    //   .header-portal{
+    //     .headerLeft{
+    //       background-color: #fd9576;
+    //     }
+    //     .headerRight{
+    //       background-color: #fd9576;
+    //     }
+    //   }
+    // }
+    // @media (max-height: 1024px) {
+    //   .header-portal{
+    //     .headerLeft{
+    //       background-color: #e9fd76;
+    //     }
+    //     .headerRight{
+    //       background-color: #e9fd76;
+    //     }
+    //   }
+    // }
+
+    // @media (max-height: 800px) {
+    //   .header-portal{
+    //     .headerLeft{
+    //       background-color: #7695fd;
+    //     }
+    //     .headerRight{
+    //       background-color: #7695fd;
+    //     }
+    //   }
+    // }
+    // @media (max-height: 600px) {
+    //   .header-portal{
+    //     .headerLeft{
+    //       background-color: #a82759;
+    //     }
+    //     .headerRight{
+    //       background-color: #a82759;
+    //     }
+    //   }
+    // }
+  }
+}
+
+// 220
+// 50

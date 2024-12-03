@@ -1,0 +1,242 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+  app-pur005-supplier-detail {
+
+    //header1
+    .header-1 {
+      display: flex;
+      justify-content: space-between;
+      padding-left: 5px !important;
+      padding-right: 20px !important;
+      height: 52px;
+
+      .onDeleteBtn {
+        .k-icon-wrapper-host {
+          margin-bottom: 2px;
+        }
+      }
+    }
+
+    //header1
+
+    //main
+    .main {
+      //height: calc(100vh - 130px);
+      overflow-y: hidden;
+      display: grid;
+      grid-template-columns: 172px 7fr;
+      column-gap: 15px;
+
+      // main left
+      .left {
+        background-color: #FFF;
+        width: 100%;
+        height: 100%;
+
+      }
+
+      // main left
+
+      // main right
+      .right {
+        padding: 17px 20px 15px 0px;
+        overflow-x: hidden;
+        height: calc(100vh - 130px);
+
+        .block-supplierInfo,
+        .block-contactInfo,
+        .block-taxInfo {
+          margin-bottom: 5px;
+
+          .title-block {
+            color: #343A40;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+          }
+
+          .content-block {
+            margin-top: 5px;
+            display: flex;
+            background-color: #FFF;
+            overflow-x: scroll;
+            column-gap: 75px;
+            width: 100%;
+            padding: 15px 15px 5px 15px;
+
+            .column-1,
+            .column-2 {
+              display: flex;
+              flex-direction: column;
+
+              .title-field {
+                display: flex;
+                flex-direction: column;
+
+                .k-label {
+                  color: #343A40;
+                  font-size: 13px;
+                  font-weight: 700;
+                  white-space: nowrap;
+                }
+
+                app-p-textbox,
+                p-kendo-dropdownlist,
+                app-p-numeric-textbox {
+                  margin-top: 5px;
+                  margin-bottom: 10px;
+
+                }
+              }
+            }
+
+            .column-1 {
+              .title-field {
+                app-p-textbox {
+
+                  kendo-textbox {
+                    width: 270px !important;
+                  }
+
+                }
+
+                app-p-numeric-textbox {
+                  kendo-numerictextbox {
+                    width: 270px !important;
+
+                    .k-input-inner {
+                      text-align: start;
+                    }
+                  }
+                }
+
+                p-kendo-dropdownlist {
+
+                  kendo-dropdownlist {
+                    width: 270px !important;
+
+                    .k-input-inner {
+                      width: 240px;
+
+                      .k-input-value-text {
+
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                      }
+                    }
+                  }
+
+                }
+
+                kendo-dropdownlist {
+                  width: 270px !important;
+
+                  .k-input-inner {
+                    width: 240px;
+
+                    .k-input-value-text {
+
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                    }
+                  }
+                }
+              }
+            }
+
+            .column-2 {
+              width: 100%;
+
+              .parentDropdown {
+                margin-top: 5px;
+                margin-bottom: 10px;
+              }
+
+              .firstItem {
+                app-p-textbox {
+                  kendo-textbox {
+                    .k-input-inner {
+                      color: #26282E;
+                      font-size: 13px;
+                      font-weight: 700;
+
+                    }
+                  }
+                }
+              }
+
+              .groupNO-field {
+                display: flex;
+                column-gap: 8px;
+                width: 100%;
+
+                .phoneNo {
+
+                  app-p-textbox {
+                    kendo-textbox {
+                      min-width: 230px !important;
+                      //width: 100%;
+                    }
+
+                  }
+
+                }
+
+                .faxNo {
+                  width: 100%;
+
+                  app-p-textbox {
+                    kendo-textbox {
+                      min-width: 330px !important;
+                      width: 100%;
+                    }
+
+                  }
+                }
+              }
+
+              .title-field {
+
+                app-p-textbox {
+                  kendo-textbox {
+                    min-width: 560px !important;
+                    width: 100%;
+                  }
+
+                }
+
+                p-kendo-dropdownlist {
+                  kendo-dropdownlist {
+                    min-width: 560px !important;
+                    width: 100%;
+                  }
+
+                }
+              }
+            }
+          }
+        }
+
+        .block-contactInfo {
+
+          .content-block {
+            .column-1 {
+              .title-field {
+                kendo-dropdownlist {
+                  margin-top: 5px;
+                  margin-bottom: 10px;
+                }
+              }
+            }
+          }
+
+        }
+      }
+
+      // main right
+    }
+
+    //main
+  }
+}

@@ -1,0 +1,22 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep app-hri018-exam-appeal {
+    .exam-monitor-wrapper {
+        height: calc(100vh - 90px);
+        overflow-y: hidden;
+        overflow-x: hidden;
+        padding: 0 15px 0 20px;
+        p {
+            margin-bottom: unset;
+        }
+
+        .breadcrumbs-wrapper {
+            padding: 8px 0;
+            border-bottom: 1px solid $blue-gray;
+        }
+
+        app-hr-exam-detail .exam-detail-wrapper{
+            height: calc(100vh - 50px);
+        }
+    }
+}

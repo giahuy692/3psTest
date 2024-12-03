@@ -1,0 +1,325 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+  .mat-drawer {
+    .formfield-grid {
+      display: grid;
+      grid-template-columns: 50% 50%;
+      column-gap: 5px;
+
+      .item1_1 {
+        grid-column: 1;
+        grid-row: 1;
+      }
+      .item1_2 {
+        grid-column: 1;
+        grid-row: 2;
+      }
+      .item1_3 {
+        grid-column: 1;
+        grid-row: 3;
+      }
+      .item2 {
+        grid-column: 2;
+        grid-row: 1 / span 3;
+
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+  .mar007-special-product-list {
+    height: calc(100vh - #{$footer-height});
+    padding: 0 15px 0 20px;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    .header {
+      display: flex;
+      column-gap: 10px;
+      padding: 9px 0;
+      margin-bottom: 0;
+      border-bottom: 1px solid rgba($gray-500, 0.4);
+
+      &.header-1 {
+        .k-dropdownlist {
+          width: 222px;
+
+          .k-input {
+            column-gap: 5px;
+          }
+        }
+      }
+
+      .checkbox-btn-group {
+        border-radius: 15px;
+
+        &:hover,
+        &.active,
+        &.k-state-active {
+          border: 1px solid $dark-green;
+          background-image: none;
+          background-color: white;
+          color: initial;
+
+          .k-checkbox {
+            background-color: $dark-green;
+          }
+        }
+
+        .k-checkbox {
+          margin-left: 8px;
+          border-color: $dark-green;
+        }
+      }
+
+      .label {
+        margin-bottom: 6px;
+        font-weight: 700;
+        font-size: 13px;
+        color: $gray-700;
+
+        &.fake {
+          visibility: hidden;
+        }
+      }
+
+      .nav-btn {
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+      }
+
+      .nav-filter {
+        column-gap: 10px;
+
+        .filter-btn-group {
+          &.clear-btn-group {
+            .label {
+              display: flex;
+              align-items: center;
+            }
+            .clear-filter-btn {
+              color: $good-green;
+              border: none;
+              background: none;
+              text-decoration: underline;
+            }
+          }
+
+          &.search-btn-group {
+            margin-right: 5px;
+
+            .search-btn {
+              position: relative;
+
+              .k-i-search {
+                position: absolute;
+                height: 100%;
+                width: 30px;
+                z-index: 1;
+              }
+              .k-textbox {
+                padding-left: 30px;
+                min-width: fit-content;
+                width: 475px;
+              }
+            }
+          }
+          &.date-btn-group {
+            flex-grow: 1;
+          }
+        }
+
+        .searchBtn {
+          height: 31px;
+          margin-bottom: 1px;
+          margin-top: auto;
+          background-color: $dark-green !important;
+          color: white;
+          font-size: 11px;
+          font-weight: bold;
+        }
+      }
+
+      .nav-crud {
+        flex-grow: 0;
+        justify-content: flex-end;
+
+        .onAddBtn {
+          height: 32px;
+          margin-top: auto;
+          background-color: $dark-green !important;
+          color: white;
+          font-size: 11px;
+          font-weight: bold;
+        }
+        .border-center {
+          margin: auto 0 1px 10px;
+          border-right: 1px solid $gray-300;
+          height: 31px;
+        }
+      }
+
+      .nav-file {
+        flex-grow: 0;
+        margin-left: auto;
+
+        .file-btn-group {
+          background: white;
+          box-shadow: 1px 3px 6px 1px rgba($gray-500, 0.2);
+          border-radius: 3px;
+          color: $gray-500;
+          min-width: fit-content;
+          height: 32px;
+          margin-left: 15px;
+          display: flex;
+          margin-top: auto;
+          cursor: pointer;
+
+          span.text {
+            margin: auto;
+            padding-right: 9px;
+          }
+          .onImportBtn {
+            width: 64px;
+
+            .excel-ic {
+              width: 32px;
+              height: 100%;
+              margin-left: 2px;
+            }
+          }
+          .border-center {
+            align-self: center;
+            height: 90%;
+            border-right: 1px solid $gray-500;
+          }
+
+          .k-i-arrow-chevron-down {
+            text-align: center;
+            padding: 7px 0;
+            width: 32px;
+            height: 100%;
+
+            &:before {
+              font-size: 20px;
+            }
+          }
+        }
+      }
+    }
+
+    app-p-kendo-grid.scrollable {
+      .k-grid {
+        .k-grid-aria-root {
+          overflow-x: auto;
+        }
+        table {
+          // width: 1370px;
+        }
+        //đặt lại more action btn absolute theo table relative
+        tr {
+          position: initial;
+
+          td,
+          th {
+            &:last-child {
+              position: absolute;
+              top: initial;
+              margin-top: calc(1% - 10px);
+            }
+          }
+        }
+      }
+    }
+
+    .k-grid {
+      thead tr {
+        height: fit-content !important;
+
+        th {
+          padding: 0 12px;
+          height: 13px;
+        }
+      }
+      tr:not(.k-grouping-row) {
+        td:first-child {
+          padding-left: 10px !important;
+        }
+      }
+      .col_img_tensanpham_masanpham {
+        max-width: 400px;
+        width: 400px;
+      }
+      .img_tensanpham_masanpham {
+        display: flex;
+        align-items: center;
+
+        img {
+          max-height: 64px;
+          max-width: 64px;
+          width: 100%;
+          margin-right: 10px;
+        }
+        .tensanpham_masanpham {
+          height: 64px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          .tensanpham {
+            white-space: normal;
+          }
+
+          .masanpham {
+            color: $gray-700;
+          }
+
+          .tinhtrang {
+            &.red {
+              color: $bad-red;
+            }
+            &.green {
+              color: $dark-green;
+            }
+          }
+        }
+      }
+
+      .col_nguoiBan,
+      .col_xuatXu,
+      .col_dieuKien {
+        text-align: center;
+
+        > .k-link {
+          justify-content: center;
+        }
+      }
+
+      .col_dieuKien {
+        .fa-star path {
+          fill: $dark-green;
+        }
+      }
+
+      .col_giaBanLe {
+        // text-align: right;
+        padding-right: 50px;
+
+        // > .k-link {
+        //   justify-content: flex-end;
+        // }
+      }
+
+      
+    }
+    
+    // .myCustomGrid.k-grid tr:not(.k-grouping-row) td:first-child {
+    //   padding-left: 0;
+    // }
+  }
+}

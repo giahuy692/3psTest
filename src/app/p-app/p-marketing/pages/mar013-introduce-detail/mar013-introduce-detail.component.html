@@ -1,0 +1,147 @@
+<div class="mar013-introduce-detail">
+    <div class="header header-1">
+        <div class="nav-btn nav-breadcrumb">
+            <div class="breadcrumb-item">
+                <!-- (click)="gotoOnlineOrderList()" -->
+                DANH SÁCH PHẦN GIỚI THIỆU
+            </div>
+            <div class="breadcrumb-chevron">
+                <span class="k-icon k-i-arrow-chevron-right"></span>
+            </div>
+            <div class="breadcrumb-item">
+                CHI TIẾT GIỚI THIỆU
+            </div>
+        </div>
+
+        <div class="nav-btn nav-crud" style="flex-grow: 1;">
+            <!-- <button kendoButton style="background-color: #1A6634; color: white;"
+                *ngIf="!isLockAll"
+                class="crud-btn k-button udateStatusBtn" (click)="saveIntroduceDetail(true)" [icon]="'save'">
+                LƯU
+            </button> -->
+
+            <button kendoButton *ngIf="(isMaster || isCreator) && (Introduce.StatusID == 0 || Introduce.StatusID == 4)"
+                (click)="onClickChangeStatus(1)" style="color: green;" class="crud-btn k-button udateStatusBtn"
+                [icon]="'redo'">
+                GỬI DUYỆT
+            </button>
+
+            <button kendoButton *ngIf="(isMaster || isApprover) && (Introduce.StatusID == 1 || Introduce.StatusID == 3)"
+                (click)="onClickChangeStatus(2)" style="color: green;" class="crud-btn k-button udateStatusBtn"
+                [icon]="'check-outline'">
+                PHÊ DUYỆT
+            </button>
+
+            <button kendoButton *ngIf="(isMaster || isApprover) && (Introduce.StatusID == 1 || Introduce.StatusID == 3)"
+                (click)="onClickChangeStatus(4)" style="color: #FF5230;" class="crud-btn k-button udateStatusBtn"
+                [icon]="'undo'">
+                TRẢ VỀ
+            </button>
+
+            <button kendoButton *ngIf="(isMaster || isApprover) && (Introduce.StatusID == 2)"
+                (click)="onClickChangeStatus(3)" style="color: #FF5230;" class="crud-btn k-button udateStatusBtn"
+                [icon]="'minus-outline'">
+                NGƯNG HIỂN THỊ
+            </button>
+            <!-- <button kendoButton class="crud-btn k-button" (click)="isLockAll ? onCloseDetail() : (showCancelDialog = true)"
+                style="background-color: #BDC2D2; color: white;"
+                [icon]="'close'">
+                ĐÓNG
+            </button> -->
+        </div>
+    </div>
+
+    <div class="body">
+        <div class="sections">
+            <div class="section" id="baivietsanphamTbl">
+                <div class="title">
+                    PHẦN GIỚI THIỆU
+                    <span class="languages" style="margin-left: auto;">
+                        <span class="borderRight vietnamese" [ngClass]="{'active': curLanguages == 0 }"
+                            (click)="changeLanguage(0)">
+                            Tiếng Việt
+                        </span>
+
+                        <span class="borderRight japanese" [ngClass]="{'active': curLanguages == 1 }"
+                            (click)="changeLanguage(1)">
+                            日本語
+                        </span>
+
+                        <span class="english" [ngClass]="{'active': curLanguages == 2 }" (click)="changeLanguage(2)">
+                            English
+                        </span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="section-grid" style="overflow-x: scroll;">
+                <div class="grid-item item1_1">
+                    <div class="btn-group">
+                        <div class="label">
+                            Hình ảnh
+                        </div>
+
+                        <div class="btn-group" [hidden]="isLockAll ? true : null">
+                            <span class="k-icon k-i-export" (click)="onUploadImg(false)"></span>
+                            <span class="k-icon k-i-trash" (click)="onRemoveImg()"></span>
+                        </div>
+                    </div>
+
+                    <div class="img-group">
+                        <img loading="lazy" [src]="getRes(Introduce.ImageThumb)">
+                    </div>
+                </div>
+
+                <div class="grid-item item2_1">
+                    <div class="label">
+                        Tiêu đề
+                    </div>
+
+                    <kendo-textbox class="k-textbox" type="textbox" placeholder="Tiêu đề block"
+                        [ngModel]="curLanguages == 0 ? webContent.WebTitleVN : curLanguages == 1 ? webContent.WebTitleJP : webContent.WebTitleEN"
+                        (ngModelChange)="onValueChange(1, $event)" (blur)="onSaveInput(1)"
+                        [attr.disabled]="isLockAll ? true : null">
+                    </kendo-textbox>
+                </div>
+
+                <div class="grid-item item2_2">
+                    <div class="label">
+                        Trích dẫn
+                    </div>
+
+                    <kendo-textbox class="k-textbox" type="textbox" [placeholder]="'Trích dẫn của block'"
+                        [ngModel]="curLanguages == 0 ? webContent.WebSummaryVN : curLanguages == 1 ? webContent.WebSummaryJP : webContent.WebSummaryEN"
+                        (ngModelChange)="onValueChange(2, $event)" (blur)="onSaveInput(2)" [disabled]="isLockAll">
+                    </kendo-textbox>
+                </div>
+
+            </div>
+
+            <div id="editor">
+                <div class="title">
+                    NỘI DUNG
+                </div>
+                <app-p-kendo-editor class="" id="myeditor" style="height: 100vh;" [readonly]="isLockAll"
+                    [content]="curLanguages == 0 ? webContent.WebContentVN : curLanguages == 1 ? webContent.WebContentJP : webContent.WebContentEN"
+                    (valueChange)="onValueChange(3, $event)" (saveEvent)="onSaveInput(3)">
+
+                </app-p-kendo-editor>
+            </div>
+        </div>
+    </div>
+</div>
+
+<kendo-dialog #dialog class="deleteDialog" title="Đóng chỉnh sửa nội dung" [hidden]="!showCancelDialog"
+    (close)="showCancelDialog = false" [minWidth]="250">
+    <p style="margin: 30px; text-align: center;">
+        Nội dung sẽ <b><span style="color: red;">không</span></b> được lưu.<br>
+        Bạn có chắc chắn muốn đóng ?</p>
+    <div class="dialog-footer">
+        <button kendoButton class="btn-hachi hachi-secondary" (click)="showCancelDialog = false"
+            [icon]="'close'">Không</button>
+        <button kendoButton class="btn-hachi hachi-warning" (click)="onCloseDetail()" [icon]="'trash'">Có</button>
+    </div>
+</kendo-dialog>
+
+<app-folder-popup [pickFileCallback]="getFileCallback" [GetFolderCallback]="getFolderCallback" [canResize]="true">
+</app-folder-popup>

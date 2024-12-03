@@ -1,0 +1,139 @@
+<div class="mar015-common-quetions-detail">
+    <div class="header header-1">
+        <div class="nav-btn nav-breadcrumb">
+            <div class="breadcrumb-item">
+                <!-- (click)="gotoOnlineOrderList()" -->
+                CÂU HỎI THƯỜNG GẶP
+            </div>
+            <div class="breadcrumb-chevron">
+                <span class="k-icon k-i-arrow-chevron-right"></span>
+            </div>
+            <div class="breadcrumb-item">
+                {{ isAdd ? 'TẠO MỚI' : isLockAll ? 'CHI TIẾT' : 'CHỈNH SỬA' }} CÂU HỎI
+            </div>
+        </div>
+
+        <div class="nav-btn nav-crud" style="flex-grow: 1;">
+            <button kendoButton
+                *ngIf="(isToanQuyen || isAllowedToCreate) && !isAdd && (Question.StatusID == 0 || Question.StatusID == 4)"
+                (click)="updateStatus(1)" style="color: green;" class="crud-btn k-button updateStatusBtn"
+                [icon]="'redo'">
+                GỬI DUYỆT
+            </button>
+
+            <button kendoButton *ngIf="(isToanQuyen || isAllowedToVerify) && !isAdd && (Question.StatusID == 1 || Question.StatusID == 3)"
+                (click)="updateStatus(2)" style="color: green;" class="crud-btn k-button updateStatusBtn"
+                [icon]="'check-outline'">
+                PHÊ DUYỆT
+            </button>
+
+            <button kendoButton
+                *ngIf="(isToanQuyen || isAllowedToVerify) && !isAdd && (Question.StatusID == 1 || Question.StatusID == 3)"
+                (click)="updateStatus(4)" style="color: #FF5230;" class="crud-btn k-button updateStatusBtn"
+                [icon]="'undo'">
+                TRẢ VỀ
+            </button>
+
+            <button kendoButton *ngIf="(isToanQuyen || isAllowedToVerify) && !isAdd && Question.StatusID == 2"
+                (click)="updateStatus(3)" style="color: #FF5230;" class="crud-btn k-button updateStatusBtn"
+                [icon]="'minus-outline'">
+                NGƯNG HIỂN THỊ
+            </button>
+            <!-- <button kendoButton class="crud-btn k-button" (click)="clearDialogOpened = true" *ngIf="!isLockAll"
+                style="background-color: #BDC2D2; color: black;">
+                XÓA NỘI DUNG
+            </button> -->
+
+            <button kendoButton class="crud-btn k-button" (click)="deleteDialogOpened = true"
+                *ngIf="((isToanQuyen || isAllowedToVerify) && Question.StatusID == 3) || ((Question.StatusID == 0 || Question.StatusID == 4) && (isToanQuyen || isAllowedToCreate)) && !isAdd"
+                style="background-color: #FF5230; color: white;">
+                XÓA CÂU HỎI
+            </button>
+
+            <button kendoButton style="background-color: #1A6634; color: white;" *ngIf="!isLockAll"
+                class="crud-btn k-button updateStatusBtn" (click)="onCreateQuestion()" [icon]="'plus'">
+                TẠO MỚI
+            </button>
+        </div>
+    </div>
+
+    <div class="body">
+        <div class="sections">
+            <div class="section">
+                <div class="title" style="display: flex;">
+                    CÂU HỎI
+
+                    <span class="languages" style="margin-left: auto;">
+                        <span class="borderRight vietnamese" [ngClass]="{'active': curLanguage == 0 }"
+                            (click)="changeLanguage(0)">
+                            Tiếng Việt
+                        </span>
+
+                        <span class="borderRight japanese" [ngClass]="{'active': curLanguage == 1 }"
+                            (click)="changeLanguage(1)">
+                            日本語
+                        </span>
+
+                        <span class="english" [ngClass]="{'active': curLanguage == 2 }" (click)="changeLanguage(2)">
+                            English
+                        </span>
+                    </span>
+                </div>
+
+                <div class="section-grid">
+                    <div class="grid-item item1_1">
+                        <div class="label"> Câu hỏi </div>
+
+                        <kendo-textbox class="k-textbox" type="textbox" placeholder="Câu hỏi"
+                            [ngModel]="curLanguage == 0 ? Question.TitleVN : curLanguage == 1 ? Question.TitleJP : Question.TitleEN"
+                            (ngModelChange)="onValueChange('Title', $event)" (blur)="onSaveInput('Title')"
+                            [attr.disabled]="isLockAll ? true : null">
+                        </kendo-textbox>
+                    </div>
+                    <div class="grid-item item1_2">
+                        <div class="label"> Phân nhóm </div>
+
+                        <kendo-dropdownlist [data]="QuestionCategoryList" [textField]="'NewsCategory'"
+                            [valueField]="'Code'" [valuePrimitive]="true" [(ngModel)]="Question.NewsCategory"
+                            [defaultItem]="defaultQuestionCategoryObj" (blur)="onSaveInput('NewsCategory')"
+                            [attr.disabled]="isLockAll ? true : null" [itemDisabled]="isItemDisabled"
+                            [popupSettings]="{width: 'auto', appendTo: 'component'}">
+                            <ng-template kendoDropDownListValueTemplate let-item>
+                                <span class="value"
+                                    [ngStyle]="{'color': item.Code == -1 ? '#008000': '#26282E', 'width': 'auto'}">
+                                    {{ item.NewsCategory }}
+                                </span>
+                            </ng-template>
+                        </kendo-dropdownlist>
+                    </div>
+                </div>
+            </div>
+
+        <div id="editor">
+            <div class="title">
+                TRẢ LỜI
+            </div>
+
+            <app-p-kendo-editor id="myeditor" style="height: 100vh;" [readonly]="isLockAll ? true : null"
+            [content]="curLanguage == 0 ? Question.ContentVN : curLanguage == 1 ? Question.ContentJP : Question.ContentEN"
+            (valueChange)="onValueChange('Content', $event)" (saveEvent)="onSaveInput('Content')">
+            </app-p-kendo-editor>
+        </div>
+    </div>
+
+</div>
+
+<kendo-dialog #dialog class="deleteDialog" title="Xóa Bài viết" [hidden]="!deleteDialogOpened"
+    (close)="deleteDialogOpened = false" [minWidth]="250">
+    <p style="margin: 30px; text-align: center;">
+        Bạn chắc chắn muốn xóa vĩnh viễn bài viết này?</p>
+    <div class="dialog-footer">
+        <button kendoButton class="btn-hachi hachi-secondary" (click)="deleteDialogOpened = false"
+            [icon]="'close'">Không</button>
+        <button kendoButton class="btn-hachi hachi-warning" (click)="DeleteQuestion(Question)" [icon]="'trash'">Có</button>
+    </div>
+</kendo-dialog>
+
+<app-folder-popup [pickFileCallback]="pickFileCallback" [GetFolderCallback]="GetFolderCallback" [canResize]="true">
+</app-folder-popup>
+

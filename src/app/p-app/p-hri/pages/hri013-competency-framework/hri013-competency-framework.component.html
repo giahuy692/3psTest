@@ -1,0 +1,215 @@
+<!-- <div class="d-flex">
+  <app-datetimepicker [format]="'d/MM/yyyy H:mm'" [placeholder]="'d/MM/yyyy H:mm'"
+    [formatPlaceholder]="{ time: 'H:mm', year: 'yyyy', month: 'MM', day: 'dd' }" [(ngModel)]="minDate" [max]="maxDate"
+    (blur)="blur($event)" (allDayClick)="onAllDayClick($event)"></app-datetimepicker>
+
+  <app-datetimepicker [format]="'d/MM/yyyy H:mm'" [placeholder]="'d/MM/yyyy H:mm'"
+    [formatPlaceholder]="{ time: 'H:mm', year: 'yyyy', month: 'MM', day: 'dd' }" [(ngModel)]="maxDate" [min]="minDate"
+    (blur)="blur($event)" (allDayClick)="onAllDayClick($event)"></app-datetimepicker>
+</div> -->
+
+<div id="hri013-competency-framework">
+  <!-- START BREADCRUMB AND BUTTON -->
+  <div class="header header-1">
+    <!-- Breadcumb  -->
+    <div class="breadcumb d-flex align-items-center">
+      <app-p-kendo-breadcrumb (loadData)="loadDefault()"></app-p-kendo-breadcrumb>
+      <!-- GROUP BUTTON FILTER -->
+      <div class="buttonGroup">
+        <app-checkbox-button-group
+          [ignoreCase]="true"
+          title="Đang soạn thảo"
+          [checked]="isDrafting"
+          [field]="'StatusID'"
+          [value]="0"
+          (selectedChange)="selectedChangeCheckbox($event, 'isDrafting')"
+          (filterChange)="filterChangeDrafting($event)"
+          [disabled]="!isFilterActive"
+        ></app-checkbox-button-group>
+        <app-checkbox-button-group
+          [ignoreCase]="true"
+          title="Gửi duyệt"
+          [checked]="isSent"
+          [field]="'StatusID'"
+          [value]="1"
+          (selectedChange)="selectedChangeCheckbox($event, 'isSent')"
+          (filterChange)="filterChangeSent($event)"
+          [disabled]="!isFilterActive"
+        ></app-checkbox-button-group>
+        <app-checkbox-button-group
+          [ignoreCase]="true"
+          title="Đã duyệt"
+          [checked]="isApproved"
+          [field]="'StatusID'"
+          [value]="2"
+          (selectedChange)="selectedChangeCheckbox($event, 'isApproved')"
+          (filterChange)="filterChangeApproved($event)"
+          [disabled]="!isFilterActive"
+        ></app-checkbox-button-group>
+        
+        <app-checkbox-button-group
+          [ignoreCase]="true"
+          title="Ngưng áp dụng"
+          [checked]="isSuspended"
+          [field]="'StatusID'"
+          [value]="3"
+          (selectedChange)="selectedChangeCheckbox($event, 'isSuspended')"
+          (filterChange)="filterChangesSuspended($event)"
+          [disabled]="!isFilterActive"
+        ></app-checkbox-button-group>
+      </div>
+    </div>
+
+    <!-- BUTTON -->
+    <div class="btnWrapper">
+      <button
+        kendoButton
+        iconClass="k-icon k-i-plus"
+        (click)="onAdd()"
+        [disabled]="!isFilterActive"
+        *ngIf="isToanQuyen || isAllowedToCreate"
+        class="btn-hachi hachi-primary"
+      >
+        thêm mới
+      </button>
+    </div>
+  </div>
+  <!-- END BREADCRUMB AND BUTTON -->
+
+  <!-- START FUNCTIONBAR -->
+  <div id="functionbar" class="header header-2">
+    <!-- SEARCH FILTER -->
+    <app-search-filter-group
+      placeholder="Tìm theo tiêu đề hay mô tả khung năng lực"
+      [fields]="['Title', 'Description']"
+      (filterChange)="handleSearch($event)"
+      (onReset)="onResetFilter()"
+      [disabled]="!isFilterActive"
+    ></app-search-filter-group>
+  </div>
+  <!-- END FUNCTIONBAR -->
+
+  <!-- START GIRD LAYOUT -->
+  <div class="grid-wrapper">
+    <app-p-kendo-grid
+      class="grid scrollable"
+      [data]="gridView | async"
+      [scrollable]="'none'"
+      [loading]="loading"
+      [pageable]="true"
+      [pageSizes]="pageSizes"
+      [pageSize]="pageSize"
+      [skip]="gridState.skip"
+      [take]="gridState.take"
+      [sortable]="true"
+      [sort]="gridState.sort"
+      [selectable]="selectable"
+      [allowedMoreActionDropdown]="allowActionDropdown"
+      [onActionDropdownClickCallback]="onActionDropdownClickCallback"
+      [getActionDropdownCallback]="getActionDropdownCallback"
+      [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+      [getSelectionPopupCallback]="getSelectionPopupCallback"
+      [onSelectCallback]="onSelectCallback"
+      [onPageChangeCallback]="onPageChangeCallback"
+    >
+      <!-- COL-1 -->
+      <kendo-grid-column
+        field="Title"
+        title="Khung năng lực"
+        class="col_theFramework"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <span class="title font-weight-bold">{{dataItem.Title}}</span>
+          <div class="dateTime">
+            <span>Ngày hiệu lực</span>
+            <span
+              *ngIf="dataItem.effdate  != ''"
+              style="padding: 0 5px;"
+              >|</span
+            >
+            <span>{{dataItem.EffDate | date: 'd/M/yyyy'}}</span>
+          </div>
+        </ng-template>
+      </kendo-grid-column>
+
+      <!-- COL-2 -->
+      <kendo-grid-column
+        field="CategoryName"
+        title="Mô tả"
+        class="col_decription"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <span>{{dataItem.Description}}</span>
+        </ng-template>
+      </kendo-grid-column>
+
+      <!-- COL-3 -->
+      <kendo-grid-column
+        field="StatusName"
+        title="Tình trạng"
+        class="col_status"
+        headerClass="col_theStatusHeader"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID">
+          </div>
+        </ng-template>
+      </kendo-grid-column>
+    </app-p-kendo-grid>
+  </div>
+  <!-- END GIRD LAYOUT -->
+  <!-- Start: Dialog verify -->
+  <kendo-dialog
+    *ngIf="openedDialog"
+    (close)="closeDialog()"
+    [minWidth]="250"
+    [width]="450"
+    [minHeight]="250"
+    class="wrapper-dialog"
+  >
+    <!-- Start: header dialog  -->
+    <kendo-dialog-titlebar>
+      <div class="title-delete d-flex">
+        <span
+          class="btn-title-dialog"
+          kendoButton
+          imageUrl="assets/img/icon/icon_warning.svg"
+        ></span>
+        <span>XÓA KHUNG NĂNG LỰC?</span>
+      </div>
+    </kendo-dialog-titlebar>
+    <!-- End: header dialog  -->
+
+    <!-- Start: Body dialog  -->
+    <div class="body_dialog">
+      <div class="content-primary">
+        <p>Bạn chắc chắn muốn xóa khung năng lực:</p>
+        <strong>{{ paramCompetenceName }}</strong>
+      </div>
+      <p class="content-sub">
+        Khung năng lực bị xóa sẽ <span style="color: red">KHÔNG</span> thể khôi phục
+        lại.
+      </p>
+    </div>
+    <!-- Emd: Body dialog  -->
+
+    <!-- Start: action dialog  -->
+    <div class="k-dialog-actions">
+      <button kendoButton (click)="closeDialog()" class="cancel">
+        HỦY BỎ
+      </button>
+      <button
+        kendoButton
+        imageUrl="assets/img/icon/icon_bin.svg"
+        (click)="deleteDialog('yes')"
+        class="delete"
+      >
+        ĐỒNG Ý
+      </button>
+    </div>
+    <!-- End: action dialog  -->
+  </kendo-dialog>
+  <!-- End: Dialog  -->
+</div>
+
+<app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>

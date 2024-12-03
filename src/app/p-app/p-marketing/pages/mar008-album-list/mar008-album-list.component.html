@@ -1,0 +1,133 @@
+<div class="app-mar008-album-list">
+  <div class="header header-1">
+    <button kendoButton class="k-button checkbox-btn-group dangHieuLuc_btn" [toggleable]="isFilterActive"
+      (selectedChange)="selectedBtnChange($event, 'dangSoanThao')" [selected]="dangSoanThao">
+      Đang soạn thảo
+      <input type="checkbox" class="k-checkbox" disabled [checked]="dangSoanThao" />
+    </button>
+
+    <button kendoButton class="k-button checkbox-btn-group dangHieuLuc_btn" [toggleable]="isFilterActive"
+      (selectedChange)="selectedBtnChange($event, 'daDuyet')" [selected]="daDuyet">
+      Đã duyệt
+      <input type="checkbox" class="k-checkbox" disabled [checked]="daDuyet" />
+    </button>
+
+    <button kendoButton class="k-button checkbox-btn-group hetHieuLuc_btn" [toggleable]="isFilterActive"
+      (selectedChange)="selectedBtnChange($event, 'ngungHienThi')" [selected]="ngungHienThi">
+      Ngưng hiển thị
+      <input type="checkbox" class="k-checkbox" disabled [checked]="ngungHienThi" />
+    </button>
+
+    <div class="nav-btn nav-crud" *ngIf="isAllowedToCreate || isToanQuyen">
+      <button kendoButton class="k-button onAddBtn" [icon]="'plus'" (click)="openDetail(true)" 
+        [disabled]="!isFilterActive">
+        TẠO MỚI</button>
+    </div>
+  </div>
+
+  <div class="header header-2">
+    <div class="nav-filter nav-btn">
+      <div class="filter-btn-group clear-btn-group">
+        <div class="label">
+          <span class="k-icon k-i-filter"></span>Lọc dữ liệu
+        </div>
+        <button kendoButton class="k-button clear-filter-btn" (click)="resetFilter()">Reset bộ lọc</button>
+      </div>
+
+      <form style="display: flex; flex-grow: 1;" [formGroup]="searchForm">
+        <div class="filter-btn-group search-btn-group">
+          <div class="label">
+            Tìm kiếm
+          </div>
+          <div class="search-btn">
+            <span class="k-icon k-i-search"></span>
+            <kendo-textbox formControlName="SearchQuery" type="text" class="k-textbox"
+              placeholder="Tìm theo tên chủ đề">
+            </kendo-textbox>
+          </div>
+        </div>
+
+        <button kendoButton class="k-button searchBtn" [icon]="'search'"  (click)="search()"
+          [disabled]="!isFilterActive">TÌM</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="grid-wrapper">
+    <app-p-kendo-grid class="grid scrollable" [data]="gridView | async" [scrollable]="'none'" [loading]="loading"
+      [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize" [skip]="gridState.skip" [take]="gridState.take"
+      [sortable]="true" [sort]="gridState.sort" [onPageChangeCallback]="onPageChangeCallback"
+      [onSortChangeCallback]="onSortChangeCallback" [allowedMoreActionDropdown]="allowActionDropdown"
+      [getActionDropdownCallback]="getActionDropdownCallback" [autoHeight]="false"
+      [onActionDropdownClickCallback]="onActionDropdownClickCallback" [selectable]="selectable"
+      [onSelectCallback]="onSelectCallback" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+      [getSelectionPopupCallback]="getSelectionPopupCallback">
+  
+      <kendo-grid-column field="AlbumNameVN" title="Tên sản phẩm" class="col_img_tensanpham_masanpham"
+        headerClass="col_img_tensanpham_masanpham">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div class="img_tensanpham_masanpham">
+            <img loading="lazy" src="{{dataItem.ImgSetting}}" alt="">
+            <div class="tensanpham_masanpham">
+              <div class="tensanpham">{{ dataItem.AlbumNameVN }}</div>
+              <div class="masanpham">
+                SKU: {{ dataItem.NoOfSKU | number : '1.' }}
+                {{ ' | Thứ tự: ' + dataItem.OrderBy }}
+                <span *ngIf="dataItem.ParentID != null && dataItem.ParentID > 0">{{ ' | ' + dataItem.ParentName }}</span>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </kendo-grid-column>
+  
+      <kendo-grid-column field="CreateBy" title="Người khởi tạo" class="col_nguoiTao">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div>{{ dataItem.CreateBy }}</div>
+          <div *ngIf="dataItem.CreateTime != null && dataItem.CreateTime != ''">
+            Ngày tạo: {{ dataItem.CreateTime | date: 'dd/MM/yyyy' }}</div>
+        </ng-template>
+      </kendo-grid-column>
+  
+      <kendo-grid-column field="ApprovedBy" title="Thông tin phê duyệt" class="col_thongTinDuyet">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div>{{ dataItem.ApprovedBy }}</div>
+          <div *ngIf="dataItem.ApprovedTime != null && dataItem.ApprovedTime != ''">
+            Ngày duyệt: {{ dataItem.ApprovedTime | date: 'dd/MM/yyyy' }}</div>
+        </ng-template>
+      </kendo-grid-column>
+  
+      <kendo-grid-column field="StatusID" title="Tình trạng" class="col_tinhTrang" headerClass="col_tinhTrang">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div [ngClass]="{'yellow': dataItem.StatusID == 1 || dataItem.StatusID == 4, 
+            'green': dataItem.StatusID == 2, 'red': dataItem.StatusID == 3}">{{ dataItem.StatusName }}</div>
+        </ng-template>
+      </kendo-grid-column>
+    </app-p-kendo-grid>
+  </div>
+
+  <kendo-dialog #dialog class="deleteDialog" title="Xóa Chủ đề nổi bật" [hidden]="!deleteDialogOpened"
+    (close)="closeDeleteDialog()" [minWidth]="250">
+    <p style="margin: 30px; text-align: center;">
+      Bạn chắc chắn muốn xóa vĩnh viễn Chủ đề nổi bật&nbsp;
+      "{{ album.AlbumNameVN }}"&nbsp;này?</p>
+    <div class="dialog-footer">
+      <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteDialog()"
+        [icon]="'close'">Không</button>
+      <button kendoButton class="btn-hachi hachi-warning" (click)="delete()" [icon]="'trash'">Có</button>
+    </div>
+  </kendo-dialog>
+
+  <kendo-dialog #dialog class="deleteDialog" title="Xóa các Chủ đề nổi bật đã chọn" [hidden]="!deleteManyDialogOpened"
+    (close)="closeDeleteDialog()" [minWidth]="250">
+    <div style="margin: 30px; text-align: center;">
+      Bạn chắc chắn muốn xóa vĩnh viễn {{ deleteList.length }} Chủ đề nổi bật này?
+    </div>
+    <div class="dialog-footer">
+      <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteManyDialog()"
+        [icon]="'close'">Không</button>
+      <button kendoButton class="btn-hachi hachi-warning" (click)="deleteMany()" [icon]="'trash'">Có</button>
+    </div>
+  </kendo-dialog>
+
+  
+</div>

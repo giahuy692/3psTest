@@ -1,0 +1,156 @@
+<div class="section" id="promotion-info">
+  <div class="title">THÔNG TIN KHUYẾN MÃI {{productName}}
+    <span class="type green">{{curPromotion.CategoryName}}</span>
+
+    <span class="languages">
+      <span class="borderRight vietnamese" [ngClass]="{'active': curLanguage == 1 }"
+        (click)="changeLanguage(1)">Tiếng Việt</span>
+      <span class="borderRight japanese" [ngClass]="{'active': curLanguage == 2 }"
+        (click)="changeLanguage(2)">日本語</span>
+      <span class="english" [ngClass]="{'active': curLanguage == 3 }"
+        (click)="changeLanguage(3)">English</span>
+    </span>
+  </div>
+
+  <div class="section-grid">
+    <div class="grid-item item1">
+      <div class="d-flex align-items-center label">
+        <div class=" pr-1">Mã khuyến mãi</div>
+        <span class="symbol">(*)</span>
+      </div>
+      <kendo-textbox type="text" class="k-textbox" [(ngModel)]="curPromotion.PromotionNo" [disabled]="true">
+      </kendo-textbox>
+    </div>
+
+    <div class="grid-item item2">
+      <div class="d-flex align-items-center label">
+        <div class=" pr-1">Phân nhóm</div>
+        <span class="symbol" title="Trường bắt buộc nhập">(*)</span>
+      </div>
+      <kendo-dropdownlist [data]="listPromotionType" [itemDisabled]="isItemDisabled" [loading]="loading"
+        (selectionChange)="onDropdownlistClick($event, 'PromotionType')" [disabled]="isLockAll  || disabled" [valuePrimitive]="true"
+        [value]="curPromotion.PromotionType "
+        [textField]="'PromotionType'" [valueField]="'Code'" [defaultItem]="defaultPromotionType"
+        [popupSettings]="{appendTo:'component'}"> 
+        <ng-template kendoDropDownListValueTemplate let-dataItem>
+          <span class="value" [ngStyle]="{'color': dataItem?.Code == -1 ? '#73818f' : 'initial'}">
+            {{ dataItem?.PromotionType }}</span>
+        </ng-template>
+      </kendo-dropdownlist>
+    </div>
+
+    <div class="grid-item item3">
+      <div class="d-flex align-items-center label">
+        <div class=" pr-1">Thời gian hiệu lực</div>
+        <span class="symbol" title="Trường bắt buộc nhập">(*)</span>
+      </div>
+      <div class="d-flex">
+        <kendo-datepicker [format]="'dd/MM/yyyy'" placeholder="dd/mm/yyyy" [(ngModel)]="StartDate" 
+          [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }" [disabled]="isLockAll || disabled"
+          (keydown.Enter)="$event.target.blur()" (blur)="onDatepickerChange('StartDate', StartDate)"
+          [max]="EndDate" (focus)="focusDatepicker()">
+        </kendo-datepicker>
+
+        <kendo-datepicker [format]="'dd/MM/yyyy'" placeholder="dd/mm/yyyy" [(ngModel)]="EndDate"
+          [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }" [disabled]="isLockAll || disabled"
+          (keydown.Enter)="$event.target.blur()" (blur)="onDatepickerChange('EndDate', EndDate)"
+          [min]="StartDate" (focus)="focusDatepicker()">
+        </kendo-datepicker>
+      </div>
+    </div>
+
+    <div class="grid-item item4">
+      <div class="label">Tình trạng</div>
+      <b class="d-flex status"
+        [ngClass]="{'yellow': curPromotion.StatusID == 1, 
+      'green': curPromotion.StatusID == 2, 'red': curPromotion.StatusID == 3 || curPromotion.StatusID == 4}">
+        {{ curPromotion.StatusName }}
+      </b>
+    </div>
+
+    <div class="grid-item item5">
+      <div class="d-flex align-items-center label">
+        <div class=" pr-1">Tên chương trình khuyến mãi</div>
+        <span class="symbol"  title="Trường bắt buộc nhập" *ngIf="curLanguage == 1">(*)</span>
+      </div>
+      <!-- <kendo-textbox type="text" class="k-textbox" [disabled]="isLockAll"
+        (keydown.Enter)="$event.target.blur()"
+        [ngModel]="curLanguage == 1 ? curPromotion.VNPromotion : curLanguage == 2 ? curPromotion.JPPromotion : curPromotion.ENPromotion"
+        (ngModelChange)="curLanguage == 1 ? curPromotion.VNPromotion=$event : curLanguage == 2 ? curPromotion.JPPromotion=$event : curPromotion.ENPromotion=$event"
+        (blur)="onTextboxLoseBlur(curLanguage == 1 ? 'VNPromotion' : curLanguage == 2 ? 'JPPromotion' : 'ENPromotion')">
+      </kendo-textbox> -->
+      <app-p-textbox [propName]="curLanguage == 1 ? 'VNPromotion' : curLanguage == 2 ? 'JPPromotion' : 'ENPromotion'" 
+        [disabled]="isLockAll || disabled" class="k-textbox"
+        (keydownEnter)="$event.target.blur()"
+        [ngModel]="curLanguage == 1 ? curPromotion.VNPromotion : curLanguage == 2 ? curPromotion.JPPromotion : curPromotion.ENPromotion"
+        (ngModelChange)="curLanguage == 1 ? curPromotion.VNPromotion=$event : curLanguage == 2 ? curPromotion.JPPromotion=$event : curPromotion.ENPromotion=$event"
+        (blur)="onTextboxLoseBlur(curLanguage == 1 ? 'VNPromotion' : curLanguage == 2 ? 'JPPromotion' : 'ENPromotion')"></app-p-textbox>
+    </div>
+
+    <div class="grid-item item6">
+      <div class="d-flex align-items-center label">
+        <div class=" pr-1">Mô tả chương trình khuyến mãi</div>
+        <span class="symbol"  title="Trường bắt buộc nhập" *ngIf="curLanguage == 1">(*)</span>
+      </div>
+        <!-- <app-p-textarea [propName]="curLanguage == 1 ? 'VNSummary' : curLanguage == 2 ? 'JPSummary' : 'ENSummary'"
+          [disabled]="isLockAll || disabled" (keydownEnter)="$event.target.blur()" 
+          [ngModel]="curLanguage == 1 ? curPromotion.VNSummary : curLanguage == 2 ? curPromotion.JPSummary : curPromotion.ENSummary"
+          (ngModelChange)="curLanguage == 1 ? curPromotion.VNSummary=$event : curLanguage == 2 ? curPromotion.JPSummary=$event : curPromotion.ENSummary=$event"
+          (blur)="onTextboxLoseBlur(curLanguage == 1 ? 'VNSummary' : curLanguage == 2 ? 'JPSummary' : 'ENSummary')"
+        ></app-p-textarea> -->
+        <app-p-kendo-editor [index]="1" [ngModel]="curLanguage == 1 ? curPromotion.VNSummary : curLanguage == 2 ? curPromotion.JPSummary : curPromotion.ENSummary"
+        (ngModelChange)="curLanguage == 1 ? curPromotion.VNSummary=$event : curLanguage == 2 ? curPromotion.JPSummary=$event : curPromotion.ENSummary=$event" [readonly]="isLockAll || disabled" [index]="1" [height]="'auto'"
+          (saveEvent)="onTextboxLoseBlur(curLanguage == 1 ? 'VNSummary' : curLanguage == 2 ? 'JPSummary' : 'ENSummary')"  (valueChange)="valueChangeEditor($event)"
+        ></app-p-kendo-editor>
+    </div>
+
+
+    <div class="grid-item item7">
+      <div class="d-flex align-items-center label">
+        <div class=" pr-1">Ghi chú</div>
+        <span class="symbol" title="Trường bắt buộc nhập" *ngIf="curLanguage == 1">(*)</span>
+      </div>
+      <!-- <textarea [disabled]="isLockAll"
+        [ngModel]="curLanguage == 1 ? curPromotion.VNDescription : curLanguage == 2 ? curPromotion.JPDescription : curPromotion.ENDescription"
+        (ngModelChange)="curLanguage == 1 ? curPromotion.VNDescription=$event : curLanguage == 2 ? curPromotion.JPDescription=$event : curPromotion.ENDescription=$event"
+        (blur)="onTextboxLoseBlur(curLanguage == 1 ? 'VNDescription' : curLanguage == 2 ? 'JPDescription' : 'ENDescription')"></textarea> -->
+        <app-p-textarea [propName]="curLanguage == 1 ? 'VNDescription' : curLanguage == 2 ? 'JPDescription' : 'ENDescription'" [disabled]="isLockAll || disabled"
+        [ngModel]="curLanguage == 1 ? curPromotion.VNDescription : curLanguage == 2 ? curPromotion.JPDescription : curPromotion.ENDescription"
+        (ngModelChange)="curLanguage == 1 ? curPromotion.VNDescription=$event : curLanguage == 2 ? curPromotion.JPDescription=$event : curPromotion.ENDescription=$event"
+        (blur)="onTextboxLoseBlur(curLanguage == 1 ? 'VNDescription' : curLanguage == 2 ? 'JPDescription' : 'ENDescription')" (keydownEnter)="$event.target.blur()" 
+      ></app-p-textarea>
+    </div>
+
+    <div class="grid-item item8">
+      <div class="d-flex align-items-center label  ">
+        <div class="pr-1">Hình ảnh</div>
+        <span class="symbol" title="Trường bắt buộc nhập">(*)</span>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <img loading="lazy" [src]="curPromotion.ImageSetting1" alt="" class="w-100">
+          <div class="d-flex align-items-center">
+            <span>Ảnh nhỏ: </span>
+            <button kendoButton icon="export" [disabled]="isLockAll || disabled" (click)="onUploadFile(1)"
+              ></button>
+            <button kendoButton icon="trash" [disabled]="isLockAll || disabled" (click)="deleteFile(1)"
+              ></button>
+          </div>
+        </div>
+        <div class="col-6">
+          <img loading="lazy" [src]="curPromotion.ImageSetting2" alt="" class="w-100">
+          <div class="d-flex align-items-center">
+            <span>Ảnh lớn: </span>
+            <button kendoButton icon="export" [disabled]="isLockAll || disabled" (click)="onUploadFile(2)"
+              ></button>
+            <button kendoButton icon="trash" [disabled]="isLockAll || disabled" (click)="deleteFile(2)"
+              ></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<app-folder-popup [pickFileCallback]="pickFileCallback" [GetFolderCallback]="GetFolderCallback"></app-folder-popup>

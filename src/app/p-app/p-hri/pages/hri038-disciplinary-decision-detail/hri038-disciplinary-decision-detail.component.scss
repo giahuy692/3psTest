@@ -1,0 +1,295 @@
+@import "../../../../../assets/scss/variables/colors";
+
+::ng-deep{
+    app-hri038-disciplinary-decision-detail{
+        .emptyText { color: $light-blue-gray; font-style: italic }
+        .column-gap-10{
+            column-gap: 10px;
+        }
+        .flex-1{flex: 1;}
+        .flex-grow-1{flex-grow: 1;}
+        .header {
+
+            &.disable {
+                pointer-events: none;
+                opacity: 0.6;
+                filter: grayscale(0.1);
+            }
+
+            &.header-1 {
+                justify-content: space-between;
+                overflow-x: auto;
+                padding-right: 10px;
+
+                .btnWrapper {
+                    display: flex;
+                    gap: 5px;
+
+                    .export-word{
+                        color: rgba(39, 84, 155, 1);
+                    }
+                }
+            }
+        }
+
+        .content-wrapper {
+            height: calc(100vh - 163px);
+            overflow-y: auto;
+
+            .Topic {
+                display: block;
+                color: var(--color-text-content, #26282e);
+                font-size: 16px;
+                font-weight: 700;
+                width: 100%;
+                // padding: 12px 0 15px 0;
+                padding-top: 3px;
+                padding-bottom: 6px;
+
+                &.backgrounded {
+                    background-color: $dark-green;
+                    color: white;
+                    width: 292px;
+                    padding-left: 10px;
+                    padding-bottom: 3px;
+                }
+
+                &.flex {
+                    display: flex;
+                    gap: 20px;
+                    align-items: center;
+                }
+
+                .detail-profile {
+                    font-size: 13px;
+                    color: #0D99FF;
+                    font-style: italic;
+                    font-weight: normal;
+                    cursor: pointer;
+                }
+            }
+
+            .input-container {
+                position: relative;
+
+                .label {
+                    color: #959db3;
+                    font-weight: bold;
+                    margin-bottom: 5px;
+
+                    .important {
+                        color: red;
+
+                    }
+
+                }
+
+                .box-text {
+                    display: block;
+                    padding-left: 7px;
+
+                    &.area-scroll {
+                        display: flex;
+                        height: 56px;
+                        overflow-y: auto;
+                    }
+                }
+
+            }
+
+            .flex {
+                display: flex;
+                width: 100%;
+            }
+
+            .hr-profile-block {
+                padding: 10px;
+
+                .input-container {
+                    display: flex;
+                    background-color: white;
+                    padding: 15px;
+                    // gap: 60px;
+                    // height: 200px;
+                    overflow-x: auto;
+
+                    .flex {
+                        gap: 102px;
+                    }
+
+                    .left-block {
+                        min-width: 207px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        .avatar-container {
+                            flex-shrink: 0;
+                            .img-avatar {
+                                border-radius: 100px;
+                            }
+                        }
+                    }
+
+
+                    .right-block {
+                        display: flex;
+                        gap: 50px;
+
+                        .box-area {
+                            min-width: 170px;
+                            width: 170px;
+
+                            .box-text {
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+
+                            }
+
+                            &.typeStaff {
+                                min-width: fit-content;
+                            }
+                        }
+
+                        .column-block {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 15px;
+                        }
+                    }
+                }
+            }
+
+            .DecisionProfile-detail-block {
+                padding: 10px;
+
+                .input-container {
+                    display: flex;
+                    background-color: white;
+                    padding: 15px;
+                    // gap: 60px;
+                    min-height: 230px;
+                    max-height: 360px;
+                    overflow-x: auto;
+
+                    .flex {
+                        gap: 60px;
+                    }
+
+                    .left-block {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 20px;
+                        width: 260px;
+
+                        .box-area {
+
+                            .input-id {
+                                .k-input {
+                                    width: 209px;
+                                }
+                            }
+
+                        }
+
+                    }
+
+                    .right-block {
+                        display: flex;
+                        width: calc(100% - 260px);
+                        column-gap: 20px;
+
+                        .right-block-1,
+                            .right-block-2 {
+                                display: flex;
+                                flex: 1;
+                                gap: 20px;
+                                flex-direction: column;
+
+                                .k-dropdownlist{
+                                    width: 100%;
+                                }
+
+                                .CustomDropdownlistDisciplinaryForm4{
+                                    .dropdownlistCustom {
+                                        width: 168px;
+                                    
+                                    }
+                                }
+
+                                .CustomDropdownlistPreDisciplinary{
+                                    .dropdownlistCustom {
+                                        width: 330px;
+                                    }
+                                }
+
+                                .treeItem {
+                                    display: flex;
+                                    flex-direction: column;
+                                    justify-content: center;
+                                    padding-left: 10px;
+
+                                    .item-status {
+                                        font-weight: 700;
+                                        color: #959DB3;
+                                        font-size: 9px;
+                                    }
+                                }
+
+                                
+
+                                .box-area {
+                                    .input-area {
+                                        .k-input {
+                                            height: 78px;
+                                        }
+                                    }
+        
+                                    .ListOfAttached{
+                                        .itemAttached{
+                                            display: flex;
+                                            justify-content: space-between;
+                                            align-items: center;
+
+                                            .k-icon{
+                                                cursor: pointer;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                        
+                    }
+                }
+            }
+
+            .span-important {
+                color: red;
+            }
+        }
+    }
+    
+        .CustomPopupTreeAtRootHri038Disciplinary {
+            .treeItem {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding-left: 10px;
+        
+                .item-status {
+                    font-weight: 700;
+                    color: #959DB3;
+                    font-size: 9px;
+                }
+            }
+        
+            .k-treeview-mid{
+                padding: 0;
+                margin: 4px 0;
+            }
+        }
+    
+        
+}

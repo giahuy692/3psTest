@@ -1,0 +1,222 @@
+<div id="developer003-api-list" class="app-drawer-container">
+    <mat-drawer-container [hasBackdrop]="true" >
+  
+      <!-- Center Content -->
+      <mat-drawer-content>
+  
+        <div class="header header-1">
+          <div class="breadcumb">
+            <app-p-kendo-breadcrumb (loadData)="loadAPI()"></app-p-kendo-breadcrumb>
+          </div>
+  
+          <div class="nav-btn nav-crud">
+                <button kendoButton class="k-button onAddBtn" [icon]="'plus'" (click)="onAddNew()">TẠO MỚI</button>
+          </div>
+        </div>
+  
+        <div class="header header-2">
+          <app-search-filter-group placeholder="Tìm theo API"
+           (onReset)="onResetFilter($event)" (filterChange)="onSearchValueAPI($event)"
+            [fields]="['APIID','URL']">
+          </app-search-filter-group>
+
+          <div class="dropdown-module">
+            <div class="label">Module</div>
+            <kendo-dropdowntree
+            kendoDropDownTreeExpandable
+            [kendoDropDownTreeHierarchyBinding]="listModuleTree"
+            childrenField="ListGroup"
+            [loading]="loading"
+            textField="Vietnamese"
+            valueField="Code"
+            [value]="currentModule"
+            [filterable]="true"
+            (valueChange)="
+            selectionDropdownChange($event)
+          "
+          [popupSettings]="{ appendTo: 'root',animate: true, popupClass:'Bps CustomPopupTreeAtRoot'}"
+          >
+          <ng-template kendoDropDownTreeNodeTemplate let-dataItem let-index="index">
+              <!-- <i class="fa fa-solid fa-location-dot"></i> -->
+              <img loading="lazy" src="assets/img/icon/icon_departmentGray.svg" />
+              {{dataItem.Vietnamese}}
+          </ng-template>
+          </kendo-dropdowntree>
+        </div>
+        
+        </div>
+
+       
+
+        <div class="treelist-wrapper">
+          <kendo-treelist #myTreeList [data]="rootData" [fetchChildren]="fetchChildren" [hasChildren]="hasChildren" 
+          kendoTreeListSelectable [selectable]="settingsTreelist" [loading]="loading" [hideHeader]="true"
+          (selectionChange)="onSelectionChange($event)" [initiallyExpanded]="true" [(expandedKeys)]="collapsedIds"
+          kendoTreeListExpandable
+           >
+  
+           <kendo-treelist-span-column [expandable]="true">
+				<kendo-treelist-column field="Vietnamese" [width]="190" class="column-1">
+        
+        </kendo-treelist-column>
+				<ng-template kendoTreeListCellTemplate let-dataItem>
+						<span class="iconImg">
+							<img loading="lazy" [src]="dataItem.APIID ? 'assets/img/icon/icon_share.svg' : 'assets/img/icon/icon_departmentGray.svg'" alt="">
+						</span>
+					<span [ngClass]="{'apiName': dataItem.URL,'vietnameseModule': dataItem.Vietnamese}" [title]="dataItem.Vietnamese || dataItem.URL">{{ dataItem.Vietnamese || dataItem.URL}}</span>
+            
+				</ng-template>
+			</kendo-treelist-span-column>
+
+			<!-- COLUMN 2 -->
+			<kendo-treelist-column field="APIID" [width]="100">
+				<ng-template kendoTreeListCellTemplate let-dataItem>
+					<span class="apiID" [title]="dataItem.APIID">{{dataItem.APIID}} </span>
+				</ng-template>
+			</kendo-treelist-column>
+
+      <!-- col 3 -->
+      <kendo-treelist-column field="ServerURL" [width]="150">
+				<ng-template kendoTreeListCellTemplate let-dataItem>
+					<span class="serverURL" *ngIf="dataItem.URL" [title]="dataItem.ServerURL + dataItem.URL">{{dataItem.ServerURL + dataItem.URL}} </span>
+				</ng-template>
+			</kendo-treelist-column>
+
+
+      <!-- col 4 -->
+      <kendo-treelist-column field="Remark" [width]="170">
+				<ng-template kendoTreeListCellTemplate let-dataItem>
+					<span class="remark" [title]="dataItem.Remark">{{dataItem.Remark}} </span>
+				</ng-template>
+			</kendo-treelist-column>
+
+
+      <!-- col 5 - action -->
+            <kendo-treelist-column title="Size" [width]="30" class="btn-action">
+              <ng-template kendoTreeListCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <div class="horizontal">
+                  <kendo-button #anchor class="k-button k-button-icon togglePopup" [ngClass]="{'noHasAPI': !dataItem.APIID}"
+                  icon="more-horizontal" (click)="togglePopup(rowIndex, dataItem)"></kendo-button>         
+                </div>
+              </ng-template>
+            </kendo-treelist-column>
+
+
+          </kendo-treelist>
+        </div>
+      </mat-drawer-content>
+  
+      <!-- Drawer -->
+      <mat-drawer #formDrawer [mode]="'over'" position="end" disableClose>
+        
+        <form class="formInfoAPI k-form" (keydown)="onKeyDown($event)" [formGroup]="apiForm" >
+          <ng-container>
+            <!-- API FORM -->
+            <fieldset [disabled]="false">
+              <legend>THÔNG TIN API</legend>
+              <div class="formAPI">
+                    <div class="item item1">
+                      <div class="end-use">
+                        <div class="label">Tên biến trên Frontend <span class="impose"> (*) </span>
+                          <span class="idApi" *ngIf="apiForm.controls['Code'].value">{{ '| ' + apiForm.controls['Code'].value }}</span>
+                        </div>
+                        <span class="label label-checkbox" (click)="selectIsClosed()">Kết thúc sử dụng  <input type="checkbox" formControlName="IsClosed" [checked]="apiForm.controls['IsClosed'].value" (change)="checkboxChange($event)" kendoCheckBox #IsClosed> </span>
+                       
+                      </div>
+                      <app-p-textbox propName="APIID" formControlName="APIID" #APIID></app-p-textbox>
+                    </div>
+
+                    <div class="item item2">
+                      <div class="dropdown-module">
+                        <div class="label">Module</div>
+                        <kendo-dropdowntree
+                        kendoDropDownTreeExpandable
+                        [kendoDropDownTreeHierarchyBinding]="listModuleTree"
+                        childrenField="ListGroup"
+                        [loading]="loading"
+                        textField="Vietnamese"
+                        valueField="Code"
+                        formControlName="ModuleID"
+                        [filterable]="true"
+                        (valueChange)="
+                        selectionChangeForm($event)
+                      "
+                      [popupSettings]="{ appendTo: 'component' }"
+                      >
+                      <ng-template kendoDropDownTreeNodeTemplate let-dataItem let-index="index">
+                          <!-- <i class="fa fa-solid fa-location-dot"></i> -->
+                          <img loading="lazy" src="assets/img/icon/icon_departmentGray.svg" />
+                          {{dataItem.Vietnamese}}
+                      </ng-template>
+                      </kendo-dropdowntree>
+                    </div>
+                    </div>
+
+                    <div class="item item3">
+                      <div class="label">API package</div>
+                      <app-p-textbox  formControlName="APIPackage" propName="APIPackage" [disabled]="true" #APIPackage></app-p-textbox>
+                    </div>
+
+                    <div class="item item4">
+                      <div class="label">Server URL  <span class="impose"> (*) </span></div>
+                      <app-p-textbox  formControlName="ServerURL" propName="ServerURL" #ServerURL></app-p-textbox>
+                    </div>
+
+                    <div class="item item5">
+                      <div class="label">URL  <span class="impose"> (*) </span></div>
+                      <app-p-textbox  formControlName="URL" propName="URL" #URL></app-p-textbox>
+                    </div>
+                    <div class="item item6">
+                      <div class="label">Mô tả </div>
+                      <app-p-textarea  formControlName="Remark" propName="Remark" #Remark></app-p-textarea>
+                    </div>
+
+                    <div class="item item7">
+                      <div class="label">Thứ tự hiển thị</div>
+                      <app-p-numeric-textbox  formControlName="OrderBy" propName="OrderBy" [format]="'n0'"  [spinners]="false" [min]="0" #OrderBy></app-p-numeric-textbox>
+                    </div>
+
+                    <i><span class="impose">(*) Thông tin bắt buộc nhập </span></i>
+              </div>
+            </fieldset>
+  
+            <div class="k-form-buttons">
+              <button kendoButton class="k-button btn-hachi closeBtn" (click)="onCloseForm()">
+                Đóng
+              </button>
+              <button kendoButton class="k-button btn-hachi updateBtn" (click)="onUpdateAPI()">
+                {{apiForm.controls['Code'].value > 0
+                  ? "CẬP NHẬT"
+                  : apiForm.controls['Code'].value == 0
+                  ? "TẠO MỚI": ""}}
+              </button>
+              <button kendoButton class="k-button btn-hachi deleteBtn" (click)="openDialog()" *ngIf="apiForm.controls['Code'].value > 0">
+                XÓA
+              </button>
+            </div>
+          </ng-container>
+          <!-- API FORM -->
+        </form>
+      </mat-drawer>
+    </mat-drawer-container>
+    <app-p-kendo-dialog *ngIf="dialog" class="dialogAPI" [title]="'Xác nhận Xóa API'"
+    (close)="closeDialog()" (handleButton)="onDeleteAPI()"
+    [cancelText]="'KHÔNG'"
+    [actionText]="'Có'"
+    [dialogType]="1"
+    >
+      <p>Bạn có chắc chắn muốn Xóa API  <span style="color: green">{{apiForm.controls['APIID'].value}}</span> này? </p>
+     
+    </app-p-kendo-dialog>
+
+   
+        <kendo-popup #stylePopup class="stylePopup" [style.visibility]="isPopupVisible() " [anchor]="getAnchor()"
+        [anchorAlign]="{ horizontal:'left', vertical: 'top'}" [popupAlign]="{ horizontal:'right', vertical: topValue}"
+        
+      >
+        <div  *ngFor="let item of menuItemList; let i = index" class="popup-item" (click)="onClickMenuDropdownItem(item)">
+            <span class="k-icon k-i-{{ item.iconName}}"></span>
+            <span class="item-text">{{ item.text}}</span>
+        </div>
+      </kendo-popup>
+  </div>

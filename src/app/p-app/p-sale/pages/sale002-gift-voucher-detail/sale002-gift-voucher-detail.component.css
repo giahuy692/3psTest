@@ -1,0 +1,505 @@
+::ng-deep .sale002-gift-voucher-detail {
+  height: calc(93vh - 30px);
+  padding: 0 15px 35px 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header {
+  display: flex;
+  padding: 9px 0;
+  margin-bottom: 0;
+  border-bottom: 1px solid rgba(143, 155, 166, 0.4);
+}
+
+@media screen and (max-width: 480px) {
+  ::ng-deep .sale002-gift-voucher-detail .header {
+    display: none;
+  }
+}
+
+::ng-deep .sale002-gift-voucher-detail .header.header-1 .checkbox-btn-group {
+  margin-right: 10px;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .label {
+  margin-bottom: 6px;
+  font-weight: 700;
+  font-size: 13px;
+  color: #5c6873;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-btn {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-breadcrumb {
+  font-weight: bold;
+  color: #8f9ba6;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-breadcrumb .breadcrumb-item:first-child {
+  cursor: pointer;
+  color: #1a6634;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-breadcrumb .breadcrumb-chevron {
+  display: flex;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-crud {
+  flex-grow: 0;
+  justify-content: flex-end;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-crud .crud-btn {
+  height: 32px;
+  margin-left: 10px;
+  font-size: 11px;
+  font-weight: bold;
+  background-color: white !important;
+  box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2) !important;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-crud #reloadBtn {
+  color: #8f9ba6;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-crud #updateOrderType_Treo_Btn {
+  color: #EB273A;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-crud .updateStatusBtn {
+  text-transform: uppercase;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-crud .updateStatusBtn.gray {
+  color: #959db3;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-crud .updateStatusBtn.yellow {
+  color: #FFB900;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-crud .updateStatusBtn.green {
+  color: #1a6634;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-crud .updateStatusBtn.red {
+  color: #EB273A;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-crud .onDeleteBtn {
+  background-color: #8f9ba6 !important;
+  color: white;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-crud .onAddBtn {
+  height: 32px;
+  margin-left: 10px;
+  font-size: 11px;
+  background-color: #1a6634 !important;
+  color: white;
+  font-weight: bold;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-crud .onAddBtn.k-dropdown {
+  width: fit-content;
+  width: -mozfit-content;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-crud .onAddBtn.k-dropdown .k-dropdown-wrap {
+  font-size: 11px;
+  background-color: #1a6634;
+  color: white;
+  border: none;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-crud .onAddBtn.k-dropdown .k-dropdown-wrap .k-input {
+  height: 100%;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-crud .onAddBtn.k-dropdown .k-state-focused {
+  width: 100%;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-crud .onAddBtn.k-dropdown .k-animation-container {
+  left: unset !important;
+  right: 0;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-crud .border-center {
+  margin: auto 0 1px 10px;
+  border-right: 1px solid #c8ced3;
+  height: 31px;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-file {
+  flex-grow: 0;
+  column-gap: 10px;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-file .file-btn-group {
+  background: white;
+  box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+  border-radius: 3px;
+  color: #8f9ba6;
+  min-width: fit-content;
+  height: 32px;
+  display: flex;
+  cursor: pointer;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-file .file-btn-group span.text {
+  margin: auto;
+  padding-right: 9px;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-filter {
+  padding-left: 15px;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-filter .search-btn-group {
+  margin-right: 5px;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-filter .search-btn-group .search-btn {
+  position: relative;
+  font-weight: 400;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-filter .search-btn-group .search-btn .k-i-search {
+  position: absolute;
+  height: 100%;
+  width: 30px;
+  z-index: 1;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-filter .search-btn-group .search-btn .k-textbox {
+  padding-left: 30px;
+  min-width: fit-content;
+  width: 303px;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .nav-filter .searchBtn {
+  height: 31px;
+  margin-bottom: 1px;
+  margin-top: auto;
+  background-color: #1a6634 !important;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header .title {
+  margin: 12px 0;
+  font-weight: bold;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+::ng-deep .sale002-gift-voucher-detail .header.header-2 .title {
+  font-size: 13px;
+}
+
+::ng-deep .sale002-gift-voucher-detail .body .sections .section .title {
+  margin: 12px 0;
+  font-weight: bold;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+::ng-deep .sale002-gift-voucher-detail .body .sections .section .crud-btn {
+  height: 32px;
+  font-size: 11px;
+  font-weight: bold;
+  background-color: #1a6634 !important;
+  color: white;
+}
+
+::ng-deep .sale002-gift-voucher-detail .body .sections .section .section-grid {
+  display: grid;
+  column-gap: 27px;
+  row-gap: 10px;
+  background-color: white;
+  padding: 15px;
+}
+
+::ng-deep .sale002-gift-voucher-detail .body .sections .section .section-grid .grid-item {
+  display: flex;
+  flex-direction: column;
+}
+
+::ng-deep .sale002-gift-voucher-detail .body .sections .section .section-grid .k-textbox {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .sale002-gift-voucher-detail .body .sections .section .section-grid .k-numerictextbox {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .sale002-gift-voucher-detail .body .sections .section .section-grid .k-numerictextbox.red-color input {
+  color: #EB273A;
+}
+
+::ng-deep .sale002-gift-voucher-detail .body .sections .section .section-grid .k-dropdown {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .sale002-gift-voucher-detail .body .sections .section .section-grid .k-datepicker {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .sale002-gift-voucher-detail .body .sections .section .section-grid .k-datetimepicker {
+  width: fit-content;
+}
+
+::ng-deep .sale002-gift-voucher-detail .body .sections .section .section-grid .k-timepicker {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .sale002-gift-voucher-detail .body .sections .section .section-grid .k-timepicker .k-input {
+  width: 70px;
+}
+
+::ng-deep .sale002-gift-voucher-detail .body .sections .section .section-grid .k-checkbox,
+::ng-deep .sale002-gift-voucher-detail .body .sections .section .section-grid .k-radio {
+  margin-right: 10px;
+}
+
+::ng-deep .sale002-gift-voucher-detail .body .sections .section .section-grid #plcDichDanh {
+  margin-left: 30px;
+}
+
+::ng-deep .sale002-gift-voucher-detail .body .sections .section .section-grid textarea {
+  resize: none;
+  border-radius: 3px;
+  border-color: rgba(0, 0, 0, 0.08);
+  outline: none;
+  height: 100%;
+  padding: 4px 8px;
+}
+
+::ng-deep .sale002-gift-voucher-detail .body .sections .section .section-grid textarea:hover, ::ng-deep .sale002-gift-voucher-detail .body .sections .section .section-grid textarea:focus-visible {
+  border-color: #1a6634;
+}
+
+::ng-deep .sale002-gift-voucher-detail .body .sections .section .section-grid label {
+  margin-bottom: 0;
+}
+
+::ng-deep .sale002-gift-voucher-detail .body .sections .section .section-grid .input_label {
+  margin-bottom: 10px;
+}
+
+::ng-deep .sale002-gift-voucher-detail .body .sections .section .section-grid .row {
+  align-items: center;
+  margin-bottom: 7px;
+}
+
+::ng-deep .sale002-gift-voucher-detail .body .sections .section .section-grid .subrow {
+  margin-left: 20px;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinkhuyenmaiTbl .title {
+  justify-content: flex-start;
+  column-gap: 15px;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinkhuyenmaiTbl .title .type {
+  color: #8f9ba6;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinkhuyenmaiTbl .title .type.green {
+  color: #1a6634;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinkhuyenmaiTbl .title .type.red {
+  color: #EB273A;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinkhuyenmaiTbl .title .languages {
+  margin-left: auto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 20px;
+  color: #bbc0bb;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinkhuyenmaiTbl .title .languages .active,
+::ng-deep .sale002-gift-voucher-detail #thongtinkhuyenmaiTbl .title .languages :hover {
+  color: #626662;
+  cursor: pointer;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinkhuyenmaiTbl .title .languages .borderRight {
+  border-right: 1px solid #bbc0bb;
+  padding-right: 5px;
+  margin-right: 5px;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinkhuyenmaiTbl .section-grid {
+  grid-template-columns: 300px 300px 300px;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinkhuyenmaiTbl .section-grid .item1_1 {
+  grid-column: 1 / span 2;
+  grid-row: 1;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinkhuyenmaiTbl .section-grid .item1_2 {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinkhuyenmaiTbl .section-grid .item1_3 {
+  grid-column: 1 / span 3;
+  grid-row: 3;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinkhuyenmaiTbl .section-grid .item2_2 {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinkhuyenmaiTbl .section-grid .item3_1 {
+  grid-column: 3;
+  grid-row: 1;
+  color: #959db3;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinkhuyenmaiTbl .section-grid .item3_1 .green {
+  color: #1a6634;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinkhuyenmaiTbl .section-grid .item3_1 .red {
+  color: #EB273A;
+}
+
+::ng-deep .sale002-gift-voucher-detail #dieukienapdungTbl .section-grid {
+  grid-template-columns: 300px 300px;
+}
+
+::ng-deep .sale002-gift-voucher-detail #dieukienapdungTbl .section-grid .item1 {
+  grid-column: 1;
+}
+
+::ng-deep .sale002-gift-voucher-detail #dieukienapdungTbl .section-grid .item2 {
+  grid-column: 2;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinphieumuahangTbl .section-grid {
+  grid-template-columns: 300px 300px 300px;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinphieumuahangTbl .section-grid .item1_1 {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinphieumuahangTbl .section-grid .item1_2 {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinphieumuahangTbl .section-grid .item1_3 {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinphieumuahangTbl .section-grid .item1_3 .label .tile {
+  float: right;
+  font-weight: 400;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinphieumuahangTbl .section-grid .item1_3 .label + div {
+  display: flex;
+  column-gap: 14px;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinphieumuahangTbl .section-grid .item2_1 {
+  grid-column: 2;
+  grid-row: 1;
+  flex-direction: row;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinphieumuahangTbl .section-grid .item2_1 .item2_1i {
+  width: 40%;
+  margin-left: 13px;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinphieumuahangTbl .section-grid .item2_2 {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinphieumuahangTbl .section-grid .item2_3 {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinphieumuahangTbl .section-grid .item3_1 {
+  grid-column: 3;
+  grid-row: 1;
+  flex-direction: row;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinphieumuahangTbl .section-grid .item3_1 .k-label {
+  color: #1a6634;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinphieumuahangTbl .section-grid .item3_1 .k-label i {
+  font-size: 11px;
+}
+
+::ng-deep .sale002-gift-voucher-detail #thongtinphieumuahangTbl .section-grid .item3_2 {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+::ng-deep .sale002-gift-voucher-detail #danhSachCouponTbl .grid tr:not(.k-grouping-row) td:first-child {
+  padding-left: 10px;
+}
+
+::ng-deep .sale002-gift-voucher-detail #danhSachCouponTbl .grid .col_tinhTrang .red {
+  color: #EB273A;
+}
+
+::ng-deep .sale002-gift-voucher-detail #danhSachCouponTbl .grid .col_tinhTrang .green {
+  color: #1a6634;
+}
+
+::ng-deep .sale002-gift-voucher-detail .label {
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #8f9ba6;
+}
+
+::ng-deep .sale002-gift-voucher-detail .label.thick-label {
+  color: #23282c;
+}
+
+::ng-deep .sale002-gift-voucher-detail .label.thick-label + .number {
+  font-weight: bold;
+}
+
+::ng-deep .sale002-gift-voucher-detail .label.thick-label + .k-numerictextbox input {
+  font-weight: bold;
+}
+
+::ng-deep .sale002-gift-voucher-detail .label.thin-label {
+  font-weight: normal;
+  color: #2f353a;
+}

@@ -1,0 +1,10 @@
+<kendo-treelist
+    #customTreeList
+    kendoTreeListExpandable
+    [data]="rootData | async"
+    [fetchChildren]="fetchChildrenFn"
+    [hasChildren]="hasChildrenFn"
+    [height]="400"
+    >
+    <ng-content></ng-content>
+</kendo-treelist>

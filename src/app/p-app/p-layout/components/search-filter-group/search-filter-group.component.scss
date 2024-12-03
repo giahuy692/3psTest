@@ -1,0 +1,23 @@
+::ng-deep {
+    // .filter-btn-group.search-btn-group,
+    // .filter-btn-group,
+    // .search-btn-group {
+    //     .search-btn {
+    //         .k-textbox {
+    //         }
+    //     }
+    // }
+
+    app-search-filter-group {
+        display: flex;
+        align-items: center;
+        -moz-column-gap: 10px;
+        column-gap: 10px;
+
+        .clear-btn-group {
+            .label {
+                white-space: nowrap;
+            }
+        }
+    }
+}

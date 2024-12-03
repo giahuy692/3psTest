@@ -1,0 +1,91 @@
+body.ps_loaded .page-loading-index {
+    display: none;
+}
+
+.page-loading-index {
+    position: absolute;
+    top: 0;
+    bottom: 0%;
+    left: 0;
+    right: 0%;
+    z-index: 99999;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.page-loading-index .loading {
+    position: fixed;
+    width: 267px;
+    height: 111px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 140px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-loading-index .loading .dot-flashing {
+    text-align: center;
+    width: 100%;
+    margin-left: 4px;
+}
+
+.page-loading-index .loading .dot-flashing {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #066ca4;
+    color: #066ca4;
+    animation: dotFlashing 1s infinite linear alternate;
+    animation-delay: 0.5s;
+}
+
+.page-loading-index .loading .dot-flashing::before,
+.dot-flashing::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+}
+
+.page-loading-index .loading .dot-flashing::before {
+    left: -15px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #066ca4;
+    color: #066ca4;
+    animation: dotFlashing 1s infinite alternate;
+    animation-delay: 0s;
+}
+
+.page-loading-index .loading .dot-flashing::after {
+    left: 15px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #066ca4;
+    color: #066ca4;
+    animation: dotFlashing 1s infinite alternate;
+    animation-delay: 1s;
+}
+
+@keyframes dotFlashing {
+    0% {
+        background-color: #066ca4;
+    }
+
+    50%,
+    100% {
+        background-color: #ebe6ff;
+    }
+}

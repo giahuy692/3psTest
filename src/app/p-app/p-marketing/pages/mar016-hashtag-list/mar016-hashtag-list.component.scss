@@ -1,0 +1,68 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+    .app-mar016-hashtag-list {
+        height: calc(100vh - #{$footer-height});
+        padding: 0 15px 0 20px;
+        // padding: 0 15px 35px 20px;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: scroll;
+
+        .header.header-2 .nav-btn {
+            align-items: stretch;
+            column-gap: 2%;
+
+            .searchBtn {
+                margin-top: auto;
+            }
+        }
+
+        .myCustomGrid.k-grid tr td {
+            &.TagName {
+                white-space: normal;
+            }
+
+            img {
+                max-height: unset;
+            }
+        }
+        .myCustomGrid.k-grid {
+            thead tr {
+                th:first-child {
+                    padding-left: 30px;
+                }
+                th:nth-child(2) {
+                    width: 50%;
+                }
+            }
+        }
+
+        .app-p-kendo-grid {
+            .red {
+                color: $bad-red;
+            }
+            .yellow {
+                color: $medium-yellow;
+            }
+            .green {
+                color: $dark-green;
+            }
+        }
+    }
+    .k-list-container .k-button:hover,
+    .k-list-container .k-button {
+        background-color: transparent;
+    }
+    .popupClass {
+        .category-container {
+            width: 100%;
+
+            display: grid;
+            grid-template-columns: auto 30px;
+            align-items: center;
+            padding-left: 4px;
+        }
+    }
+}

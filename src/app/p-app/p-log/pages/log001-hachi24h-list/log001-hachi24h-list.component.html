@@ -1,0 +1,232 @@
+<div class="app-drawer-container">
+  <mat-drawer-container [hasBackdrop]="true">
+    <mat-drawer #drawer [mode]="'over'" position="end" opened="false">
+      <form class="k-form" [formGroup]="form" (keydown.Enter)="keydownEnter($event)">
+        <fieldset>
+          <legend>{{isAdd ? 'THÊM MỚI' : 'CHI TIẾT'}} SẢN PHẨM</legend>
+
+          <kendo-formfield>
+            <kendo-label text="Nhập mã sản phẩm" [for]="Barcode"></kendo-label>
+            <kendo-textbox formControlName="Barcode" #Barcode (keydown.Enter)="$event.target.blur()"
+              (inputBlur)="onTextboxLoseFocus('Barcode')" [(value)]="curProd.Barcode" [disabled]="!isAdd">
+            </kendo-textbox>
+          </kendo-formfield>
+
+          <div class="tensanpham">
+            <kendo-label text="Tên sản phẩm">
+              <b>{{ curProd.Poscode }}</b>
+              <!-- <b class="tbarcode" [hidden]="curProd.TBarcode == null || curProd.TBarcode == ''">
+                {{ ' | '+ curProd.TBarcode }}</b> -->
+            </kendo-label>
+            <div class="VNName">{{ curProd.ProductName }}</div>
+          </div>
+
+          <div class="formfield-grid">
+            <div class="item1_1">
+              <kendo-label text="Giá bán lẻ"></kendo-label>
+              <div class="VNName">{{ curProd.UnitPrice | number: '1.' }} đ</div>
+            </div>
+
+            <div class="item1_2">
+              <kendo-label text="Thương hiệu"></kendo-label>
+              <div class="VNName">{{ curProd.BrandName }}</div>
+            </div>
+
+            <div class="item1_3">
+              <kendo-label text="Xuất xứ"></kendo-label>
+              <div class="VNName">{{ curProd.OriginName }}</div>
+            </div>
+
+            <div class="img item2">
+              <img loading="lazy" [src]="getRes(curProd.ImageSetting, 'image' + curProd.Code)" alt="" (error)="handleError('image' + curProd.Code)" alt="Ảnh sản phẩm" >
+            </div>
+          </div>
+
+          <div class="tensanpham" *ngIf="curProd.GroupIDCode1 != null && curProd.GroupIDCode1 != ''">
+            <kendo-label text="Phân nhóm 1">
+            </kendo-label>
+            <div class="VNName"><b>{{ curProd.GroupIDCode1 + ' : ' + curProd.GroupIDName1 }}</b></div>
+          </div>
+
+          <div class="tensanpham" *ngIf="curProd.GroupIDCode2 != null && curProd.GroupIDCode2 != ''">
+            <kendo-label text="Phân nhóm 2"></kendo-label>
+            <div class="VNName">{{ curProd.GroupIDCode2 + ' : ' + curProd.GroupIDName2 }}</div>
+          </div>
+
+          <div class="tensanpham" *ngIf="curProd.GroupIDCode3 != null && curProd.GroupIDCode3 != ''">
+            <kendo-label text="Phân nhóm 3"></kendo-label>
+            <div class="VNName"><i>{{ curProd.GroupIDCode3 + ' : ' + curProd.GroupIDName3 }}</i></div>
+          </div>
+
+          <div class="tensanpham" *ngIf="curProd.GroupIDCode4 != null && curProd.GroupIDCode4 != ''">
+            <kendo-label text="Phân nhóm 4"></kendo-label>
+            <div class="VNName">{{ curProd.GroupIDCode4 + ' : ' + curProd.GroupIDName4 }}</div>
+          </div>
+
+          <div class="tensanpham" *ngIf="curProd.GroupIDCode5 != null && curProd.GroupIDCode5 != ''">
+            <kendo-label text="Phân nhóm 5"></kendo-label>
+            <div class="VNName">{{ curProd.GroupIDCode5 + ' : ' + curProd.GroupIDName5 }}</div>
+          </div>
+
+          <div class="k-form-buttons">
+            <button kendoButton class="k-button closeBtn"  (click)="closeForm()">Đóng</button>
+            <button kendoButton class="k-button updateBtn"  (click)="onSubmit()" *ngIf="isAdd">
+              THÊM MỚI
+            </button>
+            <button kendoButton class="k-button deleteBtn"  (click)="onDelete()" *ngIf="!isAdd">
+              XÓA
+            </button>
+          </div>
+        </fieldset>
+      </form>
+    </mat-drawer>
+    <!-- center content -->
+    <mat-drawer-content>
+      <div class="app-log001-hachi24h-list">
+        <div class="header header-1">
+          <div class="nav-filter nav-btn">
+            <div class="filter-btn-group clear-btn-group">
+              <div class="label">
+                <span class="k-icon k-i-filter"></span>Lọc dữ liệu
+              </div>
+              <button kendoButton class="k-button clear-filter-btn" (click)="resetFilter()">Reset bộ lọc</button>
+            </div>
+
+            <form style="display: flex; flex-grow: 1;" [formGroup]="searchForm">
+              <div class="filter-btn-group search-btn-group">
+                <div class="label">
+                  Tìm kiếm
+                </div>
+                <div class="search-btn">
+                  <span class="k-icon k-i-search"></span>
+                  <kendo-textbox formControlName="SearchQuery" type="text" class="k-textbox"
+                    placeholder="Tìm kiếm barcode, tên sản phẩm, thương hiệu">
+                  </kendo-textbox>
+                </div>
+              </div>
+
+              <button kendoButton class="k-button searchBtn" [icon]="'search'"  (click)="search()"
+                [disabled]="!isFilterActive">TÌM</button>
+            </form>
+          </div>
+
+          <div class="nav-file nav-btn">
+            <div class="file-btn-group">
+              <button kendoButton id="onUploadBtn" class="k-button" [icon]="'export'" (click)="onImportExcel()"
+                 [disabled]="!isFilterActive"></button>
+            </div>
+
+            <div class="file-btn-group">
+              <button kendoButton id="onDownloadBtn" class="k-button" [icon]="'import'" (click)="downloadExcel()"
+                 [disabled]="!isFilterActive">Template</button>
+            </div>
+
+            <div class="file-btn-group">
+              <button kendoButton class="k-button onImportBtn" [icon]="'import'" 
+                (click)="exportExcel()">
+              </button>
+              <button kendoButton class="k-button k-btn-xlsx" imageUrl="assets\img\logo\xlsx.svg"
+                (click)="exportExcel()"></button>
+              <div class="border-center"></div>
+              <span class="k-icon k-i-arrow-chevron-down"></span>
+            </div>
+          </div>
+
+          <div class="nav-btn nav-crud">
+            <button kendoButton class="k-button onAddBtn" [icon]="'plus'" (click)="onAdd()" 
+              [disabled]="!isFilterActive">
+              THÊM MỚI</button>
+          </div>
+        </div>
+
+        <div class="grid-wrapper">
+          <app-p-kendo-grid class="grid scrollable" [data]="gridView | async" [scrollable]="'none'" [loading]="loading"
+            [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize" [skip]="gridState.skip"
+            [take]="gridState.take" [sortable]="true" [sort]="gridState.sort"
+            [onPageChangeCallback]="onPageChangeCallback" [onSortChangeCallback]="onSortChangeCallback"
+            [allowedMoreActionDropdown]="allowActionDropdown"
+            [onActionDropdownClickCallback]="onActionDropdownClickCallback" [selectable]="selectable"
+            [onSelectCallback]="onSelectCallback" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+            [getSelectionPopupCallback]="getSelectionPopupCallback">
+
+            <kendo-grid-column field="ProductName" title="Tên sản phẩm" class="col_img_tensanpham_masanpham"
+              headerClass="col_img_tensanpham_masanpham">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="img_tensanpham_masanpham">
+                  <img loading="lazy" [src]="getRes(dataItem.ImageSetting, 'image' + dataItem.Code)" alt="" (error)="handleError('image' + dataItem.Code)">
+                  <div class="tensanpham_masanpham">
+                    <div class="tensanpham">{{ dataItem.ProductName }}</div>
+                    <div class="masanpham">
+                      {{ dataItem.Barcode + ' | ' + dataItem.Poscode }}
+                      <span class="tinhtrang" [ngClass]="{'green': dataItem.Status == 1, 'red': dataItem.Status == 2}">
+                        {{ ' | ' + dataItem.StatusName }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column field="IsHachi24h" title="Hachi3h" class="col_dieuKien" headerClass="col_dieuKien">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <img loading="lazy" class="img-hachi24" src="assets\img\logo\hachi3h.svg">
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column field="GroupIDCode1" title="Phân nhóm" class="col_phanNhom">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="group1" *ngIf="dataItem.GroupIDCode1 != null && dataItem.GroupIDCode1 != ''">
+                  <b>{{ dataItem.GroupIDCode1 }} : {{ dataItem.GroupIDName1 }}</b>
+                </div>
+                <div class="group2" *ngIf="dataItem.GroupIDCode2 != null && dataItem.GroupIDCode2 != ''">
+                  {{ dataItem.GroupIDCode2 }} : {{ dataItem.GroupIDName2 }}
+                </div>
+                <div class="group3" *ngIf="dataItem.GroupIDCode3 != null && dataItem.GroupIDCode3 != ''">
+                  <i>{{ dataItem.GroupIDCode3 }} : {{ dataItem.GroupIDName3 }}</i>
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column field="OriginName" title="Xuất xứ" class="col_xuatXu" headerClass="col_xuatXu">
+            </kendo-grid-column>
+
+            <kendo-grid-column field="BrandName" title="Thương hiệu" class="col_thuonghieu">
+            </kendo-grid-column>
+
+            <kendo-grid-column field="UnitPrice" title="Giá bán lẻ" class="col_giaBanLe" headerClass="col_giaBanLe">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                {{ dataItem.UnitPrice | number: '1.' }}
+              </ng-template>
+            </kendo-grid-column>
+          </app-p-kendo-grid>
+        </div>
+
+        <kendo-dialog #dialog class="deleteDialog" title="Xóa Sản phẩm Hachi3h" [hidden]="!deleteDialogOpened"
+          (close)="closeDeleteDialog()" [minWidth]="250">
+          <p style="margin: 30px; text-align: center;">
+            Bạn chắc chắn muốn xóa vĩnh viễn Sản phẩm Hachi3h&nbsp;
+            "{{ curProd.ProductName }}"&nbsp;này?</p>
+          <div class="dialog-footer">
+            <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteDialog()"
+              [icon]="'close'">Không</button>
+            <button kendoButton class="btn-hachi hachi-warning" (click)="delete()" [icon]="'trash'">Có</button>
+          </div>
+        </kendo-dialog>
+
+        <kendo-dialog #dialog class="deleteDialog" title="Xóa các Sản phẩm Hachi3h đã chọn"
+          [hidden]="!deleteManyDialogOpened" (close)="closeDeleteDialog()" [minWidth]="250">
+          <div style="margin: 30px; text-align: center;">
+            Bạn chắc chắn muốn xóa vĩnh viễn {{ deleteList.length }} Sản phẩm Hachi3h này?
+          </div>
+          <div class="dialog-footer">
+            <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteManyDialog()"
+              [icon]="'close'">Không</button>
+            <button kendoButton class="btn-hachi hachi-warning" (click)="deleteMany()" [icon]="'trash'">Có</button>
+          </div>
+        </kendo-dialog>
+
+        <app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>

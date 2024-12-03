@@ -1,0 +1,418 @@
+<div *ngIf="show" class="main">
+    <!-- PHẦN HEADER CỦA LIST -->
+    <div class="header-list-position">
+        <div class="header header-2 block-infoDetail">
+            <div class="title">
+                <div class="title title-prod">DANH SÁCH CHỨC DANH ÁP DỤNG <span class="important">
+                        (*)</span></div>
+
+                        <app-search-filter-group [clearButton]="true"
+                        [ngClass]="isMaster || handleCheckApproverEditable() ? '' : 'none-show-import'"
+                        placeholder="Tìm kiếm theo mã hoặc tên chức danh" [fields]="['PolicyID', 'PolicyName', 'Description']"
+                        (valueChange)="handleSetValueSearch($event)">
+                    </app-search-filter-group>
+            </div>
+
+
+        
+
+            <!-- Button export -->
+            <div
+                [ngClass]="dataHRPolicyMaster.Code == 0 || dataHRPolicyMaster?.Status == 2 || dataHRPolicyMaster?.Status == 3 || isViewer() ? 'disable-col-3' : 'header-col-3'">
+                <div class="btn-area">
+                    <div *ngIf="isMaster || handleCheckApproverEditable()" class="nav-prod">
+                        <div class="file-group">
+                            <button (click)="onImportExcel()" kendoButton iconClass="k-icon k-i-export"
+                                class="addImport">
+                            </button>
+                        </div>
+                        <div class="file-group">
+                            <button (click)="APIDownloadExcel()" kendoButton iconClass="k-icon k-i-import"
+                                class="addExport">
+                                Template
+                            </button>
+                        </div>
+                        <button (click)="handleACtionPositionClick(null, 2)" kendoButton
+                            class="k-button btn-hachi hachi-primary" [icon]="'plus'">
+                            THÊM MỚI CHỨC DANH
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- <div (click)="pageChanges()">
+        click me
+    </div> -->
+
+    <!-- PHẦN GRID CỦA LIST -->
+    <div class="body-list-position">
+        <div class="grid-wrapper">
+            <!-- GRID DEPARTMENT -->
+            <kendo-grid [skip]="skip" #kendoGrid [loading]="loading" class="grid-positionApply grid scrollable"
+                [pageable]="true" [pageSize]="listPageSize[0]" (pageChange)="handlePageChanges($event)"
+                [kendoGridBinding]="listFilterHRPolicyApply" [kendoGridExpandDetailsBy]="handleExpandDetailsBy"
+                [(expandedDetailKeys)]="expandedDetailKeys" [initiallyExpanded]="true">
+                <kendo-grid-column [width]="600" class="col_1">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <div class="text-area">
+                            <div class="icon">
+                                <fa-icon [icon]="['fas', handleGetIconByDTO(dataItem)]"></fa-icon>
+                            </div>
+                            <div [title]="dataItem.DepartmentName" class="name">
+                                {{ dataItem.DepartmentName }}
+                            </div>
+                            <div [title]="dataItem.DepartmentID" class="id">
+                                {{dataItem.DepartmentID}}
+                            </div>
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column [width]="300" class="col_2">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+
+                    </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column class="col_3">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+
+                    </ng-template>
+                </kendo-grid-column>
+
+                <!-- GRID POSITION -->
+                <ng-template kendoGridDetailTemplate let-dataItem let-parentRowIndex="rowIndex">
+                    <kendo-grid class="grid grid-position" [kendoGridBinding]="dataItem.ListPosition"
+                        [kendoGridExpandDetailsBy]="handleExpandDetailsBy" [(expandedDetailKeys)]="expandedDetailKeys"
+                        [initiallyExpanded]="true">
+                        <kendo-grid-column field="PositionName" class="col_1">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="text-area">
+                                    <div class="icon">
+                                        <fa-icon [icon]="['fas', handleGetIconByDTO(dataItem)]"></fa-icon>
+                                    </div>
+                                    <div [title]="dataItem.PositionName" class="name">
+                                        {{dataItem.PositionName}}
+                                    </div>
+                                    <div [title]="dataItem.PositionID" class="id">
+                                        {{dataItem.PositionID}}
+                                    </div>
+                                </div>
+
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <kendo-grid-column [width]="400" field="PositionName" class="col_2">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div>
+                                    <div *ngIf="dataItem.IsLeader == true">
+                                        Trưởng đơn vị
+                                    </div>
+                                    <div [ngClass]="!dataItem.IsLeader ? 'onlyIsSupervivor': ''"  *ngIf="dataItem.IsSupervivor == true">
+                                        Quản lý điểm làm việc
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <kendo-grid-column [width]="65" [headerStyle]="{'position': 'sticky'}" class="col_3"
+                            [headerClass]=" 'hidden'">
+                            <ng-template kendoGridCellTemplate let-dataItem let-childRowIndex="rowIndex">
+                                <div class="icon-area">
+                                    <div class="btnCell">
+                                        <button (click)="handleOpenPopup(dataItem); positionSelected = dataItem" kendoButton
+                                            #anchor class="k-button k-button-icon togglePopup"
+                                            icon="more-horizontal"></button>
+                                    </div>
+                                </div>
+
+                                <kendo-popup #rowMoreActionPopup class="rowMoreActionPopup" [style.visibility]="'visible'" [anchor]="anchor"
+                                    *ngIf="isPopShow && dataItem == positionSelected"
+                                    (anchorViewportLeave)=" anchors = null; handleOpenPopup(dataItem)"
+                                    [anchorAlign]="{ horizontal:'left', vertical: 'top'}" [collision]="{ horizontal: 'flip', vertical: 'fit' }" [popupAlign]="{ horizontal:'right', vertical: 'top'}">
+                                    <div class="popup-function" >
+                                        <div
+                                            *ngIf="(this.dataHRPolicyMaster.Status == 0 || this.dataHRPolicyMaster.Status == 1 ||  this.dataHRPolicyMaster.Status == 4) && (isMaster || handleCheckApproverEditable())">
+                                            <div *ngFor="let item of listActionDraw; let isFirst = first; let isLast = last">
+                                                <div (click)="handleACtionPositionClick(positionSelected,item.id)" 
+                                                    [ngClass]="{'first-item': isFirst, 'last-item': isLast }"    
+                                                    class="item">
+                                                    <div class="icon">
+                                                        <kendo-svg-icon [icon]="item.icon"></kendo-svg-icon>
+                                                    </div>
+                                                    <div class="text">{{item.text}}</div>
+                                                </div>
+                                            </div>
+                                
+                                        </div>
+                                
+                                        <div
+                                            *ngIf="(isCreator && dataHRPolicyMaster.Status == 1) || this.dataHRPolicyMaster.Status == 2 || this.dataHRPolicyMaster.Status == 3 || ((this.dataHRPolicyMaster.Status == 0 || this.dataHRPolicyMaster.Status == 4) && isApprover) || isViewer()">
+                                            <div *ngFor="let item of listActionApply; let isFirst = first; let isLast = last">
+                                                <div  (click)="handleACtionPositionClick(positionSelected,item.id)" class="item item-view">
+                                                    <div class="icon">
+                                                        <kendo-svg-icon [icon]="item.icon"></kendo-svg-icon>
+                                                    </div>
+                                                    <div class="text">{{item.text}}</div>
+                                                </div>
+                                            </div>
+                                
+                                        </div>
+                                    </div>
+                                </kendo-popup>
+
+                                <!-- <div class="popup-function" *ngIf="isPopShow && dataItem == positionSelected">
+                                    <div
+                                        *ngIf="(this.dataHRPolicyMaster.Status == 0 || this.dataHRPolicyMaster.Status == 1 ||  this.dataHRPolicyMaster.Status == 4) && (isMaster || checkApproverEditable())">
+                                        <div *ngFor="let item of listActionDraw">
+                                            <div (click)="handleACtionPositionClick(positionSelected,item.id)"
+                                                class="item">
+                                                <div class="icon">
+                                                    <kendo-svg-icon [icon]="item.icon"></kendo-svg-icon>
+                                                </div>
+                                                <div class="text">{{item.text}}</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div
+                                        *ngIf="(isCreator && dataHRPolicyMaster.Status == 1) || this.dataHRPolicyMaster.Status == 2 || this.dataHRPolicyMaster.Status == 3 || ((this.dataHRPolicyMaster.Status == 0 || this.dataHRPolicyMaster.Status == 4) && isApprover) || isViewer()">
+                                        <div *ngFor="let item of listActionApply">
+                                            <div (click)="handleACtionPositionClick(positionSelected,item.id)"
+                                                class="item">
+                                                <div class="icon">
+                                                    <kendo-svg-icon [icon]="item.icon"></kendo-svg-icon>
+                                                </div>
+                                                <div class="text">{{item.text}}</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div> -->
+
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <!-- GRID LOCATION -->
+                        <ng-template kendoGridDetailTemplate let-dataPosition>
+                            <section>
+                                <kendo-grid [kendoGridBinding]="dataPosition.ListLocation"
+                                    [kendoGridExpandDetailsBy]="handleExpandDetailsBy"
+                                    [(expandedDetailKeys)]="expandedDetailKeys" class="grid-location">
+                                    <kendo-grid-column class="col_1">
+                                        <ng-template kendoGridCellTemplate let-dataItem>
+                                            <div class="text-area">
+                                                <div class="icon">
+                                                    <fa-icon [icon]="['fas', handleGetIconByDTO(dataItem)]"></fa-icon>
+                                                </div>
+                                                <div [title]="dataItem.LocationName" class="name">
+                                                    {{dataItem.LocationName}}
+                                                </div>
+                                                <div [title]="dataItem.LocationID" class="id">
+                                                    {{dataItem.LocationID}}
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </kendo-grid-column>
+
+                                    <kendo-grid-column class="col_2">
+                                        <ng-template kendoGridCellTemplate let-dataItem>
+                                            <div>
+                                                <span class=" status-name"
+                                                    [innerHTML]="dataItem.StatusName | colorStatus: dataItem.Status"></span>
+                                            </div>
+                                            <!-- <div *ngIf="dataItem.Status == 0 || dataItem.Status == 1 || dataItem.Status == 4"
+                                                class="icon-area">
+                                                <kendo-svg-icon
+                                                    (click)="openDiaLogLocation(dataPosition, dataItem)" 
+                                                    *ngIf="dataPosition.ListLocation?.length > 1 && (checkApproverEditable() || isMaster)"
+                                                    class="icon" [icon]="icons.trash"></kendo-svg-icon>
+                                            </div>
+
+                                            <div
+                                                *ngIf="dataItem.Status == 2  && ( isMaster || checkApproverEditable())">
+                                                <div  class="icon-area">
+                                                    <kendo-svg-icon class="icon"
+                                                    (click)="openDialogChangeStatus(dataItem)"
+                                                        [icon]="icons.minusOutline"></kendo-svg-icon>
+                                                </div>
+                                            </div>
+
+
+                                            <div *ngIf="(
+                                            (dataItem.Status == 3 || (dataItem.Status == 2 && isCreator) || 
+                                            ((dataItem.Status == 2 || dataItem.Status == 3) && isViewer())))"
+                                                class="icon-area-null">
+                                            </div> -->
+
+                                            <!-- Icon đầu tiên -->
+                                            <div 
+                                                *ngIf="(dataItem.Status == 0 || dataItem.Status == 1 || dataItem.Status == 4)" 
+                                                class="icon-area">
+                                                <kendo-svg-icon (click)="handleOpenDiaLogLocation(dataPosition, dataItem)"
+                                                    *ngIf="dataPosition.ListLocation?.length > 1 && (handleCheckApproverEditable() || isMaster)" class="icon"
+                                                    [icon]="icons.trash">
+                                                </kendo-svg-icon>
+                                            </div>
+                                            
+                                            <!-- Icon thứ hai -->
+                                            <div 
+                                                *ngIf="dataItem.Status == 2  && ( isMaster || handleCheckApproverEditable())">
+                                                <div class="icon-area">
+                                                    <kendo-svg-icon class="icon" (click)="handleOpenDialogChangeStatus(dataItem)"
+                                                        [icon]="icons.minusOutline"></kendo-svg-icon>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Icon "null" chỉ hiện nếu 2 icon trên không hiện -->
+                                            <div *ngIf="!(
+                                                (dataItem.Status == 0 || dataItem.Status == 1 || dataItem.Status == 4) 
+                                                || (dataItem.Status == 2  && (isMaster || handleCheckApproverEditable()))
+                                                ) && (
+                                                dataItem.Status == 3 || (dataItem.Status == 2 && isCreator) || 
+                                                ((dataItem.Status == 2 || dataItem.Status == 3) && isViewer())
+                                                )" class="icon-area-null">
+                                            </div>
+
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                </kendo-grid>
+                            </section>
+                        </ng-template>
+
+
+                    </kendo-grid>
+
+                </ng-template>
+                <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage">
+                    <div class="label">Hiển thị mỗi trang</div>
+                    <kendo-pager-page-sizes [pageSizes]="listPageSize"></kendo-pager-page-sizes>
+                    <!-- <div class="total" [hidden]="!(total > 0)">Tổng cộng: <span>{{total | number:'1.0-2'}}</span></div> -->
+                    <kendo-pager-prev-buttons class="k-pager-nav-btn"></kendo-pager-prev-buttons>
+                    <kendo-pager-numeric-buttons [buttonCount]="4"></kendo-pager-numeric-buttons>
+                    <kendo-pager-next-buttons class="k-pager-nav-btn"></kendo-pager-next-buttons>
+
+                </ng-template>
+
+                <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage">
+                    <!-- <kendo-pager-page-sizes [pageSizes]=""></kendo-pager-page-sizes> -->
+                    <kendo-pager-prev-buttons class="k-pager-nav-btn"></kendo-pager-prev-buttons>
+                    <!-- <kendo-pager-numeric-buttons [buttonCount]="4"></kendo-pager-numeric-buttons> -->
+                    <kendo-pager-next-buttons class="k-pager-nav-btn"></kendo-pager-next-buttons>
+                </ng-template>
+
+                <kendo-grid-messages [pagerItemsPerPage]="''"></kendo-grid-messages>
+            </kendo-grid>
+        </div>
+    </div>
+
+
+    <!-- POPUP CONFIRM DELETE POSITION -->
+    <kendo-dialog class="dialog-delete popup-confirm-custom" [minHeight]="250" [minWidth]="400"
+        *ngIf="isShowDialogPosition">
+        <!-- HEADER -->
+        <div class="dialog-header">
+            <span class="k-icon k-i-warning"></span>
+            <div>Xóa chức danh áp dụng</div>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="dialog-content">
+            <div class="text-confirm">
+                <span>Bạn có chắc chắn muốn xoá chức danh</span>
+                <div class="policy-name-text">
+                    {{tempItemDeleteDialogPosition.PositionName}}
+                </div>
+            </div>
+
+            <div class="warning">
+                <span>Chức danh áp dụng bị xoá thì toàn bộ</span>
+                <div>
+                    <span style="color: #FD7676;">ĐIỂM LÀM VIỆC &nbsp;</span>
+                    <span>thuộc chức danh này sẽ mất.</span>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="dialog-footer">
+            <button kendoButton (click)="handleCloseDialogPosition()" class="cancel-button">Không xóa</button>
+            <button kendoButton (click)="handleDeletePosition(tempItemDeleteDialogPosition)" icon="trash"
+                class="btn-delete">xóa</button>
+        </div>
+    </kendo-dialog>
+
+
+    <!-- POPUP CONFIRM DELETE LOCATION -->
+    <kendo-dialog class="dialog-delete popup-confirm-custom" [minHeight]="250" [minWidth]="400"
+        *ngIf="isShowDialogLocation">
+        <!-- HEADER -->
+        <div class="dialog-header">
+            <span class="k-icon k-i-warning"></span>
+            <div>Xóa điểm làm việc</div>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="dialog-content">
+            <div class="text-confirm">
+                <span>Bạn có chắc chắn muốn xóa điểm làm việc</span>
+                <div class="policy-name-text">
+                    {{tempItemDeleteDialogLocaton.LocationName}}
+                </div>
+            </div>
+
+            <div class="warning">
+                <span>Điểm làm việc bị xóa sẽ <span style="color: #FD7676;">KHÔNG</span> thể khôi phục lại</span>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="dialog-footer">
+            <button kendoButton (click)="handleCloseDialogLocation()" class="cancel-button">Không xóa</button>
+            <button kendoButton (click)="handleDeleteLocation(tempItemDeleteDialogLocaton)" icon="trash"
+                class="btn-delete">xóa</button>
+        </div>
+    </kendo-dialog>
+
+    <!-- POPUP CONFIRM CHANGE STATUS -->
+    <kendo-dialog class="dialog-delete popup-confirm-custom" [minHeight]="250" [minWidth]="400"
+        *ngIf="isShowDialogChangeStatus">
+        <!-- HEADER -->
+        <div class="dialog-header">
+            <span class="k-icon k-i-warning"></span>
+            <div>Ngưng chức danh áp dụng</div>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="dialog-content">
+            <div class="text-confirm">
+                <span>Bạn chắc chắn muốn điểm làm việc</span>
+                <div class="policy-name-text">
+                    {{tempItemChangeDialogLocation?.LocationName}}
+                </div>
+            </div>
+
+            <div class="warning-change-status">
+                <span>Điểm làm việc bị ngưng sẽ <span style="color: #FD7676;">KHÔNG</span> thể duyệt lại và sẽ không áp
+                    dụng chính sách này cho chức danh thuộc điểm làm việc này</span>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="dialog-footer">
+            <button kendoButton (click)="handleCloseDialogChangeStatus()" class="cancel-button">Hủy</button>
+            <button kendoButton (click)="handleChangeStatusLocation(tempItemChangeDialogLocation)" icon="trash"
+                class="btn-delete">ngưng áp dụng</button>
+        </div>
+    </kendo-dialog>
+
+    <app-import-popup *ngIf="statusImport == 1" [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>
+
+
+</div>

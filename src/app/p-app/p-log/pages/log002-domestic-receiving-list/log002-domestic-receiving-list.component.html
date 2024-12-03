@@ -1,0 +1,185 @@
+<div class="log002-domestic-receiving-list">
+
+    <!-- START HEADER -->
+    <div class="header header-1 d-flex align-items-center justify-content-between">
+        <div class="header1-left">
+            <app-p-kendo-breadcrumb (loadData)="onLoadFilter()"></app-p-kendo-breadcrumb>
+            <p-kendo-dropdownlist [data]="ListTypeData13" [hasValueNull]="false" [loading]="loadingOrderType"
+                [(ngModel)]="currentStatusHeader1" textField="StatusName" valueField="OrderBy"
+                (selectionChange)="onSelectionOrderType($event)"></p-kendo-dropdownlist>
+        </div>
+    </div>
+    
+    <div class="header header-2">
+        <app-search-filter-group placeholder="Tìm theo số phiếu giao hàng, đơn hàng và nhà cung cấp"
+            [fields]="['OrderNo', 'SupplierName']" (filterChange)="handleSearch($event)"
+            (onReset)="onResetFilter()"></app-search-filter-group>
+
+        <div class="d-flex flex-column">
+          <div class="label blueGray">Ngày giao nhận hàng</div>
+          <div class="filter-dropdown-list">
+              <p-kendo-dropdownlist class="filter-by-date" [data]="ListDateFilterOperator" textField="TypeFilter"
+                  valueField="Code" [hasValueNull]="false" [(ngModel)]="currentDateFilterOperator"
+                  (selectionChange)="selectionDateFilterOperatorChange($event)"></p-kendo-dropdownlist>
+  
+              <app-datepicker [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'" (blur)="onDatepickerChange($event)"
+                  (keydown.Enter)="$event.target.blur()" [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                  [(ngModel)]="currentDate"></app-datepicker>
+  
+              <p-kendo-dropdownlist class="delivery-time-range" [data]="ListDeliveryTimeFrame" textField="TimeRange"
+                  valueField="Code" [(ngModel)]="currentDeliveryTimeFrame"
+                  (selectionChange)="selectionDeliveryTimeFrameChange($event)"></p-kendo-dropdownlist>
+
+                  
+        <div class="filter-checkbox">
+          <input type="checkbox" #filterCheckbox kendoCheckBox (change)="onClickCheckbox($event)"
+              [disabled]="currentStatusHeader1?.OrderBy != 1" [(ngModel)]="currentFilterCheckbox" />
+          <kendo-label class="k-checkbox-label" [for]="filterCheckbox" text="Đơn hàng có vấn đề"></kendo-label>
+      </div>
+          </div>
+        </div>
+
+    </div>
+    <!-- END HEADER -->
+
+
+    <!-- START BODY -->
+    <div class="body">
+        <div class="grid-wrapper">
+            <app-p-kendo-grid class="grid scrollable " [data]="gridView | async" [scrollable]="'none'"
+                [loading]="isLoading" [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize"
+                [skip]="gridState.skip" [take]="gridState.take" [sortable]="true" [showCheckbox]="false"
+                [onPageChangeCallback]="onPageChangeCallback" [getActionDropdownCallback]="getActionDropdownCallback"
+                [onActionDropdownClickCallback]="onActionDropdownClickCallback" [onSelectCallback]="onSelectCallback"
+                [selectable]="selectable">
+
+                <kendo-grid-column field="SupplierName" title="Phiếu giao hàng" class="col_supplier" headerClass="header_supplier">
+
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="nameOrder font-weight-bold" title="Tên nhà cung cấp: {{dataItem.SupplierName}}">{{dataItem.SupplierName}}</div>
+                    <div class="inforGroup">
+                      <span class="font-weight-bold blue" title="Mã đơn hàng: {{ dataItem.OrderNo }}">{{ dataItem.OrderNo}}</span>
+                      <span class="lineVertical" *ngIf="dataItem.OrderNo && dataItem.OrderedTime"> | </span>
+                      <span class="cate" title="Ngày đặt hàng: {{dataItem.OrderedTime | date:'dd/MM/yyyy'}}">{{dataItem.OrderedTime | date:'dd/MM/yyyy'}} </span>
+                    </div>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column title="Chấp nhận" field="Detail" headerClass="header_reasonRequest"
+                    class="col_reasonRequest">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <div class="AcceptedTime" *ngIf="dataItem.AcceptedTime"
+                            title="Thời gian chấp nhận PO: {{dataItem.AcceptedTime | date:'dd/MM/yyyy HH:mm'}}">Đã chấp nhận: {{dataItem.AcceptedTime |
+                            date:'dd/MM/yyyy HH:mm'}}</div>
+                        <div class="DeliveriedTime orangeColor" *ngIf="dataItem.DeliveriedTime  && dataItem.StatusID == 6"
+                            title="Thời gian đăng ký giao: {{dataItem.DeliveriedTime  | date:'dd/MM/yyyy HH:mm'}}">Đăng ký giao: {{dataItem.DeliveriedTime  | date:'dd/MM/yyyy HH:mm'}}
+                            {{ dataItem.DeliveryPeriod }}</div>
+                        <div class="DeliveriedTime darkgreenColor" *ngIf="dataItem.ReceivedTime && dataItem.StatusID >= 7"
+                          title="Thời gian giao vào lúc: {{dataItem.ReceivedTime | date:'dd/MM/yyyy HH:mm'}}">Giao vào lúc: {{dataItem.ReceivedTime | date:'dd/MM/yyyy HH:mm'}}</div>
+                          <div class="DeliveriedTime redColorStatus" *ngIf="dataItem.RefusedTime && dataItem.StatusID == 3"
+                            title="Từ chối: {{dataItem.RefusedTime | date:'dd/MM/yyyy HH:mm'}}">Từ chối: {{dataItem.RefusedTime | date:'dd/MM/yyyy HH:mm'}}</div>
+                    </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column title="Kế hoạch nhận hàng" field="" [headerClass]="'header_deliveryPlan'" class="col_deliveryPlan">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <div class="detail layoutContent" *ngIf="dataItem.ReceivingStart">
+                            <span title="Bắt đầu nhận: {{dataItem.ReceivingStart | date:'dd/MM/yyyy'}}">Bắt đầu nhận</span>
+                            <span title="Bắt đầu nhận: {{dataItem.ReceivingStart | date:'dd/MM/yyyy'}}">: {{dataItem.ReceivingStart | date:'dd/MM/yyyy'}}</span>
+                        </div>
+                        <div class="detail layoutContent" *ngIf="dataItem.ReceivingEnd">
+                            <span title="Kết thúc nhận: {{dataItem.ReceivingEnd | date:'dd/MM/yyyy'}}">Kết thúc nhận</span>
+                            <span title="Kết thúc nhận: {{dataItem.ReceivingEnd | date:'dd/MM/yyyy'}}">: {{dataItem.ReceivingEnd | date:'dd/MM/yyyy'}} </span>
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column field="SKU" title="Giá trị đơn hàng" [headerClass]="'header_orderValue'" class="col_orderValue">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="itemCover layoutContent">
+                          <span class="item-child" title="SKU: {{dataItem.SKU == null ? 0 : dataItem.SKU | number:'1.0-0'}}">SKU</span>
+                          <span title="SKU: {{dataItem.SKU == null ? 0 : dataItem.SKU | number:'1.0-0'}}">: {{dataItem.SKU == null ? 0 : dataItem.SKU | number:'1.0-0'}}</span>
+                      </div>
+            
+                      <div class="itemCover layoutContent">
+                          <span class="item-child" title="Số lượng: {{dataItem.TotalQuantity == null ? 0 : dataItem.TotalQuantity | number:'1.0-0'}}">SL</span>
+                          <span title="Số lượng: {{dataItem.TotalQuantity == null ? 0 : dataItem.TotalQuantity | number:'1.0-0'}}">: {{dataItem.TotalQuantity == null ? 0 : dataItem.TotalQuantity | number:'1.0-0'}}</span>
+                      </div>
+            
+                      <div class="itemCover layoutContent">
+                          <span class="item-child" title="Giá trị: {{ dataItem.AmountAfterVAT == null ? 0 : dataItem.AmountAfterVAT | number: '1.0-0' }} K">Giá trị</span>
+                          <span title="Giá trị: {{ dataItem.AmountAfterVAT == null ? 0 : dataItem.AmountAfterVAT | number: '1.0-0' }}">: {{ dataItem.AmountAfterVAT == null ? 0 : dataItem.AmountAfterVAT / 1000| number: '1.0-0' }} <span>K</span></span>
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+
+                <kendo-grid-column field="RemarkSupplier" title="Ghi chú" [headerClass]="'header_noteOrder'" class="col_noteOrder">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="Note">
+                        <span *ngIf="dataItem.RemarkSupplier">
+                          <span class="font-weight-bold" title="Ghi Chú cho NCC: {{dataItem.RemarkSupplier}}">NCC: </span>
+                          <span title="Ghi Chú cho NCC: {{dataItem.RemarkSupplier}}"> {{dataItem.RemarkSupplier}} </span>
+                        </span>
+                      </div>
+            
+                      <div class="Note">
+                        <span *ngIf="dataItem.RemarkWarehouse">
+                          <span class="font-weight-bold" title="Ghi chú cho LGT: {{dataItem.RemarkWarehouse}}">LGT: </span>
+                          <span  title="Ghi chú cho LGT: {{dataItem.RemarkWarehouse}}"> {{dataItem.RemarkWarehouse}} </span>
+                        </span>
+                      </div>
+            
+                      <div class="Note">
+                        <span *ngIf="dataItem.RemarkFromSupplier">
+                          <span class="font-weight-bold" title="Ghi chú cho đợt giao: {{dataItem.RemarkFromSupplier}}">G.hàng: </span>
+                          <span title="Ghi chú cho đợt giao: {{dataItem.RemarkFromSupplier}}"> {{dataItem.RemarkFromSupplier}} </span>
+                        </span>
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+
+                <kendo-grid-column title="Tình trạng" field="StatusName" headerClass="header_Status" class="col_Status">
+                    <ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+                        <!-- <kendo-dropdownbutton *ngIf="currentStatusHeader1?.OrderBy == 1" [data]="ListTypeData14"
+                            iconClass="k-icon k-i-arrow-chevron-down"
+                            [popupSettings]="{ popupClass: 'popupClassStatusGridLog002 Bps', appendTo: 'component', animate: true, align:'center' }"
+                            textField="StatusName" valueField="OrderBy" (itemClick)="onItemStatusGridClick($event)"
+                            [loading]="loadingOrderType">Tình trạng
+                            <ng-template kendoDropDownButtonItemTemplate let-dataItem>
+                                <span [ngClass]="{'activeMenu': dataItem.OrderBy == currentStatusHeaderGrid?.OrderBy}"
+                                    [title]="dataItem?.StatusName">{{ dataItem?.StatusName }}</span>
+                            </ng-template>
+                        </kendo-dropdownbutton> -->
+                        <kendo-dropdownlist [loading]="loadingOrderType" 
+                          [data]="dataFilterTypeData14" textField="StatusName" [filterable]="true" 
+                          (filterChange)="handleFilterStatus($event)" class="k-dropdown" [(ngModel)]="currentStatusHeaderGrid"
+                          valueField="OrderBy" (valueChange)="onItemStatusGridClick($event)"
+                          [popupSettings]="{popupClass:'popupClassStatusGridLog002' }">
+                          <ng-template kendoDropDownListValueTemplate let-dataItem>
+                            Tình trạng
+                          </ng-template>
+                        </kendo-dropdownlist>
+                        <!-- <span *ngIf="currentStatusHeader1?.OrderBy != 1">Tình trạng</span> -->
+                    </ng-template>
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <span [innerHTML]="dataItem.StatusName | colorStatus: dataItem.StatusID:14 "></span>
+                        <div class="greenColorStatus" *ngIf="dataItem.StatusID == 7 &&  dataItem.NoOfReceivingInvoice && dataItem.NoOfReceivingInvoice > 0">
+                          Đang nhận lần {{dataItem.NoOfReceivingInvoice}}
+                        </div>
+              
+                        <div class="orangeColor" *ngIf="dataItem.StatusID == 7 && dataItem.NoOfWaitingInvoice && dataItem.NoOfWaitingInvoice > 0">
+                          {{dataItem.NoOfReceivingInvoice}} HĐ chờ hàng
+                        </div>
+              
+                        <div class="orangeColor" *ngIf="dataItem.StatusID == 7 && dataItem.NoOfReturnedInvoice && dataItem.NoOfReturnedInvoice > 0">
+                          {{dataItem.NoOfReceivingInvoice}} hóa đơn trả về
+                        </div>
+                      </ng-template>
+                </kendo-grid-column>
+
+            </app-p-kendo-grid>
+        </div>
+    </div>
+    <!-- END BODY -->
+
+</div>

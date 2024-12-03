@@ -1,0 +1,192 @@
+@import "../../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    .config-product-info{
+        padding-top: 5px;
+        max-height: 600px;
+        display: flex;
+        flex-direction: column;
+        .k-window-content{
+            #footer{
+                width: 100%;
+            }
+        }
+       
+        .section{
+            overflow: auto;
+            .title{
+                display: flex;
+                align-items: center;
+                padding-bottom: 5px;
+                font-size: 16px;
+                font-weight: 700;
+                b,span{
+                    font-size: 13px;
+                    padding-left: 30px;
+                }
+                span,i{
+                    font-weight: 700;
+                    color: #31ADFF;
+                }
+                i{
+                    font-size: 13px;
+                    cursor: pointer;
+                    font-weight: 400;
+                }
+            }
+            .section-grid {
+                min-width: 1100px;
+                display: grid;
+                column-gap: 27px;
+                row-gap: 10px;
+                background-color: white;
+                padding: 15px;
+                grid-template-columns: 370px 350px 300px;
+                column-gap: 14px;
+                .impose{
+                    font-weight: 700;
+                    color: $bad-red;
+                }
+                .grid-item {
+                    display: flex;
+                    flex-direction: column;
+                    .label{
+                        font-weight: 700;
+                        color: #959DB3;
+                        padding-bottom: 5px;
+                       
+                    }
+                    .k-textbox,.k-dropdown{
+                        width: 100%;
+                    }
+                }
+                .item1 {
+                    grid-column: 1;
+                    grid-row: 1;
+                }
+                // .hiddenItem{
+                //     display: none;
+                // }
+                .item1_V1{
+                    grid-column: 1;
+                    grid-row: 1;
+                    display: flex;
+                    flex-direction: row;
+                    gap: 10px;
+                    .item1_barcode{
+                        .k-textbox{
+                            width: 200px;
+                        } 
+                    }
+                }
+                .item2 {
+                    grid-column: 1;
+                    grid-row: 2;
+                }
+                .item3 {
+                    grid-column: 1;
+                    grid-row: 3;
+                }
+                .item4 {
+                    grid-column: 1;
+                    grid-row: 4;
+                }
+                .item4_1 {
+                    grid-column: 1;
+                    grid-row: 5;
+                }
+
+                .item5 {
+                    grid-column: 1;
+                    grid-row: 5;
+                }
+                .item6 {
+                    grid-column: 2;
+                    grid-row: 1;
+                }
+                .item7 {
+                    grid-column: 2;
+                    grid-row: 2;
+                }
+                .item7_1 {
+                    grid-column: 2;
+                    grid-row: 4;
+                }
+                .item8 {
+                    grid-column: 2;
+                    grid-row: 3;
+                }
+                .item8_1 {
+                    grid-column: 2;
+                    grid-row: 5;
+                }
+
+                .item9 {
+                    grid-column: 3;
+                    grid-row: 1 / span 3;
+                    align-items: center;
+                    position: relative;
+                    .label {
+                        // position: relative;
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
+                        .upload-img{
+                            display: flex;
+                            gap: 5px;
+                          .iconExport{
+                            margin-top: -3.5px;
+                          }
+                        }
+                        .k-checkbox{
+                            margin-top: -6px; 
+                        }
+                    }
+
+                    .k-icon {
+                        font-size: 19px;
+                        cursor: pointer;
+
+                        &.k-i-export {
+                            color: $dark-green;
+                        }
+                        &.k-i-minus-outline {
+                            color: $bad-red;
+                            position: absolute;
+                            right: 0;
+                            top: 40px;
+                        }
+                    }
+
+                    img {
+                        height: 150px;
+                        width: 230px;
+                        overflow-wrap: anywhere;
+                    }
+
+                    .image-child{
+                        padding: 5px 0;
+                        position: absolute;
+                        display: flex;
+                        gap: 10px;
+                        max-width: 200px;
+                        bottom: -65px;
+                        overflow: auto;
+                        .layout-child{
+                            display: flex;
+                        }
+                        img{
+                            cursor: pointer;
+                            width: 50px;
+                            height: 50px;
+                        }
+                        .k-i-minus-outline{
+                            position: unset !important;
+                        }
+    
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,248 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    .app-partner-drawer-container{
+        position: relative;
+        height: 100vh;
+
+        .header-1{
+            height: 52px
+        }
+        .k-drawer-overlay.k-drawer-expanded > .k-overlay{
+            position: absolute;
+        }
+
+        kendo-drawer{
+            height: 100%;
+            margin-top: 55px;
+            border-top: 1px solid rgba(0, 0, 0, 0.5);
+            height: calc(100vh - 85px);
+            .k-drawer-wrapper {
+                width: 417px !important;
+                scrollbar-color: unset !important;
+            }
+
+            .headerDrawer{
+                .title{
+                    color: #1A6634;
+                    font-size: 13px;
+                    font-weight: 700;
+                    padding: 10px;
+                    padding-bottom: 5px;
+                    border-bottom: 1px solid black;
+                    text-transform: uppercase;
+                }
+            }
+
+            .bodyDrawer{
+                padding: 10px;
+                overflow-y: scroll;
+                .content{
+                    display: flex;
+                    justify-content: space-between;
+                    .ProductTitle{
+                        .Title{
+                            color: #343A40;
+                            font-size: 13px;
+                            font-weight: 700;
+                        }
+                        .Product{
+                            word-wrap: break-word;
+                            padding-left: 10px;
+                            padding-top: 10px;
+                            width: 250px;
+                        }
+                    }
+                    img{
+                        max-width: 125px;
+                        max-height: 123px;
+                    }
+                }
+
+                .grid-wrapper{
+                    height: calc(100vh - 330px) !important;
+                    app-p-kendo-grid{
+                        height: calc(100vh - 330px) !important;
+                        .k-grid-header{
+                            .k-header{
+                                color: #5A6276 !important;
+                            }
+                        } 
+                        .headerCenterCustomClass .k-cell-inner > .k-link{
+                            justify-content: center;
+                        }
+                        .myCustomGrid.k-grid{
+                            background-color: #ffffff;
+                            font-size: 13px !important;
+                            height: calc(100vh - 330px) !important;
+                            table{
+                                min-width: 380px !important;
+                            }
+                            tbody {
+                                tr{
+                                    background-color: #EDEFF3;
+                                    td{
+                                        min-width: 80px;
+                                    }
+                                }
+                                tr:not(.k-grouping-row) td:first-child{
+                                    padding-left: 5px;
+                                }
+                                tr:not(.k-grouping-row) td:not(:first-child){
+                                    text-align: center;
+                                }
+                                .Col1{
+                                    margin-left: 7px;
+                                    .Text{
+                                        color: #26282E;
+                                        font-size: 13px;
+                                        font-weight: 700;
+                                    }
+                                }
+                                .Col2{
+                                    text-align: center;
+                                    align-items: center;
+                                    .Text{
+                                        color: #26282E;
+                                        font-size: 13px;
+                                        font-weight: 700;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .footerDrawer{
+                padding-left: 10px;
+            }
+        }
+
+        kendo-drawer-content{
+            width: 100%;
+            .pur007-partner-product{
+                height: calc(100vh - #{$footer-height});
+                .header{
+                    overflow-x: scroll;
+
+                    &.header-1{
+                        height: 52px;
+                    }
+                }
+
+                .content{
+                    width: 100%;
+                    display: flex;
+                    // .Menu{
+                        
+                    // }
+                    .main{
+                        overflow-y: scroll;
+                        width: 100%;
+                        padding: 0 15px 0 20px;
+                        height: calc(100vh - #{$footer-height});
+                        .header-2{
+                            overflow-x: scroll;
+                        }
+                        .grid-wrapper{
+                            margin-top: 0;
+                            app-p-kendo-grid {
+                                .myCustomGrid.k-grid{
+                                    .k-grid-header{
+                                        .k-header{
+                                            color: #3c3c3d !important;
+                                        }
+                                    }
+                                    .headerCenterCustomClass .k-cell-inner > .k-link{
+                                        justify-content: center;
+                                    }
+                                    .headerRightCustomClass .k-cell-inner > .k-link{
+                                        justify-content: right;
+                                    }
+                                }
+                                .TextCenter{
+                                    text-align: center;
+                                    align-items: center;
+                                }
+                                .TextRight{
+                                    text-align: right;
+                                }
+                                .col_ProductName{
+                                    .ProductContainer{
+                                        display: flex;
+                                        flex-direction: row;
+                                        img{
+                                            min-width: 82px;
+                                            min-height: 62px;
+                                            max-width: 120px !important;
+                                        }
+                                        .ProductContent{
+                                            display: flex;
+                                            flex-direction: column;
+                                            justify-content: space-between;
+                                            .Name{
+                                                padding-left: 5px;
+                                                white-space: initial;      
+                                                overflow: hidden;
+                                                display: -webkit-inline-box;
+                                                -webkit-line-clamp: 2;
+                                                -webkit-box-orient: vertical;
+                                                text-overflow: ellipsis;
+                                                width: 300px;
+                                                max-height: 40px;
+                                                line-height: 20px;
+                                            }
+                                            .GroupSub{
+                                                display: flex;
+                                                align-items: center;
+                                                column-gap: 5px;
+                                            }
+                                            .Sup{
+                                                color: #5A6276;
+                                                font-size: 13px;
+                                                font-weight: 700;
+                                            }
+                                            .Date{
+                                                font-size: 13px;
+                                                font-style: italic;
+                                                font-weight: 400;
+                                            }
+                                        }
+                                    }
+                                }
+                                .col_GroupName{
+                                    .GroupName{
+                                        display: flex;
+                                        flex-direction: column;
+                                        font-size: 13px;
+                                        .Group1{
+                                            color: #5A6276;
+                                            font-weight: 700;
+                                        }
+                                        .Group3{
+                                            font-style: italic;
+                                        }
+                                    }
+                                }
+                                .col_PurchasePrice{
+                                    .PurchasePrice{
+                                        display: flex;
+                                        flex-direction: column;
+                                        font-size: 13px;
+                                        justify-content: space-between;
+                                        height: 42px;
+                                        .GreenText{
+                                            color: #008000;
+                                            font-weight: 700;
+                                        }
+                                    }
+                                }
+                            }
+                        }   
+                    }
+                }
+            }
+        }
+    }
+}

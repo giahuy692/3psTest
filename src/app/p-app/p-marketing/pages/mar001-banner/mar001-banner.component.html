@@ -1,0 +1,272 @@
+<div id="app-marbanner-container">
+  <mat-drawer-container #drawercontainer class="example-container" [hasBackdrop]="true">
+    <!-- [hasBackdrop]="true" -->
+    <!-- right drawer form -->
+    <mat-drawer id="drawer" #drawer [mode]="'over'" position="end">
+      <!-- form banner -->
+      <form class="k-form" [formGroup]="form" [ngClass]="{'hasImage': banner?.ImageSetting1 != undefined}">
+        <fieldset class="k-form-fieldset">
+          <legend *ngIf="!isAdd" class="k-form-legend">Cập nhật Banner</legend>
+          <legend *ngIf="isAdd" class="k-form-legend">Thêm mới Banner</legend>
+
+          <kendo-formfield>
+            <kendo-label text="Thuộc Nhóm Banner" [for]="BannerGroup">
+              <span class="symbol">(*)</span>
+              <span class="text" (click)="shownAtWebpage(form.get('BannerGroup').value)">hiển thị ở trang</span>
+            </kendo-label>
+
+            <kendo-dropdownlist formControlName="BannerGroup" #BannerGroup [data]="groupBannerList"
+              [textField]="'BannerGroup'" [valueField]="'Code'" [valuePrimitive]="true" required
+              [popupSettings]="{appendTo:'component'}">
+            </kendo-dropdownlist>
+          </kendo-formfield>
+
+          <kendo-formfield>
+            <kendo-label text="Tên Tiếng Việt" [for]="VNTitle">
+              <span class="symbol">(*)</span>
+            </kendo-label>
+            <kendo-textbox formControlName="VNTitle" #VNTitle [clearButton]="true" required></kendo-textbox>
+          </kendo-formfield>
+
+          <kendo-formfield>
+            <kendo-label text="Tên Tiếng Anh" [for]="ENTitle"></kendo-label>
+            <kendo-textbox formControlName="ENTitle" #ENTitle [clearButton]="true"></kendo-textbox>
+          </kendo-formfield>
+
+          <kendo-formfield>
+            <kendo-label text="Tên Tiếng Nhật" [for]="JPTitle"></kendo-label>
+            <kendo-textbox formControlName="JPTitle" #JPTitle [clearButton]="true"></kendo-textbox>
+          </kendo-formfield>
+
+          <kendo-formfield>
+            <kendo-label [for]="ImageSetting1" text="Hình ảnh">
+            </kendo-label>
+            <div id="btnPathGroup">
+              <button kendoButton class="k-button" [icon]="'image'" id="folderBtn" (click)="onUploadFile()"
+                >Chọn</button>
+
+              <kendo-textbox formControlName="ImageSetting1" #ImageSetting1 [clearButton]="true"
+                (valueChange)="onValueChangeImageSetting1($event)"></kendo-textbox>
+            </div>
+
+            <img loading="lazy" width="250" height="auto" *ngIf="banner?.ImageSetting1 != undefined"
+              [src]="banner.ImageSetting1">
+          </kendo-formfield>
+
+          <kendo-formfield>
+            <kendo-label [for]="URLLink" text="Link tới trang"></kendo-label>
+            <kendo-textbox formControlName="URLLink" #URLLink [clearButton]="true"></kendo-textbox>
+          </kendo-formfield>
+
+          <kendo-formfield class="formfield-col">
+            <kendo-label [for]="StartDate" text="Ngày bắt đầu">
+              <span class="symbol">(*)</span>
+            </kendo-label>
+            <kendo-datepicker #StartDate formControlName="StartDate" required [format]="'dd/MM/yyyy'"
+              placeholder="dd/mm/yyyy" [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+              (valueChange)="onValueChangeDatePickerStartDate($event)">
+            </kendo-datepicker>
+          </kendo-formfield>
+
+          <kendo-formfield class="formfield-col">
+            <kendo-label [for]="EndDate" text="Ngày kết thúc"></kendo-label>
+            <kendo-datepicker #EndDate formControlName="EndDate" [format]="'dd/MM/yyyy'" placeholder="dd/mm/yyyy"
+              [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+              (valueChange)="onValueChangeDatePickerEndDate($event)">
+            </kendo-datepicker>
+          </kendo-formfield>
+
+          <kendo-formfield class="formfield-col">
+            <kendo-label [for]="IsDefault" text="Mặc định"></kendo-label>
+            <input type="checkbox" formControlName="IsDefault" #IsDefault class="k-checkbox" />
+          </kendo-formfield>
+
+          <kendo-formfield class="formfield-col">
+            <kendo-label [for]="IsClosed" text="Chấm dứt"></kendo-label>
+            <input type="checkbox" formControlName="IsClosed" #IsClosed class="k-checkbox" />
+          </kendo-formfield>
+
+          <kendo-formfield>
+            <kendo-label [for]="OrderBy" text="Thứ tự hiển thị">
+              <span class="symbol">(*)</span>
+            </kendo-label>
+            <kendo-textbox id="formCtrlOrderBy" formControlName="OrderBy" #OrderBy [clearButton]="true"></kendo-textbox>
+          </kendo-formfield>
+
+          <kendo-formerror>(*) Trường bắt buộc nhập.</kendo-formerror>
+
+          <div class="k-form-buttons">
+            <button kendoButton class="k-button" (click)="closeForm()"  id="closeBtn">Đóng</button>
+            <button kendoButton class="k-button" (click)="updateBanner()" id="updateBtn" 
+              [ngClass]="{'addBtn': isAdd}">{{ isAdd ? 'Thêm mới' : 'Cập nhật'}} </button>
+            <!-- <button kendoButton class="k-button" (click)="addBanner()" id="addBtn"  *ngIf="isAdd">
+              Thêm mới</button> -->
+          </div>
+        </fieldset>
+      </form>
+    </mat-drawer>
+    <!-- center content -->
+    <mat-drawer-content>
+      <div id="app-marbanner">
+        <div class="header header-1">
+          <kendo-buttongroup selection="single">
+            <button kendoButton #shownBannerBtn id="shownBannerBtn" [toggleable]="true"
+              class="k-button checkbox-btn-group" (selectedChange)="selectedBtnChange($event, 'shownBannerBtn')"
+              [selected]="shownBannerChecked">
+              Banner đang hiển thị
+              <input type="checkbox" class="k-checkbox" disabled [checked]="shownBannerChecked"
+                id="shown-banner-checkbox" />
+            </button>
+
+            <button kendoButton #hiddenBannerBtn id="hiddenBannerBtn" [toggleable]="true"
+              class="k-button checkbox-btn-group" (selectedChange)="selectedBtnChange($event, 'hiddenBannerBtn')">
+              Banner hết hạn hiển thị
+              <input type="checkbox" class="k-checkbox" disabled [checked]="hiddenBannerChecked"
+                id="hidden-banner-checkbox" />
+            </button>
+          </kendo-buttongroup>
+
+          <div class="nav-btn nav-crud">
+            <button kendoButton id="onAddBtn" class="k-button" [icon]="'plus'" (click)="onAdd()" >THÊM
+              MỚI BANNER</button>
+
+            <div class="border-center"></div>
+          </div>
+
+          <div class="nav-file nav-btn">
+            <div class="file-btn-group">
+              <button kendoButton id="onUploadBtn" class="k-button" [icon]="'export'" (click)="onUploadFile()"
+                ></button>
+            </div>
+
+            <div class="file-btn-group">
+              <button kendoButton id="onDownloadBtn" class="k-button" [icon]="'import'" (click)="downloadExcel()"
+                >Template</button>
+            </div>
+
+            <div class="file-btn-group">
+              <button kendoButton id="onImportBtn" class="k-button" [icon]="'import'" (click)="importExcel()"
+                >
+              </button>
+              <button kendoButton class="k-button k-btn-xlsx" imageUrl="assets\img\logo\xlsx.svg"
+                (click)="importExcel()"></button>
+              <div class="border-center"></div>
+              <span class="k-icon k-i-arrow-chevron-down"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="header header-2">
+          <div class="nav-filter nav-btn">
+            <form [formGroup]="searchForm" style="display: flex;">
+
+              <div class="filter-btn-group">
+                <div class="label">
+                  Tìm kiếm Banner
+                </div>
+                <div class="search-btn">
+                  <span class="k-icon k-i-search"></span>
+                  <kendo-textbox formControlName="SearchTitle" #SearchTitle type="text" class="k-textbox"
+                    placeholder="Tìm kiếm Tiêu đề Banner" [clearButton]="true">
+                  </kendo-textbox>
+                </div>
+              </div>
+              <div class="filter-btn-group">
+                <div class="label">
+                  Ngày bắt đầu
+                </div>
+                <div class="search-btn">
+                  <kendo-datepicker formControlName="SearchStartDate" #SearchStartDate [format]="'dd/MM/yyyy'"
+                    placeholder="dd/mm/yyyy" [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }">
+                  </kendo-datepicker>
+                </div>
+              </div>
+              <div class="filter-btn-group">
+                <div class="label">
+                  Ngày kết thúc
+                </div>
+                <div class="search-btn">
+                  <kendo-datepicker formControlName="SearchEndDate" #SearchEndDate [format]="'dd/MM/yyyy'"
+                    placeholder="dd/mm/yyyy" [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }">
+                  </kendo-datepicker>
+                </div>
+              </div>
+              <!-- <div class="filter-btn-group"> -->
+              <button kendoButton id="searchBtn" class="k-button" [icon]="'search'" (click)="search()"
+                >TÌM</button>
+              <!-- [disabled]="searchForm.errors?.atLeastOneSearchField " -->
+              <!-- </div> -->
+            </form>
+          </div>
+        </div>
+        <!-- TABLE MỚI -->
+        <app-p-kendo-grid [data]="gridDSView | async" [scrollable]="'none'" [loading]="loading"
+          (sortChange)="sortChange($event)" [sort]="gridDSState.sort" [sortable]="false"
+          (pageChange)="pageChange($event)" [pageable]="true" [pageSize]="pageSize" [skip]="gridDSState.skip"
+          [take]="gridDSState.take" (filterChange)="filterChange($event)" filterable="false"
+          [filter]="gridDSState.filter" [allowedMoreActionDropdown]="allowActionDropdown"
+          [onActionDropdownClickCallback]="onActionDropdownClickCallback" [groupable]="true" [groups]="groups">
+
+          <kendo-grid-column [hidden]="true" field="BannerGroupName">
+            <ng-template kendoGridGroupHeaderTemplate let-group let-field="field" let-dataItem let-value="value">
+              <span class="groupName" (click)="shownAtWebpage(group.items[0].BannerGroup)"> {{ value }}</span>
+            </ng-template>
+          </kendo-grid-column>
+
+          <kendo-grid-column [groupable]="false" [filterable]="false" title="Hình ảnh" field="ImageSetting1"
+            [width]="150">
+            <ng-template kendoGridCellTemplate let-dataItem>
+              <img loading="lazy" width="auto" *ngIf="dataItem.ImageSetting1 != null" [src]="dataItem.ImageSetting1">
+            </ng-template>
+          </kendo-grid-column>
+
+          <kendo-grid-column [groupable]="false" field="VNTitle" title="Tiêu đề hiển thị"></kendo-grid-column>
+
+          <kendo-grid-column [groupable]="false" title="Ngày bắt đầu" field="StartDate" filter="date" format="{0:d}">
+            <ng-template kendoGridCellTemplate let-dataItem>
+              {{dataItem.StartDate | date: 'dd/MM/yyyy'}}
+            </ng-template>
+          </kendo-grid-column>
+
+          <kendo-grid-column [groupable]="false" title="Ngày kết thúc" field="EndDate" filter="date" format="{0:d}">
+            <ng-template kendoGridCellTemplate let-dataItem>
+              {{dataItem.EndDate | date: 'dd/MM/yyyy'}}
+            </ng-template>
+          </kendo-grid-column>
+
+          <kendo-grid-column [groupable]="false" title="Mặc định" field="IsDefault">
+            <ng-template kendoGridCellTemplate let-dataItem>
+              <input type="checkbox" disabled class="k-checkbox" [checked]="dataItem.IsDefault" />
+            </ng-template>
+          </kendo-grid-column>
+
+          <kendo-grid-column [groupable]="false" title="Thứ tự hiển thị" field="OrderBy"> </kendo-grid-column>
+
+          <kendo-grid-column [groupable]="false" title="Kết thúc hiển thị" field="IsClosed">
+            <ng-template kendoGridCellTemplate let-dataItem>
+              <input type="checkbox" disabled class="k-checkbox" [checked]="dataItem.IsClosed" />
+            </ng-template>
+          </kendo-grid-column>
+
+        </app-p-kendo-grid>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+  <!-- popup confirm delete -->
+  <kendo-dialog #dialog id="deleteDialog" class="deleteDialog" title="Xóa Banner" [hidden]="!deleteDialogOpened"
+    (close)="closeDeleteDialog()" [minWidth]="250">
+    <p style="margin: 30px; text-align: center;">Bạn chắc chắn muốn xóa vĩnh viễn Banner
+      "{{ banner.VNTitle }}" này?</p>
+    <div class="dialog-footer">
+      <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteDialog()"
+        [icon]="'close'">Không</button>
+      <button kendoButton class="btn-hachi hachi-warning" (click)="delete()" [icon]="'trash'">Có</button>
+    </div>
+  </kendo-dialog>
+
+  
+</div>
+
+<app-folder-popup [pickFileCallback]="pickFileCallback" [GetFolderCallback]="GetFolderCallback"></app-folder-popup>
+<app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>
+<app-mar-groupbanner-webpage [groupBanner]="groupBanner"></app-mar-groupbanner-webpage>

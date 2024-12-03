@@ -1,0 +1,72 @@
+
+<div class="config-product-label">
+    <div class="section">
+        <div class="title">THUỘC TÍNH TEM NHÃN</div>
+        <div class="section-grid">
+          <!-- col 1 -->
+          <div class="column_1">
+          <div class="grid-item item1">
+            <div class="item1_1">
+              <div class="label mautem">Mẫu tem</div>
+              <div class="label">Diễn giải</div>
+              </div>
+            
+              <div *ngFor="let item of stickerList; let i = index" class="font">
+              <div class="item1_1 item2_1"  (click)="onChangeClick(item)" [ngClass]="{'active': item.Selected == true || item == selectedSticker}">
+                  <div class="mautem">
+                      <input type="checkbox" kendoCheckBox [checked]="item.Selected == true" (change)="onCheckboxChange($event,item)" [disabled]="disable">
+                      <span>{{item.StickName}}</span>
+                  </div>
+                  <div class="diengiai">
+                      <span>{{item.Remark}}</span>
+                  </div>
+                  <div class="icon_item" *ngIf="item == selectedSticker">
+                    <span kendoButton imageUrl="assets/img/icon/icon_Sticker.svg"></span>
+                  </div>
+                </div>
+              </div>
+            
+  
+          </div>
+        </div>
+        
+        <div class="column_2" *ngIf="selectedSticker">
+          <!--col 2-->
+          <div>
+          <div class="grid-item item1">
+            <div class="label">Tên in tem</div>
+            <app-p-textbox [propName]="'ProductName1'" [disabled]="disableText" (blur)="onBlurTextbox(selectedSticker,'ProductName1')" [(ngModel)]="selectedSticker.ProductName1" ></app-p-textbox>
+            <app-p-textbox [propName]="'ProductName2'" [disabled]="disableText" (blur)="onBlurTextbox(selectedSticker,'ProductName2')" [(ngModel)]="selectedSticker.ProductName2"></app-p-textbox>
+          </div>
+          <div class="grid-item item2">
+            <div class="label">Footer tem</div>
+            <app-p-textbox [propName]="'Footer1'" [disabled]="disableText" (blur)="onBlurTextbox(selectedSticker,'Footer1')" [(ngModel)]="selectedSticker.Footer1"></app-p-textbox>
+            <app-p-textbox [propName]="'Footer2'" [disabled]="disableText" (blur)="onBlurTextbox(selectedSticker,'Footer2')" [(ngModel)]="selectedSticker.Footer2"></app-p-textbox>
+          </div>
+        </div>
+        </div>
+  
+
+        <div class="column_3" *ngIf="selectedSticker">
+            <div class="grid-item item1">
+                <div class="label">Nội dung tem</div>
+              <app-p-textarea [propName]="'tem'" (blur)="onBlurTextbox(selectedSticker,'Content1')" [disabled]="disableText"[(ngModel)]="selectedSticker.Content1"></app-p-textarea>
+              <app-p-textarea [propName]="'tem'" (blur)="onBlurTextbox(selectedSticker,'Content2')" [disabled]="disableText"[(ngModel)]="selectedSticker.Content2"></app-p-textarea>
+              <app-p-textarea [propName]="'tem'" (blur)="onBlurTextbox(selectedSticker,'Content3')" [disabled]="disableText"[(ngModel)]="selectedSticker.Content3"></app-p-textarea>
+              </div>
+          <!-- col 3 -->
+        </div>
+
+        <app-p-kendo-dialog *ngIf="dialogOpen" [title]="'Xác nhận hủy mẫu tem'"
+        (close)="closeDialog()" (handleButton)="delete(selectedSticker)"
+        [cancelText]="'KHÔNG'"
+        [actionText]="'Có'"
+        [dialogType]="1"
+        >
+          <p>Bạn có chắc chắn muốn Hủy mẫu tem này? </p>
+         
+        </app-p-kendo-dialog>
+        </div>
+     
+      </div>
+  </div>

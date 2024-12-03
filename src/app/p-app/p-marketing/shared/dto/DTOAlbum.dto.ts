@@ -1,0 +1,42 @@
+export class DTOAlbum {
+	Code: number = 0
+	NoOfSKU: number = 0
+	NoOfChilds: number = 0
+	ParentID: number = null
+	OrderBy: number = 0
+	StatusID: number = 0
+	ParentName: string = ''
+	StatusName: string = ''
+	AlbumNameVN: string = ''
+	AlbumNameEN: string = ''
+	AlbumNameJP: string = ''
+	SummaryVN: string = ''
+	SummaryEN: string = ''
+	SummaryJP: string = ''
+	ImgSetting: string = ''
+	ApprovedBy: string = ''
+	ApprovedTime: Date = null
+	CreateBy: string = ''
+	CreateTime: Date = null
+	IsSpecial: boolean = false
+}
+
+export class DTOAlbumDetail {
+	ProductName: string = ''
+	GroupIDName1: string = ''
+	GroupIDName2: string = ''
+	GroupIDName3: string = ''
+	GroupIDCode1: string = ''
+	GroupIDCode2: string = ''
+	GroupIDCode3: string = ''
+	OriginName: string = ''
+	BrandName: string = ''
+	Barcode: string = ''
+	PosCode: string = ''
+	URLImageSetting: string = ''
+	Code: number = 0
+	AlbumID: number = null
+	Product: number = null
+	OrderBy: number = 0
+	UnitPrice: number = 0
+}

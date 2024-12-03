@@ -1,0 +1,145 @@
+@import "variables/colors";
+@import "bootstrap/functions";
+@import "variables/bootstrap/variables";
+@import "mixins/borders";
+
+$font-roboto: "Roboto", sans-serif;
+$font-nunito: "Nunito", sans-serif;
+$font-family: "Mulish", sans-serif;
+$font-size: 13px;
+
+$pathThumbLogo :"./assets/img/logo/3ps.svg";
+$pathFullLogo :"./assets/img/logo/logo.svg";
+
+$navbar-height:55px !default;
+$navbar-bg: #fff !default;
+$navbar-border: (
+  bottom: (
+    size:                             1px,
+    style:                            solid,
+    color:                            $border-color
+  )
+)  !default;
+$navbar-logo-height:50px !default;
+$navbar-logo-bg: #fff !default;
+$navbar-logo-width: 210px !default;
+$navbar-logo-bg: transparent !default;
+$navbar-logo-border: 0 !default;
+
+
+$navbar-color:                        $gray-600 !default;
+$navbar-hover-color:                  $gray-800 !default;
+$navbar-active-color:                 $gray-800 !default;
+$navbar-disabled-color:               $gray-300 !default;
+
+$navbar-toggler-icon:   str-replace(url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='#{$navbar-color}' stroke-width='2.25' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E"), "#", "%23") !default;
+$navbar-toggler-icon-hover: str-replace(url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='#{$navbar-hover-color}' stroke-width='2.25' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E"), "#", "%23") !default;
+
+$footer-height: 30px;
+
+$right-container-height: $navbar-height+$footer-height;
+
+
+$icon-sm: 16px;
+$icon-md: 32px;
+$icon-lg: 64px;
+
+$icon_upload: "\e962";
+$icon_folder: "\e95d";
+$icon_open_folder: "\e95e";
+$icon_file_unknow-path1: "\e95f";
+$icon_file_unknow-path2: "\e960";
+$icon_add_folder: "\e961";
+$icon_structure: "\e95c";
+$icon_printer: "\e95a";
+$icon_new_folder: "\e95b";
+$icon_maximize: "\e958";
+$icon_minimize: "\e959";
+$icon_finished: "\e957";
+$icon_doubleright: "\e956";
+$icon_closeback: "\e954";
+$icon_add: "\e955";
+$icon_filters: "\e953";
+$icon_warning: "\e94f";
+$icon_info: "\e950";
+$icon_successful: "\e951";
+$icon_danger: "\e952";
+$icon_newest: "\e906";
+$icon_oldest: "\e90f";
+$icon_circleminus: "\e945";
+$icon_columns: "\e946";
+$icon_add_2: "\e947";
+$icon_checkbox: "\e948";
+$icon_uncheckbox: "\e949";
+$icon_indeterminate: "\e94a";
+$icon_switchon: "\e94b";
+$icon_switchoff: "\e94c";
+$icon_uncheck: "\e94d";
+$icon_radiocheck: "\e94e";
+$icon_calendar: "\e900";
+$icon_category: "\e901";
+$icon_chart: "\e902";
+$icon_chart2: "\e903";
+$icon_chart3: "\e904";
+$icon_circlecheck: "\e905";
+$icon_clock: "\e907";
+$icon_close: "\e908";
+$icon_coin: "\e909";
+$icon_collapse: "\e90a";
+$icon_config: "\e90b";
+$icon_copy: "\e90c";
+$icon_dashboard: "\e90d";
+$icon_delete: "\e90e";
+$icon_down: "\e910";
+$icon_download: "\e911";
+$icon_dragit: "\e912";
+$icon_edit: "\e913";
+$icon_edit_blank: "\e914";
+$icon_email: "\e915";
+$icon_enter: "\e916";
+$icon_etc: "\e917";
+$icon_expand: "\e918";
+$icon_export: "\e919";
+$icon_filter: "\e91a";
+$icon_globe: "\e91b";
+$icon_grid: "\e91c";
+$icon_home: "\e91d";
+$icon_human: "\e91e";
+$icon_import: "\e91f";
+$icon_key: "\e920";
+$icon_languagetick: "\e921";
+$icon_left: "\e922";
+$icon_leftwall: "\e923";
+$icon_link: "\e924";
+$icon_list: "\e925";
+$icon_location: "\e926";
+$icon_locking: "\e927";
+$icon_menu: "\e928";
+$icon_minus: "\e929";
+$icon_noti: "\e92a";
+$icon_onoff: "\e92b";
+$icon_operation: "\e92c";
+$icon_out: "\e92d";
+$icon_phone-call: "\e92e";
+$icon_pim: "\e92f";
+$icon_playcircle: "\e930";
+$icon_policy: "\e931";
+$icon_policy-apps: "\e932";
+$icon_refreshdata: "\e933";
+$icon_results: "\e934";
+$icon_right: "\e935";
+$icon_roadmap: "\e936";
+$icon_roundabout: "\e937";
+$icon_save: "\e938";
+$icon_search: "\e939";
+$icon_send: "\e93a";
+$icon_setting: "\e93b";
+$icon_share: "\e93c";
+$icon_ticked: "\e93d";
+$icon_timekeeping_salary: "\e93e";
+$icon_twoblocks: "\e93f";
+$icon_unlocking: "\e940";
+$icon_up: "\e941";
+$icon_upload_avatar: "\e942";
+$icon_view: "\e943";
+$icon_whiteboard: "\e944";

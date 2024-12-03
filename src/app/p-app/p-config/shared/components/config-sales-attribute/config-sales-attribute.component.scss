@@ -1,0 +1,119 @@
+@import "../../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    .config-sales-attribute{
+        max-height: 600px;
+        display: flex;
+        flex-direction: column;
+        margin: 10px 0;
+        .section{
+            overflow: auto;
+            .title{
+                display: flex;
+                align-items: center;
+                padding-bottom: 5px;
+                font-size: 16px;
+                font-weight: 700;
+                b{
+                    font-size: 13px;
+                    padding-left: 30px;
+                }
+            }
+            .section-grid {
+                min-width: 1100px;
+                background-color: white;
+                display: flex;
+                // justify-content: space-between;
+                padding: 15px;
+                .grid-item {
+                    padding-bottom: 5px;
+                    .label{
+                        font-weight: 700;
+                        color: #959DB3;
+                        padding-bottom: 10px;
+                    }
+                    .k-dropdownlist{
+                        width: 100%;
+                    }
+                }
+                .column_1,.column_2,.column_3{
+                    width: 350px;
+                }
+                .sales{
+                    display: flex;
+                    gap: 10px;
+                    .customized-input{
+                        width: 230px;
+                    }
+                    p-kendo-dropdownlist{
+                        width: 100%;
+                    }
+                }
+                .item2_1{
+                    display: flex;
+                    margin-left: 20px;
+                    .label{
+                        min-width: 200px;
+                        font-weight: 400;
+                    }
+                    
+                }
+               
+                .item_flex,.item3_1{
+                    padding-bottom: 8px;
+                    display: flex;
+                    justify-content: space-between;
+                    .flex_item3{
+                        padding-left: 2px;
+                    }
+                    .k-i-plus{
+                        cursor: pointer;
+                        color: $dark-green;
+                        font-size: 20px;
+                    }
+                    .k-i-delete{
+                        cursor: pointer;
+                        margin-left: 5px;
+                        font-size: 18px;
+                        color: red;
+                        padding-right: 20px;
+                    }
+                    .s_label{
+                        color: #959DB3;
+                    }
+                }
+               .item3{
+                padding-right: 15px;
+                overflow-y: auto; 
+                max-height: 140px;
+               }
+        }
+       
+    }
+
+        .k-dialog{
+            height: 400px;
+
+            .header{
+                border-bottom: none;
+                justify-content: center;
+                .nav-filter{
+                    .clear-btn-group,.label,.searchBtn{
+                        display: none;
+                    }
+                }
+            }
+            .listStore{
+                display: flex;
+                justify-content: space-between;
+                padding: 10px 50px;
+                .label{
+                    cursor: default;
+                    &:hover{
+                        color: $dark-green;
+                    }
+                }
+            }
+        }
+    }
+}

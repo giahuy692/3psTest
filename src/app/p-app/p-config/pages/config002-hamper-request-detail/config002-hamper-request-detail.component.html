@@ -1,0 +1,98 @@
+<div class="app-drawer-container">
+    <mat-drawer-container [hasBackdrop]="true">
+      <mat-drawer-content>
+<div class="config002-hamper-request-detail">
+    <div class="header header1">
+        <app-p-kendo-breadcrumb (loadData)="loadData()"></app-p-kendo-breadcrumb>
+        <div class="nav-btn nav-crud">
+          <div class="nav-file nav-btn">
+            <button kendoButton class="btn-hachi btnNgunghienthi" icon="trash" *ngIf="(hamper.Code !== 0 && hamper.StatusID == 0) && (isCreator || isMaster) "  (click)="openDialog()">XÓA HAMPER</button>
+          </div>
+          <div class="nav-crud StatusBtn">
+            <button
+              *ngFor="let i of arrBtnStatus"
+              kendoButton
+              iconClass="k-icon k-i-{{ i.code }}"
+              class="{{ i.class }} "
+              (click)="handleBtnStatus(i)"
+            >
+              {{ i.text }}
+            </button>
+          </div>
+
+        
+          <div class="nav-file nav-btn">
+            <button kendoButton class="k-button onAddBtn" [icon]="'plus'" *ngIf="isCreator || isMaster" (click)="AddNew()">TẠO MỚI</button>
+          </div>
+          
+        </div>
+    </div>
+    <div class="body">
+            <app-config-product-info [typeInfo]="1" (dataChanged)="handleInfoChange($event)"
+             [isMaster]="isMaster" [isCreator]="isCreator" [isApprover]="isApprover"></app-config-product-info>
+            <app-config-product-package-info></app-config-product-package-info>
+            <app-config-product-other-info></app-config-product-other-info>
+            <app-config-product-list  (openDrawerEvent)="openDrawer()" (dataChanged)="handleListProdChange($event)"></app-config-product-list>
+            <app-config-applied-company (dataChanged)="handleCompanyChange($event)"></app-config-applied-company>
+            <i class="impose">(*) Thông tin bắt buộc nhập</i>
+        </div>
+</div>
+    </mat-drawer-content>
+    <mat-drawer #formDrawer [mode]="'over'" position="end" class="k-drawer-container">
+    <div class="wrapper-drawer-right">
+          <legend>
+            SẢN PHẨM THUỘC HAMPER
+          </legend>
+    
+          <div class="content-drawer-right">
+    
+            <div class="info-product">
+              <div class="info">
+                <div class="item">
+                  
+                    <div class="label">Nhập mã sản phẩm <span class="impose"> (*)</span></div>
+                    <app-p-textbox [propName]="'ChildBarcode'" (keydown.space)="$event.preventDefault()" [(ngModel)]="productCache.ChildBarcode" [disabled]="lockBarcode" (blur)="onTextboxBlur(productCache)"></app-p-textbox>
+                </div>
+                <div class="item">
+                    <div class="label">Tên sản phẩm</div>
+                    <span>{{productCache.ChildName}}</span>
+                </div>
+                <div class="item">
+                    <div class="label">Số lượng có trong hamper <span class="impose"> (*)</span></div>
+                    <div class="img-product">
+                        <app-p-numeric-textbox [(ngModel)]="quantity" propName="sl" [format]="'n0'"  [spinners]="false" [min]="1" [disabled]="checkProduct"></app-p-numeric-textbox>
+                        <img loading="lazy" width="150" [src]="getImgRes(productCache.URLThumbImage)" alt="" loading="lazy">
+                    </div>
+                </div>
+                <i class="impose">(*) Thông tin bắt buộc nhập</i>
+             </div>
+            </div>
+            <div class="btn-ev">
+              <button kendoButton class="btn-close btn-hachi" (click)="closeDrawer()">ĐÓNG</button>
+              <button kendoButton class="btn-update btn-hachi hachi-primary" (click)="onUpdate(productCache)"> 
+
+                {{addNewItem
+                  ? "THÊM MỚI"
+                  : !addNewItem
+                  ? "CẬP NHẬT"
+                  : ""}}
+
+              </button>
+            </div>
+        </div>
+    </div>
+    
+      </mat-drawer>
+    </mat-drawer-container>
+
+    <app-p-kendo-dialog *ngIf="dialogOpen" class="dialogDelete" [title]="'Xác nhận Xóa Hamper'"
+    (close)="closeDialog()" (handleButton)="update()"
+    [cancelText]="'KHÔNG'"
+    [actionText]="'Có'"
+    [dialogType]="1"
+    >
+      <p>Bạn có chắc chắn muốn Xóa Hamper <b style="color:#1a6634;">{{hamper.VNName}}</b> này? </p>
+     
+    </app-p-kendo-dialog>
+  
+</div>

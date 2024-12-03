@@ -1,0 +1,163 @@
+<div class="app-sale002-gift-voucher-list">
+
+    <div class="header header-1">
+        <kendo-dropdownlist [data]="listChuongTrinh" [value]="currentChuongTrinh" [textField]="'VoucherType'"
+            [valueField]="'Code'" (valueChange)="onDropdownlistClick($event, 'currentChuongTrinh')"
+            [disabled]="!isFilterActive" [defaultItem]="defaultChuongTrinh" [itemDisabled]="isItemDisabled"
+            [popupSettings]="{          width: 'auto',appendTo:'component'        }">
+            <ng-template kendoDropDownListValueTemplate let-dataItem>
+                <span class="value" [ngStyle]="{'color': dataItem.Code == -1 ? '#73818f' : 'initial'}">{{
+                    dataItem.VoucherType
+                    }}</span>
+            </ng-template>
+        </kendo-dropdownlist>
+
+        <kendo-dropdownlist [data]="listDonVi" [value]="currentDonVi == null ? defaultDonVi : currentDonVi"
+            [textField]="'text'" [valueField]="'value'" (valueChange)="onDropdownlistClick($event, 'currentDonVi')"
+            [disabled]="!isFilterActive" [defaultItem]="defaultDonVi" [itemDisabled]="isItemDisabled"
+            [popupSettings]="{          width: 'auto'  ,appendTo:'component'      }">
+            <ng-template kendoDropDownListValueTemplate let-dataItem>
+                <span class="value" [ngStyle]="{'color': dataItem.value == -1 ? '#73818f' : 'initial'}">
+                    {{ dataItem.text }}</span>
+            </ng-template>
+            <ng-template kendoDropDownListItemTemplate let-dataItem>
+                <span class="value" [ngClass]="{ 'dropdownDonVi_subitem': dataItem.sub }">{{ dataItem.text }}</span>
+            </ng-template>
+        </kendo-dropdownlist>
+
+        <ng-container *ngFor="let b of cbxList; let i = index">
+            <button *ngIf="i < 4" kendoButton class="checkbox-btn-group" [toggleable]="isFilterActive"
+                (selectedChange)="selectedBtnChange($event, i)" [selected]="b.Checked">
+                {{ b.Name }}
+                <input type="checkbox" class="k-checkbox" disabled [checked]="b.Checked" />
+            </button>
+        </ng-container>
+
+        <div class="nav-btn nav-crud" style="flex-grow: 1;">
+            <button kendoButton class="k-button btn-hachi hachi-primary" [disabled]="!isFilterActive" [icon]="'plus'"
+                *ngIf="isAllowedToCreate || isToanQuyen" (click)="openDetail(true)">
+                TẠO MỚI
+            </button>
+        </div>
+    </div>
+
+    <div class="header header-2">
+        <div class="nav-filter nav-btn">
+            <div class="filter-btn-group clear-btn-group">
+                <div class="label">
+                    <span class="k-icon k-i-filter"></span>Lọc dữ liệu
+                </div>
+                <button kendoButton class="k-button clear-filter-btn" (click)="resetFilter()">Reset bộ lọc</button>
+            </div>
+
+            <form style="display: flex; flex-grow: 1;" [formGroup]="searchForm">
+                <div class="filter-btn-group search-btn-group">
+                    <div class="label">
+                        Tìm kiếm
+                    </div>
+                    <div class="search-btn">
+                        <span class="k-icon k-i-search"></span>
+                        <kendo-textbox formControlName="SearchQuery" type="text" class="k-textbox" [clearButton]="true"
+                            placeholder="Tìm theo mã bắt đầu, tên đợt phát hành">
+                        </kendo-textbox>
+                    </div>
+                </div>
+
+                <button kendoButton class="k-button searchBtn" [icon]="'search'" (click)="search()"
+                    [disabled]="!isFilterActive">TÌM</button>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <app-p-kendo-grid class="grid scrollable" [data]="gridDSView | async" [scrollable]="'none'" [loading]="loading"
+            [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize" [skip]="gridDSState.skip"
+            [take]="gridDSState.take" [sortable]="true" [sort]="gridDSState.sort"
+            [onPageChangeCallback]="onPageChangeCallback" [onSortChangeCallback]="onSortChangeCallback"
+            [allowedMoreActionDropdown]="allowActionDropdown" [getActionDropdownCallback]="getActionDropdownCallback"
+            [onActionDropdownClickCallback]="onActionDropdownClickCallback" [selectable]="selectable"
+            [onSelectCallback]="onSelectCallback" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+            [getSelectionPopupCallback]="getSelectionPopupCallback">
+    
+            <kendo-grid-column field="CouponNameVN" title="Đợt phát hành phiếu mua hàng" class="col_coupon"
+                headerClass="col_coupon">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="ten" title={{dataItem.CouponNameVN}}><b>{{ dataItem.CouponNameVN }}</b></div>
+                    <div class="chuongtrinhkhuyenmai d-flex">
+                        <div class="prefix"><b>{{ dataItem.Prefix }}</b></div>
+                        <div class="couponType" title={{dataItem.TypeOfVoucherName}}><b>{{ dataItem.TypeOfVoucherName }}</b>
+                        </div>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+    
+            <kendo-grid-column field="DescriptionVN" title="Diễn giải đợt phát hành" class="col_dienGiai"
+                headerClass="col_dienGiai">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div title={{dataItem.DescriptionVN}}>{{ dataItem.DescriptionVN }}</div>
+                </ng-template>
+            </kendo-grid-column>
+    
+            <kendo-grid-column field="StartDate" title="Thời hạn" class="col_ngayHieuLuc" headerClass="col_ngayHieuLuc">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="StartDate">
+                        {{ dataItem.EndDate | date: 'dd/MM/yyyy' }}
+                    </div>
+                    <div class="EndDate"><b>{{ dataItem.PeriodDay | number: '1.' }}</b></div>
+                </ng-template>
+            </kendo-grid-column>
+    
+            <kendo-grid-column field="VoucherAmount" title="Mệnh giá/Giá bán" class="col_giaTri" headerClass="col_giaTri">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="giaTri">{{ dataItem.VoucherAmount | number: '1.' }}</div>
+                    <div> {{ dataItem.UnitPrice | number: '1.' }} </div>
+                </ng-template>
+            </kendo-grid-column>
+    
+            <kendo-grid-column field="WHName" title="Đơn vị áp dụng" class="col_donVi" headerClass="col_donVi">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="donVi">{{ dataItem.WHName }}</div>
+                </ng-template>
+            </kendo-grid-column>
+    
+    
+            <kendo-grid-column field="StatusID" title="Tình trạng" class="col_tinhTrang" headerClass="col_tinhTrang">
+                <ng-template kendoGridHeaderTemplate let-dataItem>
+                    <div class="tinhtrang">Tình trạng</div>
+                </ng-template>
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div [ngClass]="{'green': dataItem.StatusID == 2, 
+                    'red': dataItem.StatusID == 4 || dataItem.StatusID == 3}">
+                        {{ dataItem.StatusName }}</div>
+                </ng-template>
+            </kendo-grid-column>
+        </app-p-kendo-grid>
+    </div>
+
+    <kendo-dialog #dialog class="deleteDialog" title="Xóa Đợt phát hành" [hidden]="!deleteDialogOpened"
+        (close)="closeDeleteDialog()" [minWidth]="250">
+        <p style="margin: 30px; text-align: center;">
+            Bạn chắc chắn muốn xóa vĩnh viễn Đợt phát hành&nbsp;
+            "{{ curCoupon.CouponNameVN }}"&nbsp;này?</p>
+        <div class="dialog-footer">
+            <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteDialog()"
+                [icon]="'close'">Không</button>
+            <button kendoButton class="btn-hachi hachi-warning" (click)="delete()" [icon]="'trash'">Có</button>
+        </div>
+    </kendo-dialog>
+
+    <kendo-dialog #dialog class="deleteDialog" title="Xóa các Đợt phát hành đã chọn" [hidden]="!deleteManyDialogOpened"
+        (close)="closeDeleteDialog()" [minWidth]="250">
+        <div style="margin: 30px; text-align: center;">
+            Bạn chắc chắn muốn xóa vĩnh viễn {{ deleteList.length }} Đợt phát hành này?
+        </div>
+        <div class="dialog-footer">
+            <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteManyDialog()"
+                [icon]="'close'">Không</button>
+            <button kendoButton class="btn-hachi hachi-warning" (click)="deleteMany()" [icon]="'trash'">Có</button>
+        </div>
+    </kendo-dialog>
+
+
+</div>

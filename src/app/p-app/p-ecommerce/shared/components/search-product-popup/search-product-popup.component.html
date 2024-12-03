@@ -1,0 +1,63 @@
+<kendo-dialog #folderDialogPopup title="THÊM SẢN PHẨM" [hidden]="!isDialogOpen()" (close)="closeDialog()"
+  id="searchProductPopup">
+
+  <div class="label">
+    Chọn sản phẩm
+  </div>
+
+  <div class="productCbx">
+    <span class="k-icon k-i-cart"></span>
+
+    <kendo-combobox #combobox [data]="productList" [valueField]="'ProductID'" [textField]="'Barcode'"
+      [value]="currentProduct" placeholder="Nhập mã hay tên sản phẩm" [loading]="loading"
+      (valueChange)="valueChange($event)" (selectionChange)="getProductByCode($event)" [suggest]="true"
+      [allowCustom]="true" [valueNormalizer]="valueNormalizer" [filterable]="true" (filterChange)="filterChange($event)"
+      (click)="toggleCombobox($event)" (keydown.enter)="getProductList($event)" icon="cart"
+      [popupSettings]="{  appendTo: 'component'  }">
+
+      <ng-template kendoComboBoxItemTemplate let-dataItem>
+        <div class="productItem">
+          <div class="code">{{ dataItem.Barcode }}</div>
+          <div class="name">{{ dataItem.ProductName }}</div>
+        </div>
+      </ng-template>
+    </kendo-combobox>
+  </div>
+
+  <div class="row">
+    <div class="col-7 left-col">
+
+      <div class="label">Tên sản phẩm</div>
+      <div class="textarea">{{ currentProduct.ProductName }}</div>
+
+      <div class="label">Xuất xứ</div>
+      <div class="textarea">{{ currentProduct.OrginalName }}</div>
+
+      <!-- <div class="label">Thành phần</div>
+      <div class="textarea">{{ currentProduct.VNMaterial }}</div> -->
+
+      <div class="label">Tồn kho</div>
+      <div class="textarea">{{ currentProduct.Quantity |number:'1.'}}</div>
+    </div>
+
+    <div class="col-5 right-col">
+      <div class="label">Hình ảnh</div>
+      <img loading="lazy" src="{{currentProduct.ImageThumb}}">
+
+      <div class="priceGroup">
+        <div class="label">Giá bán</div>
+        <div class="price">
+          <div class="newPrice">{{ currentProduct.Price | number : '1.'}}</div>
+          <div [hidden]="currentProduct.PriceBase == null || currentProduct.PriceBase == 0 
+          || currentProduct.PriceBase == currentProduct.Price" class="oldPrice">{{
+            currentProduct.PriceBase | number : '1.'}}</div>
+        </div>
+      </div>
+      <div class="description">{{ currentProduct.PromotionName }}
+      </div>
+    </div>
+  </div>
+
+  <button kendoButton class="k-button btn-hachi hachi-primary ml-auto d-flex" [icon]="'search'"
+    [disabled]="!(currentProduct?.ProductID > 0)" (click)="addProd()">Thêm</button>
+</kendo-dialog>

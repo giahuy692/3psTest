@@ -1,0 +1,342 @@
+::ng-deep .app-mar004-coupon-list {
+  height: calc(93vh - 30px);
+  padding: 0 15px 35px 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+::ng-deep .app-mar004-coupon-list .header {
+  display: flex;
+  column-gap: 10px;
+  padding: 9px 0;
+  margin-bottom: 0;
+  border-bottom: 1px solid rgba(143, 155, 166, 0.4);
+}
+
+::ng-deep .app-mar004-coupon-list .header.header-1 .k-dropdown {
+  width: 222px;
+}
+
+::ng-deep .app-mar004-coupon-list .header.header-1 .k-dropdown .k-input {
+  column-gap: 5px;
+}
+
+::ng-deep .app-mar004-coupon-list .header .checkbox-btn-group {
+  border-radius: 15px;
+}
+
+::ng-deep .app-mar004-coupon-list .header .checkbox-btn-group:hover, ::ng-deep .app-mar004-coupon-list .header .checkbox-btn-group.active, ::ng-deep .app-mar004-coupon-list .header .checkbox-btn-group.k-state-active {
+  border: 1px solid #1a6634;
+  background-image: none;
+  background-color: white;
+  color: initial;
+}
+
+::ng-deep .app-mar004-coupon-list .header .checkbox-btn-group:hover .k-checkbox, ::ng-deep .app-mar004-coupon-list .header .checkbox-btn-group.active .k-checkbox, ::ng-deep .app-mar004-coupon-list .header .checkbox-btn-group.k-state-active .k-checkbox {
+  background-color: #1a6634;
+}
+
+::ng-deep .app-mar004-coupon-list .header .checkbox-btn-group .k-checkbox {
+  margin-left: 8px;
+  border-color: #1a6634;
+}
+
+::ng-deep .app-mar004-coupon-list .header .label {
+  margin-bottom: 6px;
+  font-weight: 700;
+  font-size: 13px;
+  color: #5c6873;
+}
+
+::ng-deep .app-mar004-coupon-list .header .label.fake {
+  visibility: hidden;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-btn {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-filter {
+  column-gap: 10px;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-filter .filter-btn-group.clear-btn-group .label {
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-filter .filter-btn-group.clear-btn-group .clear-filter-btn {
+  color: #5CB800;
+  border: none;
+  background: none;
+  text-decoration: underline;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-filter .filter-btn-group.search-btn-group {
+  margin-right: 5px;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-filter .filter-btn-group.search-btn-group .search-btn {
+  position: relative;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-filter .filter-btn-group.search-btn-group .search-btn .k-i-search {
+  position: absolute;
+  height: 100%;
+  width: 30px;
+  z-index: 1;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-filter .filter-btn-group.search-btn-group .search-btn .k-textbox {
+  padding-left: 30px;
+  min-width: fit-content;
+  width: 475px !important;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-filter .filter-btn-group.date-btn-group {
+  flex-grow: 1;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-filter .searchBtn {
+  height: 31px;
+  margin-bottom: 1px;
+  margin-top: auto;
+  background-color: #1a6634 !important;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-crud {
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-crud .onAddBtn {
+  height: 32px;
+  background-color: #1a6634 !important;
+  color: white;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-crud .onAddBtn.k-dropdown {
+  width: fit-content;
+  width: -mozfit-content;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-crud .onAddBtn.k-dropdown .k-dropdown-wrap {
+  font-size: 11px;
+  font-weight: bold;
+  background-color: #1a6634;
+  color: white;
+  border: none;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-crud .onAddBtn.k-dropdown .k-dropdown-wrap .k-input {
+  height: 100%;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-crud .onAddBtn.k-dropdown .k-state-focused {
+  width: 100%;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-crud .onAddBtn.k-dropdown .k-animation-container {
+  left: unset !important;
+  right: 0;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-crud .border-center {
+  margin: auto 0 1px 10px;
+  border-right: 1px solid #c8ced3;
+  height: 31px;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-file {
+  flex-grow: 0;
+  margin-left: auto;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-file .file-btn-group {
+  background: white;
+  box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+  border-radius: 3px;
+  color: #8f9ba6;
+  min-width: fit-content;
+  height: 32px;
+  display: flex;
+  margin-top: auto;
+  cursor: pointer;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-file .file-btn-group span.text {
+  margin: auto;
+  padding-right: 9px;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-file .file-btn-group .onImportBtn {
+  width: 64px;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-file .file-btn-group .onImportBtn .excel-ic {
+  width: 32px;
+  height: 100%;
+  margin-left: 2px;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-file .file-btn-group .border-center {
+  align-self: center;
+  height: 90%;
+  border-right: 1px solid #8f9ba6;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-file .file-btn-group .k-i-arrow-chevron-down {
+  text-align: center;
+  padding: 7px 0;
+  width: 32px;
+  height: 100%;
+}
+
+::ng-deep .app-mar004-coupon-list .header .nav-file .file-btn-group .k-i-arrow-chevron-down:before {
+  font-size: 20px;
+}
+
+::ng-deep .app-mar004-coupon-list .grid.scrollable .k-grid .k-grid-aria-root {
+  overflow-x: auto;
+}
+
+::ng-deep .app-mar004-coupon-list .grid.scrollable .k-grid table {
+  width: 1370px;
+}
+
+::ng-deep .app-mar004-coupon-list .grid.scrollable .k-grid tr {
+  position: initial;
+}
+
+::ng-deep .app-mar004-coupon-list .grid.scrollable .k-grid tr td:last-child,
+::ng-deep .app-mar004-coupon-list .grid.scrollable .k-grid tr th:last-child {
+  position: absolute;
+  top: initial;
+  margin-top: calc(1% - 10px);
+}
+
+::ng-deep .app-mar004-coupon-list .k-grid {
+  color: #5c6873 !important;
+}
+
+::ng-deep .app-mar004-coupon-list .k-grid .k-grid-header .k-header {
+  color: #5c6873 !important;
+}
+
+::ng-deep .app-mar004-coupon-list .k-grid thead tr {
+  height: fit-content !important;
+}
+
+::ng-deep .app-mar004-coupon-list .k-grid tr:not(.k-grouping-row) td:first-child {
+  padding-left: 10px !important;
+}
+
+::ng-deep .app-mar004-coupon-list .k-grid tr {
+  color: #5c6873;
+}
+
+::ng-deep .app-mar004-coupon-list .k-grid tr .col_coupon {
+  max-width: 333px;
+  width: 333px;
+}
+
+::ng-deep .app-mar004-coupon-list .k-grid tr .col_coupon .ten {
+  margin-bottom: 6px;
+  white-space: normal;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+::ng-deep .app-mar004-coupon-list .k-grid tr .col_coupon .prefix {
+  color: #959db3;
+}
+
+::ng-deep .app-mar004-coupon-list .k-grid tr .col_coupon .couponType {
+  margin-left: 20px;
+  white-space: normal;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+::ng-deep .app-mar004-coupon-list .k-grid tr .col_ngayHieuLuc {
+  text-align: center;
+}
+
+::ng-deep .app-mar004-coupon-list .k-grid tr .col_ngayHieuLuc.k-header .k-link {
+  justify-content: center;
+}
+
+::ng-deep .app-mar004-coupon-list .k-grid tr .col_ngayHieuLuc .EndDate {
+  margin-top: 6px;
+}
+
+::ng-deep .app-mar004-coupon-list .k-grid tr .col_giaTri {
+  text-align: center;
+}
+
+::ng-deep .app-mar004-coupon-list .k-grid tr .col_giaTri.k-header .k-link {
+  justify-content: center;
+}
+
+::ng-deep .app-mar004-coupon-list .k-grid tr .col_giaTri .giaTri {
+  background-color: #1a6634;
+  color: white;
+  border-radius: 3px;
+  padding: 4px 12px;
+  font-weight: 700;
+  margin: 0 auto 4px;
+  width: fit-content;
+}
+
+::ng-deep .app-mar004-coupon-list .k-grid tr .col_donVi .donVi {
+  padding-left: 12px;
+}
+
+::ng-deep .app-mar004-coupon-list .k-grid tr td {
+  padding: 3px 7px 5px;
+}
+
+::ng-deep .app-mar004-coupon-list .k-grid tr td.col_moTa, ::ng-deep .app-mar004-coupon-list .k-grid tr td.col_dienGiai {
+  white-space: normal !important;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+::ng-deep .app-mar004-coupon-list .k-grid tr td.col_tinhTrang {
+  padding-right: 50px;
+  text-align: left;
+  color: #959db3;
+}
+
+::ng-deep .app-mar004-coupon-list .k-grid tr td.col_tinhTrang .yellow {
+  color: #FFB900;
+}
+
+::ng-deep .app-mar004-coupon-list .k-grid tr td.col_tinhTrang .green {
+  color: #1a6634;
+}
+
+::ng-deep .app-mar004-coupon-list .k-grid tr td.col_tinhTrang .red {
+  color: #D82C12;
+}
+
+::ng-deep .app-mar004-coupon-list .myCustomGrid.k-grid tr:not(.k-grouping-row) td:first-child {
+  padding-left: 0;
+}
+
+::ng-deep .dropdownDonVi_subitem {
+  padding-left: 20px;
+}

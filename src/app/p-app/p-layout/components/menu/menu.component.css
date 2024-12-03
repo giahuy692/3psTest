@@ -1,0 +1,277 @@
+.color-white {
+  color: #ffffff;
+}
+
+.color-gray {
+  color: #23282c;
+}
+
+.color-darkblue {
+  color: #39579a;
+}
+
+.color-blue {
+  color: #008cd7;
+}
+
+.color-lightblue {
+  color: #46b1ff;
+}
+
+.color-darkgreen {
+  color: #316e00;
+}
+
+.color-green {
+  color: #649e0f;
+}
+
+.color-lightgreen {
+  color: #8dc63f;
+}
+
+.color-yellowgreen {
+  color: #c1d72e;
+}
+
+.color-yellow {
+  color: #ffc400;
+}
+
+.color-mediumyellow {
+  color: #FFB900;
+}
+
+.color-orangeyellow {
+  color: #ffab00;
+}
+
+.color-lightorange {
+  color: #ff5230;
+}
+
+.color-lightpink {
+  color: #dc3545;
+}
+
+.color-red {
+  color: #d82c12;
+}
+
+.color-badred {
+  color: #EB273A;
+}
+
+.hachi-color-primary-1 {
+  color: #353935;
+}
+
+.hachi-color-primary-2 {
+  color: #868b86;
+}
+
+.hachi-color-primary-3 {
+  color: #8dc63f;
+}
+
+.hachi-color-primary-4 {
+  color: #c1d72e;
+}
+
+.hachi-color-primary-5 {
+  color: #ffffff;
+}
+
+.hachi-color-secondary-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-1 {
+  color: #46b1ff;
+}
+
+.hachi-color-text-2 {
+  color: #868b86;
+}
+
+.hachi-color-text-3 {
+  color: #008cd7;
+}
+
+.hachi-color-text-4 {
+  color: #d82c12;
+}
+
+.hachi-color-text-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-6 {
+  color: #ffffff;
+}
+
+.hachi-color-text-7 {
+  color: #8dc63f;
+}
+
+.hachi-color-text-8 {
+  color: #626662;
+}
+
+.hachi-color-text-10 {
+  color: #ff5230;
+}
+
+.hachi-color-text-9 {
+  color: #bbc0bb;
+}
+
+.hachi-color-text-11 {
+  color: #dc3545;
+}
+
+.hachi-color-text-12 {
+  color: #828282;
+}
+
+::ng-deep .sidebar app-menu {
+  height: 100%;
+  background: #5c6873;
+  color: #ffffff;
+}
+
+::ng-deep .sidebar app-menu .k-drawer-container {
+  height: 100%;
+}
+
+::ng-deep .sidebar app-menu .k-drawer {
+  background-color: #5c6873;
+  color: #c8ced3;
+  height: calc(100vh - 90px);
+}
+
+@media screen and (max-width: 688px) {
+  ::ng-deep .sidebar app-menu .k-drawer {
+    top: 56px;
+  }
+}
+
+::ng-deep .sidebar app-menu .k-drawer .k-drawer-wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+::ng-deep .sidebar app-menu .k-drawer .k-drawer-items {
+  height: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+::ng-deep .sidebar app-menu .k-drawer .k-drawer-items::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  background-color: transparent;
+}
+
+::ng-deep .sidebar app-menu .k-drawer .k-drawer-items::-webkit-scrollbar-thumb {
+  background-color: #1a6634;
+  border-radius: 30px;
+}
+
+::ng-deep .sidebar app-menu .k-drawer .k-drawer-items .k-drawer-item {
+  flex-direction: column;
+  padding: 0;
+  transition-duration: 2s;
+  -o-transition-duration: 2s;
+  -moz-transition-duration: 2s;
+  -webkit-transition-duration: 2s;
+}
+
+::ng-deep .sidebar app-menu .k-drawer .k-drawer-items .k-drawer-item:last-child {
+  margin-top: auto;
+}
+
+::ng-deep .sidebar app-menu .k-drawer .k-drawer-items .k-drawer-item:last-child .drawer-item {
+  position: absolute;
+  bottom: 0;
+  border-top: 1px solid white;
+}
+
+::ng-deep .sidebar app-menu .k-drawer .k-drawer-items .k-drawer-item.k-state-selected, ::ng-deep .sidebar app-menu .k-drawer .k-drawer-items .k-drawer-item.k-selected {
+  background-color: #1A2334;
+}
+
+::ng-deep .sidebar app-menu .k-drawer .k-drawer-items .k-drawer-item:hover {
+  background-color: inherit;
+  color: inherit;
+}
+
+::ng-deep .sidebar app-menu .k-drawer .k-drawer-items .k-drawer-item:focus {
+  background-color: inherit;
+}
+
+::ng-deep .sidebar app-menu .k-drawer .k-drawer-items .k-drawer-item .itemMenuUser {
+  display: none;
+}
+
+@media screen and (max-width: 640px) {
+  ::ng-deep .sidebar app-menu .k-drawer .k-drawer-items .k-drawer-item .itemMenuUser {
+    display: block;
+  }
+}
+
+::ng-deep .sidebar app-menu .drawer-item {
+  height: 49px;
+  width: 100%;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  letter-spacing: 1px;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+  padding: 0 10px;
+  background: #5c6873;
+}
+
+::ng-deep .sidebar app-menu .drawer-item:hover, ::ng-deep .sidebar app-menu .drawer-item.active {
+  color: white;
+  background-color: #464e61 !important;
+}
+
+::ng-deep .sidebar app-menu .drawer-item.active {
+  border-left: 5px solid white;
+}
+
+::ng-deep .sidebar app-menu .drawer-item.groupMenu:hover, ::ng-deep .sidebar app-menu .drawer-item.groupMenu.active {
+  color: #5CB800;
+  background-color: #464e61 !important;
+}
+
+::ng-deep .sidebar app-menu .drawer-item.groupMenu.active {
+  border-left: 5px solid #5CB800;
+}
+
+::ng-deep .sidebar app-menu .drawer-item span {
+  margin: 0;
+}
+
+::ng-deep .sidebar app-menu .drawer-item span.child {
+  margin-left: 1rem;
+}
+
+::ng-deep .sidebar app-menu .drawer-item .k-icon {
+  height: 100%;
+}
+
+::ng-deep .sidebar app-menu .drawer-item .k-icon.k-i-arrow-chevron-down, ::ng-deep .sidebar app-menu .drawer-item .k-icon.k-i-arrow-chevron-up {
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+
+::ng-deep .sidebar app-menu .drawer-item.groupMenu {
+  text-transform: uppercase;
+  font-size: 14px;
+}

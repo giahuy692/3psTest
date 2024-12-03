@@ -1,0 +1,725 @@
+@import "../../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    // .paycheck-login{
+    //     display: flex;
+    //     justify-content: center;
+    // }
+    // web
+    .app-hr-paycheck-detail{
+        .paycheck-login{
+            margin-top: 20px;
+            background-color: $white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .right-half{
+                margin-bottom: 50px;
+                .article{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                    border-bottom: 3px solid #EDEFF3;
+                    align-items: center;
+                    padding-bottom: 10px;
+                    img{
+                        width: 300px;
+                    }
+                    span{
+                        font-size: 20px;
+                        color: #464E61;
+                        font-weight: 700;
+
+                    }
+                }
+
+                .body-login{
+                    padding: 15px;
+                    display: flex;
+                    justify-content: center;
+                    .form-group{
+                        display: flex;
+                        gap: 10px;
+                        align-items: center;
+                        input{
+                            padding: 20px 10px 20px 35px;
+                            font-size: 1rem;
+                            font-weight: 400;
+                            flex: 1;
+                        }
+                        .icon-right {
+                            position: absolute;
+                            cursor: pointer;
+                            margin-left: 250px;
+                            // right: 10px;
+                            // top: 10px;
+                            z-index: 0;
+    
+                            > svg {
+                                fill: $gray-200;
+                                flex: 1 0 auto;
+                            }
+                        }
+                        .icon-right:hover {
+                            > svg {
+                                fill: $light-blue-gray !important;
+                            }
+                        }
+
+                        // input[type=number]{
+                        //     width: 40px;
+                        //     padding: 5px;
+                        //     text-align: center;
+                        // }
+                        // input[type=number]::-webkit-inner-spin-button, 
+                        // input[type=number]::-webkit-outer-spin-button { 
+                        //     -webkit-appearance: none;
+                        //     -moz-appearance: none;
+                        //     appearance: none;
+                        //     margin: 0; 
+                        // }
+                    }
+                    .AddBtn{
+                        background-color: $dark-green;
+                        margin-left: 40px;
+                        padding: 20px;
+                        width: 250px;
+                        .k-button-text{
+                            font-size: 16px;
+                        }
+                    }
+                }      
+            }
+        }
+        .header{
+            display: flex;
+            justify-content: space-between;
+            .nav-btn {
+                display: flex;
+                align-items: center;
+                flex-grow: 1;
+                .onAddBtn {
+                    height: 32px;
+                    margin-top: auto;
+                    background-color: $dark-green !important;
+                    color: white;
+                    font-size: 11px;
+                    font-weight: bold;
+                }
+            }
+        }
+        .portalHeader{
+            border-bottom: none !important;
+            .GroupDropdown{
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+                .TitleDropdown{
+                    color: #1A6634;
+                    font-weight: 700;
+                    width: 65px;
+                }
+                .k-dropdownlist{
+                    margin-top: 5px;
+                    width: 85px;
+                    background-color: #f0f3f5; 
+                    box-shadow: none;
+                    border: 1px solid #f0f3f5;
+                    .k-input-value-text{
+                        color: #1A6634;
+                        font-weight: 700;
+                    }
+                    &:hover,:focus{
+                        border: 1px solid #1a6634;
+                    }
+                    .k-button:hover{
+                        filter: none !important;
+                    }
+                    .k-button-icon{
+                        color: #1A6634;
+                    }
+                    .k-child-animation-container{
+                        .k-dropdownlist-popup{
+                            width: 90px;
+                            .k-list-filter{
+                                padding: 1px;
+                            }
+                            .k-input-inner{
+                                border: none;
+                                overflow-x: hidden;
+                            }
+                            .k-list-md{
+                                overflow-y: scroll;
+                                overflow-x: hidden;
+                            }
+                        }
+                    }
+                }  
+            }
+        }
+        .TextcolorOrgen{
+            color: #F1802E;
+            font-weight: 700;
+            font-size: 20px;
+        }
+        .FontItalic{
+            font-style: italic;
+        }
+        .Main{
+            padding-top: 5px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            height: calc(96vh - 122px);
+            .sections{
+                .colorGreen{
+                    background: #1A6634;
+                }
+                .colorOrgen{
+                    background: #F1802E;
+                }
+                .Title{
+                    padding: 3px 0 0 11px;
+                    width: 200px;
+                    height: 26px;
+                    border-top: 1px solid rgba(149, 157, 179, 0.30);
+                    border-right: 1px solid rgba(149, 157, 179, 0.30);
+                    border-left: 1px solid rgba(149, 157, 179, 0.30);
+                    .lable{
+                        color:  $white;
+                        font-weight: 700;
+                    }
+                }
+                .section-grid{
+                    display: grid;
+                    grid-template-columns: auto;
+                    row-gap: 6px;
+                    margin-bottom: 15px;
+                    filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
+                    .grid-item{
+                        display: flex;
+                        .Text10{
+                            font-size: 10px;
+                        }
+                        .Padding{
+                            padding-left: 16px;
+                        }
+                        .TextcolorGreen{
+                            color: #1A6634;
+                            font-weight: 700;
+                        }
+                        .TextBold{
+                            font-weight: 700;
+                        }
+                        .TextRight{
+                            text-align: end;
+                        }
+                        .TextCenter{
+                            text-align: center;
+                        }
+                        .line{
+                            border: 1px solid #BDC2D2;
+                            width: 1px;
+                            height: 15px;
+                            margin: 0 5px;
+                        }
+                        .Textcolorblue{
+                            color: #31ADFF;
+                        }
+                        .Padding{
+                            padding-left: 16px;
+                        }
+                        
+                        .FirstCol{
+                            min-width: 300px;
+                            justify-content: space-between;
+                        }
+                        .SecondCol{
+                            display: flex;
+                        }
+                        .backGroudGray{
+                            margin-left: 20px;
+                            background: rgba(217, 217, 217, 0.30);
+                            .table{
+                                margin: 0;
+                                padding: 9px 12px 16px 11px;
+                                justify-content: space-between;
+                                .workday, .Year{
+                                    .col_1{
+                                        span{
+                                            padding: 2.5px 0;
+                                        }
+                                    }
+                                    .col_2{
+                                        width: 40px;
+                                        text-align: center;
+                                        span{
+                                            padding: 2.5px 0;
+                                        }
+                                    }
+                                }
+                                .space{
+                                    display: flex;
+                                    justify-content: space-between;
+                                    .col_1,.col_2{
+                                        display: flex;
+                                        flex-direction: column;
+                                    }
+                                }
+                                .Year{
+                                    padding-top: 30px;
+                                }
+                            }
+                            table{
+                                display: flex;
+                                flex-direction: row;
+                                .First{
+                                    padding-top: 20px;
+                                    padding-left: 0;
+                                }
+                                td{
+                                    display: flex;
+                                    flex-direction: column;
+                                    border: none;
+                                    padding: 0 5.5px;
+                                    row-gap: 2px;
+                                    tr{
+                                        height: 25px;
+                                    }
+                                }
+                                .last{
+                                    padding-right: 0;
+                                }
+                            }
+                            .table1{
+                                min-width: 350px;
+                            }
+                            .table2{
+                                min-width: 435px;
+                                .First{
+                                    tr{
+                                        width: 170px;
+                                    }
+                                }
+                            }
+                        }
+                        .display{
+                            display: none;
+                        }
+
+                    }
+                }
+                .scroll{
+                    overflow-x: scroll;
+                }
+            }
+            .tbt_NgayCong{
+                .section-grid{
+                    .grid-item{
+                        .col_1{
+                            row-gap: 6px;
+                            display: flex;
+                            flex-direction: column;
+                            max-width: 355px;
+                            .grid-item{
+                                .FirstCol{
+                                    justify-content: space-between;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .tbt_ThanhToan, .tbt_ChiPhiLuong{
+                .section-grid{
+                    .item1{
+                        align-items: center;
+                        .SecondCol{
+                            align-items: center;
+                        }
+                    }
+                }
+            }
+            .tbt_ChiPhiLuong, .tbt_TinhLuongThang, .tbt_KhungLuong{
+                .grid-item{
+                    align-items: center;
+                    .Padding{
+                        padding-left: 0 !important;
+                        width: 95px;
+                        text-align: end;
+                    }
+                    .TextcolorOrgen {
+                        padding-left: 16px !important;
+                    }
+                } 
+            }   
+            .tbt_TinhLuongThang, .tbt_KhungLuong{
+                .grid-item{
+                    align-items: center;
+                    .Padding{
+                        padding-left: 16px !important;
+                        width: 95px;
+                        text-align: end;
+                    }   
+                }
+            }
+            .tbt_ThanhToan{
+                .grid-item{
+                    &.item3{
+                        .Padding{
+                            padding-left: 16px !important;
+                            text-align: start !important;
+                        }
+                    }
+                } 
+            }
+            .tbt_TinhLuongThang{
+                .ListPlusException {
+                    row-gap: 2px; 
+                    display: flex; 
+                    flex-direction: column;
+                }
+                .display{
+                    display: none;
+                }
+            }
+        }   
+    }
+    @media only screen and (max-width: 500px) {
+        .app-hr-paycheck-detail{
+            height: 670px;
+            .headerMobile{
+                .GroupImgAndhearder{
+                    display: flex;
+                    height: 55px;
+                    align-items: center;
+                }
+                position: absolute;
+                display: flex;
+                background-color: $white;
+                height: 55px;
+                width: calc(100vw - 15px);
+                top: -55px;
+                justify-content: space-between;
+                align-items: flex-end;
+                img{
+                    margin: 0 15px 0 8px;
+                }
+                .HeaderProtalMobile{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    .Title{
+                        color: #1A6634;
+                        font-weight: 700;
+                    }
+                    .GroupDropdown{
+                        display: flex;
+                        flex-direction: row;
+                        .TitleDropdown{
+                            width: 65px;
+                            font-weight: 400;
+                        }
+                        .k-dropdownlist{
+                            height: 20px;
+                            width: 85px;
+                            box-shadow: none;
+                            border: none;
+                            .k-input-inner{
+                                padding: 0;
+                            }
+                            .k-button{
+                                height: 19px !important;
+                            }
+                            .k-input-value-text{
+                                color: #1A6634;
+                            }
+                            .k-button-icon{
+                                color: #1A6634;
+                            }
+                            .k-child-animation-container{
+                                .k-dropdownlist-popup{
+                                    width: 85px;
+                                    .k-list-filter{
+                                        padding: 1px;
+                                    }
+                                    .k-input-inner{
+                                        border: none;
+                                        overflow-x: hidden;
+                                    }
+                                    .k-list-md{
+                                        overflow-y: scroll;
+                                        overflow-x: hidden;
+                                    }
+                                }
+                            }
+                        }
+                        .k-animation-container{
+                            left: 116px !important;
+                        }
+                    }
+                }
+            }
+            .Main{
+                width: calc(100vw - 10px);
+                padding-top: 15px;
+                height:calc(100vh - 190px);
+                .section-grid{
+                    .grid-item{
+                        width: 100%;
+                        .FirstCol{
+                            max-width: 300px;
+                        }
+                        .SecondCol{
+                            .Padding{
+                                white-space: initial;
+                                overflow: hidden;
+                                display: -webkit-inline-box;
+                                -webkit-line-clamp: 2;
+                                -webkit-box-orient: vertical;
+                                text-overflow: ellipsis;
+                                max-width: 360px;
+                            }
+                            .TextcolorOrgen{
+                                font-size: 15px !important;
+                            }
+                        }
+                    }
+                }
+                .tbt_ThongTinNhanSu{
+                    .grid-item{
+                        .FirstCol{
+                            min-width: 95px !important;
+                        }
+                    }
+                }
+                .tbt_NgayCong{
+                    .section-grid{
+                        .grid-item{
+                            .col_1{
+                                width: 100%;
+                                max-width: none;
+                                .item3, .item4{
+                                    .grid-item-Child{
+                                        flex-direction: column;
+                                    }
+                                    .Explan{
+                                        row-gap: 6px;
+                                    }
+                                }
+                                .item4{
+                                    .grid-item-Child{
+                                        width: 100%;
+                                        word-wrap: break-word;
+                                        .itemChil2{
+                                            .Chil1{
+                                                justify-content: space-between;
+                                                width: 100%;
+                                                div{
+                                                    padding: 0 5px;
+                                                }
+                                            }
+                                        }
+                                        .itemChil3{
+                                            justify-content: space-between;
+                                            .second, .third, .fourth{
+                                                text-align: center;
+                                                display: grid;
+                                                align-items: center;
+                                            }
+                                        }
+                                        .first{
+                                            width: 185px;
+                                        }
+                                        .second{
+                                            width: 70px;
+                                        }
+                                        .third, .fourth{
+                                            width: 45px;
+                                        }
+                                    }
+                                }
+                                .SecondCol{
+                                    .Padding{
+                                        width: 45px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .tbt_ThanhToan, .tbt_ChiPhiLuong, .tbt_TinhLuongThang, .tbt_KhungLuong{
+                    .grid-item{
+                        .Padding{
+                            padding-left: 0 !important;
+                            width: 95px;
+                            text-align: end;
+                        }
+                        .TextcolorOrgen {
+                            padding-left: 0 !important;
+                        }
+                    } 
+                } 
+                .tbt_ThanhToan{
+                    .grid-item{
+                        &.item3{
+                            .Padding{
+                                padding-left: 16px !important;
+                                text-align: start !important;
+                            }
+                        }
+                    } 
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 420px) {
+        .app-hr-paycheck-detail{
+            app-p-kendo-dialog .dialog{
+                width: 400px;
+            }
+            .Main{
+                .tbt_ThongTinNhanSu{
+                    .grid-item{
+                        .FirstCol{
+                            min-width: 95px !important;
+                        }
+                    }
+                }
+                .tbt_NgayCong{
+                    .section-grid{
+                        .grid-item{
+                            .col_1{
+                                .item4{
+                                    .grid-item-Child{
+                                        .first{
+                                            width: 160px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .tbt_ThanhToan, .tbt_ChiPhiLuong, .tbt_TinhLuongThang, .tbt_KhungLuong{
+                    .grid-item{
+                        .FirstCol{
+                            min-width: 275px;
+                        }
+                        .Padding{
+                            padding-left: 0 !important;
+                            width: 90px !important;
+                            text-align: end;
+                        }
+                        .TextcolorOrgen {
+                            padding-left: 0 !important;
+                        }
+                    } 
+                } 
+            }
+        }
+    }
+    @media only screen and (max-width: 400px) {
+        .app-hr-paycheck-detail{
+            app-p-kendo-dialog .k-dialog{
+                width: 350px;
+                left: 10px;
+            }
+            .Main{
+                .tbt_ThongTinNhanSu{
+                    .grid-item{
+                        .FirstCol{
+                            min-width: 95px !important;
+                        }
+                    }
+                }
+                .tbt_ThanhToan, .tbt_ChiPhiLuong, .tbt_TinhLuongThang, .tbt_KhungLuong{
+                    .grid-item{
+                        .FirstCol{
+                            min-width: 235px !important;
+                        }
+                    } 
+                } 
+            }
+        }
+    }
+    @media only screen and (max-width: 370px) {
+        .app-hr-paycheck-detail{
+            app-p-kendo-dialog .dialog{
+                width: 350px !important;
+                left: 10px;
+            }
+            .Main{
+                .tbt_ThongTinNhanSu{
+                    .grid-item{
+                        .FirstCol{
+                            min-width: 95px !important;
+                        }
+                    }
+                }
+                .tbt_ThanhToan, .tbt_ChiPhiLuong, .tbt_TinhLuongThang, .tbt_KhungLuong{
+                    .grid-item{
+                        .FirstCol{
+                            min-width: 275px;
+                        }
+                        .Padding{
+                            padding-left: 0 !important;
+                            width: 90px !important;
+                            text-align: end;
+                        }
+                        .TextcolorOrgen {
+                            padding-left: 0 !important;
+                        }
+                    } 
+                } 
+                .tbt_NgayCong{
+                    .section-grid{
+                        .grid-item{
+                            .FirstCol{
+                                min-width: 280px;
+                            }
+                            .col_1{
+                                .item4{
+                                    .grid-item-Child{
+                                        .first{
+                                            width: 150px;
+                                        }
+                                        .second{
+                                            width: 60px;
+                                        }
+                                        .fourth{
+                                            width: 44px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .row{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: flex-end;
+                    padding-right: 16px;
+                }
+                .tbt_TinhLuongThang{
+                    .section-grid .item7 {
+                        .FirstCol{
+                            align-items: flex-start;
+                        }
+                        align-items: flex-start;
+                    }
+                }
+                .tbt_ChiPhiLuong{
+                    .section-grid .item2, .item3 {
+                        .FirstCol{
+                            align-items: flex-start;
+                        }
+                        align-items: flex-start;
+                    }
+                }
+            }
+        }
+    }
+}

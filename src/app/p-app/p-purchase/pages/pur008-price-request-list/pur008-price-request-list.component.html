@@ -1,0 +1,184 @@
+<div class="pur008-price-request-list">
+
+    <!-- START HEADER -->
+    <div class="header header-1">
+        <app-p-kendo-breadcrumb (loadData)="loadData()"></app-p-kendo-breadcrumb>
+
+        <!-- FILTER STATUS -->
+        <div class="nav-btn-status">
+            <app-checkbox-button-group title="Đang soạn thảo"
+					(selectedChange)="applyFilter($event,'isNew')" [selected]="isNew" [checked]="isNew" [disabled]="!isFilterActive">
+				</app-checkbox-button-group>
+				<app-checkbox-button-group title="Gửi duyệt"
+					(selectedChange)="applyFilter($event,'isSent')" [selected]="isSent" [checked]="isSent" [disabled]="!isFilterActive">
+				</app-checkbox-button-group>
+				<app-checkbox-button-group title="Đã duyệt" (selectedChange)="applyFilter($event,'isApproved')"
+                [disabled]="!isFilterActive"  [selected]="isApproved" [checked]="isApproved"
+					>
+				</app-checkbox-button-group>
+				<app-checkbox-button-group title="Ngưng áp dụng" (selectedChange)="applyFilter($event,'isStoped')"
+                [disabled]="!isFilterActive" [selected]="isStoped" [checked]="isStoped"
+					>
+				</app-checkbox-button-group>
+        </div>
+
+        <!-- ADD NEW PRICE REQUEST -->
+        <div class="nav-btn-addNew">
+            <button kendoButton class="btn-hachi hachi-primary" icon="plus" (click)="openDetail(true)" *ngIf="isAllowedToCreate || isToanQuyen" [disabled]="!isFilterActive">
+				TẠO MỚI
+			</button>
+        </div>
+
+    </div>
+
+    <div class="header header-2">
+        <!-- FILTER SEARCH -->
+        <app-search-filter-group  [label]="'Tìm kiếm đề nghị báo giá'" [placeholder]="'Tìm theo tên, mã NCC và lý do lập đề nghị'"  [fields]="['PartnerName','PartnerID','Remark']"
+        (filterChange)="handleSearch($event)" (onReset)="resetFilter()" [disabled]="!isFilterActive"></app-search-filter-group>
+
+        <!-- FILTER EFFDATE -->
+        <div class="date-price-request">
+            <div class="label">Ngày hiệu lực đề nghị báo giá</div>
+            <div class="group-filter">
+                <p-kendo-dropdownlist 
+                [data]="listDropdownFilterDate"
+                [hasValueNull]="false"
+                textField="TypeName" 
+                valueField="Code"
+                [(ngModel)]="defaultFilterDate"
+                (valueChange)="onDropdownFilter($event)"
+                [disabled]="!isFilterActive"
+                ></p-kendo-dropdownlist>
+    
+                <app-datepicker [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'"
+                [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                [popupSetting]="{animate:true, appendTo: 'root',popupClass:'popupLayoutCpnDatePicker'}"
+                (blur)="onDateblur($event)"
+                [(ngModel)]="currentEffDate"
+                [disabled]="!isFilterActive"
+                ></app-datepicker>
+            </div>
+          
+        </div>
+    </div>
+    <!-- END HEADER -->
+
+
+    <!-- START BODY -->
+    <div class="body">
+        <!-- DANH SÁCH ĐỀ NGHỊ BÁO GIÁ -->
+        <div class="grid-wrapper">
+            <app-p-kendo-grid class="grid scrollable " [data]="gridView | async" [scrollable]="'none'"
+                [loading]="loading" [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize"
+                [skip]="gridState.skip" [take]="gridState.take" [sortable]="true"
+                [onPageChangeCallback]="onPageChangeCallback" [getActionDropdownCallback]="getActionDropdownCallback"
+                [onActionDropdownClickCallback]="onActionDropdownClickCallback" [onSelectCallback]="onSelectCallback"
+                [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback" [selectable]="selectable" 
+                [getSelectionPopupCallback]="getSelectionPopupCallback"
+                >
+                <kendo-grid-column title="Nhà cung cấp" field="PartnerName" class="col_supplier" [headerClass]="'hdc_supplier'">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                       <div class="ncc-name">
+                        <div class="label" [title]="dataItem.PartnerName">{{dataItem.PartnerName}}</div>
+                        <div class="range-date">
+                            <div class="range" style="padding-right: 5px;">Hiệu lực</div>
+                            <div class="date" [title]="dataItem.EffDate"> <span *ngIf="dataItem.EffDate"> | </span>  {{dataItem.EffDate | date : "dd/MM/yyyy" : "Indochina Time" : "vi_VN"}}</div>
+                        </div>
+                       </div>
+                    </ng-template>
+                </kendo-grid-column>
+
+
+                <kendo-grid-column title="Lý do lập đề nghị" field="Remark" class="col_reasonRequest">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <span class="remark" [title]="dataItem.Remark">{{dataItem.Remark}}</span>
+                     </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column title="Chi tiết sản phẩm" field="" class="col_detailProd" [width]="100">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <div class="detail">
+                            <span>Mới</span>
+                            <span [title]="dataItem.NoOfNewProduct | number:'1.0-0'">{{' : ' + (dataItem.NoOfNewProduct | number:'1.0-0')}} </span>
+                        </div>
+                        <div class="detail">
+                            <span>Đổi NCC</span>
+                            <span [title]="dataItem.NoOfChangePartner | number:'1.0-0'">{{' : ' + (dataItem.NoOfChangePartner | number:'1.0-0')}} </span>
+                        </div>
+                        <div class="detail">
+                            <span>Đổi giá</span>
+                            <span [title]="dataItem.NoOfChangePrice | number:'1.0-0'">{{' : ' + (dataItem.NoOfChangePrice | number:'1.0-0')}} </span>
+                        </div>
+                     </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column title="Người đề nghị" field="CreateBy" class="col_requester" [headerClass]="'hdc_requester'">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <div class="request-name">
+                            <div class="label" [title]="dataItem.CreateBy">{{dataItem.CreateBy}}</div>
+                            <div class="birth-date" style="text-align: center;" [title]="dataItem.CreateTime">
+                                {{dataItem.CreateTime | date : "dd/MM/yyyy" : "Indochina Time" : "vi_VN"}}
+                            </div>
+                           </div>
+                    </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column title="Người phê duyệt" field="ApprovedBy" class="col_approver" [headerClass]="'hdc_approver'">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <div class="request-name">
+                            <div class="label" [title]="dataItem.ApprovedBy">{{dataItem.ApprovedBy}}</div>
+                            <div class="birth-date" [title]="dataItem.ApprovedDate">
+                                {{dataItem.ApprovedDate | date : "dd/MM/yyyy" : "Indochina Time" : "vi_VN"}}
+                            </div>
+                           </div>
+                    </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column title="Tình trạng" field="StatusName" class="col_Status" [headerClass]="'col_status'">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <span style="display: flex;
+                        justify-content: flex-end;" [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID"></span>
+                    </ng-template>
+                </kendo-grid-column>
+
+               
+                <!-- masterDetail
+                <ng-template #detailTemplate let-dataItem>
+                </ng-template> -->
+
+            </app-p-kendo-grid>
+        </div>
+    </div>
+    <!-- END BODY -->
+
+
+    <!--START DIALOG XÁC NHẬN -->
+    <app-p-kendo-dialog class="dialogPrice" *ngIf="dialog" [title]="'Xác nhận Xóa Đề nghị'"
+    (close)="closeDialog()"
+    (handleButton)="onDelete()"
+    [iconTitle]="'k-icon k-i-warning'"
+    [iconButton]="'delete'"
+    [cancelText]="'KHÔNG'"
+    [actionText]="'CÓ'"
+    [dialogType]="1"
+    >
+      <p>Bạn có chắc chắn muốn Xóa Đề nghị  <span style="color: green">{{priceRequest?.PartnerName}}</span> này? </p>
+     
+    </app-p-kendo-dialog>
+
+
+    <app-p-kendo-dialog class="dialogPrice" *ngIf="dialogMany" [title]="'Xác nhận Xóa đề nghị'"
+    (close)="closeDialog()"
+    (handleButton)="onDeleteManyItem()"
+    [iconTitle]="'k-icon k-i-warning'"
+    [iconButton]="'delete'"
+    [cancelText]="'KHÔNG'"
+    [actionText]="'CÓ'"
+    [dialogType]="1"
+    >
+      <p>Bạn có chắc chắn muốn Xóa <span style="color: green">{{listDelete.length}}</span> Đề nghị  này? </p>
+     
+    </app-p-kendo-dialog>
+    <!--END DIALOG XÁC NHẬN -->
+
+</div>

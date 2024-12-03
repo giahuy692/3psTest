@@ -1,0 +1,1329 @@
+<div class="hr007-personal-info">
+    <!-- header nav-btn -->
+  <div class="header">
+      <div class="breadcumb">
+          <app-p-kendo-breadcrumb (loadData)="loadPage()"></app-p-kendo-breadcrumb>
+      </div>
+      <!-- <div class="nav-btn nav-crud" *ngIf="isToanQuyen || isAllowedToCreate">
+          <button kendoButton class="k-button onAddBtn" [icon]="'plus'" (click)="onAddNew()">
+              TẠO MỚI
+          </button>
+      </div> -->
+  </div>
+  <!-- End header nav-btn -->
+
+  <div class="body">
+      <!-- //router left -->
+      <app-hr-menu-staff-info></app-hr-menu-staff-info>
+      <!-- End router left -->
+      <div class="body-right">
+        <app-personal-info-detail [isLockAll]="isLockAll" [isToanQuyen]="isToanQuyen"
+            [isAllowedToCreate]="isAllowedToCreate" [isAllowedToVerify]="isAllowedToVerify"
+            #personalInfoRef></app-personal-info-detail>
+        <!-- End body right - sections -->
+    </div>
+   <!-- body right - sections -->
+   <!-- <div class="body-right">
+      <div class="sections">
+          
+          <div class="section thongTinCoBan_tbl">
+              <div class="title">1. THÔNG TIN CƠ BẢN</div>
+              <div class="section-grid">
+                  <div class="grid-item item1">
+                      <kendo-label text="Họ"></kendo-label>
+                      <app-p-textbox 
+                      [propName]="'LastName'" 
+                      [(ngModel)]="personal.LastName" 
+                      (keydown.Enter)="$event.target.blur()" 
+                      (blur)="onTextboxLoseFocus(['LastName'], 1)"
+                      ></app-p-textbox>
+                  </div>
+                  <div class="grid-item item2">
+                      <kendo-label text="Tên đệm"></kendo-label>
+                      <app-p-textbox [propName]="'MiddleName'" 
+                      [(ngModel)]="personal.MiddleName"
+                      (keydown.Enter)="$event.target.blur()" 
+                      (blur)="onTextboxLoseFocus(['MiddleName'], 1)"
+                      ></app-p-textbox>
+                  </div>
+                  <div class="grid-item item3">
+                      <kendo-label text="Tên"></kendo-label>
+                      <app-p-textbox  [propName]="'FirstName'"
+                      [(ngModel)]="personal.FirstName"
+                      (keydown.Enter)="$event.target.blur()" 
+                      (blur)="onTextboxLoseFocus(['FirstName'], 1)"
+                      ></app-p-textbox>
+                  </div>
+                  <div class="grid-item item4">
+                      <kendo-label text="Tên viết tắt"></kendo-label>
+                      <app-p-textbox  [propName]="'NickName'" 
+                      [(ngModel)]="personal.NickName"
+                      (keydown.Enter)="$event.target.blur()" 
+                      (blur)="onTextboxLoseFocus(['NickName'], 1)"
+                      ></app-p-textbox>
+                  </div>
+                  <div class="grid-item item5">
+                      <kendo-label text="Giới tính"></kendo-label>
+                      <p-kendo-dropdownlist
+                      [data]="List['Gender']"
+                      [textField]="'ListName'"
+                      [valueField]="'OrderBy'"
+                      [defaultItem]="{ ListName: '-- Chọn --', OrderBy: null }"
+                      [(ngModel)]="SelectedGender"
+                      (valueChange)="onDropdownlistClick($event, ['Gender'], 1, 'Gender')"
+                      (open)="openDropdown('Gender', 2)"
+                      ></p-kendo-dropdownlist>
+                  </div>
+                  <div class="grid-item item6 Scroll">
+                      <kendo-label text="Quốc tịch"></kendo-label>
+                      <p-kendo-dropdownlist
+                      [data]="listNationality"
+                      textField="VNName"
+                      valueField="Code"
+                      [defaultItem]="{ VNName: '-- Chọn --', Code: null }"
+                      [(ngModel)]="SelectedNationality"
+                      (valueChange)="onDropdownlistClick($event, ['Nationality'], 1, 'Nationality')"
+                      (open)="openDropdown('Nationality', 0)"
+                      [filterable]="true"
+                      ></p-kendo-dropdownlist>
+                  </div>
+                  <div class="grid-item item7">
+                      <kendo-label text="Dân tộc"></kendo-label>
+                      <p-kendo-dropdownlist
+                      [data]="List['Ethnic']"
+                      textField="ListName"
+                      valueField="OrderBy"
+                      [defaultItem]="{ ListName: '-- Chọn --', OrderBy: null }"
+                      [(ngModel)]="SelectedEthnic"
+                      (valueChange)="onDropdownlistClick($event,['Ethnic'], 1, 'Ethnic')"
+                      (open)="openDropdown('Ethnic', 9)"
+                      ></p-kendo-dropdownlist>
+                  </div>
+                  <div class="grid-item item8">
+                      <kendo-label text="Tôn giáo"></kendo-label>
+                      <p-kendo-dropdownlist
+                      [data]="List['Religion']"
+                      textField="ListName"
+                      valueField="OrderBy"
+                      [(ngModel)]="SelectedReligion"
+                      [defaultItem]="{ ListName: 'Không', OrderBy: null }"
+                      (valueChange)="onDropdownlistClick($event, ['Religion'], 1, 'Religion')"
+                      (open)="openDropdown('Religion', 8)"
+                      ></p-kendo-dropdownlist>
+                  </div>
+                  <div class="grid-item item9">
+                      <kendo-label text="Tình trạng hôn nhân"></kendo-label>
+                      <p-kendo-dropdownlist
+                      [data]="List['Marital']"
+                      textField="ListName"
+                      valueField="OrderBy"
+                      [defaultItem]="{ ListName: '-- Chọn --', OrderBy: null }"
+                      [(ngModel)]="SelectedMarital"
+                      (valueChange)="onDropdownlistClick($event, ['Marital'], 1, 'Marital')"
+                      (open)="openDropdown('Marital', 7)"
+                      ></p-kendo-dropdownlist>
+                  </div>
+                  <div class="grid-item item10">
+                      <kendo-label text="Nguyên quán"></kendo-label>
+                      <app-p-textbox [propName]="'Domicile'" 
+                      [(ngModel)]="personal.Domicile"
+                      (keydown.Enter)="$event.target.blur()" 
+                      (blur)="onTextboxLoseFocus(['Domicile'], 1)"
+                      ></app-p-textbox>
+                  </div>
+                  <div class="grid-item item11">
+                      <kendo-label text="Ngày sinh (năm, tháng, ngày)"></kendo-label>
+                      <div class="list-dropdownlist">
+                          <p-kendo-dropdownlist
+                          [data]="years"
+                          [textField]="'ListName'"
+                          [valueField]="'OrderBy'"
+                          [(ngModel)]="SelectedBirthYear"
+                          (valueChange)="onDropdownlistClick($event, ['BirthYear', 'BirthMonth', 'BirthDay'], 1, 'BirthYear')"
+                          class="dropdownlist-year"
+                          ></p-kendo-dropdownlist>
+
+                          <p-kendo-dropdownlist
+                          [data]="dropdownMonth"
+                          [textField]="'ListName'"
+                          [valueField]="'OrderBy'"
+                          [(ngModel)]="SelectedBirthMonth"
+                          class="dropdownlist-month"
+                          (valueChange)="onDropdownlistClick($event, ['BirthMonth', 'BirthDay'], 1, 'BirthMonth')"
+                          [ngClass]="{'changeSize':  personal.BirthMonth == null}"
+                          ></p-kendo-dropdownlist>
+
+                          <p-kendo-dropdownlist
+                          [data]="dropdownDay"
+                          [textField]="'ListName'"
+                          [valueField]="'OrderBy'"
+                          [(ngModel)]="SelectedBirthDay"
+                          class="dropdownlist-date"
+                          (valueChange)="onDropdownlistClick($event, ['BirthDay'], 1, 'BirthDay')" 
+                          [ngClass]="{'changeSize':  personal.BirthDay == null}"
+                          ></p-kendo-dropdownlist>
+                      </div>
+                  </div>
+                  <div class="grid-item item12">
+                      <kendo-label text="Nơi sinh"></kendo-label>
+                      <app-p-textbox [propName]="'BirthPlace'" 
+                      [(ngModel)]="personal.BirthPlace"
+                      (keydown.Enter)="$event.target.blur()" 
+                      (blur)="onTextboxLoseFocus(['BirthPlace'], 1)"
+                      ></app-p-textbox>
+                  </div>
+              </div>
+          </div> 
+         
+
+          
+          <div class="section thongTinChungThuVaThueTNCN_tbl">
+              <div class="title">2. THÔNG TIN CHỨNG THỰC VÀ THUẾ TNCN</div>
+              <div class="section-grid">
+                  <div class="grid-item item1">
+                      <kendo-label text="Số CMND/CCCD"></kendo-label>
+                      <app-p-masked-textbox [mask]="'000000000000'"
+                      [propName]="'CertificateNo'"
+                      [(ngModel)]="personalCertificateType1.CertificateNo" 
+                      (keyup.enter)="$event.target.blur()"
+                      (onBlurCallback)="onTextboxLoseFocus(['CertificateNo', 'Code', 'TypeData'], 2, 'personalCertificateType1')">
+                      </app-p-masked-textbox>
+                  </div>
+                  <div class="grid-item item2">
+                      <kendo-label text="Ngày cấp"></kendo-label>
+                      <kendo-datepicker
+                      format="dd/MM/yyyy"
+                      placeholder="dd/MM/yyyy"
+                      formatPlaceholder="formatPattern"
+                      [min]="minDate"
+                      [max]="maxDate"
+                      [popupSettings]="{appendTo: 'root', popupClass: 'CustomPopupDatePickerPersonal' }"
+                      [(value)]="EffDateCCCD"
+                      (blur)="onDatepickerChange(['EffDate', 'ExpDate', 'TypeData'], 1)"
+                      ></kendo-datepicker>
+                  </div>
+                  <div class="grid-item item3">
+                      <kendo-label text="Ngày hết hạn"></kendo-label>
+                      <kendo-datepicker
+                      format="dd/MM/yyyy"
+                      placeholder="dd/MM/yyyy"
+                      formatPlaceholder="formatPattern"
+                      [(value)]="ExpDateCCCD"
+                      [min]="minEXPDate"
+                      [max]="maxEXPDate"
+                      [popupSettings]="{appendTo: 'root', popupClass: 'CustomPopupDatePickerPersonal' }"
+                      (blur)="onDatepickerChange(['ExpDate', 'TypeData'], 1)"
+                      ></kendo-datepicker>
+                  </div>
+                  <div class="grid-item item4">
+                      <kendo-label text="Nơi cấp"></kendo-label>
+                      <app-p-textbox [propName]="'Register'" 
+                      [(ngModel)]="personalCertificateType1.Register"
+                      (keydown.Enter)="$event.target.blur()" 
+                      (blur)="onTextboxLoseFocus(['Register'], 2, 'personalCertificateType1')"
+                      ></app-p-textbox>
+                  </div>
+                  <div class="grid-item item5">
+                      <kendo-label text="Số hộ chiếu (Passport)"></kendo-label>
+                      <app-p-textbox [propName]="'CertificateNo'"  
+                      [(ngModel)]="personalCertificateType2.CertificateNo" 
+                      (keydown.Enter)="$event.target.blur()" 
+                      (blur)="onTextboxLoseFocus(['CertificateNo', 'Code', 'TypeData'], 2, 'personalCertificateType2')"
+                      ></app-p-textbox>
+                  </div>
+                  <div class="grid-item item6">
+                      <kendo-label text="Ngày cấp"></kendo-label>
+                      <kendo-datepicker
+                      format="dd/MM/yyyy"
+                      placeholder="dd/MM/yyyy"
+                      formatPlaceholder="formatPattern"
+                      [(value)]="EffDatePP"
+                      [min]="minDate"
+                      [max]="maxDate"
+                      [popupSettings]="{appendTo: 'root', popupClass: 'CustomPopupDatePickerPersonal' }"
+                      (blur)="onDatepickerChange(['EffDate', 'ExpDate', 'TypeData'], 2)"
+                      ></kendo-datepicker>
+                  </div>
+                  <div class="grid-item item7">
+                      <kendo-label text="Ngày hết hạn"></kendo-label>
+                      <kendo-datepicker
+                      format="dd/MM/yyyy"
+                      placeholder="dd/MM/yyyy"
+                      formatPlaceholder="formatPattern"
+                      [min]="minEXPDate"
+                      [max]="maxEXPDate"
+                      [(value)]="ExpDatePP"
+                      [popupSettings]="{appendTo: 'root', popupClass: 'CustomPopupDatePickerPersonal' }"
+                      (blur)="onDatepickerChange(['ExpDate', 'TypeData'], 2)"
+                      ></kendo-datepicker>
+                  </div>
+                  <div class="grid-item item8">
+                      <kendo-label text="Nơi cấp"></kendo-label>
+                      <app-p-textbox [propName]="'Register'"
+                      [(ngModel)]="personalCertificateType2.Register"
+                      (keydown.Enter)="$event.target.blur()" 
+                      (blur)="onTextboxLoseFocus(['Register'], 2, 'personalCertificateType2')"
+                      ></app-p-textbox>
+                  </div>
+                  <div class="grid-item item9">
+                      <kendo-label text="Mã số thuế TNCN"></kendo-label>
+                      <app-p-textbox [propName]="'PITCode'" 
+                      [(ngModel)]="personal.PITCode"
+                      (keydown.Enter)="$event.target.blur()" 
+                      (blur)="onTextboxLoseFocus(['PITCode'], 1)"
+                      ></app-p-textbox>
+                  </div>
+                  <div class="grid-item item10">
+                      <kendo-label text="Ngày đăng ký"></kendo-label>
+                      <kendo-datepicker
+                      format="dd/MM/yyyy"
+                      placeholder="dd/MM/yyyy"
+                      formatPlaceholder="formatPattern"
+                      [(value)]="PITEffDate"
+                      (blur)="onDatepickerChange(['PITEffDate'], 3)"
+                      [popupSettings]="{appendTo: 'root', popupClass: 'CustomPopupDatePickerPersonal' }"
+                      ></kendo-datepicker>
+                  </div>
+                  <div class="grid-item item11">
+                      <kendo-label text="Nơi đăng ký"></kendo-label>
+                      <app-p-textbox  [propName]="'PITRegister'" 
+                      placeholder=""
+                      [(ngModel)]="personal.PITRegister"
+                      (keydown.Enter)="$event.target.blur()" 
+                      (blur)="onTextboxLoseFocus(['PITRegister'], 1)"
+                      ></app-p-textbox>
+                  </div>
+              </div>
+          </div>
+            
+
+       
+          <div class="section vanHoaChuyenMonNgheNghiep">
+              <div class="title">3. VĂN HÓA, CHUYÊN MÔN - NGHỀ NGHIỆP</div>
+              <div class="section-grid">
+                  <div class="grid-item item1 Scroll">
+                      <kendo-label text="Trình độ học vấn"></kendo-label>
+                      <kendo-dropdownlist
+                      [data]="ListFilter['Education']"
+                      [textField]="'ListName'"
+                      [valueField]="'OrderBy'"
+                      [defaultItem]="{ ListName: '-- Chọn --', OrderBy: null }"
+                      [(ngModel)]="SelectedEducation"
+                      [popupSettings]="{appendTo:'component'}"
+                      (valueChange)="onDropdownlistClick($event, ['Education'], 1, 'Education')"
+                      (open)="openDropdown('Education', 11)"
+                      (filterChange)="handleFilterDropdownlist($event, List['Education'], ListFilter['Education'] , 'Education' , 'ListName', 1)"
+                      [filterable]="true"
+                      ></kendo-dropdownlist>
+                  </div>
+                  <div class="grid-item item2">
+                      <kendo-label text="Học hàm"></kendo-label>
+                      <kendo-dropdownlist
+                      [data]="List['EduRank']"
+                      textField="ListName"
+                      valueField="OrderBy"
+                      [popupSettings]="{appendTo:'component'}"
+                      [defaultItem]="{ ListName: '-- Chọn --', OrderBy: null }"
+                      [(ngModel)]="SelectedEduRank"
+                      (valueChange)="onDropdownlistClick($event, ['EduRank'], 1, 'EduRank')"
+                      (open)="openDropdown('EduRank', 10)"
+                      ></kendo-dropdownlist>
+                  </div>
+                  <div class="grid-item item3">
+                      <kendo-label text="Học vị"></kendo-label>
+                      <kendo-dropdownlist
+                      [data]="List['EduDegree']"
+                      textField="ListName"
+                      valueField="OrderBy"
+                      [popupSettings]="{appendTo:'component'}"
+                      [defaultItem]="{ ListName: '-- Chọn --', OrderBy: null }"
+                      [(ngModel)]="SelectedEduDegree"
+                      (valueChange)="onDropdownlistClick($event, ['EduDegree'], 1, 'EduDegree')"
+                      (open)="openDropdown('EduDegree', 6)"
+                      ></kendo-dropdownlist>
+                  </div>
+                  <div class="grid-item item4">
+                      <kendo-label text="Lĩnh vực chuyên gia"></kendo-label>
+                      <app-p-textbox [propName]="'ExpertIn'"
+                      [(ngModel)]="personal.ExpertIn" 
+                      (keydown.Enter)="$event.target.blur()" 
+                      (blur)="onTextboxLoseFocus(['ExpertIn'], 1)"
+                      ></app-p-textbox>
+                  </div>
+                  <div class="grid-item item5">
+                      <kendo-label text="Nghề nghiệp"></kendo-label>
+                      <app-p-textbox [propName]="'Profession'"
+                      [(ngModel)]="personal.Profession" 
+                      (keydown.Enter)="$event.target.blur()" 
+                      (blur)="onTextboxLoseFocus(['Profession'], 1)"
+                      ></app-p-textbox>
+                  </div>
+              </div>
+          </div>
+          
+
+        
+          <div class="section thongTinLienHe">
+              <div class="title">4.THÔNG TIN LIÊN HỆ</div>
+              <div class="section-grid">
+                  <div class="grid-item item1">
+                      <span class="title-Checkbox">
+                          <kendo-label  text="Điện thoại di động 1"></kendo-label>
+                          <input type="checkbox" class="k-checkbox" [checked]="personalContact.IsCellPhoneZalo"
+                          (click)="clickCheckbox($event, 'IsCellPhoneZalo', 'Cellphone')" id="IsCellPhoneZalo"/>
+                          <label for="IsCellPhoneZalo" class="label">Tài khoản Zalo</label>
+                      </span> 
+                      <kendo-maskedtextbox 
+                      mask = "000 000 0000"
+                      [(ngModel)]="personalContact.Cellphone" 
+                      (keyup.enter)="$event.target.blur()"
+                      (blur)="onTextboxLoseFocus(['Cellphone'], 3)">
+                      </kendo-maskedtextbox>
+                  </div>
+                  <div class="grid-item item2">
+                      <span class="title-Checkbox">
+                          <kendo-label text="Điện thoại di động 2"></kendo-label>
+                          <input type="checkbox" class="k-checkbox" [checked]="personalContact.IsOtherCellphoneZalo"
+                          (click)="clickCheckbox($event, 'IsOtherCellphoneZalo', 'OtherCellphone')" id="IsOtherCellphoneZalo"/>
+                          <label for="IsOtherCellphoneZalo" class="label">Tài khoản Zalo</label>
+                      </span>
+                      <kendo-maskedtextbox 
+                      mask = "000 000 0000"
+                      [(ngModel)]="personalContact.OtherCellphone" 
+                      (keyup.enter)="$event.target.blur()"
+                      (blur)="onTextboxLoseFocus(['OtherCellphone'], 3)">
+                      </kendo-maskedtextbox>
+                  </div>
+                  <div class="grid-item item3">
+                      <kendo-label text="Email cá nhân"></kendo-label>
+                      <app-p-textbox [propName]="'Email'"
+                      [(ngModel)]="personalContact.Email" 
+                      (keydown.Enter)="$event.target.blur()" 
+                      (blur)="onTextboxLoseFocus(['Email'], 3)"
+                      >
+                      </app-p-textbox>
+                  </div>
+                  <div class="grid-item item4">
+                      <kendo-label text="Người liên hệ khẩn cấp"></kendo-label>
+                      <app-p-textbox [propName]="'Emergency'" 
+                      [(ngModel)]="personalContact.Emergency" 
+                      (keydown.Enter)="$event.target.blur()" 
+                      (blur)="onTextboxLoseFocus(['Emergency'], 3)"
+                     >
+                      </app-p-textbox>
+                  </div>
+                  <div class="grid-item item5">
+                      <kendo-label text="Số điện thoại liên hệ khẩn cấp"></kendo-label>
+                      <kendo-maskedtextbox 
+                      class="k-textbox"
+                      mask = "000 000 0000"
+                      [(ngModel)]="personalContact.EmergencyNo" 
+                      (keyup.enter)="$event.target.blur()"
+                      (blur)="onTextboxLoseFocus(['EmergencyNo'], 3)">
+                      </kendo-maskedtextbox>
+                  </div>
+                  <div class="grid-item item6">
+                      <kendo-label text="Mối quan hệ"></kendo-label>
+                      <app-p-textbox [propName]="'EmergencyRelationship'" 
+                      [(ngModel)]="personalContact.EmergencyRelationship" 
+                      (keydown.Enter)="$event.target.blur()" 
+                      (blur)="onTextboxLoseFocus(['EmergencyRelationship'], 3)"
+                      >
+                      </app-p-textbox>
+                  </div>
+                  <div class="grid-item item7">
+                      <kendo-label text="Mạng xã hội 1"></kendo-label>
+                      <span class="BoxInternet">
+                          <app-p-textbox [propName]="'SocialNetwork'" 
+                          [(ngModel)]="personalContact.SocialNetwork" 
+                          (keydown.Enter)="$event.target.blur()" 
+                          (blur)="onTextboxLoseFocus(['SocialNetwork'], 3)"
+                          >
+                          </app-p-textbox>
+                          <kendo-dropdownlist
+                          class="socialNetwork"
+                          [data]="List['SocialNetwork']"
+                          textField="ListName"
+                          valueField="OrderBy"
+                          [popupSettings]="{appendTo:'component'}"
+                          [defaultItem]="{ ListName: '--Chọn--', OrderBy: null }"
+                          [(ngModel)]="SelectedSocialNetworkTypeData"
+                          (valueChange)="onDropdownlistClick($event, ['SocialNetworkTypeData'], 3, 'SelectedSocialNetworkTypeData')"
+                          (open)="openDropdown('SocialNetwork', 14)"
+                          ></kendo-dropdownlist>
+                      </span>
+                  </div>
+                  <div class="grid-item item8">
+                      <kendo-label text="Mạng xã hội 2"></kendo-label>
+                      <span class="BoxInternet">
+                          <app-p-textbox [propName]="'OtherSocialNetwork'" 
+                          [(ngModel)]="personalContact.OtherSocialNetwork" 
+                          (keydown.Enter)="$event.target.blur()" 
+                          (blur)="onTextboxLoseFocus(['OtherSocialNetwork'], 3)"
+                          >
+                          </app-p-textbox>
+                          <kendo-dropdownlist
+                          [defaultItem]="{ ListName: '--Chọn--', OrderBy: null }"
+                          class="socialNetwork"
+                          [data]="List['SocialNetwork']"
+                          textField="ListName"
+                          valueField="OrderBy"
+                          [popupSettings]="{appendTo:'component'}"
+                          [(ngModel)]="SelectedOtherSocialNetworkTypeData"
+                          (valueChange)="onDropdownlistClick($event, ['OtherSocialNetworkTypeData'], 3, 'SelectedOtherSocialNetworkTypeData')"
+                          (open)="openDropdown('SocialNetwork', 14)"
+                          ></kendo-dropdownlist>
+                      </span>
+                  </div>
+                  <div class="grid-item item9">
+                      <kendo-label text="Tài khoản chat/VoIP"></kendo-label>
+                      <span class="BoxInternet">
+                          <app-p-textbox [propName]="'VoIP'" 
+                          [(ngModel)]="personalContact.VoIP" 
+                          (keydown.Enter)="$event.target.blur()" 
+                          (blur)="onTextboxLoseFocus(['VoIP'], 3)"
+                          >
+                          </app-p-textbox>
+                          <kendo-dropdownlist
+                          [defaultItem]="{ ListName: '--Chọn--', OrderBy: null }"
+                          class="socialNetwork"
+                          [data]="List['SocialNetwork']"
+                          textField="ListName"
+                          valueField="OrderBy"
+                          [popupSettings]="{appendTo:'component'}"
+                          [(ngModel)]="SelectedchatVoIP"
+                          (valueChange)="onDropdownlistClick($event, ['VoIPTypeData'], 3, 'SelectedchatVoIP')"
+                          (open)="openDropdown('SocialNetwork', 14)"
+                          ></kendo-dropdownlist>
+                      </span>
+                  </div>
+              </div>
+          </div>
+          
+          <div class="section diaChiCuTru">
+              <div class="title">5.   ĐỊA CHỈ CƯ TRÚ</div>
+              <div class="section-grid">
+                  <div class="grid-item item1">
+                      <kendo-label text="Địa chỉ thường trú"></kendo-label>
+                      <app-p-textbox [propName]="'Address'" 
+                      class="width500" 
+                      [(ngModel)]="personalAddressType1.Address" 
+                      (keydown.Enter)="$event.target.blur()" 
+                      (blur)="onTextboxLoseFocus(['Address', 'Code', 'TypeData'], 4, 'personalAddressType1')"
+                     >
+                      </app-p-textbox>
+                  </div>
+                  <div class="grid-item item2">
+                      <kendo-label text="Quốc gia"></kendo-label>
+                      <kendo-dropdownlist
+                      [data]="listNationalityFilter"
+                      textField="VNName"
+                      valueField="Code"
+                      [popupSettings]="{appendTo:'component'}"
+                      [defaultItem]="{ VNName: '-- Chọn --', Code: null }"
+                      [(ngModel)]="SelectedCountry1"
+                      (valueChange)="onDropdownlistClick($event, ['Country','Province', 'District','Ward'], 4, 'Country', 1)"
+                      (open)="openDropdown('Nationality', 0, 1)"
+                      (filterChange)="handleFilterDropdownlist($event, listNationality, listNationalityFilter, 'listNationalityFilter', 'VNName')"
+                      [filterable]="true"
+                      >
+                      </kendo-dropdownlist>
+                  </div>
+                  <div class="grid-item item3">
+                      <kendo-label text="Tỉnh thành"></kendo-label>
+                      <kendo-dropdownlist
+                      [data]="provinceList1Filter"
+                      textField="VNProvince"
+                      valueField="Code" 
+                      [defaultItem]="{ VNProvince: '-- Chọn --', Code: null }"
+                      [(ngModel)]="SelectedProvince1"       
+                      [popupSettings]="{appendTo:'component'}"               
+                      (valueChange)="onDropdownlistClick($event, ['Province', 'District', 'Ward'], 4, 'Province', 1)"
+                      [disabled]="!hasValueCountry1"
+                      (open)="openDropdown('Province1', 0, 1)"
+                      (filterChange)="handleFilterDropdownlist($event, provinceList1, provinceList1Filter, 'provinceList1Filter', 'VNProvince')"
+                      [filterable]="true"
+                      ></kendo-dropdownlist>
+                  </div>
+                  <div class="grid-item item4">
+                      <kendo-label text="Quận/huyện"></kendo-label>
+                      <kendo-dropdownlist
+                      [data]="districtList1Filter"
+                      textField="VNDistrict"
+                      valueField="Code"
+                      [(ngModel)]="SelectedDistrict1"   
+                      [defaultItem]="{ VNDistrict: '-- Chọn --', Code: null }"
+                      (valueChange)="onDropdownlistClick($event, ['District', 'Ward'], 4, 'District', 1)"
+                      [disabled]="!hasValueProvince1"
+                      [popupSettings]="{appendTo:'component'}"
+                      (open)="openDropdown('District1', 0, 1)"
+                      (filterChange)="handleFilterDropdownlist($event, districtList1, districtList1Filter, 'districtList1Filter', 'VNDistrict')"
+                      [filterable]="true"
+                      ></kendo-dropdownlist>
+                  </div>
+                  <div class="grid-item item5">
+                      <kendo-label text="Phường/xã"></kendo-label>
+                      <kendo-dropdownlist
+                      [data]="wardList1Filter"
+                      textField="VNWard"
+                      valueField="Code"
+                      [(ngModel)]="SelectedWard1" 
+                      [defaultItem]="{ VNWard: '-- Chọn --', Code: null }"
+                      (valueChange)="onDropdownlistClick($event, ['Ward'], 4, 'Ward', 1)"
+                      [disabled]="!hasValueDistrict1"
+                      [popupSettings]="{appendTo:'component'}"
+                      (open)="openDropdown('Ward1', 0, 1)"
+                      (filterChange)="handleFilterDropdownlist($event, wardList1, wardList1Filter, 'wardList1Filter', 'VNWard')"
+                      [filterable]="true"
+                      ></kendo-dropdownlist>
+                  </div>
+                  <div class="grid-item item6">
+                      <kendo-label text="Địa chỉ tạm trú"></kendo-label>
+                      <app-p-textbox  [propName]="'Address'" 
+                      class="width500" 
+                      [(ngModel)]="personalAddressType2.Address" 
+                      (keydown.Enter)="$event.target.blur()" 
+                      (blur)="onTextboxLoseFocus(['Address', 'Code', 'TypeData'], 4, 'personalAddressType2')"
+                     >
+                      </app-p-textbox>
+                  </div>
+                  <div class="grid-item item7">
+                      <kendo-label text="Quốc gia"></kendo-label>
+                      <kendo-dropdownlist
+                      [data]="listNationalityFilter"
+                      textField="VNName"
+                      valueField="Code"
+                      [defaultItem]="{ VNName: '-- Chọn --', Code: null }"
+                      [(ngModel)]="SelectedCountry2"
+                      [popupSettings]="{appendTo:'component'}"
+                      (valueChange)="onDropdownlistClick($event, ['Country', 'Province', 'District', 'Ward'], 4, 'Country', 2)"
+                      (open)="openDropdown('Nationality', 0, 2)"
+                      (filterChange)="handleFilterDropdownlist($event, listNationality, listNationalityFilter, 'listNationalityFilter', 'VNName')"
+                      [filterable]="true"
+                      ></kendo-dropdownlist>
+                  </div>
+                  <div class="grid-item item8">
+                      <kendo-label text="Tỉnh thành"></kendo-label>
+                      <kendo-dropdownlist
+                      [data]="provinceList2Filter"
+                      textField="VNProvince"
+                      valueField="Code"
+                      [(ngModel)]="SelectedProvince2"   
+                      (valueChange)="onDropdownlistClick($event, ['Province', 'District', 'Ward'], 4, 'Province', 2)"
+                      [defaultItem]="{ VNProvince: '-- Chọn --', Code: null }"
+                      [disabled]="!hasValueCountry2"
+                      [popupSettings]="{appendTo:'component'}"
+                      (open)="openDropdown('Province2', 0, 2)"
+                      (filterChange)="handleFilterDropdownlist($event, provinceList2, provinceList2Filter, 'provinceList2Filter', 'VNProvince')"
+                      [filterable]="true"
+                      ></kendo-dropdownlist>
+                  </div>
+                  <div class="grid-item item9">
+                      <kendo-label text="Quận/huyện"></kendo-label>
+                      <kendo-dropdownlist
+                      [data]="districtList2Filter"
+                      textField="VNDistrict"
+                      valueField="Code"
+                      [(ngModel)]="SelectedDistrict2" 
+                      [defaultItem]="{ VNDistrict: '-- Chọn --', Code: null }"
+                      (valueChange)="onDropdownlistClick($event, ['District', 'Ward'], 4, 'District', 2)"
+                      [disabled]="!hasValueProvince2"
+                      [popupSettings]="{appendTo:'component'}"
+                      (open)="openDropdown('District2', 0, 2)"
+                      (filterChange)="handleFilterDropdownlist($event, districtList2, districtList2Filter, 'districtList2Filter', 'VNDistrict')"
+                      [filterable]="true"
+                      ></kendo-dropdownlist>
+                  </div>
+                  
+                  <div class="grid-item item10">
+                      <kendo-label text="Phường/xã"></kendo-label>
+                      <kendo-dropdownlist
+                      [data]="wardList2Filter"
+                      textField="VNWard"
+                      valueField="Code"
+                      [(ngModel)]="SelectedWard2" 
+                      [defaultItem]="{ VNWard: '-- Chọn --', Code: null }"
+                      (valueChange)="onDropdownlistClick($event, ['Ward'], 4, 'Ward', 2)"
+                      [disabled]="!hasValueDistrict2"
+                      [popupSettings]="{appendTo:'component'}"
+                      (open)="openDropdown('Ward2', 0, 2)"
+                      (filterChange)="handleFilterDropdownlist($event, wardList2, wardList2Filter, 'wardList2Filter', 'VNWard')"
+                      [filterable]="true"
+                      ></kendo-dropdownlist>
+                  </div>
+              </div>
+          </div>
+          
+      </div>
+  
+  </div> -->
+</div>
+
+
+
+
+<!-- 
+<div class="hr007-personal-info">
+    <div class="header">
+        <div class="breadcumb">
+            <app-p-kendo-breadcrumb (loadData)="loadPage()"></app-p-kendo-breadcrumb>
+        </div>
+        <div class="nav-btn nav-crud" *ngIf="isToanQuyen || isAllowedToCreate">
+            <button kendoButton class="k-button onAddBtn" [icon]="'plus'" (click)="onAddNew()">
+                TẠO MỚI
+            </button>
+        </div>
+    </div>
+
+    <div class="body">
+        <app-hr-menu-staff-info></app-hr-menu-staff-info>
+
+     <div class="body-right">
+        <div class="sections">
+            <div class="section thongTinCoBan_tbl">
+                <div class="title">1. THÔNG TIN CƠ BẢN</div>
+                <div class="section-grid">
+                    <div class="grid-item item1">
+                        <kendo-label text="Họ"></kendo-label>
+                        <kendo-textbox type="text"  
+                        class="k-textbox" 
+                        [(value)]="personalChange.LastName" 
+                        (keydown.Enter)="$event.target.blur()" 
+                        (inputBlur)="onTextboxLoseFocus(['LastName'], 3)"
+                        ></kendo-textbox>
+                    </div>
+                    <div class="grid-item item2">
+                        <kendo-label text="Tên đệm"></kendo-label>
+                        <kendo-textbox type="text" 
+                        class="k-textbox" 
+                        [(value)]="personalChange.MiddleName"
+                        (keydown.Enter)="$event.target.blur()" 
+                        (inputBlur)="onTextboxLoseFocus(['MiddleName'], 3)"
+                        ></kendo-textbox>
+                    </div>
+                    <div class="grid-item item3">
+                        <kendo-label text="Tên"></kendo-label>
+                        <kendo-textbox type="text" 
+                        class="k-textbox" 
+                        [(value)]="personalChange.FirstName"
+                        (keydown.Enter)="$event.target.blur()" 
+                        (inputBlur)="onTextboxLoseFocus(['FirstName'], 3)"
+                        ></kendo-textbox>
+                    </div>
+                    <div class="grid-item item4">
+                        <kendo-label text="Tên viết tắt"></kendo-label>
+                        <kendo-textbox type="text" 
+                        class="k-textbox" 
+                        [(value)]="personalChange.NickName"
+                        (keydown.Enter)="$event.target.blur()" 
+                        (inputBlur)="onTextboxLoseFocus(['NickName'], 3)"
+                        ></kendo-textbox>
+                    </div>
+                    <div class="grid-item item5">
+                        <kendo-label text="Giới tính"></kendo-label>
+                        <kendo-dropdownlist
+                        [popupSettings]="{appendTo:'component'}"
+                        [data]="List['Gender']"
+                        textField="ListName"
+                        valueField="OrderBy"
+                        [defaultItem]="{ ListName: '-- Chọn --', OrderBy: null }"
+                        [(ngModel)]="SelectedGender"
+                        (valueChange)="onDropdownlistClick(['Gender'], 1, 'Gender')"
+                        (open)="openDropdown('Gender', 2)"
+                        ></kendo-dropdownlist>
+                    </div>
+                    <div class="grid-item item6 Scroll">
+                        <kendo-label text="Quốc tịch"></kendo-label>
+                        <kendo-dropdownlist
+                        [data]="listNationalityFilter"
+                        textField="VNName"
+                        valueField="Code"
+                        [defaultItem]="{ VNName: '-- Chọn --', Code: null }"
+                        [(ngModel)]="SelectedNationality"
+                        (valueChange)="onDropdownlistClick(['Nationality'], 1, 'Nationality')"
+                        (open)="openDropdown('Nationality', 0)"
+                        [popupSettings]="{appendTo:'component'}"
+                        (filterChange)="handleFilterDropdownlist($event, listNationality, listNationalityFilter, 'listNationalityFilter', 'VNName')"
+                        [filterable]="true"
+                        ></kendo-dropdownlist>
+                    </div>
+                    <div class="grid-item item7">
+                        <kendo-label text="Dân tộc"></kendo-label>
+                        <kendo-dropdownlist
+                        [data]="List['Ethnic']"
+                        textField="ListName"
+                        valueField="OrderBy"
+                        [defaultItem]="{ ListName: '-- Chọn --', OrderBy: null }"
+                        [(ngModel)]="SelectedEthnic"
+                        (valueChange)="onDropdownlistClick(['Ethnic'], 1, 'Ethnic')"
+                        (open)="openDropdown('Ethnic', 9)"
+                        [popupSettings]="{appendTo:'component'}"
+                        ></kendo-dropdownlist>
+                    </div>
+                    <div class="grid-item item8">
+                        <kendo-label text="Tôn giáo"></kendo-label>
+                        <kendo-dropdownlist
+                        [data]="List['Religion']"
+                        textField="ListName"
+                        valueField="OrderBy"
+                        [popupSettings]="{appendTo:'component'}"
+                        [(ngModel)]="SelectedReligion"
+                        [defaultItem]="{ ListName: 'Không', OrderBy: null }"
+                        (valueChange)="onDropdownlistClick(['Religion'], 1, 'Religion')"
+                        (open)="openDropdown('Religion', 8)"
+                        ></kendo-dropdownlist>
+                    </div>
+                    <div class="grid-item item9">
+                        <kendo-label text="Tình trạng hôn nhân"></kendo-label>
+                        <kendo-dropdownlist
+                        [data]="List['Marital']"
+                        textField="ListName"
+                        valueField="OrderBy"
+                        [defaultItem]="{ ListName: '-- Chọn --', OrderBy: null }"
+                        [(ngModel)]="SelectedMarital"
+                        (valueChange)="onDropdownlistClick(['Marital'], 1, 'Marital')"
+                        (open)="openDropdown('Marital', 7)"
+                        [popupSettings]="{appendTo:'component'}"
+                        ></kendo-dropdownlist>
+                    </div>
+                    <div class="grid-item item10">
+                        <kendo-label text="Nguyên quán"></kendo-label>
+                        <kendo-textbox type="text" 
+                        class="k-textbox" 
+                        [(value)]="personalChange.Domicile"
+                        (keydown.Enter)="$event.target.blur()" 
+                        (inputBlur)="onTextboxLoseFocus(['Domicile'], 3)"
+                        ></kendo-textbox>
+                    </div>
+                    <div class="grid-item item11">
+                        <kendo-label text="Ngày sinh (năm, tháng, ngày)"></kendo-label>
+                        <div class="list-dropdownlist">
+                            <kendo-dropdownlist
+                            [data]="years"
+                            [textField]="'text'"
+                            [valueField]="'value'"
+                            [(ngModel)]="SelectedYear"
+                            [valuePrimitive]="true"
+                            (valueChange)="onDropdownlistClick(['BirthYear', 'BirthMonth', 'BirthDay'], 2, 'SelectedYear')"
+                            class="dropdownlist-year"
+                            [popupSettings]="{appendTo:'component'}"
+                            ></kendo-dropdownlist>
+
+                            <kendo-dropdownlist
+                            [data]="dropdownMonth"
+                            [textField]="'text'"
+                            [valueField]="'value'"
+                            [(ngModel)]="SelectedMonth"
+                            class="dropdownlist-month"
+                            [valuePrimitive]="true"
+                            (valueChange)="onDropdownlistClick(['BirthMonth', 'BirthDay'], 2, 'SelectedMonth')"
+                            [popupSettings]="{appendTo:'component'}"
+                            ></kendo-dropdownlist>
+
+                            <kendo-dropdownlist
+                            [data]="dropdownDay"
+                            [textField]="'text'"
+                            [valueField]="'value'"
+                            [(ngModel)]="SelectedDay"
+                            class="dropdownlist-date"
+                            [valuePrimitive]="true"
+                            [popupSettings]="{appendTo:'component'}"
+                            (valueChange)="onDropdownlistClick(['BirthDay'], 2, 'SelectedDay')" 
+                            ></kendo-dropdownlist>
+                        </div>
+                    </div>
+                    <div class="grid-item item12">
+                        <kendo-label text="Nơi sinh"></kendo-label>
+                        <kendo-textbox type="text" 
+                        class="k-textbox box" 
+                        [(value)]="personalChange.BirthPlace"
+                        (keydown.Enter)="$event.target.blur()" 
+                        (inputBlur)="onTextboxLoseFocus(['BirthPlace'], 3)"
+                        ></kendo-textbox>
+                    </div>
+                </div>
+            </div> 
+
+            <div class="section thongTinChungThuVaThueTNCN_tbl">
+                <div class="title">2. THÔNG TIN CHỨNG THỰC VÀ THUẾ TNCN</div>
+                <div class="section-grid">
+                    <div class="grid-item item1">
+                        <kendo-label text="Số CMND/CCCD"></kendo-label>
+                        <input type="tel" 
+                        class="k-textbox" 
+                        (keypress)="onKeyPress($event)"
+                        [(ngModel)]="CCCDCode" 
+                        (keyup.enter)="$event.target.blur()"
+                        (blur)="onTextboxLoseFocus(['CertificateNo', 'Code', 'TypeData'], 1)">
+                    </div>
+                    <div class="grid-item item2">
+                        <kendo-label text="Ngày cấp"></kendo-label>
+                        <kendo-datepicker
+                        format="dd/MM/yyyy"
+                        placeholder="dd/MM/yyyy"
+                        formatPlaceholder="formatPattern"
+                        [min]="minDate"
+                        [max]="maxDate"
+                        [(value)]="EffDateCCCD"
+                        (blur)="onDatepickerChange(['EffDate', 'ExpDate'], 1)"
+                        ></kendo-datepicker>
+                    </div>
+                    <div class="grid-item item3">
+                        <kendo-label text="Ngày hết hạn"></kendo-label>
+                        <kendo-datepicker
+                        format="dd/MM/yyyy"
+                        placeholder="dd/MM/yyyy"
+                        formatPlaceholder="formatPattern"
+                        [(value)]="ExpDateCCCD"
+                        [min]="minEXPDate"
+                        [max]="maxEXPDate"
+                        (blur)="onDatepickerChange(['ExpDate'], 3)"
+                        ></kendo-datepicker>
+                    </div>
+                    <div class="grid-item item4">
+                        <kendo-label text="Nơi cấp"></kendo-label>
+                        <kendo-textbox type="text" 
+                        class="k-textbox" 
+                        [(value)]="issuedbyCCCD"
+                        (keydown.Enter)="$event.target.blur()" 
+                        (inputBlur)="onTextboxLoseFocus(['Register'], 7)"
+                        ></kendo-textbox>
+                    </div>
+                    <div class="grid-item item5">
+                        <kendo-label text="Số hộ chiếu (Passport)"></kendo-label>
+                        <kendo-textbox type="text"  
+                        class="k-textbox" 
+                        [(value)]="PassportCode" 
+                        (keydown.Enter)="$event.target.blur()" 
+                        (inputBlur)="onTextboxLoseFocus(['CertificateNo', 'Code', 'TypeData'], 2)"
+                        ></kendo-textbox>
+                    </div>
+                    <div class="grid-item item6">
+                        <kendo-label text="Ngày cấp"></kendo-label>
+                        <kendo-datepicker
+                        format="dd/MM/yyyy"
+                        placeholder="dd/MM/yyyy"
+                        formatPlaceholder="formatPattern"
+                        [(value)]="EffDatePP"
+                        [min]="minDate"
+                        [max]="maxDate"
+                        (blur)="onDatepickerChange(['EffDate', 'ExpDate'], 2)"
+                        ></kendo-datepicker>
+                    </div>
+                    <div class="grid-item item7">
+                        <kendo-label text="Ngày hết hạn"></kendo-label>
+                        <kendo-datepicker
+                        format="dd/MM/yyyy"
+                        placeholder="dd/MM/yyyy"
+                        formatPlaceholder="formatPattern"
+                        [min]="minEXPDate"
+                        [max]="maxEXPDate"
+                        [(value)]="ExpDatePP"
+                        (blur)="onDatepickerChange(['ExpDate'], 4)"
+                        ></kendo-datepicker>
+                    </div>
+                    <div class="grid-item item8">
+                        <kendo-label text="Nơi cấp"></kendo-label>
+                        <kendo-textbox type="text" 
+                        class="k-textbox" 
+                        [(value)]="issuedbyPass"
+                        (keydown.Enter)="$event.target.blur()" 
+                        (inputBlur)="onTextboxLoseFocus(['Register'], 8)"
+                        ></kendo-textbox>
+                    </div>
+                    <div class="grid-item item9">
+                        <kendo-label text="Mã số thuế TNCN"></kendo-label>
+                        <kendo-textbox type="text"  
+                        class="k-textbox" 
+                        [(value)]="personalChange.PITCode"
+                        (keydown.Enter)="$event.target.blur()" 
+                        (inputBlur)="onTextboxLoseFocus(['PITCode'], 3)"
+                        ></kendo-textbox>
+                    </div>
+                    <div class="grid-item item10">
+                        <kendo-label text="Ngày đăng ký"></kendo-label>
+                        <kendo-datepicker
+                        format="dd/MM/yyyy"
+                        placeholder="dd/MM/yyyy"
+                        formatPlaceholder="formatPattern"
+                        [(value)]="PITEffDate"
+                        (blur)="onDatepickerChange(['PITEffDate'], 5)"
+                        ></kendo-datepicker>
+                    </div>
+                    <div class="grid-item item11">
+                        <kendo-label text="Nơi đăng ký"></kendo-label>
+                        <kendo-textbox type="text"  
+                        class="k-textbox" 
+                        placeholder=""
+                        [(value)]="personalChange.PITRegister"
+                        (keydown.Enter)="$event.target.blur()" 
+                        (inputBlur)="onTextboxLoseFocus(['PITRegister'], 3)"
+                        ></kendo-textbox>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section vanHoaChuyenMonNgheNghiep">
+                <div class="title">3. VĂN HÓA, CHUYÊN MÔN - NGHỀ NGHIỆP</div>
+                <div class="section-grid">
+                    <div class="grid-item item1 Scroll">
+                        <kendo-label text="Trình độ học vấn"></kendo-label>
+                        <kendo-dropdownlist
+                        [data]="ListFilter['Education']"
+                        [textField]="'ListName'"
+                        [valueField]="'OrderBy'"
+                        [defaultItem]="{ ListName: '-- Chọn --', OrderBy: null }"
+                        [(ngModel)]="SelectedEducation"
+                        [popupSettings]="{appendTo:'component'}"
+                        (valueChange)="onDropdownlistClick(['Education'], 1, 'Education')"
+                        (open)="openDropdown('Education', 11)"
+                        (filterChange)="handleFilterDropdownlist($event, List['Education'], ListFilter['Education'] , 'Education' , 'ListName', 1)"
+                        [filterable]="true"
+                        ></kendo-dropdownlist>
+                    </div>
+                    <div class="grid-item item2">
+                        <kendo-label text="Học hàm"></kendo-label>
+                        <kendo-dropdownlist
+                        [data]="List['EduRank']"
+                        textField="ListName"
+                        valueField="OrderBy"
+                        [popupSettings]="{appendTo:'component'}"
+                        [defaultItem]="{ ListName: '-- Chọn --', OrderBy: null }"
+                        [(ngModel)]="SelectedEduRank"
+                        (valueChange)="onDropdownlistClick(['EduRank'], 1, 'EduRank')"
+                        (open)="openDropdown('EduRank', 10)"
+                        ></kendo-dropdownlist>
+                    </div>
+                    <div class="grid-item item3">
+                        <kendo-label text="Học vị"></kendo-label>
+                        <kendo-dropdownlist
+                        [data]="List['EduDegree']"
+                        textField="ListName"
+                        valueField="OrderBy"
+                        [popupSettings]="{appendTo:'component'}"
+                        [defaultItem]="{ ListName: '-- Chọn --', OrderBy: null }"
+                        [(ngModel)]="SelectedEduDegree"
+                        (valueChange)="onDropdownlistClick(['EduDegree'], 1, 'EduDegree')"
+                        (open)="openDropdown('EduDegree', 6)"
+                        ></kendo-dropdownlist>
+                    </div>
+                    <div class="grid-item item4">
+                        <kendo-label text="Lĩnh vực chuyên gia"></kendo-label>
+                        <kendo-textbox type="text"  
+                        class="k-textbox"
+                        [(value)]="personalChange.ExpertIn" 
+                        (keydown.Enter)="$event.target.blur()" 
+                        (inputBlur)="onTextboxLoseFocus(['ExpertIn'], 3)"
+                        ></kendo-textbox>
+                    </div>
+                    <div class="grid-item item5">
+                        <kendo-label text="Nghề nghiệp"></kendo-label>
+                        <kendo-textbox type="text"  
+                        class="k-textbox"
+                        [(value)]="personalChange.Profession" 
+                        (keydown.Enter)="$event.target.blur()" 
+                        (inputBlur)="onTextboxLoseFocus(['Profession'], 3)"
+                        ></kendo-textbox>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section thongTinLienHe">
+                <div class="title">4.THÔNG TIN LIÊN HỆ</div>
+                <div class="section-grid">
+                    <div class="grid-item item1">
+                        <span class="title-Checkbox">
+                            <kendo-label  text="Điện thoại di động 1"></kendo-label>
+                            <input type="checkbox" class="k-checkbox" [checked]="personalContactChange.IsCellPhoneZalo"
+                            (click)="clickCheckbox($event, 'IsCellPhoneZalo')" id="IsCellPhoneZalo"/>
+                            <label for="IsCellPhoneZalo" class="label">Tài khoản Zalo</label>
+                        </span> 
+                        <kendo-maskedtextbox 
+                        mask = "000 000 0000"
+                        [(value)]="personalContactChange.Cellphone" 
+                        (keyup.enter)="$event.target.blur()"
+                        (blur)="onTextboxLoseFocus(['Cellphone'], 4)">
+                        </kendo-maskedtextbox>
+                    </div>
+                    <div class="grid-item item2">
+                        <span class="title-Checkbox">
+                            <kendo-label text="Điện thoại di động 2"></kendo-label>
+                            <input type="checkbox" class="k-checkbox" [checked]="personalContactChange.IsOtherCellphoneZalo"
+                            (click)="clickCheckbox($event, 'IsOtherCellphoneZalo')" id="IsOtherCellphoneZalo"/>
+                            <label for="IsOtherCellphoneZalo" class="label">Tài khoản Zalo</label>
+                        </span>
+                        <kendo-maskedtextbox 
+                        mask = "000 000 0000"
+                        [(value)]="personalContactChange.OtherCellphone" 
+                        (keyup.enter)="$event.target.blur()"
+                        (blur)="onTextboxLoseFocus(['OtherCellphone'], 4)">
+                        </kendo-maskedtextbox>
+                    </div>
+                    <div class="grid-item item3">
+                        <kendo-label text="Email cá nhân"></kendo-label>
+                        <kendo-textbox type="text"  
+                        class="k-textbox" 
+                        [(value)]="personalContactChange.Email" 
+                        (keydown.Enter)="$event.target.blur()" 
+                        (inputBlur)="onTextboxLoseFocus(['Email'], 4)"
+                        >
+                        </kendo-textbox>
+                    </div>
+                    <div class="grid-item item4">
+                        <kendo-label text="Người liên hệ khẩn cấp"></kendo-label>
+                        <kendo-textbox type="text"  
+                        class="k-textbox" 
+                        [(value)]="personalContactChange.Emergency" 
+                        (keydown.Enter)="$event.target.blur()" 
+                        (inputBlur)="onTextboxLoseFocus(['Emergency'], 4)"
+                       >
+                        </kendo-textbox>
+                    </div>
+                    <div class="grid-item item5">
+                        <kendo-label text="Số điện thoại liên hệ khẩn cấp"></kendo-label>
+                        <kendo-maskedtextbox 
+                        class="k-textbox"
+                        mask = "000 000 0000"
+                        [(value)]="personalContactChange.EmergencyNo" 
+                        (keyup.enter)="$event.target.blur()"
+                        (blur)="onTextboxLoseFocus(['EmergencyNo'], 4)">
+                        </kendo-maskedtextbox>
+                    </div>
+                    <div class="grid-item item6">
+                        <kendo-label text="Mối quan hệ"></kendo-label>
+                        <kendo-textbox type="text"  
+                        [(value)]="personalContactChange.EmergencyRelationship" 
+                        class="k-textbox" 
+                        (keydown.Enter)="$event.target.blur()" 
+                        (inputBlur)="onTextboxLoseFocus(['EmergencyRelationship'], 4)"
+                        >
+                        </kendo-textbox>
+                    </div>
+                    <div class="grid-item item7">
+                        <kendo-label text="Mạng xã hội 1"></kendo-label>
+                        <span class="BoxInternet">
+                            <kendo-textbox type="text"  
+                            class="k-textbox" 
+                            [(value)]="personalContactChange.SocialNetwork" 
+                            (keydown.Enter)="$event.target.blur()" 
+                            (inputBlur)="onTextboxLoseFocus(['SocialNetwork'], 4)"
+                            >
+                            </kendo-textbox>
+                            <kendo-dropdownlist
+                            class="socialNetwork"
+                            [data]="List['SocialNetwork']"
+                            textField="ListName"
+                            valueField="OrderBy"
+                            [popupSettings]="{appendTo:'component'}"
+                            [defaultItem]="{ ListName: '--Chọn--', OrderBy: null }"
+                            [(ngModel)]="SelectedSocialNetworkTypeData"
+                            (valueChange)="onDropdownlistClick(['SocialNetworkTypeData'], 3, 'SelectedSocialNetworkTypeData')"
+                            (open)="openDropdown('SocialNetwork', 14)"
+                            ></kendo-dropdownlist>
+                        </span>
+                    </div>
+                    <div class="grid-item item8">
+                        <kendo-label text="Mạng xã hội 2"></kendo-label>
+                        <span class="BoxInternet">
+                            <kendo-textbox type="text"  
+                            class="k-textbox" 
+                            [(value)]="personalContactChange.OtherSocialNetwork" 
+                            (keydown.Enter)="$event.target.blur()" 
+                            (inputBlur)="onTextboxLoseFocus(['OtherSocialNetwork'], 4)"
+                            >
+                            </kendo-textbox>
+                            <kendo-dropdownlist
+                            [defaultItem]="{ ListName: '--Chọn--', OrderBy: null }"
+                            class="socialNetwork"
+                            [data]="List['SocialNetwork']"
+                            textField="ListName"
+                            valueField="OrderBy"
+                            [popupSettings]="{appendTo:'component'}"
+                            [(ngModel)]="SelectedOtherSocialNetworkTypeData"
+                            (valueChange)="onDropdownlistClick(['OtherSocialNetworkTypeData'], 3, 'SelectedOtherSocialNetworkTypeData')"
+                            (open)="openDropdown('SocialNetwork', 14)"
+                            ></kendo-dropdownlist>
+                        </span>
+                    </div>
+                    <div class="grid-item item9">
+                        <kendo-label text="Tài khoản chat/VoIP"></kendo-label>
+                        <span class="BoxInternet">
+                            <kendo-textbox type="text"  
+                            class="k-textbox" 
+                            [(value)]="personalContactChange.VoIP" 
+                            (keydown.Enter)="$event.target.blur()" 
+                            (inputBlur)="onTextboxLoseFocus(['VoIP'], 4)"
+                            >
+                            </kendo-textbox>
+                            <kendo-dropdownlist
+                            [defaultItem]="{ ListName: '--Chọn--', OrderBy: null }"
+                            class="socialNetwork"
+                            [data]="List['SocialNetwork']"
+                            textField="ListName"
+                            valueField="OrderBy"
+                            [popupSettings]="{appendTo:'component'}"
+                            [(ngModel)]="SelectedchatVoIP"
+                            (valueChange)="onDropdownlistClick(['VoIPTypeData'], 3, 'SelectedchatVoIP')"
+                            (open)="openDropdown('SocialNetwork', 14)"
+                            ></kendo-dropdownlist>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section diaChiCuTru">
+                <div class="title">5.   ĐỊA CHỈ CƯ TRÚ</div>
+                <div class="section-grid">
+                    <div class="grid-item item1">
+                        <kendo-label text="Địa chỉ thường trú"></kendo-label>
+                        <kendo-textbox type="text"  
+                        class="k-textbox width500" 
+                        [(value)]="PermanentAddress" 
+                        (keydown.Enter)="$event.target.blur()" 
+                        (inputBlur)="onTextboxLoseFocus(['Address', 'Code', 'TypeData'], 5)"
+                       >
+                        </kendo-textbox>
+                    </div>
+                    <div class="grid-item item2">
+                        <kendo-label text="Quốc gia"></kendo-label>
+                        <kendo-dropdownlist
+                        [data]="listNationalityFilter"
+                        textField="VNName"
+                        valueField="Code"
+                        [popupSettings]="{appendTo:'component'}"
+                        [defaultItem]="{ VNName: '-- Chọn --', Code: null }"
+                        [(ngModel)]="SelectedCountryOfResidence"
+                        (valueChange)="onDropdownlistClick(['Country','Code', 'TypeData','Province', 'District','Ward'], 4, 'SelectedCountryOfResidence')"
+                        (open)="openDropdown('Nationality', 0)"
+                        (filterChange)="handleFilterDropdownlist($event, listNationality, listNationalityFilter, 'listNationalityFilter', 'VNName')"
+                        [filterable]="true"
+                        >
+                        </kendo-dropdownlist>
+                    </div>
+                    <div class="grid-item item3">
+                        <kendo-label text="Tỉnh thành"></kendo-label>
+                        <kendo-dropdownlist
+                        [data]="provinceList1Filter"
+                        textField="VNProvince"
+                        valueField="Code" 
+                        [defaultItem]="{ VNProvince: '-- Chọn --', Code: null }"
+                        [(ngModel)]="SelectedProvincePermanent"       
+                        [popupSettings]="{appendTo:'component'}"               
+                        (valueChange)="onDropdownlistClick(['Province', 'Code', 'TypeData', 'District', 'Ward'], 5, 'SelectedProvincePermanent')"
+                        [disabled]="notSelectedProvince1"
+                        (open)="openDropdown('ProvincePermanent', 0)"
+                        (filterChange)="handleFilterDropdownlist($event, provinceList1, provinceList1Filter, 'provinceList1Filter', 'VNProvince')"
+                        [filterable]="true"
+                        ></kendo-dropdownlist>
+                    </div>
+                    <div class="grid-item item4">
+                        <kendo-label text="Quận/huyện"></kendo-label>
+                        <kendo-dropdownlist
+                        [data]="districtList1Filter"
+                        textField="VNDistrict"
+                        valueField="Code"
+                        [(ngModel)]="SelectedDistrictPermanent"   
+                        [defaultItem]="{ VNDistrict: '-- Chọn --', Code: null }"
+                        (valueChange)="onDropdownlistClick(['District', 'Code', 'TypeData', 'Ward'], 6, 'SelectedDistrictPermanent')"
+                        [disabled]="notSelectedDistrict1"
+                        [popupSettings]="{appendTo:'component'}"
+                        (open)="openDropdown('DistrictPermanent', 0)"
+                        (filterChange)="handleFilterDropdownlist($event, districtList1, districtList1Filter, 'districtList1Filter', 'VNDistrict')"
+                        [filterable]="true"
+                        ></kendo-dropdownlist>
+                    </div>
+                    <div class="grid-item item5">
+                        <kendo-label text="Phường/xã"></kendo-label>
+                        <kendo-dropdownlist
+                        [data]="wardList1Filter"
+                        textField="VNWard"
+                        valueField="Code"
+                        [(ngModel)]="SelectedWardPermanent" 
+                        [defaultItem]="{ VNWard: '-- Chọn --', Code: null }"
+                        (valueChange)="onDropdownlistClick(['Ward', 'Code', 'TypeData'], 7, 'SelectedWardPermanent')"
+                        [disabled]="notSelectedWard1"
+                        [popupSettings]="{appendTo:'component'}"
+                        (open)="openDropdown('WardPermanent', 0)"
+                        (filterChange)="handleFilterDropdownlist($event, wardList1, wardList1Filter, 'wardList1Filter', 'VNWard')"
+                        [filterable]="true"
+                        ></kendo-dropdownlist>
+                    </div>
+                    <div class="grid-item item6">
+                        <kendo-label text="Địa chỉ tạm trú"></kendo-label>
+                        <kendo-textbox type="text"  
+                        class="k-textbox width500" 
+                        [(value)]="TemporaryResidenceAddress" 
+                        (keydown.Enter)="$event.target.blur()" 
+                        (inputBlur)="onTextboxLoseFocus(['Address', 'Code', 'TypeData'], 6)"
+                       >
+                        </kendo-textbox>
+                    </div>
+                    <div class="grid-item item7">
+                        <kendo-label text="Quốc gia"></kendo-label>
+                        <kendo-dropdownlist
+                        [data]="listNationalityFilter"
+                        textField="VNName"
+                        valueField="Code"
+                        [defaultItem]="{ VNName: '-- Chọn --', Code: null }"
+                        [(ngModel)]="SelectedCountry"
+                        [popupSettings]="{appendTo:'component'}"
+                        (valueChange)="onDropdownlistClick(['Country','Code', 'TypeData', 'Province', 'District', 'Ward'], 4, 'SelectedCountry')"
+                        (open)="openDropdown('Nationality', 0)"
+                        (filterChange)="handleFilterDropdownlist($event, listNationality, listNationalityFilter, 'listNationalityFilter', 'VNName')"
+                        [filterable]="true"
+                        ></kendo-dropdownlist>
+                    </div>
+                    <div class="grid-item item8">
+                        <kendo-label text="Tỉnh thành"></kendo-label>
+                        <kendo-dropdownlist
+                        [data]="provinceList2Filter"
+                        textField="VNProvince"
+                        valueField="Code"
+                        [(ngModel)]="SelectedProvinceTemporaryResidence"   
+                        (valueChange)="onDropdownlistClick(['Province', 'Code', 'TypeData', 'District', 'Ward'], 5, 'SelectedProvinceTemporaryResidence')"
+                        [defaultItem]="{ VNProvince: '-- Chọn --', Code: null }"
+                        [disabled]="notSelectedProvince2"
+                        [popupSettings]="{appendTo:'component'}"
+                        (open)="openDropdown('ProvinceTemporaryResidence', 0)"
+                        (filterChange)="handleFilterDropdownlist($event, provinceList2, provinceList2Filter, 'provinceList2Filter', 'VNProvince')"
+                        [filterable]="true"
+                        ></kendo-dropdownlist>
+                    </div>
+                    <div class="grid-item item9">
+                        <kendo-label text="Quận/huyện"></kendo-label>
+                        <kendo-dropdownlist
+                        [data]="districtList2Filter"
+                        textField="VNDistrict"
+                        valueField="Code"
+                        [(ngModel)]="SelectedDistrictTemporaryResidence" 
+                        [defaultItem]="{ VNDistrict: '-- Chọn --', Code: null }"
+                        (valueChange)="onDropdownlistClick(['District', 'Code', 'TypeData', 'Ward'], 6, 'SelectedDistrictTemporaryResidence')"
+                        [disabled]="notSelectedDistrict2"
+                        [popupSettings]="{appendTo:'component'}"
+                        (open)="openDropdown('DistrictTemporaryResidence', 0)"
+                        (filterChange)="handleFilterDropdownlist($event, districtList2, districtList2Filter, 'districtList2Filter', 'VNDistrict')"
+                        [filterable]="true"
+                        ></kendo-dropdownlist>
+                    </div>
+                    
+                    <div class="grid-item item10">
+                        <kendo-label text="Phường/xã"></kendo-label>
+                        <kendo-dropdownlist
+                        [data]="wardList2Filter"
+                        textField="VNWard"
+                        valueField="Code"
+                        [(ngModel)]="SelectedWardTemporaryResidence" 
+                        [defaultItem]="{ VNWard: '-- Chọn --', Code: null }"
+                        (valueChange)="onDropdownlistClick(['Ward', 'Code', 'TypeData'], 7, 'SelectedWardTemporaryResidence')"
+                        [disabled]="notSelectedWard2"
+                        [popupSettings]="{appendTo:'component'}"
+                        (open)="openDropdown('WardTemporaryResidence', 0)"
+                        (filterChange)="handleFilterDropdownlist($event, wardList2, wardList2Filter, 'wardList2Filter', 'VNWard')"
+                        [filterable]="true"
+                        ></kendo-dropdownlist>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

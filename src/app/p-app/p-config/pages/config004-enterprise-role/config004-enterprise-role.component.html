@@ -1,0 +1,200 @@
+<div class="app-drawer-container">
+
+    <kendo-drawer-container>
+        <!-- DRAWER -->
+        <kendo-drawer #drawerRight mode="overlay" [(expanded)]="expandedRight" 
+        [(autoCollapse)]="isautoCollapse" fillMode="flat" [position]="'end'">
+        
+            <ng-template kendoDrawerTemplate let-item>
+                <div class="ContetDrawer">
+                    <!-- header -->
+                    <div class="headerDrawer">
+                        <div class="title">THÔNG TIN VAI TRÒ</div>
+                    </div>
+                    <!-- Form content -->
+                    <form [formGroup]="formData" class="formContent">
+                        <!-- Công ty -->
+                        <div class="form Company">
+                            <kendo-label text="Công ty"><span class="symbol">(*)</span></kendo-label>
+                            <kendo-dropdownlist 
+                                [data]="ListCompany" 
+                                class="CustomDropdownlist" 
+                                textField="Bieft" 
+                                valueField="Code" 
+                                name="Company"
+                                [valuePrimitive]="true"
+                                [ngClass]="{'disableInput':  isSeen  }"
+                                [popupSettings]="{ appendTo: 'component' }"
+                                formControlName="Company">
+                            </kendo-dropdownlist>
+                        </div>
+                        <!-- Vai trò người dùng -->
+                        <div class="form Role">
+                            <kendo-label text="Vai trò người dùng"><span class="symbol">(*)</span></kendo-label>
+                            <kendo-textbox formControlName="RoleName" [ngClass]="{'disableInput':  isOnlySeen  }"></kendo-textbox>
+
+                        </div>
+                        <!-- Mã vai trò -->
+                        <div class="form RoleID">
+                            <kendo-label text="Mã vai trò"><span class="symbol">(*)</span></kendo-label>
+                            <kendo-textbox formControlName="RoleID" [ngClass]="{'disableInput':  isOnlySeen  }"></kendo-textbox>
+                        </div>
+                        <!-- Loại vai trò và là quản trị hệ thống -->
+                        <div class="form Group">
+                            <div class="GroupTitle">
+                                <!-- Loại vai trò -->
+                                <kendo-label text="Loại vai trò"><span class="symbol">(*)</span></kendo-label>
+                                <!-- là quản trị hệ thống -->
+                                <kendo-label text="Là quản trị hệ thống" for="IsSupperAdmin" class="admin">
+                                    <input 
+                                    formControlName="IsSupperAdmin"
+                                    type="checkbox" 
+                                    class="k-checkbox Checkbox" 
+                                    id="IsSupperAdmin" 
+                                    [checked]="false"
+                                    [ngClass]="{'disableInput':  isOnlySeen  }"
+                                    >
+                                </kendo-label>
+                            </div> 
+                            <app-p-numeric-textbox [format]="'n0'" [spinners]="false" [min]="0" propName="TypeData" formControlName="TypeData" [ngClass]="{'disableInput':  isOnlySeen  }"></app-p-numeric-textbox>
+                        </div>
+                        <!-- Thứ tự hiển thị -->
+                        <div class="form DisplayOrder">
+                            <kendo-label text="Thứ tự hiển thị"><span class="symbol">(*)</span></kendo-label>
+                            <app-p-numeric-textbox  [format]="'n0'" [spinners]="false" [min]="0" propName="OrderBy"   formControlName="OrderBy" [ngClass]="{'disableInput':  isOnlySeen  }" ></app-p-numeric-textbox>
+                        </div>
+                        <!-- Ghi chú -->
+                        <div class="form Note">
+                            <kendo-label text="Ghi chú"></kendo-label>
+                            <app-p-textarea formControlName="Remark"  [propName]="'Remark'" [ngClass]="{'disableInput':  isOnlySeen  }"></app-p-textarea>
+                        </div>
+                        <!-- Danh sách chức danh áp dụng -->
+                        <div *ngIf="Role.ListPositionApply.length != 0" class="form ListPosition">
+                            <kendo-label text="Danh sách chức danh áp dụng"> </kendo-label>
+                            <span *ngFor="let role of Role.ListPositionApply" class="role">
+                                <div class="roleId">{{role.PositionID }}</div><div class="roleName" title="{{role.Position}}"> | {{role.Position}}</div>
+                            </span>
+                        </div>
+                        <p class="symbol fst-italic mt-2">(*) Trường bắt buộc nhập.</p>
+
+                    </form>
+                    <!-- Group Btn -->
+                    <div class="groupButton">
+                        <button kendoButton class="k-button btn-hachi hachi-primary hachi-secondary" (click)="onCloseDrawer()">
+                            Đóng
+                        </button>
+                        <button kendoButton class="k-button btn-hachi hachi-primary" (click)="onSubmitForm()">
+                            {{formData.get('Code').value !== 0 ? 'CẬP NHẬT' : 'TẠO MỚI'}}
+                        </button>
+                        <button kendoButton class="k-button btn-hachi hachi-warning" *ngIf="Role.ListPositionApply.length == 0 && Role.Code != 0"
+                         (click)="onToggleDialog()">
+                            Xóa
+                        </button>
+                    </div>
+                </div>
+            </ng-template>
+        </kendo-drawer>
+
+        <!-- CONTENT -->
+        <kendo-drawer-content>
+
+            <div class="app-config004-enterprise-role">
+
+                <div class="header header-1">
+
+                    <app-p-kendo-breadcrumb (loadData)="onLoadPage()"></app-p-kendo-breadcrumb>
+
+                    <div class="nav-btn">
+                        <button kendoButton class="k-button onAddBtn" [icon]="'plus'" (click)="onOpenDrawer(true)">TẠO MỚI</button>
+                    </div>
+
+                </div>
+
+                <div class="header header-2">
+
+                    <app-search-filter-group [placeholder]="'Tìm theo vai trò người dùng'" 
+                    [fields]="['RoleName', 'RoleID']" [clearButton]="true"
+                    (filterChange)="handleSearch($event)" (onReset)="onResetFilter()">
+                    </app-search-filter-group>
+
+                    <div class="filter-dropdown-group">
+                        <label>Công ty</label>
+                        <p-kendo-dropdownlist [data]="ListCompany" class="CustomDropdownlist"  [textField]="'Bieft'" [valueField]="'Code'" 
+                        (valueChange)="onDropdownlistClick($event)" [(ngModel)]="currentCompany">
+                        </p-kendo-dropdownlist>
+                    </div>
+
+                </div>
+
+                <div class="grid-wrapper">
+
+                    <app-p-kendo-grid class="grid scrollable " [data]=" gridView | async" [scrollable]="'none'" [loading]="loading"
+                    [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize"[skip]="gridState.skip" [take]="gridState.take" 
+                    [onPageChangeCallback]="onPageChangeCallback" [allowedMoreActionDropdown]="allowActionDropdown" 
+                    [getActionDropdownCallback]="getActionDropdownCallback" [onActionDropdownClickCallback]="onActionDropdownClickCallback">
+
+                        <kendo-grid-column title="Vai trò người dùng" class="col_RoleName" [headerClass]="'headerPaddingCustomClass'">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="RoleName">
+                                    <div class="Name" title="{{dataItem.RoleName}}">{{dataItem.RoleName}}</div>
+                                    <div>
+                                        <span>{{dataItem.RoleID}}</span> 
+                                        <span *ngIf="dataItem.ListPositionApply.length != 0"> | {{dataItem.ListPositionApply.length}} chức danh áp dụng</span>
+                                    </div> 
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <kendo-grid-column title="Cấu hình" class="col_Config">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div>
+                                    <div> Quản trị hệ thống : <span>{{ dataItem.IsSupperAdmin === true ? 'Có' : 'Không' }}</span> </div>
+                                    <div> Loại dữ liệu : {{dataItem.TypeData}} </div>
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <!-- <kendo-grid-column title="Ghi chú" class="col_Note">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="Remark" title="{{dataItem.Remark}}"> {{dataItem.Remark}} </div>
+                            </ng-template>
+                        </kendo-grid-column> -->
+
+                        <kendo-grid-column title="Thứ tự hiển thị" class="col_DisplayOrder" [headerClass]="'headerCenterCustomClass'">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="OrderBy"> {{dataItem.OrderBy}} </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                
+                    </app-p-kendo-grid>
+                </div>
+
+            </div>
+
+        </kendo-drawer-content>
+
+    </kendo-drawer-container>
+
+    <!-- Popup thông báo xóa -->
+
+    <app-p-kendo-dialog 
+    *ngIf="opened" 
+    [dialogType]="1" 
+    [title]="'XÓA VAI TRÒ?'" 
+    [iconTitle]="'k-font-icon k-i-exception k-i-warning k-icon'"
+    (close)="onCloseDialog()" 
+    (handleButton)="onDeleteDialog('yes')"
+    
+    >
+        <div class="ContentDialog">
+        <p>Bạn chắc chắn muốn xóa vai trò</p>
+        <p><strong>{{Role.RoleName}}?</strong></p>
+        <p class="content-sub">
+            vai trò bị xóa sẽ <span style="color: red">KHÔNG</span> thể
+            khôi phục lại.
+        </p>
+        </div>
+    
+    </app-p-kendo-dialog>
+
+</div>

@@ -1,0 +1,768 @@
+@import "./colors";
+@import "../variable";
+
+//border
+.border-white {
+    border-color: $white;
+}
+
+.border-darkblue {
+    border-color: $darkblue;
+}
+.border-blue {
+    border-color: $blue;
+}
+.border-lightblue {
+    border-color: $lightblue;
+}
+
+.border-darkgreen {
+    border-color: $darkgreen;
+}
+.border-green {
+    border-color: $green;
+}
+.border-lightgreen {
+    border-color: $lightgreen;
+}
+.border-yellowgreen {
+    border-color: $yellowgreen;
+}
+
+.border-yellow {
+    border-color: $yellow;
+}
+.border-orangeyellow {
+    border-color: $orangeyellow;
+}
+
+.border-lightorange {
+    border-color: $lightorange;
+}
+.border-lightpink {
+    border-color: $lightpink;
+}
+.border-red {
+    border-color: $red;
+}
+.border-color-1{
+    border-color: $white;
+}
+//background
+.background-main {
+    background-color: $whitegray-1;
+}
+
+.hachi-bg-color-1 {
+    background-color: $lightorange;
+}
+
+.hachi-bg-color-2 {
+    background-color: $orangeyellow;
+}
+
+.hachi-bg-color-3 {
+    background-color: $blue;
+}
+
+.hachi-bg-color-4 {
+    background-color: $gray-4;
+}
+
+.hachi-bg-color-5 {
+    background-color: $green;
+}
+
+.hachi-bg-color-6 {
+    background-color: $red;
+}
+
+.hachi-bg-color-7 {
+    background-color: $yellow;
+}
+
+.hachi-bg-color-8 {
+    background-color: $lightblue;
+}
+
+.hachi-bg-color-9 {
+    background-color: $lightgray;
+}
+
+.hachi-bg-color-10 {
+    background-color: $whitegray-6;
+}
+
+.hachi-bg-color-11 {
+    background-color: $whitegray-4;
+}
+
+.hachi-bg-color-12 {
+    background-color: $whitegray-3;
+}
+
+.hachi-bg-color-13 {
+    background-color: $darkblue;
+}
+
+.hachi-bg-color-14 {
+    background-color: $lightgreen;
+}
+
+.hachi-bg-color-15 {
+    background-color: $white;
+}
+
+.bg-white {
+    background-color: $white;
+}
+
+.bg-darkblue {
+    background-color: $darkblue;
+}
+.bg-blue {
+    background-color: $blue;
+}
+.bg-lightblue {
+    background-color: $lightblue;
+}
+
+.bg-darkgreen {
+    background-color: $darkgreen;
+}
+.bg-green {
+    background-color: $green;
+}
+.bg-lightgreen {
+    background-color: $lightgreen;
+}
+.bg-yellowgreen {
+    background-color: $yellowgreen;
+}
+
+.bg-yellow {
+    background-color: $yellow;
+}
+.bg-orangeyellow {
+    background-color: $orangeyellow;
+}
+
+.bg-lightorange {
+    background-color: $lightorange;
+}
+.bg-lightpink {
+    background-color: $lightpink;
+}
+.bg-red {
+    background-color: $red;
+}
+//font
+//h
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    padding: 0;
+    font-family: $font-nunito;
+    font-weight: bold;
+}
+
+h1,
+.h1 {
+    font-size: 24;
+}
+
+h2,
+.h2 {
+    font-size: 20;
+    line-height: 35;
+}
+
+h3,
+.h3 {
+    font-size: 16;
+}
+
+h4,
+.h4 {
+    font-size: 13;
+}
+
+h5,
+.h5 {
+    font-size: 13;
+}
+
+h6,
+.h6 {
+    font-size: 13;
+}
+//font family
+.font-roboto {
+    $font-roboto: "Roboto", sans-serif;
+}
+.font-nunito {
+    $font-nunito: "Nunito", sans-serif;
+}
+.font-noto {
+    $font-noto: "Noto Sans JP", sans-serif;
+}
+.font-alata {
+    $font-alata: "Alata", sans-serif;
+}
+//font size
+.font-size-11 {
+    font-size: 11px;
+}
+.font-size-13 {
+    font-size: 13px;
+}
+.font-size-16 {
+    font-size: 16px;
+}
+.font-size-20 {
+    font-size: 20px;
+}
+.font-size-21 {
+    font-size: 21px;
+}
+.font-size-24 {
+    font-size: 24px;
+}
+//font weight
+.font-weight-400 {
+    $font-weight-400: 400px;
+}
+.font-weight-500 {
+    $font-weight-500: 500px;
+}
+.font-weight-700 {
+    $font-weight-700: 700px;
+}
+//line height
+.line-height-18 {
+    line-height: 18px;
+}
+.line-height-20 {
+    line-height: 20px;
+}
+.line-height-24 {
+    line-height: 24px;
+}
+.line-height-30 {
+    line-height: 30px;
+}
+.line-height-35 {
+    line-height: 35px;
+}
+//
+.hachi-title {
+    font-style: normal;
+    font-weight: bold;
+    font-family: $font-nunito;
+    font-size: 20;
+    line-height: 35;
+}
+
+.hachi-title-green {
+    font-style: normal;
+    font-weight: bold;
+    font-family: $font-nunito;
+    font-size: 20;
+    line-height: 35;
+    color: $green;// $secondary-5;
+}
+//margin
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.mt-16 {
+    margin-top: 16px;
+}
+
+.mt-30 {
+    margin-top: 30px;
+}
+.mt-20 {
+    margin-top: 20px;
+}
+//padding
+//top
+.pt-20 {
+    padding-top: 20px;
+}
+
+.pt-30 {
+    padding-top: 30px;
+}
+
+.pt-40 {
+    padding-top: 40px;
+}
+//bottom
+.pb-20 {
+    padding-bottom: 20px;
+}
+
+.pb-30 {
+    padding-bottom: 30px;
+}
+
+.pb-40 {
+    padding-bottom: 40px;
+}
+//left
+.pl-20 {
+    padding-top: 20px;
+}
+
+.pl-30 {
+    padding-top: 30px;
+}
+
+.pl-40 {
+    padding-top: 40px;
+}
+//right
+.pr-20 {
+    padding-top: 20px;
+}
+
+.pr-30 {
+    padding-top: 30px;
+}
+
+.pr-40 {
+    padding-top: 40px;
+}
+//a link
+//a
+a {
+    color: $blackgray;
+
+    &:hover {
+        text-decoration: unset;
+        color: $green;
+    }
+}
+
+a.hachi-link {
+    color: $blue;
+
+    &:hover {
+        color: $lightblue;
+        text-decoration: underline;
+    }
+}
+
+a.hachi-link-title {
+    color: $blackgray;
+    font-weight: bold;
+    font-family: $font-nunito;
+    font-size: 16;
+
+    &:hover {
+        color: $green;
+    }
+}
+//
+.hachi-active-title {
+    color: $green;
+    font-weight: bold;
+    font-family: $font-nunito;
+    font-size: 20;
+}
+
+.hachi-title-green a {
+    color: $green;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+//button
+button {
+    outline: none;
+}
+
+button:focus {
+    outline: none;
+}
+
+.btn.focus,
+.btn:focus,
+.btn:hover {
+    outline: none;
+}
+
+.btn.hachi-primary {
+    // @include font-nunito-extraBold(13px);
+    background: $lightgreen;
+    border-radius: 3px;
+    color: $white;
+    border-color: $lightgreen;
+
+    span::before {
+        color: $white;
+    }
+    &:hover {
+        color: $white;
+        background: $green;
+        border-color: $green;
+    }
+    &:focus {
+        color: $white;
+        background: $darkgreen;
+        border-color: $darkgreen;
+    }
+    &:disabled {
+        background: $whitegray-4;
+        color: $gray-1;
+        border-color: $whitegray-4;
+    }
+}
+
+.btn.hachi-outline-primary {
+    background-color: white;
+    color: $lightgreen;
+
+    &:hover {
+        background-color: $lightgreen;
+        color: white;
+    }
+}
+
+.btn.hachi-secondary {
+    // @include font-nunito-bold(13px);
+    background: $white;
+    border-radius: 3px;
+    color: $green;
+    border-color: $green;
+
+    &:hover {
+        color: $green;
+        background: $white;
+        border-width: 2px;
+        margin: -1px;
+    }
+    &:focus {
+        color: $green;
+        background: $white;
+    }
+    &:disabled {
+        background: $white;
+        color: $blackgray;
+        border-color: $whitegray-4;
+    }
+}
+
+.btn.hachi-standard {
+    // @include font-roboto-regular(13px);
+    background: $whitegray-4;
+    border-radius: 3px;
+    color: $blackgray;
+    border-color: $whitegray-4;
+
+    &:hover {
+        color: $blackgray;
+        background: $whitegray-6;
+    }
+    &:focus {
+        color: $white;
+        background: $gray-1;
+    }
+    &:disabled {
+        background: $whitegray-4;
+        color: $blackgray;
+        border-color: $whitegray-4;
+    }
+}
+//checkbox
+.container-checkbox {
+	display: block;
+	position: relative;
+	padding-left: 25px;
+	margin-bottom: 16px;
+	cursor: pointer;
+	// font-size: 22px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+	input {
+		position: absolute;
+		opacity: 0;
+		cursor: pointer;
+		height: 0;
+		width: 0;
+
+		&:checked {
+			~ {
+				.checkmark {
+					background-color: $lightgreen;
+					border: unset;
+					&:after {
+						display: block;
+					}
+				}
+			}
+		}
+	}
+	&:hover {
+		color: $lightgreen;
+
+		input {
+			~ {
+				.checkmark {
+					border-color: $lightgreen;
+				}
+			}
+		}
+	}
+	.checkmark {
+		&:after {
+			left: 6px;
+			top: 2px;
+			width: 5px;
+			height: 10px;
+			border: solid white;
+			border-width: 0 3px 3px 0;
+			-webkit-transform: rotate(45deg);
+			-ms-transform: rotate(45deg);
+			transform: rotate(45deg);
+		}
+	}
+}
+.checkmark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 16px;
+	width: 16px;
+	border-radius: 3px;
+	background-color: $white;
+	border: 2px solid $whitegray-6;
+	box-sizing: border-box;
+
+	&:after {
+		content: "";
+		position: absolute;
+		display: none;
+	}
+}
+//list
+//style các thẻ ul,ol li
+//list-inline
+.list-inline > li {
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+}
+
+.list-inline > li:not(:last-child)::after {
+    margin: 0px 0px 0px 7px;
+    width: 2px;
+    height: 18px;
+    vertical-align: middle;
+    border-right-color: $lightgray;
+    border-right-width: 1px;
+    border-right-style: solid;
+    display: inline-block;
+    content: "";
+}
+
+.list-inline > li:not(:first-child) {
+    padding-left: 6px;
+}
+
+//ul ol
+ul {
+    padding: 0;
+    // list-style: disc outside none;
+    margin-left: 1em;
+}
+
+ol {
+    padding: 0;
+    list-style: decimal inside none;
+}
+
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+    padding-left: 10px;
+}
+//modal
+.hachi-modal {
+    .modal {
+        z-index: 10001;
+        display: block;
+
+        .modal-header {
+            padding: 12px 17px 0px 24px;
+            border: unset;
+
+            button.btn-close {
+                background: $white;
+                border: unset;
+                display: flex;
+                align-content: center;
+
+                span::before {
+                    color: $lightgreen;
+                }
+            }
+        }
+        .modal-body {
+            padding: 14px 24px 0px 24px;
+        }
+        .modal-footer {
+            padding: 0px 24px 16px 24px;
+            // padding: 30px 24px 16px 24px;
+            border-top: unset;
+
+            button {
+                font-family: $font-nunito;
+            }
+        }
+    }
+}
+
+.hachi-model-fade {
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 10000;
+    transition: opacity 0.15s linear;
+    background-color: #000;
+    opacity: 0.5;
+}
+//select
+.hachi-react-select-container {
+    .hachi-react-select__control {
+        min-height: 32px;
+        height: 32px;
+        align-items: normal;
+
+        .hachi-react-select__value-container {
+            padding: 0px 0.75rem;
+            height: 32px;
+
+            .css-1g6gooi {
+                margin: 0;
+                padding-top: 0;
+                input {
+                    box-shadow: unset !important;
+                }
+            }
+        }
+        .hachi-react-select__indicators {
+            height: 32px;
+
+            .hachi-react-select__indicator-separator {
+                display: none;
+            }
+            .hachi-react-select__dropdown-indicator {
+                padding: 4px 8px;
+            }
+        }
+    }
+    &.error {
+        .hachi-react-select__control {
+            border-color: #ff5230;
+        }
+    }
+}
+//hachi page content
+#hachi-page {
+    width: 100%;//100vw;
+    min-height: 100vh;
+    position: relative;
+    // overflow-x: hidden;
+
+    #hachi-page__body {
+        // padding-bottom: 70px;
+        padding-bottom: 10px;
+    }
+}
+
+.main-content-qc {
+    display: none;
+}
+
+@media (min-width: 1160px) {
+    .main-content-qc {
+        display: unset;
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+
+        .main-qc {
+            width: 984px;
+            padding-left: 15px;
+            padding-right: 15px;
+            margin-right: auto;
+            margin-left: auto;
+
+            > div {
+                position: absolute;
+                width: calc((100vw - 1015px) / 2);
+                max-width: 150px;
+            }
+
+            > div:nth-child(1) {
+                left: 0px;
+                transform: translateX(-100%);
+            }
+
+            > div:nth-child(2) {
+                right: 0px;
+                transform: translateX(100%);
+            }
+            
+            .hachi-carousel {
+                .carousel:hover {
+                    .carousel-control-prev,
+                    .carousel-control-next {
+                        visibility: hidden !important;
+                    }
+                }
+
+                .carousel-indicators {
+                    visibility: hidden;
+                }
+            }
+        }
+    }
+}
+
+#hachi_mobile_menu {
+    display: none;
+}
+//hachi section
+.hachi-section {
+    margin: 0 auto;
+    clear: both;
+    display: block;
+    width: 100%;
+}
+
+.hachi-section:before,
+.hachi-section:after {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both;
+}
+
+

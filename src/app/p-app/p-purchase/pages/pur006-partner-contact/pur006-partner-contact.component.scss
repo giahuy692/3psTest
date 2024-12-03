@@ -1,0 +1,259 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+    app-pur006-partner-contact {
+
+        .app-drawer-container {
+            .mat-drawer-container {
+
+                // START CONTENT
+                .mat-drawer-content {
+                    .app-pur006-partner-contact {
+                        height: 100%;
+
+                        //header
+                        .header {
+                            justify-content: space-between;
+
+                            .nav-crud {
+                                margin-top: 25px;
+                            }
+                        }
+
+                        .header-1 {
+                            height: 52px;
+                            padding-left: 5px;
+                        }
+
+
+                        .coverContent {
+                            display: flex;
+                            flex-direction: row;
+
+                            .content {
+                                display: grid;
+                                width: 100%;
+                                padding: 0 15px 0 20px;
+
+
+
+
+                                .gridHeader {
+                                    overflow: scroll;
+                                }
+
+                                .coverGrid {
+                                    height: calc(100vh - 200px);
+                                    display: grid;
+
+                                    //grid list 
+                                    .grid-wrapper {
+                                        margin-top: 0px;
+
+                                        app-p-kendo-grid {
+                                            .myCustomGrid {
+                                                height: calc(100vh - 200px);
+
+                                                .k-grid-aria-root {
+                                                    overflow-x: auto;
+
+                                                    .k-table {
+                                                        .k-grid-header {
+                                                            .k-table-row {
+                                                                .k-header {
+                                                                    color: #5A6276 !important;
+                                                                }
+
+                                                                .col_personContact {
+                                                                    min-width: 125px;
+                                                                }
+                                                            }
+                                                        }
+
+                                                        .k-table-tbody {
+                                                            .k-table-row {
+                                                                td {
+                                                                    color: #5A6276;
+                                                                    font-size: 13px;
+                                                                    font-style: normal;
+                                                                    font-weight: 400;
+                                                                    line-height: normal;
+
+                                                                    &:first-child {
+                                                                        padding-left: 12px;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+
+                                                        .col_personContact {
+                                                            max-width: 90px;
+
+                                                            .NamePC {
+                                                                color: #26282E;
+                                                                line-height: 20px;
+                                                                font-weight: 700;
+                                                                white-space: nowrap;
+                                                                overflow: hidden;
+                                                                text-overflow: ellipsis;
+                                                            }
+
+                                                            .rolePC {
+                                                                color: #26282E;
+                                                                font-size: 13px;
+                                                                font-style: italic;
+                                                                font-weight: 400;
+                                                                line-height: normal;
+                                                                overflow: hidden;
+                                                                text-overflow: ellipsis;
+                                                            }
+                                                        }
+
+                                                        .col_Department {
+                                                            max-width: 80px;
+
+                                                            .department {
+                                                                overflow: hidden;
+                                                                text-overflow: ellipsis;
+                                                            }
+                                                        }
+
+                                                        .col_Cellphone {
+                                                            max-width: 300px;
+
+                                                            .phoneInforTop {
+                                                                overflow: hidden;
+                                                                text-overflow: ellipsis;
+                                                            }
+
+                                                            .phoneInforBot {
+                                                                overflow: hidden;
+                                                                text-overflow: ellipsis;
+                                                            }
+                                                        }
+
+                                                        .col_Email {
+                                                            min-width: 150px;
+                                                            max-width: 160px;
+
+                                                            .email {
+                                                                overflow: hidden;
+                                                                text-overflow: ellipsis;
+                                                            }
+
+                                                        }
+
+                                                        .col_StatusName {
+                                                            min-width: 120px;
+                                                            max-width: 160px;
+
+                                                            .status {
+                                                                overflow: hidden;
+                                                                text-overflow: ellipsis;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+                // END CONTENT
+
+
+                // START DRAWER
+                .mat-drawer {
+                    padding: 0 !important;
+                    overflow: hidden;
+
+                    .title-formPersonContact {
+                        padding: 10px !important;
+                        height: 40px;
+                    }
+
+                    .container-form {
+                        height: calc(100vh - 180px);
+                        overflow-y: auto;
+                        overflow-x: hidden;
+                        margin-bottom: 14px;
+                        padding: 0 10px;
+
+                        .form {
+                            .customLabel {
+
+                                .lable {
+                                    margin-bottom: 5px;
+                                    display: flex;
+                                    justify-content: space-between;
+
+                                    .labelName {
+                                        font-weight: 700;
+                                        color: #343A40;
+
+                                        .symbol {
+                                            padding-left: 5px;
+                                            color: $dark-red;
+                                            font-weight: bold;
+                                        }
+
+                                        .line {
+                                            font-size: 17px;
+                                        }
+
+                                        .codeCompany {
+                                            color: #1A6634;
+                                            font-weight: 700;
+                                        }
+
+                                    }
+                                }
+
+
+                                .k-maskedtextbox {
+                                    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+                                    border-radius: 3px !important;
+
+                                    &:hover,
+                                    &.k-focus {
+                                        outline: 1px solid #316e00 !important;
+                                    }
+                                }
+
+                            }
+
+
+                            .d-flex {
+                                justify-content: space-between;
+
+                                app-p-textbox {
+                                    .k-textbox {
+                                        width: 175px;
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+
+                    .footer-formPersonContact {
+                        display: flex;
+                        align-items: center;
+                        column-gap: 10px;
+                        height: 36px;
+                        background-color: #ffffff;
+                        padding: 0 10px;
+                    }
+                }
+
+                // END DRAWER
+            }
+        }
+    }
+}

@@ -1,0 +1,30 @@
+<div class="config002-hamper-detail">
+
+    <div class="header header-1">
+
+        <app-p-kendo-breadcrumb (loadData)="loadPage()"></app-p-kendo-breadcrumb>
+
+    </div>
+
+    <div class="body">
+        <!-- THÔNG TIN HAMPER -->
+        <app-config-product-info [typeInfo]="3" [isMaster]="isMaster" [isApprover]="isApprover" [isCreator]="isCreator">
+        </app-config-product-info>
+
+        <!-- DANH SÁCH SẢN PHẨM THUỘC HAMPER -->
+        <app-config-product-list [hasAction]="false"></app-config-product-list>
+
+        <!-- THUỘC TÍNH HAMPER -->
+        <app-config-product-attribute></app-config-product-attribute>
+
+        <!-- THUỘC TÍNH BÁN HÀNG -->
+        <app-config-sales-attribute></app-config-sales-attribute>
+
+        <!-- THUỘC TÍNH TEM NHÃN -->
+        <app-config-product-label></app-config-product-label>
+
+        <!-- THUỘC TÍNH HIỂN THỊ WEBSITE -->
+        <app-config-web-display></app-config-web-display>
+        <i class="impose">(*) Thông tin bắt buộc nhập</i>
+    </div>
+</div>

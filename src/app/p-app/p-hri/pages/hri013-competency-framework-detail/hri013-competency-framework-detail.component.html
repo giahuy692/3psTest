@@ -1,0 +1,583 @@
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+<div class="hri013-competency-framework-detail">
+  <!-- Start: Header 2 -->
+  <div class="header header-1">
+    <div class="breadcumb">
+      <app-p-kendo-breadcrumb (loadData)="loadPage()"></app-p-kendo-breadcrumb>
+    </div>
+    <div class="nav-crud">
+      <button
+        *ngFor="let i of arrBtnStatus"
+        kendoButton
+        iconClass="k-icon k-i-{{ i.code }}"
+        class="{{ i.class }} "
+        (click)="handleBtnStatus(i)"
+        title="{{i.title}}"
+      >
+        {{ i.text }}
+      </button>
+    </div>
+  </div>
+  <!-- End: Header 2 -->
+  <div class="main">
+    <div class="InfoFramework">
+      <span class="Topic">
+        THÔNG TIN KHUNG NĂNG LỰC
+      </span>
+      <div class="container">
+        <div class="TimeAndStatus">
+          <div class="time">
+            <label class="label">Ngày hiệu lực khung năng lực
+              <span class="symbol">(*)</span>
+            </label>
+            <!-- <kendo-datepicker
+              class="datepicker"
+              [format]="'d/M/yyyy'"
+              placeholder="d/m/yyyy"
+              [formatPlaceholder]="{ year: 'yyyy', month: 'm', day: 'd' }"
+              [(ngModel)]="FrameworkEffDate"
+              [disabled]="isLock || Framework.StatusID == 2 || Framework.StatusID == 3"
+              (valueChange)="onUpdateFramework(['EffDate'])"
+              [popupSettings]="{animate:true,appendTo: 'component',popupClass:'popupClassCustom'}"
+            >
+            </kendo-datepicker> -->
+            <app-datepicker [format]="'d/M/yyyy'" [placeholder]="'d/m/yyyy'" [formatPlaceholder]="{ year: 'yyyy', month: 'm', day: 'd' }"
+              [(ngModel)]="FrameworkEffDate" [disabled]="isLock || Framework.Code == 0 || Framework.StatusID == 2 || Framework.StatusID == 3" 
+              (blur)="onBlurDatePicker($event,['EffDate'])" [readOnlyInput]="true" 
+            ></app-datepicker>
+          </div>
+          <div class="status">
+            <label class="label" style="margin-top: 8px">Tình trạng</label>
+            <div #status [innerHTML]="Framework.StatusName | colorStatus:Framework.StatusID"></div>
+            
+          </div>
+        </div>
+        <div class="infomation">
+          <div class="groupInput">
+            <label class="label">Tên khung năng lực
+              <span class="symbol">(*)</span>
+            </label>
+            <kendo-textbox
+              class="k-textbox"
+              placeholder=" -- Tên khung năng lực --"
+              [(ngModel)]="Framework.Title"
+              (blur)="onUpdateFramework(['Title'])"
+              (keydown.Enter)="$event.target.blur()"
+              [disabled]="isLock || Framework.StatusID == 2 || Framework.StatusID == 3"
+            ></kendo-textbox>
+          </div>
+          <div class="groupInput" style="margin-top: 8px">
+            <label class="label">Diễn giải
+              <!-- <span class="symbol">(*)</span> -->
+            </label>
+            <textarea class="k-area  k-textbox" name="description" 
+              [(ngModel)]="Framework.Description" 
+              (blur)="onUpdateFramework(['Description'])"
+              (keydown.Enter)="$event.target.blur()"
+              [disabled]="isLock || Framework.Code == 0 || Framework.StatusID == 2 || Framework.StatusID == 3"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="FrameworkDetail">
+      <span class="Topic">
+        CHI TIẾT KHUNG NĂNG LỰC
+        <span class="symbol">(*)</span>
+      </span>
+      <div class="container">
+          <div class="d-flex justify-content-between FrameworkDetailWrapper">
+            <div class="content" >
+              <table id="myTable">
+                <thead class="theadTable">
+                  <tr  class="categoryHeader">
+                    <th class="locked" ></th>
+                    <th class="locked2"></th>
+                    <th class="locked3 bgTransparent"></th>
+                    <ng-container *ngFor="let category of uniqueCategoryIDs; let i = index">
+                      <!-- Tính toán colspan cho từng Category -->
+                      <th class="border-0 cateContent"  [attr.colspan]="category.ColSpan" title="{{ category.CategoryName }}">{{ category.CategoryName }}</th>
+                    </ng-container>
+                  </tr>
+                  <tr  class="headerGroup locked">
+                    <th class="rotate locked"></th>
+                    <th class="border-0 locked2">
+                      <div class="titleTable" #titleTable>
+                        <span>Chức danh</span>
+                        <span class="line"></span>
+                        <span>Năng lực</span>
+                      </div>
+                    </th>
+                    <th class="locked3" >
+                       <div class="btnAdd btnCompetence">
+                          <button
+                            kendoButton
+                            iconClass="k-icon k-i-plus"
+                            (click)="openBtnAdd('competence');focusDialogAdd('competence')"
+                            [disabled]="isLock || Framework.StatusID == 2 || Framework.StatusID == 3 || Framework.Code == 0"
+                          >
+                            Thêm mới năng lực
+                          </button> 
+                        </div>
+                     
+                    </th>
+                    <th *ngFor="let competence of columnCompetences" [attr.cateData]="competence.Category" kendoTooltip class="competenceItem">
+                      <span class="competenceID" >{{ competence.CompetenceID }}</span>
+                      <img loading="lazy" src="../../../../../assets/img/icon/icon_circleInfo.svg" class="icon_circleInfo" title="{{ competence.CompetenceID }}">
+                      <div class="LimitNumber">
+                        <div class="px-2">Min</div>
+                        <div class="px-2">Max</div>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="tbodyTable">
+                  <tr>
+                    <td class="rotate locked bgTransparent" [attr.departData]="0"></td>
+                    <td class="border-0">
+                      <div class="btnAdd btnPosition">
+                        <button
+                          kendoButton
+                          iconClass="k-icon k-i-plus"
+                          (click)="openBtnAdd('position');focusDialogAdd('position')"
+                          [disabled]="isLock || Framework.StatusID == 2 || Framework.StatusID == 3 || Framework.Code == 0"
+                          
+                        >
+                          Thêm mới chức danh
+                        </button>
+                      </div>
+                    </td>
+                    <td [attr.colspan]="columnCompetences.length" ></td>
+                  </tr>
+                  <tr  *ngFor="let position of rowPositions; let i = index" kendoTooltip position="right" class="rowPosition">
+                      <td class="rotate locked rowDepartment" #rowDepartment [attr.departData]="position.Department" title="{{position.DepartmentName}}">{{ position.DepartmentName }}</td>
+                      <td class="position columnFisrt border-light locked2" [attr.departData]="position.Department">
+                        <span class="positonID" title="{{ position.PositionID }}">{{ position.PositionID }}</span>
+                        <span class="positonLine">|</span>
+                        <span class="positonName" title="{{ position.PositionName }}">{{ position.PositionName }}</span>
+                      </td>
+                      <td class="locked3"></td>
+                      <td *ngFor="let competence of columnCompetences; let j = index" class="border-0 border-light levelFramework">
+                        <ng-container *ngIf="shouldDisplayInput(position.Position, competence.Competence)">
+                          <div class="LimitNumber">
+                            <kendo-numerictextbox
+                              #min
+                              [spinners]="false"
+                              [ngModel]="getCompetenceLevel(position.Position, competence.Competence)"
+                              (ngModelChange)="onCompetenceLevelChange(position.Position, competence.Competence, $event)"
+                              (blur)="setCompetenceLevel(position.Position, competence.Competence, true)"
+                              (focus)="onCompetenceLevelFocus(position.Position, competence.Competence)"
+                              (keydown.Enter)="min.blur()"
+                              [format]="'n0'"
+                              [min]="1"
+                              [max]="getCompetenceLevelMax(position.Position, competence.Competence)  ? getCompetenceLevelMax(position.Position, competence.Competence) : 5"
+                              [autoCorrect]="true"
+                              [disabled]="isLock || Framework.StatusID == 2 || Framework.StatusID == 3 || Framework.Code == 0"
+                            ></kendo-numerictextbox>
+                            <kendo-numerictextbox
+                              #max
+                              [spinners]="false"
+                              [ngModel]="getCompetenceLevelMax(position.Position, competence.Competence)"
+                              (ngModelChange)="onCompetenceLevelMaxChange(position.Position, competence.Competence, $event)"
+                              (blur)="setCompetenceLevelMax(position.Position, competence.Competence, true)"
+                              (focus)="onCompetenceLevelMaxFocus(position.Position, competence.Competence)"
+                              (keydown.Enter)="max.blur()"
+                              [format]="'n0'"
+                              [min]="getCompetenceLevel(position.Position, competence.Competence) ? getCompetenceLevel(position.Position, competence.Competence) : 1"
+                              [max]="5"
+                              [autoCorrect]="true"
+                              [disabled]="isLock || Framework.StatusID == 2 || Framework.StatusID == 3 || Framework.Code == 0"
+                            ></kendo-numerictextbox>
+                          </div>
+                        </ng-container>
+                      </td>
+                  </tr>
+                </tbody>
+                <!-- <tfoot>
+                  <tr>
+                    <th class="rotate border-0 locked"></th>
+                    <th class="locked2 border-0 p-0 m-0" >
+                      <div class="btnAdd btnPosition">
+                        <div class="mockDepartment"></div>
+                        <button
+                          [style.width.px]="widthRowPosition"
+                          kendoButton
+                          iconClass="k-icon k-i-plus"
+                          (click)="openBtnAdd('position');focusDialogAdd('position')"
+                          [disabled]="isLock || Framework.StatusID == 2 || Framework.StatusID == 3 || Framework.Code == 0"
+                          
+                        >
+                          Thêm mới chức danh
+                        </button>
+                      </div>
+                    </th>
+                    <td [attr.colspan]="columnCompetences.length" ></td>
+                  </tr>
+                </tfoot> -->
+              </table>
+            </div>
+           
+          </div>
+          <!-- <div class="btnAdd btnPosition">
+            <div class="mockDepartment"></div>
+            <button
+              [style.width.px]="widthRowPosition"
+              kendoButton
+              iconClass="k-icon k-i-plus"
+              (click)="openBtnAdd('position');focusDialogAdd('position')"
+              [disabled]="isLock || Framework.StatusID == 2 || Framework.StatusID == 3 || Framework.Code == 0"
+              
+            >
+              Thêm mới chức danh
+            </button>
+          </div> -->
+          
+      </div>
+    </div>
+    <!-- End: CHI TIẾT KHUNG NĂNG LỰC -->
+    <p class="symbol fst-italic mt-2">(*) Trường bắt buộc nhập.</p>
+  </div>
+
+  <!-- Thêm khung năng lục   -->
+  <kendo-dialog
+    title="THÊM NĂNG LỰC VÀO KHUNG NĂNG LỰC"
+    *ngIf="openedCompetence"
+    (close)="closeBtnAdd('no', 'competence')"
+    [minWidth]="250"
+  >
+    <div class="searhcInput nav-filter">
+      <kendo-multiselect
+        #mutiseleteComponent
+        [data]="dataFilterCompetence"
+        [loading]="isloading"
+        valueField="Code"
+        textField="CompetenceName"
+        placeholder="-- Chọn năng lực --"
+        style="min-width: 300px;"
+        [popupSettings]="{ appendTo: 'component' }"
+        [valuePrimitive]="true"
+        [suggest]="true"
+        (valueChange)="valueChangeMultiselect($event, 'c')"
+        (blur)="blurDialogAdd('competence')"
+        [filterable]="true"
+        (filterChange)="handleFilterCompetence($event)"
+      >
+        <ng-template kendoComboBoxItemTemplate let-dataItem>
+          <span
+            [ngStyle]="{
+              'padding-left': dataItem.Parent !== null ? '18px' : '0'
+            }"
+            ><strong>{{ dataItem.CompetenceName }}</strong> - {{ dataItem.CompetenceID }}</span
+          >
+        </ng-template>
+      </kendo-multiselect>
+      <button kendoButton  iconClass="k-icon k-i-plus" class="k-button k-add" (click)="onAdd('c')" [disabled]="arrCompentence.length == 0">THÊM</button>
+    </div>
+
+    <div class="grid-wrapper-custom">
+      <app-p-kendo-grid
+        class="grid scrollable"
+        [data]="columnCompetences"
+        [scrollable]="'none'"
+        [loading]="loading"
+        [pageable]="true"
+        [pageSizes]="pageSizes"
+        [pageSize]="pageSize"
+        [skip]="gridState.skip"
+        [take]="gridState.take"
+      >
+        <!-- COL-1 -->
+        <kendo-grid-column class="competence">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <span class="title" *ngIf="dataItem.CompetenceName !== null || dataItem.CompetenceName !== undefined">{{ dataItem.CompetenceName }}</span>
+            <div class="codeAndTypeQuestion">
+              <span  *ngIf="dataItem.CompetenceID !== null || dataItem.CompetenceID !== undefined">{{ dataItem.CompetenceID }}</span>
+              <span
+                *ngIf="
+                  ( dataItem.CompetenceID != '' &&
+                    dataItem.CompetenceID == '') ||
+                  ( dataItem.CompetenceID == '' &&
+                    dataItem.CompetenceID != '') ||
+                  ( dataItem.CompetenceID == '' &&
+                    dataItem.CompetenceID == '') ||
+                  ( dataItem.CompetenceID != '' &&
+                    dataItem.CompetenceID != '')
+                "
+                style="padding: 0 5px"
+                class="line"
+                >|</span
+              >
+              <span *ngIf="dataItem.CategoryName !== null || dataItem.CategoryName !== undefined">{{ dataItem.CategoryName }}</span>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column class="btnDelete">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <button kendoButton iconClass="k-icon k-i-trash" (click)="handleDeteleDetail('competence', dataItem)"></button>
+          </ng-template>
+        </kendo-grid-column>
+      </app-p-kendo-grid>
+    </div>
+  </kendo-dialog>
+
+  <!-- Thêm chức danh  -->
+  <kendo-dialog
+    title="THÊM CHỨC DANH VÀO KHUNG NĂNG LỰC"
+    *ngIf="openedPosition"
+    (close)="closeBtnAdd('no', 'position')"
+    [minWidth]="250"
+  >
+    <div class="searhcInput nav-filter">
+      <kendo-multiselect
+        #mutiseleteComponent
+        [data]="dataFilterPosition"
+        [loading]="isloading"
+        valueField="Code"
+        textField="Position"
+        placeholder="-- Chọn chức danh --"
+        style="min-width: 300px;"
+        [popupSettings]="{ appendTo: 'component' }"
+        [valuePrimitive]="true"
+        [suggest]="true"
+        (valueChange)="valueChangeMultiselect($event, 'p')"
+        [filterable]="true"
+        (filterChange)="handleFilterPosition($event)"
+      >
+        <ng-template kendoComboBoxItemTemplate let-dataItem>
+          <span
+            [ngStyle]="{
+              'padding-left': dataItem.Parent !== null ? '18px' : '0'
+            }"
+            ><strong>{{ dataItem.Position }}</strong> - {{ dataItem.PositionID }}</span>
+        </ng-template>
+      </kendo-multiselect>
+      <button kendoButton iconClass="k-icon k-i-plus" class="k-button k-add" (click)="onAdd('p')" [disabled]="arrPositon.length == 0">
+        THÊM
+      </button>
+    </div>
+
+    <div class="grid-wrapper-custom">
+      <app-p-kendo-grid
+        class="grid scrollable"
+        [data]="rowPositions"
+        [scrollable]="'none'"
+        [loading]="loading"
+        [pageable]="true"
+        [pageSizes]="pageSizes"
+        [pageSize]="pageSize"
+        [skip]="gridState.skip"
+        [take]="gridState.take"
+      >
+        <!-- COL-1 -->
+        <kendo-grid-column class="competence">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div>
+              <span class="title">{{ dataItem.PositionName }}</span>
+              <div class="codeAndTypeQuestion">
+                <span>{{ dataItem.PositionID }}</span>
+                <span
+                  *ngIf="
+                    (dataItem.PositionID != '' &&
+                      dataItem.PositionName == '') ||
+                    (dataItem.PositionID == '' &&
+                      dataItem.PositionName != '') ||
+                    (dataItem.PositionID == '' &&
+                      dataItem.PositionName == '') ||
+                    (dataItem.PositionID != '' &&
+                      dataItem.PositionName != '')
+                  "
+                  style="padding: 0 5px"
+                  class="line"
+                  >|</span
+                >
+                <span>{{ dataItem.DepartmentName }}</span>
+              </div>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column class="btnDelete">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <button kendoButton iconClass="k-icon k-i-trash" (click)="handleDeteleDetail('position', dataItem)"></button>
+          </ng-template>
+        </kendo-grid-column>
+      </app-p-kendo-grid>
+    </div>
+  </kendo-dialog>
+
+  <!-- Start: Dialog Xóa framework -->
+  <kendo-dialog
+  *ngIf="openedDialog"
+  (close)="closeDialog()"
+  [minWidth]="250"
+  [width]="450"
+  [minHeight]="250"
+  id="wrapper-dialog"
+  [actionsLayout]="'stretched'"
+  >
+  <!-- Start: header dialog  -->
+  <kendo-dialog-titlebar>
+    <div class="title-delete d-flex">
+      <span
+        class="btn-title-dialog"
+        kendoButton
+        imageUrl="assets/img/icon/icon_warning.svg"
+      ></span>
+      <span>XÓA KHUNG NĂNG LỰC?</span>
+    </div>
+  </kendo-dialog-titlebar>
+  <!-- End: header dialog  -->
+
+  <!-- Start: Body dialog  -->
+  <div class="body_dialog">
+    <div class="content-primary">
+      <p>Bạn chắc chắn muốn xóa khung năng lực:</p>
+      <strong>{{ Framework.Title }}</strong>
+    </div>
+    <p class="content-sub">
+      Khung năng lực bị xóa sẽ <span style="color: red">KHÔNG</span> thể khôi phục lại.
+    </p>
+  </div>
+  <!-- Emd: Body dialog  -->
+
+  <!-- Start: action dialog  -->
+  <div class="k-dialog-actions">
+    <button
+      kendoButton
+      (click)="closeDialog()"
+      class="cancel"
+      iconClass="k-icon k-i-trash"
+    >
+      HỦY BỎ
+    </button>
+    <button
+      kendoButton
+      imageUrl="assets/img/icon/icon_bin.svg"
+      (click)="deleteDialog('yes')"
+      class="delete"
+    >
+      ĐỒNG Ý
+    </button>
+  </div>
+  <!-- End: action dialog  -->
+  </kendo-dialog>
+
+
+  <!-- Start: Dialog Xóa năng lực -->
+  <kendo-dialog
+  *ngIf="openedDiaDeleteCompetence"
+  (close)="closeDiaDeleteCompetence()"
+  [minWidth]="250"
+  [width]="450"
+  [minHeight]="250"
+  id="wrapper-dialog"
+  [actionsLayout]="'stretched'"
+  >
+  <!-- Start: header dialog  -->
+  <kendo-dialog-titlebar>
+    <div class="title-delete d-flex">
+      <span
+        class="btn-title-dialog"
+        kendoButton
+        imageUrl="assets/img/icon/icon_warning.svg"
+      ></span>
+      <span>XÓA NĂNG LỰC?</span>
+    </div>
+  </kendo-dialog-titlebar>
+  <!-- End: header dialog  -->
+
+  <!-- Start: Body dialog  -->
+  <div class="body_dialog">
+    <div class="content-primary">
+      <p>Bạn chắc chắn muốn xóa năng lực:</p>
+      <strong>{{ tempDeleteDetail.CompetenceName }}</strong>
+    </div>
+    <p class="content-sub">
+      Năng lực bị xóa sẽ <span style="color: red">KHÔNG</span> thể khôi phục lại.
+    </p>
+  </div>
+  <!-- Emd: Body dialog  -->
+
+  <!-- Start: action dialog  -->
+  <div class="k-dialog-actions">
+    <button
+      kendoButton
+      (click)="closeDiaDeleteCompetence()"
+      class="cancel"
+      iconClass="k-icon k-i-trash"
+    >
+      HỦY BỎ
+    </button>
+    <button
+      kendoButton
+      imageUrl="assets/img/icon/icon_bin.svg"
+      (click)="handleDeleteCompetence('yes')"
+      class="delete"
+    >
+      ĐỒNG Ý
+    </button>
+  </div>
+  <!-- End: action dialog  -->
+  </kendo-dialog>
+
+    <!-- Start: Dialog Xóa chức danh -->
+    <kendo-dialog
+    *ngIf="openedDiaDeletegPosition"
+    (close)="closeDiaDeletePosition()"
+    [minWidth]="250"
+    [width]="450"
+    [minHeight]="250"
+    id="wrapper-dialog"
+    [actionsLayout]="'stretched'"
+    >
+    <!-- Start: header dialog  -->
+    <kendo-dialog-titlebar>
+      <div class="title-delete d-flex">
+        <span
+          class="btn-title-dialog"
+          kendoButton
+          imageUrl="assets/img/icon/icon_warning.svg"
+        ></span>
+        <span>XÓA CHỨC DANH?</span>
+      </div>
+    </kendo-dialog-titlebar>
+    <!-- End: header dialog  -->
+  
+    <!-- Start: Body dialog  -->
+    <div class="body_dialog">
+      <div class="content-primary">
+        <p>Bạn chắc chắn muốn xóa chức danh:</p>
+        <strong>{{ tempDeleteDetail.PositionName }}</strong>
+      </div>
+      <p class="content-sub">
+        Chức danh bị xóa sẽ <span style="color: red">KHÔNG</span> thể khôi phục lại.
+      </p>
+    </div>
+    <!-- Emd: Body dialog  -->
+  
+    <!-- Start: action dialog  -->
+    <div class="k-dialog-actions">
+      <button
+        kendoButton
+        (click)="closeDiaDeletePosition()"
+        class="cancel"
+        iconClass="k-icon k-i-trash"
+      >
+        HỦY BỎ
+      </button>
+      <button
+        kendoButton
+        imageUrl="assets/img/icon/icon_bin.svg"
+        (click)="handleDeletePosition('yes')"
+        class="delete"
+      >
+        ĐỒNG Ý
+      </button>
+    </div>
+    <!-- End: action dialog  -->
+    </kendo-dialog>
+</div>
+<app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>

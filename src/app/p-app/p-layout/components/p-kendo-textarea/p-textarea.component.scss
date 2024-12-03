@@ -1,0 +1,42 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep app-p-textarea {
+    position: relative;
+    .customized-textarea {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        width: 100%;
+    .k-textarea{
+        :read-only{
+            background-color:unset;
+        }
+        .k-input-suffix {
+            position: absolute;
+            bottom: 0;
+            right: 10px;
+        }
+
+        .k-input-inner{
+            background-color: transparent;
+            z-index: 1;
+        }
+    }
+    }
+
+    .kendo-textarea-mock-placeHolder {
+        margin-top: 4px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 94%;
+        padding: 10px;
+        color: #959db3;
+        z-index: 0;
+        overflow: auto;
+    }
+      
+} 

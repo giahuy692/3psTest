@@ -1,0 +1,231 @@
+<div id="app-hri019-payroll-list">
+  <!-- START BREADCRUMB AND BUTTON -->
+  <div class="header header-1">
+    <!-- Breadcumb  -->
+    <div class="breadcumb d-flex align-items-center">
+      <app-p-kendo-breadcrumb
+        (loadData)="loadDataBreadcumb()"
+      ></app-p-kendo-breadcrumb>
+      <!-- GROUP BUTTON FILTER -->
+      <div class="buttonGroup">
+        <app-checkbox-button-group
+          [ignoreCase]="true"
+          title="Đang soạn thảo"
+          [checked]="isDrafting"
+          [field]="'StatusID'"
+          [value]="0"
+          (selectedChange)="selectedChangeCheckbox($event, 'isDrafting')"
+          (filterChange)="filterChangeDrafting($event)"
+          [disabled]="!isFilterActive"
+        ></app-checkbox-button-group>
+        <app-checkbox-button-group
+          [ignoreCase]="true"
+          title="Gửi duyệt"
+          [checked]="isSent"
+          [field]="'StatusID'"
+          [value]="1"
+          (selectedChange)="selectedChangeCheckbox($event, 'isSent')"
+          (filterChange)="filterChangeSent($event)"
+          [disabled]="!isFilterActive"
+        ></app-checkbox-button-group>
+        <app-checkbox-button-group
+          [ignoreCase]="true"
+          title="Đã duyệt"
+          [checked]="isApproved"
+          [field]="'StatusID'"
+          [value]="2"
+          (selectedChange)="selectedChangeCheckbox($event, 'isApproved')"
+          (filterChange)="filterChangeApproved($event)"
+          [disabled]="!isFilterActive"
+        ></app-checkbox-button-group>
+
+        <app-checkbox-button-group
+          [ignoreCase]="true"
+          title="Ngưng áp dụng"
+          [checked]="isSuspended"
+          [field]="'StatusID'"
+          [value]="3"
+          (selectedChange)="selectedChangeCheckbox($event, 'isSuspended')"
+          (filterChange)="filterChangesSuspended($event)"
+          [disabled]="!isFilterActive"
+        ></app-checkbox-button-group>
+      </div>
+    </div>
+
+    <!-- BUTTON -->
+    <div class="btnWrapper">
+      <button
+        kendoButton
+        iconClass="k-icon k-i-plus"
+        (click)="onAdd()"
+        [disabled]="!isFilterActive"
+        *ngIf="isToanQuyen || isAllowedToCreate"
+        class="btn-hachi hachi-primary"
+      >
+        thêm mới
+      </button>
+    </div>
+  </div>
+  <!-- END BREADCRUMB AND BUTTON -->
+
+  <!-- START FUNCTIONBAR -->
+  <div id="functionbar" class="header header-2">
+    <!-- SEARCH FILTER -->
+    <app-search-filter-group
+      placeholder="Tìm theo bảng lương"
+      [fields]="['SalaryName', 'Remark']"
+      (valueChange)="handleSearch($event)"
+      (onReset)="onResetFilter(fromDate, toDate)"
+      [disabled]="!isFilterActive"
+    ></app-search-filter-group>
+
+    <div class="d-flex justify-content-between flex-column h-100">
+      <span class="label">Lọc theo kỳ lương</span>
+      <div class="d-flex align-items-center justify-content-between align-self-end colGap10"> 
+        <p-kendo-dropdownlist #fromDate [data]="dropdownFromDate" [valueField]="'Code'" [textField]="'Period'" [(ngModel)]="FromDate" [filterable]="true" [disabled]="!isFilterActive"
+          (selectionChange)="selectionChangeDropdown($event,'FromDate')"  [popupSettings]="{ popupClass: 'customDropdownList'}">
+        </p-kendo-dropdownlist>
+        <span class="px-2">-</span>
+        <p-kendo-dropdownlist #toDate [data]="dropdownToDate" [valueField]="'Code'" [textField]="'Period'" [(ngModel)]="ToDate" [filterable]="true" [disabled]="!isFilterActive"
+          (selectionChange)="selectionChangeDropdown($event,'ToDate')" [popupSettings]="{ popupClass: 'customDropdownList'}">
+        </p-kendo-dropdownlist>
+      </div>
+    </div>
+  </div>
+  <!-- END FUNCTIONBAR -->
+
+  <!-- START GIRD LAYOUT -->
+  <div class="grid-wrapper">
+    <app-p-kendo-grid
+      class="grid scrollable"
+      [data]="gridView | async"
+      [scrollable]="'none'"
+      [loading]="loading"
+      [pageable]="true"
+      [pageSizes]="pageSizes"
+      [pageSize]="pageSize"
+      [skip]="gridState.skip"
+      [take]="gridState.take"
+      [sortable]="true"
+      [sort]="gridState.sort"
+      [selectable]="selectable"
+      [allowedMoreActionDropdown]="allowActionDropdown"
+      [getActionDropdownCallback]="getActionDropdownCallback"
+      [getSelectionPopupCallback]="getSelectionPopupCallback"
+      [onActionDropdownClickCallback]="onActionDropdownClickCallback"
+      [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+      [onSelectCallback]="onSelectCallback"
+      [onPageChangeCallback]="onPageChangeCallback"
+    >
+      <kendo-grid-column
+        field="Title"
+        title="Bảng lương"
+        class="col_SalaryName"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <span class="title text-ellipsis" [title]="dataItem.SalaryName">{{ dataItem.SalaryName }}</span>
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column
+        field="CategoryName"
+        title="Kỳ lương"
+        class="col_Period"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <span class="text-ellipsis" [title]="dataItem.Period">{{ dataItem.Period }}</span>
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column
+        field="CategoryName"
+        title="Thời gian hiện trên hệ thống"
+        class="col_EffDate"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <span class="text-ellipsis" [title]="dataItem.EffDate">{{ dataItem.EffDate | date: 'dd/MM/yyyy HH:mm' }}</span>
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column
+        field="CategoryName"
+        title="SL nhân sự "
+        class="col_NoOfEmployee"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <span class="font-weight-bold text-ellipsis">
+            {{ dataItem.NoOfEmployee }}
+          </span>
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column
+        field="StatusName"
+        title="Tình trạng"
+        class="col_status"
+        headerClass="col_theStatusHeader"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div
+            [innerHTML]="dataItem.StatusName | colorStatus : dataItem.StatusID"
+          ></div>
+        </ng-template>
+      </kendo-grid-column>
+    </app-p-kendo-grid>
+  </div>
+  <!-- END GIRD LAYOUT -->
+  <!-- Start: Dialog verify -->
+  <kendo-dialog
+    *ngIf="openedDialog"
+    (close)="closeDialog()"
+    [minWidth]="250"
+    [width]="450"
+    [minHeight]="250"
+    class="wrapper-dialog"
+  >
+    <!-- Start: header dialog  -->
+    <kendo-dialog-titlebar>
+      <div class="title-delete d-flex">
+        <span
+          class="btn-title-dialog"
+          kendoButton
+          imageUrl="assets/img/icon/icon_warning.svg"
+        ></span>
+        <span>XÓA BẢNG LƯƠNG?</span>
+      </div>
+    </kendo-dialog-titlebar>
+    <!-- End: header dialog  -->
+
+    <!-- Start: Body dialog  -->
+    <div class="body_dialog">
+      <div class="content-primary">
+        <p>Bạn chắc chắn muốn xóa bản lương:</p>
+        <strong>{{ Payroll.SalaryName }}</strong>
+      </div>
+      <p class="content-sub">
+        Bảng lương bị xóa sẽ <span style="color: red">KHÔNG</span> thể khôi
+        phục lại.
+      </p>
+    </div>
+    <!-- Emd: Body dialog  -->
+
+    <!-- Start: action dialog  -->
+    <div class="k-dialog-actions">
+      <button kendoButton (click)="closeDialog()" class="cancel">HỦY BỎ</button>
+      <button
+        kendoButton
+        imageUrl="assets/img/icon/icon_bin.svg"
+        (click)="deleteDialog('yes')"
+        class="delete"
+      >
+        ĐỒNG Ý
+      </button>
+    </div>
+    <!-- End: action dialog  -->
+  </kendo-dialog>
+  <!-- End: Dialog  -->
+</div>
+
+<!-- <app-import-popup
+  [uploadEventHandlerCallback]="uploadEventHandlerCallback"
+></app-import-popup> -->

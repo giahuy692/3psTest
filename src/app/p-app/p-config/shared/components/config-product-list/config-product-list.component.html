@@ -1,0 +1,80 @@
+<div class="config-product-list">
+  <div class="header">
+      <div class="title">DANH SÁCH SẢN PHẨM THUỘC HAMPER</div>
+      <app-search-filter-group [placeholder]="'Tìm theo barcode, tên sản phẩm'" (valueChange)="Search($event)" (onReset)="resetFilter()" [disabled]="disableSearch" [loading]="loading" [clearButton]="true"></app-search-filter-group>
+      <div class="nav-btn nav-crud" *ngIf="hasAction" >
+          <div class="file-btn-group">
+          <button kendoButton id="onUploadBtn" class="k-button" [icon]="'export'" (click)="onImportExcel()"></button>
+          </div>
+          <div class="file-btn-group">
+          <button kendoButton id="onDownloadBtn" class="k-button" [icon]="'import'" (click)="downloadExcel()"
+          >Template</button>
+          </div>
+          <button kendoButton class="k-button btn-hachi hachi-primary" [icon]="'plus'" (click)="addNewItem()">
+              THÊM MỚI
+          </button>
+      </div>
+  </div>
+        <div class="grid-product">
+            <div class="grid-wrapper">
+                <app-p-kendo-grid class="grid scrollable " [data]="gridView | async" [scrollable]="'none'" [loading]="loading"
+                [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize" [skip]="gridState.skip"
+                [take]="gridState.take" [onPageChangeCallback]="onPageChangeCallback" [sortable]="true"
+                [sort]="gridState.sort" [onSortChangeCallback]="onSortChangeCallback"
+                [getActionDropdownCallback]="getActionDropdownCallback"
+                [onActionDropdownClickCallback]="onActionDropdownClickCallback"
+                [onSelectCallback]="onSelectCallback" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+                [getSelectionPopupCallback]="getSelectionPopupCallback" 
+                [hasMoreAction]="hasAction"
+                >
+
+                <kendo-grid-column field="ChildName" title="Tên sản phẩm" class="col_img_tensanpham_masanpham"
+                headerClass="col_img_tensanpham_masanpham">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                  <div class="img_tensanpham_masanpham">
+                    <div class="img">
+                      <img loading="lazy" [src]="dataItem.URLThumbImage" alt="">
+                    </div>
+                    <div class="tensanpham_masanpham d-flex">
+                      <div class="tensanpham">{{ dataItem.ChildName }}</div>
+                      <!-- <div class="masanpham">
+                        <b>{{ dataItem.Barcode }}</b>
+                      </div> -->
+                    </div>
+                  </div>
+                </ng-template>
+              </kendo-grid-column>
+
+              <kendo-grid-column field="ChildBarcode" title="Barcode">
+              </kendo-grid-column>
+
+              <kendo-grid-column field="ChildQty" title="Số lượng" class="col_soLuong">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                  <div>{{ dataItem.ChildQty | number: '1.' }}</div>
+                </ng-template>
+              </kendo-grid-column>
+
+              <kendo-grid-column field="OriginName" title="Xuất xứ" class="col_xuatXu" headerClass="col_xuatXu">
+              </kendo-grid-column>
+
+              <kendo-grid-column field="BrandName" title="Thương hiệu" class="col_thuonghieu">
+              </kendo-grid-column>
+             
+      
+            </app-p-kendo-grid>
+            </div>
+        </div>
+
+        
+        <app-p-kendo-dialog *ngIf="dialogOpen" class="dialogDelete" [title]="'Xác nhận Xóa sản phẩm'"
+        (close)="closeDialog()" (handleButton)="Delete()"
+        [cancelText]="'KHÔNG'"
+        [actionText]="'Có'"
+        [dialogType]="1"
+        >
+          <p>Bạn có chắc chắn muốn Xóa sản phẩm này? </p>
+         
+        </app-p-kendo-dialog>
+
+<app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>
+       

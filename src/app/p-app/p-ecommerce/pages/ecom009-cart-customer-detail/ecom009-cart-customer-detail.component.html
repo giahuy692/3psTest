@@ -1,0 +1,585 @@
+<div id="app-drawer-container">
+  <mat-drawer-container [hasBackdrop]="true">
+    <mat-drawer #drawer [mode]="'over'" position="end">
+
+      <form class="formSanpham k-form" [formGroup]="form" [hidden]="!isAddSp" (keydown.Enter)="keydownEnter($event)">
+        <fieldset>
+          <legend>Chi tiết Sản phẩm</legend>
+          <kendo-formfield>
+            <kendo-label text="Mã sản phẩm" [for]="Barcode">
+              <span class="symbol">(*)</span>
+            </kendo-label>
+            <kendo-textbox formControlName="Barcode" #Barcode (keydown.Enter)="$event.target.blur()"
+              [(value)]="currentOrderDetail.Barcode" disabled>
+            </kendo-textbox>
+          </kendo-formfield>
+
+          <div class="tensanpham">
+            <kendo-label text="Tên sản phẩm"></kendo-label>
+            <div class="VNName">{{currentOrderDetail.VNName}}</div>
+          </div>
+
+          <div class="formfield-grid" [ngClass]="{'hasNoImage': currentOrderDetail.ImageSetting == ''}">
+            <kendo-formfield class="formfield-item item1">
+              <kendo-label text="Giao hàng Hachi3h" [for]="IsHachi24h"></kendo-label>
+              <input type="checkbox" formControlName="IsHachi24h" #IsHachi24h class="k-checkbox"
+                [(ngModel)]="currentOrderDetail.IsHachi24h" />
+              <img loading="lazy" class="img-hachi24" src="assets\img\logo\hachi3h.svg">
+            </kendo-formfield>
+
+            <img loading="lazy" class="img-ImageSetting formfield-item item2" [src]="currentOrderDetail.ImageSetting">
+
+            <kendo-formfield class="formfield-item item3">
+              <kendo-label text="Số lượng đặt" [for]="ShippedQuantity">
+                <span class="symbol">(*)</span>
+              </kendo-label>
+              <kendo-numerictextbox formControlName="ShippedQuantity" min="1" #ShippedQuantity format="#,0"
+                [(ngModel)]="currentOrderDetail.ShippedQuantity">
+              </kendo-numerictextbox>
+            </kendo-formfield>
+
+            <kendo-formfield class="formfield-item item4">
+              <kendo-label text="Giá bán" [for]="UnitPrice"></kendo-label>
+              <kendo-numerictextbox formControlName="UnitPrice" #UnitPrice format="#,0"
+                [(ngModel)]="currentOrderDetail.UnitPrice">
+              </kendo-numerictextbox>
+            </kendo-formfield>
+
+            <kendo-formfield class="formfield-item item5">
+              <kendo-label text="." [for]="BasePrice"></kendo-label>
+              <kendo-textbox formControlName="BasePrice" #BasePrice class="red-color"
+                [(ngModel)]="currentOrderDetail.BasePrice"></kendo-textbox>
+            </kendo-formfield>
+          </div>
+
+          <kendo-formfield>
+            <kendo-label text="Thành tiền" [for]="ThanhTien"></kendo-label>
+            <!-- <kendo-textbox formControlName="ThanhTien" #ThanhTien></kendo-textbox> -->
+            <kendo-numerictextbox formControlName="ThanhTien" #ThanhTien format="#,0">
+            </kendo-numerictextbox>
+          </kendo-formfield>
+
+          <kendo-formerror>(*) Trường bắt buộc nhập.</kendo-formerror>
+
+          <div class="k-form-buttons">
+            <button kendoButton class="k-button closeBtn" (click)="closeForm()">Đóng</button>
+          </div>
+        </fieldset>
+      </form>
+
+      <form class="k-form formQuatang" [hidden]="isAddSp" (keydown.Enter)="keydownEnter($event)">
+        <fieldset class="k-form-fieldset">
+          <legend class="k-form-legend">Lựa chọn quà tặng</legend>
+
+          <div class="groupQuatang" *ngIf="giftProductList.length > 0">
+            <div class="groupName">Quà tặng theo sản phẩm</div>
+            <div class="sanpham" *ngFor="let prod of giftProductList">
+              <div class="sanphamName">
+                <img loading="lazy" [src]="prod.ImageSetting1" alt="">
+                <span>{{ prod.VName }}</span>
+              </div>
+              <div class="quatang-list">
+                <div class="quatang-item" *ngFor="let item of prod.ListOfGift">
+
+                  <input type="checkbox" class="k-checkbox" [(ngModel)]="item.IsChecked"
+                    [ngModelOptions]="{standalone: true}" />
+                  <img loading="lazy" class="item2" [src]="item.ImageSetting1" alt="">
+
+                  <div class="tenquatang_maquatang">
+                    <div class="tenquatang">{{ item.VNGift }}</div>
+                    <div class="maquatang">{{ item.Barcode }}</div>
+                  </div>
+                  <div class="soluongquatang">
+                    <span class="soluong">Số lượng</span>
+                    <kendo-numerictextbox [min]="item.MinQuantity" [max]="item.MaxQuantity" format="#,0"
+                      [value]="item.OrderQuantity != undefined ? item.OrderQuantity : item.MinQuantity">
+                    </kendo-numerictextbox>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="groupQuatang" *ngIf="giftBillList.length > 0">
+            <div class="groupName">Quà tặng theo bill</div>
+            <div class="sanpham" *ngFor="let prod of giftBillList">
+              <div class="sanphamName">
+                <span>{{ prod.VName }}</span>
+              </div>
+              <div class="quatang-list">
+                <div class="quatang-item" *ngFor="let item of prod.ListOfGift">
+
+                  <input type="checkbox" class="k-checkbox" [(ngModel)]="item.IsChecked"
+                    [ngModelOptions]="{standalone: true}" />
+                  <img loading="lazy" class="item2" [src]="item.ImageSetting1" alt="">
+
+                  <div class="tenquatang_maquatang">
+                    <div class="tenquatang">{{ item.VNGift }}</div>
+                    <div class="maquatang">{{ item.Barcode }}</div>
+                  </div>
+                  <div class="soluongquatang">
+                    <span class="soluong">Số lượng</span>
+                    <kendo-numerictextbox [min]="item.MinQuantity" [max]="item.MaxQuantity" format="#,0"
+                      [value]="item.OrderQuantity != undefined ? item.OrderQuantity : item.MinQuantity">
+                    </kendo-numerictextbox>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="k-form-buttons">
+            <button kendoButton class="k-button closeBtn" (click)="closeForm()">Đóng</button>
+          </div>
+        </fieldset>
+      </form>
+    </mat-drawer>
+    <!-- center content -->
+    <mat-drawer-content>
+      <div id="ecom009-cart-customer-detail">
+        <div class="header header-1">
+          <div class="nav-btn nav-breadcrumb">
+            <div class="breadcrumb-item">
+              GIỎ HÀNG CỦA KHÁCH
+            </div>
+
+            <div class="breadcrumb-chevron">
+              <span class="k-icon k-i-arrow-chevron-right"></span>
+            </div>
+
+            <div class="breadcrumb-item">
+              CHI TIẾT GIỎ HÀNG
+            </div>
+          </div>
+
+          <div class="nav-btn nav-crud">
+            <button kendoButton class=" btn-hachi hachi-secondary" [icon]="'success'" (click)="VNPayIPNRecall()">
+              KIỂM TRA THANH TOÁN
+            </button>
+
+            <button kendoButton class=" btn-hachi hachi-primary" [icon]="'reset'" (click)="GetClientOrder()">
+              LÀM MỚI
+            </button>
+
+          </div>
+        </div>
+
+        <div class="body">
+          <div class="sections">
+            <div class="section" id="thongtindonhangTbl">
+              <div class="title">
+                <span [ngClass]="{'red': curOrder.IsHachi24}">THÔNG TIN GIỎ HÀNG
+                  <img loading="lazy" *ngIf="curOrder.IsHachi24" src="assets\img\logo\hachi3h.svg">:
+                </span>
+
+                <span class="tinhtrang" [ngClass]="{'green': curOrder.OrderTypeID == 13,
+                'red': curOrder.OrderTypeID == 18}">{{ curOrder.StatusName }}</span>
+              </div>
+
+              <div class=" section-grid">
+                <!-- row 1 -->
+                <div class="grid-item item1">
+                  <div class="label">Mã giỏ hàng</div>
+                  <kendo-textbox type="text" class="k-textbox" disabled [value]="curOrder.CartNo">
+                  </kendo-textbox>
+                </div>
+                <div class="grid-item item2">
+                  <div class="label">Kênh bán hàng</div>
+                  <kendo-dropdownlist [data]="channelListInhouse" [textField]="'ChannelName'" [valueField]="'Code'"
+                    [value]="currentChannel" [disabled]="true" [popupSettings]="{appendTo:'component'}">
+                  </kendo-dropdownlist>
+                </div>
+                <div class="grid-item item3">
+                  <div class="label">Người nhận hàng</div>
+                  <kendo-textbox type="text" class="k-textbox" (keydown.Enter)="$event.target.blur()" disabled
+                    [(ngModel)]="curOrder.ReceivedBy">
+                  </kendo-textbox>
+                </div>
+                <!-- row 2 -->
+                <div class="grid-item item6">
+                  <div class="label">Ngày đặt hàng</div>
+                  <kendo-datepicker [format]="'dd/MM/yyyy'" placeholder="dd/mm/yyyy"
+                    [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }" disabled
+                    (keydown.Enter)="$event.target.blur()" [(ngModel)]="createdDate">
+                  </kendo-datepicker>
+                </div>
+                <div class="grid-item item7">
+                  <div class="label">Người mua hàng <span class="nguoimuahang">{{ curOrder.MembershipID }}</span>
+                  </div>
+                  <kendo-textbox type="text" class="k-textbox" disabled (keydown.Enter)="$event.target.blur()"
+                    [(ngModel)]="curOrder.OrderBy">
+                  </kendo-textbox>
+                </div>
+                <div class="grid-item item8">
+                  <div class="label">Điện thoại người nhận</div>
+                  <kendo-textbox type="text" class="k-textbox" disabled (keydown.Enter)="$event.target.blur()"
+                    [(ngModel)]="curOrder.Cellphone">
+                  </kendo-textbox>
+                </div>
+                <!-- row 3 -->
+                <div class="grid-item item9">
+                  <div class="label">Ghi chú giỏ hàng</div>
+                  <textarea [readonly]="isLockAll" [(ngModel)]="curOrder.Remark"></textarea>
+                </div>
+
+                <div class="grid-item item10">
+                  <div class="label">Phân loại giỏ hàng</div>
+                  <button kendoButton #phanloaidonhangBtn id="phanloaidonhangBtn" class="k-button"
+                    [toggleable]="!isLockAll" [disabled]="true" [selected]="curOrder.IsAnonymous">
+                    <input type="checkbox" class="k-checkbox" [disabled]="true" [checked]="curOrder.IsAnonymous" />
+                    Giỏ hàng vãng lai
+                  </button>
+                </div>
+                <div class="grid-item item11">
+                  <div class="label">Điện thoại</div>
+                  <kendo-textbox type="text" class="k-textbox" disabled (keydown.Enter)="$event.target.blur()"
+                    [(ngModel)]="curOrder.OrderPhone">
+                  </kendo-textbox>
+                </div>
+
+                <div class="grid-item item12">
+                  <div class="address-item address">
+                    <div class="label" [title]="curOrder.Address">Địa chỉ nhận hàng</div>
+                    <kendo-textbox type="text" class="k-textbox" disabled (keydown.Enter)="$event.target.blur()"
+                      [(ngModel)]="curOrder.Address" [title]="curOrder.Address">
+                    </kendo-textbox>
+                  </div>
+                  <div class="address-item address-province">
+                    <div class="label" [title]="currentProvince.ProvinceName">Tỉnh/thành phố</div>
+                    <kendo-dropdownlist [data]="provinceList" [textField]="'ProvinceName'" [valueField]="'ID'"
+                      [disabled]="true" [value]="currentProvince" [popupSettings]="{appendTo:'component'}">
+                    </kendo-dropdownlist>
+                  </div>
+                  <div class="address-item address-district">
+                    <div class="label" [title]="currentDistrict.DistrictName">Quận/huyện</div>
+                    <kendo-dropdownlist [data]="districtList" [textField]="'DistrictName'" [valueField]="'ID'"
+                      [disabled]="true" [value]="currentDistrict" [popupSettings]="{appendTo:'component'}">
+                    </kendo-dropdownlist>
+                  </div>
+                  <div class="address-item address-ward">
+                    <div class="label" [title]="currentWard.WardName">Phường/xã</div>
+                    <kendo-dropdownlist [data]="wardList" [textField]="'WardName'" [valueField]="'ID'" [disabled]="true"
+                      [value]="currentWard" [popupSettings]="{appendTo:'component'}">
+                    </kendo-dropdownlist>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section" id="thongtinthanhtoanTbl">
+              <div class="title">THÔNG TIN THANH TOÁN</div>
+
+              <div class="section-grid">
+                <!-- col 1 -->
+                <div class="grid-item item1">
+                  <div class="label" [title]="curPayment.PaymentName">Phương thức thanh toán</div>
+                  <kendo-dropdownlist [data]="paymentList" [textField]="'PaymentName'" [valueField]="'ID'"
+                    [disabled]="!canEditPayment" [value]="curPayment"
+                    (valueChange)="onDropdownlistClick($event, 'PaymentID')" [title]="curPayment.PaymentName"
+                    [popupSettings]="{appendTo:'component'}">
+                  </kendo-dropdownlist>
+                </div>
+
+                <div class="grid-item item2">
+                  <div class="label" [title]="curOrder.VATAddress">Thông tin xuất hóa đơn</div>
+                  <kendo-textbox type="text" class="k-textbox" placeholder="Mã số thuế" title="Mã số thuế"
+                    (keydown.Enter)="$event.target.blur()" [(ngModel)]="curOrder.VATCode" disabled>
+                  </kendo-textbox>
+                </div>
+
+                <div class="grid-item item3">
+                  <kendo-textbox type="text" class="k-textbox" placeholder="Tên công ty" title="Tên công ty"
+                    (keydown.Enter)="$event.target.blur()" [(ngModel)]="curOrder.VATCompany" disabled>
+                  </kendo-textbox>
+
+                  <kendo-textbox type="text" class="k-textbox" placeholder="Địa chỉ" [title]="curOrder.VATAddress"
+                    (keydown.Enter)="$event.target.blur()" [(ngModel)]="curOrder.VATAddress" disabled>
+                  </kendo-textbox>
+
+                  <kendo-textbox type="text" class="k-textbox" placeholder="Email nhận hóa đơn"
+                    title="Email nhận hóa đơn" (keydown.Enter)="$event.target.blur()" [(ngModel)]="curOrder.VATEmail"
+                    disabled>
+                  </kendo-textbox>
+                </div>
+                <!-- col 2, 3 -->
+                <div class="grid-item item4">
+                  <div class="label">Nhập Coupon</div>
+                  <kendo-textbox type="text" class="k-textbox" disabled (keydown.Enter)="$event.target.blur()"
+                    [(ngModel)]="currentCoupon.CouponNo">
+                  </kendo-textbox>
+                </div>
+
+                <div class="grid-item item5">
+                  <div class="item" *ngFor="let item of couponList">
+                    <span class="couponcode">{{ item.CouponNo }}</span>
+                    <span class="number">{{ item.CouponAmount | number : '1.' }}</span>
+                  </div>
+                </div>
+                <!-- col 4 -->
+                <div class="grid-item item6">
+                  <div class="item">
+                    <div class="label thick-label">Giá trị sản phẩm</div>
+                    <kendo-numerictextbox format="#,0" [min]="0" disabled [value]="curOrder.TotalAmount">
+                    </kendo-numerictextbox>
+                  </div>
+                  <div class="item" *ngIf="curOrder.PolicyMembership > 0">
+                    <div class="label thin-label">Chiết khấu 3% KHTT</div>
+                    <kendo-numerictextbox format="-#,0" [min]="0" class="red-color" [value]="curOrder.PolicyMembership"
+                      disabled>
+                    </kendo-numerictextbox>
+                  </div>
+                </div>
+
+                <div class="grid-item item7">
+                  <div class="item">
+                    <div class="label thick-label">Giá trị mua hàng</div>
+                    <kendo-numerictextbox format="#,0" [min]="0" disabled
+                      [value]="curOrder.TotalAmount - curOrder.PolicyMembership">
+                    </kendo-numerictextbox>
+                  </div>
+                  <div class="item" *ngIf="curOrder.CouponPaid > 0">
+                    <div class=" label thin-label">Trừ mã giảm giá</div>
+                    <kendo-numerictextbox format="-#,0" [min]="0" class="red-color" [(ngModel)]="curOrder.CouponPaid"
+                      (keydown.Enter)="$event.target.blur()" disabled>
+                    </kendo-numerictextbox>
+                  </div>
+                </div>
+
+                <div class="grid-item item8">
+                  <div class="item" *ngIf="curOrder.ShippingFee > 0">
+                    <div class="label thick-label">Phí vận chuyển tạm tính</div>
+                    <!-- khi web go live, disable block này thay vì isLockAll -->
+                    <kendo-numerictextbox format="#,0" [min]="0" [(ngModel)]="curOrder.ShippingFee"
+                      (keydown.Enter)="$event.target.blur()" disabled>
+                    </kendo-numerictextbox>
+                  </div>
+                  <div class="item" *ngIf="curOrder.ShippingDiscount > 0">
+                    <div class="label thin-label">Trừ phí vận chuyển</div>
+                    <kendo-numerictextbox format="-#,0" [min]="0" class="red-color"
+                      [(ngModel)]="curOrder.ShippingDiscount" (keydown.Enter)="$event.target.blur()" disabled>
+                    </kendo-numerictextbox>
+                  </div>
+                </div>
+
+                <div class="grid-item item9">
+                  <div class="label">TỔNG THANH TOÁN</div>
+                  <div class="number">{{ curOrder.Payment | number : '1.' }}</div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="section" id="thongtinchitietdonhangTbl">
+              <div class="title">THÔNG TIN CHI TIẾT GIỎ HÀNG </div>
+
+              <div class="grids">
+                <div class="grid1 gridGroup" [ngClass]="{'gridNull': grid1Null}">
+                  <div class="grid-title" *ngIf="orderDetailsGroups.length > 1">
+                    <div class="grid-subtitle">{{ 'GIỎ HÀNG: ' + curOrder.CartNo + '-1' }}</div>
+                    <img loading="lazy" src="assets\img\logo\hachi3h.svg">
+                  </div>
+
+                  <div class="grid-wrapper">
+                    <app-p-kendo-grid [data]="gridDSView1 | async" [scrollable]="'none'" [loading]="loading"
+                      [pageable]="pageable1" [pageSizes]="pageSizes" [pageSize]="pageSize" [skip]="gridDSState1.skip"
+                      [take]="gridDSState1.take" [onPageChangeCallback]="onPageChangeCallback"
+                      [allowedMoreActionDropdown]="isLockAll ? [] : allowActionDropdown" [autoHeight]="false"
+                      [onActionDropdownClickCallback]="onActionDropdownClickCallback">
+  
+                      <kendo-grid-column field="VNName" title="Tên sản phẩm" class="tensanpham" [filterable]="false"
+                        [sortable]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                          <div class="img_tensanpham_masanpham main_combo">
+                            <img loading="lazy" src="{{dataItem.ImageSetting}}" alt="">
+                            <div class="tensanpham_masanpham">
+                              <div>{{ dataItem.VNName }}</div>
+                              <div class="masanpham">{{ dataItem.Barcode }}
+                                <span *ngIf="dataItem.ModelID != null && dataItem.ModelID > 0">
+                                  <b> | Mẫu: {{ dataItem.Model }}</b>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+  
+                          <!-- <div class="chitiet_combo" *ngFor="let cItem of dataItem.ListProductInCombo; let i = index">
+                            <div class="d-flex">
+                              <div class="combo_item_index">{{ i + 1 }}</div>
+                              <div class="img">
+                                <img loading="lazy" src="{{cItem.ImageSetting}}" alt="">
+                              </div>
+                              <div class="tensanpham_masanpham d-flex">
+                                <div class="tensanpham">{{ cItem.VNName }}</div>
+                                <div class="masanpham"><b>{{ cItem.Barcode }}</b></div>
+                              </div>
+                            </div>
+                          </div> -->
+                        </ng-template>
+                      </kendo-grid-column>
+  
+                      <kendo-grid-column field="IsSubOrder24h" class="isHachi24" [filterable]="false" [sortable]="false">
+                        <ng-template kendoGridHeaderTemplate let-dataItem>
+                          <img loading="lazy" class="hachi24" src="assets\img\logo\hachi3h.svg">
+                        </ng-template>
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                          <input type="checkbox" class="k-checkbox" [checked]="true" disabled />
+                        </ng-template>
+                      </kendo-grid-column>
+  
+                      <kendo-grid-column field="ShippedQuantity" title="Số lượng" class="soluong" [filterable]="false"
+                        [sortable]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                          <div class="soluong main_combo">
+                            <div>{{ dataItem.ShippedQuantity | number : '1.' }}</div>
+                          </div>
+  
+                          <!-- <div class="chitiet_combo" *ngFor="let cItem of dataItem.ListProductInCombo; let i = index">
+                            <div class="soluong">
+                              <div class="sl">SL trong combo
+                                <span>{{ cItem.Quantity | number: '1.' }}</span>
+                              </div>
+                              <div class="sl" style="visibility: hidden;">SL trong combo
+                                <span>{{ cItem.Quantity | number: '1.' }}</span>
+                              </div>
+                            </div>
+                          </div> -->
+                        </ng-template>
+                      </kendo-grid-column>
+  
+                      <kendo-grid-column field="UnitPrice" title="Đơn giá" class="dongia" [filterable]="false"
+                        [sortable]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                          <div class="unitprice_baseprice main_combo">
+                            <div>{{ dataItem.UnitPrice | number : '1.' }}</div>
+                            <div *ngIf="dataItem.UnitPrice != dataItem.BasePrice" class="BasePrice">
+                              {{ dataItem.BasePrice | number : '1.' }}</div>
+                          </div>
+  
+                          <!-- <div class="chitiet_combo" *ngFor="let cItem of dataItem.ListProductInCombo; let i = index">
+                            <div class="unitprice_baseprice">
+                              <div class="unitprice">{{ cItem.PriceDiscount | number: '1.' }}</div>
+                              <div class="baseprice">{{ cItem.Price | number: '1.' }} </div>
+                            </div>
+                          </div> -->
+                        </ng-template>
+                      </kendo-grid-column>
+  
+                      <kendo-grid-column title="Thành tiền" class="thanhtien" [filterable]="false" [sortable]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                          <div class="unitprice_baseprice main_combo">
+                            <div>{{ dataItem.ShippedQuantity * dataItem.UnitPrice | number : '1.' }}</div>
+                          </div>
+  
+                          <!-- <div class="chitiet_combo" *ngFor="let cItem of dataItem.ListProductInCombo; let i = index">
+                            <div class="unitprice_baseprice">
+                              <div class="unitprice">{{ cItem.PriceDiscount | number: '1.' }}</div>
+                              <div class="baseprice">{{ cItem.Price | number: '1.' }} </div>
+                            </div>
+                          </div> -->
+                        </ng-template>
+                      </kendo-grid-column>
+  
+                      <kendo-grid-column title="Ghi chú" class="col_ghiChu" field="Remark">
+                      </kendo-grid-column>
+                    </app-p-kendo-grid>
+                  </div>
+                </div>
+
+                <div class="grid2 gridGroup" [ngClass]="{'gridNull': grid2Null}">
+                  <div class="grid-title" *ngIf="orderDetailsGroups.length > 1">
+                    <div class="grid-subtitle">{{ 'GIỎ HÀNG: ' + curOrder.CartNo + '-2' }}</div>
+                  </div>
+
+                  <div class="grid-wrapper">
+                    <app-p-kendo-grid [data]="gridDSView2 | async" [scrollable]="'none'" [loading]="loading"
+                      [pageable]="pageable2" [pageSizes]="pageSizes" [pageSize]="pageSize" [skip]="gridDSState2.skip"
+                      [take]="gridDSState2.take" [onPageChangeCallback]="onPageChangeCallback"
+                      [allowedMoreActionDropdown]="allowActionDropdown" [autoHeight]="false"
+                      [onActionDropdownClickCallback]="onActionDropdownClickCallback">
+  
+                      <kendo-grid-column field="VNName" title="Tên sản phẩm" class="tensanpham" [filterable]="false"
+                        [sortable]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                          <img loading="lazy" [src]="dataItem.ImageSetting" alt="">
+                          <div class="tensanpham_masanpham">
+                            <div class="tensanpham">{{ dataItem.VNName }}</div>
+                            <div class="masanpham">{{ dataItem.Barcode }}
+                              <span *ngIf="dataItem.ModelID != null && dataItem.ModelID > 0">
+                                <b> | Mẫu: {{ dataItem.ModelName }}</b>
+                              </span>
+                            </div>
+                          </div>
+                        </ng-template>
+                      </kendo-grid-column>
+  
+                      <kendo-grid-column field="IsSubOrder24h" class="isHachi24" [filterable]="false" [sortable]="false">
+                        <ng-template kendoGridHeaderTemplate let-dataItem>
+                          <img loading="lazy" class="hachi24" src="assets\img\logo\hachi3h.svg">
+                        </ng-template>
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                          <input type="checkbox" class="k-checkbox" *ngIf="dataItem.IsHachi24h"
+                            [checked]="dataItem.IsSubOrder24h" disabled />
+                        </ng-template>
+                      </kendo-grid-column>
+  
+                      <kendo-grid-column field="ShippedQuantity" title="Số lượng" class="soluong" [filterable]="false"
+                        [sortable]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                          <div>{{ dataItem.ShippedQuantity | number : '1.' }}</div>
+                        </ng-template>
+                      </kendo-grid-column>
+  
+                      <kendo-grid-column field="UnitPrice" title="Đơn giá" class="dongia" [filterable]="false"
+                        [sortable]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                          <div>{{ dataItem.UnitPrice | number : '1.' }}</div>
+                          <div *ngIf="dataItem.UnitPrice != dataItem.BasePrice" class="BasePrice">{{ dataItem.BasePrice |
+                            number : '1.' }}</div>
+                        </ng-template>
+                      </kendo-grid-column>
+  
+                      <kendo-grid-column title="Thành tiền" class="thanhtien" [filterable]="false" [sortable]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                          <div>{{ dataItem.ShippedQuantity * dataItem.UnitPrice | number : '1.' }}</div>
+                        </ng-template>
+                      </kendo-grid-column>
+  
+                      <kendo-grid-column title="Ghi chú" class="col_ghiChu" field="Remark">
+                      </kendo-grid-column>
+                    </app-p-kendo-grid>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="section" id="quatangTbl">
+              <div class="title">QUÀ TẶNG </div>
+
+              <div class="quatang-list">
+                <div class="quatang-item" *ngFor="let item of giftList">
+                  <div class="hinhanh">
+                    <img loading="lazy" [src]="item.ImageSetting" alt="">
+                  </div>
+                  <div class="tenquatang_maquatang">
+                    <div class="tenquatang">{{ item.VNName }}</div>
+                    <div class="maquatang">{{ item.Barcode }}</div>
+                  </div>
+                  <div class="soluongquatang">
+                    <span class="soluong">Số lượng</span>
+                    <span class="number">{{ item.OrderQuantity | number : '1.' }}</span>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+
+
+</div>

@@ -1,0 +1,544 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+  app-config005-enterprise-permission{
+    .selection-wrapper {
+      // padding-left: 30px;
+
+      .k-checkbox,.k-radio{
+        flex-basis: 16px;
+        flex: none;
+      }
+      .per-name {
+        flex: 1;
+        margin-left: 12px;
+        
+      }
+    }
+
+    .symbol{
+      color: $dark-red !important;
+      &.fst-italic{
+        font-style: italic !important;
+      }
+    }
+
+    .text-ellipsis {
+      max-height: 2.4em;
+      /* Điều này tương đương với 2 dòng văn bản */
+      line-height: 1.2em;
+      /* Điều này tương ứng với độ cao của mỗi dòng */
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      /* Số dòng tối đa */
+      -webkit-box-orient: vertical;
+    }
+    .columnGap {
+      column-gap: 10px !important;
+    }
+
+    
+
+    .cursorPointer{
+      cursor:pointer !important;
+    }
+    #config005-enterprise-permission {
+      padding: 0 15px 0 20px;
+      height: calc(100vh - 55px - 30px);
+  
+  
+      .header-1 {
+        height: 55px;
+      }
+  
+      .header-2 {
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+        overflow-x: auto;
+  
+        .title_filter {
+          align-self: self-start;
+          color: #5A6276;
+  
+          .title {
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+          }
+        }
+  
+        .filter_group {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          column-gap: 10px;
+          width: 90%;
+  
+          .filter_item {
+            p-kendo-dropdownlist {
+              .app-p-dropdownlist {
+                .dropdownlistCustom {
+                  width: 197px;
+  
+                  .k-input-inner {
+                    width: 167px;
+                  }
+  
+                  overflow: hidden;
+                }
+              }
+  
+            }
+  
+            .k-dropdowntree {
+              width: 197px;
+            }
+  
+            .k-multiselecttree,
+            .k-multiselect {
+              width: 324px;
+              flex-direction: row-reverse;
+              background-color: #fff;
+  
+              .k-input-inner {
+                .k-readonly {
+                  padding-left: 10px;
+                }
+              }
+  
+  
+            }
+          }
+        }
+      }
+  
+      .treelist-wrapper {
+        height: calc(100vh - 254px);
+        margin-top: 8px;
+  
+        .k-treelist.k-grid {
+          // background-color: #edeff3 !important;
+          border-width: unset !important;
+          border-style: unset !important;
+  
+          .k-grid-aria-root {
+            height: calc(100vh - 170px);
+  
+            .firstHeader {
+              text-align: center;
+              line-height: 40px;
+              font-weight: 700;
+            }
+  
+            .k-grid-header {
+              .k-grid-header-wrap {
+                .k-grid-header-table {
+                  .k-table-thead {
+                    .k-table-row {
+                      // background-color: rgba(26, 102, 52, 0.2) !important;
+                      // border-top: 4px solid rgba(26, 102, 52, 0.2) !important;
+                      // border-bottom: 4px solid rgba(26, 102, 52, 0.2) !important;
+  
+                      .k-header {
+                        text-align: center;
+                        // line-height: 40px;
+                        font-weight: 700;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+  
+          .k-grid-container {
+           
+            .k-grid-content-locked{
+              height: auto !important;
+              // td {
+              //   &:first-child {
+              //     background-color: rgba(26, 102, 52, 0.2) !important;
+              //   }
+              // }
+            }
+            // style cho các hàng trong body
+            // .k-grid-content {
+            //   // overflow-x: hidden !important;
+            //   background-color: unset;
+            //   // margin-bottom: 57px;
+    
+            //   .k-grid-table-wrap{
+            //     .k-table{
+            //       .k-table-tbody{
+            //         .k-table-row{
+            //           .k-table-td{
+            //             text-align: center;
+            //           }
+            //         }
+            //       }
+            //     }
+            //   }
+            // }
+          }
+  
+  
+          .child-text {
+            margin-left: 20px;
+          }
+  
+          tr.k-alt {
+            background-color: white;
+          }
+  
+          //selected item
+          tr.k-selected {
+            background-color: rgba(26, 102, 52, 1) !important;
+            position: relative !important;
+  
+            .text-name,
+            .text-id {
+              color: white;
+            }
+  
+            img[src*="icon"] {
+              filter: brightness(0) saturate(100%) //chuyển thành màu đen
+                invert(100%) sepia(91%) saturate(0%) hue-rotate(320deg) brightness(103%) contrast(105%); //đổi màu;
+            }
+          }
+  
+          tr.k-selected>td {
+            background-color: unset;
+          }
+  
+          tr {
+            background-color: white !important;
+            border-top: 4px solid #edeff3 !important;
+            border-bottom: 4px solid #edeff3 !important;
+            position: relative !important;
+            height: 58px;
+  
+            &:hover {
+              background-color: rgba(26, 102, 52, 0.33) !important;
+            }
+  
+            td {
+  
+              .btn_permission{
+                color: $medium-blue;
+              }
+              &:first-child {
+  
+                .k-icon {
+                  padding-left: 23px;
+                  height: 32px;
+                  width: 32px;
+  
+                  &[class*="caret"]:hover {
+                    cursor: pointer;
+                  }
+                }
+              }
+  
+  
+  
+              .colNameTree {
+                display: flex;
+  
+                .italics {
+                  font-style: italic;
+                }
+  
+                .text-name {
+                  width: 450px;
+                  // padding-right: 80px;
+                  white-space: nowrap;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+  
+                }
+  
+                &.colNameTreeBold {
+                  .text-name {
+                    font-weight: 700;
+                    width: 450px;
+                    padding-right: 80px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+  
+                  }
+                }
+              }
+  
+              // Column 2: Button action
+              &:last-child {
+                padding: 9px;
+  
+                .togglePopup {
+                  &.k-focus.opendPopup {
+                    background-color: #bdc2d2 !important;
+                    border-radius: 0px 2px 2px 0px;
+  
+                    .k-button-icon {
+                      color: white;
+                    }
+                  }
+  
+  
+                }
+  
+              }
+  
+  
+  
+            }
+          }
+  
+  
+  
+          .k-grid-table {
+            border-collapse: collapse !important;
+            border-color: unset !important;
+            border-block-end-width: unset !important;
+            border-inline-start-width: unset !important;
+            border-style: unset !important;
+            padding-inline: unset;
+            padding-block: unset;
+            height: 58px;
+            width: 100%;
+  
+            &:last-child {
+              border-left: 1px solid #edeff3 !important;
+              text-align: center;
+              height: 58px;
+            }
+  
+            .box-icon {
+              cursor: pointer;
+              height: 24px;
+              text-align: center;
+            }
+          }
+  
+          .k-text-nowrap {
+            display: flex;
+            align-items: center;
+            height: 100%;
+          }
+  
+          .k-icon {
+            height: 100%;
+          }
+  
+          .colName-icon {
+            padding-left: 17px;
+            padding-right: 9px;
+          }
+  
+  
+          .text-name {
+            color: #5a6276;
+            font-weight: 400;
+            margin-top: unset;
+            margin-bottom: unset;
+  
+            &.parent {
+              font-weight: 700;
+            }
+          }
+  
+          .text-id {
+            color: #26282e;
+            font-weight: 400;
+            width: 147px;
+            margin-top: unset;
+            margin-bottom: unset;
+          }
+        }
+      }
+      
+      
+    }
+
+      .title{
+        color: $light-blue-gray;
+      }
+      .color-black{
+        color: #26282e;
+      }
+
+      .col-gap-10{
+        column-gap: 10px !important;
+      }
+
+      .k-panelbar{
+        border: none;
+        .k-panelbar-header{
+          margin: 10px 0;
+          box-shadow: 0 0 2px 0px;
+          border-style: none !important;
+        }
+        .k-panelbar-item{
+          .k-link{
+            .k-icon-wrapper-host{
+              margin-left: auto;
+            }
+          }
+
+        }
+      }
+
+     
+
+      .k-window-actions{
+        display: none !important;
+      }
+
+      .listDataPermission{
+        height: 370px;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        .k-panelbar{
+          padding: 0 2px;
+        }
+      }
+      
+      .k-treeview{
+        ul,
+        .k-treeview-group {
+          margin: 0;
+          padding: 0;
+          padding-left: 33px;
+        }
+
+        ul.k-treeview-lines {
+          padding-left: 0;
+        }
+
+        
+        li,
+        .k-treeview-item {
+          list-style: none;
+          .k-checkbox {
+            margin-right: 0;
+          }
+        }
+        .k-treeview-top,
+        .k-treeview-mid,
+        .k-treeview-bot {
+          white-space: nowrap;
+          display: flex;
+          align-items: center;
+          padding-left: 10px;
+          height: 32px;
+
+          &:has(.k-i-caret-alt-down), &:has(.k-i-caret-alt-right) {
+            margin: 10px 0;
+            height: 54px;
+            background-color: rgb(237, 239, 243);
+          }
+
+          &.k-state-hover,
+          &.k-hover,
+          &:hover {
+            color: white;
+            background-color: rgba($dark-green, 0.5);
+            cursor: pointer;
+
+            img {
+              filter: brightness(0) saturate(100%) //chuyển thành màu đen
+                invert(100%) sepia(91%) saturate(0%) hue-rotate(320deg) brightness(103%) contrast(105%); //đổi màu;
+            }
+          }
+
+          &.k-selected,
+          &.k-state-selected {
+            color: white;
+            background-color: $dark-green;
+          }
+
+          .k-icon {
+            background-color: transparent;
+            color: inherit;
+          }
+
+          img {
+            margin-right: 12px;
+            margin-left: 10px;
+          }
+
+          .k-checkbox-wrapper{
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+            pointer-events: none;
+          }
+        }
+        .k-treeview-toggle{
+          margin-right: 10px;
+        }
+      }
+  }
+
+  // .CustomePopupTreeConfig005EnPer {
+  //   .k-treeview {
+  //     .k-treeview-group {
+  //       list-style: none !important;
+  //       padding-left: 0;
+
+  //       .k-treeview-item {
+
+  //         .k-treeview-mid,
+  //         .k-treeview-top,
+  //         .k-treeview-bot {
+  //           white-space: nowrap;
+  //           height: 32px;
+  //           padding: 4px;
+  //           display: flex;
+  //           align-items: center;
+  //           list-style: none;
+
+  //           &:hover {
+  //             color: white;
+  //             background-color: rgba(26, 102, 52, 0.5);
+  //             cursor: pointer;
+
+  //             .k-treeview-leaf {
+
+  //               .k-treeview-leaf-text {
+  //                 img {
+  //                   filter: brightness(0) saturate(100%) invert(100%) sepia(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+
+  //                 }
+  //               }
+  //             }
+  //           }
+
+
+  //           .k-treeview-leaf {
+  //             padding-left: 4px;
+  //           }
+
+  //           .k-checkbox-wrapper {
+  //             display: none;
+  //           }
+  //         }
+
+  //         .k-treeview-group {
+  //           margin: 0;
+  //           padding: 0;
+  //           padding-left: 33px;
+  //         }
+
+
+  //       }
+  //     }
+  //   }
+
+  // }
+}

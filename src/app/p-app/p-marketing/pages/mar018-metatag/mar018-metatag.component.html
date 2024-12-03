@@ -1,0 +1,353 @@
+<div class="app-drawer-container">
+  <mat-drawer-container [hasBackdrop]="true">
+    <mat-drawer-content>
+      <div class="app-mar018-metatag">
+        <div class="header header-1">
+          <kendo-dropdownlist [data]="dropDownMenu" [disabled]="!isFilterActive" #dropdown [textField]="'name'"
+            [valueField]="'id'" [value]="defaultMenu" (valueChange)="onDropdownlistClick($event)" [popupSettings]="{
+              appendTo: 'component'
+            }">
+            <ng-template kendoDropDownListValueTemplate let-dataItem>
+              <img loading="lazy" src="assets/img/icon/{{dataItem?.icon}}">
+              {{ dataItem?.name }}
+            </ng-template>
+            <ng-template kendoDropDownListItemTemplate let-dataItem>
+              <img loading="lazy" src="assets/img/icon/{{dataItem?.icon}}">
+              {{ dataItem?.name }}
+            </ng-template>
+          </kendo-dropdownlist>
+
+          <app-checkbox-button-group *ngFor="let item of listStatus; index as i" [title]="item.StatusName"
+            [checked]="item.Checked" (selectedChange)="selectedBtnChange($event, i)" [disabled]="!isFilterActive">
+          </app-checkbox-button-group>
+
+          <div class="nav-btn nav-crud">
+            <button kendoButton class="k-button btn-hachi hachi-primary" [icon]="'plus'" [disabled]="!isFilterActive"
+              (click)="openDrawer(true)">
+              THÊM MỚI
+            </button>
+
+            <div class="file-btn-group">
+              <button kendoButton id="onUploadBtn" class="k-button" [icon]="'export'" (click)="onImportExcel()"
+                [disabled]="!isFilterActive"></button>
+            </div>
+            <div class="file-btn-group">
+              <button kendoButton id="onDownloadBtn" class="k-button" [icon]="'import'"
+                (click)="downloadExcel()">Template</button>
+            </div>
+
+            <div class="file-btn-group">
+              <kendo-groupbutton [disabled]="!isFilterActive">
+                <button kendoButton class="k-button" [icon]="'import'"></button>
+                <button kendoButton class="k-button k-btn-xlsx" imageUrl="assets\img\logo\xlsx.svg"></button>
+                <button kendoButton class="k-button" [icon]="'arrow-chevron-down'"></button>
+              </kendo-groupbutton>
+            </div>
+          </div>
+        </div>
+
+        <div class="header header-2">
+          <app-search-filter-group
+            [placeholder]="selectedMenu.id == 1 ? 'Tìm theo barcode, poscode, tên sản phẩm' : selectedMenu.id == 2 ? 'Tìm theo tiêu đề bài viết' : 'Lọc theo Tên Trang, Tên phân nhóm, và Link'"
+            [disabled]="!isFilterActive" (valueChange)="Search($event)" (onReset)="resetFilter()" [clearButton]="true"
+            [loading]="loading"></app-search-filter-group>
+
+          <div class="multiselect-filter" *ngIf="selectedMenu.id == 3" [disabled]="!isFilterActive">
+            <div class="typepage">
+              <span>Loại trang</span>
+            </div>
+            <div class="multiselect">
+              <kendo-multiselect [data]="listFilterMetaCategory" textField="Name" valueField="Code"
+                [(ngModel)]="selectedMetaCategory" (keydown.Enter)="$event.target.blur()"
+                (blur)="loadFilter();getData()" [popupSettings]="{
+                  appendTo: 'component'
+                }" [filterable]="true" #multiSelect [loading]="loading">
+
+                <ng-template kendoMultiSelectTagTemplate let-dataItem>
+                  <span class="value">{{ dataItem.Name }}</span>
+                </ng-template>
+              </kendo-multiselect>
+            </div>
+          </div>
+        </div>
+
+        <!-- GridProduct -->
+        <div class="grid-wrapper" *ngIf="selectedMenu.id == 1">
+          <app-p-kendo-grid class="grid scrollable" [data]="gridViewSP | async" [scrollable]="'none'"
+            [loading]="loading" [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize" [skip]="gridState.skip"
+            [take]="gridState.take" [selectable]="selectable" [onPageChangeCallback]="onPageChangeCallback"
+            [getActionDropdownCallback]="getActionDropdownCallback" [onSelectCallback]="onSelectCallback"
+            [onActionDropdownClickCallback]="onActionDropdownClickCallback"
+            [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+            [getSelectionPopupCallback]="getSelectionPopupCallback">
+
+            <kendo-grid-column field="ProductName" title="Tên sản phẩm" class="col_img_tensanpham_masanpham"
+              headerClass="col_img_tensanpham_masanpham">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="img_tensanpham_masanpham">
+                  <div class="img">
+                    <img loading="lazy" [src]="dataItem.ImageSetting" *ngIf="isValidImg(dataItem.ImageSetting)">
+                  </div>
+
+                  <div class="tensanpham_masanpham d-flex">
+                    <div class="tensanpham">{{ dataItem.ProductName }}</div>
+                    <div class="codeProduct">
+                      <div class="poscode">
+                        <b>{{ dataItem.Poscode }}</b>
+                      </div>
+                      <div class="line"></div>
+                      <div class="masanpham">
+                        <b>{{ dataItem.Barcode }}</b>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Thẻ title" field="MetaTitle" class="col_theTitle">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="titlename">{{dataItem.MetaTitle}}</div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Thẻ keyword" field="MetaKeyword" class="col_theKeyword">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="keywordname">{{dataItem.MetaKeyword}}</div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Thẻ description" field="MetaDescription" class="col_theDesc">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="descname">{{dataItem.MetaDescription}}</div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Tình trạng" field="MetaStatusName" class="col_metaStatus">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="statusname" [innerHTML]="dataItem.MetaStatusName | colorStatus:dataItem.MetaStatus">
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+          </app-p-kendo-grid>
+        </div>
+        <!-- endGridProduct -->
+
+        <!-- gridBlog -->
+        <div class="grid-wrapper" *ngIf="selectedMenu.id == 2">
+          <app-p-kendo-grid class="grid scrollable" [data]="gridViewBV | async" [scrollable]="'none'"
+            [loading]="loading" [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize" [skip]="gridState.skip"
+            [take]="gridState.take" [selectable]="selectable" [onPageChangeCallback]="onPageChangeCallback"
+            [getActionDropdownCallback]="getActionDropdownCallback" [onSelectCallback]="onSelectCallback"
+            [onActionDropdownClickCallback]="onActionDropdownClickCallback"
+            [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+            [getSelectionPopupCallback]="getSelectionPopupCallback">
+
+            <kendo-grid-column field="TitleVN" title="Bài viết" class="col_img_tensanpham_masanpham"
+              headerClass="col_img_tensanpham_masanpham">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="img_tensanpham_masanpham">
+                  <div class="img">
+                    <img loading="lazy" src="{{dataItem.ImageSetting1}}">
+                  </div>
+
+                  <div class="tensanpham_masanpham d-flex">
+                    <div class="tensanpham_bv">{{ dataItem.TitleVN}}</div>
+                    <div class="summary">{{dataItem.SummaryVN}}</div>
+                  </div>
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Thẻ title" field="MetaTitle" class="col_theTitle">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="titlename">{{dataItem.MetaTitle}}</div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Thẻ keyword" field="MetaKeyword" class="col_theKeyword">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="keywordname">{{dataItem.MetaKeyword}}</div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Thẻ description" field="MetaDescription" class="col_theDesc">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="descname">{{dataItem.MetaDescription}}</div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Tình trạng" field="MetaStatusName" class="col_metaStatus">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="statusname" [innerHTML]="dataItem.MetaStatusName | colorStatus:dataItem.MetaStatus">
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+          </app-p-kendo-grid>
+        </div>
+        <!-- EndgridBlog -->
+
+        <!-- grid Cấu hình -->
+        <div class="grid-wrapper" *ngIf="selectedMenu.id == 3">
+          <app-p-kendo-grid class="grid scrollable" [data]="gridViewCH | async" [scrollable]="'none'"
+            [loading]="loading" [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize" [skip]="gridState.skip"
+            [take]="gridState.take" [selectable]="selectable" [onPageChangeCallback]="onPageChangeCallback"
+            [getActionDropdownCallback]="getActionDropdownCallback" [onSelectCallback]="onSelectCallback"
+            [onActionDropdownClickCallback]="onActionDropdownClickCallback"
+            [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+            [getSelectionPopupCallback]="getSelectionPopupCallback">
+
+            <kendo-grid-column field="TitleVN" title="Trang hiển thị" class="col_img_tensanpham_masanpham"
+              headerClass="col_img_tensanpham_masanpham">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="img_tensanpham_masanpham">
+                  <div class="tensanpham_masanpham d-flex">
+                    <div class="tensanpham_ch">{{ dataItem.PageName}}</div>
+                    <div class="phannhom">{{dataItem.CategoryName}}</div>
+                    <div class="alias"><a [href]="getHachiImg(dataItem.Alias)"
+                        target="_blank">{{getHachiImg(dataItem.Alias)}}</a>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Thẻ title" field="MetaTitle" class="col_theTitle">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="titlename">{{dataItem.MetaTitle}}</div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Thẻ keyword" field="MetaKeyword" class="col_theKeyword">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="keywordname">{{dataItem.MetaKeyword}}</div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Thẻ description" field="MetaDescription" class="col_theDesc">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="descname">{{dataItem.MetaDescription}}</div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Tình trạng" field="MetaStatusName" class="col_metaStatus">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="statusname" [innerHTML]="dataItem.MetaStatusName | colorStatus:dataItem.MetaStatus">
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+          </app-p-kendo-grid>
+        </div>
+
+        <kendo-dialog #dialog class="deleteDialog" title="Xóa Meta" [hidden]="!deleteDialogOpened"
+          (close)="deleteDialogOpened = false" [minWidth]="250">
+          <p style="margin: 30px; text-align: center;">
+            Bạn chắc chắn muốn xóa vĩnh viễn thẻ Meta của item <b>
+              {{ selectedMenu.id == 1 ? selectedMenu.item.Barcode : selectedMenu.id == 2 ? selectedMenu.item.TitleVN :
+              selectedMenu.item.PageName }}
+            </b>này?
+          </p>
+
+          <div class="dialog-footer">
+            <button kendoButton class="btn-hachi hachi-secondary" (click)="deleteDialogOpened = false"
+              [icon]="'close'">Không</button>
+            <button kendoButton class="btn-hachi hachi-warning" (click)="deleteMeta()" [icon]="'trash'">Có</button>
+          </div>
+        </kendo-dialog>
+
+        <kendo-dialog #dialog class="deleteDialog" title="Xóa các thẻ Meta đã chọn" [hidden]="!deleteManyDialogOpened"
+          [minWidth]="250" (close)="deleteManyDialogOpened = false">
+          <div style="margin: 30px; text-align: center;">
+            Bạn chắc chắn muốn xóa vĩnh viễn thẻ Meta của {{ selectedMenu.list.length }} item này?
+            <br>
+            Thẻ Meta sẽ bị xóa và <b style="color: #FD7676">KHÔNG</b> thể khôi phục lại
+          </div>
+
+          <div class="dialog-footer">
+            <button kendoButton class="btn-hachi hachi-secondary" (click)="deleteManyDialogOpened = false"
+              [icon]="'close'">Không</button>
+            <button kendoButton class="btn-hachi hachi-warning" (click)="deleteManyMeta()" [icon]="'trash'">Có</button>
+          </div>
+        </kendo-dialog>
+      </div>
+    </mat-drawer-content>
+
+    <mat-drawer #formDrawer [mode]="'over'" position="end" class="k-drawer-container">
+      <div class="wrapper-drawer-right">
+        <legend>
+          THIẾT LẬP THẺ META CHO
+          {{ selectedMenu.id == 1 ? 'SẢN PHẨM': selectedMenu.id == 2 ? 'BÀI VIẾT' : 'TRANG CẤU HÌNH' }}
+        </legend>
+
+        <div class="content-drawer-right">
+          <div class="search-btn">
+            <span class="k-icon k-i-search"></span>
+            <kendo-textbox type="text" class="k-textbox"
+              [placeholder]="selectedMenu.id == 1 ? 'Tìm mã barcode, poscode và tên sản phẩm' : selectedMenu.id == 2 ? 'Tìm bài viết' : 'Tìm trang cấu hình'"
+              [disabled]="!isAdd" [(value)]="searchTerm" (keydown.Enter)="SearchDrawer()" (blur)="SearchDrawer()">
+            </kendo-textbox>
+          </div>
+
+          <div class="info-product">
+            <div class="info">
+              <kendo-label [text]="selectedMenu.id == 1 ? 'Tên sản phẩm'
+              : selectedMenu.id == 2 ? 'Tên bài viết'
+              : 'Trang cấu hình'"></kendo-label>
+              <span>{{ selectedMenu.id == 1 ? selectedMenu.item.ProductName :
+                selectedMenu.id == 2 ? selectedMenu.item.TitleVN : selectedMenu.item.PageName }} </span>
+
+              <kendo-label [text]="selectedMenu.id == 1 ? 'Mã sản phẩm'
+              : selectedMenu.id == 2 ? 'Phân nhóm'
+              : 'Phân loại'"></kendo-label>
+
+              <div class="flex-row">
+                <div class="item1">
+                  <span>{{ selectedMenu.id == 1 ? selectedMenu.item.Barcode : selectedMenu.id == 2 ?
+                    selectedMenu.item.TypeDataName :
+                    selectedMenu.item.PageName }}</span>
+                </div>
+                <div class="gap-item2">
+                  <span>{{ selectedMenu.id == 1 ? selectedMenu.item.Poscode : selectedMenu.id == 2 ?
+                    selectedMenu.item.NewsCategoryName :
+                    selectedMenu.item.CategoryName }}</span>
+                </div>
+              </div>
+
+              <kendo-label text="Đường dẫn"></kendo-label>
+              <a [href]="selectedMenu.item.Alias" target="_blank">{{selectedMenu.item.Alias}}</a>
+            </div>
+
+            <div class="info img">
+              <img loading="lazy" [src]="selectedMenu.id == 1 ? selectedMenu.item.ImageSetting : selectedMenu.item.ImageSetting1"
+                *ngIf="selectedMenu.id != 3" alt="Hình ảnh">
+            </div>
+          </div>
+
+          <kendo-label text="Thông tin thẻ meta: Title" class="metaTag">
+            <textarea [(ngModel)]="selectedMenu.item.MetaTitle"
+              [disabled]="isLockAll || selectedMenu.item.Code == 0"></textarea>
+          </kendo-label>
+
+          <kendo-label text="Thông tin thẻ meta: Keyword" class="metaTag">
+            <textarea [(ngModel)]="selectedMenu.item.MetaKeyword"
+              [disabled]="isLockAll || selectedMenu.item.Code == 0"></textarea>
+          </kendo-label>
+
+          <kendo-label text="Thông tin thẻ meta: Description" class="metaTag">
+            <textarea [(ngModel)]="selectedMenu.item.MetaDescription"
+              [disabled]="isLockAll || selectedMenu.item.Code == 0"></textarea>
+          </kendo-label>
+
+          <kendo-label text="Tình trạng"></kendo-label>
+          <b [innerHTML]="selectedMenu.item.MetaStatusName | colorStatus:selectedMenu.item.MetaStatus"></b>
+
+          <div class="btn-ev">
+            <button kendoButton class="btn-update btn-hachi hachi-primary" (click)="onUpdateMeta()">Lưu</button>
+            <button kendoButton class="btn-close btn-hachi" (click)="closeDrawer()">ĐÓNG</button>
+          </div>
+        </div>
+      </div>
+    </mat-drawer>
+  </mat-drawer-container>
+</div>
+<app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>

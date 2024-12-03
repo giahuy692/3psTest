@@ -1,0 +1,249 @@
+<div id="ecom001-online-order" #ecom001_online_order>
+  <div class="header header-1">
+    <app-checkbox-button-group *ngFor="let item of listStatus; index as i" [count]="item.Total"
+      [title]="item.StatusName" [checked]="item.Checked" (selectedChange)="selectedBtnChange($event, i)"
+      [disabled]="!isFilterActive"></app-checkbox-button-group>
+
+    <div class="nav-btn nav-crud">
+      <button kendoButton class="k-button btn-hachi hachi-primary onAddBtn" [icon]="'plus'" (click)="onAdd(2)"
+        [disabled]="!isFilterActive">
+        LẤY ĐƠN</button>
+
+      <button kendoButton class="k-button btn-hachi hachi-primary onAddBtn" [icon]="'plus'" (click)="onAdd(1)"
+        [disabled]="!isFilterActive">
+        THÊM MỚI</button>
+
+      <div class="border-center"></div>
+    </div>
+
+    <div class="nav-file nav-btn">
+      <div class="file-btn-group" *ngIf="isUploadDownloadAllowed || isAdmin">
+        <button kendoButton id="onUploadBtn" class="k-button" [icon]="'export'" (click)="onImportExcel()"
+          [disabled]="!isFilterActive"></button>
+      </div>
+
+      <div class="file-btn-group" *ngIf="isUploadDownloadAllowed || isAdmin">
+        <kendo-dropdownbutton [data]="templateMenuList" [popupSettings]="{
+            animate: true,
+            appendTo: 'component',
+            align: 'right'
+          }" [disabled]="!isFilterActive" (itemClick)="downloadExcel($event)">
+          <span class="k-icon k-i-import"></span>
+          Template
+          <span class="k-icon k-i-chevron-down"></span>
+          <ng-template kendoDropDownButtonItemTemplate let-dataItem>
+            <img loading="lazy" src="assets\img\logo\xlsx.svg" alt="">
+            {{ dataItem.text }}
+          </ng-template>
+        </kendo-dropdownbutton>
+      </div>
+
+      <div class="file-btn-group">
+        <button kendoButton id="onAssignUser" class="k-button" (click)="AssignUserDialogOpened = true"
+          [disabled]="!isFilterActive" title="Chuyển giao ca làm việc">
+          <fa-icon [icon]="faPeopleArrows"></fa-icon>C/giao ca
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="header header-2">
+
+    <app-search-filter-group placeholder="Tìm kiếm mã đơn hàng, người nhận, địa chỉ giao hàng"
+      [disabled]="!isFilterActive" label="Tìm kiếm Đơn hàng" (valueChange)="search($event)" (onReset)="resetFilter()">
+    </app-search-filter-group>
+
+    <div class="nav-filter nav-btn">
+      <div class="filter-btn-group hachi24-btn-group">
+        <div class="label">
+          Lọc theo Hachi 3H
+        </div>
+        <button kendoButton id="hachi_24_btn" [toggleable]="isFilterActive" class="k-button checkbox-btn-group"
+          (selectedChange)="selectedBtnChange($event, 'hachi_24_checked')" [selected]="hachi_24_checked">
+          <input type="checkbox" class="k-checkbox" disabled [checked]="hachi_24_checked" />
+          <img loading="lazy" src="assets\img\logo\hachi3h.svg">
+        </button>
+      </div>
+
+      <div class="filter-btn-group">
+        <div class="label">
+          Lọc theo kênh bán hàng
+        </div>
+        <kendo-multiselect [disabled]="!isFilterActive" class="mapping-multiselect" [(value)]="listSelectedChannel"
+          [data]="listFilterChannel" textField="ChannelName" valueField="Code" placeholder="Chọn kênh bán hàng"
+          (keydown.Enter)="$event.target.blur()" (blur)="selectedBtnChange($event, 'Channel')" 
+          [popupSettings]="{  appendTo: 'component'  }" [filterable]="true" [loading]="loading" #multiSelect>
+
+          <ng-template kendoMultiSelectTagTemplate let-dataItem>
+            <span class="value">{{ dataItem.ChannelName }}</span>
+          </ng-template>
+
+          <ng-template kendoMultiSelectItemTemplate let-dataItem>
+            <span class="value">
+              <div class="img"><img loading="lazy" *ngIf="dataItem.ImageSetting && dataItem.ImageSetting != ''"
+                  [src]="dataItem.ImageSetting" /></div>
+              {{ dataItem?.ChannelName }}
+            </span>
+          </ng-template>
+        </kendo-multiselect>
+      </div>
+    </div>
+
+  </div>
+  <!-- TABLE MỚI -->
+  <div class="grid-wrapper">
+    <app-p-kendo-grid class="scrollable" #grid [data]="gridDSView | async" [scrollable]="'none'" [loading]="loading"
+      [sort]="gridDSState.sort" [sortable]="true" [onSortChangeCallback]="onSortChangeCallback"
+      [onPageChangeCallback]="onPageChangeCallback" [pageable]="true" [pageSizes]="pageSizes"
+      [pageSize]="gridDSState.take" [skip]="gridDSState.skip" [take]="gridDSState.take" [filterable]="'menu'"
+      [onFilterChangeCallback]="onFilterChangeCallback" [allowedMoreActionDropdown]="allowActionDropdown"
+      [onActionDropdownClickCallback]="onActionDropdownClickCallback"
+      [getActionDropdownCallback]="getActionDropdownCallback" [selectable]="selectable"
+      [onSelectCallback]="onSelectCallback" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+      [getSelectionPopupCallback]="getSelectionPopupCallback">
+      <!--  [rowClass]="isDisabled" -->
+  
+      <kendo-grid-column field="IsHachi24" title="Mã đơn hàng" class="madonhang" [filterable]="false"
+        [headerStyle]="{'padding-left': 0}">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div title="{{dataItem.CartNo}}" class="madonhang" [ngClass]="{'tinhtrang_treo': dataItem.OrderTypeID == 14 }">
+            {{ dataItem.CartNo }}
+          </div>
+          <div class="orderdate">
+            <span>{{ dataItem.OrderDate | date: 'd/M/yyyy' }}</span>
+            <span>{{ dataItem.OrderDate | date: 'H:mm' }}</span>
+          </div>
+          <img loading="lazy" src="assets\img\logo\hachi3h.svg" *ngIf="dataItem.IsHachi24 == true">
+        </ng-template>
+      </kendo-grid-column>
+  
+      <kendo-grid-column field="StatusID" title="Tình trạng" class="tinhtrang">
+        <ng-template kendoGridFilterMenuTemplate let-filter>
+          <p-kendo-grid-dropdownlist [showOperators]="false" [filter]="filterStatusID" [data]="orderStatusList"
+            textField="StatusName" valueField="StatusID" [onFilterChangeCallback]="onFilterChangeCallback"
+            [currentItem]="filterStatusIDItem">
+          </p-kendo-grid-dropdownlist>
+        </ng-template>
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{ dataItem.StatusName }}
+        </ng-template>
+      </kendo-grid-column>
+  
+      <kendo-grid-column field="WHNamePickup" title="Đơn vị xử lý" class="donvixuly">
+        <ng-template kendoGridFilterMenuTemplate let-filter>
+          <p-kendo-grid-dropdownlist [showOperators]="false" [filter]="filterWHPickup" [data]="orderWHNamePickupList"
+            textField="WHName" valueField="Code" [onFilterChangeCallback]="onFilterChangeCallback"
+            [currentItem]="filterWHPickupItem">
+          </p-kendo-grid-dropdownlist>
+        </ng-template>
+      </kendo-grid-column>
+  
+      <kendo-grid-column title="Thời gian xử lý" class="thoigianxuly" [filterable]="false" [sortable]="false">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div class="ProcessFrom">
+            <span>{{ dataItem.ProcessFrom | date: 'd/M/yyyy' }}</span>
+            <span class="ProcessTime">{{ dataItem.ProcessFrom | date: 'H:mm' }}</span>
+          </div>
+          <div class="ProcessTo">
+            <span>{{ dataItem.ProcessTo | date: 'd/M/yyyy' }}</span>
+            <span class="ProcessTime">{{ dataItem.ProcessTo | date: 'H:mm' }}</span>
+          </div>
+        </ng-template>
+      </kendo-grid-column>
+  
+      <kendo-grid-column title="Thông tin giao hàng" class="thongtingiaohang" [filterable]="false" [sortable]="false">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div class="ReceivedBy">{{ dataItem.ReceivedBy }}</div>
+          <div class="FullAddress">{{ dataItem.FullAddress }}</div>
+        </ng-template>
+      </kendo-grid-column>
+  
+      <kendo-grid-column title="" field="ChannelImage" class="ChannelImage" [filterable]="false" [sortable]="false">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <img loading="lazy" width="auto" *ngIf="dataItem.ChannelImage != null" [src]="getImgRes(dataItem.ChannelImage)">
+        </ng-template>
+      </kendo-grid-column>
+  
+      <kendo-grid-column title="Giá trị giỏ hàng" field="Payment" class="giatrigiohang"
+        [headerStyle]="{'padding-left': 0}" filter="numeric">
+        <!-- filter="numeric" -->
+        <!-- <ng-template kendoGridFilterMenuTemplate let-filter let-column="column" >
+          <kendo-grid-numeric-filter-menu [column]="column" [filter]="filterPayment"  [extra]="false">
+          </kendo-grid-numeric-filter-menu>
+        </ng-template> -->
+  
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div>{{ dataItem.Payment | number: '1.'}}</div>
+          <div *ngIf="dataItem.VATCode != null && dataItem.VATCode != ''" class="VATCode">({{ dataItem.VATCode }})</div>
+        </ng-template>
+      </kendo-grid-column>
+  
+      <kendo-grid-column field="TypeOfPayment" title="Phương thức thanh toán" class="phuongthucthanhtoan">
+        <ng-template kendoGridFilterMenuTemplate let-filter>
+          <p-kendo-grid-dropdownlist [showOperators]="false" [filter]="filterPaymentID" [data]="paymentTypeList"
+            textField="TypeOfPayment" valueField="PaymentID" [onFilterChangeCallback]="onFilterChangeCallback"
+            [currentItem]="filterPaymentIDItem">
+          </p-kendo-grid-dropdownlist>
+        </ng-template>
+      </kendo-grid-column>
+  
+      <kendo-grid-column field="ShipperName" title="Nhà vận chuyển" class="nhavanchuyen" [filterable]="false">
+      </kendo-grid-column>
+  
+      <kendo-grid-column field="TrackingNo" title="Mã vận đơn" class="mavandon" [filterable]="false">
+      </kendo-grid-column>
+      <!-- TODO BIND DATA CHO HÓA ĐƠN -->
+      <kendo-grid-column field="TrackingNo" title="Hóa đơn VAT" class="hoadon" [filterable]="false">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div><b>{{ dataItem.TrackingNo }}</b></div>
+          <div>{{ dataItem.OrderDate | date:'d/M/yyyy' }}</div>
+        </ng-template>
+      </kendo-grid-column>
+    </app-p-kendo-grid>
+  </div>
+</div>
+<!-- popup confirm delete -->
+<kendo-dialog #dialog id="deleteDialog" class="deleteDialog" title="{{deleteDialogCtx}}" [hidden]="!deleteDialogOpened"
+  (close)="closeDeleteDialog()" [minWidth]="250">
+  <p style="margin: 30px; text-align: center;">
+    Bạn chắc chắn muốn {{deleteDialogCtx}} "{{ order.CartNo }}" này?</p>
+  <div class="dialog-footer">
+    <button kendoButton class="btn btn-hachi hachi-secondary" (click)="closeDeleteDialog()"
+      [icon]="'close'">Không</button>
+    <button kendoButton class="btn btn-hachi hachi-warning" id="deleteBtn" (click)="delete()"
+      [icon]="'trash'">Có</button>
+  </div>
+</kendo-dialog>
+
+<assign-whpickup-dialog [opened]="AssignWHPickupDialogOpened" (closed)="closeAssignWHPickupDialog($event)"
+  [selectedOrderList]="selectedOrderList" [WHPickupList]="orderWHNamePickupList"></assign-whpickup-dialog>
+
+<assign-online-user-dialog [opened]="AssignUserDialogOpened" (closed)="closeAssignUserDialog($event)">
+</assign-online-user-dialog>
+
+<kendo-dialog title="LẤY ĐƠN HÀNG" [hidden]="!syncOrderDialog" id="syncOrderDialog"
+  (close)="toggleSyncOrderDialog(false)" [minWidth]="363" class="p-hachi-dialog">
+  <form [formGroup]="syncOrderForm">
+    <div class="label">Kênh bán hàng</div>
+    <kendo-dropdownlist [data]="listChannel" [textField]="'ChannelName'" [valueField]="'Code'"
+      placeholder="Chọn kênh bán hàng" formControlName="Channel" [popupSettings]="{appendTo:'component'}">
+    </kendo-dropdownlist>
+
+    <div class="label">Mã đơn hàng muốn lấy</div>
+    <kendo-textbox type="text" class="k-textbox" placeholder="Mã đơn hàng muốn lấy"
+      [disabled]="syncOrderForm?.controls['Channel']?.invalid" formControlName="CartNo">
+    </kendo-textbox>
+
+    <div *ngIf="syncOrderForm?.errors?.['apiError']" class="error">
+      {{ syncOrderForm?.errors?.['apiError'] }}
+    </div>
+  </form>
+
+  <div class="dialog-footer">
+    <button class="btn btn-hachi hachi-secondary" (click)="toggleSyncOrderDialog(false)">ĐÓNG</button>
+    <button class="btn btn-hachi hachi-primary" (click)="syncOrder()" [disabled]="syncOrderForm?.invalid">
+      LẤY ĐƠN HÀNG</button>
+  </div>
+</kendo-dialog>
+
+<app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>

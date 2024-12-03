@@ -1,0 +1,269 @@
+<div class="hr001-staff-detail">
+  <!-- header nav-btn -->
+  <div class="header header1">
+      <app-p-kendo-breadcrumb (loadData)="getData();reloadEmployee()"></app-p-kendo-breadcrumb>
+  </div>
+<!-- End header nav-btn -->
+  <div class="body">
+      <!-- //router left -->
+      <app-hr-menu-staff-info></app-hr-menu-staff-info>
+      <!-- End router left -->
+      
+      <!-- body right - sections -->
+      <div class="body-right">
+          <div class="sections">
+            <!-- Section thongTinNhanVien_tbl -->
+           
+              <div class="section thongTinNhanVien_tbl">
+                  <div class="title">1. THÔNG TIN NHÂN VIÊN</div>
+                  <div class="section-grid">
+
+                      <div class="grid-item item1">
+                        <kendo-label text="Mã nhân viên"><span class="symbol">(*)</span></kendo-label>
+                        <kendo-textbox type="text" class="k-textbox"
+                        [(ngModel)]="newEmployee.StaffID"
+                        (keydown.Enter)="$event.target.blur()"
+                        (inputBlur)="onTextboxLoseFocus(['StaffID'])"
+                       ></kendo-textbox>
+                      </div>
+
+                      <div class="grid-item item2">
+                        <kendo-label  text="Đơn vị công tác"><span class="symbol">(*)</span></kendo-label>
+                        <kendo-dropdownlist
+                        [data]="listDepartmentStatusFilter"
+                        textField="Department" 
+                        valueField="Code"
+                        [defaultItem]="{Department: '-- Chọn --', Code: null }" 
+                        [(ngModel)]="currentDepartment"
+                        (valueChange)="onDropdownlistClick($event, ['Department'])"
+                        [disabled]="!employee.StaffID"
+                        [popupSettings]="{appendTo:'component'}"
+                        (filterChange)="handleFilterDropdownlist($event, listDepartmentStatusFilter, listDepartmentStatus , 'listDepartmentStatusFilter', 'Department')"
+                        [filterable]="true"
+                        >
+                      </kendo-dropdownlist>
+                      </div>
+
+                      <div class="grid-item item3">
+                        <kendo-label text="Chức danh"><span class="symbol">(*)</span></kendo-label>
+                        <kendo-dropdownlist [data]="listPositionStatusFilter"
+                        textField="Position" valueField="Code" 
+                        [(value)]="currentPositon"
+                        (valueChange)="onDropdownlistClick($event, ['CurrentPosition'])"
+                        [defaultItem]="{Position: '-- Chọn --', Code: null }" 
+                        [disabled]="!currentDepartment || !currentDepartment.Code"
+                        [popupSettings]="{appendTo:'component'}"
+                        (filterChange)="handleFilterDropdownlist($event, listPositionStatusFilter, listPositionStatus, 'listPositionStatusFilter', 'Position')"
+                        [filterable]="true"
+                        >
+                       
+                      </kendo-dropdownlist>
+                      </div>
+
+                      <div class="grid-item item4">
+                        <kendo-label text="Nhóm chức danh"></kendo-label>
+                        <span class="label-position"> {{employee.PositionGroup}}</span>
+                      </div>
+
+                      <div class="grid-item item5">
+                        <kendo-label text="Điểm làm việc"><span class="symbol">(*)</span></kendo-label>
+                        <kendo-dropdownlist [data]="listLocationStatusFilter"
+                         textField="LocationName" 
+                         valueField="Code" 
+                         [(value)]="currentLocation"
+                         [defaultItem]="{LocationName: '-- Chọn --', Code: null}" 
+                         (valueChange)="onDropdownlistClick($event, ['Location'])"
+                         [disabled]="!currentDepartment || !currentDepartment.Code"
+                         [popupSettings]="{appendTo:'component'}"
+                         (filterChange)="handleFilterDropdownlist($event, listLocationStatusFilter, listLocationStatus, 'listLocationStatusFilter', 'LocationName')"
+                         [filterable]="true"
+                         >
+                        
+                        </kendo-dropdownlist>
+                      </div>
+
+                      <div class="grid-item item6 DontScroll">
+                        <kendo-label text="Loại nhân viên"><span class="symbol">(*)</span></kendo-label>
+                        <kendo-dropdownlist [data]="listHR"
+                         textField="ListName"
+                         valueField="Code"
+                         [defaultItem]="{ListName: '-- Chọn --', Code: null }" 
+                         [(value)]="currentListHR"
+                         (valueChange)="onDropdownlistClick($event, ['TypeData'])"
+                         [disabled]="!newEmployee.StaffID"
+                         [popupSettings]="{appendTo:'component'}"
+                        >
+                       
+                      </kendo-dropdownlist>
+                      </div>
+
+                      <div class="grid-item item7">
+                        <kendo-label text="Ngày vào làm chính thức"><span class="symbol">(*)</span></kendo-label>
+                       <kendo-datepicker
+                       [max]="today"
+                       format="dd/MM/yyyy"
+                       placeholder="dd/MM/yyyy"
+                       formatPlaceholder="formatPattern"
+                       [(value)]="joinDate"
+                       [popupSettings]="{appendTo: 'root', popupClass: 'CustomPopupDatePickerStaff' }"
+                       (keydown.Enter)="$event.target.blur()"
+                       (blur)="onDatepickerChange('JoinDate')"
+                       [disabled]="!employee.StaffID"
+                       ></kendo-datepicker>
+                      </div>
+
+                      <div class="grid-item item8 DontScroll">
+                        <kendo-label text="Tình trạng"><span class="symbol">(*)</span></kendo-label>
+                        <kendo-dropdownlist 
+                        [data]="typeData"
+                        textField="StatusName"
+                        valueField="Code"
+                        [(value)]="currentStatus"
+                        (valueChange)="onDropdownlistClick($event, ['Status'])"
+                        [disabled]="!employee.StaffID"
+                        [popupSettings]="{appendTo:'component'}"
+                        >
+                       
+                      </kendo-dropdownlist>
+                      </div>
+
+                        <div class="grid-item item9 DontScroll">
+                          <kendo-label text="Chức danh quản lý trực tiếp"><span class="symbol">(*)</span></kendo-label>
+                          <kendo-dropdownlist 
+                          [data]="listPositionDirectStatusFilter"
+                          textField="Position"
+                          valueField="Code"
+                          [defaultItem]="{Position: '-- Chọn --', Code: null }" 
+                          [(value)]="currentReportTo"
+                          (valueChange)="onDropdownlistClick($event, ['ReportTo'])"
+                          [disabled]="!currentPositon || !currentPositon.Code"
+                          [popupSettings]="{appendTo:'component'}"
+                          (filterChange)="handleFilterDropdownlist($event, listPositionDirectStatusFilter, listPositionDirectStatus, 'listPositionDirectStatusFilter', 'Position')"
+                          [filterable]="true" 
+                          >
+                        </kendo-dropdownlist>
+                        </div>
+
+                      <div class="grid-item item10">
+                        <kendo-label text="Chức danh quản lý gián tiếp"><span class="symbol">(*)</span></kendo-label>
+                        <kendo-dropdownlist [data]="listPositionInDirectStatusFilter"
+                          textField="Position"
+                          valueField="Code" 
+                          [defaultItem]="{Position: '-- Chọn --', Code: null }"
+                          [value]="currentIndirect"
+                          (valueChange)="onDropdownlistClick($event, ['IndirectReportTo'])"
+                          [disabled]="!employee.StaffID"
+                          [popupSettings]="{appendTo:'component'}"
+                          (filterChange)="handleFilterDropdownlist($event, listPositionInDirectStatusFilter, listPositionInDirectStatus, 'listPositionInDirectStatusFilter', 'Position')"
+                          [filterable]="true"
+                         >
+                        </kendo-dropdownlist>
+                      </div>
+
+                      <div class="grid-item item11">
+                        <kendo-label text="Email"><span class="symbol">(*)</span></kendo-label>
+                        <kendo-textbox type="text" class="k-textbox" [(ngModel)]="newEmployee.Email"
+                        (keydown.Enter)="$event.target.blur()"
+                        (inputBlur)="onTextboxLoseFocus(['Email'])" 
+                        [disabled]="!employee.StaffID"></kendo-textbox>
+                      </div>
+
+                      <div class="grid-item item12">
+                        <kendo-label text="Ngày nghỉ việc"></kendo-label>
+                        <kendo-datepicker
+                        format="dd/MM/yyyy"
+                        placeholder="dd/MM/yyyy"
+                        formatPlaceholder="formatPattern"
+                        [(value)]="leaveDate"
+                        (keydown.Enter)="$event.target.blur()"
+                        (blur)="onDatepickerChange('LeaveDate')"
+                        [disabled]="!employee.StaffID"
+                        ></kendo-datepicker>
+                      </div>
+                  </div>
+              </div>
+              <!-- End section thongTinNhanVien_tbl -->
+
+              <!-- section grid phanQuyenHeThong_tbl -->
+              <div class="section phanQuyenHeThong_tbl">
+                  <div class="title">2. PHÂN QUYỀN SỬ DỤNG HỆ THỐNG</div>
+                      <div class="section-grid">
+
+                        <div class="grid-item item1">
+                          <kendo-label text="Tên đăng nhập"><span class="symbol">(*)</span></kendo-label>
+                          <kendo-textbox 
+                          type="text" 
+                          class="k-textbox" 
+                          [(ngModel)]="employee.UserName" 
+                          [disabled]="isNewUserName" 
+                          (keydown.Enter)="$event.target.blur()"
+                          (inputBlur)="onTextboxLoseFocus(['UserName'])"></kendo-textbox>
+                        </div>
+
+                        <div class="grid-item item2">
+                          <kendo-label text="Thiết lập lại mật khẩu"></kendo-label>
+                          <input 
+                          kendoTextBox 
+                          type="password" 
+                          class="k-textbox" 
+                          [(ngModel)]="employee.Pwd"
+                          [disabled]="isNewPwr"
+                          (keydown.Enter)="$event.target.blur()"
+                          (blur)="onTextboxLoseFocus(['Pwd'])">
+                        </div>
+
+                        <div class="grid-item item3">
+                          <kendo-label  text="Vai trò sử dụng tài nguyên hệ thống"><span class="symbol">(*)</span></kendo-label>
+                          <div class="group-add">
+                            <kendo-dropdownlist [data]="listRoleChangeFilter"
+                            #dropdownlist
+                             textField="RoleName" 
+                             valueField="Code"
+                             [defaultItem]="{RoleName: '-- Chọn --', Code: null }"
+                             [(value)]="newEmployeeRole"
+                             [disabled]="isNew"
+                             [popupSettings]="{appendTo:'component'}"
+                             (filterChange)="handleFilterDropdownlist($event, listRoleChangeFilter, listRoleChange, 'listRoleChangeFilter', 'RoleName')"
+                             [filterable]="true"
+                             >
+                            </kendo-dropdownlist>
+                            <button kendoButton icon="plus" class="btn-add" (click)="addEmployeeRole()" [disabled]="isNew">THÊM</button>
+                          </div>
+                        </div>
+
+                        <div class="grid-item item4">
+                          <div class="group-del" *ngFor="let role of newEmployee.ListOfStaffRoles">
+                            <button kendoButton icon="delete" class="btn-del" (click)="openDialog(role.Code)"></button>
+                            <span>{{role.Roles}} </span>
+
+                            <app-p-kendo-dialog
+                            *ngIf="deleteDialogOpened && selectedRoleCode === role.Code"
+                            [title]="'Xóa Vai trò'"
+                            [iconTitle]="'k-icon k-i-warning'"
+                            [dialogType]="confirm"
+                            [iconButton]="'delete'"
+                            (close)="closeDialog()"
+                            (handleButton)="deleteEmployeeRole(role.Code)"
+                          >
+                          <p>
+                          Bạn chắc chắn muốn xóa vĩnh viễn Vai trò <span style="color: green">{{role.Roles}}</span>  của nhân sự
+                        <b *ngIf="(employee.FirstName) != null && (employee.MiddleName) != null && (employee.LastName) != null">{{employee.LastName + " " + employee.MiddleName + " " + employee.FirstName}}</b> này? </p>
+                  </app-p-kendo-dialog>
+
+                          </div>
+                          <span *ngFor="let role of employee.ListOfRoles" class="role2">{{role.Roles}}</span>
+                        </div>
+                      </div>
+              </div>
+              <!-- End section grid phanQuyenHeThong_tbl -->
+
+              <p class="symbol fst-italic mt-2">(*) Trường bắt buộc nhập.</p>
+
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+

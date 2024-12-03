@@ -1,0 +1,102 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    .app-hr001-staff-list{
+        height: calc(100vh - #{$footer-height});
+        padding: 0 15px 0 20px;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        .header{
+            &.header-1 {
+                .k-dropdownlist {
+                    width: 222px;
+            
+                    .k-input {
+                        column-gap: 5px;
+                    }
+                }
+            }
+            .nav-btn {
+                display: flex;
+                align-items: center;
+                flex-grow: 1;
+                .onAddBtn {
+                    height: 32px;
+                    margin-top: auto;
+                    background-color: $dark-green !important;
+                    color: white;
+                    font-size: 11px;
+                    font-weight: bold;
+                }
+            }
+            .nav-file{
+                justify-content: end;
+            }
+            
+        }
+        .headerhoVatenCustomClass .k-cell-inner > .k-link{
+            margin-left: 11px;
+        }
+        .headerCustomClass .k-cell-inner > .k-link{
+            justify-content: end;
+        }
+        .headerCenterCustomClass .k-cell-inner > .k-link{
+            justify-content: center;
+        }
+        .Status{
+            text-align: right;
+        }
+        .testCenter{
+            text-align: center;
+        }
+        .img_tennhanvien_manhanvien{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: center;
+            text-align: left;
+            .avata{
+                border-radius: 50%;
+                max-height: 50px !important;
+            }
+            .tennhanvien_manhanvien{
+                margin-left: 10px;
+                .tennhanvien{
+                    font-weight: 700;
+                    color: #5A6276;
+                }
+            }
+        }
+        .k-grid{
+            .k-grid-header .k-header {
+                color: $gray-700 !important;
+                
+            }
+            thead tr {
+                height: fit-content !important;
+        
+                th {
+                  padding: 0 12px;
+                  height: 13px;
+                }
+            }
+            tr:not(.k-grouping-row) {
+                td:first-child {
+                  padding-left: 10px !important;
+                }
+            }
+            tr {
+                color: $gray-850;
+            }
+            tr > td{
+                padding: 8px 6px !important;
+            }
+        }
+        app-p-kendo-grid .myCustomGrid.k-grid tbody tr > td:nth-last-child(1){
+            width: 40px;
+            padding: 18px 12px 20px 4px;
+        }
+    }
+}

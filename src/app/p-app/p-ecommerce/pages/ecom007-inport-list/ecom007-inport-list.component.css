@@ -1,0 +1,44 @@
+::ng-deep .app-ecom007-inport-list {
+  height: calc(93vh - 30px);
+  padding: 0 15px 35px 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+::ng-deep .app-ecom007-inport-list .header .nav-filter .filter-btn-group.search-btn-group .search-btn .k-textbox {
+  width: 385px;
+}
+
+::ng-deep .app-ecom007-inport-list .header .nav-filter .filter-btn-group.date-btn-group {
+  position: relative;
+}
+
+::ng-deep .app-ecom007-inport-list .header .nav-filter .filter-btn-group.date-btn-group .k-datepicker {
+  width: 150px;
+}
+
+::ng-deep .app-ecom007-inport-list .header .nav-filter .filter-btn-group.date-btn-group .k-i-close {
+  position: absolute;
+  right: 33px;
+  bottom: 15%;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: lightgrey;
+  color: white;
+  font-size: 13px;
+}
+
+::ng-deep .app-ecom007-inport-list .header .nav-filter .filter-btn-group.date-btn-group .k-i-close:hover {
+  background-color: gray;
+  color: lightgrey;
+}
+
+::ng-deep .app-ecom007-inport-list .header .nav-file {
+  margin-left: auto;
+}
+
+::ng-deep .app-ecom007-inport-list .grid.scrollable .k-grid table {
+  width: 1370px;
+}

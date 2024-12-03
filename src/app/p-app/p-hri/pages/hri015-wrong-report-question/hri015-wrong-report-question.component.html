@@ -1,0 +1,208 @@
+<div class="hri015-analysis-report-question">
+
+    <!-- START HEADER -->
+    <div class="header header-1">
+        <app-p-kendo-breadcrumb (loadData)="GetQuizWrongQuestionReport()"></app-p-kendo-breadcrumb>
+
+
+       
+        <div class="file-btn-group">
+          <!-- <div class="btn-file">
+            <button kendoButton id="onUploadBtn" class="k-button" [icon]="'export'"></button>
+          </div>
+          <div class="btn-file">
+            <button kendoButton id="onDownloadBtn" class="k-button" [icon]="'import'">Template</button>
+          </div> -->
+          
+            <kendo-groupbutton>
+              <button kendoButton class="k-button" [icon]="'import'"></button>
+              <button kendoButton class="k-button k-btn-xlsx" imageUrl="assets\img\logo\xlsx.svg" [disabled]="loading" (click)="onExportExcel()"></button>
+              <button kendoButton class="k-button" [icon]="'arrow-chevron-down'"></button>
+            </kendo-groupbutton>
+          </div>
+    </div>
+
+    <div class="header header-2">
+        <div class="filter1">
+            <div class="label">
+                <span class="k-icon k-i-filter"></span>  Đợt đánh giá
+            </div>
+            <!-- <kendo-dropdownlist [data]="listQuizSession" [textField]="'SessionName'" [valueField]="'Code'"
+                [(ngModel)]="selectedQuizSession" (valueChange)="loadFilter();getQuizQuestionReport()" [loading]="loading">
+            </kendo-dropdownlist> -->
+            <p-kendo-dropdownlist [data]="listQuizSession" [textField]="'SessionName'" [valueField]="'Code'"
+            [(ngModel)]="selectedQuizSession" [filterable]="true" [searchFields]="['SessionName']"
+            (selectionChange)="onSelectionChange($event)" [hasValueNull]="false" [disabled]="listQuizSession.length == 0"
+            [loading]="loading" ></p-kendo-dropdownlist>
+        </div>
+
+        <app-search-filter-group
+        [placeholder]="'Tìm theo câu hỏi, phân nhóm và năng lực'"
+        [clearButton]="true"
+        (valueChange)="Search($event)"
+        [loading]="loading"
+        ></app-search-filter-group>
+     
+    </div>
+  <!-- END HEADER -->
+
+  <!-- START BODY -->
+    <div class="body">
+        <div class="grid-wrapper">
+            <app-p-kendo-grid class="grid scrollable " [data]="gridView | async" [scrollable]="'none'" [loading]="loading"
+            [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize"[skip]="gridStateReport.skip" [take]="gridStateReport.take"
+            [sortable]="true" [onPageChangeCallback]="onPageChangeCallback" [autoHeight]="false"
+            [getActionDropdownCallback]="getActionDropdownCallback"
+            [onActionDropdownClickCallback]="onActionDropdownClickCallback"
+            [onSelectCallback]="onSelectCallback" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+            [getSelectionPopupCallback]="getSelectionPopupCallback">
+                    
+                <kendo-grid-column title="Câu hỏi" field="Remark" [headerClass]="'col_question'" class=""></kendo-grid-column>
+        
+                <kendo-grid-column title="Phân nhóm" field="CategoryName" [headerClass]="'col_category'"></kendo-grid-column>
+                
+                <kendo-grid-column title="Mức độ khó" field="LevelID" [headerClass]="'col_CategoryLevel'"></kendo-grid-column>
+        
+                <kendo-grid-column title="Năng lực" field="CompetenceName" [headerClass]="'col_Competence'"></kendo-grid-column>
+        
+                <kendo-grid-column title="Tổng SL" [headerClass]="'col_TotalQuantity'">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <span class="text-center">{{dataItem.NoOfAllCorrect + dataItem.NoOfAllWrong + dataItem.NoOfPartialCorrect}}</span>
+                </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column title="Sai hết" [headerClass]="'col_Wrong'">
+                  <ng-template
+                    kendoGridHeaderTemplate
+                    let-column
+                    let-columnIndex="columnIndex"
+                  >
+                    <div class="align-items-center layoutNumber">
+                        <span class="text-center mb-1 layoutNumberMain">Sai hết</span>
+                        <div class="d-flex justify-content-between">
+                          <span class="layoutNumberMainAmount">SL</span>
+                          <span class="layoutNumberMainPercent">%</span>
+                        </div>
+                    </div>
+                  </ng-template>
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="d-flex  justify-content-between layoutNumber">
+                      <span  class="layoutNumberMainAmount">{{dataItem.NoOfAllWrong}}</span>
+                      <span  class="layoutNumberMainPercent">{{((dataItem.NoOfAllWrong / (dataItem.NoOfAllCorrect + dataItem.NoOfAllWrong +
+                        dataItem.NoOfPartialCorrect)) * 100)| number:'1.0-2'}}</span>
+                    </div>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column title="Đúng 1 phần" [headerClass]="'col_Correct'" [class]="'col_Correct'">
+                  <ng-template
+                    kendoGridHeaderTemplate
+                    let-column
+                    let-columnIndex="columnIndex"
+                  >
+                    <div class="align-items-center layoutNumber">
+                        <span class="text-center mb-1 layoutNumberMain">Đúng 1 phần</span>
+                        <div class="d-flex justify-content-between">
+                          <span class="layoutNumberMainAmount">SL</span>
+                          <span class="layoutNumberMainPercent">%</span>
+                        </div>
+                    </div>
+                  </ng-template>
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="d-flex  justify-content-between  layoutNumber">
+                      <span class="layoutNumberMainAmount">{{dataItem.NoOfPartialCorrect}}</span>
+                      <span class="layoutNumberMainPercent">{{ ((dataItem.NoOfPartialCorrect / (dataItem.NoOfAllCorrect + dataItem.NoOfAllWrong +
+                        dataItem.NoOfPartialCorrect)) * 100)| number:'1.0-2'}}</span>
+                    </div>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column title="Loại câu hỏi" field="TypeOfQuestionName" [headerClass]="'col_TypeOfQuestion'"></kendo-grid-column>
+                
+<!--               
+                <kendo-grid-column-group title="Đúng hết" [headerClass]="'col_DungHet'">
+                    <kendo-grid-column title="SL" field="NoOfAllCorrect"></kendo-grid-column>
+                    <kendo-grid-column title="%" field="phantram">
+                      <ng-template kendoGridCellTemplate let-dataItem>
+                        <span>{{((dataItem.NoOfAllCorrect / (dataItem.NoOfAllCorrect + dataItem.NoOfAllWrong + dataItem.NoOfPartialCorrect)) * 100)| number:'1.0-2'}}</span>
+                    </ng-template>
+                    </kendo-grid-column>
+                  </kendo-grid-column-group> -->
+
+                  <kendo-grid-column title="Đáp án đúng" [headerClass]="'col_AnwerCorrect'">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="answer-list">
+                        <ng-container *ngFor="let answer of dataItem.ListAnswers ; let i = index">
+                          <!-- One choice -->
+                          <div
+                            class="answer-item"
+                            *ngIf="
+                              dataItem.TypeOfQuestion === 1 || dataItem.TypeOfQuestion === 4
+                            "
+                          >
+                            <div class="selection-wrapper d-flex align-items-center">
+                              <input
+                                [disabled]="true"
+                                type="radio"
+                                [checked]="answer.IsRight"
+                                class="k-radio k-radio-md"
+                                id="radioButtonName"
+                              />
+                              <label class="answer-name mb-0">{{ answer.Answer }}</label>
+                            </div>
+                          </div>
+                          <!-- Multiple choices -->
+                          <div class="answer-item" *ngIf="dataItem.TypeOfQuestion === 2">
+                            <div class="selection-wrapper d-flex align-items-center">
+                              <input
+                                [disabled]="true"
+                                type="checkbox"
+                                kendoCheckBox
+                                [(ngModel)]="answer.IsRight"
+                              />
+                              <label  class="answer-name mb-0">{{
+                                answer?.Answer
+                              }}</label>
+                            </div>
+                          </div>
+                        </ng-container>
+                        <!-- Essay -->
+                        <div class="answer-item flex-column" *ngIf="dataItem.TypeOfQuestion === 3">
+                          <span>{{dataItem.RefAnswer}}</span>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+
+               
+              
+
+                  <!-- <kendo-grid-column-group title="Sai hết" [headerClass]="'col_Wrong'">
+                    <kendo-grid-column title="SL" field="NoOfAllWrong"></kendo-grid-column>
+                    <kendo-grid-column title="%" field="phantram">
+                      <ng-template kendoGridCellTemplate let-dataItem>
+                        <span>{{((dataItem.NoOfAllWrong / (dataItem.NoOfAllCorrect + dataItem.NoOfAllWrong + dataItem.NoOfPartialCorrect)) * 100)| number:'1.0-2'}}</span>
+                    </ng-template>
+                    </kendo-grid-column>
+                  </kendo-grid-column-group>
+
+                  <kendo-grid-column-group title="Đúng 1 phần" [headerClass]="'col_Correct'" [class]="'col_Correct'">
+                    <kendo-grid-column title="SL" field="NoOfPartialCorrect" [class]="'col_CorrectQuantity'" [headerStyle]="{ 'text-align': 'center', 'justify-content': 'center' }"></kendo-grid-column>
+                    <kendo-grid-column title="%" field="phantram" [class]="'col_CorrectPercent'" [headerStyle]="{ 'text-align': 'center', 'justify-content': 'center' }">
+                      <ng-template kendoGridCellTemplate let-dataItem>
+                        <span>{{ ((dataItem.NoOfPartialCorrect / (dataItem.NoOfAllCorrect + dataItem.NoOfAllWrong + dataItem.NoOfPartialCorrect)) * 100)| number:'1.0-2'}}</span>
+                      </ng-template>
+                    </kendo-grid-column>
+                  </kendo-grid-column-group> -->
+
+                  
+
+              
+
+            </app-p-kendo-grid>
+        </div>
+
+    </div>
+  <!-- END BODY -->
+
+</div>

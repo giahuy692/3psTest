@@ -1,0 +1,703 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+    // .config001-product-detail {
+    //     height: calc(93vh - #{$footer-height});
+    //     padding: 0 15px 35px 20px;
+    //     display: flex;
+    //     flex-direction: column;
+    //     overflow-y: scroll;
+    //     overflow-x: hidden;
+
+    //     .header {
+    //         display: flex;
+    //         padding: 9px 0;
+    //         margin-bottom: 0;
+    //         border-bottom: 1px solid rgba($gray-500, 0.4);
+
+    //         @media screen and (max-width: 480px) {
+    //             display: none;
+    //         }
+
+    //         &.header-1 {
+    //             .checkbox-btn-group {
+    //                 margin-right: 10px;
+    //             }
+    //         }
+
+    //         .label {
+    //             margin-bottom: 6px;
+    //             font-weight: 700;
+    //             font-size: 13px;
+    //             color: $gray-700;
+    //         }
+    //         .nav-btn {
+    //             display: flex;
+    //             align-items: center;
+    //             flex-grow: 1;
+
+    //             &.nav-file,
+    //             &.nav-crud {
+    //                 flex-grow: 0;
+    //             }
+    //         }
+    //         .nav-breadcrumb {
+    //             font-weight: bold;
+    //             color: $gray-500;
+
+    //             .breadcrumb-item {
+    //                 &:first-child {
+    //                     cursor: pointer;
+    //                     color: $dark-green;
+    //                 }
+    //             }
+    //             .breadcrumb-chevron {
+    //                 display: flex;
+    //             }
+    //         }
+    //     }
+
+    //     .body {
+    //         .sections {
+    //             .section {
+    //                 .title {
+    //                     margin: 12px 0;
+    //                     font-weight: bold;
+    //                     font-size: 16px;
+    //                     display: flex;
+    //                     justify-content: space-between;
+    //                 }
+    //                 .crud-btn {
+    //                     height: 32px;
+    //                     font-size: 11px;
+    //                     font-weight: bold;
+    //                     background-color: $dark-green !important;
+    //                     color: white;
+    //                 }
+
+    //                 .section-grid {
+    //                     display: grid;
+    //                     column-gap: 27px;
+    //                     row-gap: 10px;
+    //                     background-color: white;
+    //                     padding: 15px;
+
+    //                     .grid-item {
+    //                         display: flex;
+    //                         flex-direction: column;
+    //                     }
+
+    //                     .k-textbox {
+    //                         flex-grow: 1;
+    //                         width: auto;
+    //                     }
+    //                     .k-numerictextbox {
+    //                         flex-grow: 1;
+    //                         width: auto;
+
+    //                         &.red-color input {
+    //                             color: $bad-red;
+    //                         }
+    //                     }
+
+    //                     .k-dropdownlist {
+    //                         flex-grow: 1;
+    //                         width: auto;
+    //                         max-height: 32px;
+    //                     }
+    //                     .k-datepicker {
+    //                         flex-grow: 1;
+    //                         width: auto;
+    //                     }
+    //                     .k-timepicker {
+    //                         flex-grow: 1;
+    //                         width: auto;
+
+    //                         .k-input {
+    //                             width: 70px;
+    //                         }
+    //                     }
+    //                     .k-checkbox {
+    //                         margin-right: 10px;
+    //                     }
+    //                     textarea {
+    //                         resize: none;
+    //                         border-radius: 3px;
+    //                         border-color: rgba(0, 0, 0, 0.08);
+    //                         outline: none;
+    //                         height: 100%;
+    //                         padding: 4px 8px;
+
+    //                         &:hover,
+    //                         &:focus-visible {
+    //                             border-color: $dark-green;
+    //                         }
+    //                     }
+    //                     label {
+    //                         margin-bottom: 0;
+    //                         // cursor: pointer;
+    //                     }
+    //                     .input_label {
+    //                         margin-bottom: 10px;
+    //                     }
+    //                     .row {
+    //                         align-items: center;
+    //                         margin-bottom: 7px;
+    //                     }
+    //                     .subrow {
+    //                         margin-left: 20px;
+    //                     }
+    //                 }
+
+    //                 &.thongTinSanPhamGoc_tbl {
+    //                     > .title {
+    //                         justify-content: flex-start;
+    //                         column-gap: 50px;
+    //                     }
+
+    //                     .section-grid {
+    //                         grid-template-columns: 350px 350px 330px;
+    //                         column-gap: 14px;
+
+    //                         .item1 {
+    //                             grid-column: 1;
+    //                             grid-row: 1;
+    //                         }
+    //                         .item2 {
+    //                             grid-column: 1;
+    //                             grid-row: 2;
+    //                         }
+    //                         .item3 {
+    //                             grid-column: 1;
+    //                             grid-row: 3;
+    //                         }
+    //                         .item4 {
+    //                             grid-column: 1;
+    //                             grid-row: 4;
+    //                         }
+    //                         .item4_1 {
+    //                             grid-column: 1;
+    //                             grid-row: 5;
+    //                         }
+
+    //                         .item5 {
+    //                             grid-column: 2;
+    //                             grid-row: 1;
+    //                         }
+    //                         .item6 {
+    //                             grid-column: 2;
+    //                             grid-row: 2;
+    //                         }
+    //                         .item7 {
+    //                             grid-column: 2;
+    //                             grid-row: 3;
+    //                         }
+    //                         .item7_1 {
+    //                             grid-column: 2;
+    //                             grid-row: 4;
+    //                         }
+    //                         .item8 {
+    //                             grid-column: 2;
+    //                             grid-row: 5;
+    //                         }
+
+    //                         .item9 {
+    //                             grid-column: 3;
+    //                             grid-row: 1 / span 3;
+    //                             align-items: center;
+
+    //                             .label {
+    //                                 position: relative;
+    //                                 display: flex;
+    //                                 justify-content: space-between;
+    //                                 width: 100%;
+    //                             }
+
+    //                             .k-icon {
+    //                                 font-size: 19px;
+    //                                 cursor: pointer;
+
+    //                                 &.k-i-export {
+    //                                     color: $dark-green;
+    //                                 }
+
+    //                                 &.k-i-minus-outline {
+    //                                     color: $bad-red;
+    //                                     position: absolute;
+    //                                     right: 0;
+    //                                     top: 40px;
+    //                                 }
+    //                             }
+
+    //                             img {
+    //                                 height: 100%;
+    //                                 overflow-wrap: anywhere;
+    //                             }
+    //                         }
+
+    //                         .item10 {
+    //                             grid-column: 3;
+    //                             grid-row: 4;
+    //                             flex-direction: row;
+    //                             justify-content: center;
+    //                             align-items: flex-end;
+
+    //                             .giaBanLe {
+    //                                 margin-bottom: 6px;
+    //                                 margin-left: 17px;
+    //                                 color: $worse-red;
+    //                                 font-weight: 700;
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+
+    //                 &.thongTinSanPham_tbl {
+    //                     .section-grid {
+    //                         grid-template-columns: 180px 160px 300px 130px 130px 130px;
+    //                         column-gap: 7px;
+
+    //                         .item1_1 {
+    //                             grid-column: 1;
+    //                             grid-row: 1;
+    //                         }
+    //                         .item1_2 {
+    //                             grid-column: 1;
+    //                             grid-row: 2;
+    //                         }
+    //                         .item1_3 {
+    //                             grid-column: 1;
+    //                             grid-row: 3;
+    //                         }
+    //                         .item1_4 {
+    //                             grid-column: 1;
+    //                             grid-row: 4;
+    //                         }
+    //                         .item1_5 {
+    //                             grid-column: 1;
+    //                             grid-row: 5;
+    //                         }
+
+    //                         .item2_1 {
+    //                             grid-column: 2;
+    //                             grid-row: 1;
+    //                         }
+    //                         .item2_2 {
+    //                             grid-column: 2;
+    //                             grid-row: 2;
+    //                         }
+    //                         .item2_3 {
+    //                             grid-column: 2;
+    //                             grid-row: 3;
+    //                         }
+    //                         .item2_4 {
+    //                             grid-column: 2;
+    //                             grid-row: 4;
+    //                         }
+    //                         .item2_5 {
+    //                             grid-column: 2;
+    //                             grid-row: 5;
+    //                         }
+
+    //                         .item3_1 {
+    //                             grid-column: 3;
+    //                             grid-row: 1;
+    //                         }
+    //                         .item3_2 {
+    //                             grid-column: 3;
+    //                             grid-row: 2;
+    //                         }
+    //                         .item3_3 {
+    //                             grid-column: 3;
+    //                             grid-row: 3;
+    //                         }
+    //                         .item3_4 {
+    //                             grid-column: 3;
+    //                             grid-row: 4;
+    //                         }
+    //                         .item3_5 {
+    //                             grid-column: 3;
+    //                             grid-row: 5;
+    //                         }
+
+    //                         .item4_1 {
+    //                             grid-column: 4 / span 3;
+    //                             grid-row: 1;
+    //                         }
+
+    //                         .item4_2_1 {
+    //                             grid-column: 4;
+    //                             grid-row: 2;
+    //                         }
+    //                         .item4_2_2 {
+    //                             grid-column: 5;
+    //                             grid-row: 2;
+    //                         }
+    //                         .item4_2_3 {
+    //                             grid-column: 6;
+    //                             grid-row: 2;
+    //                         }
+
+    //                         .item4_3_1 {
+    //                             grid-column: 4;
+    //                             grid-row: 3;
+    //                         }
+    //                         .item4_3_2 {
+    //                             grid-column: 5;
+    //                             grid-row: 3;
+    //                         }
+    //                         .item4_3_3 {
+    //                             grid-column: 6;
+    //                             grid-row: 3;
+
+    //                             .k-checkbox {
+    //                                 float: right;
+    //                             }
+    //                         }
+
+    //                         .item4_4 {
+    //                             grid-column: 4 / span 3;
+    //                             grid-row: 4;
+
+    //                             .k-checkbox {
+    //                                 float: right;
+    //                             }
+
+    //                             .item4_4_col {
+    //                                 display: flex;
+    //                                 align-items: center;
+    //                                 column-gap: 7px;
+
+    //                                 .label {
+    //                                     white-space: nowrap;
+    //                                     margin-bottom: 0;
+    //                                 }
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+
+    //                 &.thongTinSanPhamHienThiWebsite_tbl {
+    //                     .section-grid {
+    //                         grid-template-columns: 350px 350px 330px;
+    //                         column-gap: 14px;
+
+    //                         .item1_1 {
+    //                             grid-column: 1;
+    //                             grid-row: 1;
+    //                         }
+    //                         .item1_2 {
+    //                             grid-column: 1;
+    //                             grid-row: 2 / span 2;
+
+    //                             .k-textbox {
+    //                                 margin-bottom: 6px;
+
+    //                                 &:last-child {
+    //                                     margin-bottom: 0;
+    //                                 }
+    //                             }
+    //                         }
+    //                         .item1_3 {
+    //                             grid-column: 1;
+    //                             grid-row: 4;
+    //                         }
+    //                         .item1_3 {
+    //                             grid-column: 1;
+    //                             grid-row: 5;
+    //                         }
+
+    //                         .item2_1 {
+    //                             grid-column: 2;
+    //                             grid-row: 1;
+    //                         }
+    //                         .item2_2 {
+    //                             grid-column: 2;
+    //                             grid-row: 2;
+    //                         }
+    //                         .item2_3 {
+    //                             grid-column: 2;
+    //                             grid-row: 3;
+    //                         }
+    //                         .item2_4 {
+    //                             grid-column: 2;
+    //                             grid-row: 4 / span 2;
+    //                         }
+
+    //                         .item3_1 {
+    //                             grid-column: 3;
+    //                             grid-row: 1 / span 3;
+    //                         }
+    //                         .item3_2 {
+    //                             grid-column: 3;
+    //                             grid-row: 4 / span 1;
+    //                         }
+    //                         .item3_3 {
+    //                             grid-column: 3;
+    //                             grid-row: 5 / span 1;
+    //                         }
+    //                     }
+    //                 }
+
+    //                 &.thongTinDongGoiVanChuyen_tbl {
+    //                     .section-grid {
+    //                         grid-template-columns: 370px 350px 300px;
+    //                         column-gap: 14px;
+
+    //                         .item1_1 {
+    //                             grid-column: 1;
+    //                             grid-row: 1;
+    //                         }
+    //                         .item_grid {
+    //                             display: grid;
+    //                             grid-template-columns: 80px 80px 80px auto;
+    //                             column-gap: 7px;
+    //                         }
+
+    //                         .item1_2 {
+    //                             grid-column: 1;
+    //                             grid-row: 2;
+    //                         }
+    //                         .item1_3 {
+    //                             grid-column: 1;
+    //                             grid-row: 3;
+    //                         }
+    //                         .item1_4 {
+    //                             grid-column: 1;
+    //                             grid-row: 4;
+    //                         }
+    //                         .item1_5 {
+    //                             grid-column: 1;
+    //                             grid-row: 5;
+    //                         }
+    //                         .item1_6 {
+    //                             grid-column: 1;
+    //                             grid-row: 6;
+    //                         }
+
+    //                         .item2_1 {
+    //                             grid-column: 2;
+    //                             grid-row: 1 / span 3;
+
+    //                             .item2_1_item {
+    //                                 display: flex;
+    //                                 align-items: center;
+    //                                 column-gap: 7px;
+    //                                 white-space: nowrap;
+    //                                 margin-bottom: 6px;
+
+    //                                 .label {
+    //                                     margin-bottom: 0;
+    //                                     width: 50%;
+    //                                 }
+    //                             }
+    //                         }
+
+    //                         .item3_1 {
+    //                             grid-column: 3;
+    //                             grid-row: 1;
+    //                         }
+    //                         .item3_2 {
+    //                             grid-column: 3;
+    //                             grid-row: 2;
+
+    //                             .k-checkbox {
+    //                                 margin-left: 14px;
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+
+    //                 &.thongTinTemNhan_tbl {
+    //                     .section-grid {
+    //                         grid-template-columns: 350px 350px 330px;
+    //                         column-gap: 14px;
+
+    //                         .item1_1 {
+    //                             grid-column: 1;
+
+    //                             .item1_1_item {
+    //                                 height: 32px;
+    //                                 display: flex;
+    //                                 align-items: center;
+    //                                 margin-bottom: 6px;
+    //                                 padding: 0 11px;
+    //                                 border: 1px solid #dbdee7;
+    //                                 border-radius: 3px;
+
+    //                                 .span_label {
+    //                                     flex-grow: 1;
+    //                                     cursor: pointer;
+    //                                 }
+
+    //                                 &.selected {
+    //                                     border: 1px solid $dark-green;
+
+    //                                     .span_label {
+    //                                         color: $dark-green;
+    //                                     }
+    //                                 }
+    //                             }
+    //                         }
+
+    //                         .item2_1,
+    //                         .item2_2 {
+    //                             grid-column: 2;
+
+    //                             .k-textbox {
+    //                                 margin-bottom: 6px;
+    //                             }
+    //                         }
+
+    //                         .item3_1 {
+    //                             grid-column: 3;
+    //                             grid-row: 1 / span 3;
+
+    //                             textarea {
+    //                                 margin-bottom: 6px;
+    //                                 min-height: 64px;
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+
+    //                 &.thongTinKhac_tbl {
+    //                     .section-grid {
+    //                         grid-template-columns: 350px 350px 330px;
+    //                         column-gap: 14px;
+
+    //                         .item1_1 {
+    //                             grid-column: 1;
+    //                             grid-row: 1;
+    //                         }
+    //                         .item1_2 {
+    //                             grid-column: 1;
+    //                             grid-row: 2;
+    //                         }
+    //                         .item1_3 {
+    //                             grid-column: 1;
+    //                             grid-row: 3;
+    //                         }
+    //                         .item1_4 {
+    //                             grid-column: 1;
+    //                             grid-row: 4;
+    //                         }
+
+    //                         .item2_1 {
+    //                             grid-column: 2;
+    //                             grid-row: 1;
+    //                         }
+    //                         .item2_1 {
+    //                             grid-column: 2;
+    //                             grid-row: 1;
+    //                         }
+    //                         .item2_2 {
+    //                             grid-column: 2;
+    //                             grid-row: 2;
+    //                         }
+    //                         .item2_3 {
+    //                             grid-column: 2;
+    //                             grid-row: 3;
+    //                         }
+
+    //                         .item3_1 {
+    //                             grid-column: 3;
+    //                             grid-row: 1;
+    //                         }
+    //                         .item3_2 {
+    //                             grid-column: 3;
+    //                             grid-row: 2;
+
+    //                             .text {
+    //                                 color: #31adff;
+    //                                 font-weight: 700;
+    //                             }
+    //                         }
+
+    //                         .item3_3 {
+    //                             grid-column: 3;
+    //                             grid-row: 3;
+
+    //                             .text {
+    //                                 color: #31adff;
+    //                                 font-weight: 700;
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+
+    //                 &.congTyAnDung_tbl {
+    //                     .section-grid {
+    //                         display: flex;
+    //                         column-gap: unset;
+
+    //                         .label {
+    //                             margin-top: 10px;
+    //                         }
+
+    //                         label {
+    //                             font-weight: bold;
+    //                         }
+
+    //                         .price {
+    //                             display: flex;
+    //                             column-gap: 7px;
+
+    //                             .k-textbox {
+    //                                 flex-grow: 1;
+    //                             }
+
+    //                             .k-dropdownlist {
+    //                                 min-width: 109px;
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    //     .label {
+    //         margin-bottom: 6px;
+    //         font-weight: bold;
+    //         color: $gray-500;
+
+    //         &.thick-label {
+    //             color: $gray-900;
+
+    //             + .number {
+    //                 font-weight: bold;
+    //             }
+    //             + .k-numerictextbox {
+    //                 input {
+    //                     font-weight: bold;
+    //                 }
+    //             }
+    //         }
+    //         &.thin-label {
+    //             font-weight: normal;
+    //             color: $gray-800;
+    //         }
+    //     }
+    // }
+    .config001-product-detail{
+        height: calc(93vh - #{$footer-height});
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        .header{
+            display: flex;
+            justify-content: space-between;
+            .nav-btn{
+                margin-right: 20px;
+                .onAddBtn{
+                    background-color: $dark-green;
+                }
+            }
+        }
+        .body{
+            padding: 10px;
+        }
+    }
+}

@@ -1,0 +1,325 @@
+<div class="app-drawer-container">
+    <mat-drawer-container [hasBackdrop]="true">
+        <!-- START CONTENT PAGE -->
+        <mat-drawer-content>
+            <div class="app-pur006-partner-contact">
+
+                <!-- START HEADER -->
+                <div class=" header header-1">
+                    <app-p-kendo-breadcrumb (loadData)="reloadData()"></app-p-kendo-breadcrumb>
+                </div>
+                <!-- END HEADER -->
+
+                <!-- START MAIN CONTENT -->
+                <div class="coverContent">
+                    <div class="submenu">
+                        <app-pur-menu-supplier-info [Link]="'pur006-partner-contact'"></app-pur-menu-supplier-info>
+                    </div>
+                    <div class="content">
+                        <!-- HEADER FILTER -->
+                        <div class="gridHeader">
+                            <div class=" header header-2">
+                                <app-search-filter-group #search (valueChange)="onSearch($event)" (onReset)="onReset()"
+                                    placeholder="Tìm theo tên, số điện thoại người liên hệ"></app-search-filter-group>
+                                <div class="nav-btn nav-crud">
+                                    <button kendoButton class="onAddBtn k-button btn-hachi hachi-primary"
+                                        *ngIf="isAllPers== true || isCanCreate == true" [icon]="'plus'"
+                                        (click)="onOpenDrawer(0)">
+                                        TẠO MỚI
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- GRID LIST CONTACT -->
+                        <div class="coverGrid">
+                            <div class="grid-wrapper">
+                                <app-p-kendo-grid class="grid" [data]="listContact" [scrollable]="'none'"
+                                    [loading]="isLoading" [pageable]="false"
+                                    [getActionDropdownCallback]="getActionDropdownCallback"
+                                    [onActionDropdownClickCallback]="onActionDropdownClickCallback">
+                                    <kendo-grid-column field="ContactName" title="Người liên hệ"
+                                        class="col_personContact" headerClass="col_personContact" [width]="300">
+                                        <ng-template kendoGridCellTemplate let-dataItem>
+                                            <div class="NamePC  " title="{{dataItem.ContactName}}">
+                                                {{dataItem.ContactName}}
+                                            </div>
+
+                                            <div class="rolePC  " title="{{dataItem.PositionName}}">
+                                                {{dataItem.PositionName}}
+                                            </div>
+                                        </ng-template>
+                                    </kendo-grid-column>
+
+                                    <kendo-grid-column field="Department" title="Bộ phận" class="col_Department"
+                                        headerClass="col_Department" [width]="300">
+                                        <ng-template kendoGridCellTemplate let-dataItem>
+                                            <div class="department  " title="{{dataItem.Department}}">
+                                                {{dataItem.Department}}
+                                            </div>
+                                        </ng-template>
+                                    </kendo-grid-column>
+
+                                    <kendo-grid-column field="Cellphone1" title="Điện thoại" class="col_Cellphone"
+                                        headerClass="col_Cellphone" [width]="500">
+                                        <ng-template kendoGridCellTemplate let-dataItem>
+                                            <div class="phoneInforTop  ">
+                                                <!-- Telephone -->
+                                                <span *ngIf="dataItem.Tel1 || dataItem.Tel2"> Phone:&nbsp;</span>
+                                                <span title="{{dataItem.Tel1}}">
+                                                    {{ dataItem.Tel1}}
+                                                </span>
+                                                <span *ngIf="dataItem.Tel2">/</span>
+                                                <span title="{{dataItem.Tel2}}">
+                                                    {{ dataItem.Tel2}}
+                                                </span>
+                                                <span *ngIf="dataItem.Ext1 || dataItem.Ext2">&nbsp;- &nbsp;</span>
+
+                                                <!-- Ext -->
+                                                <span *ngIf="dataItem.Ext1 || dataItem.Ext2">Ext:</span>
+                                                <span title="{{dataItem.Ext1}}">
+                                                    {{dataItem.Ext1}}
+                                                </span>
+                                                <span *ngIf=" dataItem.Ext2">/</span>
+                                                <span title="{{dataItem.Ext2}}">
+                                                    {{dataItem.Ext2}}
+                                                </span>
+                                            </div>
+
+                                            <div class="phoneInforBot ">
+                                                <!-- Cellphone -->
+                                                <span *ngIf="dataItem.Cellphone1 || dataItem.Cellphone2">
+                                                    Cellphone:&nbsp;</span>
+                                                <span title="{{dataItem.Cellphone1}}">
+                                                    {{dataItem.Cellphone1}}&nbsp;</span>
+                                                <span *ngIf="dataItem.Cellphone2">/</span>
+                                                <span title="{{dataItem.Cellphone2}}">
+                                                    {{dataItem.Cellphone2}}</span>
+                                            </div>
+                                        </ng-template>
+                                    </kendo-grid-column>
+
+                                    <kendo-grid-column field="Email1" title="Email" class="col_Email"
+                                        headerClass="col_Email" [width]="280">
+                                        <ng-template kendoGridCellTemplate let-dataItem>
+                                            <div class="email" title="{{dataItem.Email1}}"> {{dataItem.Email1}}
+                                            </div>
+                                            <div class="email" title="{{dataItem.Email2}}"> {{dataItem.Email2}}
+                                            </div>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column field="StatusName" title="Tình trạng" class="col_StatusName"
+                                        headerClass="col_StatusName" [width]="120">
+                                        <ng-template kendoGridCellTemplate let-dataItem>
+                                            <div class="status" title="{{dataItem.StatusName}}">
+                                                {{dataItem.StatusName}}
+                                            </div>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                </app-p-kendo-grid>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END MAIN CONTENT -->
+
+            </div>
+        </mat-drawer-content>
+        <!-- END CONTENT PAGE -->
+
+
+        <!-- START DRAWER -->
+        <mat-drawer #Drawer [mode]="'over'" position="end" [hasBackdrop]="true" (keydown.Enter)="onKeydownEnter($event)"
+            [disableClose]='true'>
+
+            <div class="formPersonContact">
+                <legend class="title-formPersonContact"> THÔNG TIN NGƯỜI LIÊN HỆ </legend>
+                <div class="container-form">
+                    <form class="form" [formGroup]="formPersonContact">
+                        <fieldset [disabled]="isLockAll">
+                            <kendo-label class="k-form customLabel">
+                                <div class="lable">
+                                    <span class="labelName">
+                                        <span class="name">Họ và tên</span>
+                                        <span class="symbol">(*)</span>
+                                    </span>
+                                </div>
+                                <app-p-textbox [propName]="'ContactName'" formControlName="ContactName"></app-p-textbox>
+                            </kendo-label>
+
+
+                            <kendo-label class="k-form customLabel">
+                                <div class="lable">
+                                    <span class="labelName">
+                                        <span class="name">Chức danh</span>
+                                    </span>
+                                </div>
+                                <app-p-textbox [propName]="'PositionName'"
+                                    formControlName="PositionName"></app-p-textbox>
+                            </kendo-label>
+
+                            <kendo-label class="k-form customLabel">
+                                <div class="lable">
+                                    <span class="labelName">
+                                        <span class="name">Bộ phận</span>
+                                    </span>
+                                </div>
+                                <app-p-textbox [propName]="'Department'" formControlName="Department"></app-p-textbox>
+                            </kendo-label>
+
+
+                            <div class="d-flex">
+                                <kendo-label class="k-form customLabel">
+                                    <div class="lable">
+                                        <span class="labelName">
+                                            <span class="name">Điện thoại bàn 1</span>
+                                        </span>
+                                    </div>
+
+                                    <kendo-maskedtextbox mask="000 0000 0000" [propName]="'Tel1'"
+                                        formControlName="Tel1"></kendo-maskedtextbox>
+                                    <!-- <app-p-textbox [propName]="'Tel1'" formControlName="Tel1"></app-p-textbox> -->
+                                </kendo-label>
+
+                                <kendo-label class="k-form customLabel">
+                                    <div class="lable">
+                                        <span class="labelName">
+                                            <span class="name">Điện thoại bàn 2</span>
+
+                                        </span>
+                                    </div>
+
+                                    <kendo-maskedtextbox mask="000 0000 0000" [propName]="'Tel2'"
+                                        formControlName="Tel2"></kendo-maskedtextbox>
+                                    <!-- <app-p-textbox [propName]="'Tel2'" formControlName="Tel2"></app-p-textbox> -->
+                                </kendo-label>
+                            </div>
+
+                            <div class="d-flex">
+                                <kendo-label class="k-form customLabel">
+                                    <div class="lable">
+                                        <span class="labelName">
+                                            <span class="name">Số nội bộ 1</span>
+                                        </span>
+                                    </div>
+
+                                    <kendo-maskedtextbox mask="0000" [propName]="'Ext1'"
+                                        formControlName="Ext1"></kendo-maskedtextbox>
+                                    <!-- <app-p-textbox  [propName]="'Ext1'"
+                                        formControlName="Ext1"></app-p-textbox> -->
+                                </kendo-label>
+
+                                <kendo-label class="k-form customLabel">
+                                    <div class="lable">
+                                        <span class="labelName">
+                                            <span class="name">Số nội bộ 2</span>
+                                        </span>
+                                    </div>
+
+                                    <kendo-maskedtextbox mask="0000" [propName]="'Ext2'"
+                                        formControlName="Ext2"></kendo-maskedtextbox>
+                                    <!-- <app-p-textbox  [propName]="'Ext2'"
+                                        formControlName="Ext2"></app-p-textbox> -->
+                                </kendo-label>
+                            </div>
+
+                            <div class="d-flex">
+                                <kendo-label class="k-form customLabel">
+                                    <div class="lable">
+                                        <span class="labelName">
+                                            <span class="name">Số di động 1</span>
+                                        </span>
+                                    </div>
+
+                                    <kendo-maskedtextbox mask="000 000 0000" [propName]="'Cellphone1'"
+                                        formControlName="Cellphone1"></kendo-maskedtextbox>
+                                    <!-- <app-p-textbox [propName]="'Cellphone1'"
+                                        formControlName="Cellphone1"></app-p-textbox> -->
+                                </kendo-label>
+
+                                <kendo-label class="k-form customLabel">
+                                    <div class="lable">
+                                        <span class="labelName">
+                                            <span class="name">Số di động 2</span>
+                                        </span>
+                                    </div>
+
+                                    <kendo-maskedtextbox mask="000 000 0000" [propName]="'Cellphone2'"
+                                        formControlName="Cellphone2"></kendo-maskedtextbox>
+                                    <!-- <app-p-textbox  [propName]="'Cellphone2'"
+                                        formControlName="Cellphone2"></app-p-textbox> -->
+                                </kendo-label>
+                            </div>
+
+                            <kendo-label class="k-form customLabel">
+                                <div class="lable">
+                                    <span class="labelName">
+                                        <span class="name">Email 1</span>
+                                    </span>
+                                </div>
+                                <app-p-textbox [propName]="'Email1'" formControlName="Email1"></app-p-textbox>
+                            </kendo-label>
+
+                            <kendo-label class="k-form customLabel">
+                                <div class="lable">
+                                    <span class="labelName">
+                                        <span class="name">Email 2</span>
+                                    </span>
+                                </div>
+                                <app-p-textbox [propName]="'Email1'" formControlName="Email2"></app-p-textbox>
+                            </kendo-label>
+
+                            <kendo-label class="k-form customLabel">
+                                <div class="lable">
+                                    <span class="labelName">
+                                        <span class="name">Tình trạng</span>
+                                    </span>
+                                </div>
+                                <app-p-textbox [propName]="'StatusName'" formControlName="StatusName"></app-p-textbox>
+                            </kendo-label>
+
+
+                            <kendo-formerror>(*) Trường bắt buộc nhập.</kendo-formerror>
+                        </fieldset>
+                    </form>
+                </div>
+
+                <div class="footer-formPersonContact">
+                    <button kendoButton class="k-button btn-hachi hachi-primary hachi-secondary"
+                        (click)="onCloseDrawer()">
+                        Đóng
+                    </button>
+                    <button kendoButton class="k-button btn-hachi hachi-primary" (click)="onSubmitForm()"
+                        *ngIf="isAllPers== true || isCanCreate == true">
+                        {{this.formPersonContact.value.Code == 0? 'TẠO MỚI' : 'CẬP NHẬT'}}
+                    </button>
+                    <button kendoButton class="k-button btn-hachi hachi-primary deleteBtn" (click)="onToggleDialog()"
+                        *ngIf="(isAllPers== true || isCanCreate == true) && showDel == 1">
+                        XÓA
+                    </button>
+                </div>
+
+            </div>
+
+        </mat-drawer>
+        <!-- END DRAWER -->
+
+    </mat-drawer-container>
+
+
+
+    <!-- START DIALOG DELETE -->
+    <app-p-kendo-dialog *ngIf="openeDialog" [title]="'XÓA NGƯỜI LIÊN HỆ'" (close)="onToggleDialog()"
+        (handleButton)="onDeleteDialog('yes')" [iconButton]="'delete'" [dialogType]="1"
+        [iconTitle]="'k-icon k-i-warning'">
+        <div class="text-center">
+            Bạn có chắc chắn muốn xóa người liên hệ <br>
+            <strong> {{delItem.ContactName}} </strong>
+            <p class="content-sub">
+                bị xóa sẽ <span style="color: red">KHÔNG</span> thể khôi phục lại.
+            </p>
+        </div>
+    </app-p-kendo-dialog>
+    <!-- END DIALOG DELETE -->
+</div>

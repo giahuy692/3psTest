@@ -1,0 +1,944 @@
+@import "../../../../../assets/scss/variables/colors";
+@mixin textarea {
+  display: block;
+  padding: 5px;
+  width: 100%;
+  min-height: 75px;
+  resize: none;
+  overflow: hidden;
+  height: auto;
+}
+::ng-deep {
+  .hri008-question-bank-detail {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: -webkit-fill-available;
+
+    .symbol{
+      color: $dark-red !important;
+
+      &.fst-italic{
+        font-style:italic;
+      }
+    }
+
+    .col40{
+      column-gap: 40px;
+    }
+
+    .colorBlackgray{
+      color: $blackgray;
+    }
+
+    .numericWidth{
+      .k-numerictextbox{
+        width: 90px;
+      }
+    }
+
+    p {
+      margin: 0;
+    }
+
+    app-p-textbox{
+      width: 100%;
+      kendo-textbox{
+        width: 100%;
+      }
+    }
+
+    app-p-textarea{
+      width: 100%;
+      kendo-textarea{
+        width: 100%;
+        max-height: 75px;
+        height: 75px !important;
+      }
+    }
+
+    app-p-numeric-textbox{
+      width: 100%;
+      kendo-numerictextbox{
+        width: 100%;
+      }
+    }
+
+    kendo-label {
+      label {
+        color: $light-blue-gray;
+        font-weight: 700;
+        padding: 6px 0;
+      }
+    }
+
+    .header-2 {
+      margin: 0 15px 0 20px !important;
+      height: 50px;
+      .breadcumb {
+        display: flex;
+        column-gap: 5px;
+        align-items: center;
+        color: $dark-green;
+        font-weight: 700;
+        a {
+          font-size: 13px;
+        }
+
+        .active-link {
+          color: $dark-green;
+        }
+        i:last-child {
+          color: $light-blue-gray;
+        }
+        span:last-child {
+          color: $light-blue-gray;
+        }
+        .myCustomBreadCrumb{
+          width: 411px;
+        }
+      }
+      .nav-crud {
+        display: flex;
+        margin-left: auto;
+
+        .btn-aplication {
+          width: fit-content;
+          height: 32px;
+          background-color: $white;
+          color: $dark-green;
+          box-shadow: 0 0 8px $lightgray;
+          font-weight: 700;
+          font-size: 11px;
+        }
+        .btn-delete {
+          width: fit-content;
+          height: 32px;
+          background-color: $gray-1;
+          color: $white;
+          box-shadow: 0 0 8px $lightgray;
+          font-weight: 700;
+          font-size: 11px;
+        }
+        .btn-addition {
+          width: fit-content;
+          height: 32px;
+          background-color: $dark-green;
+          color: $white;
+          box-shadow: 0 0 8px $lightgray;
+          font-weight: 700;
+          font-size: 11px;
+        }
+
+        .btnGuiDuyet {
+          width: fit-content;
+          height: 32px;
+          background-color: $white;
+          color: $dark-green;
+          border: 1px solid $dark-green;
+          box-shadow: 0 0 8px $lightgray;
+          font-weight: 700;
+          font-size: 11px;
+        }
+
+        .btnTraVe {
+          width: fit-content;
+          height: 32px;
+          background-color: $white;
+          color: $bad-red;
+          border: 1px solid $bad-red;
+          box-shadow: 0 0 8px $lightgray;
+          font-weight: 700;
+          font-size: 11px;
+        }
+
+        .btnNgunghienthi {
+          width: fit-content;
+          height: 32px;
+          background-color: $bad-red;
+          color: $white;
+          border: 1px solid $white;
+          box-shadow: 0 0 8px $lightgray;
+          font-weight: 700;
+          font-size: 11px;
+        }
+      }
+    }
+
+    .main{
+      padding: 0 15px 15px 20px;
+      height: calc(100vh - 136px);
+      overflow-y: auto;
+      .infoQuestion-wrapper {
+        .header-infoQuestion {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin: 10px 0;
+  
+          .title {
+            font-weight: 700;
+            font-size: 16px;
+            color: $gray-850;
+          }
+  
+          .languages {
+            button:first-child {
+              border: none;
+              background-color: transparent;
+            }
+            button {
+              border: none;
+              border-left: 1px solid $lightgray;
+              background-color: transparent;
+              color: $lightgray;
+  
+              &:focus {
+                box-shadow: none;
+              }
+            }
+  
+            .k-state-active {
+              color: $gray-4;
+            }
+          }
+        }
+  
+        .content-infoQuestion {
+          display: flex;
+          justify-content: space-between;
+          background-color: $white;
+          padding: 13px 20px;
+          column-gap: 20px;
+          overflow-x: scroll;
+          .contentLeft {
+            display: flex;
+            flex-direction: column;
+            kendo-label {
+              label {
+                color: $light-blue-gray;
+                font-weight: 700;
+                padding: 6px 0;
+              }
+              // kendo-dropdownlist {
+              //   display: block;
+              // }
+  
+              .k-state-disabled {
+              }
+  
+              .StatusValue {
+                color: $dark-green;
+                font-weight: 700;
+                border: none;
+                background-color: transparent !important;
+                box-shadow: none;
+  
+                .k-input-prefix {
+                  display: none;
+                }
+                .k-input-suffix {
+                  display: none;
+                }
+  
+                .k-input {
+                  padding: 0;
+                }
+              }
+            }
+
+            .QuestionGroupTree{
+              img {
+                filter: grayscale(100%) brightness(46%);
+              }
+            }
+          }
+  
+          .contenRight {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+  
+            kendo-label {
+              color: $light-blue-gray;
+              display: block;
+              font-weight: 700;
+              pointer-events: none;
+            }
+            // textarea {
+            //   padding: 4px 8px;
+            //   @include textarea;
+
+            //   &:focus {
+            //     box-shadow: 0 0 0 1px $dark-green !important;
+            //   }
+            // }
+  
+            .editorQuestionDetail {
+              app-p-kendo-editor {
+                #editor {
+                  padding: 0 10px;
+                  kendo-editor {
+                    height: auto !important;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+  
+      .AnswerOptions-Wrapper {
+        .titleAnswerOptions {
+          font-size: 16px;
+          font-weight: 700;
+          padding: 10px 0;
+          margin: 0;
+        }
+        .content {
+          width: 100%;
+          min-height: 150px;
+          background-color: $white;
+          padding: 13px 20px;
+          
+          .k-i-plus {
+            color: $dark-green;
+          }
+  
+          .AnswerGroup {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 10px;
+  
+            thead {
+              .headerAnswerGroup,
+              tr {
+                th:first-child {
+                  width: 80px;
+                  text-align: center;
+                }
+                th {
+                  width: 5%;
+                  text-align: center;
+                }
+                th:last-child {
+                  width: auto;
+                  text-align: start;
+                  padding-left: 34px;
+                }
+  
+                .title {
+                  font-weight: 700;
+                  font-size: 13px;
+                  color: $light-blue-gray;
+                  padding-bottom: 9px;
+                }
+              }
+            }
+            tbody {
+              tr {
+                padding: 5px 0;
+                .answer:first-child {
+                  width: 65px;
+                  text-align: center;
+                }
+  
+                .answer {
+                    kendo-numerictextbox {
+                      &:hover {
+                        box-shadow: 0 0 0 1px $dark-green;
+                      }
+                      input {
+                        text-align: center;
+                      }
+                    }
+                }
+  
+                .boxInput{
+                  .answer-wrap{
+                    display: flex;
+                    align-items: center;
+                    margin-left: 16px;
+                    .stt{
+                      width: 20px;
+                    }
+                  }
+                }
+  
+                .deteleAnswer{
+                  .k-button{
+                    color: $bad-red;
+                    filter: drop-shadow(0px 2px 4px #eb273a7a);
+                  }
+                }
+              }
+  
+              
+            }
+  
+            // input[type='radio']{
+            //   display: block;
+            // }
+            // input[type='text']{
+            //   width: 100%;
+            //   display: block;
+            // }
+          }
+  
+          .footer-answer {
+            margin: 10px auto;
+            text-align: center;
+  
+            button {
+              border: none;
+              color: $dark-green;
+              box-shadow: none;
+  
+              &:hover {
+                font-weight: bold;
+              }
+  
+              &:focus {
+                border: none;
+                font-weight: bold;
+                box-shadow: none;
+              }
+              .k-icon {
+                width: 28px;
+                height: 28px;
+                border: 1px solid $dark-green;
+                border-radius: 50%;
+              }
+            }
+          }
+  
+          .HintAnswer {
+            width: 100%;
+            align-items: center;
+            display: flex;
+            column-gap: 10px;
+            justify-content: space-around;
+            kendo-label {
+              display: block;
+              padding: 5px 0;
+              font-weight: 700;
+              color: $light-blue-gray;
+              font-size: 13px;
+            }
+  
+            #hintAnswer {
+              #editor{
+                #myeditor{
+                  height: 350px !important;
+                }
+              }
+            }
+          }
+  
+          .YesNoQuestion{
+            thead {
+              .headerAnswerGroup,
+              tr {
+                th:first-child {
+                  width: 80px;
+                  text-align: center;
+                }
+                
+                th:nth-child(2) {
+                  width: 100px;
+                  text-align: center;
+                }
+  
+                th:last-child{
+                  width: calc(100vw - 180px);
+                }
+  
+                .title {
+                  font-weight: 700;
+                  font-size: 13px;
+                  color: $light-blue-gray;
+                  padding-bottom: 9px;
+                }
+              }
+            }
+  
+            tbody{
+              tr {
+                padding: 5px 0;
+                .answer:first-child {
+                  width: 65px;
+                  text-align: center;
+                }
+  
+                .answer {
+                    kendo-numerictextbox {
+                      &:hover {
+                        box-shadow: 0 0 0 1px $dark-green;
+                      }
+                      input {
+                        text-align: center;
+                      }
+                    }
+                }
+  
+                .boxInput{
+                   text-align: center;
+                }
+  
+                .deteleAnswer{
+                  text-align: right;
+                  .k-button{
+                    color: $bad-red;
+                    filter: drop-shadow(0px 2px 4px #eb273a7a);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+  
+      .scope {
+        width: 100%;
+  
+        .title {
+          font-size: 16px;
+          font-weight: 700;
+          color: $gray-850;
+          margin: 0;
+          padding: 10px 0;
+        }
+  
+        .content {
+          padding: 18px 20px;
+          background-color: #ffffff;
+          min-height: 80px;
+          .checkbox-scope {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            row-gap: 13px;
+  
+            .checkeBox {
+              display: flex;
+              column-gap: 18px;
+              font-size: 13px;
+            }
+          }
+        }
+      }
+  
+      .CollabAbility {
+        .title {
+          font-size: 16px;
+          font-weight: 700;
+          color: $gray-850;
+          margin: 0;
+          padding: 10px 0;
+        }
+  
+        .content {
+          display: flex;
+          min-height: 150px;
+          background-color: $white;
+          padding: 18px 20px;
+          column-gap: 100px;
+          flex-wrap: wrap;
+  
+          .Level-wrapper {
+            .LevelLabel {
+              display: flex;
+              flex-direction: column;
+              color: $light-blue-gray;
+              font-size: 13px;
+              color: #959db3;
+              display: block;
+  
+              span {
+                font-weight: 700;
+              }
+            }
+
+            .dropdownlistCustom{
+              min-width: 280PX;
+            }
+          }
+  
+          .Competence-wrapper {
+            margin-top: 27px;
+            .CompetenceWrap {
+              display: flex;
+              align-items: center;
+              .searhcInput {
+                position: relative;
+  
+                kendo-combobox {
+                  min-width: 252px;
+                  .k-dropdown-wrap {
+                    .k-searchbar {
+                      &::before {
+                        content: "";
+                        width: 30px;
+                        background-image: url(../../../../../assets/img/icon/icon_search.svg);
+                        background-repeat: no-repeat;
+                        background-position: center;
+                      }
+                    }
+  
+                    .k-select {
+                      display: none;
+                    }
+                  }
+  
+                  .k-animation-container-shown {
+                    .k-popup {
+                      kendo-list {
+                        .k-state-selected,
+                        .k-state-focused {
+                          background-color: transparent;
+                          box-shadow: none;
+                        }
+                        .k-list-scroller {
+                          .k-list {
+                            padding: 5px;
+                            .k-state-disabled {
+                              opacity: 1;
+                              filter: none;
+                              font-weight: 700;
+                              font-size: 13px;
+                              color: $gray-850;
+                            }
+                            .k-item {
+                              display: block;
+                              padding: 0;
+                              &:hover {
+                                background-color: #d9d9d94d;
+                                color: $gray-850;
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+  
+                  .comboxClass{
+                    min-width: 252px;
+                  }
+                }
+  
+                kendo-dropdownlist {
+                  .k-dropdown-wrap {
+                    .k-select {
+                      visibility: hidden;
+                    }
+                  }
+                }
+              }
+            }
+          }
+  
+          .result {
+            margin: 10px 0;
+            display: flex;
+  
+            .k-button {
+              background-color: transparent;
+              border: none;
+              color: $bad-red;
+              margin-left: 0;
+              filter: drop-shadow(0px 2px 4px #eb273a7a);
+              box-shadow: none;
+              &:focus {
+                box-shadow: none !important;
+              }
+            }
+  
+            .contentResult{
+              padding: 6px 0px 0 6px; 
+              display: flex;
+  
+              .parent{
+                display: flex; 
+                align-items: center;
+  
+                .sttParent{
+                  font-weight: 700; width: 18px;
+                }
+  
+                .contentParent{
+                  font-weight: 700;
+                }
+              }
+  
+              .child{
+                margin: 0;
+                .content{
+                  display: flex; align-items: center;
+                }
+              }
+            }
+  
+          }
+        }
+      }
+      
+      .reviewQuestion{
+        .title {
+          font-size: 16px;
+          font-weight: 700;
+          color: $gray-850;
+          margin: 0;
+          padding: 10px 0;
+          text-transform: uppercase;
+        }
+        .question-list-wrapper {
+          .question-item-container {
+            .question-index {
+              display: flex;
+              .index-text {
+                background: #fff;
+                border-top: 1px solid rgba(149, 157, 179, 0.3);
+                border-right: 1px solid rgba(149, 157, 179, 0.3);
+                border-left: 1px solid rgba(149, 157, 179, 0.3);
+                width: fit-content;
+                min-width: 57px;
+                color: #5a6276;
+                text-align: center;
+                align-self: flex-end;
+                padding: 4px;
+              }
+      
+              .answered-question-wrapper {
+                display: flex;
+                align-items: center;
+                padding-left: 7px;
+      
+                .answered-quantity {
+                  color: #c0392b;
+                  font-size: 13px;
+                  font-weight: 700;
+                }
+                .total-question {
+                  color: #1a6634;
+                  font-size: 13px;
+                  font-weight: 700;
+                }
+              }
+            }
+      
+            .question-info {
+              background-color: white;
+              display: flex;
+              flex-direction: column;
+              padding: 13px 9px;
+              background: #fff;
+              // box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
+              border: 1px solid transparent;
+              // border-bottom: 1px solid rgba(149, 157, 179, 0.3);
+              // border-right: 1px solid rgba(149, 157, 179, 0.3);
+              // border-left: 1px solid rgba(149, 157, 179, 0.3);
+              .title {
+                color: #26282e;
+                font-size: 13px;
+                font-weight: 700;
+              }
+      
+              .answer-list {
+                .answer-item {
+                  display: flex;
+                  align-items: center;
+                  margin-top: 10px;
+                  position: relative;
+      
+                  .checkbox-icon {
+                    border: unset;
+                    background-color: unset;
+                    box-shadow: none;
+                    height: 10px;
+                    position: absolute;
+                  }
+      
+                  .selection-wrapper {
+                    padding-left: 30px;
+                  }
+      
+                  .answer-name {
+                    margin-left: 12px;
+                  }
+      
+                  .essay-answer-input {
+                    width: 100%;
+      
+                    .k-textarea {
+                      height: 130px;
+                      width: 100%;
+                      .k-input-inner {
+                        &::placeholder {
+                          color: $light-blue-gray;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      kendo-dropdownlist {
+        .k-animation-container {
+          .k-list-optionlabel {
+            display: none;
+          }
+        }
+      }
+  
+      ::-webkit-scrollbar {
+        width: 6px !important;
+      }
+    }
+  }
+
+  body .Bps .k-numerictextbox input {
+    text-align: left;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  textarea {
+    &:focus {
+      box-shadow: 0 0 0 1px $dark-green;
+    }
+    &:hover {
+      box-shadow: 0 0 0 1px $dark-green;
+    }
+  }
+  body .Bps .k-textbox {
+    box-shadow: 0 0 0 1px $gray-200;
+    &:hover {
+      box-shadow: 0 0 0 1px $dark-green;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 1px $dark-green;
+    }
+    // box-shadow: 0 0 0 1px #1a6634;
+
+    input {
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  }
+  .k-numerictextbox .k-state-focused {
+    box-shadow: 0 0 0 1px $dark-green !important;
+  }
+
+  .Bps .k-textbox.k-state-focused {
+    border-color: $dark-green !important;
+  }
+
+  .k-dropdown {
+    .k-dropdown-wrap {
+      .k-select {
+        color: $light-blue-gray;
+      }
+    }
+  }
+  .wrapper-dialog {
+    .k-dialog {
+      .k-dialog-titlebar {
+        display: flex;
+        align-items: center;
+        background-color: $white;
+        color: #fd7676;
+
+        .k-dialog-title {
+          justify-content: center;
+          align-items: center;
+          .title-delete{
+            column-gap: 10px;
+            .k-button {
+              background-color: white;
+              padding: 0;
+              background-image: none;
+              width: fit-content;
+              height: fit-content;
+              border: none;
+            }
+          }
+        }
+        .k-dialog-titlebar-actions {
+          display: none;
+        }
+      }
+
+      .k-dialog-content {
+        text-align: center;
+        padding: 0;
+
+        .body_dialog {
+          width: 100%;
+          position: absolute;
+          top: 34%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          padding: 10px;
+          .content-primary {
+            p {
+              margin: 0;
+              font-size: 16px;
+              font-weight: 700;
+            }
+            strong {
+              color: $primary;
+              font-size: 16px;
+              font-weight: 700;
+            }
+          }
+          .content-sub {
+            margin: 16px 0 0 0;
+          }
+        }
+      }
+
+      .k-dialog-actions {
+        display: flex;
+        width: 100%;
+        padding: 0;
+        column-gap: 0;
+        position: absolute;
+        bottom: 0;
+        .delete{
+          background: #FD7676;
+          color: #fff;
+        }
+        .cancel{
+          background: $white;
+          color: #959DB3;
+        }
+        button {
+          width: 50%;
+          height: 53px;
+          border-radius: 0;
+          font-weight: 700;
+          
+          .k-button-icon {
+            width: 20px;
+            img {
+              width: 20px;
+            }
+          }
+        }
+      }
+    }
+    //End: dialog
+    
+  }
+
+  //#endregion
+}

@@ -1,0 +1,47 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="app-menu-portal">
+    <kendo-drawer-container>
+        <kendo-drawer #drawerPortal [items]="allowedListMenu" mode="push" [mini]="true" [width]="220"
+            [(expanded)]="expanded" [autoCollapse]="autoCollapse" (expandedChange)="onExpandChange($event)">
+            <ng-template kendoDrawerHeaderTemplate>
+                <div class="main" kendoTooltip>
+                    <div class="info d-flex align-items-center">
+                        <div class="avt" [ngClass]="{'avtExp': expanded == false}">
+                            <img loading="lazy" class="rounded-circle"
+                                [ngStyle]="{ width: expanded ? '35px' : '30px', height: expanded ? '35px' : '30px' }"
+                                *ngIf="InfoUser" title="{{InfoUser?.FullName}}"
+                                [src]="!!(InfoUser?.ImageThumb) ? InfoUser?.ImageThumb : '../../../../../assets/img/logo/HachiHachiLogo1.svg'" alt="avt">
+                        </div>
+                        <div class="UserInfo" *ngIf="expanded">
+                            <span class="fullname">Chào bạn,</span>
+                            <div class="d-flex align-items-center">
+                                <span class="font-weight-bold fullname" *ngIf="InfoUser?.FullName"
+                                    title="{{InfoUser?.FullName}}">{{InfoUser?.FullName}}</span>
+                                <kendo-dropdownbutton [data]="dataDropdownbutton" [disabled]="popupDisable"
+                                    (itemClick)="selectionChangeUser($event)" class="btnChevronDown"
+                                    iconClass="k-icon k-i-arrow-chevron-down"
+                                    [popupSettings]="{ popupClass: 'dropDownUser', animate: true,appendTo: 'component',align:'right' }">
+                                    <ng-template kendoDropDownButtonItemTemplate let-dataItem>
+                                        <kendo-icon name="{{dataItem?.icon}}"></kendo-icon>
+                                        <span>{{ dataItem?.text }}</span>
+                                    </ng-template>
+                                </kendo-dropdownbutton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template kendoDrawerItemTemplate let-item>
+                <div [ngClass]="{'footerMenu': item.Code === 'portal002-news-list'}" (click)="onClickMenu(item)"
+                    kendoTooltip [position]="'right'" class="pl-2 bodyMenu d-flex align-items-center">
+                    <fa-icon [icon]="['fas', item.Icon]" *ngIf="item.Icon != null && item.Icon != ''"></fa-icon>
+                    <span *ngIf="expanded" class="pl-2" title="{{ item.Name }}">{{ item.Name }}</span>
+                </div>
+            </ng-template>
+        </kendo-drawer>
+
+
+    </kendo-drawer-container>
+</div>
+<p-changepassword-popup></p-changepassword-popup>

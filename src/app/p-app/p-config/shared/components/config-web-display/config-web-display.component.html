@@ -1,0 +1,96 @@
+<div class="config-web-display">
+    <div class="section">
+        <div class="title">THUỘC TÍNH HIỂN THỊ WEBSITE</div>
+        <div class="section-grid">
+          <!-- col 1 -->
+          <div class="column_1">
+          <div class="grid-item item1">
+                <div class="label">Tên hiển thị trên website</div>
+                <app-p-textbox [propName]="'WebName'" (blur)="onTextboxLoseFocus('WebName')" [disabled]="disable" [(ngModel)]="product.WebName"></app-p-textbox >
+          </div>
+          <!-- <div class="grid-item item2">
+            <div class="label">Tên hiển thị trên website</div>
+            <app-p-textbox [propName]=""  [disabled]="disable"></app-p-textbox [propName]="">
+          </div>
+          <div class="grid-item item3">
+            <div class="label">Tên hiển thị trên website</div>
+            <app-p-textbox [propName]=""  [disabled]="disable"></app-p-textbox [propName]="">
+          </div>
+          <div class="grid-item item4">
+            <div class="label">Tên hiển thị trên website</div>
+            <app-p-textbox [propName]=""  [disabled]="disable"></app-p-textbox [propName]="">
+          </div> -->
+          <div class="grid-item item5">
+            <div class="label">03 điểm nổi bật của sản phẩm</div>
+            <app-p-textbox [propName]="" (blur)="onTextboxLoseFocus('WebBrief1')" [disabled]="disable" [(ngModel)]="product.WebBrief1"></app-p-textbox >
+            <app-p-textbox [propName]="" (blur)="onTextboxLoseFocus('WebBrief2')" [disabled]="disable" [(ngModel)]="product.WebBrief2"></app-p-textbox >
+            <app-p-textbox [propName]="" (blur)="onTextboxLoseFocus('WebBrief3')" [disabled]="disable" [(ngModel)]="product.WebBrief3"></app-p-textbox >
+          </div>
+        </div>
+        <div class="column_2">
+          <!--col 2-->
+          <div class="grid-item item1">
+                <div class="label">Hướng dẫn bảo quản</div>
+               <app-p-textarea propName="text" (blur)="onTextboxLoseFocus('WebIntroVN')" [disabled]="disable" [(ngModel)]="product.WebIntroVN"></app-p-textarea>
+        </div>
+        <div class="grid-item item2">
+            <div class="label">Hướng dẫn sử dụng</div>
+           <app-p-textarea propName="text" (blur)="onTextboxLoseFocus('WebUsesVN')"  [disabled]="disable"  [(ngModel)]="product.WebUsesVN"></app-p-textarea>
+        </div>
+        <div class="grid-item item3">
+            <div class="label">Hashtag</div>
+            <kendo-multiselect [disabled]="disable" class="mapping-multiselect" [(ngModel)]="listSelectedHashtag"
+            [data]="listFilterHashtag" textField="TagName" valueField="Code" 
+            (blur)="onTextboxLoseFocus('ListTag')" [filterable]="true" #multiSelect [loading]="loading"
+            [popupSettings]="{  appendTo: 'component'  }">
+
+            <ng-template kendoMultiSelectTagTemplate let-dataItem>
+              <span class="ngModel">{{ dataItem.TagCode }} | {{ dataItem.TagName }}</span>
+            </ng-template>
+
+            <ng-template kendoMultiSelectItemTemplate let-dataItem>
+              <span class="ngModel">
+                {{ dataItem.TagCode }} | {{ dataItem.TagName }}
+              </span>
+            </ng-template>
+          </kendo-multiselect>
+        </div>
+        <div class="grid-item item4">
+            <div class="label">Lưu ý khác</div>
+           <app-p-textbox [propName]="" (blur)="onTextboxLoseFocus('WebRemark')" [disabled]="disable" [(ngModel)]="product.WebRemark"></app-p-textbox >
+        </div>
+    </div>
+  
+
+        <div class="column_3">
+          <!-- col 3 -->
+          <div class="grid-item item1">
+            <div class="label">Ngày sản xuất hiển thị website</div>
+           <app-p-textbox [propName]="" (blur)="onTextboxLoseFocus('WebLotDate')" [(ngModel)]="product.WebLotDate"  [disabled]="disable" ></app-p-textbox >
+        </div>
+        <div class="grid-item item2">
+          <div class="label">Số ngày sử dụng kể từ NSX</div>
+          <app-p-textbox [propName]="" (blur)="onTextboxLoseFocus('WebExpiredDate')" [(ngModel)]="product.WebExpiredDate"  [disabled]="disable" ></app-p-textbox >
+      </div>
+        <div class="grid-item item2">
+            <div class="label">Nhà sản xuất hiển thị website</div>
+           <app-p-textbox [propName]="" (blur)="onTextboxLoseFocus('WebManufacturer')" [(ngModel)]="product.WebManufacturer"  [disabled]="disable"></app-p-textbox >
+        </div>
+        <div class="grid-item item3">
+            <div class="label">Nhà phân phối hiển thị website</div>
+           <app-p-textbox [propName]=""  (blur)="onTextboxLoseFocus('WebDistributor')" [(ngModel)]="product.WebDistributor"  [disabled]="disable"></app-p-textbox >
+        </div>
+        <div class="grid-item item4">
+            <div class="label">Nhà nhập khẩu hiển thị website</div>
+           <app-p-textbox [propName]="" (blur)="onTextboxLoseFocus('WebImporter')" [(ngModel)]="product.WebImporter"  [disabled]="disable"></app-p-textbox >
+        </div>
+        <div class="grid-item iten-link">
+            <div class="label">Đường link trên web</div>
+            <span>{{product.Alias}}</span>
+        </div>
+        </div>
+
+
+        </div>
+      </div>
+  </div>

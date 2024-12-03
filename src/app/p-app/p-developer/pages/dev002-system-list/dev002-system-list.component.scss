@@ -1,0 +1,1093 @@
+@import "../../../../../assets/scss/variable.scss";
+
+
+::ng-deep {
+  app-dev002-system-list {
+    $primaryERP-color: rgba(26, 102, 52);
+    $primaryErp-selected-color: rgba(26, 102, 52, 0.8);
+    $primaryErp-hover-color: rgba(26, 102, 52, 0.4);
+    $primaryText: #5a6276;
+    $icon-color: #959db3;
+    $dark-grey: #26282e;
+    $bluish-gray: #bdc2d2;
+    $deep-green: #1a6634;
+    $filter-deep-green: brightness(0) saturate(100%) invert(65%) sepia(100%) saturate(5100%) hue-rotate(113deg) brightness(56%) contrast(110%);
+
+    .app-drawer-container {
+
+      .mat-drawer-container {
+
+
+
+        // START DRAWER 
+        .mat-drawer {
+          padding: 0 !important;
+          overflow: hidden;
+
+          .title-formSystem {
+            padding: 10px !important;
+            height: 40px;
+          }
+
+          .container-form {
+            height: calc(100vh - 180px);
+            overflow-y: auto;
+            overflow-x: hidden;
+            margin-bottom: 14px;
+            padding: 0 10px;
+
+            .customLabel {
+
+              .lable {
+                margin-bottom: 5px;
+                display: flex;
+                justify-content: space-between;
+
+                .labelName {
+                  font-weight: 700;
+                  color: #343A40;
+
+                  .symbol {
+                    padding-left: 5px;
+                    color: $dark-red;
+                    font-weight: bold;
+                  }
+
+                  .line {
+                    font-size: 17px;
+                  }
+
+                  .codeCompany {
+                    color: #1A6634;
+                    font-weight: 700;
+                  }
+
+
+
+                }
+
+                .labelisVisible {
+                  .isVisible {
+                    font-weight: 700;
+                    color: #343A40;
+                  }
+
+                  .k-checkbox {
+                    margin-right: 0px;
+                    margin-left: 5px;
+                    margin-top: 1px;
+                  }
+                }
+              }
+
+
+
+
+              .k-dropdowntree {
+                .k-clear-value {
+                  display: none;
+                }
+
+                .nullItem {
+                  font-style: italic;
+                  font-size: 10px;
+                  font-weight: normal;
+
+                  i {
+                    display: none;
+                  }
+
+                  .k-i-arrow-chevron-up,
+                  img {
+                    display: none;
+                  }
+                }
+              }
+
+
+              app-p-textarea {
+                .customized-textarea {
+                  height: 230px !important;
+                  // min-height: 64px !important;
+                  padding: 0;
+
+                }
+
+              }
+
+              .ModuleID,
+              .ImageSetting {
+                .k-textbox {
+                  width: 40%;
+                }
+              }
+
+              .bothInputTx {
+                display: flex;
+                align-items: center;
+
+                .funcDetail {
+                  color: #31ADFF;
+                  font-size: 13px;
+                  font-style: italic;
+                  font-weight: 400;
+                  padding-left: 10px;
+                  cursor: pointer;
+
+                }
+
+                .TypeData {
+                  .k-numerictextbox {
+                    width: 93.6%;
+
+                    .k-input-inner {
+                      text-align: left;
+                    }
+                  }
+                }
+              }
+
+
+
+
+              .OrderBy {
+                .k-numerictextbox {
+                  width: 40%;
+
+                  .k-input-inner {
+                    text-align: left;
+                  }
+                }
+              }
+
+            }
+
+
+
+          }
+
+          .footer-formSystem {
+            display: flex;
+            align-items: center;
+            column-gap: 10px;
+            height: 36px;
+            background-color: #ffffff;
+            padding: 0 10px;
+          }
+
+          .formSystem {
+            padding: 0 !important;
+
+            // height: 100%;
+            .formFieldset {
+              padding: 0 !important;
+              margin: 0 !important;
+              height: 100%;
+
+            }
+
+            .productID_img {
+              // padding-top: 10px;
+              justify-content: space-between;
+
+              .img {
+                width: 130px;
+                flex-shrink: 0;
+
+                img {
+                  width: 100%;
+                }
+              }
+            }
+
+
+
+
+            .formfield-grid {
+              display: grid;
+              grid-template-columns: 33% 33%;
+              column-gap: 29px;
+
+              .item1 {
+                grid-row: 1;
+                grid-column: 1 / span 2;
+              }
+
+              .item4 {
+                .k-label {
+                  white-space: nowrap;
+
+                  +i {
+                    white-space: nowrap;
+                  }
+                }
+
+                .k-numerictextbox::after {
+                  content: "-";
+                  position: absolute;
+                  right: -15px;
+                  top: 5px;
+                  height: 100%;
+                }
+              }
+
+              .item2,
+              .item6 {
+                .k-label {
+                  white-space: nowrap;
+                }
+              }
+
+              .item7 {
+                .k-textbox {
+                  font-weight: 700;
+                  color: $worse-red;
+                  text-decoration: line-through;
+                }
+              }
+
+              .item8,
+              .item9 {
+                .k-textbox .k-input {
+                  text-align: right;
+                }
+              }
+
+              .item8 {
+                .k-textbox::after {
+                  content: "-";
+                  position: absolute;
+                  right: -15px;
+                  top: 5px;
+                  height: 100%;
+                }
+              }
+            }
+          }
+
+
+        }
+
+        // END DRAWER
+
+
+
+
+        // START MAIN CONTENT
+        .mat-drawer-content {
+          height: 100%;
+          padding: 0 15px 35px 20px;
+
+          .app-developer002-system-list {
+
+
+            // START HEADER
+            .header {
+              overflow-x: scroll;
+
+              app-p-kendo-breadcrumb {
+                min-width: 250px;
+                margin-top: 4px;
+              }
+
+              .nav-crud {
+                margin-left: auto;
+                margin-top: auto;
+
+                .onAddBtn {
+                  height: 32px;
+                  margin-top: auto;
+                  background-color: $deep-green !important;
+                  color: white;
+                  font-size: 11px;
+                  font-weight: bold;
+                }
+
+
+              }
+
+
+              &.header-1 {
+                min-height: 54.36px;
+                padding: 9px 0 6px 0px;
+              }
+            }
+
+            // END HEADER
+
+
+            // START TREE LIST SYSTEM
+            .treelist-wrapper {
+              margin-top: 8px;
+
+              .k-treelist.k-grid {
+                // background-color: #edeff3 !important;
+                border-width: unset !important;
+                border-style: unset !important;
+
+                .k-grid-aria-root {
+                  height: calc(100vh - 170px);
+                }
+
+                // .k-grid-container {
+                //   // max-height: calc(100vh - 170px);
+                // }
+
+                .k-grid-content {
+                  overflow-x: hidden !important;
+                  background-color: unset;
+                  margin-bottom: 57px;
+
+                }
+
+                .child-text {
+                  margin-left: 20px;
+                }
+
+
+
+
+
+
+
+
+                tr.k-alt {
+                  background-color: white;
+                }
+
+                //selected item
+                tr.k-selected {
+                  background-color: rgba(26, 102, 52, 1) !important;
+                  position: relative !important;
+
+                  .text-name,
+                  .text-id {
+                    color: white;
+                  }
+
+                  img[src*="icon"] {
+                    filter: brightness(0) saturate(100%) //chuyển thành màu đen
+                      invert(100%) sepia(91%) saturate(0%) hue-rotate(320deg) brightness(103%) contrast(105%); //đổi màu;
+                  }
+                }
+
+                tr.k-selected>td {
+                  background-color: unset;
+                }
+
+                tr {
+                  background-color: white !important;
+                  border-top: 4px solid #edeff3 !important;
+                  border-bottom: 4px solid #edeff3 !important;
+                  position: relative !important;
+                  height: 58px;
+
+                  &:hover {
+                    background-color: rgba(26, 102, 52, 0.33) !important;
+                  }
+
+                  td {
+                    &:first-child .k-icon {
+                      padding-left: 23px;
+                      height: 32px;
+                      width: 32px;
+
+                      &[class*="caret"]:hover {
+                        cursor: pointer;
+                      }
+                    }
+
+
+                    .colNameTree {
+                      display: flex;
+
+                      .italics {
+                        font-style: italic;
+                      }
+
+                      .text-name {
+                        width: 450px;
+                        padding-right: 80px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+
+                      }
+
+                      &.colNameTreeBold {
+                        .text-name {
+                          font-weight: 700;
+                          width: 450px;
+                          padding-right: 80px;
+                          white-space: nowrap;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+
+                        }
+                      }
+                    }
+
+
+                    // Column 2: Button action
+                    &:last-child {
+                      padding: 9px;
+
+                      .togglePopup {
+                        &.k-focus.opendPopup {
+                          background-color: #bdc2d2 !important;
+                          border-radius: 0px 2px 2px 0px;
+
+                          .k-button-icon {
+                            color: white;
+                          }
+                        }
+
+
+                      }
+
+                    }
+
+
+
+                  }
+                }
+
+
+
+                .k-grid-table {
+                  border-collapse: collapse !important;
+                  border-color: unset !important;
+                  border-block-end-width: unset !important;
+                  border-inline-start-width: unset !important;
+                  border-style: unset !important;
+                  padding-inline: unset;
+                  padding-block: unset;
+                  height: 58px;
+                  width: 100%;
+
+                  &:last-child {
+                    border-left: 1px solid #edeff3 !important;
+                    text-align: center;
+                    height: 58px;
+                  }
+
+                  .box-icon {
+                    cursor: pointer;
+                    height: 24px;
+                    text-align: center;
+                  }
+                }
+
+                .k-text-nowrap {
+                  display: flex;
+                  align-items: center;
+                  height: 100%;
+                }
+
+                .k-icon {
+                  height: 100%;
+                }
+
+                .colName-icon {
+                  padding-left: 17px;
+                  padding-right: 9px;
+                }
+
+
+                .text-name {
+                  color: #5a6276;
+                  font-weight: 400;
+                  margin-top: unset;
+                  margin-bottom: unset;
+
+                  &.parent {
+                    font-weight: 700;
+                  }
+                }
+
+                .text-id {
+                  color: #26282e;
+                  font-weight: 400;
+                  width: 147px;
+                  margin-top: unset;
+                  margin-bottom: unset;
+                }
+              }
+            }
+
+            // END TREE LIST SYSTEM 
+          }
+
+        }
+
+
+        .wrapper-dialog {
+          z-index: 10050;
+
+          .k-dialog {
+            .k-dialog-titlebar {
+              display: flex;
+              align-items: center;
+              background-color: $white;
+              color: #fd7676;
+
+              .k-dialog-title {
+                justify-content: center;
+                align-items: center;
+
+                .title-delete {
+
+                  .uppercaseChar {
+                    text-transform: uppercase;
+                  }
+
+                  column-gap: 10px;
+
+                  span {
+                    font-weight: 700;
+                  }
+
+                  .k-button {
+                    background-color: white;
+                    padding: 0;
+                    background-image: none;
+                    width: fit-content;
+                    height: fit-content;
+                    border: none;
+                  }
+                }
+              }
+
+              .k-dialog-titlebar-actions {
+                display: none;
+              }
+            }
+
+            .k-dialog-content {
+              text-align: center;
+              padding: 8px 12px;
+
+              .body_dialog {
+                width: 100%;
+                position: absolute;
+                top: 34%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                padding: 10px;
+
+                .content-primary {
+                  p {
+                    margin: 0;
+                    font-size: 16px;
+                    font-weight: 700;
+                  }
+
+                  strong {
+                    color: $primary;
+                    font-size: 16px;
+                    font-weight: 700;
+                  }
+                }
+
+                .content-sub {
+                  margin: 16px 0 0 0;
+                }
+              }
+
+
+            }
+
+            .k-dialog-actions {
+              display: flex;
+              width: 100%;
+              padding: 0;
+              column-gap: 0;
+              position: absolute;
+              bottom: 0;
+
+              .delete {
+                background: #FD7676;
+                color: #fff;
+              }
+
+              .cancel {
+                background: $white;
+                color: #959DB3;
+              }
+
+              button {
+                width: 50%;
+                height: 53px;
+                border-radius: 0;
+                font-weight: 700;
+
+                .k-button-icon {
+                  width: 20px;
+
+                  img {
+                    width: 20px;
+                  }
+                }
+              }
+            }
+          }
+
+          //End: dialog
+
+        }
+
+        // END MAIN CONTENT
+
+      }
+
+
+      // START DIALOG DELETE OBJECT IN TREE
+      app-p-kendo-dialog {
+        .confirm {
+          .k-dialog {
+            .k-dialog-titlebar {
+              .k-dialog-title {
+                .titleCustom {
+                  display: flex;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      // END DIALOG DELETE OBJECT IN TREE
+
+
+      //  START POPUP ACTION MORE  
+      .stylePopup {
+        .k-popup {
+          width: 210px;
+          display: flex;
+          flex-direction: column;
+          margin: 0;
+          padding: 0px 0px;
+          font-size: 14px;
+
+          .popup-item {
+            color: #ffffff;
+            background-color: #bdc2d2;
+            padding: 6px 6px !important;
+            padding-right: 10px !important;
+            display: flex;
+            align-items: center;
+
+            span {
+              padding: 3px 5px !important;
+            }
+
+            &:hover {
+              cursor: pointer;
+              background-color: #5c6873;
+            }
+          }
+        }
+      }
+
+      // END POPUP ACTION MORE
+
+
+      // START DIALOG FUNCTION DATA DETAIL
+      .dialogFuncDetail {
+        .k-dialog-titlebar {
+          background-color: $dark-green !important;
+
+          .k-dialog-title {
+            text-align: center;
+            justify-content: center;
+
+          }
+        }
+
+
+        .k-dialog-content {
+          overflow: hidden;
+
+          .body_dialog {
+
+            .info {
+              margin-bottom: 5px;
+              margin-top: 5px;
+              font-size: 13px;
+              font-style: normal;
+              font-weight: 700;
+
+              .title {
+                display: block;
+                color: #959DB3;
+
+              }
+
+              .breadcumb {
+                color: #26282E;
+                padding-left: 10px;
+              }
+            }
+
+            .detailFun {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+
+              .title {
+                color: #5A6276;
+                font-size: 13px;
+                font-style: normal;
+                font-weight: 700;
+              }
+
+              .onAddBtn {
+
+                box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+              }
+            }
+
+
+            //grid
+            .grid-popup {
+              margin-top: 10px;
+
+              .scrollable {
+                .myCustomGrid {
+                  .k-grid-aria-root {
+                    overflow-y: scroll;
+                    overflow-x: hidden;
+
+                  }
+                }
+              }
+
+              .grid {
+                .myCustomGrid {
+                  .k-grid-aria-root {
+                    background: white;
+
+                    .k-table {
+                      .k-grid-header {
+                        display: none;
+                      }
+
+                      min-width: 0px !important;
+
+                      .k-table-tbody {
+                        .k-table-row {
+
+
+                          &:hover {
+                            background-color: white;
+                          }
+
+                          td {
+                            padding: 0;
+                            padding-bottom: 5px;
+
+                            .rowInforDetail {
+
+                              height: 54px;
+                              background-color: #EDEFF3;
+                              padding: 8px 12px;
+                              display: flex;
+                              align-items: center;
+                              justify-content: space-between;
+
+                              .leftRow {
+                                display: flex;
+                                align-items: center;
+
+                                .k-i-arrow-chevron-down,
+                                .k-i-arrow-chevron-up {
+                                  margin-right: 12px;
+                                  cursor: pointer;
+                                }
+
+                                .inforFuncDetail {
+                                  display: flex;
+                                  align-items: center;
+
+
+                                  .nameFuncDetail {
+                                    margin-right: 15px;
+
+                                    .k-textbox {
+                                      width: 350px;
+                                    }
+                                  }
+
+                                  .codeFuncDetail {
+                                    .k-textbox {
+                                      width: 60px;
+                                    }
+
+                                  }
+
+
+                                  // 
+                                  .nameFuncDetail,
+                                  .codeFuncDetail {
+
+                                    .k-textbox {
+                                      box-shadow: none;
+                                      border: none;
+                                      background-color: transparent;
+
+                                      .k-input-inner {
+                                        &:focus {
+                                          box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+                                          border: rgba(0, 0, 0, 0.08);
+                                          background-color: #ffffff;
+                                        }
+                                      }
+
+                                      &:focus {
+                                        box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+                                        border: rgba(0, 0, 0, 0.08);
+                                        background-color: #ffffff;
+                                      }
+                                    }
+
+
+                                  }
+
+                                }
+                              }
+
+                              .rightRow {
+                                cursor: pointer;
+
+                                &:hover {
+                                  outline: 1px solid red;
+                                }
+
+                                .k-i-trash {
+                                  color: #EB273A;
+                                  margin: 4px;
+                                  padding-left: 1px;
+                                }
+                              }
+
+                            }
+
+                            .expandDetail {
+                              box-shadow: 1px 2px 7px 1px rgba(143, 155, 166, 0.2);
+                              padding: 8px 15px;
+
+                              .desDetail {
+                                .lable {
+                                  margin-bottom: 5px;
+                                  font-weight: 700;
+                                  display: block;
+                                }
+
+                                // .k-textbox {
+                                //   width: 530px;
+                                //   box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+                                //   border: rgba(0, 0, 0, 0.08);
+                                //   background-color: #ffffff;
+
+                                //   &:read-only {
+                                //     box-shadow: none;
+                                //     border: none;
+                                //     background-color: transparent;
+                                //   }
+                                // }
+
+                                .k-textbox {
+                                  width: 530px;
+                                  box-shadow: none;
+                                  border: none;
+                                  background-color: transparent;
+
+                                  .k-input-inner {
+                                    &:focus {
+                                      box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+                                      border: rgba(0, 0, 0, 0.08);
+                                      background-color: #ffffff;
+                                    }
+                                  }
+
+                                  &:focus {
+                                    box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+                                    border: rgba(0, 0, 0, 0.08);
+                                    background-color: #ffffff;
+                                  }
+
+                                  &.k-disabled {
+                                    opacity: 1;
+                                    background-color: #fafafa;
+                                    cursor: not-allowed;
+                                  }
+                                }
+                              }
+
+                              .cofDetail {
+                                margin-top: 10px;
+
+                                .lable {
+                                  margin-bottom: 5px;
+                                  font-weight: 700;
+                                  display: block;
+                                }
+
+
+                                .k-textarea {
+                                  height: 68px;
+                                  width: 530px;
+                                  box-shadow: none;
+                                  border: none;
+                                  background-color: transparent;
+
+                                  &:hover {
+                                    outline: 1px solid #316e00;
+                                  }
+
+                                  textarea {
+                                    resize: none;
+
+                                    &:read-only {
+                                      opacity: 1;
+                                      background-color: #ffffff;
+                                      cursor: text;
+                                    }
+
+                                  }
+
+                                  &:read-only {
+                                    opacity: 1;
+                                    background-color: #ffffff;
+                                    cursor: text;
+                                  }
+
+                                  &.k-disabled {
+                                    opacity: 1;
+                                    background-color: #fafafa;
+                                    cursor: not-allowed;
+
+                                    textarea {
+                                      background-color: #fafafa;
+                                    }
+                                  }
+
+                                  .k-input-inner {
+                                    &:focus {
+                                      box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+                                      border: rgba(0, 0, 0, 0.08);
+                                      background-color: #ffffff;
+                                    }
+                                  }
+
+                                  &:focus {
+                                    box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+                                    border: rgba(0, 0, 0, 0.08);
+                                    background-color: #ffffff;
+                                  }
+
+                                }
+
+                              }
+
+                              .typeOrder {
+                                margin-top: 10px;
+                                display: flex;
+
+                                .mr_20 {
+                                  margin-right: 40px;
+
+                                  .lable {
+                                    .symbol {
+                                      padding-left: 5px;
+                                      color: $dark-red;
+                                      font-weight: bold;
+                                    }
+                                  }
+                                }
+
+                                .lable {
+                                  font-weight: 700;
+                                }
+
+                                .type {
+                                  padding-top: 8px;
+                                  text-align: center;
+
+
+                                  .k-numerictextbox {
+                                    width: 60px;
+                                    box-shadow: none;
+                                    border: none;
+                                    background-color: transparent;
+
+                                    .k-input-inner {
+                                      text-align: center;
+                                    }
+
+                                    input::-webkit-outer-spin-button,
+                                    input::-webkit-inner-spin-button {
+                                      -webkit-appearance: none;
+                                      margin: 0;
+                                    }
+                                  }
+
+                                  .k-focus {
+                                    box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+                                    border: rgba(0, 0, 0, 0.08);
+                                    background-color: #ffffff;
+                                  }
+                                }
+
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+
+
+            }
+          }
+
+          app-p-kendo-dialog {
+            .confirm {
+              .k-dialog {
+                .k-dialog-titlebar {
+                  background-color: #d82c12 !important;
+
+                  .k-dialog-title {
+                    .titleCustom {
+                      display: flex;
+                    }
+                  }
+                }
+
+                .k-action-custom {
+                  .btn-action {
+                    background-color: #d82c12;
+                  }
+                }
+              }
+            }
+          }
+
+        }
+      }
+
+      // END DIALOG FUNCTION DATA DETAIL
+
+    }
+
+
+
+    // .CustomBoxShadown {
+    //   box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2) !important;
+    // }
+
+
+  }
+}

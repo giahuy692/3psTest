@@ -1,0 +1,13 @@
+<kendo-breadcrumb
+    class="myCustomBreadCrumb"
+    [items]="items"
+    [collapseMode]="'none'"
+>
+<ng-template kendoBreadCrumbItemTemplate let-item let-index="index" >
+    <span 
+    (click)="onItemClick(item)" 
+    [ngClass]="{'clickable': isFirstItemClickable && index === 0, 'active': item.disabled, 'disabled': disabled}">
+    {{ item.text }}
+</span>
+</ng-template>
+</kendo-breadcrumb>

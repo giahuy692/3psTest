@@ -1,0 +1,121 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+  app-portal002-news-list {
+    .app-portal002-new-list {
+      //padding-left: 15px !important;
+      //padding-right: 15px !important;
+
+      .header-2 {
+        margin-left: 20px !important;
+        margin-right: 15px !important;
+      }
+
+      .main {
+        padding-top: 6px;
+        padding-bottom: 20px;
+        overflow-y: scroll;
+        height: calc(100vh - 130px);
+
+        .block-policy {
+          padding-top: 16px;
+          padding-left: 20px;
+          padding-right: 15px;
+
+          .title-block-policy {
+            color: #5A6276;
+            font-size: 13px;
+            font-weight: 700;
+          }
+
+          .content-policy-1 {
+            margin-top: 11px;
+            background-color: #FFF;
+            //min-height: 302px;
+            padding-top: 14px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 9px;
+
+            .content {
+              //background-color: black;
+
+              .title-policy {
+                .k-label {
+                  cursor: pointer;
+                  color: #31ADFF;
+                  font-size: 13px;
+                  font-weight: 700;
+                }
+
+              }
+
+              .text-policy {
+                //margin-top: 7px;
+                margin-bottom: 10px;
+
+                p {
+                  color: #26282E;
+                  font-size: 13px;
+                  font-weight: 400;
+                  margin-bottom: 0px;
+                }
+              }
+            }
+
+            .btnExpandCollapse {
+              cursor: pointer;
+              margin-top: 3px;
+              color: #31ADFF;
+              font-size: 13px;
+              font-style: italic;
+              font-weight: 400;
+            }
+          }
+        }
+
+      }
+
+      .no-articles-message {
+        position: relative;
+        left: 0;
+        text-align: center;
+        right: 0;
+        top: 50px;
+        color: #26282E;
+        font-size: 13px;
+        //font-weight: 700;
+      }
+    }
+
+    @media only screen and (max-width: 740px) {
+      .app-portal002-new-list {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+
+        .header-2 {
+          display: none;
+        }
+
+        .main {
+          height: calc(100vh - 56px);
+          padding-top: 12px;
+          padding-right: 15px;
+          padding-left: 20px;
+          padding-bottom: 100px;
+
+          .block-policy {
+            padding-top: 0px;
+            padding-right: 0px;
+            padding-left: 0px;
+            padding-bottom: 16px;
+          }
+        }
+
+        .no-articles-message {
+          top: 40px;
+        }
+      }
+    }
+  }
+}

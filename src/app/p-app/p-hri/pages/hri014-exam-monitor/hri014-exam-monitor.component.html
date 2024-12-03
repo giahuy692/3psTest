@@ -1,0 +1,10 @@
+<div class="exam-monitor-wrapper">
+    <div class="breadcrumbs-wrapper d-flex justify-content-between align-items-center">
+        <app-p-kendo-breadcrumb (loadData)="loadData()"></app-p-kendo-breadcrumb>
+        <kendo-button *ngIf="moduleName == 'hri'"  iconClass="k-icon k-i-undo" class="btn-hachi hachi-secondary" (click)="openDetail()">Quay về trang trước</kendo-button>
+    </div>
+
+    <div class="wrapper-monitor">
+        <app-hr-exam-detail [isPortal]="false" [justView]="true" [staffQuizInfo]="staffQuizInfo" ></app-hr-exam-detail>
+    </div>
+</div>

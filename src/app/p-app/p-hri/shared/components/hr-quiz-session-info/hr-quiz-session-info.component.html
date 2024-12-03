@@ -1,0 +1,197 @@
+<div id="evaluationSupervisionInfo" class="block-layout section">
+
+    <!-- TITTLE -->
+    <div class="title-block-wrapper">
+        <div class="group-action">
+            <h1 class="block-title">thông tin đợt đánh giá</h1>
+            <p class="see-quiz-session" (click)="openDetail('detail')" *ngIf="!(step == 1) && canSetting && isLeader">
+                Xem thiết lập đợt đánh giá
+            </p>
+        </div>
+        <div [ngClass]="blockExpan ? 'expanding-block' : 'collapsing-block'" *ngIf="!(step == 1)">
+            <p *ngIf="blockExpan" (click)="blockExpan = false">Thu gọn</p>
+            <p *ngIf="!blockExpan" (click)="blockExpan = true">Mở rộng</p>
+        </div>
+    </div>
+
+    <!-- FORM -->
+    <form class=" formContainer" [formGroup]="QuizSessionForm">
+        <div class="row">
+            <div class="colFirst">
+                <!--Mã đợt đánh giá-->
+                <kendo-label text="Mã đợt đánh giá">
+                    <app-p-textbox [propName]="'SessionID'" formControlName="SessionID"
+                        [disabled]="true"></app-p-textbox>
+                </kendo-label>
+                <!--Phân loại đợt đánh giá-->
+                <kendo-label text="Phân loại đợt đánh giá"
+                    *ngIf="(step == 1 || (step == 2 && blockExpan) || (step == 3 && blockExpan && isLeader) || (step == 4 && blockExpan && isLeader)) ? true : false ">
+                    <span class="symbol pl-1">(*)</span>
+                    <kendo-dropdownlist [popupSettings]="{appendTo:'component'}" [defaultItem]="{
+                        ListName: '-- Chọn --',  OrderBy: null }" [data]="quizTypeList" formControlName="TypeOfSession"
+                        textField="ListName" valueField="OrderBy" [valuePrimitive]="true"
+                        (valueChange)="onChangeTypeOfQuiz($event)" [disabled]="step != 1 || disable">
+                    </kendo-dropdownlist>
+                </kendo-label>
+
+                <!--Thời gian mở đợt kiểm tra-->
+                <kendo-label text="Thời gian mở đợt kiểm tra"
+                    *ngIf="step == 1 || (step != 1 && blockExpan) ?  true : false">
+                    <span class="symbol pl-1">(*)</span>
+                    <div class="in-label">
+                        <!-- <app-datepicker formControlName="StartDate" [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'"
+                            [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                            (valueChange)="onDateChange('StartDate')" [readOnlyInput]="true"
+                            [disabled]="!(step == 1) || disable" [max]="QuizSessionForm.get('EndDate').value">
+                        </app-datepicker> -->
+                        <kendo-datepicker formControlName="StartDate"
+                            [formatPlaceholder]="{ year: 'yyyy', month: 'mm', day: 'dd' }" placeholder="dd/mm/yyyy"
+                            [readOnlyInput]="true" (valueChange)="onDateChange('StartDate')"
+                            [disabled]="!(step == 1) || step == 1 && QuizSessionForm.get('StatusID').value == 2"
+                            [format]="'dd/MM/yyyy'" [max]="QuizSessionForm.get('EndDate').value">
+                        </kendo-datepicker>
+                        <p style="color: #959DB3;">-</p>
+                        <!-- <app-datepicker formControlName="EndDate" [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'"
+                            [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                            (valueChange)="onDateChange('EndDate')" [readOnlyInput]="true"
+                            [disabled]="!(step == 1) || disable" [min]="QuizSessionForm.get('StartDate').value">
+                        </app-datepicker> -->
+                        <kendo-datepicker formControlName="EndDate"
+                            [formatPlaceholder]="{ year: 'yyyy', month: 'mm', day: 'dd' }" placeholder="dd/mm/yyyy"
+                            [disabled]="!(step == 1) || step == 1 && QuizSessionForm.get('StatusID').value == 2"
+                            [readOnlyInput]="true" (valueChange)="onDateChange('EndDate')" [format]="'d/M/yyyy'"
+                            [min]="QuizSessionForm.get('StartDate').value">
+                        </kendo-datepicker>
+                    </div>
+                </kendo-label>
+
+                <!--Thời gian bắt đầu - kết thúc làm bài-->
+                <kendo-label text="Thời gian bắt đầu - kết thúc làm bài"
+                    *ngIf="step == 1 || (step != 1 && blockExpan) ?  true : false">
+                    <span class="symbol pl-1">(*)</span>
+                    <!-- [min]="QuizSessionForm.get('StartDate').value > nowDate ? QuizSessionForm.get('StartDate').value : nowDate" -->
+                    <div class="in-label">
+                        <!-- <app-datetimepicker [format]="'d/M/yyyy HH:mm'" (blur)="onDateChange('OpenedDate')"
+                            [stepTime]="2" formControlName="OpenedDate" [placeholder]="'d/m/yyyy H:m'"
+                            [readOnlyInput]="true"
+                            [formatPlaceholder]="{ time: 'H:m', year: 'yyyy', month: 'M', day: 'd' }"
+                            [min]="QuizSessionForm.get('StartDate').value"
+                            [max]="QuizSessionForm.get('ClosedDate').value" [disabled]="!(step == 1) || disable">
+                        </app-datetimepicker> -->
+                        <kendo-datetimepicker [readOnlyInput]="true" [format]="'dd/MM/yyyy HH:mm'"
+                            (valueChange)="onDateChange('OpenedDate')" formControlName="OpenedDate"
+                            [min]="QuizSessionForm.get('StartDate').value"
+                            [max]="QuizSessionForm.get('ClosedDate').value" [disabled]="!(step == 1) || disable">
+                        </kendo-datetimepicker>
+                        <p style="color: #959DB3;">-</p>
+                        <!-- <app-datetimepicker [format]="'d/M/yyyy HH:mm'" (blur)="onDateChange('ClosedDate')"
+                            formControlName="ClosedDate" [placeholder]="'d/m/yyyy H:m'" [readOnlyInput]="true"
+                            [formatPlaceholder]="{ time: 'H:m', year: 'yyyy', month: 'M', day: 'd' }"
+                            [popupSetting]="{animate: true, appendTo: 'component', popupClass: 'popupDateTimePicker'}"
+                            [disabled]="!(step == 1) || disable">
+                        </app-datetimepicker> -->
+                        <kendo-datetimepicker [readOnlyInput]="true" [format]="'dd/MM/yyyy HH:mm'"
+                            formControlName="ClosedDate" (valueChange)="onDateChange('ClosedDate')"
+                            [min]="QuizSessionForm.get('OpenedDate').value" [disabled]="!(step == 1) || disable"
+                            [max]="QuizSessionForm.get('EndDate').value">
+                        </kendo-datetimepicker>
+                    </div>
+                </kendo-label>
+
+                <kendo-label text="Thời gian gửi - chấm phúc khảo"
+                    *ngIf="(step == 1 || ((step == 2 || (step == 3 && isLeader) || step == 4) && blockExpan)) ? true : false ">
+                    <span class="symbol pl-1">(*)</span>
+                    <div class="in-label" *ngIf="step == 1">
+                        <app-p-numeric-textbox [propName]="'AppealTime'" (blur)="handleUpdateQuizSession($event, 'Thời gian gửi')"
+                            formControlName="AppealTime" [spinners]="true"
+                            [disabled]="!(step == 1) || disable  || disableReVal" [min]="1"
+                            [placeHolder]="'T.gian gửi'"></app-p-numeric-textbox>
+                        <p style="color: #959DB3;">-</p>
+                        <app-p-numeric-textbox [propName]="'ReEvaluateTime'" (blur)="handleUpdateQuizSession($event, 'Chấm phúc khảo')"
+                            formControlName="ReEvaluateTime" [spinners]="true"
+                            [disabled]="!(step == 1) || disable || disableReVal" [min]="1"
+                            [placeHolder]="'T.gian chấm'"></app-p-numeric-textbox>
+                    </div>
+                    <div class="in-label" *ngIf="!(step == 1)">
+                        <!-- <app-datepicker [format]="'dd/MM/yyyy'" formControlName="AppealDate" [readOnlyInput]="true"
+                            [disabled]="!(step == 1) || disable">
+                        </app-datepicker> -->
+                        <kendo-datepicker [format]="'dd/MM/yyyy'" formControlName="AppealDate" [readOnlyInput]="true"
+                            [disabled]="!(step == 1) || disable">
+                        </kendo-datepicker>
+                        <p style="color: #959DB3;">-</p>
+                        <!-- <app-datepicker [format]="'dd/MM/yyyy'" formControlName="ReEvaluateDate" [readOnlyInput]="true"
+                            [disabled]="!(step == 1) || disable">
+                        </app-datepicker> -->
+                        <kendo-datepicker [format]="'dd/MM/yyyy'" formControlName="ReEvaluateDate"
+                            [readOnlyInput]="true" [disabled]="!(step == 1) || disable">
+                        </kendo-datepicker>
+                    </div>
+                </kendo-label>
+
+                <!--Cách tính thời gian làm bài -->
+                <kendo-label text="Cách tính thời gian làm bài "
+                    *ngIf="(step == 1 || (step == 2 && blockExpan) || (step == 3 && blockExpan && isLeader) || (step == 4 && blockExpan && isLeader)) ? true : false ">
+                    <span class="symbol pl-1">(*)</span>
+                    <kendo-dropdownlist [popupSettings]="{appendTo:'component'}" [valuePrimitive]="true" [defaultItem]="{
+                        ListName: '-- Chọn --',  OrderBy: null  }" [data]="calculationTypeList"
+                        formControlName="TypeOfTimeEvaluation" (valueChange)="onChangeCalculationTypes($event, 'Cách tính thời gian làm bài')"
+                        textField="ListName" [disabled]="!(step == 1) || disable" valueField="OrderBy">
+                    </kendo-dropdownlist>
+                </kendo-label>
+
+                <!--Thời gian làm bài (phút)-->
+                <kendo-label text="SL câu hỏi và thời gian làm bài (phút)"
+                    *ngIf="(step == 1 || (step == 2 && blockExpan) || (step == 3 && blockExpan && isLeader) || (step == 4 && blockExpan && isLeader)) ? true : false ">
+                    <span class="symbol pl-1">(*)</span>
+                    <div class="quizz-time-group">
+                        <app-p-numeric-textbox [propName]="'NoOfQuestion'" (blur)="handleUpdateQuizSession($event, 'SL câu hỏi')"
+                            formControlName="NoOfQuestion" [spinners]="true" [disabled]="!(step == 1) || disable"
+                            [placeHolder]="'SL câu hỏi'"></app-p-numeric-textbox>
+                        <p style="color: #959DB3;">-</p>
+                        <app-p-numeric-textbox [propName]="'Duration'" (blur)="handleUpdateQuizSession($event, 'thời gian làm bài')"
+                            formControlName="Duration" [disabled]="!(step == 1) || disable || isTotalTimeQuestion"
+                            [spinners]="true" [placeHolder]="'T.gian làm bài'"></app-p-numeric-textbox>
+
+                    </div>
+                </kendo-label>
+                <!--Tình trạng-->
+                <kendo-label text="Tình trạng"
+                    *ngIf="(step == 1 || (step == 2 && blockExpan) || (step == 3 && blockExpan && isLeader) || (step == 4 && blockExpan && isLeader)) ? true : false ">
+                    <kendo-textbox class="txt" formControlName="StatusName" class="transparent-input status-input"
+                        [readonly]="true" [ngClass]="{
+                            'new-status': QuizSessionForm.get('StatusID').value === 0, 
+                            'sent-status': QuizSessionForm.get('StatusID').value === 1,
+                            'approved-status': QuizSessionForm.get('StatusID').value === 2,
+                            'stopped-status': QuizSessionForm.get('StatusID').value === 3,
+                            'return-status': QuizSessionForm.get('StatusID').value === 4}">
+                    </kendo-textbox>
+                </kendo-label>
+            </div>
+            <div class="colLast">
+                <!--Tên đợt đánh giá-->
+                <kendo-label text="Tên đợt đánh giá">
+                    <span class="symbol pl-1">(*)</span>
+                    <app-p-textbox (blur)="handleUpdateQuizSession($event, 'Tên đợt đánh giá')" [propName]="'SessionName'"
+                        formControlName="SessionName" [disabled]="!(step == 1) || disable"></app-p-textbox>
+                        <!-- <kendo-textbox (valueChange)="handleUpdateQuizSession(['SessionName'])" formControlName="SessionName"></kendo-textbox> -->
+                </kendo-label>
+                <!--Mục tiêu đợt đánh giá-->
+                <kendo-label style="margin-bottom: unset !important;" text="Mục tiêu đợt đánh giá"
+                    *ngIf="step == 1 || (step != 1 && blockExpan) ?  true : false">
+                    <span class="symbol pl-1">(*)</span>
+                </kendo-label>
+                <app-p-textarea formControlName="SessionObjective" resizable="none"
+                    [ngClass]="step == 3 && !isLeader ? 'h-102' :  step == 4 && !isLeader ? 'h-171' : ''"
+                    [disabled]="!(step == 1)  || disable" (blur)="handleUpdateQuizSession(['SessionObjective'], 'Mục tiêu đợt đánh giá')"
+                    [propName]="'SessionObjective'" *ngIf="blockExpan"></app-p-textarea>
+                <!-- [maxlength]="20"
+                    [clearButton]="true" -->
+                <!-- [placeHolder]="'input test'" -->
+                <!-- [spanSuffixIcon]="'k-i-redo'" -->
+            </div>
+        </div>
+        <div>
+        </div>
+    </form>
+</div>

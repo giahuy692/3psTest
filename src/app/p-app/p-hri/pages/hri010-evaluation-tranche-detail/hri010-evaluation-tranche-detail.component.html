@@ -1,0 +1,868 @@
+<!-- START BREADCRUMB-->
+<div class="header header-2" id="breadcrumbButtonBlock">
+
+	<!-- BREADCRUMB -->
+	<app-p-kendo-breadcrumb (loadData)="getQuizSession()"></app-p-kendo-breadcrumb>
+
+	<!-- BUTTON GROUP -->
+	<kendo-buttongroup>
+		<button kendoButton class="btn-hachi hachi-primary hachi-secondary"
+			imageUrl="assets/img/icon/icon_sentGreen.svg" *ngIf="isCanSent" (click)="checkCurrentSession(1)">
+			Gửi duyệt
+		</button>
+		<button kendoButton class="btn-hachi hachi-primary hachi-secondary" *ngIf="isCanApproved"
+			imageUrl="assets/img/icon/icon_checkCricle.svg" (click)="checkCurrentSession(2)">
+			duyệt áp dụng
+		</button>
+		<button kendoButton class="btn-hachi hachi-primary hachi-secondary btn-badred"
+			imageUrl="assets/img/icon/icon_stopColor.svg" *ngIf="isCanStop"
+			(click)="updateQuizSessionStatus([updateDetailQuizSession], 3)">
+			ngưng áp dụng
+		</button>
+		<button kendoButton class="btn-hachi hachi-primary hachi-secondary btn-badred" icon="undo" *ngIf="isCanReturn"
+			(click)="updateQuizSessionStatus([updateDetailQuizSession], 4)">
+			Trả về
+		</button>
+		<button kendoButton class="btn-hachi hachi-primary hachi-secondary" *ngIf="isCanOpen"
+			(click)="updateHeaderButton(1);">
+			bắt đầu <br> làm bài
+		</button>
+		<button kendoButton class="btn-hachi hachi-primary hachi-secondary btn-badred" *ngIf="isCanClose"
+			(click)="updateHeaderButton(2);">
+			kết thúc <br> làm bài
+		</button>
+		<button kendoButton class="btn-hachi hachi-primary hachi-secondary btn-blue" *ngIf="isCanSuccess"
+			(click)="updateHeaderButton(3);">
+			Hoàn tất <br> đợt đánh giá
+		</button>
+		<button kendoButton class="btn-hachi hachi-primary hachi-secondary" *ngIf="isCanCalculate"
+			(click)="CalculateMarkQuiz()">
+			Tính điểm <br> đợt đánh giá
+		</button>
+		<button kendoButton class="btn-hachi hachi-primary hachi-secondary btn-badred" *ngIf="isCanDelete"
+			(click)="checkDeleteAndShowDialog()">
+			xóa đợt<br>đánh giá</button>
+		<button kendoButton class="btn-hachi hachi-primary" icon="plus" (click)="addTheNewQuizSesson()"
+			*ngIf="isCanAdd">
+			thêm mới
+		</button>
+	</kendo-buttongroup>
+</div>
+<!-- END BREADCRUMB -->
+
+<div id="evaluationTrancheDetail">
+
+	<!--START EVALUATION TRANCHE INFORMATIONS -->
+	<app-hr-quiz-session-info [step]="1" (sharedData)="dataIsReceived($event)"
+		[disable]="updateDetailQuizSession.StatusID == 2 || (updateDetailQuizSession.SessionStatusID !== 0 && updateDetailQuizSession.SessionStatusID !== null)"></app-hr-quiz-session-info>
+	<!--END EVALUATION TRANCHE INFORMATIONS -->
+
+	<!--START EXAM STRUCTURE -->
+	<div id="myBlock" *ngIf="checkStep">
+
+		<!-- TITTLE -->
+		<h1>cấu trúc đề thi</h1>
+
+		<!-- LAYOUT -->
+		<div id="examStructure">
+			<div class="content-wrapper">
+				<kendo-gridlayout [cols]="['auto', 'auto', 'auto']" [gap]="{ rows: 15 }">
+					<!-- Column 1 -->
+					<kendo-gridlayout-item [row]="1" [col]="1" [colSpan]="2">
+						<h2>Danh sách câu hỏi được lấy dựa theo</h2>
+					</kendo-gridlayout-item>
+
+					<kendo-gridlayout-item [row]="2" class="content">
+						<div class="cb cb-competence">
+							<input type="checkbox" #abilityDictionary kendoCheckBox
+								(change)="checkCheckbox('competence'); checkChangeAndShowDialog('IsCompetence')"
+								[disabled]="!updateDetailQuizSession.IsCategory || updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0"
+								[(ngModel)]="updateDetailQuizSession.IsCompetence" />
+							<kendo-label [for]="abilityDictionary" text="Từ điển năng lực "></kendo-label>
+						</div>
+						<div class="rdo rdo-competence">
+							<div *ngIf="updateDetailQuizSession.IsCompetence">
+								<input type="radio" [value]="true" name="abilityDictionary"
+									[(ngModel)]="updateDetailQuizSession.IsCurrentCompetenceLevel"
+									[disabled]="!updateDetailQuizSession.IsCompetence  || updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0"
+									#maturityLevel kendoRadioButton
+									(change)="checkChangeAndShowDialog('IsCurrentCompetenceLevel')" />
+								<kendo-label [for]="maturityLevel" text="Chỉ mức trưởng thành đang chọn">
+								</kendo-label>
+							</div>
+							<div *ngIf="updateDetailQuizSession.IsCompetence">
+								<input type="radio" [value]="false" name="abilityDictionary"
+									[(ngModel)]="updateDetailQuizSession.IsCurrentCompetenceLevel"
+									[disabled]="!updateDetailQuizSession.IsCompetence  || updateDetailQuizSession.StatusID == 2  || updateDetailQuizSession.SessionStatusID !== 0"
+									#allMaturityLevel kendoRadioButton
+									(change)="checkChangeAndShowDialog('IsCurrentCompetenceLevel')" />
+								<kendo-label [for]="allMaturityLevel" text="Gồm cả mức trưởng thành thấp hơn">
+								</kendo-label>
+							</div>
+							<div *ngIf="!updateDetailQuizSession.IsCompetence">
+								<input type="radio" kendoRadioButton [disabled]="'true'" />
+								<kendo-label text="Chỉ mức trưởng thành đang chọn">
+								</kendo-label>
+							</div>
+							<div *ngIf="!updateDetailQuizSession.IsCompetence">
+								<input type="radio" kendoRadioButton [disabled]="'true'" />
+								<kendo-label text="Gồm cả mức trưởng thành thấp hơn">
+								</kendo-label>
+							</div>
+						</div>
+					</kendo-gridlayout-item>
+
+					<kendo-gridlayout-item [row]="3" class="content">
+						<div class="cb cb-category">
+							<input type="checkbox" #questionGroup
+								[disabled]="!updateDetailQuizSession.IsCompetence  || updateDetailQuizSession.StatusID == 2  || updateDetailQuizSession.SessionStatusID !== 0"
+								[(ngModel)]="updateDetailQuizSession.IsCategory"
+								(change)="checkCheckbox('category'); checkChangeAndShowDialog('IsCategory')"
+								kendoCheckBox />
+							<kendo-label [for]="questionGroup" text="Phân nhóm câu hỏi"></kendo-label>
+						</div>
+						<div class="rdo rdo-category">
+							<div>
+								<input type="radio" [value]="1" [(ngModel)]="updateDetailQuizSession.IsCategoryLevel"
+									(change)="checkChangeAndShowDialog('IsCategoryLevel')"
+									[disabled]="!updateDetailQuizSession.IsCategory  || updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0"
+									name="questionGroup" #lv1 kendoRadioButton />
+								<kendo-label [for]="lv1" text="Cấp 1"></kendo-label>
+							</div>
+							<div>
+								<input type="radio" [value]="2" [(ngModel)]="updateDetailQuizSession.IsCategoryLevel"
+									(change)="checkChangeAndShowDialog('IsCategoryLevel')"
+									[disabled]="!updateDetailQuizSession.IsCategory  || updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0"
+									name="questionGroup" #lv2 kendoRadioButton />
+								<kendo-label [for]="lv2" text="Cấp 2"></kendo-label>
+							</div>
+							<div>
+								<input type="radio" [value]="3" [(ngModel)]="updateDetailQuizSession.IsCategoryLevel"
+									(change)="checkChangeAndShowDialog('IsCategoryLevel')"
+									[disabled]="!updateDetailQuizSession.IsCategory  || updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0"
+									name="questionGroup" #lv3 kendoRadioButton />
+								<kendo-label [for]="lv3" text="Cấp 3"></kendo-label>
+							</div>
+						</div>
+					</kendo-gridlayout-item>
+
+					<!-- Column 2 -->
+					<kendo-gridlayout-item [row]="2" class="content">
+						<kendo-label class="kendo-label"
+							text="Ưu tiên đầu tiên thiết lập cầu trúc đề thi theo"></kendo-label>
+						<div class="rdo rdo-prioritize">
+							<div>
+								<input type="radio" name="prioritie" [(ngModel)]="updateDetailQuizSession.OrderConfig"
+									[disabled]="!updateDetailQuizSession.IsCategory || !updateDetailQuizSession.IsCompetence || updateDetailQuizSession.StatusID == 2  || updateDetailQuizSession.SessionStatusID !== 0"
+									[value]="0" (change)="checkChangeAndShowDialog('OrderConfig')" #dictionary
+									kendoRadioButton />
+								<kendo-label [for]="dictionary" text="Từ điển năng lực"></kendo-label>
+							</div>
+							<div>
+								<input type="radio" name="prioritie" [(ngModel)]="updateDetailQuizSession.OrderConfig"
+									[disabled]="!updateDetailQuizSession.IsCategory || !updateDetailQuizSession.IsCompetence || updateDetailQuizSession.StatusID == 2  || updateDetailQuizSession.SessionStatusID !== 0"
+									[value]="1" (change)="checkChangeAndShowDialog('OrderConfig')" #group
+									kendoRadioButton />
+								<kendo-label [for]="group" text="Phân nhóm câu hỏi"></kendo-label>
+							</div>
+						</div>
+					</kendo-gridlayout-item>
+
+					<kendo-gridlayout-item [row]="3" class="content">
+						<kendo-label class="kendo-label" text="Cho phép xem bài làm"></kendo-label>
+						<div class="rdo rdo-viewAnswer">
+							<div>
+								<input type="radio" [value]="0" [(ngModel)]="updateDetailQuizSession.EvaluationView"
+									(change)="UpdateQuizSession(updateDetailQuizSession, ['EvaluationView'])"
+									[disabled]="updateDetailQuizSession.StatusID == 2  || updateDetailQuizSession.SessionStatusID !== 0"
+									name="viewAnswer" #viewAfterTest kendoRadioButton />
+								<kendo-label [for]="viewAfterTest"
+									text="Ngay sau khi hoàn tất bài làm"></kendo-label>
+							</div>
+							<div>
+								<input type="radio" [value]="1" [(ngModel)]="updateDetailQuizSession.EvaluationView"
+									(change)="UpdateQuizSession(updateDetailQuizSession, ['EvaluationView'])"
+									[disabled]="updateDetailQuizSession.StatusID == 2  || updateDetailQuizSession.SessionStatusID !== 0"
+									name="viewAnswer" #viewAfterTestSuccess kendoRadioButton />
+								<kendo-label [for]="viewAfterTestSuccess"
+									text="Ngay sau khi hoàn tất đợt đánh giá"></kendo-label>
+							</div>
+							<div>
+								<input type="radio" [value]="2" [(ngModel)]="updateDetailQuizSession.EvaluationView"
+									(change)="UpdateQuizSession(updateDetailQuizSession, ['EvaluationView'])"
+									[disabled]="updateDetailQuizSession.StatusID == 2  || updateDetailQuizSession.SessionStatusID !== 0"
+									name="viewAnswer" #notView kendoRadioButton />
+								<kendo-label [for]="notView" text="Không cho xem bài làm"></kendo-label>
+							</div>
+						</div>
+					</kendo-gridlayout-item>
+
+					<!-- Column 3 -->
+					<kendo-gridlayout-item [row]="1" [col]="3" class="content">
+						<h2>Nhân sự tham gia đợt đánh giá</h2>
+					</kendo-gridlayout-item>
+
+					<kendo-gridlayout-item [row]="2" [rowSpan]="2" class="content">
+						<div class="rdo rdo-position">
+							<div>
+								<input type="radio" name="positionAll" [value]="0"
+									(change)="checkChangeAndShowDialog('IsAllStaff')"
+									[disabled]="updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0"
+									[(ngModel)]="updateDetailQuizSession.IsAllStaff" #positionAll kendoRadioButton />
+								<kendo-label [for]="positionAll" text="Tất cả nhân sự"></kendo-label>
+							</div>
+							<div>
+								<input type="radio" name="positionChoices" [value]="1"
+									(change)="checkChangeAndShowDialog('IsAllStaff')"
+									[disabled]="updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0"
+									[(ngModel)]="updateDetailQuizSession.IsAllStaff" #positionChoices
+									kendoRadioButton />
+								<kendo-label [for]="positionChoices" text="Theo chức danh"></kendo-label>
+							</div>
+							<div>
+								<input type="radio" name="staffJoin" [value]="2"
+									(change)="checkChangeAndShowDialog('IsAllStaff')"
+									[disabled]="updateDetailQuizSession.StatusID == 2  || updateDetailQuizSession.SessionStatusID !== 0"
+									[(ngModel)]="updateDetailQuizSession.IsAllStaff" #staffJoin kendoRadioButton />
+								<kendo-label [for]="staffJoin" text="Theo nhân sự"></kendo-label>
+							</div>
+						</div>
+						<div class="formSearch" *ngIf="updateDetailQuizSession.IsAllStaff == 1">
+							<kendo-combobox placeholder="Chức danh đánh giá" [filterable]="true"
+								[data]="positionJoinQuizBinding" valueField="Code" textField="Position"
+								[(ngModel)]="currentPositionJoinQuiz" [valuePrimitive]="true"
+								(filterChange)="filterListPositionQuizChange($event)"
+								[popupSettings]="{popupClass:'fmdd'}"
+								[disabled]="updateDetailQuizSession.StatusID == 2  || updateDetailQuizSession.SessionStatusID !== 0"
+								class="myCustomize">
+							</kendo-combobox>
+							<button kendoButton class="btn-hachi hachi-primary" icon="plus"
+								[disabled]="updateDetailQuizSession.StatusID == 2 || currentPositionJoinQuiz == null  || updateDetailQuizSession.SessionStatusID !== 0"
+								(click)="onAddPositionJoinQuiz()">thêm</button>
+						</div>
+
+						<ul class="itemChoosed" *ngIf="updateDetailQuizSession.IsAllStaff == 1">
+							<li class="item" *ngFor="let data of listPositionChoosed">
+								<button kendoButton icon="trash" (click)="onDeleteListPosition(data.Code)"
+									[disabled]="updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0"></button>
+								<span class="itemName">{{data.Position}}</span>
+							</li>
+						</ul>
+					</kendo-gridlayout-item>
+				</kendo-gridlayout>
+			</div>
+		</div>
+	</div>
+	<!--END EXAM STRUCTURE -->
+
+	<!--START SET EXAM STRUCTURE -->
+	<div id="myBlock" *ngIf="checkStep">
+
+		<!-- TITTLE -->
+		<h1>thiết lập cấu trúc đề thi</h1>
+
+		<!-- LAYOUT -->
+		<div id="setExamStructure" class="container-fluid">
+			<div class="formSearch" *ngIf="isCompetenceToCategory || isCompetence">
+				<kendo-combobox placeholder="Tìm theo năng lực" [filterable]="true" [data]="dataSearchCompetence"
+					valueField="Code" textField="Competence" [popupSettings]="{popupClass:'fmdd'}" class="myCustomize"
+					[(ngModel)]="addToConfig" (filterChange)="onChangeFilterQuizConfig($event, 'competence')"
+					[valuePrimitive]="true" (focus)="getListQuizConfigCompetence(null)"
+					[disabled]="updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0">
+				</kendo-combobox>
+				<button kendoButton class="btn-hachi hachi-primary" icon="plus" [disabled]="addToConfig == undefined"
+					(click)="addToConfigF(addToConfig, true, false, null)">thêm</button>
+			</div>
+			<div class="formSearch" *ngIf="isCategoryToCompetence || isCategory">
+				<kendo-combobox placeholder="Tìm theo phân nhóm" [filterable]="true" [data]="dataSearchCategory"
+					valueField="Code" textField="CategoryName" [popupSettings]="{popupClass:'fmdd'}" class="myCustomize"
+					[(ngModel)]="addToConfig" (filterChange)="onChangeFilterQuizConfig($event, 'category')"
+					[valuePrimitive]="true" (focus)="getListQuizConfigCategory(null, null)"
+					[disabled]="updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0">
+				</kendo-combobox>
+				<button kendoButton class="btn-hachi hachi-primary" icon="plus" [disabled]="addToConfig == undefined"
+					(click)="addToConfigF(addToConfig, false, true, null)">thêm</button>
+			</div>
+			<div *ngIf="!checkQuizConfigV" class="nullData">
+				<p>ĐỀ THI CHƯA ĐƯỢC THIẾT LẬP</p>
+			</div>
+			<kendo-panelbar *ngIf="checkQuizConfigV" [expandMode]="0" [animate]="false">
+				<kendo-panelbar-item title="" *ngFor="let item of quizConfigV; index as i"
+					[ngClass]="i % 2 === 0 ? 'changeBG' : ''" (click)="onPanelSelect(item)" [expanded]="isExpand(item)">
+					<ng-template kendoPanelBarItemTitle>
+						<div class="titleItem">
+							<div class="btnGroup">
+								<button kendoButton icon="trash"
+									[disabled]="checkItemConfigChild(item.ListChild) || updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0"
+									(click)="onInputClick($event); showDialogAndDeleteConfig(item)">
+								</button>
+								<span class="noneSpan"></span>
+							</div>
+							<div class="inforInputGroup">
+								<div class="inforGroup" *ngIf="isCompetenceToCategory || isCompetence">
+									<span class="tittle-0">{{item.CompetenceName}}</span>
+									<span class="tittle-1">{{item.CompetenceID}} <span style="color: #BDC2D2;">|</span>
+										Nhóm cốt lõi</span>
+								</div>
+								<div class="inforGroup" *ngIf="isCategoryToCompetence || isCategory">
+									<span class="tittle-0">{{item.CategoryName}}</span>
+								</div>
+								<div class="inputGroup">
+									<kendo-dropdownlist (click)="onInputClick($event)" [data]="competenceLevelDropdown"
+										[defaultItem]="{ text: 'Chọn mức đánh giá', value: null }" textField="text"
+										valueField="value" [popupSettings]="{appendTo:'component'}" class="myCustomize"
+										[valuePrimitive]="true" *ngIf="isCompetence || isCompetenceToCategory"
+										(valueChange)="updateQuizConfig(item, 1, 'parent')"
+										[(ngModel)]="item.CompetenceLevelID"
+										[disabled]="updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0">
+									</kendo-dropdownlist>
+
+
+									<kendo-numerictextbox placeholder="Tỷ lệ điểm" format="#" [step]="1"
+										(click)="onInputClick($event)" class="myCustomize"
+										[(ngModel)]="item.CompetencePercentage"
+										(blur)="numerictextboxOnBlur(item, false)"
+										(focus)="checkValNumConfig = item.CompetencePercentage"
+										*ngIf="isCompetenceToCategory || isCompetence"
+										[disabled]="updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0"
+										[min]="0">
+									</kendo-numerictextbox>
+									<kendo-numerictextbox placeholder="Tỷ lệ điểm" format="#" [step]="1"
+										(click)="onInputClick($event)" class="myCustomize"
+										[(ngModel)]="item.CategoryPercentage" (blur)="numerictextboxOnBlur(item, true)"
+										(focus)="checkValNumConfig = item.CategoryPercentage"
+										*ngIf="isCategoryToCompetence || isCategory"
+										[disabled]="updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0"
+										[min]="0">
+									</kendo-numerictextbox>
+
+
+									<kendo-textbox placeholder="SL câu hỏi" (click)="onInputClick($event)"
+										[disabled]="true" class="myCustomize"
+										[value]="calculateItemQualityQuestion(item, false)"
+										*ngIf="isCompetenceToCategory || isCompetence">
+									</kendo-textbox>
+									<kendo-textbox placeholder="SL câu hỏi" (click)="onInputClick($event)"
+										[disabled]="true" class="myCustomize"
+										[value]="calculateItemQualityQuestion(item, true)"
+										*ngIf="isCategoryToCompetence || isCategory">
+									</kendo-textbox>
+								</div>
+							</div>
+						</div>
+					</ng-template>
+					<ng-template kendoPanelBarContent
+						*ngIf="!(isCompetenceToCategory && item.CompetenceLevelID == null)">
+						<div class="container-content">
+							<div class="formSearch" *ngIf="isCategoryToCompetence">
+								<kendo-combobox placeholder="Tìm theo năng lực" [filterable]="true"
+									[data]="dataSearchCompetence" valueField="Code" textField="Competence"
+									[popupSettings]="{popupClass:'fmdd'}" class="myCustomize"
+									[(ngModel)]="addToConfigChild"
+									[disabled]="updateDetailQuizSession.StatusID == 2  || updateDetailQuizSession.SessionStatusID !== 0"
+									(filterChange)="onChangeFilterQuizConfig($event, 'competence')"
+									[valuePrimitive]="true" (focus)="getListQuizConfigCompetence(item.Category)">
+								</kendo-combobox>
+								<button kendoButton class="btn-hachi hachi-primary" icon="plus"
+									[disabled]="addToConfigChild == undefined"
+									(click)="addToConfigF(addToConfigChild, true, false, item.Code)">thêm</button>
+							</div>
+							<div class="formSearch" *ngIf="isCompetenceToCategory">
+								<kendo-combobox placeholder="Tìm theo phân nhóm" [filterable]="true"
+									[data]="dataSearchCategory" valueField="Code" textField="CategoryName"
+									[popupSettings]="{popupClass:'fmdd'}" class="myCustomize"
+									[(ngModel)]="addToConfigChild"
+									[disabled]="updateDetailQuizSession.StatusID == 2  || updateDetailQuizSession.SessionStatusID !== 0"
+									(filterChange)="onChangeFilterQuizConfig($event, 'category')"
+									[valuePrimitive]="true"
+									(focus)="getListQuizConfigCategory(item.Competence, item.CompetenceLevelID)">
+								</kendo-combobox>
+								<button kendoButton class="btn-hachi hachi-primary" icon="plus"
+									[disabled]="addToConfigChild == undefined"
+									(click)="addToConfigF(addToConfigChild, false, true, item.Code)">thêm</button>
+							</div>
+							<kendo-grid [data]="item.ListChild" [scrollable]="'true'"
+								*ngIf="checkItemConfigChild(item.ListChild)">
+
+								<kendo-grid-column title="Phân nhóm" field="CategoryName" [width]="400"
+									*ngIf="isCompetenceToCategory">
+									<ng-template kendoGridCellTemplate let-itemC>
+										<button kendoButton icon="trash"
+											[disabled]="updateDetailQuizSession.StatusID == 2  || updateDetailQuizSession.SessionStatusID !== 0"
+											(click)="onInputClick($event); showDialogAndDeleteConfig(itemC)">
+										</button>
+										<span>{{itemC.CategoryName}}</span>
+									</ng-template>
+								</kendo-grid-column>
+								<kendo-grid-column title="Năng lực" field="CompetenceName" [width]="400"
+									*ngIf="isCategoryToCompetence">
+									<ng-template kendoGridCellTemplate let-itemC>
+										<button kendoButton icon="trash"
+											[disabled]="updateDetailQuizSession.StatusID == 2  || updateDetailQuizSession.SessionStatusID !== 0"
+											(click)="onInputClick($event); showDialogAndDeleteConfig(itemC)">
+										</button>
+										<span>{{itemC.CompetenceID}} <span style="color: #BDC2D2;">|</span>
+											{{itemC.CompetenceName}}</span>
+									</ng-template>
+								</kendo-grid-column>
+
+
+								<kendo-grid-column title="Mức đánh giá" field="Name" [width]="150"
+									*ngIf="isCategoryToCompetence">
+									<ng-template kendoGridCellTemplate let-itemC>
+										<kendo-dropdownlist [data]="competenceLevelDropdown"
+											[defaultItem]="{ text: '-- Chọn --', value: null }" textField="text"
+											valueField="value" [popupSettings]="{popupClass:'fmdd'}"
+											placeholder="Chọn mức đánh giá" class="myCustomize"
+											[valuePrimitive]="true" (valueChange)="updateQuizConfig(itemC, 1, 'child')"
+											[(ngModel)]="itemC.CompetenceLevelID"
+											[disabled]="updateDetailQuizSession.StatusID == 2  || updateDetailQuizSession.SessionStatusID !== 0">
+										</kendo-dropdownlist>
+									</ng-template>
+								</kendo-grid-column>
+
+
+								<kendo-grid-column-group title="Số lượng câu hỏi trong đề thi">
+									<kendo-grid-column title="Tổng câu hỏi" [width]="105">
+										<ng-template kendoGridCellTemplate let-itemC>
+											<kendo-textbox [disabled]="true" class="myCustomize"
+												*ngIf="isCompetenceToCategory"
+												[value]="calculateItemTotalQuestion(itemC,  true)"
+												[ngClass]="{shortFirst : isCategory || isCompetence}">
+											</kendo-textbox>
+											<kendo-textbox [disabled]="true" class="myCustomize"
+												*ngIf="isCategoryToCompetence"
+												[value]="calculateItemTotalQuestion(itemC,  false)"
+												[ngClass]="{shortFirst : isCategory || isCompetence}">
+											</kendo-textbox>
+										</ng-template>
+									</kendo-grid-column>
+									<kendo-grid-column title="Trắc nhiệm" [width]="105">
+										<ng-template kendoGridCellTemplate let-itemC>
+											<kendo-numerictextbox format="#" [step]="1" class="myCustomize"
+												[(ngModel)]="itemC.CategoryQuestionMultiple"
+												[disabled]="updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0 || itemC.TotalQuestionMultiple == 0 || itemC.TotalQuestionMultiple == null"
+												(blur)="numerictextboxChildOnBlur(itemC, false, true, true)"
+												(focus)="checkValNumConfig = itemC.CategoryQuestionMultiple"
+												*ngIf="isCompetenceToCategory">
+											</kendo-numerictextbox>
+											<kendo-numerictextbox format="#" [step]="1" class="myCustomize"
+												[(ngModel)]="itemC.CompetenceQuestionMultiple"
+												[disabled]="updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0 || itemC.TotalQuestionMultiple == 0 || itemC.TotalQuestionMultiple == null"
+												(blur)="numerictextboxChildOnBlur(itemC, false, false, true)"
+												(focus)="checkValNumConfig = itemC.CompetenceQuestionMultiple"
+												*ngIf="isCategoryToCompetence">
+											</kendo-numerictextbox>
+										</ng-template>
+									</kendo-grid-column>
+									<kendo-grid-column title="Tự luận" [width]="105">
+										<ng-template kendoGridCellTemplate let-itemC>
+											<kendo-numerictextbox format="#" [step]="1" class="myCustomize"
+												[(ngModel)]="itemC.CategoryQuestionEssay"
+												[disabled]="updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0 || itemC.TotalQuestionEssay == 0 || itemC.TotalQuestionEssay == null"
+												(blur)="numerictextboxChildOnBlur(itemC, true, true, true)"
+												(focus)="checkValNumConfig = itemC.CategoryQuestionEssay"
+												*ngIf="isCompetenceToCategory">
+											</kendo-numerictextbox>
+											<kendo-numerictextbox format="#" [step]="1" class="myCustomize"
+												[(ngModel)]="itemC.CompetenceQuestionEssay"
+												[disabled]="updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0 || itemC.TotalQuestionEssay == 0 || itemC.TotalQuestionEssay == null"
+												(blur)="numerictextboxChildOnBlur(itemC, true, false, true)"
+												(focus)="checkValNumConfig = itemC.CompetenceQuestionEssay"
+												*ngIf="isCategoryToCompetence">
+											</kendo-numerictextbox>
+										</ng-template>
+									</kendo-grid-column>
+								</kendo-grid-column-group>
+
+
+								<kendo-grid-column-group title="S.lượng câu hỏi trong ngân hàng">
+									<kendo-grid-column title="Trắc nghiệm" [width]="119"
+										field="TotalQuestionMultiple">
+									</kendo-grid-column>
+									<kendo-grid-column title="Tự luận" [width]="119" field="TotalQuestionEssay">
+									</kendo-grid-column>
+								</kendo-grid-column-group>
+							</kendo-grid>
+
+							<div class="CustomNotChild" *ngIf="isCompetence || isCategory">
+
+								<div class="myGird">
+									<div class="myCol myCol-1">
+										<div class="myRow row-0">
+											<p style="color: #5A6276;">Số lượng câu hỏi trong đề thi</p>
+										</div>
+										<div class="myRow row-1">
+											<div class="inRow">
+												<p style="color: #5A6276;">Tổng câu hỏi</p>
+												<kendo-textbox [disabled]="true" class="myCustomize"
+													[value]=" calculateItemTotalQuestion(item, true)">
+												</kendo-textbox>
+											</div>
+											<div class="inRow">
+												<p style="color: #5A6276;">Trắc nhiệm</p>
+												<kendo-numerictextbox format="#" [step]="1" class="myCustomize"
+													[(ngModel)]="item.CategoryQuestionMultiple"
+													[disabled]="updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0  || item.TotalQuestionMultiple == 0"
+													(blur)="numerictextboxChildOnBlur(item, false, true, false)"
+													(focus)="checkValNumConfig = item.CategoryQuestionMultiple"
+													*ngIf="isCategory">
+												</kendo-numerictextbox>
+												<kendo-numerictextbox format="#" [step]="1" class="myCustomize"
+													[(ngModel)]="item.CompetenceQuestionMultiple"
+													[disabled]="updateDetailQuizSession.StatusID == 2  || updateDetailQuizSession.SessionStatusID !== 0 || item.TotalQuestionMultiple == 0"
+													(blur)="numerictextboxChildOnBlur(item, false, false, false)"
+													(focus)="checkValNumConfig = item.CompetenceQuestionMultiple"
+													*ngIf="isCompetence">
+												</kendo-numerictextbox>
+											</div>
+											<div class="inRow">
+												<p style="color: #5A6276;">Tự luận</p>
+												<kendo-numerictextbox format="#" [step]="1" class="myCustomize"
+													[(ngModel)]="item.CategoryQuestionEssay"
+													[disabled]="updateDetailQuizSession.StatusID == 2  || updateDetailQuizSession.SessionStatusID !== 0 || item.TotalQuestionEssay == 0"
+													(blur)="numerictextboxChildOnBlur(item, true, true, false)"
+													(focus)="checkValNumConfig = item.CategoryQuestionEssay"
+													*ngIf="isCategory">
+												</kendo-numerictextbox>
+												<kendo-numerictextbox format="#" [step]="1" class="myCustomize"
+													[(ngModel)]="item.CompetenceQuestionEssay"
+													[disabled]="updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0 || item.TotalQuestionEssay == 0"
+													(blur)="numerictextboxChildOnBlur(item, true, false, false)"
+													(focus)="checkValNumConfig = item.CompetenceQuestionEssay"
+													*ngIf="isCompetence">
+												</kendo-numerictextbox>
+											</div>
+										</div>
+									</div>
+
+									<div class="myCol myCol-2">
+										<div class="myRow row-0">
+											<p style="color: #5A6276;">S.lượng câu hỏi trong ngân hàng</p>
+										</div>
+										<div class="myRow row-1">
+											<div class="inRow">
+												<p style="color: #5A6276;">Trắc nghiệm</p>
+												<span>{{item.TotalQuestionMultiple}}</span>
+											</div>
+											<div class="inRow">
+												<p style="color: #5A6276;">Tự luận</p>
+												<span>{{item.TotalQuestionEssay}}</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</ng-template>
+					<ng-template kendoPanelBarContent *ngIf="isCompetenceToCategory && item.CompetenceLevelID == null">
+						<span class="pleaseChooseLv">Vui lòng chọn mức đánh giá</span>
+					</ng-template>
+				</kendo-panelbar-item>
+			</kendo-panelbar>
+		</div>
+	</div>
+	<!--END SET EXAM STRUCTURE -->
+
+	<!--START CONFIGURING AUDIT PARTICIPATION ROLES -->
+	<div id="myBlock" *ngIf="checkStep">
+
+		<!-- TITTLE -->
+		<h1>cấu hình vai trò tham gia đợt đánh giá</h1>
+
+		<!-- LAYOUT -->
+		<div id="configAuditParticitionRoles" class="container-fluid">
+			<div class="row">
+				<div class="col-4">
+					<div class="formSearch">
+						<kendo-label text="Trưởng ban khảo thí"></kendo-label>
+						<kendo-multiselect placeholder="Tìm theo nhân sự công ty" [data]="dataStaff"
+							textField="FirstName" valueField="Code" [valuePrimitive]="true"
+							[(ngModel)]="headOfExaminationBoardBinding" [filterable]="true"
+							[popupSettings]="{popupClass:'fmdd'}" [clearButton]="false" class="myCustomize"
+							(filterChange)="onChangeFilterStaff($event)" (removeTag)="deleteQuizRoleRemove($event, 1)"
+							[disabled]="updateDetailQuizSession.StatusID == 2  || updateDetailQuizSession.SessionStatusID !== 0"
+							(open)="getEmployeeData(1)">
+							<ng-template kendoMultiSelectTagTemplate let-dataItem>
+								<span class="template">{{dataItem.LastName }}
+									{{dataItem.MiddleName}}
+									{{dataItem.FirstName}}</span>
+							</ng-template>
+							<ng-template kendoMultiSelectItemTemplate let-dataItem>
+								<div (click)="valueStaffChange(dataItem, 1)" class="fixPopupHri010Detail"
+									style="width: 100%; height: 100%; display: flex; align-items: center; padding-left: 10px;">
+									<span class="template">{{dataItem.LastName }}
+										{{dataItem.MiddleName}}
+										{{dataItem.FirstName}}</span>
+								</div>
+							</ng-template>
+						</kendo-multiselect>
+					</div>
+				</div>
+				<div class="col-8">
+					<kendo-label text="Giám sát theo đơn vị tham gia"></kendo-label>
+					<div class="childCheckbox">
+						<div>
+							<input type="radio" [value]="true" name="supervisor"
+								[(ngModel)]="updateDetailQuizSession.IsLeaderMonitor"
+								[disabled]="updateDetailQuizSession.StatusID == 2  || updateDetailQuizSession.SessionStatusID !== 0"
+								(change)="UpdateQuizSession(updateDetailQuizSession, ['IsLeaderMonitor'])"
+								#hasSupervisor kendoRadioButton />
+							<kendo-label [for]="hasSupervisor"
+								text="Trưởng đơn vị và quản lý điểm làm việc giám sát"></kendo-label>
+						</div>
+						<div>
+							<input type="radio" [value]="false" name="supervisor"
+								[(ngModel)]="updateDetailQuizSession.IsLeaderMonitor"
+								[disabled]="updateDetailQuizSession.StatusID == 2  || updateDetailQuizSession.SessionStatusID !== 0"
+								(change)="UpdateQuizSession(updateDetailQuizSession, ['IsLeaderMonitor'])" #noSupervisor
+								kendoRadioButton />
+							<kendo-label [for]="noSupervisor" text="Không cho giám sát"></kendo-label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-4">
+					<div class="formSearch">
+						<kendo-label text="Giám sát toàn bộ đơn vị tham gia"></kendo-label>
+						<kendo-multiselect placeholder="Tìm theo nhân sự công ty" [data]="dataStaff"
+							textField="FirstName" valueField="Code" [valuePrimitive]="true"
+							[(ngModel)]="monitorAllParticipatingUnitsBinding" [filterable]="true"
+							[popupSettings]="{popupClass:'fmdd'}" [clearButton]="false" class="myCustomize"
+							(filterChange)="onChangeFilterStaff($event)" (removeTag)="deleteQuizRoleRemove($event, 2)"
+							[disabled]="updateDetailQuizSession.StatusID == 2  || updateDetailQuizSession.SessionStatusID !== 0"
+							(open)="getEmployeeData(2)">
+							<ng-template kendoMultiSelectTagTemplate let-dataItem>
+								<span class="template">{{dataItem.LastName }}
+									{{dataItem.MiddleName}}
+									{{dataItem.FirstName}}</span>
+							</ng-template>
+							<ng-template kendoMultiSelectItemTemplate let-dataItem>
+								<div (click)="valueStaffChange(dataItem, 2)" class="fixPopupHri010Detail"
+									style="width: 100%; height: 100%; display: flex; align-items: center; padding-left: 10px;">
+									<span class="template">{{dataItem.LastName }}
+										{{dataItem.MiddleName}}
+										{{dataItem.FirstName}}</span>
+								</div>
+							</ng-template>
+						</kendo-multiselect>
+					</div>
+				</div>
+				<div class="col-4">
+					<div class="formSearch">
+						<kendo-label text="Nhân sự chấm thi câu hỏi tự luận"></kendo-label>
+						<kendo-multiselect placeholder="Tìm theo nhân sự công ty" [data]="dataStaff"
+							textField="FirstName" valueField="Code" [valuePrimitive]="true"
+							[(ngModel)]="officerMarksEssayQuestionsBinding" [filterable]="true"
+							[popupSettings]="{popupClass:'fmdd'}" [clearButton]="false" class="myCustomize"
+							[disabled]="!isHaslQuestionEssay || updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0"
+							(filterChange)="onChangeFilterStaff($event)" (removeTag)="deleteQuizRoleRemove($event, 3)"
+							(open)="getEmployeeData(3)">
+							<ng-template kendoMultiSelectTagTemplate let-dataItem>
+								<span class="template">{{dataItem.LastName }}
+									{{dataItem.MiddleName}}
+									{{dataItem.FirstName}}</span>
+							</ng-template>
+							<ng-template kendoMultiSelectItemTemplate let-dataItem>
+								<div (click)="valueStaffChange(dataItem, 3)" class="fixPopupHri010Detail"
+									style="width: 100%; height: 100%; display: flex; align-items: center; padding-left: 10px;">
+									<span class="template">{{dataItem.LastName }}
+										{{dataItem.MiddleName}}
+										{{dataItem.FirstName}}</span>
+								</div>
+							</ng-template>
+						</kendo-multiselect>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--END CONFIGURING AUDIT PARTICIPATION ROLES -->
+
+	<!--START LIST OF PERSONNEL PARTICIPATING IN THE EVALUATION-->
+	<div id="myBlock" class="myblock" *ngIf="checkShowListJoin() && checkStep">
+
+		<!-- TITTLE -->
+		<div class="header header-2" style="overflow: auto;">
+			<app-search-filter-group placeholder="Nhân sự tham gia đánh giá"
+				label="DANH SÁCH NHÂN SỰ THAM GIA ĐỢT ĐÁNH GIÁ" (filterChange)="onSearchStaffJoinData($event)"
+				[fields]="['StaffName', 'PositionName', 'DepartmentName']">
+				<!-- [disabled]="updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0" -->
+			</app-search-filter-group>
+			<!-- <h1>danh sách nhân sự tham gia đợt đánh giá</h1> -->
+			<kendo-buttongroup>
+				<button kendoButton icon="plus" *ngIf="updateDetailQuizSession.IsAllStaff !== 0"
+					class="btn-hachi hachi-primary btn-add-staff"
+					(click)="getListQuizEmployee(); showDialogAddStaff = true"
+					[disabled]="updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0">thêm</button>
+				<button imageUrl="assets/img/icon/icon_play.svg" class="btn-hachi hachi-primary my-button btn-arise"
+					(click)="generateQuizRole()" kendoButton *ngIf="updateDetailQuizSession.IsAllStaff == 1"
+					[disabled]="updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0">
+					phát sinh nhân sự theo chức danh
+				</button>
+			</kendo-buttongroup>
+		</div>
+
+		<!-- LAYOUT -->
+		<div id="listStaffJoin" class="gird-layout">
+			<app-p-kendo-grid class="grid scrollable" [data]="listStaffJoinQuizSession | async" [scrollable]="'scroll'"
+				[hasMoreAction]="true" [showCheckbox]="false" [pageSizes]="pageSizes" [pageSize]="pageSize"
+				[skip]="gridState.skip" [take]="gridState.take" [selectable]="selectable"
+				[onPageChangeCallback]="onPageChangeCallback">
+				<kendo-grid-column field="Image" title="Họ và tên" [width]="400">
+					<ng-template kendoGridCellTemplate let-item>
+						<div class="imageAvt">
+							<img loading="lazy" src="{{item.ImageThumb == null ? 'assets/img/icon/icon-nonImageThumb.svg' : item.ImageThumb}}"
+								alt="" width="50" height="50">
+						</div>
+						<div class="group-infor">
+							<div style="color: #5A6276;">{{item.StaffName}}</div>
+							<div>{{item.StaffCode}} <span style="color: #BDC2D2" *ngIf="item.PositionName != null">|</span> {{item.PositionName}}</div>
+						</div>
+					</ng-template>
+				</kendo-grid-column>
+				<kendo-grid-column field="DepartmentName" title="Đơn vị công tác" [width]="220">
+					<ng-template kendoGridCellTemplate let-item>
+						<span [ngClass]="item.DepartmentName == null ? 'isNullData' : ''">
+							{{item.DepartmentName}}
+						</span>
+					</ng-template>
+				</kendo-grid-column>
+				<kendo-grid-column field="LocationName" title="Điểm làm việc" [width]="220">
+					<ng-template kendoGridCellTemplate let-item>
+						<span [ngClass]="item.LocationName == null ? 'isNullData' : ''">
+							{{item.LocationName}}
+						</span>
+					</ng-template>
+				</kendo-grid-column>
+				<kendo-grid-column field="GenderName" title="Giới tính" [width]="100">
+					<ng-template kendoGridCellTemplate let-item>
+						<span [ngClass]="item.GenderName == null ? 'isNullData' : ''">
+							{{item.GenderName}}
+						</span>
+					</ng-template>
+				</kendo-grid-column>
+				<kendo-grid-column field="Birthday" title="Năm sinh" [width]="150">
+					<ng-template kendoGridCellTemplate let-item>
+						<span [ngClass]="item.Birthday == null ? 'isNullData' : ''">
+							{{item.Birthday | date: 'yyyy'}}
+						</span>
+					</ng-template>
+				</kendo-grid-column>
+				<kendo-grid-column field="JoinDate" title="Ngày vào làm" [width]="150">
+					<ng-template kendoGridCellTemplate let-item>
+						<span [ngClass]="item.JoinDate == null ? 'isNullData' : ''">
+							{{item.JoinDate | date: 'dd/MM/yyyy'}}
+						</span>
+					</ng-template>
+				</kendo-grid-column>
+				<kendo-grid-column field="TypeDataName" title="Loại nhân viên" [width]="200"></kendo-grid-column>
+				<kendo-grid-column field="EmployeeStatusName" title="Tình trạng" [width]="150"></kendo-grid-column>
+				<kendo-grid-column [width]="40">
+					<ng-template kendoGridCellTemplate let-item>
+						<div>
+							<button icon="trash" (click)="deleteQuizRoleRemove(item, 4)" kendoButton
+								[disabled]="updateDetailQuizSession.StatusID == 2 || updateDetailQuizSession.SessionStatusID !== 0">
+								<!-- <span class="k-icon k-i-trash"></span> -->
+							</button>
+						</div>
+					</ng-template>
+				</kendo-grid-column>
+			</app-p-kendo-grid>
+		</div>
+	</div>
+	<!--END LIST OF PERSONNEL PARTICIPATING IN THE EVALUATION-->
+</div>
+
+
+<!-- START DIALOG -->
+<kendo-dialog class="dialog-delete" [minHeight]="250" [minWidth]="400" *ngIf="showDialog">
+	<kendo-dialog-titlebar>
+		<span class="k-icon k-i-warning"></span>
+		<span>{{showDialogChange.title}}</span>
+	</kendo-dialog-titlebar>
+
+	<div class="dialog-content">
+		<div class="firstContent">
+			{{showDialogChange.firstContent[0]}}<br>
+			<span>{{showDialogChange.firstContent[1]}}</span>
+		</div>
+		<div class="lastContent">
+			<span>{{showDialogChange.lastContent[0]}}</span> {{showDialogChange.lastContent[1]}} sẽ
+			<span>Không</span> thể
+			khôi phục lại.
+		</div>
+	</div>
+
+	<div class="dialog-footer">
+		<button (click)="notChangeDepartmentQuizSession()" kendoButton>{{showDialogChange.button[0]}}</button>
+		<button (click)="onClickDialog(action)" kendoButton
+			icon="{{showDialogChange.icon}}">{{showDialogChange.button[1]}}</button>
+	</div>
+</kendo-dialog>
+<!-- END DIALOG -->
+
+<kendo-dialog class="dialog-add-staff" [height]="575" [width]="900" *ngIf="showDialogAddStaff">
+	<div class="dialog-title">
+		<span>thêm nhân sư tham gia đánh giá</span>
+		<button kendoButton (click)="onCloseDialog()" class="btn-hachi hachi-primary btn-close-dialog"
+			icon="close"></button>
+	</div>
+
+	<div class="dialog-content-add">
+		<div class="header">
+			<app-search-filter-group placeholder="Tìm nhân sự tham gia đánh giá"
+				[fields]="['FirstName', 'MiddleName', 'LastName', 'StaffID', 'Position', 'DepartmentName','Fullname']"
+				(filterChange)="onSearchData($event)" (onReset)="onResetFilter()">
+			</app-search-filter-group>
+		</div>
+		<app-p-kendo-grid class="grid scrollable" [data]="dataStaffJoinDialogGird | async" [showCheckbox]="false"
+			[scrollable]="'scroll'" [hasMoreAction]="true" [pageSizes]="pageSizesStaff" [pageSize]="pasiSizeStaff"
+			[skip]="gridStateStaff.skip" [take]="gridStateStaff.take" [selectable]="selectable"
+			[onPageChangeCallback]="onPageStaffChangeCallback">
+			<kendo-grid-column field="Image" title="Họ và tên" [width]="350">
+				<ng-template kendoGridCellTemplate let-item>
+					<div class="imageAvtPopup">
+						<img loading="lazy" src="{{item.ImageThumb == null ? 'assets/img/icon/icon-nonImageThumb.svg' : item.ImageThumb}}"
+							alt="" width="40" height="40">
+					</div>
+					<div class="group-infor">
+						<div style="color: #5A6276;">{{item.LastName}} {{item.MiddleName}} {{item.FirstName}}</div>
+						<div>{{item.StaffID}} <span style="color: #BDC2D2">|</span>{{item.Position}}</div>
+					</div>
+				</ng-template>
+			</kendo-grid-column>
+			<kendo-grid-column field="DepartmentName" title="Đơn vị công tác" [width]="194">
+				<ng-template kendoGridCellTemplate let-item>
+					<span>{{item.DepartmentName}}</span>
+				</ng-template>
+			</kendo-grid-column>
+			<kendo-grid-column field="LocationName" title="Điểm làm việc" [width]="194">
+				<ng-template kendoGridCellTemplate let-item>
+					<span>{{item.LocationName}}</span>
+				</ng-template>
+			</kendo-grid-column>
+			<kendo-grid-column field="JoinDate" title="Ngày vào làm" [width]="123">
+				<ng-template kendoGridCellTemplate let-item>
+					<span>
+						{{item.JoinDate | date: 'dd/MM/yyyy'}}
+					</span>
+				</ng-template>
+			</kendo-grid-column>
+			<kendo-grid-column field="TypeDataName" title="Loại nhân viên" [width]="200">
+				<ng-template kendoGridCellTemplate let-item>
+					<span>{{item.TypeDataName}}</span>
+				</ng-template>
+			</kendo-grid-column>
+			<kendo-grid-column>
+				<ng-template kendoGridCellTemplate let-item>
+					<div>
+						<button kendoButton icon="plus" class="btn-hachi hachi-primary"
+							(click)="valueStaffChange(item, 4)"></button>
+					</div>
+				</ng-template>
+			</kendo-grid-column>
+		</app-p-kendo-grid>
+	</div>
+</kendo-dialog>

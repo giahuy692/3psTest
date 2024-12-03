@@ -1,0 +1,453 @@
+<!--START DRAWER CONTAINER RIGHT-->
+<kendo-drawer-container id="drawerContainerRight">
+
+
+	<!-- START DRAWER RIGHT -->
+	<kendo-drawer id="drawerRight" #drawerRight mode="overlay" position="end" [expanded]="false"
+		[(autoCollapse)]="isautoCollapse" (collapse)="onCollapse()">
+		<ng-template kendoDrawerHeaderTemplate>
+
+			<!-- TITLE CONTROL-->
+			<div class="title">
+				<span
+					*ngIf="btnClicked == department || btnClicked == departmentChild || btnClicked == departmentFix || btnClicked == departmentView">
+					<img loading="lazy" src="assets/img/icon/icon_departmentDarkGreen.svg" alt="">
+				</span>
+				<span *ngIf="btnClicked == position || btnClicked == positionFix || btnClicked == positionView">
+					<img loading="lazy" src="assets/img/icon/icon_userDarkGreen.svg" alt="">
+				</span>
+				{{btnClicked == department || btnClicked == departmentFix || btnClicked == departmentView ? 'THÔNG TIN
+				ĐƠN VỊ'
+				: btnClicked == departmentChild ? 'THÔNG TIN ĐƠN VỊ CON'
+				: btnClicked == position || btnClicked == positionFix || btnClicked == positionView ? 'THÔNG TIN CHỨC
+				DANH' : ''}}
+			</div>
+
+			<!--START DRAWER DEPARTMENT-->
+			<!-- INPUT CONTROL -->
+			<div class="formControl"
+				*ngIf="btnClicked == department || btnClicked == departmentChild || btnClicked == departmentFix || btnClicked == departmentView">
+				<!--Tên đơn vị-->
+				<kendo-label text="Tên đơn vị"> <span class="impose"> (*)</span>
+					<app-p-textbox [propName]="'Department'" [(ngModel)]="newDepartment.Department"
+						[disabled]="btnClicked == departmentView">
+					</app-p-textbox>
+					<!-- <kendo-textbox [(ngModel)]="newDepartment.Department" [disabled]="btnClicked == departmentView"></kendo-textbox> -->
+				</kendo-label>
+
+				<div class="group-control">
+					<!--Mã đơn vị-->
+					<kendo-label text="Mã đơn vị"> <span class="impose"> (*)</span>
+						<app-p-textbox [width]="145" [propName]="'DepartmentID'"
+							[(ngModel)]="newDepartment.DepartmentID" [disabled]="btnClicked == departmentView">
+						</app-p-textbox>
+						<!-- <kendo-textbox [style.width.px]="145" [(ngModel)]="newDepartment.DepartmentID"
+							[disabled]="btnClicked == departmentView"></kendo-textbox> -->
+					</kendo-label>
+
+					<!--Tên viết tắt-->
+					<kendo-label text="Tên viết tắt">
+						<app-p-textbox [propName]="'Brieft'" [(ngModel)]="newDepartment.Brieft"
+							[disabled]="btnClicked == departmentView">
+						</app-p-textbox>
+						<!-- <kendo-textbox [(ngModel)]="newDepartment.Brieft" [disabled]="btnClicked == departmentView"></kendo-textbox> -->
+					</kendo-label>
+				</div>
+
+				<!--Đơn vị trực thuộc-->
+				<kendo-label text="Đơn vị trực thuộc">
+					<!-- <kendo-dropdownlist [data]="listDerpartmentDropdown" textField="Department" valueField="Code"
+						[valuePrimitive]="true" [(ngModel)]="newDepartment.ParentID"
+						[popupSettings]="{appendTo:'component'}" (valueChange)="valueDepartmentChange($event)"
+						[defaultItem]="defaultItemDepartment" [disabled]="btnClicked == departmentView">
+					</kendo-dropdownlist> -->
+					<kendo-dropdowntree kendoDropDownTreeExpandable class="classRemoveDropdowntree"
+						[kendoDropDownTreeHierarchyBinding]="listDerpartmentDropdown" textField="Department"
+						valueField="Code" childrenField="ListDepartment" [value]="dataItemBding" [filterable]="true"
+						[expandOnFilter]="true" [popupSettings]="{ appendTo: 'component' }"
+						(valueChange)="valueDropdowntreeChange($event)" [disabled]="btnClicked == departmentView">
+						<ng-template kendoDropDownTreeNodeTemplate let-dataItem>
+							<!-- <div [ngClass]="{'nullItem': dataItem.Code == null}"> -->
+							<img loading="lazy" [ngClass]="{'nullItem': dataItem.Code == null}"
+								src="assets/img/icon/icon_departmentGray.svg" />
+							{{ dataItem.Department }}
+							<!-- </div> -->
+						</ng-template>
+					</kendo-dropdowntree>
+				</kendo-label>
+
+				<!--Điểm làm việc-->
+				<kendo-label text="Điểm làm việc"> <span class="impose"> (*)</span>
+					<kendo-multiselect (filterChange)="onFilterLocationChange($event)" [data]="listLocationDropdown"
+						[filterable]="true" textField="LocationName" valueField="LocationID"
+						[(ngModel)]="newDepartment.ListLocation" placeholder="-- Chọn --"
+						[popupSettings]="{appendTo:'component'}" [clearButton]="false" [filterable]="true"
+						[disabled]="btnClicked == departmentView">
+					</kendo-multiselect>
+				</kendo-label>
+
+				<!--Điện thoại-->
+				<kendo-label text="Điện thoại">
+					<kendo-maskedtextbox mask="000 000 0000" [(ngModel)]="newDepartment.Phone"
+						[disabled]="btnClicked == departmentView"></kendo-maskedtextbox>
+				</kendo-label>
+
+				<!--Fax-->
+				<kendo-label text="Fax">
+					<kendo-maskedtextbox mask="000 000 0000" [(ngModel)]="newDepartment.Fax"
+						[disabled]="btnClicked == departmentView"></kendo-maskedtextbox>
+				</kendo-label>
+
+				<!--Chức năng, nhiệm vụ-->
+				<kendo-label text="Chức năng, nhiệm vụ">
+					<app-p-textarea [(ngModel)]="newDepartment.Remark" [propName]="'Remark'"
+						[disabled]="btnClicked == departmentView"></app-p-textarea>
+					<!-- <kendo-textarea [(ngModel)]="newDepartment.Remark" resizable="none" [style.height.px]="90"
+						[disabled]="btnClicked == departmentView">
+					</kendo-textarea> -->
+				</kendo-label>
+
+				<!--Mức độ ưu tiên-->
+				<kendo-label text="Thứ tự">
+					<app-p-numeric-textbox [propName]="'OrderBy'" [min]="1" [(ngModel)]="newDepartment.OrderBy"
+						[spinners]="true" [disabled]="btnClicked == departmentView"></app-p-numeric-textbox>
+				</kendo-label>
+
+				<!--Tình trạng-->
+				<kendo-label text="Tình trạng">
+					<kendo-dropdownlist [data]="listStatusDropdown" textField="StatusName" valueField="OrderBy"
+						[popupSettings]="{appendTo:'component'}" [valuePrimitive]="true"
+						[(ngModel)]="newDepartment.StatusID" (valueChange)="setValueStatus($event)"
+						[itemDisabled]="itemDisabled">
+						<!-- [itemDisabled]="isItemDisabled" -->
+					</kendo-dropdownlist>
+				</kendo-label>
+				<i class="impose">(*) Thông tin bắt buộc nhập</i>
+
+			</div>
+			<!--END DRAWER DEPARTMENT-->
+
+			<!--START DRAWER POSITION-->
+			<!-- INPUT CONTROL -->
+			<div class="formControl"
+				*ngIf="btnClicked == position || btnClicked == positionFix || btnClicked == positionView">
+				<!--Tên chức danh-->
+				<kendo-label text="Tên chức danh"> <span class="impose"> (*)</span>
+					<app-p-textbox [propName]="'Position'" [(ngModel)]="newPosition.Position"
+						[disabled]="btnClicked == positionView">
+					</app-p-textbox>
+					<!-- <kendo-textbox [(ngModel)]="newPosition.Position" [disabled]="btnClicked ==7"></kendo-textbox> -->
+				</kendo-label>
+
+				<div class="group-control">
+					<!--Mã chức danh-->
+					<kendo-label text="Mã chức danh"> <span class="impose"> (*)</span>
+						<app-p-textbox [width]="145" [propName]="'PositionID'" [(ngModel)]="newPosition.PositionID"
+							[disabled]="btnClicked == positionView">
+						</app-p-textbox>
+						<!-- <kendo-textbox [style.width.px]="145" [(ngModel)]="newPosition.PositionID"
+							[disabled]="btnClicked == positionView"></kendo-textbox> -->
+					</kendo-label>
+
+					<!--Là trưởng đơn vị-->
+					<div class="divCheckbox">
+						<kendo-label class="fmCb" text="Là trưởng đơn vị" [for]="IsUnitLeader">
+							<!-- (click)="getListPosition()" -->
+							<input type="checkbox" size="small" [(ngModel)]="newPosition.IsLeader" #IsUnitLeader
+								(change)="getListPosition()" kendoCheckBox
+								[disabled]="newPosition.ReportTo > 0 || btnClicked == positionView" />
+						</kendo-label>
+						<kendo-label class="fmCb" text="Là q.lý điểm làm việc" [for]="IsManagerLocation">
+							<input type="checkbox" size="small" [(ngModel)]="newPosition.IsSupervivor"
+								#IsManagerLocation kendoCheckBox [disabled]="btnClicked == positionView" />
+						</kendo-label>
+					</div>
+				</div>
+
+				<!--Đơn vị trực thuộc-->
+				<kendo-label text="Đơn vị trực thuộc">
+					<kendo-dropdowntree kendoDropDownTreeExpandable class="classRemoveDropdowntree"
+						[kendoDropDownTreeHierarchyBinding]="listDerpartmentDropdown" textField="Department"
+						valueField="Code" childrenField="ListDepartment" [value]="dataItemBdingPosition"
+						[filterable]="true" [expandOnFilter]="true" [popupSettings]="{ appendTo: 'component' }"
+						(valueChange)="valueDropdowntreeChange($event)" [disabled]="btnClicked == positionView">
+						<ng-template kendoDropDownTreeNodeTemplate let-dataItem>
+							<img loading="lazy" src="assets/img/icon/icon_departmentGray.svg" />
+							{{ dataItem.Department }}
+						</ng-template>
+					</kendo-dropdowntree>
+					<!-- <kendo-dropdownlist [data]="listDerpartmentDropdown" textField="Department" valueField="Code"
+						[valuePrimitive]="true" [(ngModel)]="newPosition.DepartmentID"
+						[popupSettings]="{appendTo:'component'}" (valueChange)="valueDepartmentChange($event)"
+						[defaultItem]="defaultItemDepartment" [disabled]="btnClicked == positionView">
+					</kendo-dropdownlist> -->
+				</kendo-label>
+
+				<!--Chức danh quản lý hành chính-->
+				<kendo-label text="Chức danh quản lý hành chính">
+					<kendo-dropdownlist [data]="listPositionsDropdown" textField="Position" valueField="Code"
+						[valuePrimitive]="true" [(ngModel)]="newPosition.ReportTo"
+						[popupSettings]="{appendTo:'component'}" (valueChange)="valuePositionChange($event)"
+						[defaultItem]="{Code: null, Position: '-- Chọn --'}" [disabled]="btnClicked == positionView">
+					</kendo-dropdownlist>
+				</kendo-label>
+
+				<!--Phân nhóm-->
+				<kendo-label text="Phân nhóm"> <span class="impose"> (*)</span>
+					<kendo-dropdownlist [data]="listPositionGroupDropdown" textField="ListName" valueField="Code"
+						[valuePrimitive]="true" [popupSettings]="{appendTo:'component'}"
+						[defaultItem]="{Code: null, ListName: '-- Chọn --'}" [(ngModel)]="newPosition.GroupPosition"
+						(valueChange)="valueGroupPositionChange($event)" [disabled]="btnClicked == positionView">
+					</kendo-dropdownlist>
+				</kendo-label>
+
+				<!--Vai trò sử dụng tài nguyên hệ thống-->
+				<kendo-label text="Vai trò sử dụng tài nguyên hệ thống"> <span class="impose"> (*)</span>
+					<button kendoButton class="btn-none" icon="plus" (click)="addPositionRole()"
+						[disabled]="btnClicked == positionView"></button>
+					<kendo-multiselect (filterChange)="onFilterUseSysChange($event)" [data]="listPositionRolesDropdown"
+						[filterable]="true" textField="RoleName" valueField="Code" [(ngModel)]="listOfRoles"
+						placeholder="-- Chọn --" [popupSettings]="{appendTo:'component'}" [clearButton]="false"
+						[disabled]="btnClicked == positionView ">
+					</kendo-multiselect>
+				</kendo-label>
+
+				<!--Mức độ ưu tiên-->
+				<kendo-label text="Thứ tự">
+					<app-p-numeric-textbox [propName]="'OrderBy'" [min]="1" [(ngModel)]="newPosition.OrderBy"
+						[spinners]="true" [disabled]="btnClicked == positionView"></app-p-numeric-textbox>
+				</kendo-label>
+
+				<!--Tình trạng-->
+				<kendo-label text="Tình trạng">
+					<kendo-dropdownlist [data]="listStatusDropdown" textField="StatusName" valueField="OrderBy"
+						[popupSettings]="{ animate: true, appendTo: 'component' }" [valuePrimitive]="true"
+						[(ngModel)]="newPosition.StatusID" (valueChange)="setValueStatus($event)"
+						[itemDisabled]="itemDisabled">
+						<!-- [itemDisabled]="isItemDisabled" -->
+						<!-- <ng-template kendoDropDownListItemTemplate let-dataItem>
+                                                        <span [ngClass]="isNoneClass(dataItem, positionTemp.StatusID)">
+                                                                {{ dataItem.StatusName }}
+                                                        </span>
+                                                </ng-template> -->
+					</kendo-dropdownlist>
+				</kendo-label>
+
+				<i class="impose">(*) Thông tin bắt buộc nhập</i>
+			</div>
+			<!--END DRAWER POSITION-->
+
+
+			<!-- BUTTON CONTROL -->
+			<div class="btnControl">
+				<button kendoButton class="btn-hachi hachi-primary hachi-secondary"
+					(click)="drawerRight.toggle();">ĐÓNG</button>
+				<button kendoButton class="btn-hachi hachi-primary" (click)="btnClicked == department || btnClicked == departmentChild || btnClicked == departmentFix || btnClicked == departmentView ? onUpdateDepartmentDrawer() : 
+					btnClicked == position || btnClicked == positionFix || btnClicked == positionView ? onUpdatePosition() : ''">
+					{{btnClicked == department || btnClicked == departmentChild || btnClicked == position ? 'THÊM MỚI' :
+					'CẬP NHẬT'}}
+				</button>
+			</div>
+		</ng-template>
+	</kendo-drawer>
+	<!-- END DRAWER RIGHT -->
+
+	<!-- START DRAWER CONTENT RIGHT -->
+	<kendo-drawer-content id="drawerContentRight">
+
+		<!-- START FUNCTIONBAR  -->
+		<div class="header header-2">
+
+			<!-- FORM SEARCH -->
+			<app-p-kendo-breadcrumb (loadData)="onReset()" style="min-width: 430px;"></app-p-kendo-breadcrumb>
+
+			<!-- BUTTON GROUP -->
+			<kendo-buttongroup class="ml-2">
+				<button kendoButton class="btn-import" icon="export" *ngIf="isCanCreate || isAllPers"
+					(click)="onImportExcel()">
+				</button>
+				<button kendoButton class="btn-import" icon="import" *ngIf="isCanCreate || isAllPers"
+					(click)="onDownloadExcel()">
+					Template
+				</button>
+				<button kendoButton class="btn-hachi hachi-primary" imageUrl="assets/img/icon/icon_department.svg"
+					(click)="drawer = drawerRight; addNewItem(department)"
+					*ngIf=" isSelectedPosition && (isCanCreate || isAllPers)">
+					THÊM MỚI ĐƠN VỊ
+				</button>
+				<button kendoButton class="btn-hachi hachi-primary" imageUrl="assets/img/icon/icon_department.svg"
+					(click)="drawer = drawerRight; addNewItem(departmentChild)"
+					*ngIf=" isSelectedItem && !isSelectedItem.GroupPosition && (isCanCreate || isAllPers)">
+					THÊM MỚI ĐƠN VỊ CON
+				</button>
+				<button kendoButton class="btn-hachi hachi-primary" imageUrl="assets/img/icon/icon_user.svg"
+					(click)="drawer = drawerRight; addNewItem(position)"
+					*ngIf="isSelectedItem  && (isCanCreate || isAllPers)">
+					THÊM MỚI CHỨC DANH
+				</button>
+			</kendo-buttongroup>
+		</div>
+		<!-- END FUNCTIONBAR  -->
+
+		<div id="functionbar" class="header header-2">
+
+			<!-- SEARCH FILTER -->
+			<app-search-filter-group placeholder="Tìm theo mã, chức danh" (onReset)="onResetFilter($event)"
+				[fields]="['DepartmentID','Department','Position','PositionID']" [ignoreCase]="true"
+				(filterChange)="onSearchDataDepartment($event)">
+			</app-search-filter-group>
+
+			<!-- BUTTON GROUP -->
+			<div class="buttonGroup ml-4">
+				<!-- <app-checkbox-button-group title="Đang soạn thảo" [checked]="isNew" (selectedChange)="isNew = $event"
+					(filterChange)="applyFilter($event)" field="StatusID" operator="eq" value="0">
+				</app-checkbox-button-group>
+				<app-checkbox-button-group title="Gửi duyệt" [checked]="isSent" (selectedChange)="isSent = $event"
+					(filterChange)="applyFilter($event)" field="StatusID" operator="eq" value="1">
+				</app-checkbox-button-group>
+				<app-checkbox-button-group title="Đã duyệt" [checked]="isApproved"
+					(selectedChange)="isApproved = $event" (filterChange)="applyFilter($event)"
+					field="StatusID" operator="eq" value="2">
+				</app-checkbox-button-group>
+				<app-checkbox-button-group title="Ngưng áp dụng" [checked]="isStoped"
+					(selectedChange)="isStoped = $event" (filterChange)="applyFilter($event)"
+					field="StatusID" operator="eq" value="3">
+				</app-checkbox-button-group> -->
+				<app-checkbox-button-group title="Đang soạn thảo" (selectedChange)="applyFilter($event,'isNew')"
+					[selected]="isNew" [checked]="isNew">
+				</app-checkbox-button-group>
+				<app-checkbox-button-group title="Gửi duyệt" (selectedChange)="applyFilter($event,'isSent')"
+					[selected]="isSent" [checked]="isSent">
+				</app-checkbox-button-group>
+				<app-checkbox-button-group title="Đã duyệt" (selectedChange)="applyFilter($event,'isApproved')"
+					[selected]="isApproved" [checked]="isApproved">
+				</app-checkbox-button-group>
+				<app-checkbox-button-group title="Ngưng áp dụng" (selectedChange)="applyFilter($event,'isStoped')"
+					[selected]="isStoped" [checked]="isStoped">
+				</app-checkbox-button-group>
+
+				<!-- <app-p-file-button-group></app-p-file-button-group> -->
+
+				<!-- <app-checkbox-button-group title="test value"
+					(filterChange)="applyFilter($event)" field="StatusID"
+					value="2">
+				</app-checkbox-button-group> -->
+			</div>
+		</div>
+
+		<!-- START TREE LIST GIRD -->
+		<!-- [initiallyExpanded]="true" kendoTreeListExpandable -->
+		<kendo-treelist [data]="rootData" [fetchChildren]="fetchChildren" [hasChildren]="hasChildren"
+			kendoTreeListSelectable [selectable]="settingsTreelist" [loading]="loading"
+			(selectionChange)="onSelectionChange($event)" [initiallyExpanded]="true" kendoTreeListExpandable>
+			<!-- [(selectedItems)]="indexSeleced" itemKey="Code" -->
+
+			<!-- COLUMN 1 -->
+			<kendo-treelist-span-column [expandable]="true">
+				<kendo-treelist-column field="name" [width]="'400'"></kendo-treelist-column>
+				<ng-template kendoTreeListCellTemplate let-dataItem>
+
+					<ng-template #positionTemplate>
+						<!-- <span [ngClass]="getCellClass(dataItem)"></span> -->
+						<span class="iconImg">
+							<img loading="lazy" src="assets/img/icon/icon_userGray.svg" alt="">
+						</span>
+						<span>{{ dataItem.Position }}</span>
+						<span class="codeData">{{ dataItem.PositionID }}</span>
+					</ng-template>
+
+					<ng-container *ngIf="isStructure(dataItem); else positionTemplate">
+
+						<span class="iconImg" [ngClass]="dataItem.ParentID == null ? 'bigItem' : ''">
+							<img loading="lazy" src="assets/img/icon/icon_departmentGray.svg" alt="">
+						</span>
+						<span [ngClass]="'nameUnit'">{{ dataItem.Department }}</span>
+						<span class="codeData">{{ dataItem.DepartmentID }}</span>
+
+					</ng-container>
+				</ng-template>
+			</kendo-treelist-span-column>
+
+			<!-- COLUMN 2 -->
+			<kendo-treelist-column field="IsLeader" class="col-Leader" [width]="'90'">
+				<ng-template kendoTreeListCellTemplate let-dataItem>
+
+					<span>
+						{{ dataItem.IsLeader ? 'Trưởng đơn vị' : ''}}
+
+					</span>
+
+
+
+				</ng-template>
+			</kendo-treelist-column>
+			<!-- COLUMN3 -->
+			<kendo-treelist-column field="IsSupervivor" class="col-Supervivor" [width]="'90'">
+				<ng-template kendoTreeListCellTemplate let-dataItem>
+
+					<span>
+						{{ dataItem.IsSupervivor ? 'Q.lý điểm làm việc' : ''}}
+					</span>
+				</ng-template>
+			</kendo-treelist-column>
+
+			<kendo-treelist-column class="col_tinhTrang" field="StatusID" [width]="'80'">
+				<ng-template kendoTreeListCellTemplate let-dataItem>
+					<div [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID">
+					</div>
+				</ng-template>
+			</kendo-treelist-column>
+
+			<!-- COLUMN 3 -->
+			<!-- popup -->
+			<kendo-treelist-column field="id" [width]="41">
+				<ng-template kendoTreeListCellTemplate let-dataItem>
+					<div class="content-dropdown">
+						<kendo-dropdownbutton #dropdownlisttree
+							[popupSettings]="{ animate: true, popupClass: 'fmDropdown', align: 'right', appendTo: 'component' }"
+							[data]="itemsDropdownTreelist" (focus)="checkHasChild(dataItem)"
+							(click)="dropdownlisttreeTS = dropdownlisttree; ddltFormat($event)"
+							(itemClick)="drawer = drawerRight; selectionDropdownGirdChange($event, dataItem);">
+							<span class=" k-icon k-i-more-horizontal"></span>
+						</kendo-dropdownbutton>
+					</div>
+				</ng-template>
+			</kendo-treelist-column>
+		</kendo-treelist>
+		<!-- END TREE LIST GIRD -->
+	</kendo-drawer-content>
+	<!-- END DRAWER CONTENT RIGHT -->
+</kendo-drawer-container>
+<!--END DRAWER CONTAINER RIGHT-->
+
+<!-- START DIALOG -->
+<kendo-dialog class="dialog-delete" [minHeight]="250" [minWidth]="400" *ngIf="openedDialog">
+	<kendo-dialog-titlebar>
+		<span class="k-icon k-i-warning"></span>
+		xóa {{dialog.obj}}
+	</kendo-dialog-titlebar>
+
+	<div class="dialog-content">
+		<div>
+			Bạn chắc chắn muốn xóa {{dialog.obj}}
+			<h4>{{dialog.item}}</h4>
+		</div>
+		<div>
+			<span>{{dialog.obj}}</span> bị xóa sẽ <span>Không</span> thể khôi phục lại.
+		</div>
+	</div>
+
+	<div class="dialog-footer">
+		<button kendoButton (click)="openedDialog = false">Không xóa</button>
+		<button kendoButton icon="trash" *ngIf="btnClicked == positionDel"
+			(click)="openedDialog = false; deletePosition(selectedItemDepartmentTree)">
+			xóa {{dialog.obj}}
+		</button>
+		<button kendoButton icon="trash" *ngIf="btnClicked == departmentDel"
+			(click)="openedDialog = false; deleteDepartment(selectedItemDepartmentTree)">
+			xóa {{dialog.obj}}
+		</button>
+	</div>
+</kendo-dialog>
+<!-- END DIALOG -->
+<app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>

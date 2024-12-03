@@ -1,0 +1,126 @@
+@import "../../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    .config-product-label{
+        max-height: 600px;
+        display: flex;
+        flex-direction: column;
+        margin: 10px 0;
+        .k-dialog{
+            height: 200px;
+            .k-window-content{
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              p{
+                font-size: 18px;
+              }
+            }
+          }
+        .section{
+            overflow: auto;
+            .title{
+                display: flex;
+                align-items: center;
+                padding-bottom: 5px;
+                font-size: 16px;
+                font-weight: 700;
+                b{
+                    font-size: 13px;
+                    padding-left: 30px;
+                }
+            }
+            .section-grid {
+                min-width: 1100px;
+                background-color: white;
+                display: flex;
+                // justify-content: space-between;
+                padding: 15px;
+                .grid-item {
+                    padding-bottom: 5px;
+                    .label{
+                        font-weight: 700;
+                        color: #959DB3;
+                       padding-bottom: 5px;
+                    }
+                    .k-textbox,.customized-textarea{
+                        margin-bottom: 10px ;
+                        width: 100%;
+                    }
+                    .customized-textarea{
+                        height: 100px;
+                    }
+                }
+                .column_1,.column_2,.column_3{
+                    width: 350px;
+                }
+                .item1{
+                    .active{
+                        background-color: white !important;
+                        border: 1px solid green !important;
+                        color: black !important;
+                        .k-checkbox{
+                            border: 1px solid $dark-green;
+                            &::before{
+                                color: $white;
+                            }
+                        }&:hover{
+                            .k-checkbox{
+                                border: 1px solid $dark-green;
+                                &::before{
+                                    color: $dark-green;
+                                }
+                            }
+                        }
+                        
+                    }
+                    .font{
+                        padding-bottom: 6px;
+                        cursor: pointer;
+                    }
+                    .item1_1{
+                        display: flex;
+                       .mautem{
+                        min-width: 100px
+                       }
+                    }
+                    .item2_1{
+                        padding: 5px;
+                        border: 1px solid;
+                        border-color: rgba(0, 0, 0, 0.08);
+                        border-radius: 3px;
+                        align-items: center;
+                        .diengiai{
+                            min-width: 250px;
+                        }
+                        .icon_item{
+                            span{
+                                cursor: default;
+                                height: 0px;
+                                width: 0px;
+                                border: none;
+                                margin-left: 2px;
+                            }
+                        }
+                        .k-checkbox{
+                            margin-right: 10px;
+                        }
+                        &:hover{
+                            background-color: $dark-green;
+                            color: $white;
+                            .k-checkbox{
+                                border: 1px solid $dark-green;
+                                &::before{
+                                    color: $white;
+                                }
+                            }
+                            
+                        }
+                    }
+                }
+               
+               
+            }
+        }
+    }
+}

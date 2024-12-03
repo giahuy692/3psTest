@@ -1,0 +1,30 @@
+<kendo-textarea
+    [(ngModel)]="input" 
+    (ngModelChange)="onInputValueChange($event)"
+    class="customized-textarea"  
+    [disabled]="disabled" 
+    [readonly]="readonly"
+    [tabindex]="tabindex"
+    ngDefaultControl 
+    [maxlength]="maxlength" 
+    [clearButton]="clearButton" 
+    [placeholder]="isPlaceHolderEditor ? '' : placeHolder"
+    [autoSize]="autoSize"
+    [required]="required"
+    [resizable]="resizable"
+    (blur)="onBlur($event)"
+    (focus)="onFocus()"
+    (keydown.Enter)="onKeyDownEnter($event)"
+    (dblclick)="onDbClick($event)"
+    >
+    <kendo-textarea-suffix *ngIf="maxlength || spanSuffixIcon || svgSuffixIcon">
+        <span *ngIf="maxlength" class="counter">{{ counterString }}</span>
+        <span *ngIf="spanSuffixIcon" class="k-icon {{spanSuffixIcon}}"></span>
+        <kendo-svg-icon *ngIf="svgSuffixIcon" [icon]="svgSuffixIcon"></kendo-svg-icon>
+    </kendo-textarea-suffix>
+</kendo-textarea>
+<ng-container *ngIf="isPlaceHolderEditor">
+    <div class="kendo-textarea-mock-placeHolder" *ngIf="input == ''" [innerHTML]="placeHolderHtml"></div>
+    <!-- <div class="kendo-textarea-mock-placeHolder" *ngIf="input == ''" [innerHTML]="placeHolder"></div> -->
+    <!-- <div class="kendo-textarea-mock-placeHolder" *ngIf="input == ''">{{placeHolder}}</div> -->
+</ng-container>

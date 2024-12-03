@@ -1,0 +1,180 @@
+<div class="mar009-banner-detail">
+  <div class="header header-1">
+    <div class="nav-btn nav-breadcrumb">
+      <div class="breadcrumb-item">
+        <!-- (click)="gotoOnlineOrderList()" -->
+        WEBSITE
+      </div>
+      <div class="breadcrumb-chevron">
+        <span class="k-icon k-i-arrow-chevron-right"></span>
+      </div>
+      <div class="breadcrumb-item">
+        QUẢN LÝ BANNER
+      </div>
+      <div class="breadcrumb-chevron">
+        <span class="k-icon k-i-arrow-chevron-right"></span>
+      </div>
+      <div class="breadcrumb-item">
+        {{ isAdd ? 'TẠO MỚI' : 'CHI TIẾT' }} BANNER
+      </div>
+    </div>
+
+    <!-- <div class="nav-file nav-btn">
+      <div class="file-btn-group">
+        <button kendoButton id="onPrintBtn" class="k-button" [icon]="'print'" 
+          [disabled]="isLockAll || isAdd" title="In Chi tiết Banner" (click)="print()"></button>
+      </div>
+    </div> -->
+
+    <div class="nav-btn nav-crud">
+      <button kendoButton class="crud-btn k-button updateStatusBtn"
+        *ngIf="(isToanQuyen || isAllowedToCreate) && !isAdd && (banner.StatusID == 0 || banner.StatusID == 4)"
+        [icon]="'redo'" (click)="updateStatus(1)">
+        GỬI DUYỆT
+      </button>
+
+      <button kendoButton class="crud-btn k-button updateStatusBtn"
+        *ngIf="(isToanQuyen || isAllowedToVerify) && !isAdd && (banner.StatusID == 1 || banner.StatusID == 3)"
+        [icon]="'check-outline'" (click)="updateStatus(2)">
+        PHÊ DUYỆT
+      </button>
+
+      <button kendoButton class="crud-btn k-button updateStatusBtn red"
+        *ngIf="(isToanQuyen || isAllowedToVerify) && !isAdd && (banner.StatusID == 1 || banner.StatusID == 3)"
+        [icon]="'undo'" (click)="updateStatus(4)">
+        TRẢ VỀ
+      </button>
+
+      <button kendoButton class="crud-btn k-button updateStatusBtn red"
+        *ngIf="(isToanQuyen || isAllowedToVerify) && !isAdd && banner.StatusID == 2" [icon]="'minus-outline'"
+        (click)="updateStatus(3)">
+        NGƯNG HIỂN THỊ
+      </button>
+
+      <button kendoButton class="crud-btn k-button onDeleteBtn" [icon]="'trash'"
+        *ngIf="(isToanQuyen || isAllowedToCreate) && banner.StatusID == 0 && !isAdd" (click)="onDelete()">
+        XÓA BANNER
+      </button>
+
+      <div class="nav-btn nav-crud" *ngIf="isToanQuyen || isAllowedToCreate">
+        <button kendoButton class="k-button onAddBtn" [icon]="'plus'" (click)="createNew()">
+          THÊM MỚI BANNER</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="sections">
+      <div class="section" id="thongtinkhuyenmaiTbl">
+        <div class="title">THÔNG TIN BANNER
+
+          <span class="languages">
+            <span class="borderRight vietnamese" [ngClass]="{'active': curLanguage == 1 }"
+              (click)="changeLanguage(1)">Tiếng Việt</span>
+            <span class="borderRight japanese" [ngClass]="{'active': curLanguage == 2 }"
+              (click)="changeLanguage(2)">日本語</span>
+            <span class="english" [ngClass]="{'active': curLanguage == 3 }" (click)="changeLanguage(3)">English</span>
+          </span>
+        </div>
+
+        <div class="section-grid">
+          <div class="grid-item item1_1">
+            <div class="label">Link tới trang</div>
+            <kendo-textbox type="text" class="k-textbox" [disabled]="isLockAll" [(ngModel)]="banner.URLLink"
+              (keydown.Enter)="$event.target.blur()" (blur)="onTextboxLoseFocus('URLLink')">
+            </kendo-textbox>
+          </div>
+
+          <div class="grid-item item1_2">
+            <div class="grid-item item1_2_1">
+              <div class="label">Thứ tự hiển thị</div>
+              <kendo-numerictextbox type="text" class="k-textbox" format="#,0" [min]="0" [disabled]="isLockAll"
+                [(ngModel)]="banner.OrderBy" (keydown.Enter)="$event.target.blur()"
+                (blur)="onTextboxLoseFocus('OrderBy')">
+              </kendo-numerictextbox>
+            </div>
+
+            <div class="grid-item item1_2_2">
+              <div class="label">Phân nhóm Banner
+                <a class="text" (click)="shownAtWebpage()" *ngIf="banner.BannerGroup != null">
+                  <i>hiển thị ở trang</i></a>
+              </div>
+              <kendo-dropdownlist [data]="listBannerGroup" [textField]="'BannerGroup'" [valueField]="'Code'"
+                [value]="bannerGroup" (valueChange)="onDropdownlistClick($event, 'BannerGroup')" [disabled]="isLockAll"
+                [popupSettings]="{appendTo:'component'}">
+              </kendo-dropdownlist>
+            </div>
+
+            <div class="grid-item item1_2_3">
+              <div class="label">Thời gian hiển thị</div>
+
+              <div class="d-flex">
+                <kendo-datepicker [format]="'dd/MM/yyyy'" placeholder="dd/mm/yyyy" [(ngModel)]="StartDate"
+                  [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }" [disabled]="isLockAll"
+                  (keydown.Enter)="$event.target.blur()" (blur)="onDatepickerChange('StartDate', $event)"
+                  [max]="EndDate">
+                </kendo-datepicker>
+
+                <kendo-datepicker [format]="'dd/MM/yyyy'" placeholder="dd/mm/yyyy" [(ngModel)]="EndDate"
+                  [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }" [disabled]="isLockAll"
+                  (keydown.Enter)="$event.target.blur()" (blur)="onDatepickerChange('EndDate', $event)"
+                  [min]="StartDate">
+                </kendo-datepicker>
+              </div>
+            </div>
+
+            <div class="grid-item item1_2_4">
+              <div class="label">
+                <input type="checkbox" class="k-checkbox" [disabled]="isLockAll" [checked]="banner.IsDefault"
+                  (click)="clickCheckbox($event, 'IsDefault')" />
+                Mặc định
+              </div>
+            </div>
+
+            <div class="grid-item item1_2_5">
+              <div class="label">Tình trạng</div>
+              <b class="d-flex" [ngClass]="{'gray': banner.StatusID == 0,
+                    'yellow' :banner.StatusID == 4 || banner.StatusID == 1,
+                    'green': banner.StatusID == 2, 'red': banner.StatusID == 3}">
+                {{ banner.StatusName }}
+              </b>
+            </div>
+          </div>
+
+          <div class="grid-item item2_1">
+            <div class="label">Tiêu đề banner</div>
+            <kendo-textbox type="text" class="k-textbox" [disabled]="isLockAll" (keydown.Enter)="$event.target.blur()"
+              [ngModel]="curLanguage == 1 ? banner.VNTitle : curLanguage == 2 ? banner.JPTitle : banner.ENTitle"
+              (ngModelChange)="curLanguage == 1 ? banner.VNTitle=$event : curLanguage == 2 ? banner.JPTitle=$event : banner.ENTitle=$event"
+              (blur)="onTextboxLoseFocus(curLanguage == 1 ? 'VNTitle' : curLanguage == 2 ? 'JPTitle' : 'ENTitle')">
+            </kendo-textbox>
+          </div>
+
+          <div class="grid-item item2_2">
+            <div class="label">Hình ảnh
+              <span class="k-icon k-i-export" (click)="onUploadImg()"></span>
+              <span class="k-icon k-i-trash" (click)="deleteImg()"></span>
+            </div>
+
+            <img loading="lazy" [src]="banner.ImageSetting1" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- popup confirm delete -->
+<kendo-dialog #dialog id="deleteDialog" class="deleteDialog" title="Xóa Banner" [hidden]="!deleteDialogOpened"
+  (close)="closeDeleteDialog()" [minWidth]="250">
+  <p style="margin: 30px; text-align: center;">
+    Bạn chắc chắn muốn xóa vĩnh viễn Banner&nbsp;
+    "{{ banner.VNTitle }}" này?</p>
+  <div class="dialog-footer">
+    <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteDialog()" [icon]="'close'">Không</button>
+    <button kendoButton class="btn-hachi hachi-warning" (click)="delete()" [icon]="'trash'">Có</button>
+  </div>
+</kendo-dialog>
+
+<app-folder-popup [pickFileCallback]="pickFileCallback" [GetFolderCallback]="GetFolderCallback"></app-folder-popup>
+
+<app-mar-groupbanner-webpage [groupBanner]="bannerGroup"></app-mar-groupbanner-webpage>

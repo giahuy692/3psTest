@@ -1,0 +1,176 @@
+<div class="app-hr-offboard-decision-list">
+
+    <!-- START HEADER -->
+    <div class="header header-1">
+        <div class="breadcumb">
+            <app-p-kendo-breadcrumb (loadData)="onLoadPage()"></app-p-kendo-breadcrumb>
+        </div>
+
+        <!-- START FILTER -->
+        <div class="group-checkbox">
+            <app-checkbox-button-group [disabled]="!isFilterActive"
+                (selectedChange)="selectedBtnChange($event, 'dangsoan_checked')" [selected]="dangsoan_checked"
+                title="Đang soạn thảo" [checked]="dangsoan_checked">
+            </app-checkbox-button-group>
+
+            <app-checkbox-button-group [disabled]="!isFilterActive"
+                (selectedChange)="selectedBtnChange($event, 'guiduyet_checked')" [selected]="guiduyet_checked"
+                title="Gửi duyệt" [checked]="guiduyet_checked">
+            </app-checkbox-button-group>
+
+            <app-checkbox-button-group [disabled]="!isFilterActive"
+                (selectedChange)="selectedBtnChange($event, 'duyetapdung_checked')" [selected]="duyetapdung_checked"
+                title="Đã duyệt" [checked]="duyetapdung_checked">
+            </app-checkbox-button-group>
+
+            <app-checkbox-button-group [disabled]="!isFilterActive"
+                (selectedChange)="selectedBtnChange($event, 'ngungapdung_checked')" [selected]="ngungapdung_checked"
+                title="Ngưng áp dụng" [checked]="ngungapdung_checked">
+            </app-checkbox-button-group>
+        </div>
+        <!-- END FILTER -->
+
+        <div class="nav-btn nav-crud">
+            <div class="box-button">
+                <!-- Button xuất file word danh sách nhân sự -->
+                <button kendoButton class="k-button export-word"  (click)="APIGetHRStaffLeaveReportWord()">
+                    <img class="k-image" src="assets\img\logo\docx.svg">
+                </button>
+                <div class="line-space"></div>
+                <!-- Button xuất file excel danh sách nhân sự -->
+                <button kendoButton class="k-button export-excel" (click)="APIGetHRStaffLeaveReportExcel()">
+                    <img class="k-image" src="assets\img\logo\xlsx.svg">
+                </button>
+            </div>
+
+            <button kendoButton *ngIf="currentList == 'termination'" class="k-button onAddBtn" [icon]="'plus'"
+                (click)="onOpenDetail(true)" [disabled]="!isFilterActive">
+                THÊM MỚI
+            </button>
+        </div>
+    </div>
+
+    <div class="header  header-2">
+        <app-search-filter-group #search [placeholder]="placeholder" [disabled]="!isFilterActive"
+            [fields]="['FullName','StaffID','DepartmentName','DecisionID']" (filterChange)="handleSearch($event)"
+            (onReset)="onResetFilter()" [clearButton]="true"></app-search-filter-group>
+        <!-- FILTER EFFDATE -->
+        <kendo-label text="Ngày hiệu lực">
+            <div class="in-label">
+                <kendo-dropdownlist class="dropdown-option-filter" [data]="optionFilterDate" textField="text"
+                    valueField="value" [(ngModel)]="currentFilterValue"
+                    (valueChange)="onDropdownFilterDate($event)"></kendo-dropdownlist>
+
+                <app-datepicker [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'"
+                    [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }" [(ngModel)]="curDateFilterValue"
+                    (valueChange)="onDatepickerChange($event)" (keydown.Enter)="$event.target.blur()"
+                    [popupSetting]="{animate:true, appendTo: 'root',popupClass:'popupLayoutCpnDatePicker'}"></app-datepicker>
+            </div>
+        </kendo-label>
+    </div>
+    <!-- END HEADER -->
+
+
+    <!-- START GRID -->
+    <div class="grid-wrapper">
+        <app-p-kendo-grid class="myCustomGrid scrollable " [data]="gridView | async" [scrollable]="'none'"
+            [loading]="isLoading" [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize"
+            [skip]="gridState.skip" [take]="gridState.take" [sortable]="true"
+            [onPageChangeCallback]="onPageChangeCallback" [allowedMoreActionDropdown]="allowActionDropdown"
+            [getActionDropdownCallback]="getActionDropdownCallback"
+            [onActionDropdownClickCallback]="onActionDropdownClickCallback" [showCheckbox]="false">
+
+
+            <kendo-grid-column title="Họ và tên" [headerClass]="'headerhoVatenCustomClass'" class="col_hoVaten">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="img_tennhanvien_manhanvien">
+                        <img loading="lazy" [src]="getResImg(dataItem.ImageThumb,'image'+ dataItem.Code)" class="avata"
+                            (error)="handleError('image'+ dataItem.Code)">
+                        <div class="tennhanvien_manhanvien">
+                            <div class="tennhanvien">
+                                <span [title]="dataItem.FullName">{{dataItem.FullName}}</span>
+                            </div>
+                            <div [title]="dataItem.StaffID">
+                                {{dataItem.StaffID}}
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Vị trí hiện tại" class="col_viTriHienTai">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div [title]="dataItem.PositionName" class="text">{{dataItem.PositionName}}</div>
+                    <div [title]="dataItem.DepartmentName" class="text-bold">{{dataItem.DepartmentName}}</div>
+                    <div [title]="dataItem.LocationName" class="text-italic">{{dataItem.LocationName}}</div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Quyết định" class="col_Quyetdinh">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div [title]="dataItem.DecisionID " class="text-bold">Mã: {{dataItem.DecisionID }}</div>
+                    <div *ngIf=" dataItem.EffDate" [title]="dataItem.EffDate | date: 'dd/MM/yyyy'" class="">Hiệu lực
+                        : {{dataItem.EffDate| date: 'dd/MM/yyyy'}}</div>
+
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title=" Lý do" class="col_lyDo">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div [title]="dataItem.ReasonDescription" class="text_lydo">{{ dataItem.ReasonDescription }}
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Người lập" [headerClass]="'headerCenterCustomClass'" class="col_nguoiLap">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="testCenter">
+                        <div [title]="dataItem.CreatedBy" class="date">{{ dataItem.CreatedBy }}</div>
+                        <div [title]="dataItem.CreatedTime |  date: 'dd/MM/yyyy'" class=" date">{{
+                            dataItem.CreatedTime | date: 'dd/MM/yyyy'}}
+                        </div>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Người phê duyệt" [headerClass]="'headerCenterCustomClass'" class="col_ngayVaoLam">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="testCenter">
+                        <div [title]="dataItem.ApprovedBy" class="date">{{ dataItem.ApprovedBy }}</div>
+                        <div [title]="dataItem.ApprovedTime |  date: 'dd/MM/yyyy'" class=" date">{{
+                            dataItem.ApprovedTime | date:
+                            'dd/MM/yyyy'}}</div>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Tình trạng" field="StatusName" class="col_tinhTrang"
+                [headerClass]="'headerCustomClass col_headerTinhTrang'">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="Status">
+                        <span class="status-name"
+                            [innerHTML]="dataItem.StatusName | colorStatus: dataItem.Status">{{dataItem.StatusName}}</span>
+
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+        </app-p-kendo-grid>
+    </div>
+    <!-- END GRID -->
+    <!-- START DIALOG DELETE CHANNEL-->
+    <app-p-kendo-dialog [width]="400" *ngIf="openConfirm" [title]="'XÓA QUYẾT ĐỊNH'" (close)="onDeleteDialog('close')"
+        (handleButton)="onDeleteDialog('yes')" [iconButton]="'delete'" [dialogType]="1"
+        [iconTitle]="'k-icon k-i-warning'" class="customDialog">
+        <div class="text-center">
+            <div class="main-content">
+                Bạn có chắc chắn muốn xóa quyết định<br>
+                <strong class="hight-light-content">{{dataDelete.DecisionID}}</strong>
+            </div>
+            <div class="sub-content">
+                <span>Quyết định bị xoá sẽ <span class="hight-light-sub">KHÔNG</span> thể khôi phục lại</span>
+            </div>
+        </div>
+    </app-p-kendo-dialog>
+    <!-- END DIALOG DELETE -->
+
+</div>

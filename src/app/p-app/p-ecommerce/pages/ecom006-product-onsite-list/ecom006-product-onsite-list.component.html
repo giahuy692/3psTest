@@ -1,0 +1,384 @@
+<div class="app-drawer-container">
+  <mat-drawer-container [hasBackdrop]="true">
+    <mat-drawer #drawer [mode]="'over'" position="end" opened="false">
+      <form class="formSanpham k-form" [formGroup]="formSP" (keydown.Enter)="keydownEnter($event)">
+        <fieldset>
+          <legend>{{ isAddProd ? 'THÊM MỚI ': 'CHI TIẾT '}}SẢN PHẨM</legend>
+
+          <kendo-formfield>
+            <kendo-label text="Nhập mã sản phẩm" [for]="Barcode">
+              <span class="symbol">(*)</span>
+            </kendo-label>
+            <kendo-textbox formControlName="Barcode" #Barcode (keydown.Enter)="$event.target.blur()"
+              (inputBlur)="onTextboxLoseFocus('Barcode')" [(value)]="product.Barcode"
+              [disabled]="!isAddProd || isLockAll || isLockProd">
+            </kendo-textbox>
+          </kendo-formfield>
+
+          <div class="tensanpham">
+            <kendo-label text="Tên sản phẩm">
+              <b>{{ product.Poscode }}</b>
+              <!-- <b class="tbarcode" [hidden]="product.TBarcode == null || product.TBarcode == ''">
+                {{ product.TBarcode }}</b> -->
+            </kendo-label>
+            <div class="VNName">{{ product.ProductName }}</div>
+          </div>
+
+          <div class="minmax">
+            <kendo-label text="Hạn mức tồn kho"></kendo-label>
+
+            <div class="row">
+              <kendo-formfield class="col-6">
+                <kendo-label text="Min" [for]="MinQty">
+                  <span class="symbol">(*)</span>
+                </kendo-label>
+
+                <kendo-numerictextbox formControlName="MinQty" [min]="0" #MinQty format="#,0" [(value)]="product.MinQty"
+                  [disabled]="isLockAll || isLockProd">
+                </kendo-numerictextbox>
+              </kendo-formfield>
+
+              <kendo-formfield class="col-6">
+                <kendo-label text="Max" [for]="MaxQty">
+                  <span class="symbol">(*)</span>
+                </kendo-label>
+
+                <kendo-numerictextbox formControlName="MaxQty" #MaxQty format="#,0" [min]="0" [(value)]="product.MaxQty"
+                  [disabled]="isLockAll || isLockProd">
+                </kendo-numerictextbox>
+              </kendo-formfield>
+            </div>
+
+            <kendo-formerror *ngIf="product.MaxQty != 0 && product.MaxQty < product.MinQty">
+              Nếu Max khác 0 (không giới hạn), Max phải lớn hơn hoặc bằng Min
+            </kendo-formerror>
+          </div>
+
+          <div class="formfield-grid">
+            <div class="item1_1">
+              <kendo-label text="Ngày onsite"></kendo-label>
+              <div>{{ product.ApprovedTime != null ? (product.ApprovedTime | date: 'dd/MM/yyyy')
+                : 'Chưa xác định' }}</div>
+            </div>
+
+            <div class="item1_2">
+              <kendo-label text="Ngày dừng onsite"></kendo-label>
+              <div>{{ product.LastModifiedTime != null && product.StatusID > 2 ?
+                (product.LastModifiedTime | date: 'dd/MM/yyyy')
+                : 'Chưa xác định' }}</div>
+            </div>
+
+            <div class="item1_3">
+              <kendo-label text="Tình trạng"></kendo-label>
+              <div class="tinhtrang" [ngClass]="{'red': product.StatusID == 3, 'green': product.StatusID == 2, 
+              'yellow': product.StatusID == 1 || product.StatusID == 4 }">
+                {{ product.StatusName }}</div>
+            </div>
+
+            <div class="img item2">
+              <img loading="lazy" [src]="product.ImageSetting" alt="Ảnh sản phẩm" />
+            </div>
+          </div>
+
+          <div class="dieukien">
+            <kendo-label text="Điều kiện onsite"></kendo-label>
+
+            <ng-container *ngFor="let o of product.ListOnSite">
+              <div class="onsite_item" [ngClass]="{'red': !o.Choose}">
+                {{ o.Name }}
+                <input type="checkbox" class="k-checkbox" [disabled]="true" [checked]="o.Choose" />
+              </div>
+
+            </ng-container>
+          </div>
+
+          <kendo-formerror>(*) Trường bắt buộc nhập.</kendo-formerror>
+
+          <div class="k-form-buttons">
+            <button kendoButton class="k-button closeBtn" (click)="closeForm()">Đóng</button>
+            <button kendoButton class="k-button updateBtn" (click)="onSubmitSP()" *ngIf="!isLockAll || !isLockProd">
+              {{ isAddProd ? 'THÊM MỚI' : 'CẬP NHẬT' }}
+            </button>
+          </div>
+        </fieldset>
+      </form>
+    </mat-drawer>
+    <!-- center content -->
+    <mat-drawer-content>
+      <div class="app-ecom006-product-onsite-list" #ecom006_product_onite_list>
+        <div class="header header-1">
+          <div class="nav-btn nav-breadcrumb">
+            <div class="breadcrumb-item">
+              CHÍNH SÁCH
+            </div>
+
+            <div class="breadcrumb-chevron">
+              <span class="k-icon k-i-arrow-chevron-right"></span>
+            </div>
+
+            <div class="breadcrumb-item">
+              KÊNH BÁN HÀNG
+            </div>
+          </div>
+
+          <div class="nav-btn nav-crud">
+            <!-- chỉ cho kênh hachi -->
+            <button kendoButton class="crud-btn k-button btn-hachi hachi-secondary" *ngIf="channel.Code == 1"
+              (click)="syncImage()">
+              ĐỒNG BỘ HÌNH SẢN PHẨM
+            </button>
+
+            <button kendoButton class="crud-btn k-button btn-hachi hachi-secondary"
+              *ngIf="(isToanQuyen || isAllowedToVerify) && channel.Code == 1" (click)="syncStock()">
+              ĐỒNG BỘ TỒN
+            </button>
+
+            <button kendoButton class="crud-btn k-button btn-hachi hachi-primary" *ngIf="(isToanQuyen || isAllowedToVerify) && !isAdd && 
+              (channel.StatusID == 0 || channel.StatusID == 4 || channel.StatusID == 1 || channel.StatusID == 3)"
+              [icon]="'check-outline'" (click)="updateStatus(2)">
+              PHÊ DUYỆT
+            </button>
+
+            <button kendoButton class="crud-btn k-button btn-hachi hachi-warning"
+              *ngIf="(isToanQuyen || isAllowedToVerify) && !isAdd && (channel.StatusID == 1 || channel.StatusID == 3)"
+              [icon]="'undo'" (click)="updateStatus(4)">
+              TRẢ VỀ
+            </button>
+
+            <button kendoButton class="crud-btn k-button btn-hachi hachi-warning"
+              *ngIf="(isToanQuyen || isAllowedToVerify) && !isAdd && channel.StatusID == 2" [icon]="'minus-outline'"
+              (click)="updateStatus(3)">
+              NGƯNG HIỂN THỊ
+            </button>
+
+            <button kendoButton class="crud-btn k-button btn-hachi" [icon]="'trash'"
+              *ngIf="(isToanQuyen || isAllowedToCreate) && channel.StatusID == 0 && !isAdd" (click)="onDeleteChannel()">
+              XÓA BÀI VIẾT
+            </button>
+
+            <button kendoButton class="k-button crud-btn btn-hachi hachi-primary" [icon]="'plus'" (click)="createNew()"
+              *ngIf="isToanQuyen || isAllowedToCreate">
+              TẠO MỚI</button>
+          </div>
+        </div>
+
+        <div class="body">
+          <div class="sections">
+            <div class="section" id="thongtinkhuyenmaiTbl">
+              <div class="title">THÔNG TIN KÊNH BÁN HÀNG</div>
+
+              <div class="section-grid">
+                <div class="grid-item item1_1">
+                  <div class="label">Icon
+                    <span class="k-icon k-i-export" (click)="onUploadImg()" *ngIf="!isAdd && !isLockChannel"></span>
+                  </div>
+                  <img loading="lazy" [src]="channel.ImageSetting" />
+                </div>
+
+                <div class="grid-item item1_2">
+                  <div class="label">Tình trạng</div>
+                  <b class="d-flex" [ngClass]="{'yellow': channel.StatusID == 1 || channel.StatusID == 4, 
+                  'green': channel.StatusID == 2, 'red': channel.StatusID == 3}">{{ channel.StatusName }}
+                  </b>
+                </div>
+
+                <div class="grid-item item2_1">
+                  <div class="label">Mã kênh</div>
+                  <kendo-textbox type="text" class="k-textbox" [disabled]="isLockAll || isLockChannel"
+                    (keydown.Enter)="$event.target.blur()" [(ngModel)]="channel.Brief"
+                    (blur)="onTextboxLoseFocus('Brief')">
+                  </kendo-textbox>
+                </div>
+
+                <div class="grid-item item2_2">
+                  <div class="label">Kênh in-house</div>
+                  <input type="checkbox" class="k-checkbox" [disabled]="isLockAll || isLockChannel"
+                    [checked]="channel.Inhouse" (click)="clickCheckbox($event, 'Inhouse')" />
+                </div>
+
+                <div class="grid-item item3_1">
+                  <div class="label">Tên kênh</div>
+                  <kendo-textbox type="text" class="k-textbox" [disabled]="isLockAll || isLockChannel"
+                    (keydown.Enter)="$event.target.blur()" [(ngModel)]="channel.ChannelName"
+                    (blur)="onTextboxLoseFocus('ChannelName')">
+                  </kendo-textbox>
+                </div>
+
+                <div class="grid-item item3_2">
+                  <div>
+                    <div class="label">Thứ tự phân bổ tồn kho</div>
+                    <kendo-numerictextbox format="#,0" [min]="1" class="k-textbox"
+                      [disabled]="isLockAll || isLockChannel" [(ngModel)]="channel.Priority"
+                      (keydown.Enter)="$event.target.blur()" (blur)="onTextboxLoseFocus('Priority')">
+                    </kendo-numerictextbox>
+                  </div>
+
+                  <div>
+                    <div class="label">Thứ tự hiển thị</div>
+                    <kendo-numerictextbox format="#,0" [min]="1" class="k-textbox"
+                      [disabled]="isLockAll || isLockChannel" [(ngModel)]="channel.OrderBy"
+                      (keydown.Enter)="$event.target.blur()" (blur)="onTextboxLoseFocus('OrderBy')">
+                    </kendo-numerictextbox>
+                  </div>
+                </div>
+
+                <div class="grid-item item4_1">
+                  <div class="label">Phân nhóm</div>
+                  <kendo-dropdownlist [data]="listChannel" [textField]="'ChannelName'" [valueField]="'Code'"
+                    [value]="currentChannel" (valueChange)="onDropdownlistClick($event, 'ParentID')"
+                    [disabled]="isLockAll || isLockChannel" [popupSettings]="{appendTo:'component'}">
+                  </kendo-dropdownlist>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="header header-2">
+          <div class="title">DS SẢN PHẨM KINH DOANH</div>
+
+          <div class="nav-filter nav-btn">
+            <form style="display: flex; flex-grow: 1;" [formGroup]="searchForm">
+              <div class="filter-btn-group search-btn-group">
+                <div class="search-btn">
+                  <span class="k-icon k-i-search"></span>
+                  <kendo-textbox formControlName="SearchQuery" type="text" class="k-textbox"
+                    placeholder="Tìm theo mã sản phẩm,  tên sản phẩm">
+                  </kendo-textbox>
+                </div>
+              </div>
+
+              <button kendoButton class="k-button searchBtn" [icon]="'search'" (click)="search()"
+                [disabled]="!isFilterActive">TÌM</button>
+            </form>
+
+          </div>
+
+          <div class="nav-file nav-btn">
+            <div class="file-btn-group">
+              <button kendoButton id="onUploadBtn" class="k-button" [icon]="'export'" (click)="onImportExcel()"
+                [disabled]="!isToanQuyen && (isLockAll || isLockProd || !isFilterActive || isAdd || channel.StatusID != 2)"></button>
+            </div>
+
+            <div class="file-btn-group">
+              <button kendoButton id="onDownloadBtn" class="k-button" [icon]="'import'"
+                (click)="downloadExcel()">Template</button>
+            </div>
+          </div>
+
+          <div class="nav-btn nav-crud">
+            <button kendoButton class="k-button btn-hachi hachi-primary" [icon]="'plus'" (click)="onAdd()"
+              [disabled]="!isToanQuyen && (isLockAll || isLockProd || !isFilterActive || isAdd || channel.StatusID != 2)">
+              THÊM MỚI
+            </button>
+          </div>
+        </div>
+
+        <div class="grid-wrapper">
+          <app-p-kendo-grid class="grid" [data]="gridDSView | async" [scrollable]="'none'" [loading]="loading"
+            [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize" [skip]="gridDSState.skip"
+            [take]="gridDSState.take" [sortable]="true" [sort]="gridDSState.sort" [filterable]="'menu'"
+            [onPageChangeCallback]="onPageChangeCallback" [onSortChangeCallback]="onSortChangeCallback"
+            [allowedMoreActionDropdown]="allowActionDropdown" [getActionDropdownCallback]="getActionDropdownCallback"
+            [onActionDropdownClickCallback]="onActionDropdownClickCallback" [selectable]="selectable"
+            [onSelectCallback]="onSelectCallback" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+            [getSelectionPopupCallback]="getSelectionPopupCallback">
+
+            <kendo-grid-column field="ProductName" title="Tên sản phẩm" class="col_img_tensanpham_masanpham"
+              headerClass="col_img_tensanpham_masanpham" [filterable]="false">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="img_tensanpham_masanpham">
+                  <img loading="lazy" src="{{dataItem.ImageSetting}}" alt="">
+                  <div class="tensanpham_masanpham">
+                    <div class="tensanpham">{{ dataItem.ProductName }}</div>
+                    <div class="masanpham">
+                      {{ dataItem.Barcode }}
+                      <span *ngIf="dataItem.Poscode != '' && dataItem.Poscode != null"> | {{ dataItem.Poscode }}</span>
+                      <span> | Min: {{ dataItem.MinQty }}</span>
+                      <span> | Max: {{ dataItem.MaxQty }}</span>
+                      <span> | TK: {{ dataItem.Quantity }}</span>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column field="Price" title="Giá bán" class="col_giaBan" headerClass="col_giaBan"
+              [filterable]="false">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <b>{{ dataItem.Price | number: '1.' }}</b>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column field="IsRightToOnsite" title="Điều kiện onsite" class="col_dieuKien"
+              headerClass="col_dieuKien">
+              <ng-template kendoGridFilterMenuTemplate let-filter>
+                <p-kendo-grid-dropdownlist [showOperators]="false" [filter]="filterIsRightToOnsite"
+                  [data]="listIsRightToOnsite" textField="RightToOnsite" valueField="IsRightToOnsite"
+                  [onFilterChangeCallback]="onFilterChangeCallback" [currentItem]="curItemIsRightToOnsite">
+                </p-kendo-grid-dropdownlist>
+              </ng-template>
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <span [ngClass]="{'green': dataItem.IsRightToOnsite, 'red': !dataItem.IsRightToOnsite}">
+                  {{ dataItem.IsRightToOnsite ? 'Đủ ' : 'Chưa đủ ' }}điều kiện onsite
+                </span>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column field="LastModifiedTime" title="Ngày duyệt on/offsite" class="col_ngayDuyet"
+              headerClass="col_ngayDuyet" [filterable]="false">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="StartDate">{{ dataItem.ApprovedTime | date: 'dd/MM/yyyy' }}</div>
+                <div *ngIf="dataItem.LastModifiedTime != null && dataItem.StatusID > 2" class="EndDate"><b>{{
+                    dataItem.LastModifiedTime | date: 'dd/MM/yyyy' }}</b></div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column field="StatusID" title="Tình trạng" class="col_tinhTrang" headerClass="col_tinhTrang">
+              <ng-template kendoGridFilterMenuTemplate let-filter>
+                <p-kendo-grid-dropdownlist [showOperators]="false" [filter]="filterStatusID" [data]="listStatusID"
+                  textField="StatusName" valueField="StatusID" [onFilterChangeCallback]="onFilterChangeCallback"
+                  [currentItem]="curItemStatusID">
+                </p-kendo-grid-dropdownlist>
+              </ng-template>
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <div [ngClass]="{'yellow': dataItem.StatusID == 1 || dataItem.StatusID == 4, 
+                'green': dataItem.StatusID == 2, 'red': dataItem.StatusID == 3}">
+                  {{ dataItem.StatusName }}</div>
+              </ng-template>
+            </kendo-grid-column>
+          </app-p-kendo-grid>
+        </div>
+
+        <kendo-dialog #dialog class="deleteDialog" title="Xóa {{context[contextIndex]}}" [hidden]="!deleteDialogOpened"
+          (close)="closeDeleteDialog()" [minWidth]="250">
+          <p style="margin: 30px; text-align: center;">
+            Bạn chắc chắn muốn xóa vĩnh viễn {{context[contextIndex]}}&nbsp;
+            "{{contextName[contextIndex]}}"&nbsp;này?</p>
+          <div class="dialog-footer">
+            <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteDialog()"
+              [icon]="'close'">Không</button>
+            <button kendoButton class="btn-hachi hachi-warning" (click)="delete()" [icon]="'trash'">Có</button>
+          </div>
+        </kendo-dialog>
+
+        <kendo-dialog #dialog class="deleteDialog" title="Xóa các Sản phẩm Onsite đã chọn"
+          [hidden]="!deleteManyDialogOpened" (close)="closeDeleteDialog()" [minWidth]="250">
+          <div style="margin: 30px; text-align: center;">
+            Bạn chắc chắn muốn xóa vĩnh viễn {{ deleteList.length }} Sản phẩm Onsite này?
+          </div>
+          <div class="dialog-footer">
+            <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteManyDialog()"
+              [icon]="'close'">Không</button>
+            <button kendoButton class="btn-hachi hachi-warning" (click)="deleteMany()" [icon]="'trash'">Có</button>
+          </div>
+        </kendo-dialog>
+
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>
+
+<app-folder-popup [pickFileCallback]="pickFileCallback" [GetFolderCallback]="GetFolderCallback"></app-folder-popup>
+
+<app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>

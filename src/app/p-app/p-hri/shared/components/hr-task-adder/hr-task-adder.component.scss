@@ -1,0 +1,314 @@
+@import "../../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+    app-hr-task-adder {
+
+
+
+        .customDialog {
+            .k-dialog-titlebar {
+
+                background-color: $dark-green !important;
+            }
+
+            .k-dialog-content {
+                .task-add-body {
+                    .body-filter {
+                        .header {
+                            gap: 30px;
+                            border: none;
+                            height: 67px;
+
+                            .filter-dropdown-group {
+                                .label-text {
+                                    font-size: 13px;
+                                    margin: 0 0 10px 0;
+                                    color: #959DB3;
+                                    font-weight: bold;
+                                }
+
+                                .customDropdownList {
+                                    .app-p-dropdownlist {
+                                        .dropdownlistCustom {
+                                            width: 380px;
+
+                                            .k-input-inner {
+                                                width: 340px;
+
+                                                .k-input-value-text {
+                                                    text-overflow: ellipsis;
+                                                    overflow: hidden;
+                                                    white-space: nowrap;
+                                                    display: block;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            .filter-search-group {
+                                flex-direction: column;
+                                align-items: flex-start;
+
+                                .title {
+                                    margin: 0 0 10px 0;
+                                    color: #959DB3;
+                                    font-size: 13px;
+                                }
+
+                                .k-textbox {
+                                    width: 500px;
+                                }
+                            }
+                        }
+
+                        .grid-wrapper {
+                            height: calc(-311.5px + 100vh) !important;
+                            max-height: calc(-311.5px + 100vh) !important;
+
+
+                            .customGrid {
+                                app-selected-rowitem-popup {
+                                    display: none;
+                                }
+
+                                .myCustomGrid {
+                                    height: calc(-327.5px + 100vh) !important;
+
+                                    .k-grid-aria-root {
+                                        height: calc(-375px + 100vh) !important;
+                                        .k-grid-header {
+                                            border: none;
+
+                                            .k-grid-header-wrap {
+                                                border: none;
+
+                                                .OrderBy-header,
+                                                .DateDuration-header {
+                                                    .k-link {
+                                                        text-align: center;
+                                                        justify-content: center;
+                                                    }
+                                                }
+
+                                                .ListStaffType {
+                                                    display: flex;
+                                                    align-items: center;
+                                                    justify-content: center;
+                                                    padding-right: 25px;
+                                                }
+                                            }
+                                        }
+
+                                        .k-grid-container {
+                                            .k-grid-content {
+                                                .k-grid-table-wrap {
+                                                    .k-grid-table {
+                                                        background-color: #f0f3f5;
+
+                                                        .k-table-tbody {
+                                                            .k-table-row {
+                                                                height: 58px;
+
+                                                                .k-table-td {
+                                                                    .text-name {
+                                                                        font-size: 13px;
+                                                                        font-weight: normal;
+                                                                        color: #26282E;
+                                                                    }
+
+                                                                    .text-italic {
+                                                                        font-style: italic;
+                                                                    }
+
+                                                                    .text-bold {
+                                                                        font-weight: 700;
+                                                                    }
+
+                                                                    .blue-text {
+                                                                        color: #0D99FF;
+                                                                    }
+                                                                }
+
+                                                                .description-col {
+                                                                    .text-name {
+                                                                        display: -webkit-box;
+                                                                        -webkit-line-clamp: 2;
+                                                                        -webkit-box-orient: vertical;
+                                                                        overflow: hidden;
+                                                                        text-overflow: ellipsis;
+                                                                        word-wrap: break-word;
+                                                                        white-space: normal;
+                                                                    }
+                                                                }
+
+                                                                .orderBy-col,
+                                                                .dateDuration-col {
+                                                                    text-align: center;
+                                                                }
+
+                                                                .listStaff-col {
+                                                                    .listStaff-text {
+                                                                        text-align: right;
+                                                                        display: flex;
+                                                                        flex-direction: column;
+                                                                        justify-content: center;
+                                                                        padding-right: 10px;
+
+                                                                        .numOfStaff {
+                                                                            width: 100%;
+                                                                            padding-left: 30px;
+                                                                        }
+                                                                    }
+                                                                }
+
+                                                                .k-table-td:first-child {
+                                                                    padding-left: 12px;
+                                                                }
+
+                                                                .action {
+                                                                    // width: 0;
+                                                                    // padding: 0;
+                                                                    // min-width: 0;
+                                                                    // max-width: 0;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .button-group {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                justify-content: center;
+
+                .k-button {
+                    font-size: 11px;
+                    font-weight: 700;
+                    text-transform: uppercase;
+
+                    &.updateBtn {
+                        background-color: $dark-green;
+                        color: $white;
+                    }
+
+                    &.closeBtn {
+                        color: $dark-green;
+                    }
+
+                    padding: 10px 20px;
+                }
+            }
+        }
+
+        // Điều chỉnh width cho toàn bộ dialog khi zoom
+
+    }
+
+
+}
+
+// zoom 175%
+@media screen and (max-width: 1200px) {
+    ::ng-deep {
+        app-hr-task-adder {
+            .customDialog {
+                .k-dialog {
+                    width: 1000px !important;
+                }
+            }
+        }
+    }
+}
+
+
+// ZOOM  75%
+@media screen and (min-width: 2560px) {
+    ::ng-deep {
+        app-hr-task-adder {
+            .customDialog {
+                .k-dialog-content {
+
+                    .task-add-body {
+                        .body-filter {
+                            .grid-wrapper {
+                                max-height: calc(-340px + 100vh) !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+// ZOOM 50%
+@media screen and (min-width: 3840px) {
+    ::ng-deep {
+        app-hr-task-adder {
+            .customDialog {
+                .k-dialog-content {
+
+                    .task-add-body {
+                        .body-filter {
+                            .grid-wrapper {
+                                max-height: calc(-500px + 100vh) !important;
+
+                                .customGrid {
+
+
+                                    .myCustomGrid {
+                                        height: calc(-510.5px + 100vh) !important;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+// ZOOM 25%
+@media screen and (min-width: 7680px) {
+    ::ng-deep {
+        app-hr-task-adder {
+            .customDialog {
+                .k-dialog-content {
+
+                    .task-add-body {
+                        .body-filter {
+                            .grid-wrapper {
+                                max-height: calc(-580px + 100vh) !important;
+
+                                .customGrid {
+
+
+                                    .myCustomGrid {
+                                        height: calc(-600.5px + 100vh) !important;
+
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

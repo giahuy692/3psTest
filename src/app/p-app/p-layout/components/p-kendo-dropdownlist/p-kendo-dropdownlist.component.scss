@@ -1,0 +1,43 @@
+@import "../../../../../assets/scss/variable.scss";
+::ng-deep{
+    .col-gap-10{
+        column-gap: 10px !important;
+    }
+    kendo-popup{
+        .k-list-filter{
+            input{
+                border: none;
+            }
+        }
+    }
+
+    p-kendo-dropdownlist{
+        height: fit-content;
+        .customDropdownList{
+            border: 1px solid $dark-green;  
+            .k-list-filter{
+                position: sticky;
+                top: 0;
+                background-color: $white;
+                .k-searchbox{
+                    column-gap: 10px;
+                }
+            } 
+            input{
+                border: none !important;
+            }
+    
+            .k-list{
+                .k-list-optionlabel{
+                    height: 32px;
+                    &:hover,
+                    &.k-hover {
+                    color: white;
+                    background-color: $dark-green;
+                    }
+                }
+            }
+        }
+    }
+    
+}

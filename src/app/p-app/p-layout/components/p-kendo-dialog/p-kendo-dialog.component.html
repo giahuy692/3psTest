@@ -1,0 +1,21 @@
+<kendo-dialog *ngIf="dialogType == 1 || dialogType == 2 || dialogType == 3"
+        [width]="width"
+        [ngClass]="dialogClass"
+        (close)="closeDialog()"
+        >
+        <kendo-dialog-titlebar [style.backgroundColor]="dialogColor">
+            <div class="titleCustom" >
+            <span class="{{iconTitle}}"></span>
+            <img *ngIf="hasImageTitle" [src]="srcImageTitle" alt="3ps" class="img-logo" [width]="200">
+            <span class="titleText">{{title}}</span>
+            </div>
+        </kendo-dialog-titlebar>
+           
+          <ng-content></ng-content>
+
+          <kendo-dialog-actions  class="k-action-custom" *ngIf="!isDialogType3WithDefaultValues()">
+            <button kendoButton class="btn-close p-2" [style.color]="dialogColor" (click)="closeDialog()">{{cancelText}}</button>
+            <button kendoButton class="btn-action p-2" [style.backgroundColor]="dialogColor" icon="{{iconButton}}" (click)="onButtonClick()">{{actionText}}</button>
+        </kendo-dialog-actions>
+</kendo-dialog>
+

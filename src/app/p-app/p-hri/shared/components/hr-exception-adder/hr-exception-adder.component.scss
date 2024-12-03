@@ -1,0 +1,618 @@
+@import "../../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+    app-hr-exception-adder {
+        .customDialog {
+            .k-dialog-titlebar {
+                background-color: $dark-green !important;
+
+            }
+
+            .k-dialog-content {
+                padding: 16px 10px;
+
+                .task-add-body {
+                    height: 100%;
+
+                    .body-filter {
+                        max-height: calc(100% - 94px);
+                        overflow-y: auto;
+                        padding: 0 20px;
+
+                        .body-content-list {
+                            padding: 20px 0;
+                            border-top: 1px solid black;
+
+                            &:first-child {
+                                border-top: none;
+                                padding-top: 0;
+                            }
+
+                        }
+
+                        // filter
+                        .header {
+                            gap: 30px;
+                            border: none;
+
+                            &:first-child {
+                                padding-top: 0;
+                            }
+
+                            .filter-dropdown-group {
+                                .label-text {
+                                    font-size: 13px;
+                                    margin: 0 0 10px 0;
+                                    color: black;
+                                    font-weight: bold;
+                                }
+
+                                .text-red {
+                                    color: red;
+                                }
+
+                                .customDropdownList {
+                                    .app-p-dropdownlist {
+                                        .dropdownlistCustom {
+                                            width: 380px;
+                                        }
+                                    }
+                                }
+
+                                .customCombobox {
+                                    width: 380px;
+                                    padding-left: 30px;
+
+                                    kendo-searchbar::before {
+                                        content: "\e13e";
+                                        font-family: "WebComponentsIcons";
+
+                                        font-weight: 900;
+                                        position: absolute;
+                                        left: 10px;
+                                        top: 50%;
+                                        transform: translateY(-50%);
+                                        color: #999;
+                                        pointer-events: none;
+                                    }
+
+
+                                }
+
+                            }
+
+                            .filter-search-group {
+                                flex-direction: column;
+                                align-items: flex-start;
+
+                                .title {
+                                    margin: 0 0 10px 0;
+                                    color: black;
+                                    font-size: 13px;
+                                }
+
+                                .k-textbox {
+
+                                    width: 500px;
+                                }
+                            }
+                        }
+
+                        // grid
+                        .myCustomGrid {
+                            max-height: 510px;
+
+                            .k-table {
+                                .k-table-td {
+
+
+                                    .icon-col {
+                                        cursor: pointer;
+
+                                        .icon {
+                                            font-size: 20px;
+                                            color: red;
+                                        }
+                                    }
+                                }
+
+                                .k-detail-row {
+
+                                    .customCombobox {
+                                        width: 380px;
+                                        padding-left: 30px;
+                                        kendo-searchbar::before {
+                                            content: "\e13e";
+                                            font-family: "WebComponentsIcons";
+
+                                            font-weight: 900;
+                                            position: absolute;
+                                            left: 10px;
+                                            top: 50%;
+                                            transform: translateY(-50%);
+                                            color: #999;
+                                            pointer-events: none;
+                                        }
+
+                                        .k-button {
+                                            height: 26px;
+                                        }
+                                    }
+
+                                    &:hover {
+                                        background-color: transparent;
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+                }
+            }
+
+            .footer-content {
+                .add-ex {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 10px 0 20px 0;
+
+                    .btn-ex {
+                        width: fit-content;
+                        cursor: pointer;
+                        box-shadow: none;
+                        font-size: 13px;
+                        color: #1A6634;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 10px;
+
+                        &.disabled {
+                            pointer-events: none;
+                            opacity: 0.5;
+                        }
+
+                        .ex-icon {
+                            width: 32px;
+                            height: 32px;
+                            border: 1px solid #1a6634;
+                            border-radius: 16px;
+                        }
+
+                        &:hover {
+
+                            .ex-icon,
+                            .label-text {
+                                opacity: 90%;
+                            }
+                        }
+
+                        // border: none;
+
+
+                    }
+                }
+
+                .button-group {
+                    display: flex;
+                    align-items: center;
+                    gap: 20px;
+                    justify-content: center;
+
+                    .k-button {
+                        font-size: 11px;
+                        font-weight: 700;
+                        text-transform: uppercase;
+
+                        &.updateBtn {
+                            background-color: $dark-green;
+                            color: $white;
+                        }
+
+                        &.closeBtn {
+                            color: $dark-green;
+                        }
+
+                        padding: 10px 20px;
+                    }
+                }
+            }
+
+            // button chuc nang
+
+        }
+    }
+}
+
+
+
+// SCSCS KENDO GRID COPPY
+::ng-deep {
+    app-hr-exception-adder {
+
+        .grid-wrapper {
+
+            height: calc(100vh - 266px);
+            overflow-x: hidden;
+            overflow-y: hidden;
+            margin-top: 20px;
+
+            .myCustomGrid.k-grid {
+                height: calc(-339.5px + 100vh);
+
+                .k-grid-aria-root {
+                    overflow-y: scroll;
+                    overflow-x: auto;
+
+                    .k-grid {
+                        .k-table {
+                            width: 100% !important;
+
+                            .DateDuration-header {
+                                text-align: center;
+                            }
+                        }
+                    }
+
+                    .btnCell {
+                        display: flex;
+                        justify-content: center;
+                    }
+                }
+
+                .question-group {
+                    display: flex;
+                    gap: 20px;
+                }
+            }
+        }
+
+
+    }
+
+    app-hr-exception-adder {
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+
+        .myCustomGrid.k-grid {
+            min-height: fit-content;
+            height: 100%;
+            color: $gray-900;
+            background-color: $gray-100;
+            border: none;
+            max-height: 570px;
+
+
+            table {
+                border-spacing: 0 4px;
+                width: 100%;
+            }
+
+            thead {
+                background: none;
+            }
+
+            tbody {
+                tr {
+                    background-color: white;
+                    height: 58px;
+
+                    >td {
+                        border-style: solid;
+                        border-width: 1px 0;
+                        border-color: transparent;
+
+                        &:first-child {
+                            border-left-width: 1px;
+                        }
+
+                        &:nth-last-child(1) {
+                            border-right-width: 1px;
+                            width: 40px;
+                        }
+                    }
+                }
+
+                tr:hover {
+                    background-color: rgba($dark-green, 0.4);
+
+                    td.action {
+                        background: transparent;
+                    }
+                }
+            }
+
+            tr {
+                height: 26px;
+                position: relative;
+
+                &.k-state-selected,
+                &.k-selected {
+                    background-color: rgba($dark-green, 0.8);
+
+                    >td {
+                        background: none;
+                        border-color: $dark-green;
+                    }
+
+                    td.action {
+                        // background-color: rgba($dark-green, 0.8);
+                        background: transparent;
+                    }
+                }
+
+                &:not(.k-grouping-row) {
+                    td:first-child {
+                        padding-left: 12px;
+                    }
+                }
+
+                th,
+                td {
+                    white-space: nowrap;
+                    border: none;
+
+                    .k-button {
+                        padding: 0;
+                        width: 32px;
+                        height: 32px;
+                    }
+
+                    img {
+                        max-width: 200px;
+                        max-height: 32px;
+                    }
+
+                    &.hidden {
+                        display: none;
+                    }
+
+                    .k-icon {
+                        &.k-i-plus::before {
+                            content: "\e014";
+                        }
+
+                        &.k-i-minus::before {
+                            content: "\e015";
+                        }
+                    }
+
+                }
+
+                // td:last-child:not(:only-child)
+                td.action {
+                    position: sticky !important;
+                    top: initial;
+                    right: 0;
+                    background: white;
+                    box-shadow: -3px 0px 3px 0px rgba(143, 155, 166, 0.2);
+
+                    .k-button {
+
+                        &:hover,
+                        &.k-hover,
+                        &:focus,
+                        &.k-focus {
+                            background: #bdc2d2 !important;
+                        }
+                    }
+
+                    &:has(.hidden) {
+                        display: none;
+                    }
+                }
+            }
+
+            .k-grouping-header {
+                display: none;
+            }
+
+            .k-grouping-row {
+                td {
+                    color: $dark-green;
+                    font-weight: normal;
+
+                    &:hover {
+                        background-color: rgba($dark-green, 0.4);
+                        color: white !important;
+                    }
+
+                    .k-icon {
+                        font-size: 20px;
+                        margin-right: 12px;
+                        color: inherit;
+                    }
+
+                    .groupName {
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            .k-grid-header .k-header {
+                font-weight: 700;
+                vertical-align: middle;
+                color: $dark-blue;
+
+                &.k-filterable {
+                    .k-grid-filter {
+                        padding: 0;
+                    }
+
+                    .k-grid-filter:hover {
+                        color: $dark-green;
+                    }
+                }
+
+                >.k-link,
+                >.k-pager-nav.k-button-flat {
+                    display: flex;
+                }
+            }
+
+            tr.odd:hover,
+            tr.even:hover {
+                transform: translateY(-3px);
+            }
+
+
+        }
+    }
+
+    app-hr-exception-adder.scrollable {
+        .k-grid {
+            .k-grid-aria-root {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 720px !important;
+            }
+
+            //đặt lại more action btn absolute theo table relative
+            tr {
+                position: initial;
+
+            }
+        }
+    }
+
+}
+
+
+
+//grid
+::ng-deep {
+    app-hr-exception-adder {
+        .customDialog {
+            .myCustomGrid {
+                .label-text-bold {
+                    font-weight: 700;
+                    cursor: default;
+                }
+
+                .customCombobox {
+                    width: 150px;
+                    height: auto;
+
+                    .k-clear-value {
+                        display: none;
+                    }
+
+                    .k-searchbar {
+                        width: 92px;
+                    }
+                }
+
+                .bombobox-mutil-group {
+                    // display: flex;
+                    // gap: 50px;
+                    // padding-top: 20px;
+                    // align-items: start;
+                    // align-items: center;
+                    // justify-content: space-between;
+                    display: flex;
+                    align-items: start;
+                    flex-direction: column;
+
+                    .label-text-name {
+                        font-size: 13px;
+                        font-weight: 700;
+                        color: black;
+                        display: block;
+                        // flex-direction: column;
+                        gap: 10px;
+                        // max-width: 230x;
+                        width: 220px;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        white-space: nowrap;
+                    }
+
+                    .mapping-multiselect {
+                        width: 380px;
+                        padding-left: 30px;
+
+                        kendo-searchbar::before {
+                            content: "\e13e";
+                            font-weight: 900;
+                            position: absolute;
+                            left: 10px;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            color: #999;
+                            pointer-events: none;
+                            font-family: "WebComponentsIcons";
+                        }
+
+                        .k-chip-list {
+                            .k-chip {
+                                background: #DBDEE7;
+                                color: #26282E;
+
+                                &:hover {
+                                    border: none;
+                                }
+                            }
+
+                        }
+
+                        responsive-renderer {
+                            &::after {
+                                right: 0;
+                                background-color: white;
+                            }
+                        }
+                    }
+
+
+                    .label-text {
+                        font-size: 13px;
+                        font-weight: 700;
+                        color: #5A6276;
+                        margin-bottom: 0;
+                    }
+
+                    .header {
+                        display: flex;
+                        gap: 0 !important;
+                        padding-top: 11px !important;
+                        padding-bottom: 3px;
+
+                        .header-1 {
+                            width: 230px;
+
+                        }
+                    }
+
+                    .group-body {
+                        display: flex;
+                        flex-direction: column;
+
+                        .body-content {
+                            display: flex;
+                            padding: 5px 0;
+
+                            .body-left {
+                                width: 230px;
+                            }
+
+                            .body-mid {
+                                width: 400px;
+                            }
+
+                            .body-right {
+                                padding-left: 120px;
+                            }
+                        }
+                    }
+
+
+                }
+            }
+        }
+    }
+}

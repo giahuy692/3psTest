@@ -1,0 +1,112 @@
+<div class="app-hr-new-info">
+
+    <div class="section">
+        <div class="Title">
+            <span class="section-tab borderRight" [ngClass]="{'active': curTab == 0 }" (click)="changeTab(0)">THÔNG TIN BÀI VIẾT</span>
+            <span class="section-tab" [ngClass]="{'active': curTab == 1 }" (click)="changeTab(1)">NỘI DUNG BÀI VIẾT</span>  
+        </div>
+        
+        <div class="languages">
+            <span class="borderRight vietnamese" [ngClass]="{'active': curLanguage == 0 }"
+                (click)="changeLanguage(0)">
+                Tiếng Việt
+            </span>
+
+            <span class="borderRight japanese" [ngClass]="{'active': curLanguage == 1 }"
+                (click)="changeLanguage(1)">
+                日本語
+            </span>
+
+            <span class="english" [ngClass]="{'active': curLanguage == 2 }" (click)="changeLanguage(2)">
+                English
+            </span>
+        </div>
+    </div>
+
+    <div class="body">
+
+        <div class="articleInformation" [hidden]="curTab != 0">
+
+            <kendo-gridlayout
+            [rows]="[ 80, 80, 90]"
+            [cols]="[ 300 ]"
+            [gap]="2"
+            >
+
+            <kendo-gridlayout-item [col]="1" [row]="1" [colSpan]="1" >
+                <div class="item item1">
+                    <label>Phân nhóm <span class="symbol">(*)</span></label>
+                    <kendo-dropdownlist 
+                    title="title"
+                    [data]="listCategory" 
+                    [textField]="'NewsCategory'" 
+                    [valueField]="'Code'"
+                    [(ngModel)]="selectedCategory"
+                    [disabled]="isItemDisabled"
+                    (valueChange)="onDropdownlistClick($event)"
+                    ></kendo-dropdownlist>
+                </div>
+            </kendo-gridlayout-item>
+
+            <kendo-gridlayout-item [col]="1" [row]="2" [colSpan]="1">
+                <div class="item item2">
+                    <label>Thời gian hiển thị <span class="symbol">(*)</span></label>
+                    <app-datepicker
+                    [popupSetting]="{animate:true, appendTo: 'root',popupClass:'popupLayoutCpnDatePicker'}" 
+                    [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'"
+                    [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                    [(ngModel)]="postDate" [min]="MaxDate"
+                    (blur)="onDatepickerChange($event)"
+                    (keydown.Enter)="$event.target.blur()" 
+                    [disabled]="isItemDisabled"
+                    ></app-datepicker>
+                </div>
+            </kendo-gridlayout-item>
+
+            <kendo-gridlayout-item [col]="1" [row]="3" [colSpan]="1">
+                <div class="item item3">
+                    <label>Tình trạng </label>
+                    <label><div [innerHTML]="news.StatusName | colorStatus:news.StatusID"></div></label>
+                    <div class="symbol fst-italic mt-2">(*) Trường bắt buộc nhập.</div>
+
+                </div>
+            </kendo-gridlayout-item>
+
+            <kendo-gridlayout-item [col]="2" [row]="1" [colSpan]="2">
+                <div class="item item4">
+                    <label>Tiêu đề <span class="symbol">(*)</span></label>
+                    <app-p-textbox [propName]="Lang" placeholder="Tiêu đề bài viết" 
+                    [ngModel]="curLanguage == 0 ? news.TitleVN : curLanguage == 1 ? news.TitleJP : news.TitleEN" 
+                    (ngModelChange)="onValueChange('Title', $event)" (blur)="onSaveInput('Title')" [disabled]="isItemDisabled">
+                    </app-p-textbox>    
+                </div>
+            </kendo-gridlayout-item>
+
+            <kendo-gridlayout-item [col]="2" [row]="2" [colSpan]="2" [rowSpan]="2">
+                <div class="item item5">
+                    <label>Miêu tả </label>
+                    <app-p-textarea [propName]="Content" 
+                    [placeholder]="'Miêu tả bài viết'" 
+                    [ngModel]="curLanguage == 0 ? news.SummaryVN : curLanguage == 1 ? news.SummaryJP : news.SummaryEN"
+                    (ngModelChange)="onValueChange('Summary', $event)" (blur)="onSaveInput('Summary')" [disabled]="isItemDisabled"></app-p-textarea>    
+                </div>
+            </kendo-gridlayout-item>
+
+            </kendo-gridlayout>
+        
+        </div>
+    
+        <div class="Content" [hidden]="curTab != 1">
+            <app-p-kendo-editor [readonly]="isItemDisabled" [index]="1"
+            [(ngModel)]="curLanguage == 0 ? news.ContentVN : curLanguage == 1 ? news.ContentJP : news.ContentEN"
+            (valueChange)="onValueChange('Content', $event)" (saveEvent)="onSaveInput('Content', $event)"
+            ></app-p-kendo-editor>
+        </div>
+
+    </div>
+    
+    <app-folder-popup [pickFileCallback]="curTab == 0 ? pickFileCallback : pickFileCallback2"
+    [GetFolderCallback]="curTab == 0 ? GetFolderCallback : GetFolderCallback2" [canResize]="curTab == 1"
+    [serviceIndex]="curTab">
+    </app-folder-popup>
+</div>

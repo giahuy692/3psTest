@@ -1,0 +1,78 @@
+<div class="app-drawer-container">
+    <mat-drawer-container [hasBackdrop]="true">
+        <!-- content -->
+        <mat-drawer-content>
+            <div class="config003-enterprise-product-detail">
+                <div class="header header-1">
+                    <app-p-kendo-breadcrumb (loadData)="loadPage()"></app-p-kendo-breadcrumb>
+                    <div class="nav-btn nav-crud">
+                        <!-- <button kendoButton class="k-button onAddBtn" [icon]="'plus'">TẠO MỚI</button> -->
+                  </div>
+                </div>
+                <div class="body">
+                    <div *ngIf="isDisplay">
+                        <app-config-product-info [typeInfo]="4" (dataChanged)="handleDataChange($event)"></app-config-product-info>
+                        <app-config-product-package-info></app-config-product-package-info>
+                        <app-config-product-other-info [typeInfo]="4"></app-config-product-other-info>    
+                    </div>
+                
+                    <div *ngIf="!isDisplay">
+                        <app-config-product-info [typeInfo]="1" (dataChanged)="handleDataChange($event)"></app-config-product-info>
+                        <app-config-product-package-info></app-config-product-package-info>
+                        <app-config-product-other-info></app-config-product-other-info>    
+                        <app-config-product-list  (openDrawerEvent)="openDrawer()" [hasAction]="true"></app-config-product-list>
+                    </div>
+
+                    <i class="impose">(*) Thông tin bắt buộc nhập</i>
+                </div>
+            </div>
+        </mat-drawer-content> 
+        <!-- drawer -->
+
+        <mat-drawer #formDrawer [mode]="'over'" position="end" class="k-drawer-container">
+            <div class="wrapper-drawer-right">
+                <legend>
+                SẢN PHẨM THUỘC HAMPER
+                </legend>
+            
+                <div class="content-drawer-right">
+            
+                    <div class="info-product">
+                      <div class="info">
+                        <div class="item">
+                            <div class="label">Nhập mã sản phẩm <span class="impose">  (*)</span></div>
+                            <app-p-textbox [propName]="'Barcode'"  (keydown.space)="$event.preventDefault()" [(ngModel)]="productInHamper.ChildBarcode" [disabled]="lockBarcode" (blur)="onTextboxBlur(productInHamper)"></app-p-textbox>
+                        </div>
+                        <div class="item">
+                            <div class="label">Tên sản phẩm</div>
+                            <span>{{productInHamper.ChildName}}</span>
+                        </div>
+                        <div class="item">
+                            <div class="label">Số lượng có trong hamper <span class="impose">  (*)</span></div>
+                            <div class="img-product">
+                                <app-p-numeric-textbox [(ngModel)]="quantity" propName="sl" [format]="'n0'"  [spinners]="false" [min]="1" [disabled]="checkProduct"></app-p-numeric-textbox>
+                                <img loading="lazy" width="150" [src]="productInHamper.URLThumbImage" alt="">
+                            </div>
+                        </div>
+                        <i class="impose">(*) Thông tin bắt buộc nhập</i>
+                     </div>
+                    </div>
+                    <div class="btn-ev">
+                      <button kendoButton class="btn-close btn-hachi" (click)="closeDrawer()">ĐÓNG</button>
+                      <button kendoButton class="btn-update btn-hachi hachi-primary" (click)="onUpdate(productInHamper)"> 
+        
+                        {{addNewItem
+                          ? "THÊM MỚI"
+                          : !addNewItem
+                          ? "CẬP NHẬT"
+                          : ""}}
+        
+                      </button>
+                    </div>
+                </div>
+            </div>
+            
+        </mat-drawer>
+    </mat-drawer-container>
+</div>
+

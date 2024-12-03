@@ -1,0 +1,194 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    app-menu-portal{
+      .ReadOnlyMenu{
+        pointer-events: none;
+        color: $gray-1;
+      }
+      .app-menu-portal{
+        height: 100%;
+        kendo-drawer-container{
+          height: 100%;
+          &.k-drawer-expanded{
+  
+            .k-drawer{
+              color: #5A6276;
+              .main{
+                height: 80px;
+                .info{
+                    column-gap: 10px;
+                    padding: 10px;
+                    .btnChevronDown{
+                      .k-button{
+                        border-color: transparent;
+                        background-color: transparent;
+                        box-shadow: none;
+        
+                        &:hover{
+                            border-color: transparent !important;
+                        }
+                        .k-button-icon{
+                          width: 100%;
+                        }
+                      }
+                      .k-animation-container{
+                        .dropDownUser{
+                          kendo-button-list{
+                            .k-group{
+                              .k-focus{
+                                box-shadow: none;
+                              }
+                            }
+                          }
+                        }
+                      }
+                        
+                    }
+    
+                    .avt{
+                      border-radius:100%;                
+                      -webkit-border-radius:100%;           
+                      -moz-border-radius:100%;             
+                      -ms-border-radius:100%;                
+                      -o-border-radius:100%;
+                      width: 35px;
+                      height: 35px;
+                      position: relative;
+                      
+                      &::after{
+                        content: '';
+                        width: 12px;
+                        height: 12px;
+                        background-color: $dark-green;
+                        position: absolute;
+                        right: 0;
+                        bottom: 0;
+                        border-radius: 8px;
+                        -webkit-border-radius: 8px;
+                        -moz-border-radius: 8px;
+                        -ms-border-radius: 8px;
+                        -o-border-radius: 8px;
+                      }
+    
+                      img{
+                        width: 100%;
+                      }
+                    }
+                }
+              }
+              .k-drawer-items{
+                height: calc(100vh - 170px);
+              }
+              .k-drawer-wrapper{
+  
+                .k-drawer-items{
+                  .k-drawer-item{
+                    padding: 0;
+                    align-items: center;
+                    &.k-selected{
+                      color: $dark-green;
+                      font-weight: 700;
+                      box-shadow: none;
+                    }
+
+                    .bodyMenu {
+                      padding: 8px;
+                      width: 100%;
+                    }
+
+                    &:has(.footerMenu) {
+                      border-top: 1px solid #959DB34D;
+                      position: sticky;
+                      bottom: 0;
+                      background: #fff;
+                    }
+                  }
+                }
+              }
+            }
+          }
+  
+          .avtExp{
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+          }
+
+          .UserInfo{
+            .fullname{
+              font-size: 13px;
+            }
+          }
+        }
+
+
+      }
+
+      @media (max-width: 768px) {
+        .app-menu-portal{
+          kendo-drawer-container{
+            width: 0;
+            .k-drawer{
+              flex-basis:0 !important;
+              transition: flex-basis 0.3s ease-in-out;
+            }
+            &.k-drawer-expanded{
+              .k-drawer{
+                flex-basis: 100vw !important;
+                transition: flex-basis 0.3s ease-in-out;
+                z-index: 2;
+                .k-drawer-wrapper{
+                  width: 100vw !important;
+                  height: 100vh !important;
+                  .k-drawer-item{
+                    padding: 0;
+                    // .bodyMenu {
+                    //   padding: 8px;
+                    //   width: 100%;
+                    // }
+
+                  }
+                  
+                }
+
+                // .main{
+                //   .info{
+                //     .btnChevronDown{
+                //       display: none;
+                //     }
+                //   }
+                // }
+
+               
+              }
+
+              .k-drawer-wrapper{
+                .k-drawer-items{
+                  .k-drawer-item{
+                    padding: 0 !important;
+                    .k-icon{
+                      font-size: 25px;
+                    }
+                    // .bodyMenu {
+                    //   padding: 8px;
+                    //   width: 100%;
+                    // }
+                  }
+                }
+              }
+            }
+          }
+
+          
+        }
+        p-changepassword-popup{
+          #changePasswordPopup{
+            .k-window{
+              width: 80vw;
+            }
+          }
+        }
+    }
+  }
+}

@@ -1,0 +1,413 @@
+.color-white {
+  color: #ffffff;
+}
+
+.color-gray {
+  color: #23282c;
+}
+
+.color-darkblue {
+  color: #39579a;
+}
+
+.color-blue {
+  color: #008cd7;
+}
+
+.color-lightblue {
+  color: #46b1ff;
+}
+
+.color-darkgreen {
+  color: #316e00;
+}
+
+.color-green {
+  color: #649e0f;
+}
+
+.color-lightgreen {
+  color: #8dc63f;
+}
+
+.color-yellowgreen {
+  color: #c1d72e;
+}
+
+.color-yellow {
+  color: #ffc400;
+}
+
+.color-mediumyellow {
+  color: #FFB900;
+}
+
+.color-orangeyellow {
+  color: #ffab00;
+}
+
+.color-lightorange {
+  color: #ff5230;
+}
+
+.color-lightpink {
+  color: #dc3545;
+}
+
+.color-red {
+  color: #d82c12;
+}
+
+.color-badred {
+  color: #EB273A;
+}
+
+.hachi-color-primary-1 {
+  color: #353935;
+}
+
+.hachi-color-primary-2 {
+  color: #868b86;
+}
+
+.hachi-color-primary-3 {
+  color: #8dc63f;
+}
+
+.hachi-color-primary-4 {
+  color: #c1d72e;
+}
+
+.hachi-color-primary-5 {
+  color: #ffffff;
+}
+
+.hachi-color-secondary-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-1 {
+  color: #46b1ff;
+}
+
+.hachi-color-text-2 {
+  color: #868b86;
+}
+
+.hachi-color-text-3 {
+  color: #008cd7;
+}
+
+.hachi-color-text-4 {
+  color: #d82c12;
+}
+
+.hachi-color-text-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-6 {
+  color: #ffffff;
+}
+
+.hachi-color-text-7 {
+  color: #8dc63f;
+}
+
+.hachi-color-text-8 {
+  color: #626662;
+}
+
+.hachi-color-text-10 {
+  color: #ff5230;
+}
+
+.hachi-color-text-9 {
+  color: #bbc0bb;
+}
+
+.hachi-color-text-11 {
+  color: #dc3545;
+}
+
+.hachi-color-text-12 {
+  color: #828282;
+}
+
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox {
+  height: 32px;
+  min-width: fit-content;
+  border-radius: 3px;
+  border: 1px solid #dbdee7;
+  outline: none;
+  box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+  background: white;
+  display: flex;
+}
+
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist .k-input-values,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree .k-input-values,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox .k-input-values {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist .k-input-inner,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree .k-input-inner,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox .k-input-inner {
+  border-radius: 3px;
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  width: -webkit-fill-available;
+  padding: 4px;
+  white-space: nowrap;
+}
+
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist .k-input-inner .k-input-value-text,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree .k-input-inner .k-input-value-text,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox .k-input-inner .k-input-value-text {
+  display: flex;
+  align-items: center;
+  column-gap: 4px;
+}
+
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist .k-button,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist .k-button.k-button-flat,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree .k-button,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree .k-button.k-button-flat,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox .k-button,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox .k-button.k-button-flat {
+  display: flex;
+  box-shadow: none;
+  background-color: inherit;
+  color: inherit;
+  height: 100%;
+  border: none;
+}
+
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist .k-button:hover,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist .k-button.k-button-flat:hover,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree .k-button:hover,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree .k-button.k-button-flat:hover,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox .k-button:hover,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox .k-button.k-button-flat:hover {
+  border: none;
+}
+
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup {
+  border: 1px solid #1a6634;
+}
+
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist.k-state-hover, ::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist.k-hover, ::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist:hover, ::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist:focus, ::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist.k-focus,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree.k-state-hover,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree.k-hover,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree:hover,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree:focus,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree.k-focus,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox.k-state-hover,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox.k-hover,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox:hover,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox:focus,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox.k-focus {
+  border: 1px solid #1a6634;
+}
+
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist.k-state-hover kendo-popup, ::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist.k-hover kendo-popup, ::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist:hover kendo-popup, ::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist:focus kendo-popup, ::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist.k-focus kendo-popup,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree.k-state-hover kendo-popup,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree.k-hover kendo-popup,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree:hover kendo-popup,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree:focus kendo-popup,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree.k-focus kendo-popup,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox.k-state-hover kendo-popup,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox.k-hover kendo-popup,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox:hover kendo-popup,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox:focus kendo-popup,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox.k-focus kendo-popup {
+  border: 1px solid #1a6634;
+}
+
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist.k-state-disabled, ::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist.k-disabled, ::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist.k-widget[disabled],
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree.k-state-disabled,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree.k-disabled,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree.k-widget[disabled],
+::ng-deep p-kendo-grid-dropdownlist .k-combobox.k-state-disabled,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox.k-disabled,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox.k-widget[disabled] {
+  background-color: #f0f3f5;
+  cursor: not-allowed;
+}
+
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist[ng-reflect-disabled="true"], ::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist[disabled], ::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist.k-state-disabled, ::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist.k-disabled,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree[ng-reflect-disabled="true"],
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree[disabled],
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree.k-state-disabled,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree.k-disabled,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox[ng-reflect-disabled="true"],
+::ng-deep p-kendo-grid-dropdownlist .k-combobox[disabled],
+::ng-deep p-kendo-grid-dropdownlist .k-combobox.k-state-disabled,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox.k-disabled {
+  background-color: #f0f3f5;
+  cursor: not-allowed;
+}
+
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup ul,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-group,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup ul,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-group,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup ul,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-group {
+  margin: 0;
+  padding: 0;
+  padding-left: 33px;
+}
+
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup ul.k-treeview-lines,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup ul.k-treeview-lines,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup ul.k-treeview-lines {
+  padding-left: 0;
+}
+
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup li,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-item,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup li,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-item,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup li,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-item {
+  list-style: none;
+}
+
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup li .k-checkbox,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-item .k-checkbox,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup li .k-checkbox,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-item .k-checkbox,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup li .k-checkbox,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-item .k-checkbox {
+  margin-right: 0;
+}
+
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-top,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-mid,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-bot,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-top,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-mid,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-bot,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-top,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-mid,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-bot {
+  white-space: nowrap;
+  height: 32px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-top.k-state-hover, ::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-top.k-hover, ::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-top:hover,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-mid.k-state-hover,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-mid.k-hover,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-mid:hover,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-bot.k-state-hover,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-bot.k-hover,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-bot:hover,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-top.k-state-hover,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-top.k-hover,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-top:hover,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-mid.k-state-hover,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-mid.k-hover,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-mid:hover,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-bot.k-state-hover,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-bot.k-hover,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-bot:hover,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-top.k-state-hover,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-top.k-hover,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-top:hover,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-mid.k-state-hover,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-mid.k-hover,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-mid:hover,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-bot.k-state-hover,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-bot.k-hover,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-bot:hover {
+  color: white;
+  background-color: rgba(26, 102, 52, 0.5);
+  cursor: pointer;
+}
+
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-top.k-state-hover img, ::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-top.k-hover img, ::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-top:hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-mid.k-state-hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-mid.k-hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-mid:hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-bot.k-state-hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-bot.k-hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-bot:hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-top.k-state-hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-top.k-hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-top:hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-mid.k-state-hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-mid.k-hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-mid:hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-bot.k-state-hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-bot.k-hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-bot:hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-top.k-state-hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-top.k-hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-top:hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-mid.k-state-hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-mid.k-hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-mid:hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-bot.k-state-hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-bot.k-hover img,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-bot:hover img {
+  filter: brightness(0) saturate(100%) invert(100%) sepia(91%) saturate(0%) hue-rotate(320deg) brightness(103%) contrast(105%);
+}
+
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-top.k-selected, ::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-top.k-state-selected,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-mid.k-selected,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-mid.k-state-selected,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-bot.k-selected,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-bot.k-state-selected,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-top.k-selected,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-top.k-state-selected,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-mid.k-selected,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-mid.k-state-selected,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-bot.k-selected,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-bot.k-state-selected,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-top.k-selected,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-top.k-state-selected,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-mid.k-selected,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-mid.k-state-selected,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-bot.k-selected,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-bot.k-state-selected {
+  color: white;
+  background-color: #1a6634;
+}
+
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-top .k-icon,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-mid .k-icon,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-bot .k-icon,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-top .k-icon,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-mid .k-icon,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-bot .k-icon,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-top .k-icon,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-mid .k-icon,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-bot .k-icon {
+  background-color: transparent;
+  color: inherit;
+}
+
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-top img,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-mid img,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdownlist kendo-popup .k-treeview-bot img,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-top img,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-mid img,
+::ng-deep p-kendo-grid-dropdownlist .k-dropdowntree kendo-popup .k-treeview-bot img,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-top img,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-mid img,
+::ng-deep p-kendo-grid-dropdownlist .k-combobox kendo-popup .k-treeview-bot img {
+  margin-right: 12px;
+  margin-left: 10px;
+}

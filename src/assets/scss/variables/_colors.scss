@@ -1,0 +1,321 @@
+// Color system
+// stylelint-disable
+
+$white:     #fff !default; 
+$gray-base: #181b1e !default;
+$gray-100:  #f0f3f5 !default; // lighten($gray-base, 85%); =#edeff3
+$gray-200:  #e4e7ea !default; // lighten($gray-base, 80%); =#dbdee7
+$gray-300:  #c8ced3 !default; // lighten($gray-base, 70%);
+$gray-400:  #acb4bc !default; // lighten($gray-base, 60%);
+$gray-500:  #8f9ba6 !default; // lighten($gray-base, 50%);
+$gray-600:  #73818f !default; // lighten($gray-base, 40%);
+$gray-700:  #5c6873 !default; // lighten($gray-base, 30%);
+$gray-800:  #2f353a !default; // lighten($gray-base, 10%); 
+$gray-850:  #26282e !default; //
+$gray-900:  #23282c !default; // lighten($gray-base, 5%);
+$black:     #000 !default;
+
+$grays: () !default;
+$grays: map-merge(
+  (
+    "100": $gray-100,
+    "200": $gray-200,
+    "300": $gray-300,
+    "400": $gray-400,
+    "500": $gray-500,
+    "600": $gray-600,
+    "700": $gray-700,
+    "800": $gray-800,
+    "850": $gray-850,
+    "900": $gray-900
+  ),
+  $grays
+);
+// angular
+$blue:           #20a8d8 !default;
+$medium-blue:    #066ca4 !default;
+$dark-blue:      #1A2334 !default;
+$indigo:         #6610f2 !default;
+$purple:         #6f42c1 !default;
+$pink:           #e83e8c !default;
+$dark-red:       #891828 !default;
+$bad-red:        #EB273A !default;
+$worse-red:      #D82C12 !default;//=#ff5230
+$red:            #f86c6b !default;//=#fd7676
+$orange:         #ff9200 !default;
+$yellow:         #f8cb00 !default;
+$medium-yellow:  #FFB900 !default;//=#ffc107
+$dark-green:     #1a6634 !default;
+$worse-green:    #008000 !default;
+$green:          #4dbd74 !default;
+$good-green:     #5CB800 !default;
+$teal:           #20c997 !default;
+$cyan:           #17a2b8 !default;
+$light-blue:     #63c2de !default;
+$blue-gray:      #bdc2d2 !default;
+$medium-blue-gray:#464e61 !default;
+$light-blue-gray:#959db3 !default;
+//react
+$blackgray: #242624;
+$darkgray-2: #353935; // $primary-1:#353935;// $text-main:#353935;// $text-btn-disabled:#353935;
+$darkgray-1: #565656;
+$gray-5: #535953;
+$gray-4: #626662; // $bg-4:#626662;// $text-8:#626662;// $secondary-4:#626662;
+$gray-3: #6b736b;
+$gray-2: #828282; // $text-12:#828282;
+$gray-1: #868b86; // $text-2:#868B86;// $primary-2:#868B86;// $btn-standard-select:#868B86;
+$lightgray: #bbc0bb; // $bg-9:#BBC0BB;// $text-9:#BBC0BB;// $border-1: #BBC0BB;// $secondary-9:#BBC0BB;
+
+$whitegray-8: #dddddd;
+$whitegray-7: #e0e0e0; // $border-color-5:#E0E0E0;
+$whitegray-6: #e2e2e2; // $bg-10:#E2E2E2;// $border: #E2E2E2;// $border-color-4:#E2E2E2;// $secondary-10:#E2E2E2;// $btn-standard-hover:#E2E2E2;
+$whitegray-5: #e5e5e5; // $bg-16: #E5E5E5;
+$whitegray-4: #edeeed; // $bg-11:#EDEEED;// $btn-standard:#EDEEED;// $secondary-11:#EDEEED;
+$whitegray-3: #f1f2f1; // $bg-12:#F1F2F1;// $secondary-12:#F1F2F1;
+$whitegray-2: #f2f2f2; // $bg-17: #F2F2F2;
+$whitegray-1: #fafafa; // $background-main:#fafafa;
+$white: #ffffff; // $bg-15:#ffffff;// $text-6:#FFFFFF;// $primary-5:#FFFFFF;// $border-color-1:#FffFFf;
+
+$darkblue: #39579a; // $bg-13:#39579A;
+$blue: #008cd7; // $bg-3:#008CD7;// $text-3:#008CD7;// $secondary-3:#008CD7;
+$lightblue: #46b1ff; // $bg-8:#46B1FF;// $text-1:#46B1FF;// $secondary-8:#46B1FF;
+
+$darkgreen: #316e00; // $btn-primary-select:#316E00;
+$green: #649e0f; // $bg-5:#649E0F;// $text-5:#649E0F;// $border-color-6:#649E0F;// $secondary-5:#649E0F;// $btn-primary-hover:#649E0F;
+$lightgreen: #8dc63f; // $bg-14:#8DC63F;// $text-7:#8DC63F;// $border-color-2:#8DC63F;// $primary-3:#8DC63F;// $btn-primary:#8DC63F;// $border-hover: #8DC63F;
+$yellowgreen: #c1d72e; // $primary-4:#C1D72E;
+
+$yellow: #ffc400; // $bg-7:#FFC400;// $secondary-7:#FFC400;
+$orangeyellow: #ffab00; // $bg-2:#FFAB00;// $secondary-2:#FFAB00;
+
+$lightorange: #ff5230; // $bg-1:#FF5230;// $text-10:#FF5230;// $border-color-3:#FF5230;// $secondary-1:#FF5230;
+$lightpink: #dc3545;// $text-11:#dc3545;
+$red: #d82c12; // $bg-6:#D82C12;// $text-4:#D82C12;// $secondary-6:#D82C12;
+
+.color-white {
+  color: $white;
+}
+.color-gray {
+  color: $gray-900;
+}
+
+.color-darkblue {
+  color: $darkblue;
+}
+.color-blue {
+  color: $blue;
+}
+.color-lightblue {
+  color: $lightblue;
+}
+
+.color-darkgreen {
+  color: $darkgreen;
+}
+.color-green {
+  color: $green;
+}
+.color-lightgreen {
+  color: $lightgreen;
+}
+.color-yellowgreen {
+  color: $yellowgreen;
+}
+
+.color-yellow {
+  color: $yellow;
+}
+.color-mediumyellow {
+  color: $medium-yellow;
+}
+.color-orangeyellow {
+  color: $orangeyellow;
+}
+
+.color-lightorange {
+  color: $lightorange;
+}
+.color-lightpink {
+  color: $lightpink;
+}
+.color-red {
+  color: $red;
+}
+.color-badred {
+  color: $bad-red;
+}
+
+//color
+.hachi-color-primary-1 {
+  color: $darkgray-2;
+}
+
+.hachi-color-primary-2 {
+  color: $gray-1;
+}
+
+.hachi-color-primary-3 {
+  color: $lightgreen;
+}
+
+.hachi-color-primary-4 {
+  color: $yellowgreen;
+}
+
+.hachi-color-primary-5 {
+  color: $white;
+}
+
+.hachi-color-secondary-5 {
+  color: $green;
+}
+
+.hachi-color-text-1 {
+  color: $lightblue;
+}
+
+.hachi-color-text-2 {
+  color: $gray-1;
+}
+
+.hachi-color-text-3 {
+  color: $blue;
+}
+
+.hachi-color-text-4 {
+  color: $red;
+}
+
+.hachi-color-text-5 {
+  color: $green;
+}
+
+.hachi-color-text-6 {
+  color: $white;
+}
+
+.hachi-color-text-7 {
+  color: $lightgreen;
+}
+
+.hachi-color-text-8 {
+  color: $gray-4;
+}
+
+.hachi-color-text-10 {
+  color: $lightorange;
+}
+
+.hachi-color-text-9 {
+  color: $lightgray;
+}
+
+.hachi-color-text-11 {
+  color: $lightpink;
+}
+.hachi-color-text-12 {
+  color: $gray-2;
+}
+//end react
+$colors: () !default;
+$colors: map-merge(
+  (
+    "blue":       $blue,
+    "indigo":     $indigo,
+    "purple":     $purple,
+    "pink":       $pink,
+    "red":        $red,
+    "orange":     $orange,
+    "yellow":     $yellow,
+    "green":      $green,
+    "teal":       $teal,
+    "cyan":       $cyan,
+    "light-blue": $light-blue,
+    "white":      $white,
+    "gray":       $gray-600,
+    "gray-dark":  $gray-800
+  ),
+  $colors
+);
+
+$primary:       $blue !default;
+$secondary:     $gray-300 !default;
+$success:       $green !default;
+$info:          $light-blue !default;
+$warning:       $yellow !default;
+$danger:        $red !default;
+$light:         $gray-100 !default;
+$dark:          $gray-800 !default;
+
+$theme-colors: () !default;
+$theme-colors: map-merge(
+  (
+    "primary":    $primary,
+    "secondary":  $secondary,
+    "success":    $success,
+    "info":       $info,
+    "warning":    $warning,
+    "danger":     $danger,
+    "light":      $light,
+    "dark":       $dark
+  ),
+  $theme-colors
+);
+
+// Brand Colors
+
+$facebook:       #3b5998 !default;
+$twitter:        #00aced !default;
+$linkedin:       #4875b4 !default;
+$google-plus:    #d34836 !default;
+$flickr:         #ff0084 !default;
+$tumblr:         #32506d !default;
+$xing:           #026466 !default;
+$github:         #4183c4 !default;
+$html5:          #e34f26 !default;
+$openid:         #f78c40 !default;
+$stack-overflow: #fe7a15 !default;
+$youtube:        #b00 !default;
+$css3:           #0170ba !default;
+$dribbble:       #ea4c89 !default;
+$google-plus:    #bb4b39 !default;
+$instagram:      #517fa4 !default;
+$pinterest:      #cb2027 !default;
+$vk:             #45668e !default;
+$yahoo:          #400191 !default;
+$behance:        #1769ff !default;
+$dropbox:        #007ee5 !default;
+$reddit:         #ff4500 !default;
+$spotify:        #7ab800 !default;
+$vine:           #00bf8f !default;
+$foursquare:     #1073af !default;
+$vimeo:          #aad450 !default;
+
+$brands-colors: () !default;
+$brands-colors: map-merge((
+  "facebook":       $facebook,
+  "twitter":        $twitter,
+  "linkedin":       $linkedin,
+  "google-plus":    $google-plus,
+  "flickr":         $flickr,
+  "tumblr":         $tumblr,
+  "xing":           $xing,
+  "github":         $github,
+  "html5":          $html5,
+  "openid":         $openid,
+  "stack-overflow": $stack-overflow,
+  "youtube":        $youtube,
+  "css3":           $css3,
+  "dribbble":       $dribbble,
+  "instagram":      $instagram,
+  "pinterest":      $pinterest,
+  "vk":             $vk,
+  "yahoo":          $yahoo,
+  "behance":        $behance,
+  "dropbox":        $dropbox,
+  "reddit":         $reddit,
+  "spotify":        $spotify,
+  "vine":           $vine,
+  "foursquare":     $foursquare,
+  "vimeo":          $vimeo
+), $brands-colors);

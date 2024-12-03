@@ -1,0 +1,4 @@
+B1: Install extention: https://chrome.google.com/webstore/detail/icomoon/kppingdhhalimbaehfmhldppemnmlcjd
+B2: Import Project chọn file Icon hachifont.json
+B3: Load Project
+B4: Add icon: Import Icons

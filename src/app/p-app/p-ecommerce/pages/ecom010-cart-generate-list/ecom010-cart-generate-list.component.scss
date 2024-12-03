@@ -1,0 +1,190 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+  .app-ecom009-cart-customer-list {
+    height: calc(100vh - #{$footer-height});
+    padding: 0 15px 0 20px;
+    // padding: 0 15px 35px 20px;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    .header {
+      .nav-crud {
+        flex-grow: 1;
+      }
+      .nav-filter {
+        .filter-btn-group {
+          &.search-btn-group {
+            .search-btn {
+              .k-textbox {
+                width: 385px;
+              }
+            }
+          }
+
+          &.date-btn-group {
+            position: relative;
+            width: 150px;
+
+            .label {
+              white-space: nowrap;
+            }
+
+            .k-datepicker {
+              width: 150px;
+            }
+
+            .k-i-close {
+              position: absolute;
+              // right: 33px;
+              left: 100px;
+              bottom: 15%;
+              border-radius: 50%;
+              cursor: pointer;
+              background-color: lightgrey;
+              color: white;
+              font-size: 13px;
+
+              &:hover {
+                background-color: gray;
+                color: lightgrey;
+              }
+            }
+          }
+
+          &.hachi24-btn-group #hachi_24_btn {
+            border: none;
+            background: none;
+            box-shadow: none;
+            padding-left: 0;
+            margin-left: 8px;
+
+            .k-checkbox {
+              margin-left: 0;
+            }
+          }
+        }
+      }
+
+      .nav-file {
+        margin-left: auto;
+      }
+    }
+
+    .grid.scrollable {
+      .k-grid {
+        .k-grid-aria-root {
+          overflow-x: auto;
+        }
+        table {
+          // width: 1370px;
+        }
+        //đặt lại more action btn absolute theo table relative
+        tr {
+          position: initial;
+
+          td,
+          th {
+            &:last-child {
+              position: absolute;
+              top: initial;
+              margin-top: calc(1% - 10px);
+            }
+          }
+        }
+      }
+    }
+
+    .k-grid {
+      thead tr {
+        height: fit-content !important;
+
+        th {
+          padding: 0 12px;
+          height: 13px;
+        }
+      }
+      tr:not(.k-grouping-row) {
+        td:first-child {
+          padding-left: 10px !important;
+        }
+      }
+      .col_img_tensanpham_masanpham {
+        max-width: 200px;
+        width: 200px;
+      }
+      .img_tensanpham_masanpham {
+        display: flex;
+        align-items: center;
+
+        img {
+          max-height: 64px;
+          max-width: 64px;
+          width: 100%;
+          margin-right: 10px;
+        }
+        .tensanpham_masanpham {
+          height: 64px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+
+          .tensanpham {
+            white-space: normal;
+            font-weight: 700;
+          }
+        }
+      }
+
+      .col_createdBy,
+      .col_shipper {
+        .gray {
+          color: $gray-500;
+        }
+      }
+
+      .col_shipper {
+        .gray {
+          min-width: 200px;
+          white-space: normal;
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+        }
+      }
+
+      .col_tinhTrang {
+        .red {
+          color: $bad-red;
+        }
+        .green {
+          color: $dark-green;
+        }
+      }
+
+      .col_soLuong {
+        text-align: right;
+
+        > .k-link {
+          justify-content: flex-end;
+        }
+      }
+
+      .col_ghiChu {
+        .remark {
+          padding-right: 50px;
+          max-width: 250px;
+          width: 250px;
+          white-space: normal;
+        }
+      }
+    }
+
+    // .myCustomGrid.k-grid tr:not(.k-grouping-row) td:first-child {
+    //   padding-left: 0;
+    // }
+  }
+}

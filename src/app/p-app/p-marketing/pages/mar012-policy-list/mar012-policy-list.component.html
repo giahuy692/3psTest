@@ -1,0 +1,58 @@
+<div class="app-mar012-policy-list">
+    <!-- Header 2 -->
+    <div class="header header-1">
+        <div class="title">
+            CHÍNH SÁCH BÁN HÀNG
+        </div>
+    </div>
+
+    <!-- Body -->
+    <div class="grid-wrapper">
+        <app-p-kendo-grid class="grid scrollable" [data]="gridView | async" [scrollable]="'none'" [loading]="isLoading"
+            [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize" [onPageChangeCallback]="onPageChangeCallback"
+            [skip]="gridState.skip" [take]="gridState.take" [sortable]="true" [sort]="gridState.sort"
+            [onSortChangeCallback]="onSortChangeCallback" [getActionDropdownCallback]="getActionDropdownCallback"
+            [onActionDropdownClickCallback]="onActionDropdownClickCallback" [selectable]="selectable"
+            [onSelectCallback]="onSelectCallback" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+            [getSelectionPopupCallback]="getSelectionPopupCallback" [sortable]="true" [sort]="gridState.sort">
+    
+            <kendo-grid-column class="col_tieudechinhsach" title="Chính sách">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="tieudechinhsach">
+                        <b>{{ dataItem.TitleVN }}</b>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+    
+            <kendo-grid-column class="col_nguoiCapNhat" field="PostDate" title="Người cập nhật">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                  <div>{{ dataItem.CreateBy }}</div>
+                  <div *ngIf="dataItem.PostDate != null && dataItem.PostDate != ''">
+                    Ngày cập nhật: {{ dataItem.PostDate | date: 'dd/MM/yyyy' }}
+                  </div>
+                </ng-template>
+            </kendo-grid-column>
+    
+            <kendo-grid-column field="LastModifiedTime" title="Thông tin phê duyệt" class="col_nguoiDuyet">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div>{{ dataItem.LastModifiedBy }}</div>
+                    <div *ngIf="dataItem.LastModifiedTime != null && dataItem.LastModifiedTime != ''">
+                        Ngày duyệt: {{ dataItem.LastModifiedTime | date: 'dd/MM/yyyy' }}
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+    
+            <kendo-grid-column class="col_tinhTrang" field="StatusName" title="Tình trạng" headerClass="col_tinhTrang">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div [ngClass]="{'yellow': dataItem.StatusID == 1, 
+                'green': dataItem.StatusID == 2, 'red': dataItem.StatusID == 3 || dataItem.StatusID == 4}">{{
+                        dataItem.StatusName }}</div>
+                </ng-template>
+            </kendo-grid-column>
+        </app-p-kendo-grid>
+    </div>
+
+    <app-folder-popup style="z-index: 10001;" [pickFileCallback]="pickFileCallback"
+        [GetFolderCallback]="GetFolderCallback">
+    </app-folder-popup>
+</div>

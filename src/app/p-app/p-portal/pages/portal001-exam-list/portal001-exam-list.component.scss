@@ -1,0 +1,701 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    .app-portal001-exam-list{
+        padding: 0 15px 35px 20px;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        // //content
+        .header{
+            overflow-x: scroll;
+            column-gap: 30px !important;
+            //
+            .label{
+                color: #959DB3 !important;
+            }
+            //
+            // filter search box
+            app-search-filter-group{
+                .nav-filter{
+                    .search-btn-group{
+                        .search-btn{
+                            width: 375px;
+                            .k-textbox{
+                                width: 100% !important;
+                            }
+                        }
+                    }
+                }
+            }
+            //filter datepicker 
+            .date-btn-group{
+                min-width: 260px;
+                .datepicker-btn-group{
+                    display: flex;
+                    text-align: center;
+                    justify-content: space-between;
+                    kendo-datepicker{
+                        &:hover{
+                            outline: 1px solid #1a6634;
+                           border-color: rgba(0, 0, 0, 0.16);
+                        }
+                        &:focus{
+                            outline: 1px solid #1a6634;
+                           border-color: rgba(0, 0, 0, 0.16);
+                        }
+                        button{
+                            border-left:none;
+                            background-color: rgba(255, 255, 255, 1);
+                            &:hover{
+                                outline: none;
+                               border-color: rgba(0, 0, 0, 0.16);
+                            }
+                            &:focus{
+                                outline: none;
+                               border-color: rgba(0, 0, 0, 0.16);
+                            }
+                        }
+                   
+                        kendo-dateinput{
+                            border-top-left-radius: 3px;
+                            border-bottom-left-radius: 3px;
+                            width: 110px;
+                            border-right: none;
+                            &:hover{
+                                outline: none;
+                               border-color: rgba(0, 0, 0, 0.16);
+                            }
+                            &:focus{
+                                outline: none;
+                               border-color: rgba(0, 0, 0, 0.16);
+                            }
+                        }
+                        .k-i-calendar::before{
+                            color: #959DB3;
+                        }
+                    }
+                }
+                .cross{
+                    margin-top: 5px;
+                }
+            }
+             //filter checkbox-button 
+            .checkbox-button-group{
+                width: 355px;
+                display: flex;
+                justify-content: space-between;
+            }
+            
+        }
+       
+        .grid-wrapper {
+            height: calc(100vh - 195px) !important;
+            .myCustomGrid.k-grid {
+                height: calc(100vh - 195px) !important;
+                tr:not(.k-grouping-row) td:first-child{
+                    padding-left: 12px;
+                }
+                .title{
+                    color: #26282E;
+                    font-family:  $font-family;
+                    font-size: $font-size;
+                    font-weight: 700;
+                }  
+                .thoigiandanhgia{
+                    text-align: center;
+                }
+                .thoigianlambai{
+                    text-align: right;
+                }
+                .thoigianlambaiconlai{
+                    text-align: center;
+                    font-size: 20px;
+                }  
+                .highlight{
+                    color: #C0392B;
+                }
+                .Status{
+                    text-align: right;
+                }
+                .headerthoigianlambaiCustomClass .k-cell-inner > .k-link{
+                    justify-content: right;
+                    margin-left: 5px;
+                }
+                .headerCustomClass .k-cell-inner > .k-link{
+                    justify-content: end;
+                }
+                .QuizSessionID{
+                    padding-right: 3px;
+                }
+            }
+            .k-grid-pager{
+                bottom: 5px !important;
+            }
+        }       
+        .rowMoreActionPopup .k-popup .popup-item .k-icon::before, .rowMoreActionPopup.k-popup .popup-item .k-icon::before{
+            vertical-align: sub;
+        }
+        app-p-kendo-grid .myCustomGrid.k-grid table{
+            border-spacing: 0 8px !important;
+        }
+        app-p-kendo-grid .myCustomGrid.k-grid tbody tr > td:nth-last-child(1){
+            width: 40px;
+            padding: 18px 12px 20px 4px;
+
+        }
+        app-p-kendo-grid .myCustomGrid.k-grid tbody tr:has(.DontShow) > td:nth-last-child(1){
+            .k-button{
+                display: none;
+
+            }
+        }
+    }
+    @media only screen and (max-width: 1345px) {
+        .app-portal001-exam-list{
+            app-search-filter-group{
+                .nav-filter{
+                    .search-btn-group{
+                        .search-btn{
+                            width: 230px !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 1200px) {
+        .app-portal001-exam-list{
+            app-search-filter-group{
+                .nav-filter{
+                    .search-btn-group{
+                        .search-btn{
+                            width: 200px !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 500px) {
+        .app-portal001-exam-list{
+            padding: 0 13px 5px 13px;
+            overflow: hidden;
+             //drawer
+            #drawerContainerRight{
+                position: relative;
+                height: 100vh;
+                .k-overlay {
+                    position: absolute;
+                    z-index: 1;
+                }
+                #drawerRight {
+                    height: 100%;
+                    margin-top: 55px;
+                    border-top: 1px solid rgba(0, 0, 0, 0.5);
+                    .k-drawer-wrapper{
+                        width: 500px !important;
+                        //content drawer
+                        .collum{
+                            display: flex;
+                            flex-direction: column;
+                            flex-wrap: nowrap;
+                            align-content: flex-start;
+                            align-items: flex-start !important;
+                            margin-left: 26px;
+                            border-bottom: none !important;
+                            height: 220px;
+                            justify-content: space-around;
+                            .label{
+                                margin-top: 14px;
+                                margin-bottom: 12px;
+                            }
+                            .filter-btn-group{
+                                width: 95%;
+                                .cross{
+                                    margin: 0 4px;
+                                }
+                                margin-left: 0;
+                                .datepicker-btn-group{
+                                    width: 100%;
+                                    justify-content: flex-start;
+                                    .k-datepicker{
+                                        margin-left: 5px;
+                                        width: 30%;
+                                        .k-dateinput{
+                                            width: 100%;
+                                        }
+                                    } 
+                                }
+                                .k-animation-container {
+                                    left: 6% !important;
+                                }
+                                .checkbox-button-group{
+                                    display: flex;
+                                    flex-direction: column;
+                                    flex-wrap: nowrap;
+                                    align-content: flex-start;
+                                    align-items: flex-start !important;
+                                    .customcheckbox{
+                                        margin-left: 10px;
+                                        text-align: center;
+                                        .text{
+                                            color: #5c6873;
+                                            font-size: $font-size;
+                                            font-weight: 600;
+                                            margin-left: 12px;
+                                        }
+                                    }
+                                    button.k-button.k-button-md.k-rounded-md.k-button-solid-base.k-button-solid{
+                                        box-shadow: none !important;
+                                        border: none !important;
+                                        &:hover{
+                                            border: none;
+                                        }
+                                    }
+                                    .checkboxbtn{
+                                        margin-left: 30px;
+                                    }
+                                }
+                            }
+                            .customtextkbox{
+                                position: relative;
+                                padding-left: 30px;
+                                width: 236px;
+                                margin-left: 2px;
+                            }
+                            .customicon{
+                                position: absolute;
+                                z-index: 15;
+                                margin: 0 8px;
+                            }
+                            .Text{
+                                color: #959DB3;
+                                font-size: 13px;
+                                font-weight: 700;
+                            }
+                            .padding{
+                                margin-bottom: 5px;
+                            }
+                           
+                        }
+                    }
+                }
+                .k-drawer{
+                    max-width: 100vw !important;
+                }
+            }
+            
+            //Content
+            .k-drawer-content{
+                width: 470px !important;
+                .header{
+                    justify-content: space-between;
+                    app-search-filter-group{
+                        .nav-filter{
+                            .clear-btn-group, .search-btn-group > .label , .searchBtn{
+                                display: none;
+                            }
+                            .search-btn{
+                                margin-left: 5px;
+                                .k-textbox{
+                                    .k-input-inner{
+                                        min-width: 280px;
+                                        width: 200px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    border-bottom: none !important;
+                    column-gap: 0 !important;
+                    
+                }
+                .grid-wrapper{
+                    height: calc(100vh - 170px) !important;
+                    overflow-y: scroll;
+                   .grid {
+                        .k-grid-aria-root{
+                            table{
+                                min-width: 460px !important;
+                            }
+                        }
+                   }
+                    thead {
+                    background: none;
+                    display: none;
+                    }
+                    .tendotdanhgia{
+                        width: 235px !important; 
+                        margin-bottom: 5px;
+                    }
+                    .col_thongtinđotanhgia{
+                        .Thongtin{
+                            margin-left: 5px;
+                            color: rgba(38, 40, 46, 0.60) !important;
+                            .line{
+                                margin: 0 8px 0 4px;
+                                border: 1px solid #BDC2D2;
+                            }
+                            .title{
+                                color: rgba(38, 40, 46, 0.60) !important;
+                            }
+                            .Classify{
+                                color: rgba(38, 40, 46, 0.60) !important;
+                                font-size: 13px;
+                                font-weight: 400;
+                                display: flex;
+                                // height: 19px;
+                                .titlePhanLoai{
+                                    width: 58px;
+                                }
+                                .TypeOfSessionName{
+                                    width: 140px !important; 
+                                    margin-bottom: 5px;
+                                    display: -webkit-box !important;
+                                    -webkit-box-orient: horizontal !important; 
+                                    overflow: hidden !important; 
+                                    -webkit-line-clamp: 2 !important; 
+                                    white-space: initial;
+                                    height: fit-content;
+                                }
+                            }
+                            .thoigianlambai{
+                                width: 200px;
+                                display: flex;
+                                flex-direction: row;
+                                flex-wrap: nowrap;
+                                justify-content: flex-start;
+                                margin-top: 5px;
+                                font-size: 13px;
+                                height: 34px;
+                                .titlethoigianlambai{
+                                    width: 58px !important;
+                                    height: 35px;
+                                    white-space: pre-wrap;
+                                    text-align: left;
+                                }
+                                .boxtime{
+                                    display: flex;
+                                    flex-direction: column;
+                                }
+                            }
+                        }
+                        .Block{
+                            .title{
+                                color: #26282E !important;
+                            }
+                            .Classify{
+                                color: #26282E !important;
+                            }
+                            .titlethoigianlambai{
+                                color: #26282E !important;
+                            }
+                            .Begin{
+                                color: #26282E !important;
+                            }
+                            .highlightText{
+                                color: #FD7676;
+                            }
+                        }
+                    }
+                    .col_action{
+                        display: flex;
+                        justify-content: center;
+                        .tinhtrangButton{
+                            font-weight: 700;
+                            width: 110px;
+                            text-align: center;
+                            align-items: center;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center !important;
+                            height: 115px;
+                            .SessionStatusName{
+                                text-align: center;
+                                margin-bottom: 5px;
+                                display: -webkit-box !important;
+                                -webkit-box-orient: horizontal !important; 
+                                overflow: hidden !important; 
+                                -webkit-line-clamp: 2 !important; 
+                                white-space: initial;
+                                height: fit-content;
+                            }
+                            .custombutton{
+                                width: 105px !important;
+                                height: 54px !important;
+                                font-size: 15px;
+                                margin-top: 4px;
+                                display: flex;
+                                flex-wrap: wrap;
+                            }
+                            .green{
+                                background-color: #1A6634;
+                                color: #ffffff;
+                            }
+                            .gray{
+                                background-color: #547082;
+                                color: #ffffff;
+                                margin-right: 5px;
+                            }
+                            .text{
+                                font-size: 13px;
+                                color: #1A6634;
+                            }
+                            .Textcolor{
+                                color: rgba(38, 40, 46, 0.60) !important;
+                            }
+                        }
+                    }
+                    app-p-kendo-grid {
+                        .myCustomGrid.k-grid{
+                            height: calc(100vh - 165px) !important;
+                            tr:not(.k-grouping-row) td:first-child{
+                                padding-left: 6px;
+                            }
+                            .k-grid table{
+                                min-width: 377px !important;
+                            }
+                        }
+                        
+                    }
+                    .k-grid-pager{
+                        display: none;
+                    }
+                }
+            }
+            .k-grid th, .k-grid td{
+                padding: 5px 3px ;
+            }
+            .scrollable {
+                min-width: 400px !important;
+            }
+            .Customlabel{
+                margin-bottom: 0 !important;
+                font-weight: 700;
+                font-size: 13px;
+                color: #5A6276 !important;
+                font-family: $font-family;
+            }
+            .k-grid .k-grid-aria-root{
+                overflow: visible !important;
+            }
+            app-p-kendo-grid .myCustomGrid.k-grid tr{
+                background: #FFF !important;
+                box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25) !important;
+            }
+            app-p-kendo-grid{
+                margin-top: -10px !important;
+            }
+            .datepicker-btn-group{
+                margin-left: 2px !important;
+            }
+            .checkbox-button-group{
+                margin-left: 2px !important;
+            }
+            .k-i-filter::before{
+                margin-bottom: 3px;
+            }
+            .k-i-eye::before{
+                font-size: 24px;
+            }
+            .k-i-change-manually::before{
+                font-size: 20px;
+            }
+        }
+    }
+    @media only screen and (max-width: 460px) {
+        .app-portal001-exam-list{
+            .k-drawer-content{
+                width: 370px !important;
+                .header{
+                    app-search-filter-group{
+                        .nav-filter{
+                            .search-btn{
+                                margin-left: 5px !important;
+                                .k-textbox{
+                                    .k-input-inner{
+                                        min-width: 230px ;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .grid-wrapper{
+                    .tendotdanhgia{
+                        width: 235px !important; 
+                        margin-bottom: 5px;
+                        display: -webkit-box !important;
+                        -webkit-box-orient: horizontal !important; 
+                        overflow: hidden !important; 
+                        -webkit-line-clamp: 2 !important; 
+                        white-space: initial;
+                    }
+                    .grid {
+                        .k-grid-aria-root{
+                            table{
+                                min-width: 370px !important;
+                            }
+                        }
+                        .col_action{
+                            display: flex;
+                            justify-content: center !important;
+                            .tinhtrangButton {
+                                margin-left: 10px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .k-animation-container{
+            left: 33px !important;
+        }
+    }
+    @media only screen and (max-width: 420px) {
+        .app-portal001-exam-list{
+            .k-drawer-content{
+                width: 370px !important;
+                .header{
+                    app-search-filter-group{
+                        .nav-filter{
+                            .search-btn{
+                                margin-left: 5px !important;
+                                .k-textbox{
+                                    .k-input-inner{
+                                        min-width: 230px ;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .grid-wrapper{
+                    .tendotdanhgia{
+                        width: 235px !important; 
+                        margin-bottom: 5px;
+                        display: -webkit-box !important;
+                        -webkit-box-orient: horizontal !important; 
+                        overflow: hidden !important; 
+                        -webkit-line-clamp: 2 !important; 
+                        white-space: initial;
+                    }
+                    .grid {
+                        .k-grid-aria-root{
+                            table{
+                                min-width: 370px !important;
+                            }
+                        }
+                        .col_action{
+                            display: flex;
+                            justify-content: start !important;
+                            .tinhtrangButton {
+                                margin-left: 10px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .k-animation-container{
+            left: 33px !important;
+        }
+    }
+    @media only screen and (max-width: 400px) {
+        .app-portal001-exam-list{
+            .k-drawer-content{
+                .header{
+                    width: 380px;
+                    app-search-filter-group{
+                        .nav-filter{
+                            .search-btn{
+                                margin-left: 5px !important;
+                                .k-textbox{
+                                    .k-input-inner{
+                                        min-width: 210px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .grid-wrapper{
+                    .col_action{
+                        .tinhtrangButton{
+                            margin-left: 2px !important;
+                        }
+                    }
+                    .k-grid-content.k-virtual-content{
+                        tbody tr > td:nth-last-child(1){
+                            align-items: flex-start;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @media screen and (max-width: 390px){
+        .app-portal001-exam-list{
+            padding: 0 5px 5px 5px;
+            .k-drawer-content{
+                .header{
+                    width: 355px;
+                    app-search-filter-group{
+                        .nav-filter{
+                            .search-btn{
+                                margin-left: 5px !important;
+                                .k-textbox{
+                                    .k-input-inner{
+                                        min-width: 200px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .grid-wrapper{
+                    .col_action{
+                        .tinhtrangButton{
+                            margin-left: 0 !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @media screen and (max-width: 370px){
+        .app-portal001-exam-list{
+            .k-drawer-content{
+                width: 340px !important;
+                .header{
+                    justify-content: flex-start;
+                    app-search-filter-group{
+                        .nav-filter{
+                            .search-btn{
+                                margin-left: 5px !important;
+                                .k-textbox{
+                                    .k-input-inner{
+                                        min-width: 200px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .Customlabel{
+                        margin-left: 25px;
+                    }
+                }
+                .grid-wrapper {
+                    .tendotdanhgia{
+                        width: 200px !important;
+                    }
+                    .col_action{
+                        margin-left: -27px !important;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,94 @@
+@import "../../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    //vá dropdown filter search
+    input.k-input-inner.ng-untouched.ng-pristine.ng-valid{
+        border: none !important;
+    }
+    .config-applied-company{
+        padding: 10px 0;
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        .title{
+            display: flex;
+            align-items: center;
+            padding-bottom: 5px;
+            span{
+                font-size: 16px;
+                font-weight: 700;
+            }
+        }
+        .k-dialog{
+            height: 200px;
+            .k-window-content{
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              p{
+                font-size: 18px;
+              }
+            }
+          }
+        .block-applied-company{
+                padding: 5px 15px 15px 15px;
+                background-color: $white;
+                overflow: auto;
+                .impose{
+                    font-weight: 700;
+                    color: $bad-red;
+                }
+                .content{
+                    margin-top: 5px;
+                    display: flex;
+                    .layout{
+                        padding-right: 20px;
+                        min-width: 410px;
+                        &:last-child{
+                            padding-right: 5px;
+                        }
+                        .k-dropdown{
+                            width: 100%;
+                            box-shadow: none;
+                        }
+                        .label{
+                            font-weight: 700;
+                            color: #959DB3;
+                            padding: 5px 0;
+                        }
+                        .companyName{
+                            display: flex;
+                            align-items: center;
+                            .k-checkbox{
+                                margin-right: 15px;
+                            }
+                           span{
+                                font-weight: 700;
+                            }
+                        }
+                        .item6{
+                            .item-group{
+                                display: flex;
+                                gap: 10px;
+                                app-p-numeric-textbox{
+                                    width: 70%;
+                                    .customized-input{
+                                        width: 100%;
+                                        box-shadow: none;
+                                    }
+                                }
+                                p-kendo-dropdownlist{
+                                    width: 30%;
+                                    .k-dropdown{
+                                        
+                                    }
+                                }
+                            }
+                        
+                        }
+                    }
+            }
+        }
+    }
+}

@@ -1,0 +1,89 @@
+<kendo-dialog #folderDialogPopup title="TÌM KIỂM SẢN PHẨM" [hidden]="!isDialogOpen()" (close)="closeDialog()"
+  id="searchProductPopup">
+
+  <div class="label">
+    Chọn sản phẩm
+  </div>
+  <!-- <kendo-dropdownlist [data]="[]" [textField]="'ChannelName'" [valueField]="'Code'" [value]="{}"> -->
+  <!-- (valueChange)="onDropdownlistClick($event, 'Channel')" -->
+  <!-- </kendo-dropdownlist> -->
+
+  <div class="productCbx">
+    <span class="k-icon k-i-cart"></span>
+
+    <kendo-combobox #combobox [data]="productList" [valueField]="'Code'" [textField]="'Barcode'"
+      [value]="currentProduct" placeholder="Nhập mã hay tên sản phẩm" [loading]="loading"
+      (valueChange)="valueChange($event)" (selectionChange)="getProductByCode($event)" [suggest]="true"
+      [allowCustom]="true" [valueNormalizer]="valueNormalizer" [filterable]="true" (filterChange)="filterChange($event)"
+      (click)="toggleCombobox($event)" (keydown.enter)="getProductList($event)"
+      [popupSettings]="{  appendTo: 'component'  }">
+
+      <ng-template kendoComboBoxItemTemplate let-dataItem>
+        <div class="productItem">
+          <div class="code">{{ dataItem.Barcode }}</div>
+          <div class="name">{{ dataItem.VNName }}</div>
+        </div>
+      </ng-template>
+    </kendo-combobox>
+  </div>
+
+  <div class="row">
+    <div class="col-7 left-col">
+
+      <div class="label">Tên sản phẩm</div>
+      <div class="textarea">{{ currentProduct.VNName }}</div>
+
+      <div class="label">Xuất xứ</div>
+      <div class="textarea">{{ currentProduct.Origin }}</div>
+
+      <div class="label">Thành phần</div>
+      <div class="textarea">{{ currentProduct.VNMaterial }}</div>
+    </div>
+
+    <div class="col-5 right-col">
+      <div class="label">Hình ảnh</div>
+      <img loading="lazy" src="{{currentProduct.ImageSetting}}" [alt]="currentProduct.ImageSetting">
+
+      <div class="priceGroup">
+        <div class="label">Giá bán</div>
+        <div class="price">
+          <div class="newPrice">{{ currentProduct.UnitPrice | number : '1.'}}</div>
+          <div [hidden]="currentProduct.BasePrice == null || currentProduct.BasePrice == 0 
+          || currentProduct.BasePrice == currentProduct.UnitPrice" class="oldPrice">{{
+            currentProduct.BasePrice | number : '1.'}}</div>
+        </div>
+      </div>
+      <div class="description">{{ currentProduct.PromotionName }}
+      </div>
+    </div>
+  </div>
+
+  <div class="label">TÌNH TRẠNG TỒN KHO</div>
+  <div class="warehouseList">
+    <div class="warehouseItem" *ngFor="let wh of warehouseStockList">
+      <div class="warehouse">{{ wh?.WarehouseName }}</div>
+      <div class="quantity">{{ wh?.Stock | number : '1.'}}</div>
+    </div>
+
+    <div class="warehouseItem total">
+      <div class="warehouse">Tổng tồn</div>
+      <div class="quantity">
+        <div class="line"></div>
+        <div>{{ totalStock | number : '1.'}}</div>
+      </div>
+    </div>
+
+    <div class="warehouseItem notReceived">
+      <div class="warehouse">S.lượng khách đặt chưa tiếp nhận</div>
+      <div class="quantity">- {{ productWebInCart.Stock | number : '1.'}}</div>
+    </div>
+
+    <div class="warehouseItem total">
+      <div class="warehouse">TỔNG TỒN TOÀN HỆ THỐNG</div>
+      <div class="quantity">
+        <div class="line"></div>
+        <div>{{ totalStock - productWebInCart.Stock | number : '1.'}}</div>
+      </div>
+    </div>
+  </div>
+</kendo-dialog>

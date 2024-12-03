@@ -1,0 +1,282 @@
+.color-white {
+  color: #ffffff;
+}
+
+.color-darkblue {
+  color: #39579a;
+}
+
+.color-blue {
+  color: #008cd7;
+}
+
+.color-lightblue {
+  color: #46b1ff;
+}
+
+.color-darkgreen {
+  color: #316e00;
+}
+
+.color-green {
+  color: #649e0f;
+}
+
+.color-lightgreen {
+  color: #8dc63f;
+}
+
+.color-yellowgreen {
+  color: #c1d72e;
+}
+
+.color-yellow {
+  color: #ffc400;
+}
+
+.color-orangeyellow {
+  color: #ffab00;
+}
+
+.color-lightorange {
+  color: #ff5230;
+}
+
+.color-lightpink {
+  color: #dc3545;
+}
+
+.color-red {
+  color: #d82c12;
+}
+
+.hachi-color-primary-1 {
+  color: #353935;
+}
+
+.hachi-color-primary-2 {
+  color: #868b86;
+}
+
+.hachi-color-primary-3 {
+  color: #8dc63f;
+}
+
+.hachi-color-primary-4 {
+  color: #c1d72e;
+}
+
+.hachi-color-primary-5 {
+  color: #ffffff;
+}
+
+.hachi-color-secondary-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-1 {
+  color: #46b1ff;
+}
+
+.hachi-color-text-2 {
+  color: #868b86;
+}
+
+.hachi-color-text-3 {
+  color: #008cd7;
+}
+
+.hachi-color-text-4 {
+  color: #d82c12;
+}
+
+.hachi-color-text-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-6 {
+  color: #ffffff;
+}
+
+.hachi-color-text-7 {
+  color: #8dc63f;
+}
+
+.hachi-color-text-8 {
+  color: #626662;
+}
+
+.hachi-color-text-10 {
+  color: #ff5230;
+}
+
+.hachi-color-text-9 {
+  color: #bbc0bb;
+}
+
+.hachi-color-text-11 {
+  color: #dc3545;
+}
+
+.hachi-color-text-12 {
+  color: #828282;
+}
+
+::ng-deep .app-pur003-po-domestic {
+  height: calc(93vh - 30px);
+  padding: 0 15px 35px 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+::ng-deep .app-pur003-po-domestic .header .nav-crud {
+  flex-grow: 1;
+}
+
+::ng-deep .app-pur003-po-domestic .header .nav-filter .filter-btn-group.search-btn-group .search-btn .k-textbox {
+  width: 385px;
+}
+
+::ng-deep .app-pur003-po-domestic .header .nav-filter .filter-btn-group.date-btn-group {
+  position: relative;
+  width: 150px;
+}
+
+::ng-deep .app-pur003-po-domestic .header .nav-filter .filter-btn-group.date-btn-group .label {
+  white-space: nowrap;
+}
+
+::ng-deep .app-pur003-po-domestic .header .nav-filter .filter-btn-group.date-btn-group .k-datepicker {
+  width: 150px;
+}
+
+::ng-deep .app-pur003-po-domestic .header .nav-filter .filter-btn-group.date-btn-group .k-i-close {
+  position: absolute;
+  left: 100px;
+  bottom: 15%;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: lightgrey;
+  color: white;
+  font-size: 13px;
+}
+
+::ng-deep .app-pur003-po-domestic .header .nav-filter .filter-btn-group.date-btn-group .k-i-close:hover {
+  background-color: gray;
+  color: lightgrey;
+}
+
+::ng-deep .app-pur003-po-domestic .header .nav-filter .filter-btn-group.hachi24-btn-group #hachi_24_btn {
+  border: none;
+  background: none;
+  box-shadow: none;
+  padding-left: 0;
+  margin-left: 8px;
+}
+
+::ng-deep .app-pur003-po-domestic .header .nav-filter .filter-btn-group.hachi24-btn-group #hachi_24_btn .k-checkbox {
+  margin-left: 0;
+}
+
+::ng-deep .app-pur003-po-domestic .header .nav-file {
+  margin-left: auto;
+}
+
+::ng-deep .app-pur003-po-domestic .grid.scrollable .k-grid .k-grid-aria-root {
+  overflow-x: auto;
+}
+
+::ng-deep .app-pur003-po-domestic .grid.scrollable .k-grid table {
+  width: 1370px;
+}
+
+::ng-deep .app-pur003-po-domestic .grid.scrollable .k-grid tr {
+  position: initial;
+}
+
+::ng-deep .app-pur003-po-domestic .grid.scrollable .k-grid tr td:last-child,
+::ng-deep .app-pur003-po-domestic .grid.scrollable .k-grid tr th:last-child {
+  position: absolute;
+  top: initial;
+  margin-top: calc(1% - 10px);
+}
+
+::ng-deep .app-pur003-po-domestic .k-grid thead tr {
+  height: fit-content !important;
+}
+
+::ng-deep .app-pur003-po-domestic .k-grid thead tr th {
+  padding: 0 12px;
+  height: 13px;
+}
+
+::ng-deep .app-pur003-po-domestic .k-grid tr:not(.k-grouping-row) td:first-child {
+  padding-left: 10px !important;
+}
+
+::ng-deep .app-pur003-po-domestic .k-grid .col_img_tensanpham_masanpham {
+  max-width: 200px;
+  width: 200px;
+}
+
+::ng-deep .app-pur003-po-domestic .k-grid .img_tensanpham_masanpham {
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .app-pur003-po-domestic .k-grid .img_tensanpham_masanpham img {
+  max-height: 64px;
+  max-width: 64px;
+  width: 100%;
+  margin-right: 10px;
+}
+
+::ng-deep .app-pur003-po-domestic .k-grid .img_tensanpham_masanpham .tensanpham_masanpham {
+  height: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+::ng-deep .app-pur003-po-domestic .k-grid .img_tensanpham_masanpham .tensanpham_masanpham .tensanpham {
+  white-space: normal;
+}
+
+::ng-deep .app-pur003-po-domestic .k-grid .col_createdBy .gray,
+::ng-deep .app-pur003-po-domestic .k-grid .col_shipper .gray {
+  color: #8f9ba6;
+}
+
+::ng-deep .app-pur003-po-domestic .k-grid .col_shipper .gray {
+  min-width: 200px;
+  white-space: normal;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+::ng-deep .app-pur003-po-domestic .k-grid .col_tinhTrang .red {
+  color: #EB273A;
+}
+
+::ng-deep .app-pur003-po-domestic .k-grid .col_tinhTrang .green {
+  color: #1a6634;
+}
+
+::ng-deep .app-pur003-po-domestic .k-grid .col_soLuong {
+  text-align: right;
+}
+
+::ng-deep .app-pur003-po-domestic .k-grid .col_soLuong > .k-link {
+  justify-content: flex-end;
+}
+
+::ng-deep .app-pur003-po-domestic .k-grid .col_ghiChu .remark {
+  padding-right: 50px;
+  max-width: 250px;
+  width: 250px;
+  white-space: normal;
+}

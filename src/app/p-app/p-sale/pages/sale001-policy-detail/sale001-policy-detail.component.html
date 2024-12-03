@@ -1,0 +1,362 @@
+<div class="app-drawer-container">
+  <mat-drawer-container [hasBackdrop]="true">
+    <mat-drawer #drawer [mode]="'over'" position="end" opened="false">
+      <form class="formSanpham k-form" [formGroup]="form" (keydown.Enter)="keydownEnter($event)">
+        <fieldset>
+          <legend>SẢN PHẨM ĐỔI GIÁ</legend>
+
+          <div class="masanpham_img d-flex">
+            <kendo-formfield>
+              <kendo-label text="Nhập mã sản phẩm" [for]="Barcode">
+                <span class="symbol">(*)</span>
+              </kendo-label>
+              <kendo-textbox formControlName="Barcode" #Barcode (keydown.Enter)="$event.target.blur()"
+                (inputBlur)="onTextboxLoseFocus('Barcode')" [(value)]="posPriceDetail.Barcode"
+                [disabled]="!isAddDetail || isLockAll">
+              </kendo-textbox>
+            </kendo-formfield>
+
+            <div class="img">
+              <img loading="lazy" [src]="posPriceDetail.ImageSetting" alt="Ảnh sản phẩm">
+            </div>
+          </div>
+
+          <div class="tensanpham">
+            <kendo-label text="Tên sản phẩm">
+              <b>{{ posPriceDetail.PosCode }}</b>
+              <!-- <b class="tbarcode" [hidden]="posPriceDetail.TBarcode == null || posPriceDetail.TBarcode == ''">
+                {{ posPriceDetail.TBarcode }}</b> -->
+            </kendo-label>
+            <div class="VNName">{{ posPriceDetail.ProductName }}</div>
+          </div>
+
+          <div class="formfield-grid">
+            <!-- <kendo-formfield class="formfield-item item6"> -->
+            <div class="item6">
+              <kendo-label text="Giá bán lẻ hiện thời"></kendo-label>
+              <div class="OldPrice">{{ posPriceDetail.OldPrice | number: '1.'}}</div>
+            </div>
+            <!-- <kendo-numerictextbox formControlName="OldPrice" #OldPrice format="#,0"
+                [(value)]="posPriceDetail.OldPrice" [disabled]="true">
+              </kendo-numerictextbox> -->
+            <!-- </kendo-formfield> -->
+
+            <!-- <kendo-formfield class="formfield-item item7"> -->
+            <div class="item7">
+              <kendo-label text="." class="invisible"></kendo-label>
+              <div class="PromotionPrice">{{ posPriceDetail.PromotionPrice | number: '1.'}}</div>
+            </div>
+            <!-- <kendo-textbox formControlName="PromotionPrice" #PromotionPrice class="red-color"
+                value="{{posPriceDetail.PromotionPrice | number: '1.'}}">
+              </kendo-textbox> -->
+            <!-- </kendo-formfield> -->
+
+            <kendo-formfield class="formfield-item item8">
+              <kendo-label text="Giá bán lẻ MỚI" [for]="NewPrice"></kendo-label>
+              <kendo-numerictextbox formControlName="NewPrice" #NewPrice format="#,0"
+                [(ngModel)]="posPriceDetail.NewPrice" (valueChange)="calculateOnForm()">
+                <!-- value="{{posPriceDetail.NewPrice | number: '1.'}}" -->
+              </kendo-numerictextbox>
+            </kendo-formfield>
+
+            <!-- <kendo-formfield class="formfield-item item9"> -->
+            <div class="item9">
+              <kendo-label text="." class="invisible"></kendo-label>
+              <div class="AdjPercent">{{ posPriceDetail.AdjPercent | number: '1.0-0' }}%</div>
+            </div>
+            <!-- <kendo-textbox formControlName="AdjPercent" #AdjPercent
+                value="{{posPriceDetail.AdjPercent | number: '1.0-0'}}&nbsp;%">
+              </kendo-textbox> -->
+            <!-- </kendo-formfield> -->
+          </div>
+
+          <kendo-formfield>
+            <kendo-label text="Tình trạng" [for]="StatusID"></kendo-label>
+            <div class="d-flex IsApDung_radio_group">
+              <label for="f_rdo_1" class="my_label">
+                <input type="radio" id="f_rdo_1" formControlName="StatusID" name="StatusID" #StatusID class="k-radio"
+                  kendoRadioButton [value]="1" [(ngModel)]="posPriceDetail.StatusID"
+                  [attr.disabled]="isLockAll ? '' : null" [defaultChecked]="true" />
+                Áp dụng GIÁ MỚI
+              </label>
+              <label for="f_rdo_2" class="my_label">
+                <input type="radio" id="f_rdo_2" formControlName="StatusID" name="StatusID" #StatusID class="k-radio"
+                  kendoRadioButton [value]="2" [(ngModel)]="posPriceDetail.StatusID"
+                  [attr.disabled]="isLockAll ? '' : null" />
+                Ngừng áp dụng GIÁ MỚI
+              </label>
+            </div>
+          </kendo-formfield>
+
+          <kendo-formfield>
+            <kendo-label text="Ghi chú" [for]="Remark"></kendo-label>
+            <textarea formControlName="Remark" #Remark [(ngModel)]="posPriceDetail.Remark"
+              [attr.disabled]="isLockAll ? '' : null"></textarea>
+          </kendo-formfield>
+
+          <kendo-formerror>(*) Trường bắt buộc nhập.</kendo-formerror>
+
+          <div class="k-form-buttons">
+            <button kendoButton class="k-button closeBtn"  (click)="closeForm()">Đóng</button>
+            <button kendoButton class="k-button updateBtn"  (click)="onSubmit()" *ngIf="!isLockAll">
+              {{ isAddDetail ? 'THÊM MỚI' : 'CẬP NHẬT' }}
+            </button>
+          </div>
+        </fieldset>
+      </form>
+    </mat-drawer>
+    <!-- center content -->
+    <mat-drawer-content>
+      <div class="sale001-policy-detail">
+        <div class="header header-1">
+          <div class="nav-btn nav-breadcrumb">
+            <div class="breadcrumb-item">
+              BÁN LẺ
+            </div>
+            <div class="breadcrumb-chevron">
+              <span class="k-icon k-i-arrow-chevron-right"></span>
+            </div>
+            <div class="breadcrumb-item">
+              ĐỢT THAY ĐỔI GIÁ BÁN LẺ
+            </div>
+          </div>
+
+          <div class="nav-btn nav-crud">
+            <button kendoButton class="crud-btn k-button updateStatusBtn"
+              *ngIf="!isAdd && (posPrice.StatusID == 0 || posPrice.StatusID == 4)&& (isToanQuyen || isAllowedToVerify)"
+              [icon]="'redo'" (click)="updatePromotionStatus(1)">
+              GỬI DUYỆT
+            </button>
+
+            <button kendoButton class="crud-btn k-button updateStatusBtn"
+              *ngIf="!isAdd && (posPrice.StatusID == 1 || posPrice.StatusID == 3)&& (isToanQuyen || isAllowedToVerify)"
+              [icon]="'check-outline'" (click)="updatePromotionStatus(2)">
+              PHÊ DUYỆT
+            </button>
+
+            <button kendoButton class="crud-btn k-button updateStatusBtn red"
+              *ngIf="!isAdd && (posPrice.StatusID == 1 || posPrice.StatusID == 3)&& (isToanQuyen || isAllowedToVerify)"
+              [icon]="'undo'" (click)="updatePromotionStatus(4)">
+              TRẢ VỀ
+            </button>
+
+            <button kendoButton class="crud-btn k-button onDeleteBtn" [icon]="'trash'"
+              *ngIf="posPrice.StatusID == 0 && !isAdd && (isToanQuyen || isAllowedToCreate)" (click)="onDelete()">
+              XÓA
+            </button>
+          </div>
+
+          <div class="nav-btn nav-crud" *ngIf="isAllowedToCreate || isToanQuyen">
+            <button kendoButton class="k-button onAddBtn" [icon]="'plus'" (click)="createNew()"
+              [disabled]="!isFilterActive">
+              TẠO MỚI</button>
+          </div>
+
+          <div class="nav-file nav-btn">
+            <div class="file-btn-group">
+              <button kendoButton class="k-button onImportBtn" [icon]="'import'">
+                <!-- (click)="p_ExportCurrentMaster()" -->
+              </button>
+              <button kendoButton class="k-button k-btn-xlsx" imageUrl="assets\img\logo\xlsx.svg"></button>
+              <div class="border-center"></div>
+              <span class="k-icon k-i-arrow-chevron-down"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="body">
+          <div class="sections">
+            <div class="section" id="thongtinkhuyenmaiTbl">
+              <div class="title">THÔNG TIN ĐỢT THAY ĐỔI GIÁ BÁN LẺ
+                <!-- <span class="type green">{{posPrice.CategoryName}}</span>
+
+                <span class="languages">
+                  <span class="borderRight vietnamese" [ngClass]="{'active': curLanguage == 1 }"
+                    (click)="changeLanguage(1)">Tiếng Việt</span>
+                  <span class="borderRight japanese" [ngClass]="{'active': curLanguage == 2 }"
+                    (click)="changeLanguage(2)">日本語</span>
+                  <span class="english" [ngClass]="{'active': curLanguage == 3 }"
+                    (click)="changeLanguage(3)">English</span>
+                </span> -->
+              </div>
+
+              <div class="section-grid">
+                <div class="grid-item item1_1">
+                  <div class="label">Thời gian hiệu lực</div>
+                  <kendo-datepicker [format]="'dd/MM/yyyy'" placeholder="dd/mm/yyyy" [(ngModel)]="EffDate"
+                    [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }" [disabled]="isLockAll"
+                    (keydown.Enter)="$event.target.blur()" (blur)="onDatepickerChange('EffDate', $event)"
+                    [min]="tomorrow">
+                  </kendo-datepicker>
+                </div>
+
+                <div class="grid-item item1_2">
+                  <div class="label">Tình trạng</div>
+                  <b class="d-flex" [ngClass]="{'yellow': posPrice.StatusID == 1, 
+                  'green': posPrice.StatusID == 2}">
+                    {{ posPrice.StatusName }}
+                  </b>
+                </div>
+
+                <div class="grid-item item2_1">
+                  <div class="label">Tên đợt thay đổi giá bán lẻ</div>
+                  <kendo-textbox type="text" class="k-textbox" [disabled]="isLockAll"
+                    (keydown.Enter)="$event.target.blur()" [(ngModel)]="posPrice.AdjName"
+                    (blur)="onTextboxLoseFocus('AdjName')">
+                  </kendo-textbox>
+                </div>
+
+                <div class="grid-item item2_2">
+                  <div class="label">Lý do thay đổi giá bán lẻ</div>
+                  <textarea [disabled]="isLockAll" [(ngModel)]="posPrice.AdjReason"
+                    (blur)="onTextboxLoseFocus('AdjReason')"></textarea>
+                </div>
+
+                <div class="grid-item item2_3">
+                  <div class="label">Ghi chú</div>
+                  <kendo-textbox type="text" class="k-textbox" [disabled]="isLockAll"
+                    (keydown.Enter)="$event.target.blur()" [(ngModel)]="posPrice.Remark"
+                    (blur)="onTextboxLoseFocus('Remark')">
+                  </kendo-textbox>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="header header-2">
+          <div class="title">DS SẢN PHẨM ĐỔI GIÁ</div>
+
+          <div class="nav-filter nav-btn">
+            <form style="display: flex; flex-grow: 1;" [formGroup]="searchForm">
+              <div class="filter-btn-group search-btn-group">
+                <div class="search-btn">
+                  <span class="k-icon k-i-search"></span>
+                  <kendo-textbox formControlName="SearchQuery" type="text" class="k-textbox"
+                    placeholder="Tìm theo barcode, poscode, tên sản phẩm">
+                  </kendo-textbox>
+                </div>
+              </div>
+
+              <button kendoButton class="k-button searchBtn" [icon]="'search'" [disabled]="!isFilterActive || isAdd"
+                (click)="search()">TÌM</button>
+            </form>
+          </div>
+
+          <div class="nav-file nav-btn" *ngIf="!isLockAll">
+            <div class="file-btn-group">
+              <button kendoButton id="onUploadBtn" class="k-button" [icon]="'export'" (click)="onImportExcel()"
+                [disabled]="!isFilterActive || isAdd"></button>
+            </div>
+
+            <div class="file-btn-group">
+              <button kendoButton id="onDownloadBtn" class="k-button" [icon]="'import'" (click)="downloadExcel()"
+                [disabled]="!isFilterActive || isAdd">Template</button>
+            </div>
+          </div>
+
+          <div class="nav-btn nav-crud" *ngIf="!isLockAll">
+            <button kendoButton class="k-button onAddBtn" [icon]="'plus'" (click)="onAdd()"
+              [disabled]="!isFilterActive || isAdd">
+              THÊM MỚI SẢN PHẨM</button>
+          </div>
+        </div>
+
+        <div class="body">
+          <div class="sections">
+            <div class="section grid-wrapper" id="thongtinchitietchuongtrinhTbl">
+              <app-p-kendo-grid class="grid" [data]="gridDSView | async" [scrollable]="'none'" [loading]="loading"
+                [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize" [skip]="gridDSState.skip"
+                [take]="gridDSState.take" [onPageChangeCallback]="onPageChangeCallback" [sortable]="true"
+                [sort]="gridDSState.sort" [onSortChangeCallback]="onSortChangeCallback"
+                [allowedMoreActionDropdown]="allowActionDropdown"
+                [getActionDropdownCallback]="getActionDropdownCallback"
+                [onActionDropdownClickCallback]="onActionDropdownClickCallback" [selectable]="selectable"
+                [onSelectCallback]="onSelectCallback" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+                [getSelectionPopupCallback]="getSelectionPopupCallback">
+
+                <kendo-grid-column field="ProductName" title="Tên sản phẩm" class="col_img_tensanpham_masanpham"
+                  headerClass="col_img_tensanpham_masanpham">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="img_tensanpham_masanpham">
+                      <div class="img">
+                        <img loading="lazy" src="{{dataItem.ImageSetting}}" alt="">
+                      </div>
+                      <div class="tensanpham_masanpham d-flex">
+                        <div class="tensanpham">{{ dataItem.ProductName }}</div>
+                        <div class="masanpham">
+                          <b>{{ dataItem.Barcode +' | '+ dataItem.PosCode }}
+                            <!-- <span >
+                              <span class="tbarcode" [hidden]="dataItem.TBarcode == null || dataItem.TBarcode == ''">{{
+                                dataItem.TBarcode }}</span>
+                            </span> -->
+                          </b>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column field="NewPrice" title="Giá bán lẻ MỚI" class="col_giaMoi" headerClass="col_giaMoi">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="amount_percent">
+                      <div class="amount">{{ dataItem.NewPrice | number: '1.' }}</div>
+                      <div class="percent">{{ dataItem.AdjPercent | number: '1.0-0' }}%</div>
+                    </div>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column field="OldPrice" title="Giá bán lẻ hiện thời" class="col_giaCu"
+                  headerClass="col_giaCu">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="unitprice_baseprice">
+                      <div class="unitprice" *ngIf="dataItem.PromotionPrice > 0">
+                        {{ dataItem.PromotionPrice | number: '1.' }}</div>
+                      <div class="baseprice">{{ dataItem.OldPrice | number: '1.' }}
+                      </div>
+                    </div>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column field="StatusID" title="Tình trạng" class="col_tinhTrang">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <div [ngClass]="{'green': dataItem.StatusID == 1, 
+                      'red': dataItem.StatusID == 2}">{{ dataItem.StatusName }}</div>
+                  </ng-template>
+                </kendo-grid-column>
+              </app-p-kendo-grid>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+  <!-- popup confirm delete -->
+  <kendo-dialog #dialog class="deleteDialog" title="Xóa {{context[contextIndex]}}" [hidden]="!deleteDialogOpened"
+    (close)="closeDeleteDialog()" [minWidth]="250">
+    <p style="margin: 30px; text-align: center;">
+      Bạn chắc chắn muốn xóa vĩnh viễn {{context[contextIndex]}}&nbsp;
+      "{{ contextName[contextIndex] }}" này?</p>
+    <div class="dialog-footer">
+      <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteDialog()"
+        [icon]="'close'">Không</button>
+      <button kendoButton class="btn-hachi hachi-warning" (click)="delete()" [icon]="'trash'">Có</button>
+    </div>
+  </kendo-dialog>
+
+  <kendo-dialog #dialog class="deleteDialog" title="Xóa các Đợt phát hành Giá bán lẻ đã chọn"
+    [hidden]="!deleteManyDialogOpened" (close)="closeDeleteDialog()" [minWidth]="250">
+    <div style="margin: 30px; text-align: center;">
+      Bạn chắc chắn muốn xóa vĩnh viễn {{ deleteList.length }} Đợt phát hành Giá bán lẻ này?
+    </div>
+    <div class="dialog-footer">
+      <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteManyDialog()"
+        [icon]="'close'">Không</button>
+      <button kendoButton class="btn-hachi hachi-warning" (click)="deleteMany()" [icon]="'trash'">Có</button>
+    </div>
+  </kendo-dialog>
+
+  <app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>
+
+
+</div>

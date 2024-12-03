@@ -1,0 +1,81 @@
+<!-- <div class="app-ecom004-report"> -->
+<div class="header header-1">
+  <div class="nav-filter nav-btn">
+    <div class="filter-btn-group clear-btn-group">
+      <div class="label">
+        <span class="k-icon k-i-filter"></span>Lọc dữ liệu
+      </div>
+      <button kendoButton class="k-button clear-filter-btn" (click)="resetFilter()">Reset bộ lọc</button>
+    </div>
+
+    <form style="display: flex; flex-grow: 1;" [formGroup]="searchForm">
+      <div class="filter-btn-group search-btn-group">
+        <div class="label">
+          Tìm kiếm Báo cáo
+        </div>
+        <div class="search-btn">
+          <span class="k-icon k-i-search"></span>
+          <kendo-textbox formControlName="SearchQuery" type="text" class="k-textbox"
+            placeholder="Tìm kiếm tên báo cáo, mô tả báo cáo">
+          </kendo-textbox>
+        </div>
+      </div>
+
+      <button kendoButton class="k-button searchBtn" [icon]="'search'" (click)="search()">TÌM</button>
+    </form>
+
+  </div>
+</div>
+
+<div class="grid-wrapper">
+  <app-p-kendo-grid class="grid" [data]="gridDSView | async" [scrollable]="'none'" [loading]="loading" [pageable]="false"
+    [getActionDropdownCallback]="getActionDropdownCallback"
+    [onActionDropdownClickCallback]="onActionDropdownClickCallback">
+  
+    <kendo-grid-column field="DataID" title="Mã" class="DataID">
+    </kendo-grid-column>
+  
+    <kendo-grid-column field="DataName" title="Tên báo cáo" class="DataName">
+    </kendo-grid-column>
+  
+    <kendo-grid-column field="DataDescription" title="Mô tả" class="DataDescription">
+    </kendo-grid-column>
+  </app-p-kendo-grid>
+</div>
+
+<kendo-dialog #DialogPopup title="ĐIỀU KIỆN XUẤT BÁO CÁO" [hidden]="!isDialogOpen1" (close)="closeDialog()"
+  id="dialogPopup">
+  <div class="row">
+    <div class="col-12" *ngIf="report.TypePopup == 2">
+      <div class="label">Cửa hàng</div>
+      <kendo-dropdownlist [data]="listStore" textField="WHName" valueField="Code" [value]="store"
+        (valueChange)="onDropdownlistClick($event)" [popupSettings]="{appendTo:'component'}">
+      </kendo-dropdownlist>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6 left-col">
+      <div class="label">Năm</div>
+      <kendo-numerictextbox format="0000" [min]="2000" placeholder="exportReport.Paramaters.Year"
+        [(ngModel)]="exportReport.Paramaters.Year">
+      </kendo-numerictextbox>
+
+      <button kendoButton class="k-button action exportBtn" (click)="ExportReport()">
+        XUẤT BÁO CÁO
+      </button>
+    </div>
+
+    <div class="col-6 right-col">
+      <div class="label">Tháng</div>
+      <kendo-numerictextbox format="00" [min]="1" [max]="12" placeholder="exportReport.Paramaters.Month"
+        [(ngModel)]="exportReport.Paramaters.Month">
+      </kendo-numerictextbox>
+
+      <button kendoButton class="k-button action closeBtn" (click)="closeDialog()">
+        ĐÓNG
+      </button>
+    </div>
+  </div>
+</kendo-dialog>
+<!-- </div> -->

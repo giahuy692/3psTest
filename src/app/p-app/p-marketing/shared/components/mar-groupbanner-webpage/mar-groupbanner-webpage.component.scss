@@ -1,0 +1,131 @@
+@import "../../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+  #webpageDialogPopup {
+    z-index: 7;
+    top: 10%;
+    height: 580px;
+
+    .k-dialog {
+      width: 900px;
+      height: 600px;
+      border-radius: 3px;
+
+      .k-dialog-titlebar {
+        color: white;
+        background-color: $dark-green;
+        text-transform: uppercase;
+        font-weight: 700;
+        padding: 14px;
+        border-radius: 3px 3px 0 0;
+
+        .k-dialog-title {
+          justify-content: center;
+          font-size: 20px;
+        }
+      }
+
+      .k-dialog-content.k-window-content {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+
+        #footer {
+          text-align: right;
+          padding: 16px;
+          border-top: 1px solid $light-blue-gray;
+          border-radius: 0 0 3px 3px;
+
+          .k-button {
+            min-width: 103px;
+            min-height: 32px;
+            margin-left: 15px;
+            border-radius: 3px;
+            font-weight: 700;
+            font-size: 11px;
+            background-image: none;
+            box-shadow: 0px 1px 1px rgba(90, 98, 118, 0.502);
+
+            span {
+              text-transform: uppercase;
+            }
+          }
+
+          #closeImportPopupBtn {
+            color: $dark-green;
+            margin: 0 16px;
+
+            &:hover {
+              border: 1px solid $dark-green;
+            }
+          }
+
+          #pickFileBtn {
+            color: white;
+            background-color: $dark-green !important;
+
+            &.disabled {
+              // background-color: rgba($dark-green, 0.5);
+              background-color: $worse-green;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+::ng-deep {
+  #webpageDialogPopup {
+    #body {
+      flex-grow: 1;
+      padding: 0 16px;
+
+      .label {
+        margin: 8px 0;
+        font-weight: 700;
+        font-size: 13px;
+        color: $gray-700;
+      }
+      .k-textbox {
+        width: 100%;
+      }
+      .grid-container {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        align-items: center;
+
+        .grid-item {
+          display: flex;
+          padding: 0 16px;
+          height: 32px;
+          margin-bottom: 10px;
+
+          .checkbox-div {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+          }
+          .text {
+            display: flex;
+            flex-grow: 1;
+            align-items: center;
+          }
+        }
+      }
+      .k-checkbox {
+        border-radius: 3px;
+        border-color: $dark-green;
+
+        &:checked,
+        &:hover {
+          background-color: $dark-green;
+
+          &:before {
+            font-size: 13px;
+          }
+        }
+      }
+    }
+  }
+}

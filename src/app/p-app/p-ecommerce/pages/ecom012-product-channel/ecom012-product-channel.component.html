@@ -1,0 +1,633 @@
+<div class="app-drawer-container">
+
+  <kendo-drawer-container>
+
+      <!-- DRAWER -->
+      <kendo-drawer  #drawerRight mode="overlay" [(expanded)]="expandedRight" 
+      [(autoCollapse)]="isautoCollapse" fillMode="flat" [position]="'end'">
+
+        <ng-template kendoDrawerTemplate let-item>
+          <div class="ContetDrawer">
+            <!-- header -->
+            <div class="headerDrawer">
+              <div class="title">SẢN PHẨM KINH DOANH</div>
+            </div>
+            <!-- Content -->
+            <div class="Content">
+              <!-- Mã sản phẩm -->
+              <div class="Product">
+                <div class="form ProductBarcode">
+                  <kendo-label text="Nhập mã sản phẩm"><span class="symbol">(*)</span></kendo-label>
+                  <app-p-textbox [propName]="'Barcode'" [(ngModel)]="ChannelProduct.Barcode" (blur)="onGetProduct()" [disabled]="!isAdd" ></app-p-textbox>
+                </div>
+                <div>
+                  <img loading="lazy" [src]="getResImg(ChannelProduct.ProductImage,'image' + ChannelProduct.Product)" class="CusstomImg" (error)="handleError('image' + ChannelProduct.Product)">
+                </div>
+              </div>
+              <!-- Tên sản phẩm -->
+              <div class="form ProductName" *ngIf="!!ChannelProduct.ProductName">
+                <kendo-label text="Tên sản phẩm"></kendo-label>
+                <label class="pl-2">{{ChannelProduct.ProductName}}</label>
+              </div>
+              
+              <div *ngIf="ChannelProduct.Product != null">
+                <!-- hạn mức tồn kho -->
+                <div class="form inventory" *ngIf="typeView != 1">
+                  <kendo-label text="Hạn mức tồn kho"></kendo-label>
+                  <div class="Quanity pl-2" *ngIf="!curChannelGroup.IsOutDistributedStock && typeView == 2">
+                    <span>Min</span> <app-p-numeric-textbox [format]="'n0'" [spinners]="false" [min]="0" [max]="maxQty" propName="MinQty" [(ngModel)]="minQty" [disabled]="isLock" ></app-p-numeric-textbox>
+                    <span>Max</span> <app-p-numeric-textbox [format]="'n0'" [spinners]="false" [min]="minQty" propName="MaxQty" [(ngModel)]="maxQty" [disabled]="isLock" ></app-p-numeric-textbox>
+                  </div>
+                  <div class="Quanity pl-2" *ngIf="!curChannelGroup.IsOutDistributedStock && typeView == 3">
+                    <span>Min</span> <span>{{minQty}}</span>
+                    <span>Max</span> <span>{{maxQty}}</span>
+                  </div>
+                  <div *ngIf="curChannelGroup.IsOutDistributedStock">
+                    <label class="pl-2">Không tham gia phân bổ tồn kho</label>
+                  </div>
+                </div>
+                
+                <!-- danh sách diều kiện onsite -->
+                <div class="form ConditionOnsite">
+                  <!-- title -->
+                  <kendo-label text="Điều kiện onsite">
+                    <span class="ExpandListChild" (click)="onTransDrawer('isExpandListOnSite')">
+                      <span class="blueItalic" *ngIf="countList(ChannelProduct.ListOnSite) > 0"> ({{countList(ChannelProduct.ListOnSite)}} điều kiện chưa đáp ứng) </span>
+                      <span class="blueItalic" *ngIf="typeView == 3"> (đủ điều kiện onsite) </span>
+                      <img loading="lazy" class="colName-icon"
+                          src="{{isExpandListOnSite == false ? 'assets/img/icon/icon_BoxExpanded.svg' : 'assets/img/icon/icon_BoxCollapse.svg'}}" />
+                    </span>
+                  </kendo-label>
+                  <!-- list -->
+                  <div class="ListConditionOnsite pl-2" *ngIf="isExpandListOnSite">
+                    <div *ngFor="let condition of ChannelProduct.ListOnSite" class="listItem">
+                      <span [ngClass]="{'RedText': !condition.Choose}">{{condition.Name}}</span>
+                      <input type="checkbox" class="k-checkbox" name=""[checked]="condition.Choose" [disabled]="true">
+                    </div>
+                  </div>
+  
+                </div>
+                
+                <!-- danh sách nhóm kênh view 2 -->
+                <div class="form GroupChannel" *ngIf="typeView != 2">
+                  <!-- title -->
+                  <kendo-label text="Nhóm kênh kinh doanh">
+                    <span class="ExpandListChild" (click)="onTransDrawer('isExpandListGroupChannel')">
+                      <span class="blueItalic" *ngIf="countListGroupChannel(ListDisplayGroupChannel) > 0"> ({{countListGroupChannel(ListDisplayGroupChannel)}} nhóm kênh kinh doanh) </span>
+                      <img loading="lazy" class="colName-icon"
+                      src="{{isExpandListGroupChannel == false ? 'assets/img/icon/icon_BoxExpanded.svg' : 'assets/img/icon/icon_BoxCollapse.svg'}}" />
+                    </span>
+                  </kendo-label>
+                  <!-- list -->
+                  <ul class="ListGroupChannel" *ngIf="isExpandListGroupChannel && typeView == 1">
+                    <li  *ngFor="let itemGroupChannel of ListDisplayGroupChannel"  class="listItem" >
+                      <div class="itemGroup">
+                        <div class="defautText Hover" (click)="toggleChildren(itemGroupChannel.ChannelGroup)">                    
+                          <kendo-icon  class="k-icon k-i-arrow-chevron-down custom" [ngClass]="{'chevron-up': isExpandListChannelStates[itemGroupChannel.ChannelGroup]}"
+                          >
+                          </kendo-icon>
+                          <span>{{itemGroupChannel.ChannelGroupID}}</span><span> | </span><span>{{itemGroupChannel.ChannelGroupName}}</span>
+                        </div>
+                        <input type="checkbox" class="k-checkbox" [checked]="itemGroupChannel.IsApproved" (change)="onCheckboxClick('IsApproved', itemGroupChannel)">
+                      </div>
+                     <!-- danh sách kênh -->
+                      <ul class="ListChannel" *ngIf="isExpandListChannelStates[itemGroupChannel.ChannelGroup]">
+                        <li *ngFor="let itemChannel of itemGroupChannel.ListChannel" class="listItem">
+                            <div class="item">
+                              <img loading="lazy" class="colName-icon" src="{{itemChannel.ImageSetting}}"/>
+                              <span class="tilte" title="{{itemChannel.ChannelName}}" [ngClass]="{'delete': itemChannel.ToGroup != null}">{{itemChannel.ChannelName}}</span>
+                            </div>
+                            <div class="Groupbtn d-flex align-items-center" *ngIf="itemGroupChannel.IsApproved">
+                              <span class="blueItalic cursor_context-menu"title="Tới {{itemChannel.ToGroup}}" *ngIf="itemChannel.ToGroup != null">Tới {{itemChannel.ToGroup}}</span>
+                              <span class="blueItalic cursor_context-menu" title="Từ {{itemChannel.FromGroup}}" *ngIf="itemChannel.FromGroup != null">Từ {{itemChannel.FromGroup}}</span>
+                              <span class="Actionbtn">
+                                <kendo-icon  class="k-icon k-i-login" *ngIf="!itemChannel.IsMove "
+                                title="Chuyển kênh" (click)="onChangeChannel(itemChannel)" [disabled]="isLock || !itemGroupChannel.IsApproved">
+                                </kendo-icon>
+    
+                                <kendo-icon  class="k-icon k-i-{{displayActionBtn(itemChannel)}}" [ngClass]="{'delete': itemChannel.FromGroup != null}"
+                                [disabled]="isLock || !itemGroupChannel.IsApproved" (click)="onChangeChannelStatus(itemChannel)">
+                                </kendo-icon>
+                              </span>
+                            </div>
+                        </li>
+                      </ul>
+                      
+                    </li >
+  
+                  </ul>
+
+                  <!-- danh sách nhóm kênh view 3 -->
+                  <ul class="ListGroupChannel" *ngIf="isExpandListGroupChannel && typeView == 3">
+                    <li  *ngFor="let itemGroupChannel of ListDisplayGroupChannel"  class="listItem" >
+                      <div class="itemGroup">
+                        <div class="item_group">                    
+                          <span>{{itemGroupChannel.ChannelGroupID}}</span><span> | </span><span>{{itemGroupChannel.ChannelGroupName}}</span>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  
+                </div>
+  
+                <!-- danh sách kênh kinh doanh -->
+                <div class="form Channel" *ngIf="typeView == 2">
+                  <!-- title -->
+                  <kendo-label text="Kênh kinh doanh">
+                    <span class="ExpandListChild" (click)="onTransDrawer('isExpandListChannel')">
+                      <span class="blueItalic"> ({{countChannel}} kênh kinh doanh) </span>
+                      <img loading="lazy" class="colName-icon"
+                      src="{{isExpandListChannel == false ? 'assets/img/icon/icon_BoxExpanded.svg' : 'assets/img/icon/icon_BoxCollapse.svg'}}" />
+                    </span>
+                  </kendo-label>
+  
+                  <!-- list -->
+                  <div class="ListChannel" *ngIf="isExpandListChannel && ListDisplayGroupChannel.length > 0">
+                    <div  *ngFor="let item of ListDisplayGroupChannel[0].ListChannel"  class="listItem" >
+                      
+                      <div class="item">
+                        <img loading="lazy" class="colName-icon" src="{{item.ImageSetting}}"/>
+                        <span class="tilte" title="{{item.ChannelName}}" [ngClass]="{'delete': item.ToGroup != null}">{{item.ChannelName}}</span>
+                      </div>
+                      
+                      <div class="Groupbtn">
+                        <span class="blueItalic cursor_context-menu pt-1"title="Tới {{item.ToGroup}}" *ngIf="!!item.ToGroup">Tới {{item.ToGroup}}</span>
+                        <span class="blueItalic cursor_context-menu pt-1" title="Từ {{item.FromGroup}}" *ngIf="!!item.FromGroup">Từ {{item.FromGroup}}</span>
+                        <span class="Actionbtn">
+                          <kendo-icon  class="k-icon k-i-{{displayActionBtn(item)}} cursor_pointer" [ngClass]="{'delete': !!item.FromGroup}"
+                           [disabled]="isLock || !item.IsApproved" (click)="onChangeChannelStatus(item)">
+                          </kendo-icon>
+                        </span>
+                      
+                      </div>          
+                    </div>
+                      
+                  </div>
+  
+                  <!-- danh sách nhóm kênh khác -->
+                  <div class="form ListOrderChannelChannel" *ngIf="typeView == 2">
+                    <div class="ListOrderChannelChannel" *ngIf="isExpandListChannel">
+                      <!-- title -->
+                      <div class="defautText" (click)="onTransDrawer('isExpandListOrderChannel')">                    
+                        <kendo-icon  class="k-icon k-i-arrow-chevron-down" [ngClass]="{'chevron-up': isExpandListOrderChannel}"></kendo-icon>
+                        <kendo-label class="pl-2" text="Các kênh không thuộc nhóm kênh"></kendo-label>
+                      </div>
+  
+                      <!-- list -->
+                      <div class="ListChannel" *ngIf="isExpandListOrderChannel && ListDisplayGroupChannel.length > 0">
+                        <div  *ngFor="let item of ListDisplayGroupChannel[0].ListOtherChannel"  class="listItem" >
+                          
+                          <div class="item">
+                            <img loading="lazy" class="colName-icon" src="{{item.ImageSetting}}"/>
+                            <span class="tilte" title="{{item.ChannelName}}" [ngClass]="{'delete': !!item.ToGroup}">{{item.ChannelName}}</span>
+                          </div>
+                          
+                          <div class="Groupbtn">
+  
+                            <span class="blueItalic cursor_context-menu" title="Tới {{item.ToGroup}}" *ngIf="!!item.ToGroup">Tới {{item.ToGroup}}</span>
+                            <span class="blueItalic cursor_context-menu" title="Từ {{item.FromGroup}}" *ngIf="!!item.FromGroup">Từ {{item.FromGroup}}</span>
+                            <span class="Actionbtn">
+                              <span class="titleChanel">{{item.ChannelGroupID}}</span>
+                              <kendo-icon  class="k-icon k-i-login" *ngIf="!item.IsMove" title="Chuyển kênh" (click)="onChangeChannel(item)" [disabled]="isLock || !item.IsApproved">
+                              </kendo-icon>
+                            </span>
+                          
+                          </div>          
+                        </div>
+                          
+                      </div>
+  
+                    </div>
+                  <div>
+              </div>
+              </div>
+  
+                </div>
+                <!-- tình trạng -->
+                <div class="form Status" *ngIf="typeView != 1">
+
+                  <kendo-label text="Tình trạng"></kendo-label>
+                  <div class="StatusContent">
+                    <span [innerHTML]="ChannelProduct.StatusName | colorStatus:ChannelProduct.StatusID">
+                    </span> <span *ngIf="ChannelProduct.StatusID == 2 || ChannelProduct.StatusID == 3" class="line">|</span>
+                    <span *ngIf="ChannelProduct.StatusID == 3">ngày dừng onsite {{ChannelProduct.ApprovedTime | date: 'dd/MM/yyyy' }}</span>
+                    <span *ngIf="ChannelProduct.StatusID == 2">ngày onsite {{ChannelProduct.ApprovedTime | date: 'dd/MM/yyyy' }}</span>
+                  </div>
+                </div>
+              </div>
+         
+            </div>
+             <!-- Group Btn -->
+             <div class="groupButton">
+              <button kendoButton class="k-button btn-hachi hachi-primary hachi-secondary" (click)="onCloseDrawer()">
+                  Đóng
+              </button>
+              <button *ngIf="typeView != 3" kendoButton class="k-button btn-hachi hachi-primary" (click)="onSubmit()">
+                  {{isAdd === false ? 'CẬP NHẬT' : 'TẠO MỚI'}}
+              </button>
+          </div>
+          </div>
+        </ng-template>
+
+      </kendo-drawer>
+
+      <!-- CONTENT -->
+      <kendo-drawer-content>
+
+          <div class="app-ecom012-channel-product">  
+
+              <div class="header header-1">
+
+                  <app-p-kendo-breadcrumb (loadData)="onLoadPage()"></app-p-kendo-breadcrumb>
+
+                  <div>
+                    <div class="groupFilterCheckbox" *ngIf="typeView != 1">
+                      <app-checkbox-button-group [disabled]="!isFilterActive" (selectedChange)="selectedBtnChange($event, 'dangSoanthao_checked')" 
+                      [selected]="dangSoanthao_checked" title="Đang soạn thảo" [checked]="dangSoanthao_checked"></app-checkbox-button-group>
+                      <app-checkbox-button-group [disabled]="!isFilterActive" (selectedChange)="selectedBtnChange($event, 'guiDuyet_checked')" 
+                      [selected]="guiDuyet_checked" title="Gửi duyệt" [checked]="guiDuyet_checked"></app-checkbox-button-group>
+                      <app-checkbox-button-group [disabled]="!isFilterActive" (selectedChange)="selectedBtnChange($event, 'daDuyet_checked')" 
+                      [selected]="daDuyet_checked" title="Đã duyệt" [checked]="daDuyet_checked"></app-checkbox-button-group>
+                      <app-checkbox-button-group [disabled]="!isFilterActive" (selectedChange)="selectedBtnChange($event, 'ngungApDung_checked')" 
+                      [selected]="ngungApDung_checked" title="Ngưng áp dụng" [checked]="ngungApDung_checked"></app-checkbox-button-group>
+                    </div>
+                  </div>
+                  
+                  <div class="nav-btn">
+                      <button kendoButton id="onUploadBtn" class="k-button" [icon]="'export'" (click)="onImportExcel()" [disabled]="!isFilterActive"></button>
+                      <button kendoButton id="onDownloadBtn" class="k-button" [icon]="'import'" (click)="onDownloadExcel()" [disabled]="!isFilterActive">Template</button>
+                      <button kendoButton class="k-button btn-hachi hachi-primary" [icon]="'plus'" (click)="onOpenDrawer(true)" [disabled]="!isFilterActive">TẠO MỚI</button>
+                  </div>
+
+              </div>
+
+              <div class="header header-2">
+
+                  <app-search-filter-group placeholder="Tìm theo barcode, tên sản phẩm" [disabled]="!isFilterActive"
+                  [fields]="['ProductName', 'Barcode', 'Poscode']"
+                  (filterChange)="onHandleSearch($event)" (onReset)="onResetFilter()"></app-search-filter-group>
+                  <div class="groupFilterDropdown">
+                      <kendo-label>Nhóm kênh hoặc kênh</kendo-label>
+                      <kendo-dropdowntree kendoDropDownTreeExpandable
+                          [data]="ChannaelDataFilter" textField="ChannelGroupID" [(ngModel)]="curChannelGroup"
+                          valueField="Code" [filterable]="true" [expandOnFilter]="true" (open)="open()"
+                          (valueChange)="handleSelectedCurrentChannel($event)" [fetchChildren]="fetchChildren" [hasChildren]="hasChildren"
+                          [popupSettings]=" { appendTo: 'root', animate: true, popupClass:'Bps CustomPopupTreeAtRoot cusstomPopup'}" [loading]="loading"
+                          [disabled]="loading || !isFilterActive" (filterChange)="handleFiltertree($event)">
+                          <!-- value input -->
+                          <ng-template kendoDropDownTreeValueTemplate let-dataItem>
+                            <div>
+                              <img loading="lazy" class="colName-icon" src="{{curChannelGroup.ImageSetting }}"/>
+                              <span>
+                                <span>{{curChannelGroup.ChannelGroupID }}</span>
+                                <span *ngIf="curChannelGroup.ChannelGroupID != null && curChannelGroup.Code!= null"> | </span>
+                                <span>{{curChannelGroup.ChannelGroupName }}</span>
+                                <span>{{curChannelGroup.ChannelName }}</span>
+                              </span>
+                            </div>
+                          </ng-template>
+                          <!-- value popup -->
+                          <ng-template kendoDropDownTreeNodeTemplate let-dataItem let-index="index">
+                            <div [ngClass]="{'itemdiasble': dataItem.TypeData == 1}">
+                              <div [ngClass]="{'nullItem': dataItem.Code === null}" >
+                                <img loading="lazy" class="colName-icon" src="{{dataItem.ImageSetting}}" *ngIf="dataItem.ImageSetting != null"/>
+                                <span>
+                                  <span>{{dataItem.ChannelGroupID }}</span>
+                                  <span *ngIf="dataItem.ChannelGroupID != null && dataItem.ChannelGroupID != ''"> | </span>
+                                  <span>{{dataItem.ChannelGroupName }}</span>
+                                  <span>{{dataItem.ChannelName }}</span>
+                                </span>
+                            </div>
+                          </div>
+                          </ng-template>
+                      </kendo-dropdowntree>
+
+                  </div>
+                  <div class="groupFilterCheckbox">
+                      <div class="checkbox" *ngIf="typeView == 3">
+                        <input type="checkbox" class="k-checkbox" name="" id="IsGroupEdit" [checked]="IsGroupEdit" (change)="onCheckboxClick('IsGroupEdit')" >
+                        <label for="IsGroupEdit">Điều chỉnh nhóm kênh</label>
+                      </div>
+                      <div class="checkbox" *ngIf="typeView == 2">
+                          <input type="checkbox" class="k-checkbox" name="" id="IsEditChannel" [checked]="IsEditChannel" (change)="onCheckboxClick('IsEditChannel')" >
+                          <label for="IsEditChannel">Điều chỉnh kênh</label>
+                      </div>
+                      <div class="checkbox">
+                          <input type="checkbox" class="k-checkbox" name="" id="Onsite" [checked]="Onsite" (change)="onCheckboxClick('Onsite')" >
+                          <label for="Onsite">Chưa đủ điều kiện onsite</label>
+                      </div>
+                  </div>
+
+              </div>
+              
+              <div class="grid-wrapper" *ngIf="typeView == 1">
+                <kendo-grid class="grid scrollable myCustomGrid k-grid" [data]="gridView | async" 
+                  [scrollable]="'none'" kendoGridFocusable [loading]="loadingList" [pageable]="true" [pageSize]="pageSize" 
+                  (pageChange)="onPageChange($event)" [skip]="gridState.skip">
+
+                    <kendo-grid-column title="Tên sản phẩm" class="col_LanNhan">
+                      <ng-template kendoGridCellTemplate let-dataItem>
+                        <div class="Img_Name">
+                          <img loading="lazy" [src]="getResImg(dataItem.ImageSetting,'image' + dataItem.Code)" class="ImgProduct" (error)="handleError('image' + dataItem.Code)">
+                          <div class="Name">
+                            <div class="NameProduct defautText" title="{{dataItem.ProductName}}">{{dataItem.ProductName}}</div>
+                            <div class="Barcode">
+                              <span title="{{dataItem.Barcode}}">{{dataItem.Barcode}}</span>
+                              <span style="color: #BDC2D2;" *ngIf="dataItem.Poscode != null">|</span>
+                              <span title="{{dataItem.Poscode}}">{{dataItem.Poscode}}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column title="Kênh kinh doanh" class="col_LanNhan">
+                      <ng-template kendoGridCellTemplate let-dataItem>
+                        <div class="col_Channel">
+                          <div class="item"><span class="tilte">Onsite</span><span class="value">{{dataItem.NumOfOnsite}}</span></div>
+                          <div class="item"><span class="tilte">Chưa onsite</span><span class="value">{{dataItem.NumOfNotOnsite}}</span></div>
+                          <div class="item"><span class="tilte">Offsite</span><span class="value">{{dataItem.NumOfOffsite}}</span></div>
+                        </div>
+                      </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column title="Tình trạng onsite" class="col_Status">
+                      <ng-template kendoGridCellTemplate let-dataItem>
+                        <div class="Col_status">
+                          <div [ngStyle]="{
+                            'color': dataItem.IsRightToOnsite == false ? '#FF5230' : '#26282E'
+                          }">
+                            {{dataItem.IsRightToOnsite == false ? 'Chưa đủ điều kiện onsite' : 'Đủ điều kiện onsite'}}
+                          </div>
+                          <div *ngIf="dataItem.IsRightToOnsite == false" class="ListCondition" title="{{listConditionOnsiteChannel}}">
+                            <div *ngFor="let item of formatListOnsite(dataItem.ListOnSite)">
+                              <span class="Condition" title="Thiếu {{item.Name | lowercase}}">Thiếu {{item.Name | lowercase}}</span>
+                            </div>
+                          </div>
+                          <div class="Condition" *ngIf="(dataItem.ListOnSite.length > 0) && (countList(dataItem.ListOnSite) - 2 > 0)">+ {{countList(dataItem.ListOnSite) - 2}} điều kiện</div>
+                        </div>
+                      </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column [headerStyle]="{'position': 'sticky'}" class="action">
+                      <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <div class="list-tool" #containerPopup>
+                          <kendo-dropdownbutton
+                            #dropdownlist
+                            id="list-tool"
+                            class="DropDownButton"
+                            icon="more-horizontal"
+                            [data]="arrBtnOtion"
+                            [popupSettings]="{ animate: true, popupClass: 'fmDropdown rowMoreActionPopupCoppy', align: 'right', appendTo: 'component' }"
+                            (itemClick)="HandleActionDropdownList($event, dataItem, 2)"
+                            [class.selectedPopup]="dataItem.Product == ItemSelectedPopup.Product" 
+                            (open)="displayOtionBtn(dataItem); Compeonentdropdownlist = dropdownlist"
+                            (close)="closeDropDownList(dataItem)"
+                          >
+                          <ng-template kendoDropDownButtonItemTemplate let-dataItem>
+                            <div class="popup-item">
+                              <!-- có những icon không có hình phải dùng kết hợp với icon kendo  -->
+                              <kendo-icon  class="k-icon k-i-{{ dataItem.code }}" ></kendo-icon>
+                              <span class="popup-item-text">{{ dataItem.text }}</span>
+                            </div>
+                          </ng-template>
+                          </kendo-dropdownbutton>
+                        </div>
+                      </ng-template>
+                    </kendo-grid-column>
+                  
+                    <!-- Grid Detail -->
+                    <div *kendoGridDetailTemplate="let dataItemProduct" class="ListGroup">
+
+                      <!-- <div> -->
+                        <app-p-kendo-grid class="myCustomChileGrid" [data]="dataItemProduct.ListGroup" [scrollable]="'none'"
+                       [hasMoreAction]="false">
+
+                          <kendo-grid-column class="col_ChannelGroupName">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                              <div class="Group_Product_ListIcon">
+                                <div class="col_ChannelGroupName_content">
+                                  <div><span class="defautText">{{dataItem.ChannelGroupID}}</span><span style="color: #BDC2D2;">|</span><span class="defautText">{{dataItem.ChannelGroupName}}</span></div>
+                                  <div *ngIf="dataItem.ApprovedTime != null"><span>Ngày duyệt onsite</span><span style="color: #BDC2D2;">|</span><span>{{dataItem.ApprovedTime | date: 'dd/MM/yyyy'}}</span></div>
+                                </div>
+
+                                <div class="col_ListIcon_content" [ngClass]="{'displayOpatiy': ChecklistImage(dataItem.ListIcon)}">
+                                  <div *ngFor="let img of listImageChannel" class="Img">
+                                    <img src="{{img}}" alt="" class="itemImg" title="{{img}}">
+                                  </div>
+                                  <div class="OpatiyItem">+{{countImage}}</div>
+                                </div>
+
+                              </div>
+                            </ng-template>
+
+                          </kendo-grid-column>
+
+                          <kendo-grid-column class="col_PoolStock"
+                            [headerClass]="'headerCenterCustomClass'">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                              <div class="col_PoolStock_content">
+                                <div class="PoolStock" *ngIf="!dataItem.IsOutDistributedStock">
+                                  <div class="item"><span class="tilte">TK Min</span><span class="value">{{!!dataItem.MinQty ? dataItem.MinQty : 0 | number:'1.0-0'}}</span></div>
+                                  <div class="item"><span class="tilte">TK Max</span><span class="value">{{!!dataItem.MaxQty ? dataItem.MaxQty : 0 | number:'1.0-0'}}</span></div>  
+                                </div>
+                                <div class="defautText" *ngIf="dataItem.IsOutDistributedStock">
+                                  Không tham gia phân bổ tồn
+                                </div>
+                              </div>
+                              
+                            </ng-template>
+                          </kendo-grid-column>
+
+                          <kendo-grid-column class="col_PoolStockNumber">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                              <div class="PoolStockNumber defautText" *ngIf="dataItem.IsPoolStock">
+                                <span>Tồn kho hiện tại: </span> <span>{{dataItem.NumOfProducts | number:'1.0-0'}}</span>
+                              </div>
+                            </ng-template>
+                          </kendo-grid-column>
+
+                          <kendo-grid-column class="col_Btn_action">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                              <div class="col_Btn_action_content">
+                                <div *ngFor="let i of displayStatusBtn(dataItem)">
+                                  <kendo-icon  class="k-icon k-i-{{ i.code }}" 
+                                  title="{{ i.text }}" (click)="HandleActionDropdownList(i, dataItemProduct, 1, dataItem)" [disabled]="!isFilterActive">
+                                  </kendo-icon>
+                                </div>
+                              </div>
+                            </ng-template>
+                          </kendo-grid-column>
+
+                        </app-p-kendo-grid>
+                      <!-- </div> -->
+
+                    </div>
+
+                    <kendo-grid-column class="dontshow">
+                      <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        
+                      </ng-template>
+                    </kendo-grid-column>
+                    <!-- End Grid Detail-->
+                  
+                    <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage">
+                      <div class="label">Hiển thị mỗi trang</div>
+                      <kendo-pager-page-sizes [pageSizes]="pageSizes"></kendo-pager-page-sizes>
+                      <kendo-pager-prev-buttons class="k-pager-nav-btn"></kendo-pager-prev-buttons>
+                      <kendo-pager-numeric-buttons [buttonCount]="4"></kendo-pager-numeric-buttons>
+                      <kendo-pager-next-buttons class="k-pager-nav-btn"></kendo-pager-next-buttons>
+                    </ng-template>
+
+                </kendo-grid>
+
+              </div>
+
+              <div class="grid-wrapper gridtype2" *ngIf="typeView != 1">
+                  <app-p-kendo-grid class="grid scrollable " [data]="gridView | async" [scrollable]="'none'" [loading]="loadingList"
+                  [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize" [skip]="gridState.skip"
+                  [take]="gridState.take" [sortable]="true" [onPageChangeCallback]="onPageChangeCallback" [showCheckbox]="showCheckbox"
+                  [allowedMoreActionDropdown]="allowActionDropdown" [getActionDropdownCallback]="getActionDropdownCallback"
+                  [onActionDropdownClickCallback]="onActionDropdownClickCallback" [selectable]="selectable" [autoHeight]="false"
+                  [onSelectCallback]="onSelectCallback" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+                  [getSelectionPopupCallback]="getSelectionPopupCallback">
+
+                  <kendo-grid-column title="Tên sản phẩm" class="col_Product view2">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="Img_Name">
+                        <img loading="lazy" [src]="getResImg(dataItem.ImageSetting,'image' + dataItem.Code)" class="ImgProduct" (error)="handleError('image' + dataItem.Code)">
+                        <div class="Name">
+                          <div class="NameProduct defautText" title="{{dataItem.ProductName}}">{{dataItem.ProductName}}</div>
+                          <div class="Barcode d-flex align-items-center">
+                            <span title="{{dataItem.Barcode}}">{{dataItem.Barcode}}</span>
+                            <span *ngIf="dataItem.Poscode != null">|</span>
+                            <span title="{{dataItem.Poscode}}">{{dataItem.Poscode}}</span>
+                            <span *ngIf="dataItem.ChannelGroupID != null">|</span>
+                            <span class="d-flex align-items-center channelGroupName" title="`{{dataItem.ChannelGroupID}} : {{dataItem.ChannelGroupName}}`" [ngStyle]="{ 'color': dataItem.IsEdit == true ? '#FF5230' : '#26282E'}">
+                              {{dataItem.ChannelGroupID}} : {{dataItem.ChannelGroupName}}</span> <span *ngIf="dataItem.IsEdit">(Điều chỉnh)</span>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+
+                  <kendo-grid-column title="Tồn kho" class="col_TonKho">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="col_Channel">
+                        <div class="item item1"><span class="tilte">Tồn kho</span><span class="value">{{!!dataItem.Quantity ? dataItem.Quantity : 0}}</span></div>
+                        <div class="item"><span class="tilte">Min</span><span class="value">{{!!dataItem.MinQty ? dataItem.MinQty : 0}}</span></div>
+                        <div class="item"><span class="tilte">Max</span><span class="value">{{!!dataItem.MaxQty ? dataItem.MaxQty : 0}}</span></div>
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+
+                  <kendo-grid-column title="Tình trạng onsite" class="col_Status">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="Col_status">
+                        <div [ngStyle]="{
+                          'color': dataItem.IsRightToOnsite == false ? '#FF5230' : '#26282E'
+                        }">
+                          {{dataItem.IsRightToOnsite == false ? 'Chưa đủ điều kiện onsite' : 'Đủ điều kiện onsite'}}
+                        </div>
+                        <div *ngIf="dataItem.IsRightToOnsite == false" class="ListCondition" title="{{listConditionOnsiteChannel}}">
+                          <div *ngFor="let item of formatListOnsite(dataItem.ListOnSite)">
+                            <span class="Condition">Thiếu {{item.Name | lowercase}}</span>
+                          </div>
+                          <div class="Condition" *ngIf="(dataItem.ListOnSite.length > 0) && (countList(dataItem.ListOnSite) - 2 > 0)">+ {{countList(dataItem.ListOnSite) - 2}} điều kiện</div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+
+                  <kendo-grid-column title="{{typeView == 2 ? 'Kênh' : 'Số kênh chung tồn'}}" class="col_TonKho"  [headerClass]="'headerCenterCustomClass'">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="customIcon" *ngIf="typeView == 2" >
+                        <div class="ListIcon_content" #imageContainer [ngClass]="{'displayOpatiy': ChecklistImage(dataItem.ListIcon)}">
+                          <div *ngFor="let img of dataItem.ListIcon" class="Img">
+                            <img src="{{img.imgURL}}" alt="" class="itemImg" title="Kênh">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col_Channel_Inventory" *ngIf="typeView == 3">
+                        <div class="item"><span class="value">{{dataItem.Channel}}</span></div>
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+
+                  <kendo-grid-column title="Tình trạng" class="col_TonKho" [headerClass]="'headerEndCustomClass'">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="col_StatusId">
+                        <div [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID">
+                        </div>
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+
+                  </app-p-kendo-grid>
+              </div>
+          </div>
+
+          <!-- Popup import excel -->
+          <app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>
+
+          <!-- Popup Xóa -->
+          <app-p-kendo-dialog 
+          *ngIf="openedDialog" 
+          [dialogType]="1" 
+          [title]="PopupDetetel.title" 
+          [iconTitle]="'k-font-icon k-i-exception k-i-warning k-icon'"
+          (close)="onCloseDialog()" 
+          (handleButton)="onDeleteDialog(PopupDetetel.type, PopupDetetel.data)"
+          
+          >
+              <div class="ContentDialog">
+              <!-- <p>{{PopupDetetel.content}}</p> -->
+              <div [innerHTML]="PopupDetetel.content"></div>
+              <p class="content-sub">
+                  sản phẩm bị {{PopupDetetel.type == 2 ? 'xóa' : 'ngưng' }} sẽ <span class="font-weight-bold text-danger">KHÔNG</span> thể
+                  khôi phục lại.
+              </p>
+              </div>
+          
+          </app-p-kendo-dialog>
+
+          <!-- Popup Chuyển nhóm kênh -->
+          <app-p-kendo-dialog 
+          *ngIf="isChangeGroup" 
+          [dialogType]="2" 
+          [title]="''" 
+          >
+              <div class="ContentChangeGroupDialog">
+                <span>Vui lòng chọn nhóm kênh muốn di chuyển tới</span>
+                <kendo-dropdownlist [data]="ListGroupChannelIsApproveddisplay" 
+                [textField]="'ChannelGroupName'" [valueField]="'ChannelGroup'" [value]="curChangeGroup"
+                [(ngModel)]="curChangeGroup">
+                  <ng-template kendoDropDownListValueTemplate let-dataItem>
+                    <span>{{curChangeGroup.ChannelGroupID }}</span>
+                    <span *ngIf="curChangeGroup.ChannelGroupID != null && curChangeGroup.Code!= null"> | </span>
+                    <span>{{curChangeGroup.ChannelGroupName }}</span>
+                  </ng-template>
+                  <ng-template kendoDropDownListItemTemplate let-dataItem>
+                    <span>{{dataItem.ChannelGroupID }}</span>
+                    <span *ngIf="dataItem.ChannelGroupID != null && dataItem.Code!= null" style="padding: 0 5px;"> | </span>
+                    <span>{{dataItem.ChannelGroupName }}</span>
+                  </ng-template>
+                </kendo-dropdownlist>
+                <div class="action-btn">
+                  <button kendoButton class="k-button btn-hachi hachi-primary" (click)="onUpdate()">
+                    ĐỒNG Ý
+                  </button>
+                  <button kendoButton class="k-button btn-hachi hachi-primary" (click)="onClose()">
+                    ĐÓNG
+                  </button>
+                </div>
+              </div>
+          
+          </app-p-kendo-dialog>
+      </kendo-drawer-content>
+
+
+  </kendo-drawer-container>
+
+</div>

@@ -1,0 +1,20 @@
+<div class="app-pur-menu-supplier-info">
+    <div class="Title-Menu">
+        <div class="title" title="{{data?.VNName}}">{{data?.VNName}}</div>
+        <div>Mã công ty: {{data?.Partner}}</div>
+        <!-- <div [innerHTML]=" 'T.trạng: ' + data.StatusName | colorStatus:data.StatusID"></div> -->
+        <span *ngIf="Data?.Partner != null" [style.Color]="data?.StatusID == 0 ? '#1A6634' : '#891828'">T.trạng: {{data?.StatusName}}</span>
+    </div>
+    <div class="List-Menu">
+        <ul class="list-item">
+            <li 
+            *ngFor="let item of ListMenuSide" 
+            class="item" 
+            [ngClass]="{active: item?.Actived}" 
+            (click)="onChangMenu(item)"
+            >
+                {{item.Name}}
+            </li>
+        </ul>
+    </div>
+</div>

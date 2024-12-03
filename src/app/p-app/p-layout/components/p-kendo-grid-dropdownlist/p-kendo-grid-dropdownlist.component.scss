@@ -1,0 +1,169 @@
+// @import "../../../../../assets/scss/variable.scss";
+
+// ::ng-deep {
+//     kendo-grid-filter-menu-container {
+//         .k-dropdownlist,
+//         .k-dropdowntree,
+//         .k-combobox {
+//             height: 32px;
+//             // width: 130px;
+//             min-width: fit-content;
+//             border-radius: 3px;
+//             border: 1px solid #dbdee7;
+//             outline: none;
+//             box-shadow: 1px 3px 6px 1px rgba($gray-500, 0.2);
+//             background: white;
+//             display: flex;
+
+//             .k-input-values {
+//                 height: 100%;
+//                 width: 100%;
+//                 display: flex;
+//             }
+//             .k-input-inner {
+//                 // border: 1px solid rgba(0, 0, 0, 0.08);
+//                 border-radius: 3px;
+//                 display: inline-block;
+//                 height: 100%;
+//                 width: 100%;
+//                 width: -webkit-fill-available;
+//                 padding: 4px;
+//                 white-space: nowrap;
+
+//                 .k-input-value-text {
+//                     display: flex;
+//                     align-items: center;
+//                     column-gap: 4px;
+//                 }
+//             }
+
+//             .k-button,
+//             .k-button.k-button-flat {
+//                 display: flex;
+//                 box-shadow: none;
+//                 background-color: inherit;
+//                 color: inherit;
+//                 height: 100%;
+//                 border: none;
+
+//                 &:hover {
+//                     border: none;
+//                 }
+//             }
+
+//             kendo-popup {
+//                 border: 1px solid $dark-green;
+//             }
+
+//             &.k-state-hover,
+//             &.k-hover,
+//             &:hover,
+//             &:focus,
+//             &.k-focus {
+//                 border: 1px solid $dark-green;
+
+//                 // .k-input-inner {
+//                 //   border: 1px solid $dark-green;
+//                 // }
+
+//                 kendo-popup {
+//                     border: 1px solid $dark-green;
+//                 }
+//             }
+
+//             &.k-state-disabled,
+//             &.k-disabled,
+//             &.k-widget[disabled] {
+//                 // opacity: 1;
+//                 background-color: $gray-100;
+//                 cursor: not-allowed;
+//             }
+
+//             &[ng-reflect-disabled="true"],
+//             &[disabled],
+//             &.k-state-disabled,
+//             &.k-disabled {
+//                 background-color: $gray-100;
+//                 cursor: not-allowed;
+//             }
+//             //dùng cho tree
+//             kendo-popup {
+//                 ul,
+//                 .k-treeview-group {
+//                     margin: 0;
+//                     padding: 0;
+//                     padding-left: 33px;
+//                 }
+
+//                 ul.k-treeview-lines {
+//                     padding-left: 0;
+//                 }
+
+//                 li,
+//                 .k-treeview-item {
+//                     list-style: none;
+
+//                     .k-checkbox {
+//                         margin-right: 0;
+//                     }
+//                 }
+//                 .k-treeview-top,
+//                 .k-treeview-mid,
+//                 .k-treeview-bot {
+//                     white-space: nowrap;
+//                     height: 32px;
+//                     padding: 4px;
+//                     display: flex;
+//                     align-items: center;
+
+//                     &.k-state-hover,
+//                     &.k-hover,
+//                     &:hover {
+//                         color: white;
+//                         background-color: rgba($dark-green, 0.5);
+//                         cursor: pointer;
+
+//                         img {
+//                             filter: brightness(0) saturate(100%) //chuyển thành màu đen
+//                                 invert(100%) sepia(91%) saturate(0%) hue-rotate(320deg) brightness(103%) contrast(105%); //đổi màu;
+//                         }
+//                     }
+
+//                     &.k-selected,
+//                     &.k-state-selected {
+//                         color: white;
+//                         background-color: $dark-green;
+//                     }
+
+//                     .k-icon {
+//                         background-color: transparent;
+//                         color: inherit;
+//                     }
+
+//                     img {
+//                         margin-right: 12px;
+//                         margin-left: 10px;
+//                     }
+//                 }
+//             }
+//         }
+
+//         //         kendo-dropdownlist {
+//         //             width: 100%;
+
+//         //             .k-input-inner {
+//         //                 height: 100%;
+//         //                 display: inline-block;
+
+//         //                 .k-input-value-text {
+//         //                     height: 100%;
+//         //                     display: flex;
+//         //                     align-items: center;
+//         //                 }
+//         //             }
+//         //             > button {
+//         //                 float: right;
+//         //             }
+//         //         }
+//     }
+// }

@@ -1,0 +1,73 @@
+<div class="config-sales-attribute">
+    <div class="section">
+        <div class="title">THUỘC TÍNH BÁN HÀNG</div>
+        <div class="section-grid">
+          <!-- col 1 -->
+          <div class="column_1">
+          <div class="grid-item item1">
+                <div class="label">Giá bán lẻ (bao gồm VAT)</div>
+               
+                <div class="sales">
+                        <app-p-numeric-textbox propName="sl" [format]="'n0'" [spinners]="false" [min]="0"  [(ngModel)]="hamper.UnitPrice" [disabled]="true"></app-p-numeric-textbox>
+                        <p-kendo-dropdownlist [data]="data" textField="Value"  valueField="Code" [(ngModel)]="data[1]"  [disabled]="true"></p-kendo-dropdownlist>
+                </div>
+          </div>
+        </div>
+        <div class="column_2">
+          <!--col 2-->
+          <div class="grid-item item2">
+                <div class="label">Điều kiện bán hàng</div>
+            <div class="item2_1">
+                 <div class="label">Bán tại cửa hàng</div>
+                <input type="checkbox" kendoCheckBox [(value)]="hamper.IsStoreBuy" [checked]="hamper.IsStoreBuy" (change)="valueChange($event,'IsStoreBuy')" [disabled]="disable">
+            </div>
+            <div class="item2_1">
+                 <div class="label">Bán online</div>
+                <input type="checkbox" kendoCheckBox [(value)]="hamper.IsOnlineBuy" [checked]="hamper.IsOnlineBuy" (change)="valueChange($event,'IsOnlineBuy')" [disabled]="disable" >
+            </div>
+            <div class="item2_1">
+                 <div class="label">Bán sỉ</div>
+                <input type="checkbox" kendoCheckBox [(value)]="hamper.IsWholeBuy" [checked]="hamper.IsWholeBuy" (change)="valueChange($event,'IsWholeBuy')" [disabled]="disable">
+            </div>
+            <div class="item2_1">
+                 <div class="label">Bán chiết khấu cho nhân viên</div>
+                <input type="checkbox" kendoCheckBox [(value)]="hamper.IsStaffBuy" [checked]="hamper.IsStaffBuy" (change)="valueChange($event,'IsStaffBuy')" [disabled]="disable">
+            </div>
+
+        </div>
+    </div>
+  
+
+        <div class="column_3">
+          <!-- col 3 -->
+          <div class="grid-item item3">
+            <div class="item_flex">
+                <div class="label">KHÔNG BÁN tại các cửa hàng</div>
+                <span class="k-icon k-i-plus" (click)="openDialog()" *ngIf="!disable"></span>
+            </div>
+            <!-- hamper.WithoutStores -->
+            <div class="item3_1" *ngFor="let item of listWareHouseFormat;let i = index">
+                <div class="flex_item3">
+                    <span class="k-icon  k-i-delete k-i-trash"  (click)="onClearCheckbox($event,item)" *ngIf="!disable"></span>
+                    <span class="s_label">{{item?.WHName}}</span>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+      </div>
+
+      <app-p-kendo-dialog *ngIf="dialogOpen" [title]="'DANH SÁCH CÁC CỬA HÀNG'"
+       (close)="closeDialog()" (handleButton)="updateStore()"
+       [cancelText]="'ĐÓNG'"
+       [actionText]="'CẬP NHẬT'"
+       >
+        <div class="header">
+            <app-search-filter-group placeholder="Tìm theo cửa hàng"  (valueChange)="seach($event)"></app-search-filter-group>
+        </div>
+        <div class="listStore" *ngFor="let item of listWareHouse;let i = index">
+            <div class="label">{{item.WHName}}</div>
+            <input type="checkbox" kendoCheckBox (change)="onCheckboxChange($event, item)">
+        </div>
+    </app-p-kendo-dialog>
+  </div>

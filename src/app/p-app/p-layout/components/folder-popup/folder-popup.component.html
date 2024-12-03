@@ -1,0 +1,161 @@
+<kendo-dialog #folderDialogPopup title="tải lên" [style.display]="folderDialogDisplay()" (close)="closeFolderDialog()"
+  id="folderDialogPopup">
+  <div class="row body">
+    <div id="folderTreeDiv" class="col-4">
+      <kendo-treelist kendoTreeListExpandable #folderTree id="folderTree" [data]="folGridDSView | async"
+        childrenField="SubFolders" parentIdField="FolderName" [scrollable]="'none'" [loading]="loading"
+        [hasChildren]="hasChildren" [fetchChildren]="fetchChildren" [initiallyExpanded]="true" kendoTreeListSelectable
+        [selectable]="selectableSettings" (selectionChange)="clickFolder($event.items[0].dataItem)"
+        (add)="addFolderHandler($event)" (edit)="editFolderHandler($event)" (remove)="removeFolderHandler($event)"
+        (save)="saveFolderHandler($event)" (cancel)="cancelFolderHandler($event)">
+
+        <kendo-treelist-column [expandable]="true" field="FolderName" title="Thư mục">
+          <ng-template kendoTreeListCellTemplate let-dataItem>
+            <span class="k-icon k-i-folder"></span>
+            {{ dataItem.FolderName }}
+          </ng-template>
+        </kendo-treelist-column>
+
+        <kendo-treelist-command-column width="140">
+          <ng-template kendoTreeListHeaderTemplate>
+            <button id="addFolderBtn" kendoTreeListAddCommand type="button" class="k-button"
+              [icon]="'plus'">Thêm</button>
+          </ng-template>
+
+          <ng-template kendoTreeListCellTemplate let-isNew="isNew" let-cellContext="cellContext" let-dataItem>
+            <button [kendoTreeListAddCommand]="cellContext" icon="filter-add-expression" title="Thêm Thư mục con">
+            </button>
+            <button [kendoTreeListEditCommand]="cellContext" icon="edit" title="Đổi tên Thư mục"
+              *ngIf="dataItem.PathFolder != rootFolder.PathFolder"></button>
+            <button [kendoTreeListRemoveCommand]="cellContext" icon="delete" title="Xóa Thư mục"
+              *ngIf="dataItem.PathFolder != rootFolder.PathFolder"></button>
+
+            <button [kendoTreeListSaveCommand]="cellContext" [disabled]="formGroupFolder?.invalid" icon="save"
+              title="{{ isNew ? 'Thêm' : 'Đổi tên' }}"></button>
+            <button [kendoTreeListCancelCommand]="cellContext" icon="cancel"
+              title="{{ isNew ? 'Hủy Thêm' : 'Hủy Đổi tên' }}"></button>
+          </ng-template>
+        </kendo-treelist-command-column>
+      </kendo-treelist>
+    </div>
+
+    <div id="folderGridDiv" class="col-8">
+      <div id="folderPath">
+        <div class="label">Đường dẫn: </div>
+        <div>{{ formatLink(currentFolder.PathFolder) }}</div>
+      </div>
+
+      <app-p-kendo-grid [height]="300" [data]="getFile() | async" [selectable]="selectableSettings"
+        [showCheckbox]="false" [scrollable]="'scrollable'" [loading]="loading" [sort]="folGridDSState.sort"
+        [sortable]="false" [filterable]="false" [pageable]="false" [onSelectCallback]="onPickFileCallback"
+        [allowedMoreActionDropdown]="allowActionDropdown" [autoHeight]="false"
+        [onActionDropdownClickCallback]="onActionDropdownClickCallback">
+
+        <!-- [editHandlerCallback]="editHandlerCallback" [cancelHandlerCallback]="cancelHandlerCallback"
+        [saveHandlerCallback]="saveHandlerCallback" [removeHandlerCallback]="removeHandlerCallback" -->
+
+        <!-- (sortChange)="sortChange($event)" 
+          [onDeleteCallback]="onDeleteCallback" (selectionChange)="onPickFileCallback($event)"-->
+
+        <kendo-grid-column field="PathFile" title="Hình ảnh" class="col_file_img" headerClass="col_file_img">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <img loading="lazy" [src]="getImg(dataItem.PathFile)" class="file_img" />
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="FileName" title="Tên file" class="col_file_name" headerClass="col_file_name">
+          <ng-template kendoGridHeaderTemplate let-dataItem>
+            <div>Tên file</div>
+
+            <div class="col_search">
+              <div class="search-btn">
+                <span class="k-icon k-i-search"></span>
+                <kendo-textbox type="text" class="k-textbox" placeholder="Tìm tên file" (valueChange)="search($event)">
+                </kendo-textbox>
+              </div>
+            </div>
+
+            <kendo-fileselect #selectImportFile id="selectImportFile" zoneId="selectImportFile" [showFileList]="false"
+              [multiple]="true" accept=".jpg,.jpeg,.png" [restrictions]="restrictions" (select)="onUploadExcel($event)">
+              <kendo-fileselect-messages [select]="'Upload File'" [dropFilesHere]="''"
+                [invalidFileExtension]="'File không đúng định dạng.'">
+              </kendo-fileselect-messages>
+
+              <ng-template kendoFileSelectFileTemplate let-files let-state="state">
+                <div [style.display]="invalidFormatDisplay()">
+                  <div class="file-validation-message">File không đúng định dạng.</div>
+                </div>
+              </ng-template>
+            </kendo-fileselect>
+          </ng-template>
+
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <!-- <span class="k-icon k-i-file"></span> -->
+            <div class="file_name">{{ dataItem.FileName }}</div>
+          </ng-template>
+        </kendo-grid-column>
+
+        <!-- <kendo-grid-command-column>
+          <ng-template kendoGridCellTemplate>
+            <button kendoGridEditCommand title="Đổi tên File">Đổi tên</button>
+            <button kendoGridRemoveCommand title="Xóa File">Xóa</button>
+            <button kendoGridSaveCommand [disabled]="formGroupFile?.invalid">Lưu</button>
+            <button kendoGridCancelCommand>Hủy</button>
+          </ng-template>
+        </kendo-grid-command-column> -->
+      </app-p-kendo-grid>
+    </div>
+
+    <kendo-dialog #addFolderDialog title="{{isAdd? 'Add' : 'Rename'}} Folder"
+      [style.visibility]="addFolderDialogVisible()" (close)="closeAddFolderDialog()" id="addFolderDialog">
+      <!-- <p style="font-size: medium;">{{ currentFolderWithDropdown.Name }}</p>
+      <input type="text" [value]="currentFolderWithDropdown.Name"> -->
+      <kendo-label id="currentFolderName" text="{{currentFolderWithDropdown.FolderName}}" [for]="newFolderName">
+      </kendo-label>
+      <kendo-textbox id="newFolderName" #newFolderName [clearButton]="true" placeholder="Tên Thư mục Mới">
+      </kendo-textbox>
+
+      <kendo-dialog-actions>
+        <button kendoButton id="closeAddFolderDialogBtn" (click)="closeAddFolderDialog()" class="closeDialogBtn"
+          [icon]="'close'">Đóng</button>
+        <button kendoButton id="addFolderDialogBtn" [primary]="true" (click)="addFolder()"
+          [icon]="isAdd? 'plus' : 'pencil'">
+          {{isAdd? 'Thêm':'Đổi tên'}} </button>
+      </kendo-dialog-actions>
+    </kendo-dialog>
+  </div>
+
+  <div id="footer">
+    <span *ngIf="canResize">
+      <span class="kendo-label mr-1">Chiều dài</span>
+      <kendo-textbox [(value)]="imgWidth">
+      </kendo-textbox>
+
+      <span class="kendo-label mr-1">Chiều rộng</span>
+      <kendo-textbox [(value)]="imgHeight">
+      </kendo-textbox>
+    </span>
+
+    <button kendoButton id="closeFolderPopupBtn" (click)="closeFolderDialog()" class="k-button">
+      <span>Đóng</span>
+    </button>
+    <button kendoButton id="pickFileBtn" class="k-button " (click)="pickFile()" [disabled]="!isFilePicked()">
+      <span>Chọn</span>
+    </button>
+  </div>
+
+</kendo-dialog>
+
+<!-- popup confirm delete -->
+<kendo-dialog #deleteDialog class="deleteDialog" title="Xóa {{ context }}" [hidden]="!deleteDialogOpened"
+  (close)="closeDeleteDialog()" [minWidth]="250">
+  <p style="margin: 30px; text-align: center;">Bạn chắc chắn muốn xóa vĩnh viễn {{ context }}
+    "{{ context == contextList[0] ? currentFolder?.FolderName : currentFile?.FileName }}" này?</p>
+
+  <div class="dialog-footer">
+    <button kendoButton (click)="closeDeleteDialog()" [icon]="'close'"
+      class="closeDialogBtn btn-hachi hachi-secondary">Không</button>
+    <button kendoButton class="btn-hachi hachi-warning"
+      (click)="context == contextList[0] ? deleteFolder() : deleteFile()" [icon]="'trash'">Có</button>
+  </div>
+</kendo-dialog>

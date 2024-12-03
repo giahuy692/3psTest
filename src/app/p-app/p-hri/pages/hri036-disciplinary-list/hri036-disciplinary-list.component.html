@@ -1,0 +1,140 @@
+<div class="main">
+    <!-- HEADER-1 -->
+    <div class="header header-1">
+        <app-p-kendo-breadcrumb (loadData)="handleLoadFilter()"></app-p-kendo-breadcrumb>
+        <div class="button-group">
+            <app-checkbox-button-group title="Đang soạn thảo" [field]="'Status'" [value]="0"
+                [disabled]="isFilterDisable" [checked]="isDraft"
+                (selectedChange)="handleFilterChange($event, 'isDraft', false)"
+                (filterChange)="handleFilterChange($event, 'filterDraftStatus')">
+            </app-checkbox-button-group>
+            <app-checkbox-button-group title="Gửi duyệt" [field]="'Status'" [value]="1" [disabled]="isFilterDisable"
+                [checked]="isSent" (selectedChange)="handleFilterChange($event, 'isSent', false)"
+                (filterChange)="handleFilterChange($event, 'filterSendStatus')">
+            </app-checkbox-button-group>
+            <app-checkbox-button-group title="Đã duyệt" [field]="'Status'" [value]="2" [disabled]="isFilterDisable"
+                [checked]="isApproved" (selectedChange)="handleFilterChange($event, 'isApproved', false)"
+                (filterChange)="handleFilterChange($event, 'filterApprovedStatus')">
+            </app-checkbox-button-group>
+            <app-checkbox-button-group title="Ngưng áp dụng" [field]="'Status'" [value]="3" [disabled]="isFilterDisable"
+                [checked]="isSuspended" (selectedChange)="handleFilterChange($event, 'isSuspended', false)"
+                (filterChange)="handleFilterChange($event, 'filterSuspendedStatus')">
+            </app-checkbox-button-group>
+        </div>
+        <div class="btnWrapper">
+            <button kendoButton iconClass="k-icon k-i-plus" [disabled]="isFilterDisable" class="btn-hachi hachi-primary"
+                (click)="openDetail(true)" *ngIf="isMaster || isCreator">
+                THÊM MỚI
+            </button>
+        </div>
+    </div>
+
+    <!-- HEADER-2 -->
+    <div class="header header-2">
+        <!-- FILTER BY TERM -->
+        <app-search-filter-group placeholder="Tìm theo mã, tên, mô tả" class="filter-search"
+            [fields]="['PolicyID', 'PolicyName', 'Description']"
+            (filterChange)="handleFilterChange($event, 'filterSearch')" (onReset)="hanldeResetFilter()"
+            [disabled]="isFilterDisable">
+        </app-search-filter-group>
+
+        <!-- FILTER EFFDATE -->
+        <kendo-label text="Ngày hiệu lực">
+            <div class="in-label">
+                <p-kendo-dropdownlist class="filter-by-date" [data]="listDateFilterOperator" textField="TypeFilter"
+                    valueField="ValueFilter" [(ngModel)]="currentDateFilterOperator"
+                    (selectionChange)="handleFilterChange($event, 'curDateFilterOperator')" [hasValueNull]="false"
+                    [disabled]="isFilterDisable">
+                </p-kendo-dropdownlist>
+                <app-datepicker [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'"
+                    [(ngModel)]="currentDateFilterValue" [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                    (valueChange)="handleFilterChange($event,'curDateFilterValue')"
+                    [disabled]="isFilterDisable"></app-datepicker>
+            </div>
+        </kendo-label>
+    </div>
+
+    <!-- DANH SÁCH BẢNG CÔNG VIỆC -->
+    <div class="grid-wrapper">
+        <app-p-kendo-grid class="grid scrollable" [ngClass]="{'pagerDisable': isFilterDisable}" [data]="gridView"
+            [scrollable]="'none'" [loading]="isLoading" [selectable]="selectable" [pageable]="true"
+            [pageSizes]="pageSizes" [pageSize]="pageSize" [take]="gridState.take" [skip]="gridState.skip"
+            [sortable]="true" [sort]="gridState.sort" [onPageChangeCallback]="onPageChangeCallback"
+            [getActionDropdownCallback]="getActionDropdownCallback"
+            [onActionDropdownClickCallback]="onActionDropDownClickCallback"
+            [getSelectionPopupCallback]="getSelectionPopupCallback"
+            [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback" [onSelectCallback]="onSelectCallback">
+
+            <!-- COL-1 -->
+            <kendo-grid-column title="Bảng công việc" class="name-col" [width]="500">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <span class="taskboard-name" [title]="dataItem?.PolicyName">{{dataItem?.PolicyName}}</span>
+                    <div class="id-seperate-block">
+                        <span class="taskboard-id" title="{{dataItem?.PolicyID}}">{{dataItem?.PolicyID}}</span>
+                        <div *ngIf="dataItem?.EffDate && dataItem?.PolicyID" class="seperate-bar">|</div>
+                        <span
+                            title="{{dataItem?.EffDate | date : 'dd/MM/yyyy' : 'Indochina Time' : 'vi_VN'}}">{{dataItem?.EffDate
+                            | date : "dd/MM/yyyy" : "Indochina Time" : "vi_VN"}}</span>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <!-- COL-2 -->
+            <kendo-grid-column title="Công việc" class="num-task-col flex-center-col" headerClass="flex-center-col">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <span [title]="dataItem?.NumOfTask + ' công việc'">{{dataItem?.NumOfTask}} công việc</span>
+                </ng-template>
+            </kendo-grid-column>
+
+            <!-- COL-3 -->
+            <kendo-grid-column title="Mô tả" class="description-col overflow-text-2">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <span class="description-text" [title]="dataItem?.Description">{{dataItem?.Description}}</span>
+                </ng-template>
+            </kendo-grid-column>
+
+            <!-- COL-4 -->
+            <kendo-grid-column field="StatusName" title="Tình trạng" headerClass="flex-end-col"
+                class="flex-end-col col-status">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <span class="status-name"
+                        [innerHTML]="dataItem.StatusName | colorStatus: dataItem.Status">{{dataItem.StatusName}}</span>
+                </ng-template>
+            </kendo-grid-column>
+        </app-p-kendo-grid>
+    </div>
+
+    <!-- POPUP XÁC NHẬN XÓA BẢNG CÔNG VIỆC -->
+    <kendo-dialog class="dialog-delete popup-confirm-custom" [minHeight]="250" [minWidth]="400"
+        *ngIf="isDialogConfirmDeleteShow">
+        <!-- HEADER -->
+        <div class="dialog-header">
+            <span class="k-icon k-i-warning"></span>
+            <div>{{'Xóa bảng công việc XLKL' | uppercase}}</div>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="dialog-content">
+            <div class="text-confirm">
+                <span>Bạn chắc chắn muốn xoá bảng công việc</span>
+                <div *ngFor="let item of listSelectedTaskBoardToDelete.slice(0, 3); let i = index" class="policy-name-text">
+                    <span *ngIf="i >= 0 && i < 2" title="{{item.PolicyName}}">
+                        {{item.PolicyName}}
+                    </span>
+                    <span class="deletePlus" *ngIf="i == 2" title="{{handleGetRemainingPolicyNames()}}">+{{listSelectedTaskBoardToDelete.length - 2}} bảng công việc</span>
+                </div>
+            </div>
+            <div class="warning">
+                <span>Bảng công việc bị xoá sẽ</span>
+                <span style="color: #FD7676;">KHÔNG</span>
+                <span>thể khôi phục lại.</span>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="dialog-footer">
+            <button kendoButton (click)="handleCloseDialog()" class="cancel-button">Không xóa</button>
+            <button kendoButton icon="trash" class="btn-delete" (click)="handleDeleteTaskBoard()">xóa</button>
+        </div>
+    </kendo-dialog>
+</div>

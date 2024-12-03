@@ -1,0 +1,228 @@
+<div class="app-hri012-quiz-marking">
+  <!-- START BREADCRUMB-->
+  <div class="bread-crumb-block">
+    <!-- BREADCRUMB -->
+    <app-p-kendo-breadcrumb (loadData)="getData()"></app-p-kendo-breadcrumb>
+    <kendo-button *ngIf="toggleShowView == true" iconClass="k-icon k-i-undo" class="btn-hachi hachi-secondary" (click)="goBackListQuestion()">Danh sách câu hỏi</kendo-button>
+  </div>
+  <!-- END BREADCRUMB -->
+
+  
+  <div class="main">
+    <!-- QUIZ INFO -->
+    <app-hr-quiz-session-info [step]="3" [canSetting]="isAllowChooseQuizRole" [ngClass]="{'customsSessionInfo': toggleShowView}"></app-hr-quiz-session-info>
+    <!-- QUIZ INFO -->
+    <div *ngIf="toggleShowView">
+      <div class="QuestionInfo">
+        <div class="title p-0 my-3">
+          <h1>THÔNG TIN CÂU HỎI</h1>
+        </div>
+        <div class="info">
+          <p class="font-weight-bold text-light-blue-gray">Câu hỏi</p>
+          <p class="pl-3"  [innerHTML]="QuestionHTML"></p>
+          <p class="font-weight-bold text-light-blue-gray">Đáp án gợi ý</p>
+          <p class="pl-3 text-dark-green" [innerHTML]="RefAnswerHTML">
+          <p *ngIf="Questiton?.Min || Questiton?.Max" class="font-weight-bold text-light-blue-gray">Giới hạn ký tự trả lời</p>
+          <div class="d-flex colgap-20 align-items-center">
+              <p *ngIf="Questiton?.Min" class="pl-3" >Min : {{ Questiton.Min }}</p>
+              <p *ngIf="Questiton?.Max" class="pl-3" >Max : {{ Questiton.Max }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="QuestionListWrapper">
+        <div class="d-flex justify-content-between align-items-center my-3 " >
+          <div class="titleC p-0 header border-0">
+              <app-search-filter-group title="DANH SÁCH CÂU TRẢ LỜI" placeholder="Tìm theo câu trả lời" (valueChange)="handleSearchExam($event)"></app-search-filter-group>
+          </div>
+        </div>
+        <!-- <ng-template #AnswerList> -->
+          <div class="grid-wrapper">
+            <app-p-kendo-grid
+              class="grid scrollable AnsweListMain"
+              [data]="ListExamEssayQuestion"
+              [scrollable]="'none'"
+              [loading]="loading"
+              [pageable]="true"
+              [pageSizes]="pageSizes"
+              [pageSize]="pageSize"
+              [skip]="gridState.skip"
+              [take]="gridState.take"
+              [sortable]="true"
+              [sort]="gridState.sort"
+              [onPageChangeCallback]="onPageChangeCallbackAnswer"
+              [showCheckbox]="false"
+            >
+              <kendo-grid-column title="Câu trả lời" [headerClass]="'headerAnswerColumn1'" class="cellAnswerColumn1" >
+                <ng-template
+                  kendoGridCellTemplate
+                  let-dataItem
+                  let-rowIndex="rowIndex"
+                >
+                  <span kendoTooltip title="{{ dataItem.Answer }}">{{ rowIndex + 1 }}. {{ dataItem.Answer }}</span>
+                </ng-template>
+              </kendo-grid-column>
+
+              <kendo-grid-column title="Số ký tự câu trả lời" [headerClass]="'headerAnswerColumn4'" class="cellAnswerColumn4">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                  <span [ngClass]="dataItem.Answer == null || (Questiton?.Min && dataItem.Answer.length < Questiton?.Min) ? 'text-danger' : Questiton?.Max && dataItem.Answer.length > Questiton?.Max ? 'text-danger' : null ">{{ dataItem?.Answer?.length }}</span>
+                </ng-template>
+              </kendo-grid-column>
+      
+              <kendo-grid-column title="Điểm số" [headerClass]="'headerAnswerColumn2'" class="cellAnswerColumn2">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                  <app-p-numeric-textbox [width]="60" [propName]="'Mark'" [format]="'n0'" [min]="0" [max]="100" [spinners]="false"(keydown.Enter)="$event.target.blur()" [autoCorrect]="true" 
+                  (blur)="onBlurAnswer($event, dataItem)" [(ngModel)]="dataItem.Mark" [disabled]="QuizSesion.SessionStatusID > 3">
+                    {{ dataItem.Mark }}</app-p-numeric-textbox> / 100
+                </ng-template>
+              </kendo-grid-column>
+      
+              <kendo-grid-column title="Nhận xét của người chấm" [headerClass]="'headerAnswerColumn3'" class="cellAnswerColumn3">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                  <app-p-textbox [propName]="'Comments'" [(ngModel)]="dataItem.Comments" class="Remark" (keydown.Enter)="$event.target.blur()" 
+                  (blur)="onBlurAnswer($event,dataItem)"  [disabled]="QuizSesion.SessionStatusID > 3"></app-p-textbox>
+                </ng-template>
+              </kendo-grid-column>
+            </app-p-kendo-grid>
+          </div>
+        <!-- </ng-template> -->
+      </div>
+    </div>
+    <div class="QuestionListWrapper"  *ngIf="toggleShowView == false">
+      <div class="titleC p-0 header border-0">
+        <app-search-filter-group
+         title="DANH SÁCH CÂU HỎI TỰ LUẬN"
+        placeholder="Tìm theo tóm tắt câu hỏi, tên câu hỏi và nhân sự chấm bài"
+        (valueChange)="handleSearchQuizQuestion($event)"
+        [disabled]="!isFilterActive"
+        ></app-search-filter-group>
+      </div>
+
+        <div class="grid-wrapper">
+          <app-p-kendo-grid
+            class="grid scrollable QuestionsListMain"
+            [data]="ListQuizEssayQuestion"
+            [scrollable]="'none'"
+            [loading]="loading"
+            [pageable]="true"
+            [pageSizes]="pageSizes"
+            [pageSize]="pageSize"
+            [skip]="gridState.skip"
+            [take]="gridState.take"
+            [sortable]="true"
+            [sort]="gridState.sort"
+            [id]="'Key'"
+            
+            [onPageChangeCallback]="onPageChangeCallback"
+            [onSortChangeCallback]="onSortChangeCallback"
+            [getActionDropdownCallback]="getActionDropdownCallback"
+            [onActionDropdownClickCallback]="onActionDropdownClickCallback"
+        
+            [onSelectCallback]="onSelectCallback"
+            [getSelectionPopupCallback]="getSelectionPopupCallback"
+            [selectable]="selectable"
+            [showCheckbox]="false"
+          >
+          
+            <kendo-grid-column title="Câu hỏi tự luận" [headerClass]="'headerQuestionColumn1'" class="cellQuestionColumn1">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <span kendoTooltip [title]="dataItem.Remark">{{dataItem.Remark}}</span>
+              </ng-template>
+            </kendo-grid-column>
+    
+            <kendo-grid-column title="Số lượng bài làm" [headerClass]="'headerQuestionColumn2'" class="cellQuestionColumn2">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <span>{{dataItem.NoOfMarked + dataItem.NoOfNotMarked}}</span>
+              </ng-template>
+            </kendo-grid-column>
+    
+            <kendo-grid-column title="Số lượng bài đã chấm - còn lại" [headerClass]="'headerQuestionColumn3'" class="cellQuestionColumn3">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <span
+                  >{{ dataItem.NoOfMarked }} -
+                  {{ dataItem.NoOfNotMarked  }}</span
+                >
+              </ng-template>
+            </kendo-grid-column>
+    
+            <kendo-grid-column title="Nhân sự chấm bài" [headerClass]="'headerQuestionColumn4'" class="cellQuestionColumn4">
+              <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <kendo-dropdownlist #dropdownlist
+                  [data]="ListStaffGradingEssayQuestions" (selectionChange)="selectionQuizRoleChange($event, dataItem)"  [valuePrimitive]="true" 
+                  [(ngModel)]="dataItem.EvaluatedBy" textField="StaffName" valueField="Code" 
+                  [disabled]="ListStaffGradingEssayQuestions.length == 1 || ListStaffGradingEssayQuestions.length == 0 || !isAllowChooseQuizRole || QuizSesion.SessionStatusID > 2"
+                  (click)="onDropDownClick($event)"
+                  [readonly]="!isFilterActive && !listItemDropdown.includes(dataItem)"
+                 >
+                </kendo-dropdownlist>
+              </ng-template>
+            </kendo-grid-column>
+            
+          </app-p-kendo-grid>
+        </div>
+      <!-- </ng-template> -->
+      <!-- <app-p-kendo-dialog
+              *ngIf="dialogOpen"
+              [title]="'Xác nhận cập nhật'"
+              [dialogType]="update"
+              (close)="closeDialog()"
+              (handleButton)="updateManyItem()"
+              >
+              <p>Bạn có muốn cập nhật nhân sự chấm bài cho <b>tất cả các câu hỏi được chọn</b>?</p>
+      </app-p-kendo-dialog> -->
+      <kendo-dialog
+    *ngIf="dialogOpen"
+    (close)="closeDialog()"
+    [minWidth]="250"
+    [width]="450"
+    [minHeight]="250"
+    class="wrapper-dialog"
+  >
+    <!-- Start: header dialog  -->
+    <kendo-dialog-titlebar>
+      <div class="title-delete d-flex">
+        <span
+          class="btn-title-dialog"
+        ></span>
+        <span>CẬP NHẬT NHÂN SỰ CHẤM BÀI</span>
+      </div>
+    </kendo-dialog-titlebar>
+    <!-- End: header dialog  -->
+
+    <!-- Start: Body dialog  -->
+    <div class="body_dialog">
+      <div class="content-primary">
+        <p>Bạn có muốn cập nhật nhân sự chấm bài 
+        <strong></strong>
+        cho tất cả các câu hỏi được chọn?</p>
+      </div>
+    </div>
+    <!-- Emd: Body dialog  -->
+
+    <!-- Start: action dialog  -->
+    <div class="k-dialog-actions">
+      <button kendoButton (click)="closeDialog()" class="cancel">
+        HỦY BỎ
+      </button>
+
+          <button
+          kendoButton
+          imageUrl=""
+          (click)="updateOneItem()"
+          class="update"
+        >
+         CHỈ CHỌN MỘT
+        </button>
+      <button
+        kendoButton
+        imageUrl=""
+        (click)="updateManyItem()"
+        class="delete"
+      >
+        ĐỒNG Ý
+      </button>
+    </div>
+    <!-- End: action dialog  -->
+  </kendo-dialog>
+    </div>
+  </div>
+</div>

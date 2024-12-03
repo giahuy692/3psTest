@@ -1,0 +1,36 @@
+@import "../../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    .config-product-order-info{
+        max-height: 600px;
+        display: flex;
+        flex-direction: column;
+        padding: 10px 0;
+        .title{
+            padding-bottom: 5px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        .content{
+            overflow: auto;
+            background-color: $white;
+            display: flex;
+            padding: 15px;
+            gap: 15px;
+            .item{
+                .label{
+                    font-weight: 700;
+                    color: #959DB3;
+                    padding-bottom: 5px;
+                }
+                .k-textbox{
+                    width: 370px;
+                    box-shadow: none;
+                    .customized-input {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

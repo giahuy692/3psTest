@@ -1,0 +1,132 @@
+<div class="config008-enterprise-personal-info-list">
+    <!-- HEADER 1 -->
+    <div class="header header-1">
+        <div class="filter-ctn">
+            <!-- BREADCRUMB -->
+            <app-p-kendo-breadcrumb (loadData)="onLoadFilter()"></app-p-kendo-breadcrumb>
+
+            <!-- DROPDOWN THUỘC CÔNG TY HAY KHÔNG -->
+            <p-kendo-dropdownlist [hasValueNull]="false" [(ngModel)]="selectedTypeBelongTo" [data]="listTypeBelongTo"
+                [textField]="'TypeName'" [valueField]="'Type'" (valueChange)="onDropDownListBTCompany($event)" />
+        </div>
+
+
+        <!-- FUNCTION BUTTON WRAPPER -->
+        <div class="btnWrapper">
+            <button kendoButton iconClass="k-icon k-i-plus" [disabled]="false" class="btn-hachi hachi-primary"
+                (click)="openDetail(newPersonal)">
+                THÊM MỚI
+            </button>
+        </div>
+    </div>
+
+
+    <!-- HEADER 2 -->
+    <div class="header header-2">
+        <!-- FILTER SEARCH -->
+        <app-search-filter-group #searchGroup [placeholder]="'Tìm theo CCCD/CMND, họ và tên, tên tài khoản'"
+            [fields]="['Fullname', 'UserName', 'IdentityNo']" (filterChange)="onFilterSearchChange($event)"
+            (onReset)="handleResetFilter()" [disabled]="false">
+        </app-search-filter-group>
+
+
+        <!-- FILTER THEO CÔNG TY -->
+        <kendo-label *ngIf="selectedTypeBelongTo.Type == 1" class="filter-company" [text]="'Công ty'">
+            <kendo-multiselect [readonly]="false" [filterable]="true" [placeholder]="'-- Chọn --'"
+                [data]="listFilteredCompany" [textField]="'Bieft'" [valueField]="'Code'"
+                [(ngModel)]="listSelectedCompany" (filterChange)="onFilterListCompany($event)"
+                (valueChange)="onSelectCompany($event)">
+            </kendo-multiselect>
+        </kendo-label>
+    </div>
+
+
+    <!-- DANH SÁCH -->
+    <div class="grid-wrapper">
+        <app-p-kendo-grid class="grid scrollable grid-custom" [loading]="isLoading" [data]="gridView"
+            [scrollable]="'none'" [selectable]="selectable" [pageable]="true"
+            [pageSizes]="pageSizes" [pageSize]="pageSize" [take]="gridState.take" [skip]="gridState.skip"
+            [sortable]="true" [sort]="gridState.sort" [onPageChangeCallback]="onPageChangeCallback"
+            [getActionDropdownCallback]="getActionDropdownCallback"
+            [onActionDropdownClickCallback]="onActionDropDownClickCallback"
+            [onFilterChangeCallback]="onFilterChangeCallback" [filterable]="'menu'">
+
+            <!-- Hình ảnh, Họ và tên, CCCD -->
+            <kendo-grid-column title="Họ và tên" [width]="300">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="col-name">
+                        <img *ngIf="dataItem.ImageThumb" [src]="dataItem.ImageThumb" alt="Avatar" loading="lazy">
+                        <img *ngIf="!dataItem.ImageThumb" src="../../../../../assets/img/default-avt.png" alt="Avatar"
+                            loading="lazy">
+                        <div class="name-ctn">
+                            <div class="name" [title]="dataItem.FullName">{{dataItem.FullName}}</div>
+                            <div class="cccd" [title]="dataItem.IdentityNo">{{dataItem.IdentityNo}}</div>
+                        </div>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <!-- Giới tính -->
+            <kendo-grid-column title="Giới tính" headerClass="header-gender" [width]="200">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="col-gender" [title]="dataItem.GenderName">
+                        {{dataItem.GenderName}}
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <!-- Năm sinh -->
+            <kendo-grid-column title="Năm sinh" headerClass="header-birth" [width]="200">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="col-birth" [title]="handleFormatDateDisplay(dataItem.BirthDate)">
+                        {{handleFormatDateDisplay(dataItem.BirthDate)}}
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <!-- Email -->
+            <kendo-grid-column title="Email" headerClass="header-email">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="col-email" [title]="dataItem.Email">
+                        {{dataItem.Email}}
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <!-- Số điện thoại -->
+            <kendo-grid-column field="Cellphone" title="Số điện thoại" headerClass="header-sdt" [width]="130"
+                [filterable]="true">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="col-sdt" [title]="dataItem.Cellphone">
+                        {{dataItem.Cellphone}}
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <!-- Tài khoản -->
+            <kendo-grid-column title="Tài khoản" headerClass="header-account" [width]="270">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="col-account" [title]="dataItem.UserName">
+                        {{dataItem.UserName}}
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <!-- Thuộc công ty -->
+            <kendo-grid-column [hidden]="selectedTypeBelongTo.Type === 2" title="Thuộc công ty"
+                headerClass="header-company" [width]="200">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="col-company">
+                        <div class="text-com" *ngIf="dataItem.ListCompany.length > 0"
+                            [title]="dataItem.ListCompany[0].Bieft">{{dataItem.ListCompany[0]?.Bieft}}</div>
+                        <div class="text-com" *ngIf="dataItem.ListCompany.length > 1"
+                            [title]="dataItem.ListCompany[1].Bieft">{{dataItem.ListCompany[1]?.Bieft}}</div>
+                        <div class="text-com" *ngIf="dataItem.ListCompany.length > 2" class="title"
+                            [title]="getListCompanyTitle(dataItem.ListCompany)">+ {{dataItem.ListCompany.length - 2}}
+                            công ty</div>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+        </app-p-kendo-grid>
+    </div>
+</div>

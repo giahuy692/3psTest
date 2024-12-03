@@ -1,0 +1,209 @@
+.color-white {
+  color: #ffffff;
+}
+
+.color-darkblue {
+  color: #39579a;
+}
+
+.color-blue {
+  color: #008cd7;
+}
+
+.color-lightblue {
+  color: #46b1ff;
+}
+
+.color-darkgreen {
+  color: #316e00;
+}
+
+.color-green {
+  color: #649e0f;
+}
+
+.color-lightgreen {
+  color: #8dc63f;
+}
+
+.color-yellowgreen {
+  color: #c1d72e;
+}
+
+.color-yellow {
+  color: #ffc400;
+}
+
+.color-orangeyellow {
+  color: #ffab00;
+}
+
+.color-lightorange {
+  color: #ff5230;
+}
+
+.color-lightpink {
+  color: #dc3545;
+}
+
+.color-red {
+  color: #d82c12;
+}
+
+.hachi-color-primary-1 {
+  color: #353935;
+}
+
+.hachi-color-primary-2 {
+  color: #868b86;
+}
+
+.hachi-color-primary-3 {
+  color: #8dc63f;
+}
+
+.hachi-color-primary-4 {
+  color: #c1d72e;
+}
+
+.hachi-color-primary-5 {
+  color: #ffffff;
+}
+
+.hachi-color-secondary-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-1 {
+  color: #46b1ff;
+}
+
+.hachi-color-text-2 {
+  color: #868b86;
+}
+
+.hachi-color-text-3 {
+  color: #008cd7;
+}
+
+.hachi-color-text-4 {
+  color: #d82c12;
+}
+
+.hachi-color-text-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-6 {
+  color: #ffffff;
+}
+
+.hachi-color-text-7 {
+  color: #8dc63f;
+}
+
+.hachi-color-text-8 {
+  color: #626662;
+}
+
+.hachi-color-text-10 {
+  color: #ff5230;
+}
+
+.hachi-color-text-9 {
+  color: #bbc0bb;
+}
+
+.hachi-color-text-11 {
+  color: #dc3545;
+}
+
+.hachi-color-text-12 {
+  color: #828282;
+}
+
+::ng-deep .body-left {
+  background-color: #ffffff;
+  height: calc(100vh - 30px);
+}
+
+::ng-deep .body-left .info-employee {
+  width: 172px;
+  padding: 10px 5px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+::ng-deep .body-left .info-employee .name {
+  font-weight: 400;
+}
+
+::ng-deep .body-left .info-employee .positionName {
+  font-size: 10px;
+  font-weight: 700;
+}
+
+::ng-deep .body-left .info-employee .avatar {
+  margin: 10px 30px 0 0;
+  display: flex;
+  float: right;
+}
+
+::ng-deep .body-left .info-employee .avatar .btn-cancel {
+  background-color: rgba(143, 155, 166, 0.4);
+  width: 25px;
+  height: 25px;
+  clip-path: polygon(100% 0, 0 0, 0 100%);
+  box-shadow: none;
+  border: none;
+  position: relative;
+  left: 15px;
+}
+
+::ng-deep .body-left .info-employee .avatar .btn-cancel span {
+  margin: 0 11px 11px 0;
+  color: #D82C12;
+}
+
+::ng-deep .body-left .info-employee .avatar .img-avatar {
+  border-radius: 50%;
+  border: 1px solid rgba(143, 155, 166, 0.4);
+}
+
+::ng-deep .body-left .info-employee .btn-updateAvt {
+  font-size: 10px;
+  font-weight: 400;
+  color: #1a6634;
+  border: none;
+  box-shadow: none;
+}
+
+::ng-deep .body-left .info-employee .statusName {
+  color: #1a6634;
+  font-weight: 700;
+}
+
+::ng-deep .body-left .side-router .list-item {
+  list-style: none;
+  padding: 0;
+}
+
+::ng-deep .body-left .side-router .list-item a:hover {
+  text-decoration: none;
+}
+
+::ng-deep .body-left .side-router .list-item .item {
+  color: #959db3;
+  font-weight: 700;
+  padding: 10px;
+}
+
+::ng-deep .body-left .side-router .list-item .item:hover {
+  background-color: #e5e5e5;
+  color: #26282e;
+  border-left: 4px solid #1a6634;
+  cursor: default;
+}

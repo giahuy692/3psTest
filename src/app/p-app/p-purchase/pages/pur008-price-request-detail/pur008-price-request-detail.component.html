@@ -1,0 +1,587 @@
+<div id="pur008-price-request-detail" class="app-drawer-container">
+    <!-- <mat-drawer-container [hasBackdrop]="true" >
+  
+        <mat-drawer-content> -->
+            <div class="header header-1">
+                <app-p-kendo-breadcrumb (loadData)="loadData()"></app-p-kendo-breadcrumb>
+                <!-- STATUS BUTTON -->
+                <div class="nav-crud">
+                    <button kendoButton class="btn-hachi btnNgunghienthi" icon="trash"  [disabled]="!isFilterActive"
+                    *ngIf="price.Code > 0 && price.StatusID == 0 && (isMaster || isCreator)" (click)="openDialogRequest()">
+                        XÓA ĐỀ NGHỊ
+                    </button>
+                    <button kendoButton class="btn-hachi btnTraVe" icon="undo" (click)="onUpdateStatusRequest(4)" [disabled]="!isFilterActive"
+                     *ngIf="price.Code > 0 && (price.StatusID == 1 || price.StatusID == 3) && (isApprover || isMaster) && isValidDateUpdateStatus">
+                        TRẢ VỀ
+                    </button>
+                    <button kendoButton class="btn-hachi btnGuiDuyet" icon="redo" (click)="onUpdateStatusRequest(1)" [disabled]="!isFilterActive"
+                     *ngIf="price.Code > 0 && (price.StatusID == 0 || price.StatusID == 4) &&  (isMaster || isCreator)">
+                       GỬI DUYỆT
+                    </button>
+                    <button kendoButton class="btn-hachi btn-aplication" icon="check-outline" (click)="onUpdateStatusRequest(2)" [disabled]="!isFilterActive"
+                     *ngIf="price.Code > 0 &&(price.StatusID == 1 || price.StatusID == 3) && (isApprover || isMaster)">
+                       PHÊ DUYỆT
+                    </button>
+                    <button kendoButton class="btn-hachi btnNgunghienthi" icon="minus-outline" (click)="onUpdateStatusRequest(3)" [disabled]="!isFilterActive"
+                     *ngIf="price.Code > 0 && price.StatusID == 2 && (isApprover || isMaster)">
+                        NGƯNG ÁP DỤNG
+                    </button>
+                    <button kendoButton class="btn-hachi hachi-primary" icon="plus" *ngIf="(isMaster || isCreator)" (click)="onAddNewPrice()" [disabled]="!isFilterActive">
+                        TẠO MỚI
+                    </button>
+                </div>
+
+            </div>
+        
+            <div class="body">
+                <div class="title">
+                    THÔNG TIN ĐỀ NGHỊ BÁO GIÁ
+                </div>
+                <!-- THÔNG TIN ĐỀ NGHỊ BÁO GIÁ -->
+                <div class="block-info">
+                    <div class="content">
+                        <div class="col-1">
+                            <div class="item item1">
+                                <div class="label">Mã nhà cung cấp <span class="impose">  (*)</span> </div>
+                                <!-- <kendo-textbox #searchInput [propName]="" [(ngModel)]="searchTerm" [filterInput]="search()"
+                                 (blur)="onBlur(searchTerm)" (focus)="onFocus()"></kendo-textbox> -->
+                                 <kendo-combobox
+                                 [data]="filteredPartner"
+                                 textField="PartnerID"
+                                 valueField="Code"
+                                 [placeholder]="'--Chọn--'"
+                                 [filterable]="true"
+                                 [(ngModel)]="selectedSupplier"
+                                 (filterChange)="handleFilter($event)"
+                                 (valueChange)="onSupplierChange($event)"
+                                 [disabled]="isLockAllDetail || !isFilterActive || disableSearch"
+                               >
+                               <ng-template kendoComboBoxItemTemplate let-dataItem>
+                                <div class="customItem">
+                                  <div class="partnerCode" [ngClass]="{'sticky': dataItem.Code == -1}">{{dataItem.PartnerID}}</div>
+                                  <div class="partnerName">{{dataItem.VNName}}</div>
+                                </div>
+                                </ng-template>
+                               </kendo-combobox>
+                                
+                            </div>
+                            <div class="item item2">
+                                <div class="label">Ngày hiệu lực</div>
+                                <app-datepicker #effDateValue [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'"
+                                [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                                [popupSetting]="{animate:true, appendTo: 'root',popupClass:'popupLayoutCpnDatePicker'}"
+                                [(ngModel)]="effDate"
+                                [min]="today"
+                                [readOnlyInput]="true"
+                                (blur)="onDatepickerChange('EffDate', $event)"
+                                [disabled]="!price.PartnerID || (isLockAllDetail || !isFilterActive)"
+                                ></app-datepicker>
+                            </div>
+                            <div class="item item2">
+                                <div class="label">Tình trạng</div>
+                                <b [innerHTML]="price.StatusName | colorStatus:price.StatusID"></b>
+                            </div>
+                        </div>
+        
+                        <div class="col-2">
+                            <div class="item item1">
+                                <div class="label">Tên nhà cung cấp</div>
+                                <app-p-textbox [propName]="" [(ngModel)]="price.PartnerName" [disabled]="true"></app-p-textbox>
+                            </div>
+                            <div class="item item2">
+                                <div class="label">Lý do lập đề nghị</div>
+                                <app-p-textarea [propName]="" [(ngModel)]="price.Remark" (blur)="onBlurTextbox('Remark')"
+                                 [readonly]="!price.PartnerID || (isLockAllDetail || !isFilterActive)">
+                                </app-p-textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- THÔNG TIN CHI TIẾT ĐỀ NGHỊ -->
+                <div class="header block-infoDetail" *ngIf="this.price.Code > 0 ">
+                    <div class="search-title">
+                        <div class="title title-prod">THÔNG TIN CHI TIẾT ĐỀ NGHỊ</div>
+                        <app-search-filter-group [placeholder]="'Tìm theo barcode, poscode, tên sản phẩm và diễn giải'" (filterChange)="handleSearch($event)" 
+                         [loading]="loading" [clearButton]="true"  [fields]="['Barcode','Poscode','ProductName','Remark']" [disabled]="!isFilterActive"></app-search-filter-group>
+                    </div>
+                    <div class="nav-prod" *ngIf="this.price.StatusID == 0 || this.price.StatusID == 4">
+                        <div class="file-group">
+                        <button kendoButton id="onUploadBtn" class="k-button" [icon]="'export'" (click)="onImportExcel()" [disabled]="isLockAllDetail || !isFilterActive"></button>
+                        </div>
+                        <div class="file-group">
+                        <button kendoButton id="onDownloadBtn" class="k-button" [icon]="'import'" (click)="downloadExcel()" [disabled]="isLockAllDetail || !isFilterActive"
+                        >Template</button>
+                        </div>
+                        <button kendoButton class="k-button btn-hachi hachi-primary" [icon]="'plus'" (click)="onAddNewItemForm()" [disabled]="isLockAllDetail || !isFilterActive">
+                            THÊM MỚI SẢN PHẨM
+                        </button>
+                    </div>
+                </div>
+                <!-- DANH SÁCH SẢN PHẨM TRONG ĐỀ NGHỊ -->
+                <div class="grid-wrapper" *ngIf="this.price.Code > 0">
+                    <app-p-kendo-grid class="grid scrollable " [data]="gridView | async" [scrollable]="'none'"
+                        [loading]="loading" [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize"
+                        [skip]="gridState.skip" [take]="gridState.take" [sortable]="true" [autoHeight]="false"
+                        [onPageChangeCallback]="onPageChangeCallback" [getActionDropdownCallback]="getActionDropdownCallback"
+                        [onActionDropdownClickCallback]="onActionDropdownClickCallback" [onSelectCallback]="onSelectCallback"
+                        [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback" [selectable]="selectable" 
+                        [getSelectionPopupCallback]="getSelectionPopupCallback"
+                    >
+        
+                        <kendo-grid-column title="Tên sản phẩm" field="" class="col_supplier" [headerClass]="'hdc_supplier'" [width]="400">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="col-name">
+                                    <img loading="lazy" [src]="getRes(dataItem.URLImage)" alt="" loading="lazy">
+                                    <div class="ncc-name">
+                                        <div class="label" [title]="dataItem.ProductName">{{dataItem.ProductName}}</div>
+                                        <div class="range-date">
+                                            <div class="range" [title]="dataItem.Barcode">{{dataItem.Barcode}}</div>
+                                            <div class="date" [title]="dataItem.Poscode" *ngIf="dataItem.Poscode">{{ '  | ' + dataItem.Poscode}}</div>
+                                        </div>
+                                       </div>
+                                </div>
+
+                             
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <kendo-grid-column  class="col_reasonRequest">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span>Đề nghị</span>
+                                <br>
+                                <span class="priceCurrent" *ngIf="(dataItem.LastBid > 0 && dataItem.LastBid != dataItem.Bid) || (dataItem.OldPrice > 0 && dataItem.OldPrice != dataItem.UnitPrice)">Hiện tại</span>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <kendo-grid-column title="Giá mua (gồm VAT)" field="lido" class="col_reasonRequest" [width]="100" [headerClass]="'headerBid'">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span [title]="dataItem.Bid | number:'1.0-0'">{{dataItem.Bid | number:'1.0-0'}}</span> 
+                                <br>
+                                <span class="priceCurrent" [title]="dataItem.LastBid | number:'1.0-0'" *ngIf="(dataItem.LastBid > 0 && dataItem.LastBid != dataItem.Bid) || (dataItem.OldPrice > 0 && dataItem.OldPrice != dataItem.UnitPrice)">
+                                    {{dataItem.LastBid | number:'1.0-0' }}
+                                </span> 
+                            </ng-template>
+                        </kendo-grid-column>
+        
+                        <kendo-grid-column title="Đơn giá lẻ dự kiến"  class="col_detailProd" [width]="100" [headerClass]="'headerUnit'">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span [title]="dataItem.UnitPrice | number:'1.0-0'">{{dataItem.UnitPrice | number:'1.0-0'}}</span>
+                                <br>
+                                <span class="priceCurrent" [title]="dataItem.OldPrice | number:'1.0-0'" *ngIf="(dataItem.LastBid > 0 && dataItem.LastBid != dataItem.Bid) || (dataItem.OldPrice > 0 && dataItem.OldPrice != dataItem.UnitPrice)">
+                                    {{ dataItem.OldPrice | number:'1.0-0'}}
+                                </span>
+                             </ng-template>
+                        </kendo-grid-column>
+        
+                        <kendo-grid-column title="Diễn giải" field="Remark" class="col_requester" [width]="300">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span [title]="dataItem.Remark">{{dataItem.Remark}}</span>
+                            </ng-template>
+                        </kendo-grid-column>
+        
+                        <kendo-grid-column title="Phân loại" field="TypeDataName" class="col_approver">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span [title]="dataItem.TypeDataName">{{dataItem.TypeDataName}}</span>
+                                <span [title]="dataItem.CurrentCOPartnerID ? dataItem.CurrentCOPartnerID : dataItem.PartnerID">{{dataItem.CurrentCOPartnerID ? dataItem.CurrentCOPartnerID : dataItem.PartnerID}}</span>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <kendo-grid-column title="Tình trạng" field="StatusName" [headerClass]="'col_status'">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span style="display: flex;
+                                justify-content: flex-end;" [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID"></span>
+                            </ng-template>
+                        </kendo-grid-column>
+        
+                      
+        
+                    </app-p-kendo-grid>
+                </div>
+
+                
+            </div>
+            <!-- <i class="impose">(*) Thông tin bắt buộc nhập</i> -->
+            
+        <!-- </mat-drawer-content> -->
+
+            <!-- form Drawer -->
+            <!-- <mat-drawer  #formDrawer [mode]="'over'" position="end" disableClose>
+                <form class="formInfoRequestDetail k-form" (keydown)="onKeyDown($event)" [formGroup]="priceProductForm">
+                    <ng-container>
+                        <fieldset [disabled]="false">
+                            <legend>THÔNG TIN CHI TIẾT ĐỀ NGHỊ</legend>
+                            <div class="formRequest">
+                                <div class="form-item item1">
+                                    <div class="item1_V1">
+                                        <div class="label">Barcode  <span>{{priceProductForm.value.BaseBarcode}}</span></div>
+                                        <app-p-textbox [propName]="" formControlName="Barcode" (blur)="onTextboxBlurBarcode()" [disabled]="lockBarcode" ></app-p-textbox>
+                                    </div>
+
+                                    <div class="image">
+                                        <img loading="lazy" [src]="getRes(priceProductForm.value.URLImage)" alt="" width="80" height="60" loading="lazy">
+                                    </div>
+                                </div>
+                                <div class="form-item item2">
+                                    <div class="label">Tên sản phẩm (tiếng Việt)</div>
+                                    <app-p-textbox [propName]="" formControlName="ProductName" [disabled]="isLockAllForm"></app-p-textbox>
+                                </div>
+
+                                <div class="form-item drawer2_item1" *ngIf="price.TypeData == 22">
+                                    <div class="label">Tên sản phẩm (tiếng Anh)</div>
+                                    <app-p-textbox [propName]="" formControlName="ENName" [disabled]="isLockAllForm"></app-p-textbox>
+                                </div>
+                                <div class="form-item drawer2_item2" *ngIf="price.TypeData == 22">
+                                    <div class="label">Tên sản phẩm (tiếng Nhật)</div>
+                                    <app-p-textbox [propName]="" formControlName="JPName" [disabled]="isLockAllForm"></app-p-textbox>
+                                </div>
+
+                                <div class="form-item item3">
+                                    <div class="label">Phân loại</div>
+                                    <app-p-textbox [propName]="" [disabled]="true" formControlName="TypeDataName"></app-p-textbox>
+                                </div>
+                                <div class="form-item item4" *ngIf="priceProduct.TypeData == 2 && price.COPartner !== priceProduct.CurrentCOPartner">
+                                    <div class="label">Nhà cung cấp hiện tại</div>
+                                    <app-p-textbox [propName]="" [disabled]="true" formControlName="PartnerName"></app-p-textbox>
+                                </div> 
+
+                                <div class="form-item item5">
+                                    <div class="item5_V1">
+                                        <div class="label">Xuất xứ</div>
+                                        <p-kendo-dropdownlist [data]="listCountry" [textField]="'VNName'" [valueField]="'Code'" [filterable]="true"
+                                        (valueChange)="onDropdownClick($event,'Origin')" formControlName="OriginItem" [disabled]="isLockAllForm"
+                                        >
+                                        </p-kendo-dropdownlist>
+                                    </div>
+                                    <div class="item5_V2">
+                                        <div class="label">Đơn vị tính</div>
+                                        <p-kendo-dropdownlist  [data]="filteredBaseUnitList" textField="VNPackingUnit" valueField="Code" 
+                                        (valueChange)="onDropdownClick($event,'BaseUnit')" formControlName="BaseUnitItem" [disabled]="isLockAllForm">
+                                        </p-kendo-dropdownlist>
+                                    </div>
+                                    <div class="item5_V3">
+                                        <div class="label">Đơn vị đặt hàng</div>
+                                        <p-kendo-dropdownlist [data]="filteredBuyerUnitList"
+                                        textField="VNPackingUnit" valueField="Code"
+                                        (valueChange)="onDropdownClick($event,'BuyerUnit')" formControlName="BuyerUnitItem" [disabled]="isLockAllForm"
+                                        ></p-kendo-dropdownlist>
+                                    </div>
+                                </div>
+                                <div class="form-item item6">
+                                    <div class="label">Kích thước sản phẩm (D x R x C (cm) x W (g))</div>
+                                    <div class="item6_V1">
+                                        <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]="" formControlName="BaseUnitL" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                        <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]="" formControlName="BaseUnitW" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                        <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]="" formControlName="BaseUnitH" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                        <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]="" formControlName="BaseUnitWeight" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                    </div>
+                                </div>
+                                <div class="form-item item7">
+                                    <div class="label">Kích thước Inner (D x R x C (cm) x W (g)) - Quy đổi</div>
+                                    <div class="item7_V1">
+                                        <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]="" formControlName="InnerL" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                        <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]="" formControlName="InnerW" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                        <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]="" formControlName="InnerH" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                        <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]="" formControlName="InnerWeight" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                        <span> - </span>
+                                        <div class="convert">
+                                            <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]="" formControlName="InnerBase" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-item item8">
+                                    <div class="label">Kích thước Carton (D x R x C (cm) x W (g)) - Quy đổi</div>
+                                    <div class="item8_V1">
+                                        <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]="" formControlName="CartonL" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                        <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]="" formControlName="CartonW" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                        <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]="" formControlName="CartonH" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                        <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]="" formControlName="CartonWeight" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                        <span> - </span>
+                                        <div class="convert">
+                                            
+                                            <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]="" formControlName="CartonBase" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-item item9">
+                                    <div class="label">Phân nhóm sản phẩm</div>
+                                    <kendo-dropdowntree  
+                                    kendoDropDownTreeExpandable
+                                    [kendoDropDownTreeFlatBinding]="listGroupWeb"
+                                    parentIdField="ParentID"
+                                    [loading]="loading"
+                                    valueField="Code"
+                                    textField="GroupName"
+                                    [filterable]="true"
+                                    [popupSettings]="{ appendTo: 'root',animate: true, popupClass:'Bps CustomPopupTreeAtRoot'}"
+                                    (valueChange)="onDropdownClick($event,'GroupProduct')"
+                                    formControlName="GroupIDItem"
+                                    [disabled]="isLockAllForm"
+                                ></kendo-dropdowntree>
+                                </div>
+
+                                <div class="form-item item10">
+
+                                    <div class="item10_V1">
+                                        <div class="label">Số ngày sử dụng kể từ NSX</div>
+                                        <app-p-textbox [propName]="" formControlName="WebExpiredDate" [disabled]="isLockAllForm"></app-p-textbox>
+                                    </div>
+                                    <div class="item10_V2">
+                                        <div class="label">Thông số kỹ thuật</div>
+                                        <app-p-textbox [propName]="" formControlName="VNSpec" [disabled]="isLockAllForm"></app-p-textbox>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-item drawer2_item3" *ngIf="price.TypeData == 22">
+                                    <div class="item3_D1">
+                                        <div class="label">PO đầu tiên dự kiến</div>
+                                        <app-p-textbox [propName]="" formControlName="FirstPO" [disabled]="isLockAllForm"></app-p-textbox>
+                                    </div>
+                                    <div class="item3_D2">
+                                        <div class="label">T.gian đầu tiên dự kiến mua</div>
+                                            <div class="item3_D2_V1">
+                                            <app-datepicker [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'"
+                                            [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                                            [popupSetting]="{animate:true, appendTo: 'root',popupClass:'popupLayoutCpnDatePicker'}"
+                                            formControlName="POFrom"
+                                            [min]="effDate"
+                                            [readOnlyInput]="true"
+                                            (blur)="blurDateFormTo('POFrom', $event)"
+                                            [disabled]="isLockAllForm"
+                                            ></app-datepicker>
+
+                                            <app-datepicker [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'"
+                                            [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                                            [popupSetting]="{animate:true, appendTo: 'root',popupClass:'popupLayoutCpnDatePicker'}"
+                                            formControlName="POTo"
+                                            [min]="minDatePO"
+                                            [readOnlyInput]="true"
+                                            [disabled]="isLockAllForm"
+                                            ></app-datepicker>
+                                            </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-item item11">
+                                    <div class="item11_V1">
+                                        <div class="label">Giá mua (chưa VAT)</div>
+                                        <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]="" 
+                                        (blur)="onBlurMargin($event)" formControlName="Bid" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                    </div>
+                                    <div class="item11_V2">
+                                        <div class="label">VAT (%)</div>
+                                        <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]="" formControlName="VATIn" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                    </div>
+                                    <div class="item11_V3">
+                                        <div class="label">Đồng tiền</div>
+                                        <p-kendo-dropdownlist [data]="listCurrency" valueField="Code" textField="CurrencyID" (valueChange)="onDropdownClick($event,'CurrencyIn')"
+                                        formControlName="CurrencyInItem" [disabled]="isLockAllForm">
+                                        </p-kendo-dropdownlist>
+                                    </div>
+                                    <div class="item11_V4" *ngIf="price.TypeData == 22">
+                                        <div class="label">ĐK thương mại</div>
+                                        <p-kendo-dropdownlist [data]="listCommercialTerm" valueField="Code" textField="ShortName"
+                                        formControlName="CommercialTermItem" (valueChange)="onDropdownClick($event,'CommercialTerm')" [disabled]="isLockAllForm">
+                                        </p-kendo-dropdownlist>
+                                    </div>
+                                </div>
+
+                                <div class="form-item drawer2_item4" *ngIf="price.TypeData == 22">
+                                    <div class="item4_D1">
+                                        <div class="label">Giá vốn tham khảo</div>
+                                        <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]="" formControlName="AvgPrice" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                    </div>
+                                    <div class="item4_D2">
+                                        <div class="label">Đồng tiền</div>
+                                        <p-kendo-dropdownlist [data]="listCurrency" valueField="Code" textField="CurrencyID"
+                                        formControlName="CurrencyAvgItem" (valueChange)="onDropdownClick($event,'CurrencyAvg')" [disabled]="isLockAllForm">
+                                        </p-kendo-dropdownlist>
+                                    </div>
+                                </div>
+
+                                <div class="form-item item12">
+                                    <div class="item12_V1">
+                                        <div class="label">Giá bán (+ VAT)</div>
+                                        <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]=""
+                                        (blur)="onBlurMargin($event)" formControlName="UnitPrice" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                    </div>
+                                    <div class="item12_V2">
+                                        <div class="label">VAT (%)</div>
+                                        <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]="" formControlName="VATOut" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                    </div>
+                                    <div class="item12_V3">
+                                        <div class="label">Đồng tiền</div>
+                                        <p-kendo-dropdownlist [data]="listCurrency" valueField="Code" textField="CurrencyID"
+                                        formControlName="CurrencyOutItem" (valueChange)="onDropdownClick($event,'CurrencyOut')" [disabled]="isLockAllForm"></p-kendo-dropdownlist>
+                                    </div>
+                                    <div class="item12_V3">
+                                        <div class="label">Margin</div>
+                                        <app-p-textbox [propName]=""  [disabled]="true" formControlName="Margin"></app-p-textbox>
+                                    </div>
+                                </div>
+                                <div class="form-item item13">
+                                    <div class="item13_V1">
+                                        <div class="label">SL dữ trữ thêm</div>
+                                        <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]="" formControlName="QtyMore" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                    </div>
+                                    <div class="item13_V1">
+                                        <div class="label">SL bán/tháng</div>
+                                        <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]="" formControlName="QtyMonthSale" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                    </div>
+                                    <div class="item13_V1">
+                                        <div class="label">DT/tháng</div>
+                                        <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]="" formControlName="AmountMonthSale" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                    </div>
+                                    <div class="item13_V1">
+                                        <div class="label">SL đặt đơn đầu</div>
+                                        <app-p-numeric-textbox [format]="'n0'"  [spinners]="false" [min]="0" [propName]=""  formControlName="QtyFirstOrder" [disabled]="isLockAllForm"></app-p-numeric-textbox>
+                                    </div>
+                                </div>
+
+                                <div class="form-item item14" *ngIf="price.TypeData == 21">
+                                    <div class="label">Thời gian dự kiến lên cửa hàng</div>
+                                    <div class="item14_V1">
+                                        <app-datepicker [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'"
+                                        [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                                        [popupSetting]="{animate:true, appendTo: 'root',popupClass:'popupLayoutCpnDatePicker'}"
+                                        [min]="effDate"
+                                        [readOnlyInput]="true"
+                                        (blur)="blurDateFormTo('StoreFrom', $event)"
+                                        formControlName="StoreFrom"
+                                        [disabled]="isLockAllForm"
+                                        ></app-datepicker>
+
+                                        <app-datepicker [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'"
+                                        [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                                        [popupSetting]="{animate:true, appendTo: 'root',popupClass:'popupLayoutCpnDatePicker'}"
+                                        [min]="minDateStore"
+                                        [readOnlyInput]="true"
+                                        formControlName="StoreTo"
+                                        [disabled]="isLockAllForm"
+                                        ></app-datepicker>
+                                    </div>
+                                </div>
+
+                                <div class="form-item item15" *ngIf="price.TypeData == 21">
+                                    <div class="label">Không kinh doanh</div>
+                                    <div class="without" *ngFor="let item of listWithoutConfig">
+                                        <input kendoCheckBox type="checkbox" [checked]="item.IsSelected" [disabled]="isLockAllForm" (change)="onCheckBoxChange($event,item,listWithoutConfig)"> <span>{{item.WHName}}</span>
+                                        
+                                        <ng-container *ngIf="item.ListChild && item.ListChild.length > 0 && item.IsSelected == true">
+                                          <div class="withoutStore"  *ngFor="let itemChild of item.ListChild">
+                                            <input kendoCheckBox type="checkbox" [disabled]="isLockAllForm" (change)="onCheckBoxChange($event,itemChild,listWithoutConfig)" [checked]="itemChild.IsSelected"> <span>{{itemChild.WHName}}</span>
+                                          </div>
+                                        </ng-container>
+                                      </div>
+                                </div>
+
+                                <div class="form-item drawer2_item5" *ngIf="price.TypeData == 22">
+                                    <div class="item5_D1">
+                                        <div class="label">Shipper</div>
+                                        <p-kendo-dropdownlist [data]="listShipper" valueField="Code" textField="VNName"
+                                        formControlName="ShipperItem" (valueChange)="onDropdownClick($event,'Shipper')" [disabled]="isLockAllForm"></p-kendo-dropdownlist>
+                                       
+                                    </div>
+                                    <div class="item5_D2">
+                                        <div class="label">Maker</div>
+                                        <app-p-textbox [propName]="" formControlName="MakerName" [disabled]="isLockAllForm"></app-p-textbox>
+                                    </div>
+                                </div>
+                                <div class="form-item drawer2_item6" *ngIf="price.TypeData == 22">
+                                        <div class="label">Chất liệu tiếng Anh</div>
+                                        <app-p-textbox [propName]="" formControlName="ENMaterial" [disabled]="isLockAllForm"></app-p-textbox>
+                                </div>
+
+                                <div class="form-item item16">
+                                    <div class="label">Diễn giải</div>
+                                    <app-p-textarea [propName]="" formControlName="Remark" [readonly]="isLockAllForm"></app-p-textarea>
+                                </div>
+
+                                <div class="form-item item17">
+                                    <div class="label">Tình trạng</div>
+                                    <p-kendo-dropdownlist [data]="listStatus" valueField="OrderBy" textField="StatusName" [hasValueNull]="false"
+                                    formControlName="StatusItem" (valueChange)="onDropdownClick($event,'StatusID')" [disabled]="isLockAllDetail || this.isLockStatus"></p-kendo-dropdownlist>
+                                </div>
+                            </div>
+
+
+                            <div class="k-form-buttons">
+                                <button kendoButton class="k-button btn-hachi closeBtn" (click)="closeDrawer()">
+                                  Đóng
+                                </button>
+                                <button kendoButton class="k-button btn-hachi updateBtn" *ngIf="!(price.StatusID==2 || price.StatusID ==3)" (click)="onUpdatePriceProduct()" [disabled]="isLockAllDetail" >
+                                    {{priceProductForm.value.Code > 0
+                                    ? "CẬP NHẬT"
+                                    : priceProductForm.value.Code == 0
+                                    ? "THÊM MỚI": ""}}
+                                </button>
+                                <button kendoButton class="k-button btn-hachi deleteBtn" *ngIf=" !(price.StatusID==2 || price.StatusID ==3) && (priceProductForm.value.Code > 0 && priceProductForm.value.StatusID == 0)" [disabled]="isLockAllForm" 
+                                    (click)="openDialogForm()">
+                                  XÓA
+                                </button>
+                              </div>
+                        </fieldset>
+                    </ng-container>
+                </form>
+            </mat-drawer> -->
+    <!-- </mat-drawer-container> -->
+
+    <!-- #REGION DIALOG -->
+    <app-p-kendo-dialog class="dialogPrice" *ngIf="dialogRequest" [title]="'Xác nhận Xóa Đề nghị'"
+    (close)="closeDialog()"
+    (handleButton)="onDeleteRequest()"
+    [iconTitle]="'k-icon k-i-warning'"
+    [iconButton]="'delete'"
+    [cancelText]="'KHÔNG'"
+    [actionText]="'CÓ'"
+    [dialogType]="1"
+    >
+      <p>Bạn có chắc chắn muốn Xóa Đề nghị của nhà cung cấp <br> <span style="color: green">{{price?.PartnerName}}</span> này? </p>
+     
+    </app-p-kendo-dialog>
+
+    <app-p-kendo-dialog class="dialogPrice" *ngIf="dialog" [title]="'Xác nhận Xóa Sản phẩm'"
+    (close)="closeDialog()"
+    (handleButton)="onDelete(1)"
+    [iconTitle]="'k-icon k-i-warning'"
+    [iconButton]="'delete'"
+    [cancelText]="'KHÔNG'"
+    [actionText]="'CÓ'"
+    [dialogType]="1"
+    >
+      <p>Bạn có chắc chắn muốn Xóa Sản phẩm  <span style="color: green">{{priceProduct?.ProductName}}</span> này? </p>
+     
+    </app-p-kendo-dialog>
+
+    <!-- <app-p-kendo-dialog class="dialogPrice" *ngIf="dialogForm" [title]="'Xác nhận Xóa Sản phẩm'"
+    (close)="closeDialog()"
+    (handleButton)="onDelete(2)"
+    [iconTitle]="'k-icon k-i-warning'"
+    [iconButton]="'delete'"
+    [cancelText]="'KHÔNG'"
+    [actionText]="'CÓ'"
+    [dialogType]="1"
+    >
+      <p>Bạn có chắc chắn muốn Xóa Sản phẩm  <span style="color: green">{{priceProductForm.value.ProductName}}</span> này? </p>
+     
+    </app-p-kendo-dialog> -->
+
+
+    <app-p-kendo-dialog class="dialogPrice" *ngIf="dialogMany" [title]="'Xác nhận Xóa Sản phẩm'"
+    (close)="closeDialog()"
+    (handleButton)="onDeleteManyItem()"
+    [iconTitle]="'k-icon k-i-warning'"
+    [iconButton]="'delete'"
+    [cancelText]="'KHÔNG'"
+    [actionText]="'CÓ'"
+    [dialogType]="1"
+    >
+      <p>Bạn có chắc chắn muốn Xóa <span style="color: green">{{listDelete.length}}</span> Sản phẩm  này? </p>
+     
+    </app-p-kendo-dialog>
+
+    <app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>
+    <!-- #ENDREGION -->
+
+</div>

@@ -1,0 +1,226 @@
+<div class="app-drawer-container">
+    <mat-drawer-container [hasBackdrop]="true">
+        <mat-drawer #drawer [mode]="'over'" position="end">
+            <form class="formSanpham k-form" [formGroup]="form" (keydown.Enter)="keydownEnter($event)">
+                <fieldset>
+                    <legend>{{ isAdd ? 'Thêm mới' : 'Cập nhật'}} Cửa hàng</legend>
+
+                    <kendo-formfield class="formfield-item">
+                        <kendo-label text="Tên cửa hàng" [for]="ShortName"></kendo-label>
+                        <kendo-textbox formControlName="ShortName" #ShortName [(ngModel)]="Store.ShortName">
+                        </kendo-textbox>
+                    </kendo-formfield>
+
+                    <kendo-formfield class="formfield-item">
+                        <kendo-label text="Tên ngắn" [for]="WHName"></kendo-label>
+                        <kendo-textbox formControlName="WHName" #WHName [(ngModel)]="Store.WHName"></kendo-textbox>
+                    </kendo-formfield>
+
+                    <kendo-formfield class="formfield-item">
+                        <kendo-label text="Tên viết tắt" [for]="WHCode"></kendo-label>
+                        <kendo-textbox formControlName="WHCode" #WHCode [(ngModel)]="Store.WHCode"></kendo-textbox>
+                    </kendo-formfield>
+
+                    <kendo-formfield class="formfield-item">
+                        <kendo-label text="Số điện thoại" [for]="Phone"></kendo-label>
+                        <kendo-textbox formControlName="Phone" #Phone [(ngModel)]="Store.Phone"></kendo-textbox>
+                    </kendo-formfield>
+
+                    <kendo-formfield class="formfield-item">
+                        <kendo-label text="Số fax" [for]="Fax"></kendo-label>
+                        <kendo-textbox formControlName="Fax" #Fax [(ngModel)]="Store.Fax"></kendo-textbox>
+                    </kendo-formfield>
+
+                    <kendo-formfield class="formfield-item">
+                        <kendo-label text="Địa chỉ" [for]="Address"></kendo-label>
+                        <kendo-textbox formControlName="Address" #Address [(ngModel)]="Store.Address"></kendo-textbox>
+                    </kendo-formfield>
+
+                    <kendo-formfield class="formfield-item">
+                        <kendo-label text="Tỉnh / Thành" [for]="Province"></kendo-label>
+                        <kendo-dropdownlist [data]="listProvince" formControlName="Province" #Province
+                            [textField]="'ProvinceName'" [valueField]="'Code'" [value]="currentProvince"
+                            [disabled]="isLockAll" (valueChange)="onDropdownValueChange($event, 'Province')"
+                            style="min-width: 100%;" [popupSettings]="{appendTo:'component'}">
+                        </kendo-dropdownlist>
+                    </kendo-formfield>
+
+                    <kendo-formfield>
+                        <kendo-label [for]="ImageMap" text="Hình ảnh">
+                        </kendo-label>
+                        <div id="btnPathGroup">
+                            <button kendoButton class="k-button" [icon]="'image'" id="folderBtn"
+                                (click)="onUploadFile()">Chọn</button>
+
+                            <kendo-textbox formControlName="ImageMap" #ImageMap [clearButton]="true" [disabled]="true"
+                                (valueChange)="onValueChangeImg($event)" [title]="Store.ImageMap"></kendo-textbox>
+                        </div>
+
+                        <img loading="lazy" width="250" height="auto" *ngIf="form?.controls?.ImageMap?.value != undefined"
+                            [src]="getRes(form?.controls?.ImageMap?.value)">
+                    </kendo-formfield>
+
+                    <!-- <div class="formfield-grid" [ngClass]="{'hasNoImage': Store.ImageMap == ''}">
+                        <kendo-formfield class="formfield-item item1">
+                            <kendo-label text="Giao hàng Hachi3h" [for]="IsHachi24h"></kendo-label>
+                            <input type="checkbox" formControlName="IsHachi24h" #IsHachi24h class="k-checkbox"
+                                [(ngModel)]="Store.IsHachi24h" />
+                            <img loading="lazy" class="img-hachi24" src="assets\img\logo\hachi3h.svg">
+                        </kendo-formfield>
+
+
+                        <kendo-formfield class="formfield-item item5">
+                            <kendo-label text="." [for]="BasePrice"></kendo-label>
+                            <kendo-textbox formControlName="BasePrice" #BasePrice class="red-color"
+                                [(ngModel)]="Store.BasePrice"></kendo-textbox>
+                        </kendo-formfield>
+                    </div> -->
+
+                    <kendo-formerror>(*) Trường bắt buộc nhập.</kendo-formerror>
+
+                    <div class="k-form-buttons">
+                        <button kendoButton class="k-button closeBtn" (click)="closeForm()">Đóng</button>
+                        <button kendoButton class="k-button updateBtn" [ngClass]="{'addBtn': isAdd}"
+                            (click)="onUpdate()">{{ isAdd ? 'Thêm mới' : 'Cập nhật'}} </button>
+                    </div>
+                </fieldset>
+            </form>
+        </mat-drawer>
+        <!-- center content -->
+        <mat-drawer-content>
+            <div class="app-mar014-store-system-list">
+                <!-- Header 2 -->
+                <div class="header header-2">
+                    <div class="nav-filter nav-btn">
+                        <!-- Filter (column 1) -->
+                        <div class="filter-btn-group clear-btn-group">
+                            <div class="label">
+                                <span class="k-icon k-i-filter"></span>Lọc dữ liệu
+                            </div>
+
+                            <button kendoButton class="k-button clear-filter-btn" (click)="resetFilter()">
+                                Reset bộ lọc
+                            </button>
+                        </div>
+
+                        <!-- Search (column 2) -->
+                        <form [formGroup]="searchForm" style="display: flex;">
+                            <div class="filter-btn-group search-btn-group">
+                                <div class="label">
+                                    Tìm kiếm
+                                </div>
+
+                                <div class="search-btn">
+                                    <span class="k-icon k-i-search"></span>
+
+                                    <kendo-textbox formControlName="SearchQuery" #SearchQuery type="text"
+                                        class="k-textbox"
+                                        placeholder="Tìm theo tên, địa chỉ, số điện thoại của cửa hàng"
+                                        [clearButton]="true">
+                                    </kendo-textbox>
+                                </div>
+                            </div>
+
+                            <button kendoButton class="k-button searchBtn" [icon]="'search'" (click)="search()"
+                                [disabled]="!isFilterActive">
+                                TÌM
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="nav-btn nav-crud" style="flex-grow: 1;" *ngIf="isMaster || isCreator">
+                        <button kendoButton class="crud-btn btn-hachi hachi-primary" (click)="onAdd(true)"
+                            [icon]="'plus'">
+                            THÊM MỚI
+                        </button>
+                    </div>
+                </div>
+                <!-- Body -->
+                <div class="grid-wrapper">
+                    <app-p-kendo-grid class="grid scrollable" [data]="gridView | async" [scrollable]="'none'"
+                        [loading]="isLoading" [skip]="gridState.skip" [take]="gridState.take" [sort]="gridState.sort"
+                        [getActionDropdownCallback]="getActionDropdownCallback" [selectable]="selectable"
+                        [onActionDropdownClickCallback]="onActionDropdownClickCallback"
+                        [hasMoreAction]="isMaster || isCreator" [onPageChangeCallback]="onPageChangeCallback"
+                        [onSortChangeCallback]="onSortChangeCallback" [onSelectCallback]="onSelectCallback"
+                        [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+                        [getSelectionPopupCallback]="getSelectionPopupCallback" [sortable]="true">
+    
+                        <kendo-grid-column class="col_map" title="Bản đồ">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <img loading="lazy" [src]="getRes(dataItem.ImageMap)" alt="">
+                            </ng-template>
+                        </kendo-grid-column>
+    
+                        <kendo-grid-column field="WHName" class="col_name" title="Tên cửa hàng">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="name">
+                                    <b>{{ dataItem.WHName }}</b>
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+    
+                        <kendo-grid-column field="Address" class="col_address" title="Địa chỉ">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="address">
+                                    {{ dataItem.Address }}
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+    
+                        <kendo-grid-column field="Phone" class="col_phone" title="Số điện thoại & Fax">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="phone">
+                                    {{ dataItem.Phone }}
+                                </div>
+                                <div class="phone">
+                                    <i>{{ dataItem.Fax }}</i>
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+    
+                        <kendo-grid-column class="col_nguoiTao" title="Người khởi tạo">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div>{{ dataItem.CreateBy }}</div>
+                                <div *ngIf="dataItem.CreateTime != null && dataItem.CreateTime != ''">
+                                    Ngày tạo: {{ dataItem.CreateTime | date: 'dd/MM/yyyy' }}</div>
+                            </ng-template>
+                        </kendo-grid-column>
+                    </app-p-kendo-grid>
+                </div>
+
+                <kendo-dialog #dialog class="deleteDialog" title="Xóa hệ thống cửa hàng" [hidden]="!deleteDialogOpened"
+                    (close)="deleteDialogOpened = false" [minWidth]="250">
+                    <p style="margin: 30px; text-align: center;">
+                        Bạn chắc chắn muốn xóa cửa hàng <b>{{ Store.WHName }}</b> ?
+                    </p>
+                    <div class="dialog-footer">
+                        <button kendoButton class="btn-hachi hachi-secondary" (click)="deleteDialogOpened = false"
+                            [icon]="'close'">Không</button>
+                        <button kendoButton class="btn-hachi hachi-warning" (click)="onDeleteStore([Store])"
+                            [icon]="'trash'">Có</button>
+                    </div>
+                </kendo-dialog>
+
+                <kendo-dialog #dialog class="deleteDialog" title="Xóa các hệ thống cửa hàng đã chọn"
+                    [hidden]="!deleteManyDialogOpened" [minWidth]="250" (close)="deleteManyDialogOpened = false">
+                    <div style="margin: 30px; text-align: center;">
+                        {{ deleteList.length }} hệ thống cửa hàng bị xóa<br>
+                        sẽ <b><span style="color: #FD7676">KHÔNG</span></b> thể khôi phục lại
+                    </div>
+                    <div class="dialog-footer">
+                        <button kendoButton class="btn-hachi hachi-secondary" (click)="deleteManyDialogOpened = false"
+                            [icon]="'close'">Không</button>
+                        <button kendoButton class="btn-hachi hachi-warning" (click)="onDeleteSelected()"
+                            [icon]="'trash'">Có</button>
+                    </div>
+                </kendo-dialog>
+            </div>
+        </mat-drawer-content>
+    </mat-drawer-container>
+
+    <app-folder-popup [pickFileCallback]="pickFileCallback" [GetFolderCallback]="getFolderCallback" [canResize]="false">
+    </app-folder-popup>
+
+
+</div>

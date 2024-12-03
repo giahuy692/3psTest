@@ -1,0 +1,39 @@
+<div class="hri015-exam-report">
+
+    <!-- START HEADER -->
+    <div class="header header-1">
+        <app-p-kendo-breadcrumb (loadData)="p_GetReports()"></app-p-kendo-breadcrumb>
+    </div>
+
+    <div class="header header-2">
+        <app-search-filter-group
+        [placeholder]="'Tìm theo tên báo cáo'"
+        [clearButton]="true"
+        (valueChange)="Search($event)" (onReset)="resetFilter()"
+        [loading]="loading"
+        ></app-search-filter-group>
+    </div>
+    <!-- END HEADER -->
+
+    <!-- START BODY -->
+    <div class="body">
+      <div class="grid-wrapper">
+        <app-p-kendo-grid class="grid" [data]="gridView | async" [scrollable]="'none'" [loading]="loading"
+        [pageable]="false" [getActionDropdownCallback]="getActionDropdownCallback" [autoHeight]="false"
+        [onActionDropdownClickCallback]="onActionDropdownClickCallback">
+
+            <kendo-grid-column field="DataID" title="Mã" class="col_code"
+              headerClass="col_code">
+            </kendo-grid-column>
+            <kendo-grid-column field="DataName" title="Tên báo cáo" class="col_reportname"
+              headerClass="col_reportname">
+            </kendo-grid-column>
+            <kendo-grid-column field="DataDescription" title="Mô tả" class="col_decription"
+              headerClass="col_decription">
+            </kendo-grid-column>
+          </app-p-kendo-grid>
+    </div>
+    <!-- END BODY -->
+
+
+  </div>

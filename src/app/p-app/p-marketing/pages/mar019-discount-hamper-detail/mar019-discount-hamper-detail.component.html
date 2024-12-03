@@ -1,0 +1,758 @@
+<div class="app-drawer-container">
+  <mat-drawer-container [hasBackdrop]="true">
+    <mat-drawer #drawer [mode]="'over'" position="end" opened="false"  [disableClose]="expanded">
+      <legend class="title-formProduct">HAMPER THUỘC CHƯƠNG TRÌNH</legend>
+      <div class="container-hamper-detail">
+        <form
+          class="formProduct k-form"
+          [formGroup]="form"
+          (keydown.Enter)="onKeydownEnter($event)"
+        >
+          <fieldset class="formFieldset">
+            <div class="productID_img d-flex pt-2 col-gap-10">
+              <kendo-formfield class="m-0">
+                <div>
+                  <kendo-label
+                    class="alignItemCenter"
+                    text="Nhập mã hamper"
+                    [for]="Barcode"
+                  >
+                    <span class="symbol">(*)</span>
+                  </kendo-label>
+                  <fieldset [disabled]="!isAddDetail || isLockAll">
+                    <kendo-textbox
+                      formControlName="Barcode"
+                      #Barcode
+                      (keydown.Enter)="$event.target.blur()"
+                      (inputBlur)="onTextboxLoseFocus('Barcode')"
+                      [(value)]="curPromotionDetail.Barcode"
+                      [disabled]="!isAddDetail || isLockAll"
+                      (keydown.space)="$event.preventDefault()"
+                    >
+                    </kendo-textbox>
+                  </fieldset>
+                </div>
+                <div class="productName">
+                  <div class="col-gap-10 alignItemCenter d-flex pt-2">
+                    <span class="font-weight-bold">Tên Hamper</span>
+                    <!-- <b><span class="color-blue-gray">|</span> {{ curPromotionDetail.PosCode }}</b>
+                    <b class="tbarcode" [hidden]="curPromotionDetail.TBarcode == null || curPromotionDetail.TBarcode == ''">
+                      {{ curPromotionDetail.TBarcode }}</b> -->
+                  </div>
+                  <div
+                    class="VNName text-ellipsis"
+                    title="{{ curPromotionDetail.VNName }}"
+                  >
+                    {{ curPromotionDetail.VNName }}
+                  </div>
+                </div>
+              </kendo-formfield>
+
+              <div class="img">
+                <img loading="lazy" [src]="getRes(curPromotionDetail.ImageSetting)" alt="" />
+              </div>
+            </div>
+
+            <div class="formfield-grid">
+              <kendo-formfield class="formfield-item item4">
+                <kendo-label
+                  class="alignItemCenter"
+                  text="Hạn mức mua:"
+                  [for]="Quantity"
+                >
+                  <i>&nbsp;(Tối thiểu - tối đa)</i
+                  ><span class="symbol">(*)</span>
+                </kendo-label>
+                <kendo-numerictextbox
+                  formControlName="Quantity"
+                  [min]="1"
+                  #Quantity
+                  format="#,0"
+                  [(value)]="curPromotionDetail.Quantity"
+                  [disabled]="isLockAll"
+                >
+                </kendo-numerictextbox>
+              </kendo-formfield>
+
+              <kendo-formfield class="formfield-item item5">
+                <kendo-label
+                  class="alignItemCenter"
+                  text="Hạn"
+                  [for]="MaxQuantity"
+                  class="invisible"
+                >
+                </kendo-label>
+                <kendo-numerictextbox
+                  formControlName="MaxQuantity"
+                  #MaxQuantity
+                  format="#,0"
+                  [min]="0"
+                  [(value)]="curPromotionDetail.MaxQuantity"
+                  [disabled]="isLockAll"
+                >
+                </kendo-numerictextbox>
+              </kendo-formfield>
+
+              <kendo-formfield class="formfield-item item6">
+                <kendo-label
+                  class="alignItemCenter"
+                  text="Giá khuyến mãi"
+                  [for]="PriceDiscount"
+                >
+                  <span class="symbol">(*)</span>
+                </kendo-label>
+                <kendo-numerictextbox
+                  formControlName="PriceDiscount"
+                  #PriceDiscount
+                  format="#,0"
+                  [disabled]="true"
+                  [disabled]="isLockAll"
+                >
+                </kendo-numerictextbox>
+              </kendo-formfield>
+
+              <kendo-formfield class="formfield-item item7">
+                <kendo-label
+                  class="alignItemCenter"
+                  text="."
+                  [for]="Price"
+                  class="invisible"
+                ></kendo-label>
+                <kendo-textbox
+                  formControlName="Price"
+                  #Price
+                  class="red-color"
+                  value="{{ curPromotionDetail.Price | number : '1.' }}"
+                >
+                </kendo-textbox>
+              </kendo-formfield>
+
+              <kendo-formfield class="formfield-item item8">
+                <kendo-label
+                  class="alignItemCenter"
+                  text="Chiết khấu"
+                  [for]="DiscountAmount"
+                ></kendo-label>
+                <kendo-textbox
+                  formControlName="DiscountAmount"
+                  #DiscountAmount
+                  value="{{
+                    curPromotionDetail.DiscountAmount | number : '1.'
+                  }}"
+                >
+                </kendo-textbox>
+              </kendo-formfield>
+
+              <kendo-formfield class="formfield-item item9">
+                <kendo-label
+                  class="alignItemCenter"
+                  text="Chiết khấu"
+                  [for]="DiscountPercent"
+                  class="invisible"
+                ></kendo-label>
+                <kendo-textbox
+                  formControlName="DiscountPercent"
+                  #DiscountPercent
+                  value="{{
+                    curPromotionDetail.DiscountPercent | number : '1.0-0'
+                  }}&nbsp;%"
+                >
+                </kendo-textbox>
+              </kendo-formfield>
+            </div>
+
+            <kendo-formfield>
+              <kendo-label
+                class="alignItemCenter"
+                text="Tình trạng"
+                [for]="StatusID"
+              ></kendo-label>
+              <div class="d-flex IsApDung_radio_group">
+                <label for="f_rdo_1" class="my_label">
+                  <input
+                    type="radio"
+                    id="f_rdo_1"
+                    formControlName="StatusID"
+                    name="StatusID"
+                    #StatusID
+                    class="k-radio"
+                    kendoRadioButton
+                    [value]="1"
+                    [attr.disabled]="isLockAll ? '' : null"
+                    [(ngModel)]="curPromotionDetail.StatusID"
+                  />
+                  Áp dụng
+                </label>
+                <label for="f_rdo_2" class="my_label">
+                  <input
+                    type="radio"
+                    id="f_rdo_2"
+                    formControlName="StatusID"
+                    name="StatusID"
+                    #StatusID
+                    class="k-radio"
+                    kendoRadioButton
+                    [value]="2"
+                    [attr.disabled]="isLockAll ? '' : null"
+                    [(ngModel)]="curPromotionDetail.StatusID"
+                  />
+                  Ngừng áp dụng
+                </label>
+              </div>
+            </kendo-formfield>
+
+            <kendo-formfield>
+              <kendo-label
+                class="alignItemCenter"
+                text="Ghi chú"
+                [for]="Remark"
+              ></kendo-label>
+              <textarea
+                formControlName="Remark"
+                #Remark [(ngModel)]="curPromotionDetail.Remark"
+                [attr.disabled]="isLockAll ? '' : null"
+              ></textarea>
+            </kendo-formfield>
+
+            <kendo-formerror>(*) Trường bắt buộc nhập.</kendo-formerror>
+          </fieldset>
+        </form>
+        <div
+          class="containerProductHamper"
+          *ngIf="
+            curPromotionDetail.ListProduct &&
+            curPromotionDetail.ListProduct.length > 0
+          "
+        >
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="title">Sản phẩm có trong Hamper</span>
+            <kendo-label text="Giá KM">
+              <span class="symbol pr-1">(*)</span>
+            </kendo-label>
+          </div>
+          <div
+            class="listProductCurrentHamper"
+            *ngFor="let item of curPromotionDetail.ListProduct"
+          >
+            <div class="containerImg">
+              <img loading="lazy" [src]="getRes(item.ImageSetting)" alt="ảnh sản phẩm" />
+            </div>
+            <div class="contentProduct">
+              <div class="row align-items-center justify-content-between">
+                <span
+                  class="productName text-ellipsis col-6"
+                  title="{{ item.VNName }}"
+                  >{{ item.VNName }}</span
+                >
+                <div class="col-6 alignItemCenter productName text-nowrap">
+                  <app-p-numeric-textbox
+                    [propName]="'PriceDiscount'"
+                    [(ngModel)]="item.PriceDiscount"
+                    (blur)="
+                      onCalculateTotalPriceDiscount(
+                        curPromotionDetail.ListProduct
+                      )
+                    "
+                    [format]="'#,0'"
+                    [spinners]="false"
+                    required="true"
+                    [disabled]="isLockAll"
+                  ></app-p-numeric-textbox>
+                </div>
+              </div>
+              <div class="specifications">
+                <span class="barcode">{{ item.Barcode }}</span>
+                <span class="quantity"><span class="color-blue-gray">|</span> SL:
+                  {{ item.Quantity }}</span
+                >
+                <span class="price"><span class="color-blue-gray">|</span> Giá bán lẻ:
+                  {{ item.Price | number : "1." }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-formProduct">
+        <button
+          kendoButton
+          class="k-button btn-hachi hachi-primary hachi-secondary"
+          (click)="onCloseForm()"
+        >
+          Đóng
+        </button>
+        <button
+          kendoButton
+          class="k-button btn-hachi hachi-primary"
+          (click)="onSubmit()"
+          *ngIf="!isLockAll"
+        >
+          {{ isAddDetail ? "THÊM MỚI" : "CẬP NHẬT" }}
+        </button>
+      </div>
+    </mat-drawer>
+    <!-- center content -->
+    <mat-drawer-content>
+      <div class="mar019-discount-detail">
+        <div class="header header-1">
+          <div class="nav-btn nav-breadcrumb">
+            <app-p-kendo-breadcrumb
+              (loadData)="onLoadPage()"
+            ></app-p-kendo-breadcrumb>
+          </div>
+
+          <div class="nav-btn nav-crud">
+            <button
+              *ngFor="let item of listActionStatus"
+              kendoButton
+              class="k-button {{ item.class }}"
+              [icon]="item.code"
+              (click)="onUpdatePromotionStatus(item)"
+            >
+              {{ item.text }}
+            </button>
+
+            <kendo-groupbutton>
+              <button kendoButton class="k-button" [icon]="'import'"></button>
+              <button
+                kendoButton
+                class="k-button k-btn-xlsx"
+                imageUrl="assets\img\logo\xlsx.svg"
+                [disabled]="loading"
+                (click)="APIExportExcelPromotion()"
+              ></button>
+              <button
+                kendoButton
+                class="k-button"
+                [icon]="'arrow-chevron-down'"
+              ></button>
+            </kendo-groupbutton>
+          </div>
+        </div>
+
+        <div class="main-content-hamper">
+          <div class="body">
+            <div class="sections">
+              <app-mar-promotion-infor
+                #promotionInfor
+                [productName]="'hamper'"
+                (getListActionPromotion)="onGetListActionPromotion($event)"
+                [disabled]="!isFilterActive"
+                (getPromotion)="onGetPromotion($event)"
+              ></app-mar-promotion-infor>
+
+              <app-mar-condition-apply
+                #conditionApply
+                (getListDayOfWeek)="onGetListDayOfWeek($event)"
+                (getListGroupOfCard)="onGetListGroupOfCard($event)"
+                [disabled]="!isFilterActive"
+                (getListWareHouse)="onGetListWareHouse($event)"
+              ></app-mar-condition-apply>
+            </div>
+          </div>
+
+          <div class="header header-2">
+            <div class="title">DANH SÁCH HAMPER</div>
+
+            <div class="nav-filter nav-btn">
+              <div
+                style="display: flex; flex-grow: 1"
+              >
+                <div class="filter-btn-group search-btn-group">
+                  <div class="search-btn">
+                    <span class="k-icon k-i-search"></span>
+                    <kendo-textbox
+                        [(ngModel)]="SearchQuery"
+                        class="k-textbox"
+                        placeholder="Tìm theo mã, tên hamper"
+                        (blur)="onSearch()"
+                        [disabled]="!isFilterActive || curPromotion.Code == 0"
+                        (keydown.Enter)="$event.target.blur()"
+                      >
+                      </kendo-textbox>
+                  </div>
+                </div>
+
+                <button
+                  kendoButton
+                  class="k-button searchBtn"
+                  [icon]="'search'"
+                  [disabled]="!isFilterActive || curPromotion.Code == 0"
+                  (click)="onSearch()"
+                >
+                  TÌM
+                </button>
+              </div>
+            </div>
+
+            <!-- <div class="nav-file nav-btn" *ngIf="curPromotion.StatusID == 2">
+              <div class="file-btn-group">
+                <button
+                  kendoButton
+                  class="k-button"
+                  [icon]="'import'"
+                  (click)="onExportExcelPromotionDetail()"
+                  [disabled]="!isFilterActive || curPromotion.Code == 0"
+                >
+                  Xuất Excel
+                </button>
+              </div>
+            </div> -->
+
+            <div class="nav-file nav-btn" *ngIf="!isLockAll">
+              <div class="file-btn-group">
+                <button
+                  kendoButton
+                  id="onUploadBtn"
+                  class="k-button"
+                  [icon]="'export'"
+                  (click)="onImportExcel()"
+                  [disabled]="!isFilterActive || curPromotion.Code == 0"
+                ></button>
+              </div>
+
+              <div class="file-btn-group">
+                <button
+                  kendoButton
+                  id="onDownloadBtn"
+                  class="k-button"
+                  [icon]="'import'"
+                  (click)="onDownloadExcelPromotionHamperDetail('PromotionHamperTemplate.xlsx')"
+                  [disabled]="!isFilterActive || curPromotion.Code == 0"
+                >
+                  Template
+                </button>
+              </div>
+            </div>
+
+            <div class="nav-btn nav-crud" *ngIf="!isLockAll">
+              <button
+                kendoButton
+                class="k-button btn-hachi hachi-primary"
+                [icon]="'plus'"
+                (click)="onAddHamper()"
+                [disabled]="!isFilterActive || curPromotion.Code == 0"
+              >
+                THÊM MỚI SẢN PHẨM
+              </button>
+            </div>
+          </div>
+
+          <div class="body">
+            <div class="sections">
+              <div class="section grid-wrapper" id="listHamper">
+                <app-p-kendo-grid
+                  class="grid"
+                  [data]="gridDSView | async"
+                  [scrollable]="'none'"
+                  [loading]="loading"
+                  [pageable]="true"
+                  [pageSizes]="pageSizes"
+                  [pageSize]="pageSize"
+                  [skip]="gridDSState.skip"
+                  [take]="gridDSState.take"
+                  [onPageChangeCallback]="onPageChangeCallback"
+                  [sortable]="true"
+                  [sort]="gridDSState.sort"
+                  [onSortChangeCallback]="onSortChangeCallback"
+                  [allowedMoreActionDropdown]="allowActionDropdown"
+                  [di]
+                  [getActionDropdownCallback]="getActionDropdownCallback"
+                  [onActionDropdownClickCallback]="
+                    onActionDropdownClickCallback
+                  "
+                  [selectable]="selectable"
+                  [onSelectCallback]="onSelectCallback"
+                  [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+                  [getSelectionPopupCallback]="getSelectionPopupCallback"
+                  [ngClass]="{
+                    scroll5: curPromotion.Category == 5,
+                    scroll6: curPromotion.Category == 6,
+                    scrollable: curPromotion.Category != 7
+                  }"
+                  [rowClass]="onRowCallback"
+                >
+                  <kendo-grid-column
+                    field="VNName"
+                    title="Tên hamper"
+                    headerClass="col_img_productName-productID"
+                  >
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="img_productName-productID main-hamper">
+                        <div class="img">
+                          <img loading="lazy" [src]="getRes(dataItem.ImageSetting)" alt="" />
+                        </div>
+                        <div class="productName-productID d-flex">
+                          <div
+                            class="productName text-ellipsis"
+                            title="{{ dataItem.VNName }}"
+                          >
+                            {{ dataItem.VNName }}
+                          </div>
+                          <div class="productID">
+                            <b
+                              >{{ dataItem.Barcode }}
+                              <span
+                                *ngIf="
+                                  dataItem.ListProduct &&
+                                  dataItem.ListProduct.length > 0
+                                "
+                              >
+                                |&nbsp;
+                                <a (click)="onToggleHamperDetail(dataItem)">{{
+                                  dataItem["ShowProductDetail"] == true
+                                    ? "Thu gọn"
+                                    : "Xem chi tiết"
+                                }}</a>
+                              </span>
+                            </b>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        class="border-top-500"
+                        *ngIf="dataItem['ShowProductDetail']"
+                      >
+                        <div
+                          class="hamperDetail"
+                          *ngFor="
+                            let cItem of dataItem.ListProduct;
+                            let i = index
+                          "
+                        >
+                          <div class="d-flex col-gap-10 alignItemCenter">
+                            <div class="hamper_item_index">{{ i + 1 }}.</div>
+                            <div class="img">
+                              <img loading="lazy" [src]="getRes(cItem.ImageSetting)" />
+                            </div>
+                            <div class="productName-productID d-flex">
+                              <div
+                                class="productName text-ellipsis"
+                                title="{{ cItem.VNName }}"
+                              >
+                                {{ cItem.VNName }}
+                              </div>
+                              <div class="productID">
+                                <b>{{ cItem.Barcode }}</b>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+
+                  <kendo-grid-column
+                    field="Quantity"
+                    title="Hạn mức mua"
+                    headerClass="purchaseLimit"
+                  >
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="quantity main-hamper">
+                        <div class="quantity">
+                          SL tối thiểu:
+                          <span>{{ dataItem.Quantity }}</span>
+                        </div>
+                        <div class="quantity">
+                          SL tối đa:
+                          <span>{{ dataItem.MaxQuantity }}</span>
+                        </div>
+                      </div>
+                      <div
+                        class="border-top-500"
+                        *ngIf="dataItem['ShowProductDetail']"
+                      >
+                        <div
+                          class="hamperDetail"
+                          *ngFor="
+                            let cItem of dataItem.ListProduct;
+                            let i = index
+                          "
+                        >
+                          <div class="quantity">
+                            <div class="quantity">
+                              SL trong hamper:
+                              <span>{{ cItem.Quantity | number : "1." }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+
+                  <kendo-grid-column
+                    field="Price"
+                    title="Giá hamper"
+                    headerClass="promoPrice"
+                  >
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div
+                        class="unitprice_baseprice main-hamper textEnd contentPromoPrice"
+                      >
+                        <div class="unitprice">
+                          {{ dataItem.PriceDiscount | number : "1." }}
+                        </div>
+                        <div class="baseprice">
+                          {{ dataItem.Price | number : "1." }}
+                        </div>
+                      </div>
+
+                      <div
+                        class="border-top-500"
+                        *ngIf="dataItem['ShowProductDetail']"
+                      >
+                        <div
+                          class="hamperDetail"
+                          *ngFor="
+                            let cItem of dataItem.ListProduct;
+                            let i = index
+                          "
+                        >
+                          <div
+                            class="unitprice_baseprice textEnd contentPromoPrice"
+                          >
+                            <div class="unitprice">
+                              {{ cItem.PriceDiscount | number : "1." }}
+                            </div>
+                            <div class="baseprice">
+                              {{ cItem.Price | number : "1." }}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+
+                  <kendo-grid-column
+                    field="DiscountAmount"
+                    title="Chiết khẩu"
+                    headerClass="discount"
+                  >
+                    <ng-template kendoGridHeaderTemplate let-dataItem>
+                      <div class="discount">Chiết khẩu</div>
+                    </ng-template>
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div class="amount_percent main-hamper textEnd">
+                        <div class="amount">
+                          {{ dataItem.DiscountAmount | number : "1." }}
+                        </div>
+                        <div class="percent">
+                          {{
+                            dataItem.DiscountPercent | number : "1.0-0"
+                          }}&nbsp;%
+                        </div>
+                      </div>
+
+                      <div
+                        class="border-top-500"
+                        *ngIf="dataItem['ShowProductDetail']"
+                      >
+                        <div
+                          class="hamperDetail"
+                          *ngFor="
+                            let cItem of dataItem.ListProduct;
+                            let i = index
+                          "
+                        >
+                          <div class="amount_percent textEnd">
+                            <div class="amount">
+                              {{ cItem.DiscountAmount | number : "1." }}
+                            </div>
+                            <div class="percent" *ngIf="cItem.DiscountPercent">
+                              {{
+                                cItem.DiscountPercent | number : "1.0-0"
+                              }}&nbsp;%
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+
+                  <kendo-grid-column
+                    field="StatusID"
+                    title="Tình trạng"
+                    headerClass="status"
+                  >
+                    <ng-template kendoGridHeaderTemplate let-dataItem>
+                      <div class="status">Tình trạng</div>
+                    </ng-template>
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <div
+                        class="statusName main-hamper textEnd"
+                        [ngClass]="{ green: dataItem.StatusID == 1, red: dataItem.StatusID == 2 }"
+                      >
+                        {{ dataItem.StatusName }}
+                      </div>
+                      <!-- <div class="statusName main-hamper textEnd" [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID"></div> -->
+
+                      <div
+                        class="border-top-500"
+                        *ngIf="dataItem['ShowProductDetail']"
+                      >
+                        <div
+                          class="hamperDetail"
+                          *ngFor="
+                            let cItem of dataItem.ListProduct;
+                            let i = index
+                          "
+                        >
+                          <div
+                            class="statusName"
+                            [ngClass]="{ green: dataItem.StatusID == 1, red: dataItem.StatusID == 2 }"
+                            style="visibility: hidden"
+                          >
+                            {{ cItem.StatusName }}
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+                </app-p-kendo-grid>
+              </div>
+            </div>
+          </div>
+          <p class="symbol fst-italic mt-2">(*) Trường bắt buộc nhập.</p>
+        </div>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+  <!-- popup confirm delete -->
+  <kendo-dialog
+    #dialog
+    id="deleteDialog"
+    class="deleteDialog"
+    title="Xóa {{ context[contextIndex] }}"
+    [hidden]="!deleteDialogOpened"
+    (close)="onCloseDeleteDialog()"
+    [minWidth]="250"
+  >
+    <p style="margin: 30px; text-align: center">
+      Bạn chắc chắn muốn xóa vĩnh viễn {{ context[contextIndex] }}&nbsp; "{{
+        contextIndex == 0
+          ? curPromotion.PromotionNo
+          : curPromotionDetail.VNName
+      }}" &nbsp;này?
+    </p>
+    <div class="dialog-footer">
+      <button
+        kendoButton
+        class="btn-hachi hachi-secondary"
+        (click)="onCloseDeleteDialog()"
+        [icon]="'close'"
+      >
+        Không
+      </button>
+      <button
+        kendoButton
+        class="btn-hachi hachi-warning"
+        (click)="delete()"
+        [icon]="'trash'"
+      >
+        Có
+      </button>
+    </div>
+  </kendo-dialog>
+</div>
+<app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>

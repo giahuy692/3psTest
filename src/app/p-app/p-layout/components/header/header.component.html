@@ -1,0 +1,82 @@
+<div class="app-header navbar navbar-expand-lg">
+    <div class="wrapper-header-logo" #companyAnchor>
+        <div class="col-header-center col-logo">
+            <a class="navbar-logo" href="/">
+                <!-- <img class="navbar-logo-full" src="assets/img/logo/logo.svg" alt="CoreUI Logo"> -->
+                <img loading="lazy" class="navbar-logo-full" [hidden]="!isLogoVisible()" [src]="getCompanyLogoSrc()" alt="CoreUI Logo">
+                <img loading="lazy" class="navbar-logo-minimized" src="assets/img/logo/3ps.svg" alt="CoreUI Logo" width="30"
+                    height="30">
+            </a>
+        </div>
+
+        <div class="col-header-center col-btn-collapse">
+            <button kendoButton  class="k-button k-button-icon" icon="arrow-chevron-down"
+                (click)="toggleCompanyPopup()"></button>
+        </div>
+    </div>
+
+    <div class="wrapper-header-middle">
+        <div class="nav-list">
+            <!-- <div *ngFor="let item of allowModuleList; let i = index"> -->
+                <ng-container  *ngFor="let item of allowModuleList; let i = index">
+                    <div *ngIf="item.Actived == true" class="nav-item" (click)="onClick(item)"
+                        [ngClass]="{'active': isItemActive(item) }">
+                        <!-- currentModule.Code == item.Code -->
+                        <!-- <div *ngIf="i > 0" class="nav-item-divider"></div> -->
+        
+                        <a class="nav-link" aria-current="page">
+                            <!-- (click)="onClick(item)" -->
+                            {{ item?.Name }}
+                        </a>
+                        <!-- <div [ngClass]="{'active-header-border':currentModule.Code == item.Code}"></div> -->
+                        <div *ngIf="isItemActive(item)" class="active-header-border"></div>
+                        <!-- checkActiveMenuParent -->
+                    </div>
+                </ng-container>
+        </div>
+    </div>
+
+    <div class="wrapper-header-user">
+        <button kendoButton  class="k-button k-button-icon" icon="search" title="Tìm kiếm Sản phẩm" 
+        (click)="openSearchProductPopup()"></button>
+        <button kendoButton class="k-button k-button-icon" icon="bell" title="Thông báo" #anchor 
+        (click)=" isExpandNotifi = !isExpandNotifi;
+                notiAnchor = anchor
+              "></button>
+        <button kendoButton  #userAnchor class="k-button k-button-icon" icon="user" title="Người dùng"
+            (click)="toggleUserPopup()"></button>
+    </div>
+</div>
+
+<kendo-popup id="userMoreActionPopup" #userMoreActionPopup [hidden]="!showUser" [anchor]="userAnchor"
+    [anchorAlign]="{ horizontal:'right', vertical: 'bottom'}" [popupAlign]="{ horizontal:'right', vertical: 'top'}">
+    <div *ngFor="let item of userDropdownList">
+        <div class="popup-item" (click)="onClickUserDropdown(item)">
+            <span class="k-icon k-i-{{ item.Code }}"></span>
+            <span class="popup-item-text">{{ item.Name }}</span>
+        </div>
+    </div>
+</kendo-popup>
+
+<kendo-popup id="companyMoreActionPopup" #companyMoreActionPopup [hidden]="!showCompany" [anchor]="companyAnchor"
+    [anchorAlign]="{ horizontal:'left', vertical: 'bottom'}" [popupAlign]="{ horizontal:'left', vertical: 'top'}">
+    <div *ngFor="let item of companyDropdownList">
+        <div class="popup-item" (click)="onClickCompanyDropdown(item)" [ngClass]="{'active': item.Code == idCompany}">
+            <span class="k-icon k-i-home"></span>
+            <span class="popup-item-text">{{ item.Bieft }}</span>
+        </div>
+    </div>
+</kendo-popup>
+
+<kendo-popup #filterNumOfDate class="rowMoreActionPopup" [style.visibility]="isExpandNotifi ? 'visible' : 'hidden'"
+    [anchor]="notiAnchor" [anchorAlign]="{ horizontal: 'center', vertical: 'bottom' }"
+    [popupAlign]="{ horizontal: 'center', vertical: 'top' }">
+    <div class="d-flex p-2 justify-content-between align-items-center">
+
+    </div>
+</kendo-popup>
+
+<p-changepassword-popup></p-changepassword-popup>
+
+<app-search-product-popup></app-search-product-popup>
+

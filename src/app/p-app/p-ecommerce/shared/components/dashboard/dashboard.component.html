@@ -1,0 +1,307 @@
+<div class="app-dashboard011-ecom">
+    <div class="header header-1">
+    </div>
+  
+    <div class="list_chart">
+      <!-- chart 1 -->
+      <ng-container *ngFor="let chartItem of chartList">
+        <div class="chart" *ngIf="chartItem.ListData.length > 0 && chartItem.ChartType == -1">
+          <kendo-chart style="height:350px" [seriesColors]="seriesColors">
+            <kendo-chart-title [text]="chartItem.ChartTitle | uppercase" [color]="color_gray"
+              [font]="fontSize_title + font_nunito">
+            </kendo-chart-title>
+  
+            <kendo-chart-legend position="bottom" [padding]="{left: 36, right: 24}" [spacing]="24"
+              [labels]="{visible: true, font: fontSize_legend + font_nunito, color: color_gray}"
+              [markers]="{type: 'square', height: 10, width: 10}">
+              <kendo-chart-legend-item cursor="pointer">
+              </kendo-chart-legend-item>
+            </kendo-chart-legend>
+  
+            <kendo-chart-tooltip>
+              <ng-template kendoChartSeriesTooltipTemplate let-series="series">
+                <b>{{ series.name }}</b>
+              </ng-template>
+            </kendo-chart-tooltip>
+            <!-- dọc -->
+            <kendo-chart-value-axis>
+              <kendo-chart-value-axis-item [color]="color_gray"
+                [title]="{ text: 'Số lượng đơn', orientation: 'vertical', font: fontSize_axis + font_nunito, color: color_gray}">
+              </kendo-chart-value-axis-item>
+            </kendo-chart-value-axis>
+  
+            <kendo-chart-axis-defaults [majorGridLines]="{ visible : false}" [line]="{visible : false}">
+              <kendo-chart-axis-defaults-labels format="n0" [color]="color_gray" [font]="fontSize_content + font_nunito">
+              </kendo-chart-axis-defaults-labels>
+            </kendo-chart-axis-defaults>
+            <!-- ngang -->
+            <kendo-chart-series>
+              <kendo-chart-series-item *ngFor="let item of chartItem.ListData; index as i"
+                [labels]="{visible: true, font: 'bold ' + fontSize_content + font_nunito, color: color_gray}"
+                [name]="item.ChartTitle" [data]="[item.ChartValue]" [color]="item.Code == 25 && '#A5A5A5'">
+              </kendo-chart-series-item>
+            </kendo-chart-series>
+  
+            <kendo-chart-series-defaults type="column">
+              <kendo-chart-series-defaults-labels format="n0">
+              </kendo-chart-series-defaults-labels>
+            </kendo-chart-series-defaults>
+          </kendo-chart>
+        </div>
+        <!-- chart 2 -->
+        <div class="chart" *ngIf="chartItem.ListData.length > 0 && chartItem.ChartType == -2">
+          <kendo-chart style="height:350px">
+            <kendo-chart-title [text]="getTitle(chartItem.ChartTitle) | uppercase" [color]="color_gray"
+              [font]="fontSize_title + font_nunito">
+            </kendo-chart-title>
+  
+            <kendo-chart-legend position="bottom" [padding]="{left: 36, right: 24}" [spacing]="24"
+              [labels]="{visible: true, font: fontSize_legend + font_nunito, color: color_gray}">
+              <kendo-chart-legend-item cursor="pointer" [visual]="labelsVisual">
+              </kendo-chart-legend-item>
+            </kendo-chart-legend>
+  
+            <kendo-chart-tooltip>
+              <ng-template kendoChartSeriesTooltipTemplate let-series="series" let-value="value">
+                <b>{{ value }}
+                  <!-- {{ series.name }} -->
+                </b>
+              </ng-template>
+            </kendo-chart-tooltip>
+            <!-- dọc -->
+            <kendo-chart-value-axis>
+              <kendo-chart-value-axis-item [color]="color_gray" name="orderNum"
+                [title]="{ text: 'Số lượng đơn', orientation: 'vertical', font: fontSize_axis + font_nunito, color: color_gray}">
+              </kendo-chart-value-axis-item>
+  
+              <kendo-chart-value-axis-item *ngIf="data_column_revenueByWeek.ListData.length > 0" [color]="color_gray"
+                name="revenueNum"
+                [title]="{ text: 'Doanh thu (triệu VNĐ)', orientation: 'vertical', font: fontSize_axis + font_nunito, color: color_gray}">
+              </kendo-chart-value-axis-item>
+            </kendo-chart-value-axis>
+  
+            <kendo-chart-axis-defaults [majorGridLines]="{ visible : false}" [line]="{visible : false}">
+              <kendo-chart-axis-defaults-labels format="n0" [color]="color_gray" [font]="fontSize_content + font_nunito">
+              </kendo-chart-axis-defaults-labels>
+            </kendo-chart-axis-defaults>
+            <!-- ngang -->
+            <kendo-chart-series>
+              <!-- <kendo-chart-series-item
+              [labels]="{visible: true, font: 'bold ' + fontSize_content + font_nunito, color: color_gray, background: 'none', position: 'left'}"
+              name="Tuần trước" [data]="chartItem.ListData[0]" color="#ED7D31" [field]="'value'">
+            </kendo-chart-series-item>
+            <kendo-chart-series-item
+              [labels]="{visible: true, font: 'bold ' + fontSize_content + font_nunito, color: color_gray, background: 'none', position: 'right'}"
+              name="Tuần này" [data]="chartItem.ListData[1]" color="#5B9BD5" [field]="'value'">
+            </kendo-chart-series-item> -->
+              <kendo-chart-series-item *ngFor="let item of chartItem.ListData; index as i" [name]="item.ChartTitle"
+                [data]="item.ListData" [color]="i == 0 ? '#ED7D31': '#5B9BD5'" [field]="'ChartValue'" type="line"
+                axis="orderNum">
+              </kendo-chart-series-item>
+  
+              <kendo-chart-series-item *ngFor="let item of data_column_revenueByWeek.ListData; index as i"
+                [name]="item.ChartTitle" [data]="item.ListData" [color]="i == 0 ? seriesColors[i]: seriesColors[i]"
+                [field]="'ChartValue'" type="column" axis="revenueNum">
+              </kendo-chart-series-item>
+            </kendo-chart-series>
+  
+            <!-- <kendo-chart-series-defaults>
+            <kendo-chart-series-defaults-labels format="n0">
+            </kendo-chart-series-defaults-labels>
+          </kendo-chart-series-defaults> -->
+  
+            <kendo-chart-category-axis>
+              <kendo-chart-category-axis-item [categories]="dayOfWeek" [line]="{visible : true}"
+                [axisCrossingValue]="[0, dayOfWeek.length]">
+              </kendo-chart-category-axis-item>
+            </kendo-chart-category-axis>
+          </kendo-chart>
+        </div>
+        <!-- chart 3 -->
+        <div class="chart" *ngIf="chartItem.ListData.length > 0 && chartItem.ChartType == -3">
+          <kendo-chart style="height:350px">
+            <kendo-chart-title [text]="chartItem.ChartTitle | uppercase" [color]="color_gray"
+              [font]="fontSize_title + font_nunito">
+            </kendo-chart-title>
+  
+            <kendo-chart-legend position="bottom" [padding]="{left: 36, right: 24}" [spacing]="24"
+              [labels]="{visible: true, font: fontSize_legend + font_nunito, color: color_gray}"
+              [markers]="{type: 'square', height: 10, width: 10}">
+              <kendo-chart-legend-item cursor="pointer">
+              </kendo-chart-legend-item>
+            </kendo-chart-legend>
+  
+            <kendo-chart-tooltip>
+              <ng-template kendoChartSeriesTooltipTemplate let-series="series" let-value="value">
+                <b>{{ series.name }} {{ value | number: '1.0' }} (triệu VNĐ)</b>
+              </ng-template>
+            </kendo-chart-tooltip>
+            <!-- dọc -->
+            <kendo-chart-series>
+              <!-- <kendo-chart-series-item
+              [labels]="{visible: true, font: 'bold ' + fontSize_content + font_nunito, color: color_gray}"
+              name="Thực hiện" [data]="[chartItem[0].ChartValue]" color="#ED7D31">
+            </kendo-chart-series-item>
+            <kendo-chart-series-item
+              [labels]="{visible: true, font: 'bold ' + fontSize_content + font_nunito, color: color_gray}"
+              name="Mục tiêu" [data]="[chartItem[1].ChartValue]" color="#5B9BD5">
+            </kendo-chart-series-item> -->
+              <kendo-chart-series-item *ngFor="let item of chartItem.ListData; index as i"
+                [labels]="{visible: true, font: 'bold ' + fontSize_content + font_nunito, color: color_gray}"
+                [color]="i == 0 ? '#ED7D31' : '#5B9BD5'" [data]="[item]" field="ChartValue" noteTextField="ChartTitle"
+                [notes]="notesOptions" [name]="item.ChartTitle">
+              </kendo-chart-series-item>
+            </kendo-chart-series>
+  
+            <kendo-chart-series-defaults type="bar" [spacing]="0">
+              <kendo-chart-series-defaults-labels format="n0">
+              </kendo-chart-series-defaults-labels>
+            </kendo-chart-series-defaults>
+  
+            <kendo-chart-category-axis>
+              <kendo-chart-category-axis-item [title]="{ text: ' ', margin: { right: 77 }}">
+              </kendo-chart-category-axis-item>
+            </kendo-chart-category-axis>
+            <!-- ngang -->
+            <kendo-chart-axis-defaults [majorGridLines]="{ visible : false}">
+              <!-- [line]="{visible : false}" -->
+              <kendo-chart-axis-defaults-labels format="n0" [color]="color_gray" [font]="fontSize_content + font_nunito">
+              </kendo-chart-axis-defaults-labels>
+            </kendo-chart-axis-defaults>
+          </kendo-chart>
+        </div>
+        <!-- chart 4 -->
+        <div class="chart" *ngIf="chartItem.ListData.length > 0 && chartItem.ChartType == -4">
+          <kendo-chart style="height:350px">
+            <kendo-chart-title [text]="chartItem.ChartTitle | uppercase" [color]="color_gray"
+              [font]="fontSize_title + font_nunito">
+            </kendo-chart-title>
+  
+            <kendo-chart-legend position="bottom" [padding]="{left: 36, right: 24}" [spacing]="24"
+              [labels]="{visible: true, font: fontSize_legend + font_nunito, color: color_gray}">
+              <kendo-chart-legend-item cursor="pointer" [visual]="labelsVisual">
+              </kendo-chart-legend-item>
+            </kendo-chart-legend>
+  
+            <kendo-chart-tooltip>
+              <ng-template kendoChartSeriesTooltipTemplate let-series="series" let-value="value">
+                <b>{{ value | number: '1.0' }} (triệu VNĐ)</b>
+              </ng-template>
+            </kendo-chart-tooltip>
+            <!-- dọc -->
+            <kendo-chart-value-axis>
+              <kendo-chart-value-axis-item [color]="color_gray" [line]="{ visible : false}">
+              </kendo-chart-value-axis-item>
+            </kendo-chart-value-axis>
+  
+            <kendo-chart-axis-defaults [majorGridLines]="{ visible : false}">
+              <kendo-chart-axis-defaults-labels format="n0" [color]="color_gray" [font]="fontSize_content + font_nunito">
+              </kendo-chart-axis-defaults-labels>
+            </kendo-chart-axis-defaults>
+            <!-- ngang -->
+            <kendo-chart-series>
+              <!-- <kendo-chart-series-item type="column"
+              [labels]="{visible: false, font: 'bold ' + fontSize_content + font_nunito, color: color_gray, background: 'none'}"
+              name="Năm 2023" [data]="data2" color="#5C8D3A" [field]="'value'">
+            </kendo-chart-series-item>
+            <kendo-chart-series-item type="line"
+              [labels]="{visible: false, font: 'bold ' + fontSize_content + font_nunito, color: color_gray, background: 'none'}"
+              name="Năm 2022" [data]="data" color="#C61A1A" [field]="'value'">
+            </kendo-chart-series-item> -->
+              <kendo-chart-series-item *ngFor="let item of chartItem.ListData; index as i" [type]="item.ChartTypeName"
+                [labels]="{visible: false, font: 'bold ' + fontSize_content + font_nunito, color: color_gray, background: 'none'}"
+                [name]="item.ChartTitle" [data]="item.ListData" [color]="i == 0 ? '#5C8D3A' : '#C61A1A'"
+                [field]="'ChartValue'">
+              </kendo-chart-series-item>
+            </kendo-chart-series>
+  
+            <kendo-chart-series-defaults>
+              <kendo-chart-series-defaults-labels format="n0">
+              </kendo-chart-series-defaults-labels>
+            </kendo-chart-series-defaults>
+  
+            <kendo-chart-category-axis>
+              <kendo-chart-category-axis-item [categories]="monthOfYear" [labels]="{rotation: -45}">
+              </kendo-chart-category-axis-item>
+            </kendo-chart-category-axis>
+          </kendo-chart>
+        </div>
+        <!-- chart 5 -->
+        <div class="chart" *ngIf="chartItem.ListData.length > 0 && chartItem.ChartType == -5">
+          <kendo-chart style="height:500px" [seriesColors]="seriesColors">
+            <kendo-chart-title [text]="chartItem.ChartTitle | uppercase" [color]="color_gray"
+              [font]="fontSize_title + font_nunito">
+            </kendo-chart-title>
+  
+            <ng-template kendoChartDonutCenterTemplate>
+              <span [style.color]="color_gray" [style.font]="fontSize_title + font_nunito">
+                {{year | uppercase}}
+              </span>
+            </ng-template>
+  
+            <kendo-chart-legend position="bottom" [markers]="{type: 'square', height: 10, width: 10}" [spacing]="24"
+              [labels]="{visible: true, font: fontSize_legend + font_nunito, color: color_gray}">
+              <kendo-chart-legend-item cursor="pointer">
+              </kendo-chart-legend-item>
+            </kendo-chart-legend>
+  
+            <kendo-chart-tooltip>
+              <ng-template kendoChartSeriesTooltipTemplate let-value="value" let-category="category">
+                <b>{{ category }}: {{ value | number: '1.0' }} (triệu VNĐ)
+                  <!-- {{ value * chartItem.ChartValue / 100 | number: '1.0' }}% -->
+                </b>
+              </ng-template>
+            </kendo-chart-tooltip>
+  
+            <kendo-chart-series>
+              <kendo-chart-series-item type="donut" [data]="chartItem.ListData" categoryField="ChartTitle"
+                field="ChartValue" [autoFit]="true">
+                <kendo-chart-series-item-labels position="outsideEnd" [color]="color_gray"
+                  [font]="'bold ' + fontSize_content + font_nunito" background="none" [content]="labelContent">
+                </kendo-chart-series-item-labels>
+              </kendo-chart-series-item>
+            </kendo-chart-series>
+          </kendo-chart>
+        </div>
+        <!-- chart 6 -->
+        <div class="chart" *ngIf="chartItem.ListData.length > 0 && chartItem.ChartType == -6">
+          <kendo-chart style="height:500px" [seriesColors]="seriesColors">
+            <kendo-chart-title [text]="chartItem.ChartTitle | uppercase" [color]="color_gray"
+              [font]="fontSize_title + font_nunito">
+            </kendo-chart-title>
+  
+            <ng-template kendoChartDonutCenterTemplate>
+              <span [style.color]="color_gray" [style.font]="fontSize_title + font_nunito">
+                {{year | uppercase}}
+              </span>
+            </ng-template>
+  
+            <kendo-chart-legend position="bottom" [markers]="{type: 'square', height: 10, width: 10}" [spacing]="24"
+              [labels]="{visible: true, font: fontSize_legend + font_nunito, color: color_gray}">
+              <kendo-chart-legend-item cursor="pointer">
+              </kendo-chart-legend-item>
+            </kendo-chart-legend>
+  
+            <kendo-chart-tooltip>
+              <ng-template kendoChartSeriesTooltipTemplate let-value="value" let-category="category">
+                <b>{{ category }}: {{ value | number: '1.0' }}
+                  <!-- : {{ value * chartItem.ChartValue / 100 |                number: '1.0' }}% -->
+                </b>
+              </ng-template>
+            </kendo-chart-tooltip>
+  
+            <kendo-chart-series>
+              <kendo-chart-series-item type="donut" [data]="chartItem.ListData" categoryField="ChartTitle"
+                field="ChartValue" [autoFit]="true">
+                <kendo-chart-series-item-labels position="outsideEnd" [color]="color_gray"
+                  [font]="'bold ' + fontSize_content + font_nunito" background="none" [content]="labelContent2">
+                </kendo-chart-series-item-labels>
+              </kendo-chart-series-item>
+            </kendo-chart-series>
+          </kendo-chart>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  
+  

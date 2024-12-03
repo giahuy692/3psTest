@@ -1,0 +1,188 @@
+@import "../../../../../assets/scss/variable.scss";
+::ng-deep {
+    .app-drawer-container{
+      .dialogDelete{
+        .k-window-content{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 150px;
+          p{
+            font-size: 18px;
+          }
+        }
+      }
+    .config002-hamper-request-detail{
+        height: calc(93vh - #{$footer-height});
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;
+        overflow-x: hidden;
+      .header{
+        min-height: 50px;
+        justify-content: space-between;
+        margin-right: 15px;
+
+        app-p-kendo-breadcrumb{
+          display: inline-block;
+          min-width: 510px;
+        }
+        .nav-btn {
+          display: flex;
+          align-items: center;
+          flex-grow: 1;
+          .onAddBtn {
+              height: 32px;
+              margin-top: auto;
+              background-color: $dark-green !important;
+              color: white;
+              font-size: 11px;
+              font-weight: bold;
+          }
+          // .onDeleteBtn{
+          //   background-color: rgba(189, 194, 210, 1);
+          //   width: 130px;
+          //   color: #ffffff;
+          //   font-size: 11px;
+          //   font-weight: bold;
+          //   .k-icon {
+          //     display: none !important;
+          //   }
+          // }
+
+          .btnGuiDuyet {
+            width: fit-content;
+            height: 32px;
+            background-color: $white;
+            color: $dark-green;
+            border: 1px solid $dark-green;
+            box-shadow: 0 0 8px $lightgray;
+            font-weight: 700;
+            font-size: 11px;
+          }
+
+          .btn-aplication {
+            width: fit-content;
+            height: 32px;
+            background-color: $white;
+            color: $dark-green;
+            box-shadow: 0 0 8px $lightgray;
+            font-weight: 700;
+            font-size: 11px;
+            margin: 0 5px;
+          }
+          .btn-addition {
+            width: fit-content;
+            height: 32px;
+            background-color: $dark-green;
+            color: $white;
+            box-shadow: 0 0 8px $lightgray;
+            font-weight: 700;
+            font-size: 11px;
+          }
+
+          .btnTraVe {
+            width: fit-content;
+            height: 32px;
+            background-color: $white;
+            color: $bad-red;
+            border: 1px solid $bad-red;
+            box-shadow: 0 0 8px $lightgray;
+            font-weight: 700;
+            font-size: 11px;
+          }
+          
+          .btnNgunghienthi {
+            width: fit-content;
+            height: 32px;
+            background-color: $bad-red;
+            color: $white;
+            border: 1px solid $white;
+            box-shadow: 0 0 8px $lightgray;
+            font-weight: 700;
+            font-size: 11px;
+          }
+
+          &.nav-file,
+          &.nav-crud {
+              flex-grow: 0;
+          }
+          .StatusBtn{
+            display: flex;
+          }
+      }
+
+      }
+        .body{
+            padding: 10px 15px 15px 20px;
+            overflow-y: scroll;
+            .impose{
+              font-weight: 700;
+              color: $bad-red;
+              padding-bottom: 10px;
+          }
+        }
+
+    }
+    .k-drawer-container {
+        display: block;
+        font-family: "Mulish", sans-serif;
+        font-size: 13px;
+        padding: 0;
+        .wrapper-drawer-right {
+          .header-drawer-right {
+            color: $dark-green;
+            font-weight: 700;
+            border-bottom: 1px solid $black;
+            padding-bottom: 5px;
+          }
+          .content-drawer-right {
+            z-index: 1;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 40px;
+            .info-product{
+                padding-bottom: 10px;
+                .impose{
+                  font-weight: 700;
+                  color: $bad-red;
+                }
+               .info{
+                .label{
+                    font-weight: 700;
+                    color: #959DB3;
+                    padding-bottom: 5px;
+                }
+                .item{
+                    padding: 5px 0;
+                    .img-product{
+                      display: flex;
+                      justify-content: space-between;
+                    }
+                    .k-textbox{
+                        width: 100%;
+                    }
+                }
+               }
+            }
+            .btn-ev{
+              position: fixed;
+              bottom: 40px;
+              box-shadow: #959DB3;
+              button{
+                margin-right: 10px;
+              }
+              .btn-close{
+                background-color: $white;
+                color: $dark-green;
+              }
+              .btn-update{
+
+              }
+            }
+          }
+        }
+    }
+}
+}

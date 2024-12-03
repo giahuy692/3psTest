@@ -1,0 +1,148 @@
+<div class="app-mar003-news-product">
+  <div class="header header-1">
+    <button kendoButton class="k-button checkbox-btn-group dangHieuLuc_btn" [toggleable]="isFilterActive"
+      (selectedChange)="selectedBtnChange($event, 'dangSoanThao')" [selected]="dangSoanThao">
+      {{ dangSoanThao_count }} - Đang soạn thảo
+      <input type="checkbox" class="k-checkbox" disabled [checked]="dangSoanThao" />
+    </button>
+
+    <button kendoButton class="k-button checkbox-btn-group hetHieuLuc_btn" [toggleable]="isFilterActive"
+      (selectedChange)="selectedBtnChange($event, 'guiDuyet')" [selected]="guiDuyet">
+      {{ guiDuyet_count }} - Gửi duyệt
+      <input type="checkbox" class="k-checkbox" disabled [checked]="guiDuyet" />
+    </button>
+
+    <button kendoButton class="k-button checkbox-btn-group dangHieuLuc_btn" [toggleable]="isFilterActive"
+      (selectedChange)="selectedBtnChange($event, 'daDuyet')" [selected]="daDuyet">
+      Đã duyệt
+      <input type="checkbox" class="k-checkbox" disabled [checked]="daDuyet" />
+    </button>
+
+    <button kendoButton class="k-button checkbox-btn-group hetHieuLuc_btn" [toggleable]="isFilterActive"
+      (selectedChange)="selectedBtnChange($event, 'ngungHienThi')" [selected]="ngungHienThi">
+      {{ ngungHienThi_count }} - Ngưng hiển thị
+      <input type="checkbox" class="k-checkbox" disabled [checked]="ngungHienThi" />
+    </button>
+
+    <!-- <app-checkbox-button-group [count]="ngungHienThi_count" title="Ngưng hiển thị" [checked]="ngungHienThi"
+      [disabled]="!isFilterActive" (selectedChange)="selectedBtnChange2($event, null)"
+      (filterChange)="selectedBtnChange2(null, $event)" field="StatusID" operator="eq" value="3">
+    </app-checkbox-button-group> -->
+
+    <div class="nav-btn nav-crud" *ngIf="isToanQuyen || isAllowedToCreate">
+      <button kendoButton id="onAddBtn" class="k-button" [icon]="'plus'" (click)="openNewsProductDetail(true)">
+        TẠO MỚI</button>
+    </div>
+  </div>
+
+  <div class="header header-2">
+    <div class="nav-filter nav-btn">
+      <div class="filter-btn-group clear-btn-group">
+        <div class="label">
+          <span class="k-icon k-i-filter"></span>Lọc dữ liệu
+        </div>
+        <button kendoButton class="k-button clear-filter-btn" (click)="resetFilter()">Reset bộ lọc</button>
+      </div>
+
+      <form style="display: flex; flex-grow: 1;" [formGroup]="searchForm">
+        <div class="filter-btn-group search-btn-group">
+          <div class="label">
+            Tìm kiếm
+          </div>
+          <div class="search-btn">
+            <span class="k-icon k-i-search"></span>
+            <kendo-textbox formControlName="SearchQuery" type="text" class="k-textbox"
+              placeholder="Tìm theo barcode, mã sản phẩm, tên sản phẩm">
+            </kendo-textbox>
+          </div>
+        </div>
+
+        <button kendoButton class="k-button searchBtn" [icon]="'search'" (click)="search()"
+          [disabled]="!isFilterActive">TÌM</button>
+      </form>
+    </div>
+
+    <!-- <app-search-filter-group placeholder="Tìm theo barcode, mã sản phẩm, tên sản phẩm" [disabled]="!isFilterActive"
+      [fields]="['Barcode','Poscode','VNName']" (valueChange)="search2($event)" (filterChange)="search2($event)"
+      (onReset)="resetFilter()">
+    </app-search-filter-group> -->
+  </div>
+
+  <div class="grid-wrapper">
+    <app-p-kendo-grid class="grid" [data]="gridDSView | async" [scrollable]="'none'" [loading]="loading" [pageable]="true"
+      [pageSizes]="pageSizes" [pageSize]="pageSize" [skip]="gridDSState.skip" [take]="gridDSState.take" [sortable]="true"
+      [sort]="gridDSState.sort" [onPageChangeCallback]="onPageChangeCallback"
+      [onSortChangeCallback]="onSortChangeCallback" [allowedMoreActionDropdown]="allowActionDropdown"
+      [getActionDropdownCallback]="getActionDropdownCallback"
+      [onActionDropdownClickCallback]="onActionDropdownClickCallback" [selectable]="selectable"
+      [onSelectCallback]="onSelectCallback" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+      [getSelectionPopupCallback]="getSelectionPopupCallback">
+  
+      <kendo-grid-column field="VNName" title="Tên sản phẩm" class="col_img_tensanpham_masanpham"
+        headerClass="col_img_tensanpham_masanpham">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div class="img_tensanpham_masanpham">
+            <div class="img">
+              <img loading="lazy" src="{{dataItem.ImageSetting}}" alt="">
+            </div>
+            <div class="tensanpham_masanpham d-flex">
+              <div class="tensanpham">{{ dataItem.VNName }}</div>
+              <div class="masanpham">
+                <b>{{ dataItem.Barcode }}</b>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </kendo-grid-column>
+  
+      <kendo-grid-column field="WebContentCreated" title="Tác giả bài viết" class="tinhtrang">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div>{{ dataItem.WebContentCreatedBy }}</div>
+          <div>Ngày tạo: {{ dataItem.WebContentCreated | date : 'dd/MM/yyyy' }}</div>
+        </ng-template>
+      </kendo-grid-column>
+  
+      <kendo-grid-column field="WebContentSent" title="Thông tin phê duyệt" class="tinhtrang">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div>Ngày gửi: {{ dataItem.WebContentSent | date : 'dd/MM/yyyy' }}</div>
+          <div>{{ dataItem.WebContentApprovedBy }}</div>
+          <div>Ngày duyệt: {{ dataItem.WebContentApproved | date : 'dd/MM/yyyy' }}</div>
+        </ng-template>
+      </kendo-grid-column>
+  
+      <kendo-grid-column field="StatusID" title="Tình trạng" class="tinhtrang">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div [ngClass]="{'yellow': dataItem.StatusID == 1 || dataItem.StatusID == 4,
+           'green': dataItem.StatusID == 2, 'red': dataItem.StatusID == 3}">
+            {{ dataItem.StatusName }}</div>
+        </ng-template>
+      </kendo-grid-column>
+    </app-p-kendo-grid>
+  </div>
+
+  <kendo-dialog #dialog class="deleteDialog" title="Xóa Bài viết" [hidden]="!deleteDialogOpened"
+    (close)="closeDeleteDialog()" [minWidth]="250">
+    <p style="margin: 30px; text-align: center;">
+      Bạn chắc chắn muốn xóa vĩnh viễn bài viết cho sản phẩm&nbsp;
+      "{{ curWebContent.VNName }}"&nbsp;này?</p>
+    <div class="dialog-footer">
+      <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteDialog()"
+        [icon]="'close'">Không</button>
+      <button kendoButton class="btn-hachi hachi-warning" (click)="delete()" [icon]="'trash'">Có</button>
+    </div>
+  </kendo-dialog>
+
+  <kendo-dialog #dialog class="deleteDialog" title="Xóa các Bài viết Sản phẩm đã chọn"
+    [hidden]="!deleteManyDialogOpened" (close)="closeDeleteDialog()" [minWidth]="250">
+    <div style="margin: 30px; text-align: center;">
+      Bạn chắc chắn muốn xóa vĩnh viễn {{ deleteList.length }} Bài viết Sản phẩm này?
+    </div>
+    <div class="dialog-footer">
+      <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteManyDialog()"
+        [icon]="'close'">Không</button>
+      <button kendoButton class="btn-hachi hachi-warning" (click)="deleteMany()" [icon]="'trash'">Có</button>
+    </div>
+  </kendo-dialog>
+
+
+</div>

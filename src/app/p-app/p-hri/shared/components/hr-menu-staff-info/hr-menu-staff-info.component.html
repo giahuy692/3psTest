@@ -1,0 +1,45 @@
+<div class="body-left">
+  <div class="info-employee">
+    <kendo-label>   {{ employee.LastName || '' }} {{ employee.MiddleName || '' }} {{ employee.FirstName || '' }} </kendo-label>
+    <kendo-label class="positionName">{{employee.CurrentPositionName}}</kendo-label>
+    <div class="avatar">
+      <button kendoButton class="btn-cancel" (click)="openDialog()">x</button>
+     
+      <img loading="lazy" [src]="getImgRes(employee.ImageThumb)"[width]="80" [height]="80" class="img-avatar">
+    </div>
+    <button kendoButton icon="export" class="btn-updateAvt" (click)="onUploadImg()">Cập nhật hình đại
+      diện</button>
+    <kendo-label class="statusName">{{employee.StatusName}}</kendo-label>
+  </div>
+  <div class="side-router">
+    <ul class="list-item">
+      <li class="item" [ngClass]="isActiveMenu('/hri/hr001-staff-detail/1') ? 'active' : ''" 
+      (click)="employee.ProfileID > 0  ? changeMenu('staff-detail') : null">HỒ SƠ NHÂN SỰ</li>
+      <li class="item">CHÍNH SÁCH</li>
+      <li class="item">BHNN & THUẾ TNCN</li>
+      <li class="item">ĐÀO TẠO</li>
+      <li class="item">DỮ LIỆU CÔNG TÁC</li>
+      <li class="item" [ngClass]="isActiveMenu('/hri/hr007-personal-info/1') ? 'active' : ''" (click)="changeMenu('personal-info')">THÔNG TIN CÁ NHÂN</li>
+    </ul>
+</div>
+</div>
+
+
+<app-p-kendo-dialog
+    *ngIf="dialogOpen"
+    [title]="'Xóa Hình ảnh'"
+    [iconTitle]="'k-icon k-i-warning'"
+    [iconButton]="'delete'"
+    [dialogType]="confirm"
+    (close)="closeDialog()"
+    (handleButton)="delImage('ImageThumb')"
+>
+  <div>
+     
+    <p>
+      Bạn chắc chắn muốn xóa vĩnh viễn hình ảnh của nhân sự
+    <b>{{ employee.LastName || '' }} {{ employee.MiddleName || '' }} {{ employee.FirstName || '' }}</b> này?</p>
+
+  </div>
+</app-p-kendo-dialog>
+<app-folder-popup [pickFileCallback]="pickFileCallback" [GetFolderCallback]="GetFolderCallback"></app-folder-popup>

@@ -1,0 +1,843 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+    app-ecom011-channel-group {
+        $primaryERP-color: rgba(26, 102, 52);
+        $primaryErp-selected-color: rgba(26, 102, 52, 0.8);
+        $primaryErp-hover-color: rgba(26, 102, 52, 0.4);
+        $primaryText: #5a6276;
+        $icon-color: #959db3;
+        $dark-grey: #26282e;
+        $bluish-gray: #bdc2d2;
+        $deep-green: #1a6634;
+        $filter-deep-green: brightness(0) saturate(100%) invert(65%) sepia(100%) saturate(5100%) hue-rotate(113deg) brightness(56%) contrast(110%);
+
+
+        .app-drawer-container {
+            .pt-10 {
+                padding-top: 10px;
+            }
+
+            .mt-10 {
+                margin-top: 10px;
+            }
+
+            .mat-drawer-container {
+
+
+                // START CONTENT 
+                .mat-drawer-content {
+                    height: 100%;
+                    padding: 0 15px 15px 15px;
+
+                    .app-ecom011-channel-group {
+
+                        // HEADER
+                        .header {
+                            display: flex;
+                            justify-content: space-between;
+                        }
+
+                        //TREE LIST
+                        .treelist-wrapper {
+                            margin-top: 8px;
+
+                            .k-treelist.k-grid {
+                                border-width: unset !important;
+                                border-style: unset !important;
+
+                                .k-grid-aria-root {
+                                    height: calc(100vh - 170px);
+                                }
+
+                                .k-grid-content {
+                                    overflow-x: hidden !important;
+                                    background-color: unset;
+                                }
+
+                                .child-text {
+                                    margin-left: 20px;
+                                }
+
+                                tr.k-alt {
+                                    background-color: white;
+                                }
+
+                                //selected item
+                                tr.k-selected {
+                                    background-color: rgba(26, 102, 52, 1) !important;
+                                    position: relative !important;
+
+
+                                    .text-name,
+                                    .text-id {
+                                        color: white;
+                                    }
+
+                                    img[src*="icon"] {
+                                        filter: brightness(0) saturate(100%) //chuyển thành màu đen
+                                            invert(100%) sepia(91%) saturate(0%) hue-rotate(320deg) brightness(103%) contrast(105%); //đổi màu;
+                                    }
+
+                                    td {
+                                        border: none;
+                                    }
+
+
+                                }
+
+                                tr.k-selected>td {
+                                    background-color: unset;
+                                }
+
+                                tr {
+                                    background-color: white !important;
+                                    border-top: 4px solid #edeff3 !important;
+                                    border-bottom: 4px solid #edeff3 !important;
+                                    position: relative !important;
+                                    height: 58px;
+
+                                    &:hover {
+                                        background-color: rgba(26, 102, 52, 0.33) !important;
+
+                                        td {
+                                            border: none;
+                                        }
+                                    }
+
+                                    td {
+                                        border: none;
+
+                                        &:first-child .k-icon {
+                                            padding-left: 23px;
+                                            height: 32px;
+                                            width: 32px;
+
+                                            &[class*="caret"]:hover {
+                                                cursor: pointer;
+                                            }
+                                        }
+
+
+                                        .colNameTree {
+                                            display: flex;
+                                            white-space: nowrap;
+                                            overflow: hidden;
+                                            text-overflow: ellipsis;
+
+                                            .italics {
+                                                font-style: italic;
+                                            }
+
+                                            .text-name {
+                                                // width: 450px;
+                                                // padding-right: 80px;
+                                                white-space: nowrap;
+                                                overflow: hidden;
+                                                text-overflow: ellipsis;
+
+                                            }
+
+                                            &.colNameTreeBold {
+                                                .text-name {
+                                                    font-weight: 700;
+                                                    // width: 450px;
+                                                    // padding-right: 80px;
+                                                    white-space: nowrap;
+                                                    overflow: hidden;
+                                                    text-overflow: ellipsis;
+
+                                                }
+                                            }
+
+
+                                            .image-container {
+                                                display: flex;
+                                                flex-wrap: wrap;
+
+                                                .image-wrapper {
+                                                    // width: 40px;
+                                                    height: 30px;
+                                                    display: flex;
+                                                    justify-content: center;
+                                                    align-items: center;
+                                                    position: relative;
+                                                    margin-right: 5px;
+
+                                                    img {
+                                                        height: 30px;
+                                                        max-width: 100%;
+                                                        max-height: 100%;
+                                                        height: auto;
+                                                        width: auto;
+                                                        display: block;
+                                                        margin: auto;
+                                                        object-fit: cover;
+                                                    }
+
+                                                    .overlay {
+                                                        position: absolute;
+                                                        top: 0;
+                                                        left: 0;
+                                                        width: 100%;
+                                                        height: 100%;
+                                                        background-color: rgba(0, 0, 0, 0.5);
+                                                        color: white;
+                                                        display: flex;
+                                                        justify-content: center;
+                                                        align-items: center;
+                                                        font-size: 18px;
+
+                                                        img {
+                                                            position: relative;
+                                                            z-index: 1;
+                                                        }
+
+                                                        .labelOverlay {
+                                                            font-size: 10px;
+
+                                                        }
+                                                    }
+                                                }
+
+
+
+                                            }
+
+
+
+
+
+                                        }
+
+
+                                        // Column 2: Button action
+                                        &:last-child {
+                                            padding: 9px;
+
+                                            .togglePopup {
+                                                &.k-focus.opendPopup {
+                                                    background-color: #bdc2d2 !important;
+                                                    border-radius: 0px 2px 2px 0px;
+
+                                                    .k-button-icon {
+                                                        color: white;
+                                                    }
+                                                }
+
+
+                                            }
+
+                                        }
+
+
+
+                                    }
+                                }
+
+
+
+                                .k-grid-table {
+                                    border-collapse: collapse !important;
+                                    border-color: unset !important;
+                                    border-block-end-width: unset !important;
+                                    border-inline-start-width: unset !important;
+                                    border-style: unset !important;
+                                    padding-inline: unset;
+                                    padding-block: unset;
+                                    height: 58px;
+                                    width: 100%;
+
+                                    &:last-child {
+                                        border-left: 1px solid #edeff3 !important;
+                                        text-align: center;
+                                        height: 58px;
+                                    }
+
+                                    .box-icon {
+                                        cursor: pointer;
+                                        height: 24px;
+                                        text-align: center;
+                                    }
+
+
+                                    .k-table-tbody {
+                                        .k-table-row {
+                                            td:last-child {
+                                                border-left: 1px solid rgba(0, 0, 0, 0.08);
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .k-text-nowrap {
+                                    display: flex;
+                                    align-items: center;
+                                    height: 100%;
+                                }
+
+                                .k-icon {
+                                    height: 100%;
+                                }
+
+                                .colName-icon {
+                                    padding-left: 17px;
+                                    padding-right: 9px;
+                                }
+
+
+                                .text-name {
+                                    color: #5a6276;
+                                    font-weight: 400;
+                                    margin-top: unset;
+                                    margin-bottom: unset;
+
+                                    &.parent {
+                                        font-weight: 700;
+                                    }
+                                }
+
+                                .text-id {
+                                    color: #26282e;
+                                    font-weight: 400;
+                                    width: 147px;
+                                    margin-top: unset;
+                                    margin-bottom: unset;
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+                // END CONTENT 
+
+
+
+
+
+                // START DRAWER 
+                .mat-drawer {
+                    padding: 0 !important;
+                    overflow: hidden;
+
+                    .title-formChannel {
+                        padding: 10px !important;
+                        height: 40px;
+                    }
+
+                    .container-form {
+                        height: calc(100vh - 180px);
+                        overflow-y: auto;
+                        overflow-x: hidden;
+                        margin-bottom: 14px;
+                        padding: 0 10px;
+
+                        .formChannel {
+                            padding: 0 !important;
+
+                            .customLabel {
+
+                                .label {
+                                    margin-bottom: 5px;
+                                    display: flex;
+                                    justify-content: space-between;
+
+
+                                    .labelName {
+                                        font-weight: 700;
+                                        color: #343A40;
+
+                                        .symbol {
+                                            padding-left: 5px;
+                                            color: $dark-red;
+                                            font-weight: bold;
+                                        }
+
+
+                                        .ExpandListChild {
+                                            .blueItalic {
+                                                margin-left: 5px;
+                                                color: #31ADFF;
+                                                font-style: italic;
+                                                font-weight: normal;
+                                                cursor: pointer;
+
+                                                &:hover {
+                                                    opacity: 0.8;
+                                                }
+
+                                                &.hidden {
+                                                    pointer-events: none;
+                                                    cursor: default;
+                                                }
+                                            }
+
+                                            .nonPro {
+                                                cursor: default;
+                                                margin-left: 5px;
+                                                color: #31ADFF;
+                                                font-style: italic;
+                                                font-weight: normal;
+                                            }
+
+                                            img {
+                                                cursor: pointer;
+                                                margin-left: 5px;
+                                                margin-top: -2px;
+
+                                                &:hover {
+                                                    opacity: 0.8;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .labelcn {
+                                    width: 225px;
+                                    margin-bottom: 5px;
+                                    display: flex;
+                                    justify-content: space-between;
+
+
+                                    .labelNamecn {
+                                        width: 100%;
+                                        display: flex;
+                                        justify-content: space-between;
+                                        font-weight: 700;
+                                        color: #343A40;
+
+                                        .symbol {
+                                            padding-left: 5px;
+                                            color: $dark-red;
+                                            font-weight: bold;
+                                        }
+
+
+                                        .ExpandListChild {
+                                            .blueItalic {
+                                                margin-left: 5px;
+                                                color: #31ADFF;
+                                                font-style: italic;
+                                                font-weight: normal;
+                                                cursor: pointer;
+
+                                                &:hover {
+                                                    opacity: 0.8;
+                                                }
+
+                                                &.hidden {
+                                                    pointer-events: none;
+                                                    cursor: default;
+                                                }
+                                            }
+
+                                            .nonPro {
+                                                cursor: default;
+                                                margin-left: 5px;
+                                                color: #31ADFF;
+                                                font-style: italic;
+                                                font-weight: normal;
+                                            }
+
+                                            img {
+                                                cursor: pointer;
+                                                margin-left: 5px;
+                                                margin-top: -2px;
+
+                                                &:hover {
+                                                    opacity: 0.8;
+                                                }
+                                            }
+                                        }
+                                    }
+
+
+                                }
+
+                                .labelPri {
+                                    margin-bottom: 5px;
+
+
+                                    .labelNamePri {
+                                        width: 100%;
+                                        display: flex;
+                                        justify-content: space-between;
+                                        font-weight: 700;
+                                        color: #343A40;
+
+
+                                        .leftSide {
+                                            width: 260px;
+                                            display: flex;
+                                        }
+
+
+                                        .symbol {
+                                            padding-left: 5px;
+                                            color: $dark-red;
+                                            font-weight: bold;
+                                        }
+
+
+                                        .ExpandListChild {
+                                            // margin-left: 6px;
+
+                                            .blueItalic {
+                                                margin-left: 5px;
+                                                color: #31ADFF;
+                                                font-style: italic;
+                                                font-weight: normal;
+                                                cursor: pointer;
+
+                                                &:hover {
+                                                    opacity: 0.8;
+                                                }
+
+                                                &.hidden {
+                                                    pointer-events: none;
+                                                    cursor: default;
+                                                }
+                                            }
+
+                                            .nonPro {
+                                                cursor: default;
+                                                margin-left: 5px;
+                                                color: #31ADFF;
+                                                font-style: italic;
+                                                font-weight: normal;
+                                            }
+
+                                            img {
+                                                cursor: pointer;
+                                                margin-left: 5px;
+                                                margin-top: -2px;
+
+                                                &:hover {
+                                                    opacity: 0.8;
+                                                }
+                                            }
+                                        }
+                                    }
+
+
+                                }
+
+
+                                &:has(.left, .right) {
+                                    display: flex;
+
+                                    .left {
+                                        width: 40%;
+                                    }
+
+                                    .right {
+                                        width: 60%;
+                                        text-align: right;
+
+                                        .checkbox-item {
+                                            label {
+                                                cursor: pointer;
+                                            }
+                                        }
+                                    }
+
+                                }
+
+
+
+                                .main-grid {
+                                    max-height: 272px;
+                                    overflow-y: scroll;
+
+                                    height: 170px;
+                                    white-space: nowrap;
+                                    overflow: scroll;
+
+                                    .item-grid {
+                                        background-color: #EDEFF3;
+                                        height: 31px;
+                                        margin-bottom: 3px;
+                                        display: flex;
+                                        justify-content: space-between;
+                                        align-items: center;
+                                        padding-left: 6px;
+                                        padding-right: 7px;
+
+
+
+                                        .content-item-left {
+                                            // max-width: 250px;
+                                            width: 160px;
+                                            white-space: nowrap;
+                                            overflow: hidden;
+                                            text-overflow: ellipsis;
+                                        }
+
+                                        .content-item-mid {
+                                            width: 100px;
+                                            white-space: nowrap;
+                                            overflow: hidden;
+                                            text-overflow: ellipsis;
+                                        }
+
+                                        .content-item-right {
+                                            width: 100px;
+
+                                            // max-width: 77px;
+                                            white-space: nowrap;
+                                            overflow: hidden;
+                                            text-overflow: ellipsis;
+                                            border: none;
+                                            height: 26px;
+                                            border-radius: 2px;
+
+
+
+                                            .k-numerictextbox {
+                                                height: 26px;
+                                                border: 1px solid rgba(0, 0, 0, 0);
+
+                                                &:hover {
+                                                    input {
+                                                        outline: 1px solid #1a6634 !important;
+                                                    }
+                                                }
+
+                                                &.k-focus {
+                                                    box-shadow: 0 0 0 1px #EDEFF3 !important;
+
+                                                    input {
+                                                        background-color: #ffffff;
+                                                    }
+                                                }
+
+                                                input {
+                                                    margin-right: 0px;
+                                                    border-radius: 2px;
+                                                    border-color: transparent;
+                                                    background-color: #EDEFF3;
+                                                }
+                                            }
+                                        }
+
+                                        &.currentItem {
+                                            color: #1A6634;
+                                        }
+
+                                    }
+
+                                    .notice-grid {
+                                        display: flex;
+                                        justify-content: center;
+                                        color: #26282E;
+                                        font-weight: 700;
+                                    }
+                                }
+
+
+                                .k-dropdowntree {
+
+                                    .nullItem {
+                                        font-style: italic;
+                                        font-size: 10px;
+                                        font-weight: normal;
+
+                                        i {
+                                            display: none;
+                                        }
+
+                                        .k-i-arrow-chevron-up,
+                                        img {
+                                            display: none;
+                                        }
+                                    }
+
+                                    &.disable {
+                                        pointer-events: none;
+                                    }
+                                }
+                            }
+
+                            .ListChannel {
+
+                                .labelTitle {
+                                    font-weight: 700;
+                                    color: #343A40;
+
+                                    .symbol {
+                                        padding-left: 5px;
+                                        color: $dark-red;
+                                        font-weight: bold;
+                                    }
+
+
+                                    .ExpandListChild {
+                                        .blueItalic {
+                                            margin-left: 5px;
+                                            color: #31ADFF;
+                                            font-style: italic;
+                                            font-weight: normal;
+                                            cursor: pointer;
+
+                                            &:hover {
+                                                opacity: 0.8;
+                                            }
+
+                                            &.hidden {
+                                                pointer-events: none;
+                                                cursor: default;
+                                            }
+                                        }
+
+                                        .nonPro {
+                                            cursor: default;
+                                            margin-left: 5px;
+                                            color: #31ADFF;
+                                            font-style: italic;
+                                            font-weight: normal;
+                                        }
+
+                                        img {
+                                            cursor: pointer;
+                                            margin-left: 5px;
+                                            margin-top: -2px;
+
+                                            &:hover {
+                                                opacity: 0.8;
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                                .listChild {
+                                    height: 255px;
+                                    white-space: nowrap;
+                                    overflow: scroll;
+
+                                    .listChild-item {
+                                        padding: 5px 0px;
+                                        display: flex;
+                                        align-items: center;
+
+                                        // justify-content: space-between;
+                                        // width: 250px;
+
+                                        .leftSide {
+                                            label {
+                                                .labelName {
+                                                    cursor: pointer;
+                                                }
+                                            }
+                                        }
+
+                                        .left {
+                                            width: 230px;
+                                            white-space: nowrap;
+                                            overflow: hidden;
+                                            text-overflow: ellipsis;
+
+                                            label {
+                                                margin-bottom: 0px;
+
+                                                .labelName {
+                                                    cursor: pointer;
+                                                }
+                                            }
+                                        }
+
+                                        .cover-Img {
+                                            img {
+                                                height: 20px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .footer-formChannel {
+                        display: flex;
+                        align-items: center;
+                        column-gap: 10px;
+                        height: 36px;
+                        background-color: #ffffff;
+                        padding: 0 10px;
+                    }
+
+
+
+
+                }
+
+                // END DRAWER
+
+
+
+
+            }
+
+            // START DIALOG DELETE OBJECT IN TREE
+            app-p-kendo-dialog {
+                .confirm {
+                    .k-dialog {
+                        .k-dialog-titlebar {
+                            .k-dialog-title {
+                                .titleCustom {
+                                    display: flex;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // END DIALOG DELETE OBJECT IN TREE
+
+            //  START POPUP ACTION MORE  
+            .stylePopup {
+                .k-popup {
+                    width: 210px;
+                    display: flex;
+                    flex-direction: column;
+                    margin: 0;
+                    padding: 0px 0px;
+                    font-size: 14px;
+
+                    .popup-item {
+                        color: #ffffff;
+                        background-color: #bdc2d2;
+                        padding: 6px 6px !important;
+                        padding-right: 10px !important;
+                        display: flex;
+                        align-items: center;
+
+                        span {
+                            padding: 3px 5px !important;
+                        }
+
+                        &:hover {
+                            cursor: pointer;
+                            background-color: #5c6873;
+                        }
+                    }
+                }
+            }
+
+            // END POPUP ACTION MORE
+
+
+        }
+
+
+
+
+
+
+
+
+    }
+}

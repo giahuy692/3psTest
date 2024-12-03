@@ -1,0 +1,355 @@
+.color-white {
+  color: #ffffff;
+}
+
+.color-gray {
+  color: #23282c;
+}
+
+.color-darkblue {
+  color: #39579a;
+}
+
+.color-blue {
+  color: #008cd7;
+}
+
+.color-lightblue {
+  color: #46b1ff;
+}
+
+.color-darkgreen {
+  color: #316e00;
+}
+
+.color-green {
+  color: #649e0f;
+}
+
+.color-lightgreen {
+  color: #8dc63f;
+}
+
+.color-yellowgreen {
+  color: #c1d72e;
+}
+
+.color-yellow {
+  color: #ffc400;
+}
+
+.color-mediumyellow {
+  color: #FFB900;
+}
+
+.color-orangeyellow {
+  color: #ffab00;
+}
+
+.color-lightorange {
+  color: #ff5230;
+}
+
+.color-lightpink {
+  color: #dc3545;
+}
+
+.color-red {
+  color: #d82c12;
+}
+
+.color-badred {
+  color: #EB273A;
+}
+
+.hachi-color-primary-1 {
+  color: #353935;
+}
+
+.hachi-color-primary-2 {
+  color: #868b86;
+}
+
+.hachi-color-primary-3 {
+  color: #8dc63f;
+}
+
+.hachi-color-primary-4 {
+  color: #c1d72e;
+}
+
+.hachi-color-primary-5 {
+  color: #ffffff;
+}
+
+.hachi-color-secondary-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-1 {
+  color: #46b1ff;
+}
+
+.hachi-color-text-2 {
+  color: #868b86;
+}
+
+.hachi-color-text-3 {
+  color: #008cd7;
+}
+
+.hachi-color-text-4 {
+  color: #d82c12;
+}
+
+.hachi-color-text-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-6 {
+  color: #ffffff;
+}
+
+.hachi-color-text-7 {
+  color: #8dc63f;
+}
+
+.hachi-color-text-8 {
+  color: #626662;
+}
+
+.hachi-color-text-10 {
+  color: #ff5230;
+}
+
+.hachi-color-text-9 {
+  color: #bbc0bb;
+}
+
+.hachi-color-text-11 {
+  color: #dc3545;
+}
+
+.hachi-color-text-12 {
+  color: #828282;
+}
+
+::ng-deep #ecom001-online-order {
+  height: calc(93vh - 30px);
+  padding: 0 15px 35px 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+::ng-deep #ecom001-online-order .header .nav-filter {
+  flex-grow: 1;
+}
+
+::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group {
+  flex-grow: 1;
+}
+
+::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group.hachi24-btn-group {
+  flex-grow: 0;
+}
+
+::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group.hachi24-btn-group #hachi_24_btn {
+  border: none;
+  background: none;
+  box-shadow: none;
+  padding-left: 0;
+  height: 32px;
+}
+
+::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group.hachi24-btn-group #hachi_24_btn .k-checkbox {
+  margin-left: 0;
+  margin-right: 8px;
+}
+
+::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group.hachi24-btn-group #hachi_24_btn img {
+  height: 18px;
+}
+
+::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group .channel-btn-group {
+  display: flex;
+  column-gap: 10px;
+  flex-grow: 1;
+}
+
+::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group .k-multiselect {
+  height: 32px;
+}
+
+::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group .k-multiselect .value {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
+::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group .k-multiselect .img {
+  width: 32px;
+  height: 32px;
+}
+
+::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group .k-multiselect .img img {
+  height: 100%;
+  max-height: 32px;
+  max-width: 32px;
+}
+
+::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group .k-multiselect .k-animation-container .k-list li img,
+::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group .k-multiselect .k-animation-container-shown .k-list li img {
+  filter: none;
+}
+
+::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group .k-multiselect .k-animation-container .k-list li.k-selected, ::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group .k-multiselect .k-animation-container .k-list li.k-hover, ::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group .k-multiselect .k-animation-container .k-list li:hover,
+::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group .k-multiselect .k-animation-container-shown .k-list li.k-selected,
+::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group .k-multiselect .k-animation-container-shown .k-list li.k-hover,
+::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group .k-multiselect .k-animation-container-shown .k-list li:hover {
+  background-color: rgba(26, 102, 52, 0.6);
+}
+
+::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group .k-multiselect .k-animation-container .k-list li.k-selected img, ::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group .k-multiselect .k-animation-container .k-list li.k-hover img, ::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group .k-multiselect .k-animation-container .k-list li:hover img,
+::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group .k-multiselect .k-animation-container-shown .k-list li.k-selected img,
+::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group .k-multiselect .k-animation-container-shown .k-list li.k-hover img,
+::ng-deep #ecom001-online-order .header .nav-filter .filter-btn-group .k-multiselect .k-animation-container-shown .k-list li:hover img {
+  filter: none;
+}
+
+::ng-deep #ecom001-online-order .header .nav-crud {
+  flex-grow: 1;
+}
+
+::ng-deep #ecom001-online-order .header .nav-crud .k-dropdown-button li:hover, ::ng-deep #ecom001-online-order .header .nav-crud .k-dropdown-button li.k-hover {
+  background-color: rgba(26, 102, 52, 0.6);
+  color: white;
+}
+
+::ng-deep #ecom001-online-order .header .nav-file {
+  flex-grow: 0;
+}
+
+::ng-deep #ecom001-online-order .k-grid .k-grid-aria-root table {
+  width: 1800px;
+}
+
+::ng-deep #ecom001-online-order .k-grid .madonhang {
+  padding: 0;
+  max-width: 200px;
+  width: 200px;
+}
+
+::ng-deep #ecom001-online-order .k-grid .madonhang .tinhtrang_treo {
+  color: #EB273A;
+}
+
+::ng-deep #ecom001-online-order .k-grid .madonhang .orderdate {
+  font-size: 12px;
+  display: flex;
+  column-gap: 5px;
+}
+
+::ng-deep #ecom001-online-order .k-grid .madonhang img {
+  height: 15px;
+}
+
+::ng-deep #ecom001-online-order .k-grid .tinhtrang {
+  max-width: 110px;
+  width: 110px;
+  color: #5CB800;
+  white-space: normal;
+}
+
+::ng-deep #ecom001-online-order .k-grid .donvixuly {
+  max-width: 150px;
+  width: 150px;
+  white-space: normal;
+}
+
+::ng-deep #ecom001-online-order .k-grid .thoigianxuly {
+  max-width: 130px;
+  width: 130px;
+}
+
+::ng-deep #ecom001-online-order .k-grid .thoigianxuly .ProcessFrom {
+  color: #1a6634;
+}
+
+::ng-deep #ecom001-online-order .k-grid .thoigianxuly .ProcessTime {
+  margin-left: 5px;
+}
+
+::ng-deep #ecom001-online-order .k-grid .thongtingiaohang {
+  padding: 0;
+  max-width: 500px;
+}
+
+@media screen and (max-width: 1400px) {
+  ::ng-deep #ecom001-online-order .k-grid .thongtingiaohang {
+    max-width: 300px;
+    width: 300px;
+  }
+}
+
+::ng-deep #ecom001-online-order .k-grid .thongtingiaohang .ReceivedBy {
+  font-weight: bold;
+}
+
+::ng-deep #ecom001-online-order .k-grid .thongtingiaohang .FullAddress {
+  color: #73818f;
+  white-space: normal;
+}
+
+::ng-deep #ecom001-online-order .k-grid .ChannelImage {
+  padding: 0 0 0 5px;
+}
+
+::ng-deep #ecom001-online-order .k-grid .giatrigiohang {
+  padding-left: 0;
+  max-width: 100px;
+  width: 100px;
+  text-align: center;
+}
+
+::ng-deep #ecom001-online-order .k-grid .giatrigiohang .VATCode {
+  color: #EB273A;
+}
+
+::ng-deep #ecom001-online-order .k-grid .phuongthucthanhtoan {
+  max-width: 100px;
+  padding-right: 40px;
+  white-space: normal;
+}
+
+::ng-deep #ecom001-online-order .k-grid:not(.k-grouping-row) td:first-child {
+  padding-left: 10px;
+}
+
+::ng-deep app-ecom001-online-order #syncOrderDialog form {
+  padding-bottom: 24px;
+}
+
+::ng-deep app-ecom001-online-order #syncOrderDialog form .label {
+  margin: 0;
+  color: #26282e;
+  font-weight: bold;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+::ng-deep app-ecom001-online-order #syncOrderDialog form .k-dropdownlist,
+::ng-deep app-ecom001-online-order #syncOrderDialog form .k-textbox {
+  min-width: 251px;
+  width: 100%;
+}
+
+::ng-deep app-ecom001-online-order #syncOrderDialog form .error {
+  padding-top: 7px;
+  color: #EB273A;
+}
+
+::ng-deep app-ecom001-online-order #syncOrderDialog .k-dialog-content {
+  overflow: visible;
+}

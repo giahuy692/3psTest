@@ -1,0 +1,314 @@
+@charset "UTF-8";
+@font-face {
+  font-family: "icohachi";
+  src: url("fonts/icohachi.eot?6vh9yq");
+  src: url("fonts/icohachi.eot?6vh9yq#iefix") format("embedded-opentype"), url("fonts/icohachi.ttf?6vh9yq") format("truetype"), url("fonts/icohachi.woff?6vh9yq") format("woff"), url("fonts/icohachi.svg?6vh9yq#icohachi") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="hachi-icon-"], [class*=" hachi-icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "icohachi" !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.hachi-icon-brand:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-like:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-list:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-home:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-top:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-hachi24:before {
+  content: "";
+  color: #626763;
+}
+
+.hachi-icon-star:before {
+  content: "";
+  color: #bbc0bb;
+}
+
+.hachi-icon-up:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-down:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-right:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-left:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-heart:before {
+  content: "";
+  color: #626763;
+}
+
+.hachi-icon-information:before {
+  content: "";
+  color: #626763;
+}
+
+.hachi-icon-gift:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-vppdochoi:before {
+  content: "";
+  color: #626763;
+}
+
+.hachi-icon-freephone .path1:before {
+  content: "";
+  color: #8bc541;
+}
+
+.hachi-icon-freephone .path2:before {
+  content: "";
+  margin-left: -0.845703125em;
+  color: #8bc541;
+}
+
+.hachi-icon-freephone .path3:before {
+  content: "";
+  margin-left: -0.845703125em;
+  color: white;
+}
+
+.hachi-icon-maymacphukien:before {
+  content: "";
+  color: #626763;
+}
+
+.hachi-icon-diendientu:before {
+  content: "";
+  color: #626763;
+}
+
+.hachi-icon-ngoaitroidilai:before {
+  content: "";
+  color: #626763;
+}
+
+.hachi-icon-thucpham:before {
+  content: "";
+  color: #626763;
+}
+
+.hachi-icon-mevabe:before {
+  content: "";
+  color: #626763;
+}
+
+.hachi-icon-sapxeptrangtri:before {
+  content: "";
+  color: #626763;
+}
+
+.hachi-icon-suckhoesacdep:before {
+  content: "";
+  color: #626763;
+}
+
+.hachi-icon-giatgiuvesinh:before {
+  content: "";
+  color: #626763;
+}
+
+.hachi-icon-nhabep:before {
+  content: "";
+  color: #626763;
+}
+
+.hachi-icon-combogiftset:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-spkhuyenmai:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-spmoi:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-hangnhatdocdao:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-handbag:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-truck:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-fax:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-phone:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-refesh:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-filterline:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-trashbin:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-eyeopen:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-comment:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-onoff:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-close:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-minus:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-plus:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-roadpath:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-location:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-email:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-pricetag:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-bag:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-calendar:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-scancode:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-package:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-bell:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-user:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-search:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-love:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-introlley:before {
+  content: "";
+  color: #626662;
+}
+
+.hachi-icon-trolley:before {
+  content: "";
+  color: #626662;
+}

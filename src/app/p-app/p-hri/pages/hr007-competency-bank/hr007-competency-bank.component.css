@@ -1,0 +1,896 @@
+.color-white {
+  color: #ffffff;
+}
+
+.color-gray {
+  color: #23282c;
+}
+
+.color-darkblue {
+  color: #39579a;
+}
+
+.color-blue {
+  color: #008cd7;
+}
+
+.color-lightblue {
+  color: #46b1ff;
+}
+
+.color-darkgreen {
+  color: #316e00;
+}
+
+.color-green {
+  color: #649e0f;
+}
+
+.color-lightgreen {
+  color: #8dc63f;
+}
+
+.color-yellowgreen {
+  color: #c1d72e;
+}
+
+.color-yellow {
+  color: #ffc400;
+}
+
+.color-mediumyellow {
+  color: #FFB900;
+}
+
+.color-orangeyellow {
+  color: #ffab00;
+}
+
+.color-lightorange {
+  color: #ff5230;
+}
+
+.color-lightpink {
+  color: #dc3545;
+}
+
+.color-red {
+  color: #d82c12;
+}
+
+.color-badred {
+  color: #EB273A;
+}
+
+.hachi-color-primary-1 {
+  color: #353935;
+}
+
+.hachi-color-primary-2 {
+  color: #868b86;
+}
+
+.hachi-color-primary-3 {
+  color: #8dc63f;
+}
+
+.hachi-color-primary-4 {
+  color: #c1d72e;
+}
+
+.hachi-color-primary-5 {
+  color: #ffffff;
+}
+
+.hachi-color-secondary-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-1 {
+  color: #46b1ff;
+}
+
+.hachi-color-text-2 {
+  color: #868b86;
+}
+
+.hachi-color-text-3 {
+  color: #008cd7;
+}
+
+.hachi-color-text-4 {
+  color: #d82c12;
+}
+
+.hachi-color-text-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-6 {
+  color: #ffffff;
+}
+
+.hachi-color-text-7 {
+  color: #8dc63f;
+}
+
+.hachi-color-text-8 {
+  color: #626662;
+}
+
+.hachi-color-text-10 {
+  color: #ff5230;
+}
+
+.hachi-color-text-9 {
+  color: #bbc0bb;
+}
+
+.hachi-color-text-11 {
+  color: #dc3545;
+}
+
+.hachi-color-text-12 {
+  color: #828282;
+}
+
+::ng-deep app-hr007-competency-bank {
+  display: block;
+  padding: 0 12px;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+::ng-deep app-hr007-competency-bank label {
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+::ng-deep app-hr007-competency-bank app-checkbox-button-group {
+  margin-top: auto;
+}
+
+::ng-deep app-hr007-competency-bank .nav-btn {
+  margin-top: auto;
+}
+
+::ng-deep app-hr007-competency-bank .title {
+  color: #5a6276;
+  min-height: 41px;
+  align-items: center;
+}
+
+::ng-deep app-hr007-competency-bank .col-left {
+  min-width: 292px;
+  max-width: 300px;
+  margin-right: 18px;
+  background-color: #fff;
+}
+
+::ng-deep app-hr007-competency-bank .col-left .remark {
+  color: #5a6276;
+  background-color: #fff !important;
+  padding: 0;
+  width: 100%;
+}
+
+::ng-deep app-hr007-competency-bank .col-left .remark:read-only {
+  outline: none !important;
+  border: none !important;
+}
+
+::ng-deep app-hr007-competency-bank .col-left .remark textarea {
+  background-color: #fff !important;
+}
+
+::ng-deep app-hr007-competency-bank .col-left .remark textarea:read-only {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+::ng-deep app-hr007-competency-bank .k-i-arrow-chevron-up,
+::ng-deep app-hr007-competency-bank .k-i-arrow-chevron-down {
+  cursor: pointer;
+}
+
+::ng-deep app-hr007-competency-bank .k-i-arrow-chevron-up:hover,
+::ng-deep app-hr007-competency-bank .k-i-arrow-chevron-down:hover {
+  color: #5a6276;
+}
+
+::ng-deep app-hr007-competency-bank .button-icon {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+}
+
+::ng-deep app-hr007-competency-bank .button-icon:hover {
+  border: 1px solid;
+}
+
+::ng-deep app-hr007-competency-bank .k-i-plus,
+::ng-deep app-hr007-competency-bank .k-i-save,
+::ng-deep app-hr007-competency-bank .k-i-check-outline {
+  color: #1a6634;
+}
+
+::ng-deep app-hr007-competency-bank .k-i-trash {
+  color: #EB273A;
+}
+
+::ng-deep app-hr007-competency-bank .k-i-redo {
+  color: teal;
+}
+
+::ng-deep app-hr007-competency-bank .k-i-undo {
+  color: #FFB900;
+}
+
+::ng-deep app-hr007-competency-bank .maturity-list {
+  display: flex;
+  margin-top: 20px;
+}
+
+::ng-deep app-hr007-competency-bank .maturity-list .maturity-item .title {
+  color: #bbb;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+::ng-deep app-hr007-competency-bank .maturity-list .maturity-item .remark {
+  color: #5a6276;
+  background-color: #fff !important;
+  padding: 0;
+  width: 100%;
+  height: 71px;
+  max-height: 71px;
+  min-height: 41px !important;
+  overflow-y: auto;
+}
+
+::ng-deep app-hr007-competency-bank .maturity-list .maturity-item .remark:read-only {
+  outline: none !important;
+  border: none !important;
+}
+
+::ng-deep app-hr007-competency-bank .maturity-list .maturity-item .remark textarea {
+  background-color: #fff !important;
+}
+
+::ng-deep app-hr007-competency-bank .maturity-list .maturity-item .remark textarea:read-only {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+::ng-deep app-hr007-competency-bank .maturity-list .maturity-item:not(.col-left) {
+  width: 206px;
+  margin-right: 4px;
+}
+
+::ng-deep app-hr007-competency-bank .maturity-list .maturity-item:not(.col-left) .title {
+  width: 206px;
+  color: #fff;
+  clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 50%, calc(100% - 28px) 100%, 0 100%, 28px 50%);
+}
+
+::ng-deep app-hr007-competency-bank .maturity-list .maturity-item:not(.col-left) .remark {
+  width: 178px;
+}
+
+::ng-deep app-hr007-competency-bank .maturity-list .maturity-item:not(.col-left):nth-child(2) .title {
+  clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 50%, calc(100% - 28px) 100%, 0 100%);
+}
+
+::ng-deep app-hr007-competency-bank .k-button.btn-add-circle {
+  color: #1a6634;
+  background: none;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  margin: auto;
+}
+
+::ng-deep app-hr007-competency-bank .k-button.btn-add-circle .k-icon {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #1a6634;
+  border-radius: 50%;
+}
+
+::ng-deep app-hr007-competency-bank .k-button.btn-add-circle:hover {
+  font-weight: bold;
+}
+
+::ng-deep app-hr007-competency-bank .k-button.btn-add-circle:hover .k-icon {
+  outline: #1a6634 solid 1px;
+}
+
+::ng-deep app-hr007-competency-bank .header .search-btn .k-textbox {
+  width: 202px !important;
+}
+
+::ng-deep app-hr007-competency-bank .header.header-3 {
+  font-size: 13px;
+  white-space: nowrap;
+  border: none;
+  padding: 0;
+  column-gap: 0;
+}
+
+::ng-deep app-hr007-competency-bank .header.header-3 .col-left {
+  display: flex;
+  background: none;
+  margin-right: 0;
+}
+
+::ng-deep app-hr007-competency-bank .header.header-3 .title {
+  font-size: 13px;
+  margin: 0;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 60%;
+  min-width: fit-content;
+  width: 100%;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item {
+  display: flex;
+  margin-bottom: 12px;
+  min-width: fit-content;
+  width: 100%;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .col-left {
+  margin-right: 8px;
+  display: flex;
+  flex-direction: column;
+  max-height: 355px;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .col-left .title {
+  padding: 4px;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .col-left .title .title_top {
+  padding-bottom: 5px;
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .col-left .title .title_top b,
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .col-left .title .title_top .group-order {
+  font-size: 16px;
+  width: 32px;
+  box-shadow: none;
+  border: none;
+  background: none;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .col-left .title .title_top b input,
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .col-left .title .title_top .group-order input {
+  font-weight: bold;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .col-left .title .title_top .group-code {
+  width: 61px;
+  height: 22px;
+  margin-left: 4px;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .col-left .title .title_top .group-code:read-only {
+  border: none !important;
+  outline: none !important;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .col-left .title .title_top .group-code .k-input-inner {
+  width: 61px;
+  height: 22px;
+  font-weight: bold;
+  color: white;
+  font-size: 16px;
+  text-align: center;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .col-left .title .title_top .btn-group {
+  margin-left: auto;
+  font-weight: bold;
+  visibility: hidden;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .col-left .title .title_top .btn-group .k-icon {
+  margin-left: 6px;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .col-left .title .title_top .group-number {
+  margin-left: 6px;
+  margin-right: 6px;
+  padding-left: 6px;
+  border-left: 2px solid #c4c4c4;
+  white-space: nowrap;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .col-left .title .title_top:hover .btn-group {
+  visibility: visible;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .col-left .title .group-name {
+  height: fit-content;
+  margin-left: -5px;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .col-left .title .group-name:read-only {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .col-left .title .group-name .k-input-inner {
+  height: fit-content;
+  font-weight: bold;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .col-left .remark {
+  flex-grow: 1;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list {
+  display: flex;
+  flex-direction: column;
+  min-width: fit-content;
+  width: 100%;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-button.btn-add-circle {
+  min-height: 41px;
+  width: fit-content;
+  margin-left: 482px;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid .k-grid-aria-root {
+  overflow-x: auto;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid .k-grid-header {
+  display: none;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid .k-grid-content {
+  background: none;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table {
+  background-color: #f0f3f5;
+  min-width: 1042px !important;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table.k-grid-table {
+  padding: 29px 0;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table thead {
+  display: none;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr {
+  height: 58px;
+  max-height: 58px;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td {
+  height: 58px;
+  max-height: 58px;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td:first-child:not(.content) {
+  display: none;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td.content {
+  padding-left: 10px;
+  width: 99%;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td.action {
+  top: 10px;
+  right: 5%;
+  box-shadow: none;
+  background: none;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td.action .btnCell {
+  height: 100%;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .title {
+  display: flex;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .title .group-order {
+  width: 32px;
+  box-shadow: none;
+  border: none;
+  margin-right: 4px;
+  background: none;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .title .group-order input {
+  font-weight: bold;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .title .group-code {
+  height: 27px;
+  min-width: 44px;
+  max-width: 103px;
+  width: fit-content;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%);
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .title .group-code:read-only {
+  border: none !important;
+  outline: none !important;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .title .group-code .k-input-inner {
+  height: 27px;
+  font-weight: bold;
+  color: white;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .title .orderby {
+  width: 32px;
+  border: none;
+  box-shadow: none;
+  margin-right: 4px;
+  background: none;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .title .orderby input {
+  font-weight: bold;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .title .group-name {
+  display: flex;
+  flex-direction: column;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .title .group-name .name {
+  height: fit-content;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .title .group-name .name:read-only {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: none !important;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .title .group-name .name .k-input-inner {
+  font-weight: bold;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .title .group-name .status {
+  padding-left: 4px;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .title .group-name .status div {
+  display: inline;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .title .btn-group {
+  font-weight: bold;
+  visibility: hidden;
+  margin-right: 6px;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .title .btn-group .k-icon {
+  margin-left: 6px;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .title:hover .btn-group {
+  visibility: visible;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .title .group-remark {
+  flex-grow: 1;
+  border: none;
+  box-shadow: none;
+  background: none;
+  height: 100%;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .aspectItem .title {
+  background-color: #edeff3;
+  padding: 9px 7px;
+  margin-top: 16px;
+  margin-bottom: 9px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .aspectItem .title .code {
+  min-width: 44px;
+  max-width: 103px;
+  margin-right: 15px;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .aspectItem .title .name:read-only {
+  box-shadow: none;
+  border: none;
+  background: none;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .aspectItem .title .k-i-trash {
+  margin-left: 6px;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .aspectItem .title .k-textbox .k-input-inner {
+  background-color: #edeff3;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .aspectItem .remarkList {
+  display: flex;
+  column-gap: 32px;
+  width: 100%;
+  min-width: fit-content;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .aspectItem .remarkList .sectorItem {
+  width: 178px;
+  display: flex;
+  flex-direction: column;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .aspectItem .remarkList .sectorItem .k-textarea {
+  padding: 5px;
+  background-color: #edeff3;
+  outline: none;
+  box-shadow: none;
+  width: 100%;
+  height: 119px;
+  resize: none;
+  border-bottom: none !important;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .aspectItem .remarkList .sectorItem .k-textbox,
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .aspectItem .remarkList .sectorItem .k-numerictextbox,
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .aspectItem .remarkList .sectorItem .k-numeric-wrap {
+  background-color: #edeff3;
+  outline: none;
+  box-shadow: none;
+  flex-grow: 1;
+  min-width: 0;
+  max-width: 100%;
+  border-radius: 0;
+  text-align: center;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .aspectItem .remarkList .sectorItem .k-textbox .k-input,
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .aspectItem .remarkList .sectorItem .k-textbox .k-input-inner,
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .aspectItem .remarkList .sectorItem .k-numerictextbox .k-input,
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .aspectItem .remarkList .sectorItem .k-numerictextbox .k-input-inner,
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .aspectItem .remarkList .sectorItem .k-numeric-wrap .k-input,
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .aspectItem .remarkList .sectorItem .k-numeric-wrap .k-input-inner {
+  text-align: center;
+  box-shadow: none;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .aspectItem .remarkList .sectorItem .k-numerictextbox {
+  border-left: none !important;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .aspectItem .remarkList .sectorItem .question_percent .question {
+  color: #1a6634;
+  width: 75%;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .aspectItem .remarkList .sectorItem .question_percent .percent {
+  font-weight: bold;
+  width: 25%;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .aspectItem .remarkList .sectorItem .code_point .code,
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid table tr td .aspectItem .remarkList .sectorItem .code_point .point {
+  width: 50%;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid .k-grid-pager {
+  height: 100%;
+  width: fit-content;
+  background: none;
+  border: none;
+  position: absolute;
+  left: 550px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: visible;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid .k-grid-pager kendo-pager-prev-buttons {
+  margin-top: -9px;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid .k-grid-pager kendo-pager-prev-buttons .k-pager-first {
+  display: none;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid .k-grid-pager kendo-pager-prev-buttons .k-icon::before {
+  content: "\e013" !important;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid .k-grid-pager kendo-pager-next-buttons {
+  margin-bottom: -9px;
+  margin-top: auto;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid .k-grid-pager kendo-pager-next-buttons .k-pager-last {
+  display: none;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list .k-grid .k-grid-pager kendo-pager-next-buttons .k-icon::before {
+  content: "\e015" !important;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list.colapse .k-grid {
+  display: none;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list.colapse.hasChild .btn-add-circle {
+  display: none;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list.colapse.hasChild .k-grid {
+  display: flex;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list.colapse.hasChild .k-grid .k-grid-table {
+  padding: 0;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list.colapse.hasChild .k-grid tbody tr {
+  display: none;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list.colapse.hasChild .k-grid tbody tr:first-child {
+  display: table-row;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list.colapse.hasChild .k-grid .k-grid-pager {
+  display: none;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list.expand .btn-add-circle {
+  display: flex;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list.expand .k-grid {
+  display: flex;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list.expand .k-grid .k-grid-table {
+  padding: 29px 0;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list.expand .k-grid tbody tr {
+  display: table-row;
+}
+
+::ng-deep app-hr007-competency-bank .competency-group-list .competency-group-item .competency-list.expand .k-grid .k-grid-pager {
+  display: flex;
+}
+
+::ng-deep app-hr007-competency-bank #dialogQuestionList .k-dialog {
+  max-height: 90%;
+}
+
+::ng-deep app-hr007-competency-bank #dialogQuestionList .k-dialog-content {
+  padding: 16px 0;
+}
+
+::ng-deep app-hr007-competency-bank #dialogQuestionList .k-dialog-content > div:not(.grid-wrapper) {
+  margin: 0 16px;
+}
+
+::ng-deep app-hr007-competency-bank #dialogQuestionList .k-dialog-content > div:not(.grid-wrapper) .aspect {
+  margin-left: 18px;
+}
+
+::ng-deep app-hr007-competency-bank #dialogQuestionList .k-dialog-content > div:not(.grid-wrapper) .aspect .sector {
+  margin-left: 18px;
+  margin-bottom: 18px;
+}
+
+::ng-deep app-hr007-competency-bank #dialogQuestionList .k-dialog-content .search-btn {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+::ng-deep app-hr007-competency-bank #dialogQuestionList .k-dialog-content .search-btn .k-i-search {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+
+::ng-deep app-hr007-competency-bank #dialogQuestionList .k-dialog-content .search-btn .k-textbox,
+::ng-deep app-hr007-competency-bank #dialogQuestionList .k-dialog-content .search-btn .k-combobox {
+  flex-grow: 1;
+  padding-left: 33px;
+}
+
+::ng-deep app-hr007-competency-bank #dialogQuestionList .k-dialog-content .search-btn .onAddBtn {
+  min-width: fit-content;
+  margin-left: 6px;
+}
+
+::ng-deep app-hr007-competency-bank #dialogQuestionList .k-dialog-content .k-grid .k-grid-content {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+::ng-deep app-hr007-competency-bank #dialogQuestionList .k-dialog-content .k-grid thead {
+  display: none;
+}
+
+::ng-deep app-hr007-competency-bank #dialogQuestionList .k-dialog-content .k-grid tbody tr td.content_col {
+  padding-left: 12px;
+  padding-right: 0;
+  min-width: fit-content;
+  width: 100%;
+  max-width: 100%;
+  font-size: 13px;
+}
+
+::ng-deep app-hr007-competency-bank #dialogQuestionList .k-dialog-content .k-grid tbody tr td.content_col .content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+::ng-deep app-hr007-competency-bank #dialogQuestionList .k-dialog-content .k-grid tbody tr td.content_col .content > div {
+  max-width: 90%;
+}
+
+::ng-deep app-hr007-competency-bank #dialogQuestionList .k-dialog-content .k-grid tbody tr td.content_col .content > div b {
+  white-space: normal;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+::ng-deep app-hr007-competency-bank #dialogQuestionList .k-dialog-content .k-grid tbody tr td:last-child {
+  display: none;
+}
+
+::ng-deep app-hr007-competency-bank #dialogQuestionList .k-dialog-content .k-grid tbody tr td .k-i-trash {
+  height: 36px;
+  width: 36px;
+  margin-right: 12px;
+}
+
+::ng-deep app-hr007-competency-bank #dialogQuestionList .k-dialog-content .k-grid tbody tr td .k-i-trash:hover {
+  border: 1px solid;
+}
+
+::ng-deep app-hr007-competency-bank #dialogQuestionList .k-dialog-content .k-grid .k-grid-pager {
+  position: initial;
+  bottom: initial;
+  margin-right: initial;
+}

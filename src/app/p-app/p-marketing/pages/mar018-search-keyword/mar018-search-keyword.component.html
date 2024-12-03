@@ -1,0 +1,233 @@
+<div class="app-drawer-container">
+    <mat-drawer-container [hasBackdrop]="true">
+        <mat-drawer-content>
+            <div class="app-mar018-search-keyword">
+                <!-- Header 1 -->
+                <div class="header header-1">
+                    <!-- Button for status filter -->
+                    <ng-container *ngFor="let item of listStatusID.slice(0, 3); let  i = index">
+                        <button kendoButton class="k-button checkbox-btn-group" [togglable]="isFilterActive"
+                            [selected]="item.isChecked" (selectedChange)="selectedBtnChange($event, i)">
+                            {{item.status}}
+                            <input type="checkbox" class="k-checkbox" [checked]="item.isChecked" disabled>
+                        </button>
+                    </ng-container>
+
+                    <div class="nav-btn nav-crud" style="flex-grow: 1;">
+                        <button kendoButton class="k-button btn-hachi hachi-primary" [disabled]="!isFilterActive"
+                            [icon]="'plus'" *ngIf="isCreator || isMaster" (click)="onAdd(true, false)">
+                            TẠO MỚI
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Header 2 -->
+                <div class="header header-2">
+                    <div class="nav-filter nav-btn">
+                        <!-- Filter (column 1) -->
+                        <div class="filter-btn-group clear-btn-group">
+                            <div class="label">
+                                <span class="k-icon k-i-filter"></span>Lọc dữ liệu
+                            </div>
+
+                            <button kendoButton class="k-button clear-filter-btn" (click)="resetFilter()">
+                                Reset bộ lọc
+                            </button>
+                        </div>
+
+                        <!-- Search (column 2) -->
+                        <form [formGroup]="searchForm" style="display: flex;">
+                            <div class="filter-btn-group search-btn-group">
+                                <div class="label">
+                                    Tìm kiếm
+                                </div>
+
+                                <div class="search-btn">
+                                    <span class="k-icon k-i-search"></span>
+
+                                    <kendo-textbox formControlName="SearchQuery" #SearchQuery type="text"
+                                        class="k-textbox" placeholder="Tìm theo tên keyword" [clearButton]="true">
+                                    </kendo-textbox>
+                                </div>
+                            </div>
+
+                            <button kendoButton class="k-button searchBtn" [icon]="'search'" (click)="search()"
+                                [disabled]="!isFilterActive">
+                                TÌM
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="grid-wrapper">
+                    <app-p-kendo-grid class="grid scrollable" [data]="gridView | async" [scrollable]="'none'"
+                        [loading]="loading" [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize"
+                        [skip]="gridState.skip" [take]="gridState.take" [sortable]="true" [sort]="gridState.sort"
+                        [onPageChangeCallback]="onPageChangeCallback" [onSortChangeCallback]="onSortChangeCallback"
+                        [allowedMoreActionDropdown]="allowActionDropdown"
+                        [getActionDropdownCallback]="getActionDropdownCallback"
+                        [onActionDropdownClickCallback]="onActionDropdownClickCallback" [selectable]="selectable"
+                        [onSelectCallback]="onSelectCallback" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+                        [getSelectionPopupCallback]="getSelectionPopupCallback">
+                        <kendo-grid-column title="Keyword" field="KeywordVN">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div style="display: flex; align-items: center; column-gap: 1%;">
+                                    <div class="img">
+                                        <img loading="lazy" *ngIf="validImg( dataItem.ImageThumb)" src='{{dataItem.ImageThumb}}'>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column;">
+                                        <b>{{dataItem.KeywordVN}}</b>
+                                        <span style="white-space: nowrap;">
+                                            {{dataItem.StartDate | date: 'd/M/yyyy'}}
+                                            <ng-container *ngIf="dataItem.FinishDate">
+                                                - {{dataItem.FinishDate | date: 'd/M/yyyy'}}
+                                            </ng-container>
+                                        </span>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <kendo-grid-column title="Đường dẫn" field="AliasVN" class="Alias">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <a href="{{dataItem.AliasVN}}" target="_blank"
+                                    [title]="dataItem.AliasVN">{{dataItem.AliasVN}}</a>
+                                <div *ngIf="dataItem.CreateTime != null && dataItem.CreateTime != ''">
+                                    Ngày tạo: {{dataItem.CreateTime | date: 'd/M/yyyy'}}</div>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <kendo-grid-column class="col_status" title="Tình trạng" field="StatusID">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div [ngClass]="{'yellow': dataItem.StatusID == 1, 'green': dataItem.StatusID == 2, 
+                            'red': dataItem.StatusID == 3 || dataItem.StatusID == 4}">
+                                    {{ dataItem.StatusName }}</div>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <kendo-grid-column title="Thứ tự hiển thị" field="OrderBy" class="OrderBy">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div>{{dataItem.OrderBy}}</div>
+                            </ng-template>
+                        </kendo-grid-column>
+                    </app-p-kendo-grid>
+                </div>
+
+                <kendo-dialog #dialog class="deleteDialog" title="Xóa keyword" [hidden]="!deleteDialogOpened"
+                    (close)="deleteDialogOpened = false" [minWidth]="250">
+                    <p style="margin: 30px; text-align: center;">
+                        Bạn chắc chắn muốn xóa vĩnh viễn Keyword <b>{{Keyword.KeywordVN}}</b> này?</p>
+                    <div class="dialog-footer">
+                        <button kendoButton class="btn-hachi hachi-secondary" (click)="deleteDialogOpened = false"
+                            [icon]="'close'">Không</button>
+                        <button kendoButton class="btn-hachi hachi-warning" (click)="DeleteKeyword()"
+                            [icon]="'trash'">Có</button>
+                    </div>
+                </kendo-dialog>
+
+                <kendo-dialog #dialog class="deleteDialog" title="Xóa các keyword đã chọn"
+                    [hidden]="!deleteManyDialogOpened" [minWidth]="250" (close)="closeDeleteDialog()">
+                    <div style="margin: 30px; text-align: center;">
+                        {{ listUpdateKeyword.length }} Keyword bị xóa<br>
+                        sẽ <b><span style="color: #FD7676">KHÔNG</span></b> thể khôi phục lại
+                    </div>
+                    <div class="dialog-footer">
+                        <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteManyDialog()"
+                            [icon]="'close'">Không</button>
+                        <button kendoButton class="btn-hachi hachi-warning" (click)="deleteMany()"
+                            [icon]="'trash'">Có</button>
+                    </div>
+                </kendo-dialog>
+            </div>
+        </mat-drawer-content>
+        <mat-drawer #formDrawer [mode]="'over'" position="end">
+            <form class="formKeyword k-form" [formGroup]="searchKeywordForm" (keydown.Enter)="keydownEnter($event)">
+                <fieldset>
+                    <legend>KEYWORD HIỂN THỊ TÌM KIẾM</legend>
+                    <div class="search-keyword-form">
+                        <div class="image-container" style="margin-top: 10px;">
+                            <div class="first">
+                                <kendo-label text="Hình đại diện"></kendo-label>
+                                <button [disabled]="Keyword.StatusID == 2" kendoButton [icon]="'export'"
+                                    (click)="onUploadImg()" class="btn-hachi hachi-primary hachi-secondary"></button>
+                            </div>
+                            <div class="second">
+                                <img loading="lazy" src="{{Keyword.ImageThumb}}" />
+                                <button [disabled]="Keyword.StatusID == 2"
+                                    class="btn-hachi hachi-warning hachi-secondary" [icon]="'minus-outline'"
+                                    (click)="onClearImg()" kendoButton>
+                                </button>
+                            </div>
+                        </div>
+                        <kendo-formfield>
+                            <kendo-label text="Keyword" [for]="SearchKeyword"></kendo-label>
+                            <kendo-textbox #SearchKeyword formControlName="SearchKeyword"
+                                [(ngModel)]="Keyword.KeywordVN" [disabled]="isLockAll"></kendo-textbox>
+                        </kendo-formfield>
+
+                        <kendo-formfield *ngIf="isAdd || !isLockAll">
+                            <kendo-label text="Đường dẫn tham chiếu (link)" [for]="KeywordAlias"></kendo-label>
+                            <kendo-textbox #KeywordAlias formControlName="KeywordAlias" [(ngModel)]="Keyword.AliasVN"
+                                [disabled]="isLockAll"></kendo-textbox>
+                            <!-- <kendo-formerror></kendo-formerror> -->
+                        </kendo-formfield>
+
+                        <div *ngIf="!isAdd && isLockAll" style="margin-top: 10px;">
+                            <kendo-label text="Đường dẫn tham chiếu (link)"></kendo-label>
+                            <a href="{{Keyword.AliasVN}}" target="_blank"
+                                style="word-break: break-all;">{{Keyword.AliasVN}}</a>
+                        </div>
+
+                        <div style="margin-top: 10px;">
+                            <kendo-label text="Thời gian hiển thị"></kendo-label>
+                            <div class="date-picker-container">
+                                <kendo-datepicker #StartDate formControlName="StartDate" [(ngModel)]="startDate"
+                                    [format]="'d/M/yyyy'" [formatPlaceholder]="{ year: 'yyyy', month: 'M', day: 'd' }"
+                                    placeholder="d/M/yyyy" [disabled]="isLockAll" [max]="finishDate">
+                                </kendo-datepicker>
+                                <kendo-datepicker #FinishDate formControlName="FinishDate" [(value)]="finishDate"
+                                    [format]="'d/M/yyyy'" [formatPlaceholder]="{ year: 'yyyy', month: 'M', day: 'd' }"
+                                    placeholder="d/M/yyyy" [disabled]="isLockAll" [min]="startDate">
+                                </kendo-datepicker>
+                            </div>
+                        </div>
+
+                        <div class="group-input">
+                            <kendo-formfield>
+                                <kendo-label text="Thứ tự hiển thị" [for]="OrderBy"></kendo-label>
+                                <kendo-numerictextbox #OrderBy format="n0" formControlName="OrderBy"
+                                    [(ngModel)]="Keyword.OrderBy" [disabled]="isLockAll"></kendo-numerictextbox>
+                                <!-- <kendo-formerror></kendo-formerror> -->
+                            </kendo-formfield>
+
+                            <div class="k-form-field">
+                                <kendo-label text="Số lượt click" ></kendo-label>
+                                <div class="noOfClick">{{ 0 | number: '1.'}}</div>
+                            </div>
+                        </div>
+
+                        <kendo-formfield>
+                            <kendo-label text="Tình trạng" [for]="StatusID"></kendo-label>
+                            <kendo-dropdownlist #StatusID [data]="listStatusDropdown" textField="StatusName"
+                                valueField="OrderBy" [popupSettings]="{appendTo:'component'}" [valuePrimitive]="true"
+                                [value]="initialKeyword.StatusID" (valueChange)="Keyword.StatusID=$event"
+                                formControlName="StatusID" [itemDisabled]="isItemDisabled">
+                            </kendo-dropdownlist>
+                        </kendo-formfield>
+
+                        <div class="k-form-buttons">
+                            <button kendoButton class="k-button closeBtn" (click)="closeForm()">
+                                Đóng
+                            </button>
+                            <button kendoButton class="k-button updateBtn" (click)="updateKeyword(Keyword)">
+                                {{isAdd ? 'THÊM MỚI' : 'CẬP NHẬT'}}
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </mat-drawer>
+    </mat-drawer-container>
+</div>
+
+<app-folder-popup [pickFileCallback]="pickFileCallback" [GetFolderCallback]="GetFolderCallback"></app-folder-popup>

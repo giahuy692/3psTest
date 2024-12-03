@@ -1,0 +1,28 @@
+<div class="app-portal002-new-detail">
+  <div class="header header-1">
+    <div class="left-side">
+
+      <img loading="lazy" class="logo-icon" src="assets/img/icon/hachi_bee.svg" (click)="onNavigate()" />
+
+
+      <div class="navigation-wrapper">
+        <app-p-kendo-breadcrumb></app-p-kendo-breadcrumb>
+      </div>
+
+    </div>
+    <div class="right-side">
+      <div class="nav-btn nav-crud">
+        <button kendoButton class="k-button onAddBtn" [icon]="'undo'" (click)="onReturn()">
+          QUAY VỀ
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <h1>{{dataNew.TitleVN}}</h1>
+    <div class="news-time">Ngày cập nhật: {{dataNew.LastModifiedTime | date:'dd/MM/yyyy'}}</div>
+    <div class="content" [innerHTML]="getSafeContent()">
+
+    </div>
+  </div>
+</div>

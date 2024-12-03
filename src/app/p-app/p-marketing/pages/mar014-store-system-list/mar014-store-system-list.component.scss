@@ -1,0 +1,168 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+    .app-mar014-store-system-list {
+        height: calc(100vh - #{$footer-height});
+        padding: 0 15px 35px 20px;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: scroll;
+
+        .header.header-2 {
+            .nav-btn {
+                align-items: stretch;
+                column-gap: 2%;
+
+                .searchBtn {
+                    margin-top: auto;
+                }
+            }
+
+            .k-multiselect {
+                min-width: 222px;
+            }
+        }
+        
+        .section-grid {
+            display: grid;
+            grid-template-columns: auto 150px auto;
+            gap: 10px;
+
+            .grid1_1 {
+                grid-row: 1;
+                grid-column: 1 / span 3;
+            }
+            .grid2_1 {
+                grid-row: 2;
+                grid-column: 1 / span 3;
+            }
+            .grid3_1 {
+                grid-row: 3 / span 4;
+                grid-column: 1 / span 2;
+
+                .label {
+                    display: flex;
+                    column-gap: 5px;
+                    align-items: stretch;
+                }
+            }
+            .grid3_3 {
+                grid-row: 3;
+                grid-column: 3;
+            }
+            .grid4_3 {
+                grid-row: 4;
+                grid-column: 3;
+            }
+            .grid5_1 {
+                grid-row: 5;
+                grid-column: 1 / span 3;
+            }
+
+            .nav-btn {
+                margin-top: 60px;
+
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+            }
+            .txtbox,
+            .province {
+                width: 100%;
+            }
+            .map_img {
+                width: 100%;
+                height: 100%;
+
+                max-width: 150px;
+                max-height: 150px;
+            }
+        }
+        .k-dialog-titlebar {
+            background-color: green;
+        }
+        .k-window-title {
+            justify-content: center;
+        }
+        .myCustomGrid.k-grid tr td {
+            white-space: normal;
+        }
+        .col_name {
+            width: 300px;
+            max-width: 500px;
+
+            .name {
+                width: max-content;
+                max-width: 500px;
+
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
+        }
+        .col_address {
+            width: 400px;
+            max-width: 500px;
+
+            .address {
+                width: max-content;
+                max-width: 500px;
+
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
+        }
+        .col_map {
+            max-width: 80px;
+            max-height: 80px;
+            height: 80px;
+        }
+        .myCustomGrid.k-grid tr td img {
+            max-width: 80px;
+            max-height: 80px;
+            width: 100%;
+        }
+        .col_phone {
+            width: 300px;
+            max-width: 500px;
+            white-space: nowrap !important;
+
+            .phone {
+                width: max-content;
+                max-width: 500px;
+
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
+        }
+        .col_nguoiTao {
+            white-space: nowrap !important;
+            width: max-content;
+        }
+        .red {
+            color: red;
+        }
+        .yellow {
+            color: rgb(255, 123, 0);
+        }
+        .green {
+            color: green;
+        }
+        .k-list-container .k-button:hover,
+        .k-list-container .k-button {
+            background-color: transparent;
+        }
+    }
+}

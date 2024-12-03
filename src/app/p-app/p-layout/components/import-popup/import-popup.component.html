@@ -1,0 +1,131 @@
+<kendo-dialog #importDialogPopup title="tải lên" [style.display]="importDialogDisplay()" (close)="closeImportDialog()"
+    [minWidth]="250" id="importDialogPopup">
+    <!-- <div id="import-popup"> -->
+    <!-- <div id="header">
+            tải lên
+        </div> -->
+
+    <div id="body" [style.padding]="bodyDisplay()">
+        <div id="innerBorder" #innerBorder [style.opacity]="innerBorderDisplay()">
+            <kendo-uploaddropzone id="uploaddropzone" zoneId="selectImportFile">
+            </kendo-uploaddropzone>
+        </div>
+        <div id="innerBody" [style.paddingTop]="innerBodyPaddingTop()">
+            <div id="instruction">
+                <div #texts id="texts" [style.display]="instructionTextsDisplay()">
+                    <div class="text">
+                        kéo tệp vào đây
+                    </div>
+                    <div class="text">
+                        hoặc có thể
+                    </div>
+                </div>
+                <!-- <button kendoButton id="selectImportFile" class="k-button" (click)="importInput.click()">
+                    <span>chọn từ thiết bị</span>
+                </button>
+                <input #importInput hidden id="importInput" type="file" multiple="false"
+                    (change)="onUploadExcel($event)" accept=".xls,.xlsx"> -->
+
+                <kendo-fileselect #selectImportFile id="selectImportFile" zoneId="selectImportFile"
+                    [showFileList]="true" [multiple]="false" accept=".xls,.xlsx" [restrictions]="restrictions"
+                    (select)="onUploadExcel($event)">
+                    <kendo-fileselect-messages [select]="'chọn từ thiết bị'" [dropFilesHere]="''"
+                        [invalidFileExtension]="'File không đúng định dạng.'">
+                    </kendo-fileselect-messages>
+
+                    <ng-template kendoFileSelectFileTemplate let-files let-state="state">
+                        <div [style.display]="invalidFormatDisplay()">
+                            <div class="file-validation-message">File không đúng định dạng.</div>
+                            <button id="returnBtn" (click)="removeFile(selectImportFile, files[0].uid)"
+                                class="k-button">
+                                <!-- *ngIf="showButton(state)" -->
+                                Quay lại
+                            </button>
+                        </div>
+
+                        <div id="importGridDiv" #importGridDiv [style.display]="mode == 4 ? 'block': 'none'">
+                            <div id="fileInfo">
+                                <span class="file-info">File: {{ files[0].name }}</span>
+                                <button id="returnBtn" (click)="removeFile(selectImportFile, files[0].uid)"
+                                    class="k-button">
+                                    Quay lại
+                                </button>
+                            </div>
+                            <div class="grid-div">
+                                <kendo-grid [data]="importGridDSView | async" [style.maxHeight.px]="400"
+                                    [loading]="loading" (pageChange)="pageChange($event)" [pageSize]="pageSize"
+                                    [pageable]="true" [skip]="importGridDSState.skip" [take]="importGridDSState.take" class="scrollable">
+                                    <!-- (sortChange)="sortChange($event)" [sort]="importGridDSState.sort"
+                               [sortable]="{allowUnsort: true}" [scrollable]="'none'" -->
+                                    <!--  (filterChange)="filterChange($event)" filterable="menu" [filter]="importGridDSState.filter" [rowClass]="rowCallback" -->
+                                    <!-- <kendo-grid-checkbox-column width="48"> -->
+                                    <!-- <ng-template kendoGridHeaderTemplate let-idx="rowIndex">
+                                        <input [kendoGridSelectionCheckbox]="idx" />
+                                    </ng-template> -->
+
+                                    <!-- <ng-template kendoGridCellTemplate let-idx="rowIndex">
+                                        <input [kendoGridSelectionCheckbox]="idx" />
+                                    </ng-template>
+                                </kendo-grid-checkbox-column> -->
+
+                                    <!-- <kendo-grid-column title="kì lương" field="Period"></kendo-grid-column> -->
+                                    <!-- <kendo-grid-column title="ngạch lương" field="RateLabel"></kendo-grid-column>
+                                <kendo-grid-column title="bậc lương" field="RangeLabel"></kendo-grid-column>
+                                <kendo-grid-column title="lương thực nhận" field="ReceiveSalary">
+                                    <ng-template kendoGridCellTemplate let-item>
+                                        {{ item.ReceiveSalary | number:'1.0-0' }}
+                                    </ng-template>
+                                </kendo-grid-column> -->
+
+                                    <!-- <kendo-grid-column>
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <div class="btnCell">
+                                            <button kendoButton #anchor (click)="togglePopup(rowIndex, dataItem)" 
+                                                class="k-button k-button-icon" icon="more-horizontal"></button>
+                                        </div>
+                                    </ng-template>
+                                </kendo-grid-column> -->
+
+                                    <ng-template kendoPagerTemplate let-totalPages="totalPages"
+                                        let-currentPage="currentPage">
+                                        Hiển thị mỗi trang
+                                        <kendo-pager-page-sizes [pageSizes]="[pageSize]"></kendo-pager-page-sizes>
+                                        <kendo-pager-prev-buttons class="k-pager-nav-btn"></kendo-pager-prev-buttons>
+                                        <kendo-pager-numeric-buttons [buttonCount]="4"></kendo-pager-numeric-buttons>
+                                        <kendo-pager-next-buttons class="k-pager-nav-btn"></kendo-pager-next-buttons>
+                                    </ng-template>
+
+                                    <kendo-grid-messages [pagerItemsPerPage]="''"></kendo-grid-messages>
+                                </kendo-grid>
+                            </div>
+                        </div>
+                    </ng-template>
+                </kendo-fileselect>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer">
+        <button kendoButton id="closeImportPopupBtn" (click)="closeImportDialog()" class="k-button">
+            <span>hủy</span>
+        </button>
+        <button kendoButton id="uploadImportPopupBtn" class="k-button " [ngClass]="{'disabled': mode != 4}">
+            <!-- (click)="importGroupBanner()" -->
+            <span>tải lên</span>
+        </button>
+    </div>
+    <!-- </div> -->
+
+
+    <!-- popup import excel -->
+    <!-- <kendo-dialog #importDialog title="Import Excel" [style.visibility]="importDialogVisible()"
+    (close)="closeImportDialog()" [minWidth]="250" id="importDialog"> -->
+
+    <!-- <ng-content select=".kendo-import-dialog-grid-div"></ng-content> -->
+
+    <!-- <kendo-dialog-actions>
+        <button kendoButton (click)="closeImportDialog()" class="closeDialogBtn" [icon]="'close'">Đóng</button>
+        <button kendoButton (click)="importGroupBanner()" id="importExcelBtn"
+            [icon]="'import'">Import</button>
+    </kendo-dialog-actions> -->
+</kendo-dialog>

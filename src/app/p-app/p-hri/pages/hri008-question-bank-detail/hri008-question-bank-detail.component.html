@@ -1,0 +1,933 @@
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+
+<div class="hri008-question-bank-detail">
+  <!-- Start: Header 2 -->
+  <div class="header header-2">
+    <div class="breadcumb">
+      <app-p-kendo-breadcrumb (loadData)="onLoadPage()"></app-p-kendo-breadcrumb>
+    </div>
+    <div class="nav-crud">
+      <button
+        *ngFor="let i of arrBtnStatus"
+        kendoButton
+        iconClass="k-icon k-i-{{ i.code }}"
+        class="{{ i.class }} "
+        (click)="handleBtnStatus(i)"
+      >
+        {{ i.text }}
+      </button>
+    </div>
+    
+  </div>
+  <!-- End: Header 2 -->
+  <!-- Start: Thông tin câu hỏi -->
+
+  
+  <div class="main">
+    <div class="infoQuestion-wrapper">
+      <div class="header-infoQuestion">
+        <span class="title">THÔNG TIN CÂU HỎI</span>
+      </div>
+      <div class="content-infoQuestion">
+        <div class="contentLeft">
+          <kendo-label text="Mã câu hỏi" [for]="questionID">
+            <span class="symbol pl-1 font-weight-bold">(*)</span>
+            <br>
+            <!-- <kendo-textbox
+              placeholder=" -- Nhập mã câu hỏi -- "
+              class="k-textbox"
+              [style.width.%]="100"
+              #questionID
+              [disabled]="isLock"
+              [(ngModel)]="Question.QuestionID"
+              (blur)="handleUpdateQuestion(['QuestionID'])"
+              (keydown.Enter)="$event.target.blur()"
+              required
+            >
+            </kendo-textbox> -->
+            <app-p-textbox propName="QuestionID" #questionID [disabled]="isLock"  [placeHolder]="' -- Nhập mã câu hỏi --' "
+            [(ngModel)]="Question.QuestionID" (blur)="handleUpdateQuestion(['QuestionID'])" required="true" width="auto"
+            (keydownEnter)="$event.target.blur()" (focus)="onForcusQuestion()"></app-p-textbox>
+          </kendo-label>
+
+          <!-- Phân nhóm câu hỏi -->
+          <kendo-label text="Phân nhóm câu hỏi" [for]="questionGroupList">
+            <span class="symbol pl-1 font-weight-bold">(*)</span>
+
+            <kendo-dropdowntree
+              kendoDropDownTreeExpandable #questionGroupList [style.width.%]="100"
+              [loading]="isloading" class="QuestionGroupTree"
+              [kendoDropDownTreeHierarchyBinding]="dataListQuestionGroupFilter"
+              childrenField="ListChilds"
+              textField="CategoryName"
+              valueField="Code" 
+              [value]="Question.Category == null ? {'Code': null,'CategoryName':'Không lựa chọn'} : {'Code': Question.Category,'CategoryName':Question.CategoryName}"
+              [popupSettings]="{ appendTo: 'component' }"
+              [filterable]="true"
+              (filterChange)="handleFilterGroupList($event)"
+              [defaultItem]="{
+                CategoryName: 'Không lựa chọn',
+                Code: null
+              }"
+              [disabled]="
+                isQuestionGroupList || isLock || this.Question.Code == 0
+              "
+              (valueChange)="onSelectionChangeDropdownList($event, 'category')"
+            >
+              <ng-template kendoDropDownTreeNodeTemplate let-dataItem>
+                <img loading="lazy" src="assets/img/icon/icon_questionGroup.svg" />
+                {{ dataItem.CategoryName }}
+              </ng-template>
+            </kendo-dropdowntree>
+          </kendo-label>
+
+          <!-- Loại câu hỏi -->
+          <kendo-label text="Loại câu hỏi" [for]="typeOfQuestionList">
+            <span class="symbol pl-1 font-weight-bold">(*)</span>
+
+            <kendo-dropdownlist
+              [loading]="isloading"
+              [data]="ListQuestionType | async"
+              valueField="TypeData"
+              textField="TypeOfQuestion"
+              [defaultItem]="{
+                TypeData: null,
+                TypeOfQuestion: '-- Chọn --'
+              }"
+              class="k-dropdown"
+              [style.width.%]="100"
+              #typeOfQuestionList
+              [(ngModel)]="Question.TypeOfQuestion"
+              [valuePrimitive]="true"
+              [popupSettings]="{ appendTo: 'component' }"
+              (selectionChange)="
+                onSelectionChangeDropdownList($event, 'typeOfQuestion')
+              "
+              (open)="onOpenDropList('typeOfQuestion')"
+              [disabled]="
+                isQuestionGroupList || isLock || this.Question.Code == 0
+              "
+            ></kendo-dropdownlist>
+          </kendo-label>
+  
+          <!-- Cách tính điểm -->
+          <kendo-label
+            text="Cách tính điểm"
+            [for]="typeOfEvaluationList"
+            [hidden]="isTypeOfEvaluation || Question.TypeOfQuestion !== 2"
+          >
+            <span class="symbol pl-1 font-weight-bold">(*)</span>
+
+            <kendo-dropdownlist
+              [loading]="isloading"
+              [data]="ListEvaluationType | async"
+              valueField="TypeData"
+              textField="TypeOfEvaluation"
+              [defaultItem]="{
+                TypeOfEvaluation: '-- Chọn --',
+                TypeData: null
+              }"
+              class="k-dropdown"
+              [style.width.%]="100"
+              #typeOfEvaluationList
+              (selectionChange)="
+                onSelectionChangeDropdownList($event, 'typeOfEvaluation')
+              "
+              [(ngModel)]="Question.TypeOfEvaluation"
+              [valuePrimitive]="true"
+              [popupSettings]="{ appendTo: 'component' }"
+              [disabled]="
+                isQuestionGroupList || isLock || this.Question.Code == 0
+              "
+            ></kendo-dropdownlist>
+          </kendo-label>
+
+          <!-- Thời gian làm bài (giây)  -->
+          <kendo-label text="Thời gian làm bài (giây)" [for]="duration">
+            <span class="symbol pl-1 font-weight-bold">(*)</span>
+            <app-p-numeric-textbox propName="Duration" placeholder=" -- Nhập thời gian làm bài -- " #duration (focus)="onForcusQuestion()"
+            format="#" [spinners]="false" [min]="0" [autoCorrect]="true" (keydownEnter)="$event.target.blur()"
+            (blur)="handleUpdateQuestion(['Duration'])" [(ngModel)]="Question.Duration" [disabled]="isDuration || isLock || this.Question.Code == 0"></app-p-numeric-textbox>
+            <!-- <kendo-numerictextbox
+              placeholder=" -- Nhập thời gian làm bài -- "
+              class="k-textbox"
+              [style.width.%]="100"
+              #duration
+              [disabled]="isDuration || isLock || this.Question.Code == 0"
+              [(ngModel)]="Question.Duration"
+              (blur)="handleUpdateQuestion(['Duration'])"
+              (keydown.Enter)="$event.target.blur()"
+              format="#"
+              [spinners]="false"
+              [min]="0"
+              [autoCorrect]="true"
+            >
+            </kendo-numerictextbox> -->
+           
+          </kendo-label>
+          <kendo-label text="Tình trạng" [for]="status">
+            <br />
+            <div #status [innerHTML]="Question.StatusName | colorStatus:Question.StatusID"></div>
+          </kendo-label>
+        </div>
+        <div class="contenRight">
+          <!-- Tóm tắt câu hỏi -->
+          <kendo-label text="Tóm tắt câu hỏi" [for]="remark">
+            <span class="symbol pl-1">(*)</span>
+          </kendo-label>
+          <!-- <textarea
+            #remark
+            [(ngModel)]="Question.Remark"
+            class="k-textbox"
+            [disabled]="isRemark || isLock || this.Question.Code == 0"
+            (blur)="handleUpdateQuestion(['Remark'])"
+            (keydown.Enter)="$event.target.blur()"
+          >
+          </textarea> -->
+          <app-p-textarea propName="Remark" #remark [(ngModel)]="Question.Remark" [disabled]="isRemark || isLock || this.Question.Code == 0"
+            (blur)="handleUpdateQuestion(['Remark'])" (keydownEnter)="$event.target.blur()" placeHolder="-- Nhập tóm tắt câu hỏi --"
+            (focus)="onForcusQuestion()"></app-p-textarea>
+
+          <!-- Mô tả chi tiết câu hỏi -->
+          <div class="editorQuestionDetail pt-2">
+            <kendo-label text="Mô tả chi tiết câu hỏi" [for]="contentEditor" >
+              <span class="symbol pl-1 font-weight-bold">(*)</span>
+            </kendo-label>
+            <app-p-kendo-editor
+              id="myeditor1"
+              [index]="1"
+              [height]="'40vh'"
+              [(ngModel)]="Question.Question"
+              [readonly]="
+                isContentEditor || isLock || this.Question.Code == 0
+              "
+              #contentEditor
+              (saveEvent)="onSaveContentEditor($event)"
+              (getIndex)="onGetIndex($event)"
+            >
+            </app-p-kendo-editor>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End: Thông tin câu hỏi -->
+  
+    <!-- Start: Phương án trả lời -->
+    <div class="AnswerOptions-Wrapper">
+      <!-- <p class="titleAnswerOptions">PHƯƠNG ÁN TRẢ LỜI</p> -->
+      <p class="titleAnswerOptions">PHƯƠNG ÁN TRẢ LỜI
+        <span class="symbol pl-1">(*)</span>
+      </p>
+      <div class="content">
+        <!-- Start: Answer -->
+          <!-- Onechoose -->
+          <div #onechoose *ngIf="Question.TypeOfQuestion == 1">
+            <table class="AnswerGroup">
+              <thead>
+                <tr class="headerAnswerGroup">
+                  <th class="title">Đáp án 
+                    <span class="symbol pl-1">(*)</span>
+                  </th>
+                  <th class="title">Câu trả lời
+                    <span class="symbol pl-1">(*)</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let i of ListAnswer;
+                    index as idx;
+                    let last = last;
+                    let count = count
+                  "
+                >
+                  <td class="answer">
+                    <input
+                      type="radio"
+                      #answerRadio
+                      kendoRadioButton
+                      name="option"
+                      (change)="onOptionChange(i)"
+                      [disabled]="
+                        i.Answer == '' || isLock || this.Question.Code == 0 || i.Code == 0
+                      "
+                      [checked]="i.IsRight"
+                    />
+                  </td>
+                  <td class="answer boxInput">
+                    <div class="answer-wrap">
+                      <span class="stt">{{ idx + 1 }}.</span>
+                      <app-p-textbox #answer propName="Answer" placeholder=" -- Nhập câu trả lời -- "
+                      [(ngModel)]="i.Answer" (blur)="onInputAnswerChange(i)" (focus)="focusAnswer(i)" 
+                      (keydownEnter)="$event.target.blur()" [disabled]="isLock || this.Question.Code == 0"
+                      ></app-p-textbox>
+                      <!-- <kendo-textbox
+                        #answer
+                        placeholder=" -- Nhập câu trả lời -- "
+                        class="k-textbox"
+                        [style.width.%]="100"
+                        [(value)]="i.Answer"
+                        (blur)="onInputAnswerChange(i)"
+                        (focus)="focusAnswer(i)"
+                        (keydown.Enter)="$event.target.blur()"
+                        [disabled]="isLock || this.Question.Code == 0"
+                      >
+                      </kendo-textbox> -->
+                    </div>
+                  </td>
+                  <td class="deteleAnswer">
+                    <button
+                      kendoButton
+                      iconClass="fas fa-trash-alt"
+                      fillMode="clear"
+                      themeColor="error"
+                      (click)="onDeleteAnswer(i)"
+                      [disabled]="
+                        i.Answer == '' || isLock || this.Question.Code == 0 || i.Code == 0
+                      "
+                    ></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="footer-answer">
+              <button kendoButton iconClass="k-icon k-i-plus"   
+                [disabled]="isLock || this.Question.Code == 0"  
+                (click)="onAddAnswer()">
+                Thêm mới câu trả lời
+              </button>
+            </div>
+          </div>
+    
+          <!-- Multiple Choose -->
+          <div #multiplechoose *ngIf="Question.TypeOfQuestion == 2 && Question.TypeOfEvaluation !== null">
+            <table class="AnswerGroup">
+              <thead>
+                <tr class="headerAnswerGroup">
+                  <th class="title">Đáp án</th>
+                  <th class="title" *ngIf="Question.TypeOfEvaluation == 2 || Question.TypeOfEvaluation == 3">
+                    % điểm
+                  </th>
+                  <th class="title">Câu trả lời</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let i of ListAnswer;
+                    index as idx;
+                    let last = last;
+                    let count = count
+                  "
+                >
+                  <td class="answer">
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="i.IsRight"
+                      #answerRadio
+                      kendoCheckBox
+                      [disabled]="
+                        i.Answer == '' || isLock || this.Question.Code == 0 || i.Code == 0
+                      "
+                      (change)="onCalculateMark(i, 'not')" 
+                    />
+                  </td>
+                  <td class="answer" *ngIf="Question.TypeOfEvaluation == 2 || Question.TypeOfEvaluation == 3">
+                    <app-p-numeric-textbox *ngIf="Question.TypeOfEvaluation == 2" propName="Mark" #Mark format="#"
+                    [min]="0" [max]="100" [autoCorrect]="true" [spinners]="false" [(ngModel)]="i.Mark" [width]="60"
+                    (blur)="onCalculateMark(i, 'input')" (focus)="onFocusMark(i)" (keydownEnter)="$event.target.blur()"
+                    [disabled]="i.Answer == '' || lastItemIsRightCode == i.Code || lastItemNotRightCode == i.Code ||
+                    (Question.TypeOfEvaluation == 2 && i.IsRight == false) ||  isLock || this.Question.Code == 0"></app-p-numeric-textbox>
+                    <!-- <kendo-numerictextbox
+                      *ngIf="Question.TypeOfEvaluation == 2"
+                      #Mark
+                      format="#"
+                      [min]="0"
+                      [max]="100"
+                      [autoCorrect]="true"
+                      [style.width.px]="60"
+                      class="k-numerictextbox"
+                      [spinners]="false"
+                      [(value)]="i.Mark"
+                      (blur)="onCalculateMark(i, 'input')"
+                      (focus)="onFocusMark(i)"
+                      (keydown.Enter)="$event.target.blur()"
+                      [disabled]="
+                        i.Answer == '' ||
+                        lastItemIsRightCode == i.Code ||
+                        lastItemNotRightCode == i.Code ||
+                        (Question.TypeOfEvaluation == 2 && i.IsRight == false) ||
+                        isLock || this.Question.Code == 0
+                      "
+                    ></kendo-numerictextbox> -->
+                    
+                    <app-p-numeric-textbox #Mark propName="Mark" *ngIf="Question.TypeOfEvaluation == 3" format="#"
+                    [min]="-100" [max]="100" [autoCorrect]="true" [spinners]="false" [width]="60" [(ngModel)]="i.Mark"
+                    (blur)="onCalculateMark(i, 'input')" (focus)="onFocusMark(i)" (keydownEnter)="$event.target.blur()"
+                    [disabled]="i.Answer == '' || lastItemIsRightCode == i.Code ||
+                        lastItemNotRightCode == i.Code || isLock || this.Question.Code == 0"></app-p-numeric-textbox>
+                    <!-- <kendo-numerictextbox
+                      *ngIf="Question.TypeOfEvaluation == 3"
+                      #Mark
+                      format="#"
+                      [min]="-100"
+                      [max]="100"
+                      [autoCorrect]="true"
+                      [style.width.px]="60"
+                      class="k-numerictextbox"
+                      [spinners]="false"
+                      [(value)]="i.Mark"
+                      (blur)="onCalculateMark(i, 'input')"
+                      (focus)="onFocusMark(i)"
+                      (keydown.Enter)="$event.target.blur()"
+                      [disabled]="
+                        i.Answer == '' ||
+                        lastItemIsRightCode == i.Code ||
+                        lastItemNotRightCode == i.Code ||
+                        isLock || this.Question.Code == 0
+                      "
+                    ></kendo-numerictextbox> -->
+                  </td>
+                  <td class="answer boxInput">
+                    <div class="answer-wrap">
+                      <span class="stt">{{ idx + 1 }}.</span>
+                      <!-- <kendo-textbox
+                        #answer
+                        placeholder=" -- Nhập câu trả lời -- "
+                        class="k-textbox"
+                        [style.width.%]="100"
+                        [(value)]="i.Answer"
+                        (blur)="onInputAnswerChange(i)"
+                        (focus)="focusAnswer(i)"
+                        (keydown.Enter)="$event.target.blur()"
+                        [disabled]="isLock || this.Question.Code == 0"
+                      >
+                      </kendo-textbox> -->
+                      <app-p-textbox #answer propName="Answer" placeholder=" -- Nhập câu trả lời -- " [(ngModel)]="i.Answer"
+                      (blur)="onInputAnswerChange(i)" (focus)="focusAnswer(i)" (keydownEnter)="$event.target.blur()"
+                      [disabled]="isLock || this.Question.Code == 0"></app-p-textbox>
+                    </div>
+                  </td>
+                  <td class="deteleAnswer">
+                    <button
+                      kendoButton
+                      iconClass="fas fa-trash-alt"
+                      fillMode="clear"
+                      themeColor="error"
+                      (click)="onDeleteAnswer(i)"
+                      [disabled]="
+                        i.Answer == '' || isLock || this.Question.Code == 0
+                      "
+                    ></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="footer-answer">
+              <button kendoButton iconClass="k-icon k-i-plus" (click)="onAddAnswer()" 
+                [disabled]="isLock || this.Question.Code == 0">
+                Thêm mới câu trả lời
+              </button>
+            </div>
+          </div>
+    
+          <!-- Câu hỏi tự luận  -->
+          <div class="HintAnswer flex-column align-items-start" *ngIf="Question.TypeOfQuestion == 3">
+            <kendo-label class="k-checkbox-label" text="Giới hạn ký tự trả lời" >
+              <span class="symbol pl-1">(*)</span>
+            </kendo-label>
+            <div class="d-flex justify-content-between align-items-center col40 mb-2">
+              <div class="d-flex align-items-center">
+                <span class="pr-2">Min</span>
+                <app-p-numeric-textbox class="numericWidth" #mintext [propName]="'Min'" [spinners]="false" [min]="0" [max]="Question.Max" [(ngModel)]="Question.Min" (blur)="handleUpdateQuestion(['Min'])" [disabled]="isLock"></app-p-numeric-textbox>
+              </div>
+
+              <div  class="d-flex align-items-center">
+                <span class="pr-2">Max</span>
+                <app-p-numeric-textbox class="numericWidth" #maxtext [propName]="'Min'" [spinners]="false" [min]="Question.Min" [(ngModel)]="Question.Max" (blur)="handleUpdateQuestion(['Max'])" [disabled]="isLock"></app-p-numeric-textbox>
+              </div>
+            </div>
+            <div>
+
+              <!-- Đáp án tự luận  -->
+              <kendo-label class="k-checkbox-label" [for]="hintAnswer1" text="Đáp án tự luận">
+                <span class="symbol pl-1">(*)</span>
+              </kendo-label>
+              <app-p-kendo-editor
+                id="myeditor2"
+                #hintAnswer1
+                [index]="2"
+                [height]="'55vh'"
+                [(ngModel)]="Question.RefAnswer"
+                [readonly]="isLock || this.Question.Code == 0"
+                (saveEvent)="handleUpdateQuestion(['RefAnswer'])"
+                (getIndex)="onGetIndex($event)"
+              >
+              </app-p-kendo-editor>
+            </div>
+            
+          <!-- <textarea
+            #hintAnswer
+            name="hintAnswer"
+            id="hintAnswer"
+            class="k-textbox"
+            [(ngModel)]="Question.RefAnswer"
+            (blur)="handleUpdateQuestion(['RefAnswer'])"
+            (keydown.Enter)="$event.target.blur()"
+            [disabled]="!isAllowedToCreate || Question.StatusID == 2 || Question.StatusID == 3 || isAllowedView|| Question.Code == 0"
+          ></textarea> -->
+          </div>
+  
+          <!-- Yes/No Question -->
+          <div #yesno *ngIf="Question.TypeOfQuestion == 4">
+            <table class="YesNoQuestion">
+              <thead>
+                <tr class="headerAnswerGroup">
+                  <th class="title">Đáp án</th>
+                  <th class="title">Câu trả lời</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let i of ListAnswer;
+                    index as idx;
+                    let last = last;
+                    let count = count
+                  "
+                >
+                  <td class="answer">
+                    <input
+                      type="radio"
+                      #answerRadio
+                      kendoRadioButton
+                      name="option"
+                      (change)="onOptionChange(i)"
+                      [disabled]="
+                        i.Answer == '' || isLock || this.Question.Code == 0 || i.Code == 0
+                      "
+                      [checked]="i.IsRight"
+                    />
+                  </td>
+                  <td class="answer boxInput">
+                      <span class="answer">{{  i.Answer }}</span>
+                  </td>
+                  <!-- <td class="deteleAnswer">
+                    <button
+                      kendoButton
+                      iconClass="fas fa-trash-alt"
+                      fillMode="clear"
+                      themeColor="error"
+                      (click)="DeleteMark([i])"
+                      [disabled]="
+                        i.Answer == '' || !isAllowedToCreate || Question.StatusID == 2 || Question.StatusID == 3 || isAllowedView || i.Code == 0|| Question.Code == 0
+                      "
+                    ></button>
+                  </td> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    
+          <!-- End: Answer -->
+        <!-- </div> -->
+      </div>
+    </div>
+    <!-- End: Phương án trả lời -->
+  
+    <!-- Start: PHẠM VI ÁP DỤNG -->
+    <div class="scope">
+      <p class="title">PHẠM VI ÁP DỤNG 
+        <span class="symbol pl-1">(*)</span>
+      </p>
+      <div class="content">
+        <div class="checkbox-scope">
+  
+          <div class="checkeBox">
+            <input type="checkbox" #AppliedCompetenceTest kendoCheckBox  [(ngModel)]="Question.AppliedCompetenceTest"  
+            [disabled]="isLock || this.Question.Code == 0" (change)="onChangeCheckedScope('AppliedCompetenceTest')"/>
+            <kendo-label class="k-checkbox-label" text="Đánh giá năng lực nhân sự"  [for]="AppliedCompetenceTest">
+            </kendo-label>
+          </div>
+          <div class="checkeBox">
+            <input type="checkbox" kendoCheckBox #AppliedPreTest  [(ngModel)]="Question.AppliedPreTest" 
+            [disabled]="isLock || this.Question.Code == 0" (change)="onChangeCheckedScope('AppliedPreTest')"/>
+            <kendo-label class="k-checkbox-label" text="Bài kiểm tra thử" [for]="AppliedPreTest">
+            </kendo-label>
+          </div>
+          <div class="checkeBox">
+            <input type="checkbox" kendoCheckBox #AppliedEventTest [(ngModel)]="Question.AppliedEventTest" 
+            [disabled]="isLock || this.Question.Code == 0" (change)="onChangeCheckedScope('AppliedEventTest')"/>
+            <kendo-label class="k-checkbox-label" text="Bài kiểm tra phong trào" [for]="AppliedEventTest">
+            </kendo-label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End: PHẠM VI ÁP DỤNG -->
+  
+    <!-- Start: KHÍA CẠNH NĂNG LỰC ĐƯỢC ĐÁNH GIÁ -->
+    <div class="CollabAbility">
+      <p class="title">KHÍA CẠNH NĂNG LỰC ĐƯỢC ĐÁNH GIÁ</p>
+      <div class="content">
+          <div class="Level-wrapper">
+            <label class="LevelLabel">
+              <span>Mức độ khó </span><i>(tương ứng mức độ trưởng thành)</i>
+              <span class="symbol pl-1">(*)</span>
+
+            </label>
+            <!-- <kendo-dropdownlist
+              #dropCompetence
+              [loading]="isloading"
+              [data]="arrLevel"
+              valueField="Code"
+              textField="Level"
+              [defaultItem]="{
+                Level: '-- Chọn độ khó --',
+                Code: 0
+              }"
+              class="k-dropdown"
+              [style.minWidth.px]="280"
+              [popupSettings]="{ appendTo: 'component' }"
+              (selectionChange)="selectionChangeLevel($event)"
+              [valuePrimitive]="true"
+              (open)="openDropList('khiacanh')"
+              [(ngModel)]="Question.LevelID"
+              [disabled]="isLock || this.Question.Code == 0"
+            ></kendo-dropdownlist> -->
+            <p-kendo-dropdownlist #dropCompetence
+            [loading]="isloading"
+            [data]="arrLevel"
+            valueField="Code"
+            textField="Level"
+            [filterable]="true"
+            [defaultItem]="{
+              Level: '-- Chọn độ khó --',
+              Code: 0
+            }"
+            class="k-dropdown"
+            [popupSettings]="{ appendTo: 'component' }"
+            (selectionChange)="onSelectionChangeLevel($event)"
+            [valuePrimitive]="true"
+            (open)="onOpenDropList('competence')"
+            [(ngModel)]="Question.LevelID"
+            [disabled]="isLock || this.Question.Code == 0"></p-kendo-dropdownlist>
+          </div>
+        <div class="Competence-wrapper">
+          <div class="CompetenceWrap">
+            <div class="searhcInput">
+              <kendo-combobox
+                #combobox
+                [data]="dataQuestionCompetence"
+                [loading]="isloading"
+                valueField="Competence"
+                textField="CompetenceName"
+                placeholder="-- Tìm theo năng lực --"
+                [popupSettings]="{popupClass:'comboxClass',animate: true}"
+                [valuePrimitive]="true"
+                (selectionChange)="onValueChangeCompetence($event)"
+                [itemDisabled]="isItemDisabled"
+                [disabled]="isLock || this.Question.Code == 0"
+                [suggest]="true"
+                (blur)="onBlurComboBox()"
+                (focus)="onFocusComboBox();  combobox.toggle()"
+                (filterChange)="handleFilter($event)"
+                class="k-dropdown"
+                [allowCustom]="true"
+                [filterable]="true"
+              >
+                <ng-template kendoComboBoxItemTemplate let-dataItem>
+                  <span
+                    [ngStyle]="{
+                      'padding-left': dataItem.Parent !== null ? '18px' : '0'
+                    }"
+                    >{{dataItem.Order}}. {{ dataItem.CompetenceName }}</span
+                  >
+                </ng-template>
+              </kendo-combobox>
+            
+            </div>
+          </div>
+  
+          <div *ngIf="Question.ListCompetence !== null">
+            <div
+              class="result"
+              *ngFor="let item of Question.ListCompetence; index as idx"
+            >
+              <button
+                kendoButton
+                iconClass="fas fa-trash-alt"
+                [disabled]="isLock || this.Question.Code == 0"
+                (click)="onOpendDeleteCompetence(item, 'parent')"
+              ></button>
+              <div class="contentResult">
+                <div>
+                  <div class="parent">
+                    <span class="sttParent">{{ idx + 1 }}.</span>
+                    <p class="contentParent">{{ item.CompetenceName }}</p>
+                  </div>
+                  <div
+                    class="child"
+                    [style.margin-left]="1 * 10 + 'px'"
+                    *ngIf="item.ListChilds !== null"
+                  >
+                    <div *ngFor="let child of item.ListChilds">
+                      <p>{{ child.CompetenceName }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End: KHÍA CẠNH NĂNG LỰC ĐƯỢC ĐÁNH GIÁ -->
+
+    <!-- Start: Review -->
+    <div class="reviewQuestion">
+      <p class="title">Xem Trước Câu Hỏi hiển thị</p>
+      <div class="question-list-wrapper">
+        <app-hr-exam-question  
+          [index]="1" [question]="Question"
+          [listAnswerQuestion]="realListAnser"  
+          [readonlyEssay]="isLock || this.Question.Code == 0"
+          [disabledOneChoice]="isLock || this.Question.Code == 0" 
+          [disabledMultiple]="isLock || this.Question.Code == 0"
+          [isViewInCorrect]="true" 
+          [isViewCorrect]="true"
+        ></app-hr-exam-question>
+      </div>
+    </div>
+    <!-- End: Review -->
+
+    <p class="symbol fst-italic mt-2">(*) Trường bắt buộc nhập.</p>
+  </div>
+</div>
+
+
+<!-- Start: Dialog Xóa -->
+<kendo-dialog
+  *ngIf="openedDialog"
+  (close)="onCloseDialog()"
+  [minWidth]="250"
+  [width]="450"
+  [minHeight]="250"
+  class="wrapper-dialog"
+  [actionsLayout]="'stretched'"
+>
+  <!-- Start: header dialog  -->
+  <kendo-dialog-titlebar>
+    <div class="title-delete d-flex">
+      <span
+        class="btn-title-dialog"
+        kendoButton
+        imageUrl="assets/img/icon/icon_warning.svg"
+      ></span>
+      <span>XÓA CÂU HỎI?</span>
+    </div>
+  </kendo-dialog-titlebar>
+  <!-- End: header dialog  -->
+
+  <!-- Start: Body dialog  -->
+  <div class="body_dialog">
+    <div class="content-primary">
+      <p>Bạn chắc chắn muốn xóa câu hỏi:</p>
+      <strong>{{ valueQuestionName }}</strong>
+    </div>
+    <p class="content-sub">
+      Câu hỏi bị xóa sẽ <span style="color: red">KHÔNG</span> thể khôi phục lại.
+    </p>
+  </div>
+  <!-- Emd: Body dialog  -->
+
+  <!-- Start: action dialog  -->
+  <div class="k-dialog-actions">
+    <button
+      kendoButton
+      (click)="onCloseDialog()"
+      class="cancel"
+      iconClass="k-icon k-i-trash"
+    >
+      HỦY BỎ
+    </button>
+    <button
+      kendoButton
+      imageUrl="assets/img/icon/icon_bin.svg"
+      (click)="onDeleteDialog('yes')"
+      class="delete"
+    >
+      ĐỒNG Ý
+    </button>
+  </div>
+  <!-- End: action dialog  -->
+</kendo-dialog>
+<!-- End: Dialog  -->
+
+<!-- Xác nhận thay đổi loại câu hỏi  -->
+<kendo-dialog
+  *ngIf="openedDialogTypeQuestion"
+  (close)="onCloseDialogTypeQuestion()"
+  [minWidth]="250"
+  [width]="450"
+  [minHeight]="250"
+  class="wrapper-dialog"
+>
+  <!-- Start: header dialog  -->
+  <kendo-dialog-titlebar>
+    <div class="title-delete d-flex">
+      <span
+        class="btn-title-dialog"
+        kendoButton
+        imageUrl="assets/img/icon/icon_warning.svg"
+      ></span>
+      <span style="font-weight: 700">Bạn thay đổi loại câu hỏi?</span>
+    </div>
+  </kendo-dialog-titlebar>
+  <!-- End: header dialog  -->
+
+  <!-- Start: Body dialog  -->
+  <div class="body_dialog">
+    <div class="content-primary">
+      <p>Bạn chắc chắn muốn cập nhật loại câu hỏi khác không?</p>
+      <strong>{{ valueQuestionName }}</strong>
+    </div>
+    <p class="content-sub">
+      Khi cập nhật loại câu hỏi
+      <span style="color: red">tất cả các câu trả lời</span> sẽ bị thay đổi.
+    </p>
+  </div>
+  <!-- Emd: Body dialog  -->
+
+  <!-- Start: action dialog  -->
+  <div class="k-dialog-actions">
+    <button kendoButton (click)="onCloseDialogTypeQuestion()" class="cancel">
+      HỦY BỎ
+    </button>
+    <button
+      kendoButton
+      iconClass="k-icon k-i-redo"
+      (click)="onChangeDialogTypeQuestion('yes')"
+      class="delete"
+    >
+      ĐỒNG Ý
+    </button>
+  </div>
+  <!-- End: action dialog  -->
+</kendo-dialog>
+<!-- End: Dialog  -->
+
+<!-- Xác nhận thay đổi loại mức độ khó  -->
+<kendo-dialog
+  *ngIf="openLevelDialog"
+  (close)="onCloseDialogLevel()"
+  [minWidth]="250"
+  [width]="450"
+  [minHeight]="250"
+  class="wrapper-dialog"
+>
+  <!-- Start: header dialog  -->
+  <kendo-dialog-titlebar>
+    <div class="title-delete d-flex">
+      <span
+        class="btn-title-dialog"
+        kendoButton
+        imageUrl="assets/img/icon/icon_warning.svg"
+      ></span>
+      <span style="font-weight: 700">Bạn thay đổi mức độ khó không không?</span>
+    </div>
+  </kendo-dialog-titlebar>
+  <!-- End: header dialog  -->
+
+  <!-- Start: Body dialog  -->
+  <div class="body_dialog">
+    <div class="content-primary">
+      <p>Bạn chắc chắn muốn thay đổi mức độ khó không không?</p>
+      <strong>{{ valueQuestionLevelName }}</strong>
+    </div>
+    <p class="content-sub">
+      Khi thay đổi mức độ khó tất cả những
+      <span style="color: red">khía cạnh thuộc mức độ này sẽ bị thay đổi</span> sẽ bị thay đổi.
+    </p>
+  </div>
+  <!-- Emd: Body dialog  -->
+
+  <!-- Start: action dialog  -->
+  <div class="k-dialog-actions">
+    <button kendoButton (click)="onCloseDialogLevel()" class="cancel">
+      HỦY BỎ
+    </button>
+    <button
+      kendoButton
+      iconClass="k-icon k-i-redo"
+      (click)="handleDialogLevel()"
+      class="delete"
+    >
+      ĐỒNG Ý
+    </button>
+  </div>
+  <!-- End: action dialog  -->
+</kendo-dialog>
+<!-- End: Dialog  -->
+
+
+<!-- Xác nhận xóa khía cạnh  -->
+<kendo-dialog
+  *ngIf="openDeleteCompetenceDialog"
+  (close)="onCloseDialogCompetence()"
+  [minWidth]="250"
+  [width]="450"
+  [minHeight]="250"
+  class="wrapper-dialog"
+>
+  <!-- Start: header dialog  -->
+  <kendo-dialog-titlebar>
+    <div class="title-delete d-flex">
+      <span
+        class="btn-title-dialog"
+        kendoButton
+        imageUrl="assets/img/icon/icon_warning.svg"
+      ></span>
+      <span style="font-weight: 700">XÓA KHÍA CẠNH CÂU HỎI ?</span>
+    </div>
+  </kendo-dialog-titlebar>
+  <!-- End: header dialog  -->
+
+  <!-- Start: Body dialog  -->
+  <div class="body_dialog">
+    <div class="content-primary">
+      <p>Bạn chắc chắn muốn xóa khía cạnh câu hỏi không?</p>
+      <strong>{{ valueQuestionCompetenceName }}</strong>
+    </div>
+    <p class="content-sub">
+      Khi xóa khía cạnh câu hỏi sẽ
+      <span style="color: red">KHÔNG</span> thể khôi phục lại.
+    </p>
+  </div>
+  <!-- Emd: Body dialog  -->
+
+  <!-- Start: action dialog  -->
+  <div class="k-dialog-actions">
+    <button kendoButton (click)="onCloseDialogCompetence()" class="cancel">
+      HỦY BỎ
+    </button>
+    <button
+      kendoButton
+      iconClass="k-icon k-i-redo"
+      (click)="handleDialogCompetence()"
+      class="delete"
+    >
+      ĐỒNG Ý
+    </button>
+  </div>
+  <!-- End: action dialog  -->
+</kendo-dialog>
+<!-- End: Dialog  -->
+
+<app-folder-popup [pickFileCallback]="getFileCallback" [GetFolderCallback]="getFolderCallback" [canResize]="true">
+</app-folder-popup>

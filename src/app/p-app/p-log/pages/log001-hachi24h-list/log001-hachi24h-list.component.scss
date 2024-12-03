@@ -1,0 +1,235 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+  app-log001-hachi24h-list {
+    .mat-drawer {
+      .formfield-grid {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        column-gap: 5px;
+
+        .item1_1 {
+          grid-column: 1;
+          grid-row: 1;
+          margin-top: 1rem;
+        }
+        .item1_2 {
+          grid-column: 1;
+          grid-row: 2;
+          margin-top: 1rem;
+        }
+        .item1_3 {
+          grid-column: 1;
+          grid-row: 3;
+          margin-top: 1rem;
+        }
+
+        .item2 {
+          margin-top: 1rem;
+          grid-column: 2;
+          grid-row: 1 / span 3;
+
+          img {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .app-log001-hachi24h-list {
+      height: calc(100vh - #{$footer-height});
+      padding: 0 15px 0 20px;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      overflow-y: scroll;
+
+      .header {
+        display: flex;
+        column-gap: 10px;
+        padding: 9px 0;
+        margin-bottom: 0;
+        border-bottom: 1px solid rgba($gray-500, 0.4);
+
+        &.header-1 {
+          .k-dropdownlist {
+            width: 222px;
+
+            .k-input {
+              column-gap: 5px;
+            }
+          }
+        }
+
+        .label {
+          margin-bottom: 6px;
+          font-weight: 700;
+          font-size: 13px;
+          color: $gray-700;
+        }
+
+        .nav-btn {
+          display: flex;
+          align-items: center;
+          flex-grow: 1;
+        }
+
+        .nav-crud {
+          flex-grow: 0;
+          justify-content: flex-end;
+
+          .onAddBtn {
+            height: 32px;
+            margin-top: auto;
+            background-color: $dark-green !important;
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+          }
+          .border-center {
+            margin: auto 0 1px 10px;
+            border-right: 1px solid $gray-300;
+            height: 31px;
+          }
+        }
+
+        .nav-file {
+          flex-grow: 0;
+          margin-left: auto;
+
+          .file-btn-group {
+            background: white;
+            box-shadow: 1px 3px 6px 1px rgba($gray-500, 0.2);
+            border-radius: 3px;
+            color: $gray-500;
+            min-width: fit-content;
+            height: 32px;
+            margin-left: 15px;
+            display: flex;
+            margin-top: auto;
+            cursor: pointer;
+
+            span.text {
+              margin: auto;
+              padding-right: 9px;
+            }
+            .onImportBtn {
+              width: 64px;
+
+              .excel-ic {
+                width: 32px;
+                height: 100%;
+                margin-left: 2px;
+              }
+            }
+            .border-center {
+              align-self: center;
+              height: 90%;
+              border-right: 1px solid $gray-500;
+            }
+
+            .k-i-arrow-chevron-down {
+              text-align: center;
+              padding: 7px 0;
+              width: 32px;
+              height: 100%;
+
+              &:before {
+                font-size: 20px;
+              }
+            }
+          }
+        }
+      }
+
+      app-p-kendo-grid.scrollable {
+        .k-grid {
+          .k-grid-aria-root {
+            overflow-x: auto;
+          }
+          table {
+            // width: 1370px;
+          }
+          //đặt lại more action btn absolute theo table relative
+          tr {
+            position: initial;
+          }
+        }
+      }
+
+      .k-grid {
+        thead tr {
+          height: fit-content !important;
+
+          th {
+            padding: 0 12px;
+            height: 13px;
+          }
+        }
+        tr:not(.k-grouping-row) {
+          td:first-child {
+            padding-left: 10px !important;
+          }
+        }
+
+        .col_img_tensanpham_masanpham {
+          max-width: 400px;
+          width: 400px;
+        }
+
+        .img_tensanpham_masanpham {
+          display: flex;
+          align-items: center;
+
+          img {
+            max-height: 64px;
+            max-width: 64px;
+            width: 100%;
+            margin-right: 10px;
+          }
+          .tensanpham_masanpham {
+            height: 64px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            .tensanpham {
+              white-space: normal;
+            }
+
+            .masanpham {
+              color: $gray-700;
+            }
+
+            .tinhtrang {
+              &.red {
+                color: $bad-red;
+              }
+              &.green {
+                color: $dark-green;
+              }
+            }
+          }
+        }
+
+        .col_nguoiBan,
+        .col_xuatXu,
+        .col_dieuKien {
+          text-align: center;
+
+          > .k-link {
+            justify-content: center;
+          }
+        }
+
+        .col_giaBanLe {
+          padding-right: 50px;
+        }
+      }
+
+      .grid-wrapper {
+        height: calc(100vh - 216px);
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+@import "../../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+    .app-dashboard011-ecom{
+        height: calc(93vh - #{$footer-height});
+        padding: 0 15px 35px 20px;
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;    
+
+        .list_chart {
+            display: flex;
+            flex-wrap: wrap;
+            column-gap: 24px;
+            row-gap: 24px;
+      
+            .chart {
+              flex: 1 0 50%;
+              max-width: calc(50% - 24px);
+            }
+          }
+    }
+}

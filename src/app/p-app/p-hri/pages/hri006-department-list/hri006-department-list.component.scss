@@ -1,0 +1,680 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+	app-hri006-department-list {
+
+		// DRAWER CONTAINER RIGHT
+		#drawerContainerRight {
+			position: relative;
+			height: 100vh;
+
+			// DRAWER RIGHT
+			#drawerRight {
+				height: 100%;
+				margin-top: 55px;
+				border-top: 1px solid rgba(0, 0, 0, 0.5);
+				height: calc(100vh - 85px);
+
+				.k-drawer-wrapper {
+					width: 420px !important;
+					height: 100%;
+					scrollbar-color: unset !important;
+					.impose{
+						font-weight: 700;
+						color: $bad-red;
+					}
+					// TITLE CONTROL
+					.title {
+						height: 40px;
+						border-bottom: 1px solid $gray-300;
+						color: $dark-green;
+						font-size: 13px;
+						font-weight: 700;
+						padding-left: 15px;
+						display: flex;
+						align-items: center;
+						gap: 10px;
+						box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+					}
+
+					//  INPUT CONTROL
+					.formControl {
+						padding: 15px 15px;
+						height: calc(100% - 85px);
+						overflow: auto;
+
+						kendo-label {
+							display: block;
+							width: 100%;
+							margin-bottom: 15px;
+
+							.classRemoveDropdowntree {
+								.k-clear-value {
+									display: none;
+								}
+							}
+
+							.k-label {
+								font-weight: 700;
+								font-size: 13px;
+								color: #343A40;
+							}
+
+							.k-textbox,
+							.k-dropdownlist,
+							.k-dropdowntree,
+							.k-multiselect,
+							.k-maskedtextbox,
+							.k-numerictextbox,
+							.k-textarea {
+								width: 100%;
+								margin-top: 5px;
+
+								&.k-textarea {
+									height: 90px;
+									padding: 0;
+								}
+
+								&.k-textarea:hover,
+								&.k-textarea.k-focus {
+									border: 1px solid rgba(0, 0, 0, 0.08) !important;
+									outline: 1px solid $dark-green !important;
+								}
+							}
+
+							.k-multiselect {
+								height: fit-content;
+
+								.k-chip-list {
+									min-height: 32px;
+									max-height: 96px;
+								}
+							}
+
+							.k-maskedtextbox,
+							.k-dropdowntree,
+							.k-multiselect {
+								border: 1px solid rgba(0, 0, 0, 0.08) !important;
+								border-radius: 3px !important;
+								box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2) !important;
+								font-size: 13px !important;
+								font-weight: 400 !important;
+
+								.k-input-inner {
+									display: flex;
+									color: #424242 !important;
+								}
+
+
+
+								&.k-animation-container,
+								&.k-maskedtextbox:hover,
+								&.k-dropdowntree:hover,
+								&.k-dropdowntree:has(.k-animation-container),
+								&.k-focus {
+									outline: 1px solid $dark-green !important;
+								}
+
+								.k-animation-container {
+									border: 1px solid rgba(0, 0, 0, 0.08) !important;
+									outline: 1px solid $dark-green !important;
+									border-top: none;
+
+									ul {
+										margin-right: 2px !important;
+
+										li {
+											.k-treeview-top {
+												.k-treeview-leaf-text:has(.nullItem) {
+													font-style: italic;
+													font-size: 10px;
+													font-weight: normal;
+
+													img {
+														display: none;
+													}
+												}
+											}
+										}
+									}
+
+									.k-dropdowntree-popup {
+										.k-i-caret-alt-down {
+											display: flex;
+										}
+
+										.k-list-filter {
+											.k-textbox {
+												border: 1px solid rgba(0, 0, 0, 0.08) !important;
+												outline: none;
+												border-radius: 3px;
+												height: 32px;
+												padding: 0;
+
+												.k-input-inner {
+													width: 100%;
+													height: 100%;
+													border: none;
+												}
+
+												&.k-textbox:hover,
+												&.k-textbox:focus-within {
+													outline: 1px solid $dark-green !important;
+												}
+											}
+										}
+									}
+								}
+							}
+
+							.k-dropdowntree.k-disabled,
+							.k-multiselect.k-disabled,
+							.k-maskedtextbox.k-disabled,
+							.k-dropdownlist.k-disabled {
+								opacity: 1;
+								background-color: #f0f3f5;
+								border-color: rgba(0, 0, 0, 0.08) !important;
+								box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2) !important;
+
+								&.k-multiselect {
+
+									.k-input-values,
+									.k-chip-list {
+										background-color: transparent;
+									}
+								}
+							}
+
+							.btn-none {
+								background-color: transparent;
+								border: none;
+								box-shadow: none;
+								padding-top: 0;
+							}
+						}
+
+						.fmCb {
+							display: flex;
+							flex-direction: row-reverse;
+							justify-content: flex-end;
+							align-items: center;
+
+							input {
+								margin-right: 10px;
+							}
+						}
+
+						.group-control {
+							display: flex;
+							align-items: flex-end;
+
+							.divCheckbox {
+								width: 300px;
+							}
+						}
+					}
+
+					//  INPUT CONTROL
+					.formControl::-webkit-scrollbar {
+						width: 4px;
+						background-color: transparent;
+					}
+
+					//  INPUT CONTROL
+					.formControl::-webkit-scrollbar-thumb {
+						background-color: $worse-green;
+						border-radius: 30px;
+					}
+
+					// BUTTON CONTROL
+					.btnControl {
+						height: 45px;
+						padding: 0 15px;
+						display: flex;
+						align-items: center;
+						border-top: 1px solid $gray-300;
+						gap: 15px;
+						box-shadow: 1px 3px 6px 6px rgba(143, 155, 166, 0.2);
+
+						button {
+							width: 95px;
+						}
+					}
+				}
+			}
+
+			// DRAWER CONTENT RIGHT
+			#drawerContentRight {
+				width: 100%;
+
+				// FUNCTIONBAR
+				.header-2 {
+					justify-content: space-between;
+					padding-right: 10px;
+					padding-left: 5px;
+					overflow: auto;
+
+					app-search-filter-group {
+						.k-textbox {
+							width: 290px !important;
+						}
+					}
+
+					// BUTTON GROUP
+					kendo-buttongroup {
+						display: flex;
+						gap: 10px;
+						margin-bottom: 0px;
+						margin-top: auto;
+
+						.btn-import {
+							color: #23282c;
+							background-color: white;
+							background-image: none;
+							box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.1)
+						}
+					}
+				}
+
+				#functionbar {
+					display: flex;
+					justify-content: space-between;
+					height: 75px;
+					padding: 15px;
+					overflow: hidden;
+					line-height: 1;
+					overflow-x: auto;
+
+					.buttonGroup {
+						display: flex;
+						gap: 10px;
+						// min-width: 619px;
+						margin-top: 20px;
+					}
+				}
+
+				// TREE LIST GIRD
+				.k-treelist.k-grid {
+					background-color: transparent;
+					border: none;
+
+					.k-grid-aria-root {
+						.k-grid-header {
+							display: none;
+						}
+
+						.k-grid-container {
+							max-height: calc(100vh - 215px);
+
+							.k-grid-content {
+								background-color: transparent;
+
+								.k-grid-table-wrap {
+									.k-grid-table {
+										tbody {
+
+											tr,
+											.k-alt {
+												background-color: $white;
+												height: 63px;
+												font-size: 13px;
+												font-weight: 400;
+												color: $gray-850;
+
+												td {
+													padding-bottom: 0;
+													padding-top: 0;
+													border: none;
+													border-bottom: 5px solid $gray-100;
+													// text-overflow: unset !important;
+													// overflow: unset !important;
+												}
+
+												.col_tinhTrang {
+													text-align: right;
+												}
+
+												// COLUMN 1
+												td:first-child {
+													
+													.k-icon.k-i-none,
+													kendo-icon {
+														width: 32px;
+													}
+
+													:has(.bigItem) {
+
+														.k-icon.k-i-none,
+														kendo-icon {
+															width: 16px;
+														}
+													}
+
+													.k-icon-wrapper-host {
+
+														kendo-icon {
+															color: transparent;
+															background-repeat: no-repeat;
+															background-position: center;
+														}
+
+														.k-i-caret-alt-right {
+															background-image: url(../../../../../assets/img/icon/icon_arrowChevronDown.svg);
+														}
+
+														.k-i-caret-alt-down {
+															background-image: url(../../../../../assets/img/icon/icon_arrowChevronUp.svg);
+														}
+													}
+
+													
+														.iconImg {
+															padding: 20px;
+														}
+
+														.nameUnit {
+															font-weight: 700;
+														}
+
+														.codeData {
+															margin-left: 60px;
+														}
+														
+														.leader{
+															padding-right: 40px;
+														}												
+														.supervivor{
+															padding-right: 80px;
+														}
+														// .supervivorLv2{
+														// 	padding-right: 80px;
+														// }
+														.noHas{
+															padding-right: 120px;
+														}
+														// .noHasLv2{
+														// 	padding-right: 120px;
+														// }
+														// .noHasLv3{
+														// 	padding-right: 80px;
+														// }
+
+											}
+												.col-Leader,.col-Supervivor{
+													text-align: right;
+												}
+												
+
+
+												// COLUMN 3
+												td:last-child {
+													padding: 0;
+
+													.content-dropdown {
+														width: 100%;
+														height: 58px;
+														border-left: 1px solid $blue-gray;
+														display: flex;
+														align-items: center;
+														justify-content: center;
+													}
+
+													.k-dropdown-button {
+														width: 28px;
+														height: 28px;
+														min-width: 28px;
+
+														.k-button {
+															padding: 0;
+															width: 100%;
+															max-height: 28px;
+															border: none;
+															color: $light-blue-gray;
+															border-radius: 0px 3px 3px 0px;
+															background-color: transparent;
+															background-image: none;
+															display: flex;
+															align-items: center;
+															justify-content: center;
+															box-shadow: none;
+
+															span {
+																width: fit-content;
+															}
+														}
+
+														.k-animation-container {
+															box-shadow: none;
+
+															.k-popup {
+																position: relative;
+																border: none;
+
+
+																ul {
+
+																	li {
+																		height: 35px;
+																		font-size: 13px;
+																		font-weight: 400;
+																		color: $white;
+																		background-color: $blue-gray;
+
+																		.k-icon::before {
+																			color: transparent !important;
+																			background-image: url(../../../../../assets/img/icon/icon_department.svg) !important;
+																			background-repeat: no-repeat;
+																			background-position: center;
+																		}
+
+																		.k-i-edit::before,
+																		.k-i-trash::before,
+																		.k-i-redo::before,
+																		.k-i-check-outline::before,
+																		.k-i-undo::before,
+																		.k-i-minus-outline::before,
+																		.k-i-eye::before {
+																			color: $white !important;
+																			background-image: none !important;
+																		}
+
+																		.k-i-user::before {
+																			background-image: url(../../../../../assets/img/icon/icon_user.svg) !important;
+																		}
+
+																		.k-link {
+																			.k-icon-wrapper-host {
+																				margin-right: 8px;
+																			}
+																		}
+
+																		&.k-focus {
+																			box-shadow: none;
+																		}
+																	}
+
+																	// li:first-child {
+																	// 	.k-icon::before {
+																	// 		background-image: url(../../../../../assets/img/icon/icon_edit.svg) !important;
+																	// 	}
+																	// }
+
+																	.k-focused,
+																	.k-selected {
+																		background-color: $blue-gray;
+																		box-shadow: none;
+																	}
+
+																	li:hover,
+																	.k-selected:hover {
+																		background-color: $light-blue-gray;
+																	}
+																}
+															}
+														}
+													}
+
+													.k-dropdown-button.k-focus {
+														.k-button {
+															background-color: $blue-gray;
+															color: $white;
+															box-shadow: none;
+														}
+													}
+												}
+											}
+
+											// TR HOVER
+											tr:hover {
+												td {
+													background-color: rgba(26, 102, 52, 0.4);
+												}
+											}
+
+											// TR SELECTED
+											.k-selected,
+											.k-selected:hover {
+												td {
+													background-color: rgba(26, 102, 52, 0.8);
+													color: $white;
+
+													kendo-icon {
+														color: transparent !important;
+														filter: brightness(200%);
+													}
+
+													span {
+														color: $white !important;
+
+														img {
+															filter: grayscale(100%) brightness(1000%);
+														}
+													}
+
+													&.col_tinhTrang {
+														div {
+															div {
+																color: $white !important;
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+
+							.k-grid-content::-webkit-scrollbar {
+								width: 4px;
+								background-color: transparent;
+							}
+
+							.k-grid-content::-webkit-scrollbar-thumb {
+								background-color: $worse-green;
+								border-radius: 30px;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// DRAWER CONTAINER RIGHT EXPANDED
+		#drawerContainerRight.k-drawer-expanded {
+			.k-drawer {
+				width: 420px;
+			}
+
+			.k-overlay {
+				position: absolute;
+				z-index: 1;
+			}
+		}
+
+		//DIALOG
+		.k-dialog-wrapper {
+			z-index: 10002;
+
+			.k-dialog {
+				.k-dialog-titlebar {
+					height: 50px;
+					background-color: #FD7676;
+
+					.k-dialog-titlebar-actions {
+						display: none;
+					}
+
+					.k-dialog-title {
+						font-size: 15px !important;
+						font-weight: 700;
+						color: $white;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						gap: 10px;
+						text-transform: uppercase;
+
+						.k-icon {
+							font-size: 25px;
+						}
+					}
+				}
+
+				.k-dialog-content {
+					padding: 0 !important;
+					height: calc(100% - 50px);
+
+					.dialog-content {
+						height: 150px;
+						padding: 22px 35px;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						justify-content: space-around;
+						font-size: 14px;
+
+						div {
+							text-align: center;
+
+							h4 {
+								color: $dark-green;
+								font-size: 17px;
+								text-transform: uppercase;
+							}
+
+							span {
+								text-transform: uppercase;
+								color: $red;
+							}
+						}
+
+						div:last-child:first-letter.qcont:first-letter {
+							text-transform: capitalize
+						}
+					}
+
+					.dialog-footer {
+						column-gap: 0 !important;
+
+						button,
+						button:hover {
+							width: 50%;
+							height: 50px;
+							border: none;
+							border-top: 1px solid $gray-1 ;
+							text-transform: uppercase;
+							font-size: 11px;
+							font-weight: 700;
+						}
+
+						button:last-child {
+							color: $white;
+							background-color: #FD7676;
+						}
+					}
+				}
+			}
+		}
+	}
+}

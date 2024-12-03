@@ -1,0 +1,63 @@
+@import "../../../../../assets/scss/variable.scss";
+
+//Responsive mixin sass
+$mobile-width: 480px; 
+$tablet-width: 768px; 
+$desktop-width: 1024px;  
+
+@mixin mobile { @media (max-width: #{$mobile -width - 1px}) {     
+  @content;   
+ } 
+}  
+
+@mixin tablet { @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {       
+   @content;   
+ } 
+}  
+
+@mixin desktop {   @media (min-width: #{$desktop-width}) {     
+  @content;  
+ } 
+}
+
+::ng-deep app-portal001-exam-detail {
+    height: calc(100vh - 55px); 
+    .col-gap-10{
+        column-gap: 10px;
+    }
+
+    .app-portal001-exam-detail{
+        // height: calc(100vh - 55px);
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: hidden;
+
+        p {
+            margin-bottom: 0;
+        }
+
+        app-hr-exam-detail{
+            flex: 1;
+            .exam-detail-wrapper{
+                .row-wrapper{
+                    position: relative;
+                    top: 0;
+                    // height: 102px; 
+                }
+
+                .ListQuestion{
+                    height: calc(100vh - 208px);
+                    overflow-x: hidden;
+                    overflow-y: auto;
+
+                }
+                .question-list-wrapper{
+                    padding: 0 15px 15px 20px;
+                }
+            }
+        }
+
+    }
+ 
+}

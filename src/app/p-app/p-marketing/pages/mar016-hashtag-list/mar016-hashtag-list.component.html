@@ -1,0 +1,145 @@
+<div class="app-mar016-hashtag-list">
+    <!-- Header 1 -->
+    <div class="header header-1">
+        <!-- Button for status filter -->
+        <ng-container *ngFor="let item of listStatusID.slice(0, 3); let  i = index">
+            <button kendoButton class="k-button checkbox-btn-group" [togglable]="isFilterActive"
+                [selected]="item.isChecked" (selectedChange)="selectedBtnChange($event, i)">
+                {{item.status}}
+                <input type="checkbox" class="k-checkbox" [checked]="item.isChecked" disabled>
+            </button>
+        </ng-container>
+
+        <div class="nav-btn nav-crud" style="flex-grow: 1;">
+            <div class="nav-file nav-btn">
+                <div class="file-btn-group">
+                    <button kendoButton id="onUploadBtn" class="k-button" [icon]="'export'" (click)="onImportExcel()"
+                        [disabled]="!isFilterActive"></button>
+                </div>
+
+                <div class="file-btn-group">
+                    <button kendoButton id="onDownloadBtn" class="k-button" [icon]="'import'"
+                        (click)="onDownloadExcel()" [disabled]="!isFilterActive">Template</button>
+                </div>
+            </div>
+            <button kendoButton class="k-button btn-hachi hachi-primary" [disabled]="!isFilterActive" [icon]="'plus'"
+                *ngIf="isAllowedToCreate || isToanQuyen" (click)="openDetail(true)">
+                TẠO MỚI
+            </button>
+        </div>
+    </div>
+
+    <!-- Header 2 -->
+    <div class="header header-2">
+        <div class="nav-filter nav-btn">
+            <!-- Filter (column 1) -->
+            <div class="filter-btn-group clear-btn-group">
+                <div class="label">
+                    <span class="k-icon k-i-filter"></span>Lọc dữ liệu
+                </div>
+
+                <button kendoButton class="k-button clear-filter-btn" (click)="resetFilter()">
+                    Reset bộ lọc
+                </button>
+            </div>
+
+            <!-- Search (column 2) -->
+            <form [formGroup]="searchForm" style="display: flex;">
+                <div class="filter-btn-group search-btn-group">
+                    <div class="label">
+                        Tìm kiếm
+                    </div>
+
+                    <div class="search-btn">
+                        <span class="k-icon k-i-search"></span>
+
+                        <kendo-textbox formControlName="SearchQuery" #SearchQuery type="text" class="k-textbox"
+                            placeholder="Tìm theo tên, mã hashtag" [clearButton]="true">
+                        </kendo-textbox>
+                    </div>
+                </div>
+
+                <button kendoButton class="k-button searchBtn" [icon]="'search'" (click)="search()"
+                    [disabled]="!isFilterActive">
+                    TÌM
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <app-p-kendo-grid class="grid scrollable" [data]="gridView | async" [scrollable]="'none'" [loading]="loading"
+            [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize" [skip]="gridState.skip"
+            [take]="gridState.take" [sortable]="true" [sort]="gridState.sort"
+            [onPageChangeCallback]="onPageChangeCallback" [onSortChangeCallback]="onSortChangeCallback"
+            [allowedMoreActionDropdown]="allowActionDropdown" [getActionDropdownCallback]="getActionDropdownCallback"
+            [onActionDropdownClickCallback]="onActionDropdownClickCallback" [selectable]="selectable"
+            [onSelectCallback]="onSelectCallback" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+            [getSelectionPopupCallback]="getSelectionPopupCallback">
+
+            <kendo-grid-column title="Tên, mã Hashtag" field="TagName" class="TagName">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div>
+                        <b># {{dataItem.TagName}}</b>
+                        <b> | {{dataItem.TagCode}}</b>
+                    </div>
+                    <div>
+                        <span>Sản phẩm: {{dataItem.NoOfProduct | number: '1.'}}</span>
+                        <span> | Bài viết: {{dataItem.NoOfPost | number: '1.'}}</span>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Người khởi tạo" field="CreateTime">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div>{{dataItem.CreateBy}}</div>
+                    <div *ngIf="dataItem.CreateTime != null && dataItem.CreateTime != ''">
+                        Ngày tạo: {{dataItem.CreateTime | date: 'd/M/yyyy'}}</div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Thông tin phê duyệt" field="LastModifiedTime">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div>{{dataItem.LastModifiedBy}}</div>
+                    <div *ngIf="dataItem.LastModifiedTime != null && dataItem.LastModifiedTime != ''">
+                        Ngày duyệt: {{dataItem.LastModifiedTime | date: 'd/M/yyyy'}}</div>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column class="col_status" title="Tình trạng" field="StatusID">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID">
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+        </app-p-kendo-grid>
+    </div>
+
+    <kendo-dialog #dialog class="deleteDialog" title="Xóa hashtag" [hidden]="!deleteDialogOpened"
+        (close)="deleteDialogOpened = false" [minWidth]="250">
+        <p style="margin: 30px; text-align: center;">
+            Bạn chắc chắn muốn xóa vĩnh viễn Tag <b>{{Hashtag.TagName}}</b> này?</p>
+        <div class="dialog-footer">
+            <button kendoButton class="btn-hachi hachi-secondary" (click)="deleteDialogOpened = false"
+                [icon]="'close'">Không</button>
+            <button kendoButton class="btn-hachi hachi-warning" (click)="DeleteHashtag()" [icon]="'trash'">Có</button>
+        </div>
+    </kendo-dialog>
+
+    <kendo-dialog #dialog class="deleteDialog" title="Xóa các hashtag đã chọn" [hidden]="!deleteManyDialogOpened"
+        [minWidth]="250" (close)="closeDeleteDialog()">
+        <div style="margin: 30px; text-align: center;">
+            {{ listUpdateHashtag.length }} Hashtag bị xóa<br>
+            sẽ <b><span style="color: #FD7676">KHÔNG</span></b> thể khôi phục lại
+        </div>
+        <div class="dialog-footer">
+            <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteManyDialog()"
+                [icon]="'close'">Không</button>
+            <button kendoButton class="btn-hachi hachi-warning" (click)="deleteMany()" [icon]="'trash'">Có</button>
+        </div>
+    </kendo-dialog>
+
+    <!-- <app-folder-popup style="z-index: 10001;" [pickFileCallback]="pickFileCallback"
+        [GetFolderCallback]="GetFolderCallback">
+    </app-folder-popup> -->
+</div>
+<app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>

@@ -1,0 +1,950 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+  #app-drawer-container {
+    height: 100%;
+
+    .mat-drawer-container {
+      height: 100%;
+
+      .mat-drawer-content {
+        overflow: hidden;
+      }
+
+      .mat-drawer-backdrop {
+        background-color: rgba(black, 0.3);
+      }
+    }
+
+    .mat-drawer {
+      width: 400px;
+      padding: 10px;
+      padding-right: 0.25rem;
+
+      form {
+        width: 100%;
+        padding: 0 10px;
+
+        fieldset {
+          //.k-form-fieldset
+          margin-right: 5px;
+          padding-bottom: 35px;
+
+          .k-form-field-disabled {
+            //giữ màu cho label khi formfield bị disabled
+            .k-label {
+              opacity: 1;
+            }
+          }
+        }
+        legend {
+          //.k-form-legend
+          margin: 0;
+          padding-bottom: 10px;
+          font-weight: bold;
+          font-size: 16px;
+          color: $dark-green;
+          border-bottom: 1px solid $dark-green;
+        }
+        .k-label {
+          font-weight: bold;
+
+          #folderPath {
+            padding: 0 5px;
+            margin-top: 5px;
+          }
+        }
+        .symbol {
+          padding-left: 5px;
+          color: $dark-red;
+          flex-grow: 1;
+          font-weight: bold;
+        }
+        .text {
+          display: flex;
+          color: $cyan;
+          cursor: pointer;
+        }
+        .k-textbox {
+          &:focus,
+          &:hover {
+            border: 1px solid $dark-green;
+          }
+
+          &[formControlName="ThanhTien"] {
+            font-weight: bold;
+          }
+        }
+        .k-dropdownlist {
+          border-radius: 3px;
+          border: 1px solid transparent;
+
+          &:focus,
+          &:hover {
+            border: 1px solid $dark-green !important;
+          }
+        }
+        .k-checkbox {
+          border-radius: 3px;
+          border-color: $dark-green;
+
+          &:checked,
+          &:hover {
+            background-color: $dark-green;
+
+            &:before {
+              font-size: 13px;
+            }
+          }
+        }
+        div img {
+          background-color: transparent;
+
+          &.img-hachi24 {
+            height: 16px;
+            margin-left: 10px;
+          }
+        }
+
+        .formfield-grid {
+          display: grid;
+          grid-template-columns: auto 50%;
+          column-gap: 32px;
+          margin-top: 8px;
+
+          &.hasNoImage {
+            row-gap: 15px;
+          }
+
+          // .formfield-item {
+          .item1 {
+            margin-top: 0;
+          }
+          .item1,
+          .item3 {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+          }
+          .item2 {
+            grid-column: 2;
+            grid-row: 1 / span 2;
+            width: 100%;
+          }
+          .item5 {
+            .k-label {
+              visibility: hidden;
+            }
+            .red-color {
+              text-decoration: line-through;
+              color: red;
+            }
+          }
+        }
+        .k-form-buttons {
+          position: fixed;
+          bottom: 36px;
+
+          .k-button {
+            height: 32px;
+            width: 103px;
+            border-radius: 3px;
+            border: 1px solid;
+            background-color: white;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 11px;
+
+            &:hover {
+              background-color: $medium-blue-gray;
+              color: white;
+            }
+
+            &.updateBtn {
+              background-color: $dark-green;
+              border: none;
+              color: white;
+
+              &:hover {
+                background-color: $worse-green;
+                border: 1px solid;
+              }
+            }
+          }
+        }
+      }
+
+      .formSanpham {
+        .tensanpham {
+          margin-top: 1rem;
+
+          .VNName {
+            min-height: 32px;
+          }
+        }
+      }
+      .formQuatang {
+        .groupQuatang {
+          display: flex;
+          flex-direction: column;
+          row-gap: 10px;
+          margin-top: 10px;
+
+          .groupName {
+            font-size: 18px;
+            font-weight: bold;
+            color: $dark-green;
+          }
+          .sanpham {
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+          }
+          .sanphamName {
+            font-weight: bold;
+            color: $blue;
+            display: flex;
+            column-gap: 5px;
+            align-items: center;
+
+            img {
+              max-height: 40px;
+              max-width: 40px;
+            }
+          }
+
+          .quatang-list {
+            display: flex;
+            flex-direction: column;
+            row-gap: 15px;
+
+            .quatang-item {
+              display: grid;
+              grid-template-columns: auto 30% auto auto;
+              column-gap: 10px;
+
+              .k-checkbox {
+                grid-column: 1;
+                grid-row: 1 / span 2;
+                margin-top: 10px;
+              }
+              .item2 {
+                grid-column: 2;
+                grid-row: 1 / span 2;
+                width: 100%;
+              }
+              .tenquatang_maquatang {
+                grid-row: 1;
+                grid-column: 3 / span 2;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+              }
+              .soluongquatang {
+                grid-row: 2;
+                grid-column: 3 / span 2;
+                display: flex;
+                white-space: nowrap;
+                align-items: center;
+                column-gap: 20px;
+
+                .soluong {
+                  font-weight: bold;
+                }
+              }
+            }
+          }
+        }
+      }
+      /* width */
+      ::-webkit-scrollbar {
+        width: 0.75rem;
+      }
+    }
+
+    .mat-drawer.mat-drawer-opened {
+      background-color: white;
+    }
+  }
+
+  .mat-drawer-content{
+    overflow-y: auto !important;
+    #ecom009-cart-customer-detail {
+      // height: calc(93vh - #{$footer-height});
+      padding: 0 15px 0 20px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: scroll;
+  
+      .header {
+        display: flex;
+        padding: 9px 0;
+        margin-bottom: 0;
+        border-bottom: 1px solid rgba($gray-500, 0.4);
+  
+        @media screen and (max-width: 480px) {
+          display: none;
+        }
+  
+        &.header-1 {
+          .checkbox-btn-group {
+            margin-right: 10px;
+          }
+        }
+  
+        .label {
+          margin-bottom: 6px;
+          font-weight: 700;
+          font-size: 13px;
+          color: $gray-700;
+        }
+        .nav-btn {
+          display: flex;
+          align-items: center;
+          flex-grow: 1;
+        }
+        .nav-breadcrumb {
+          font-weight: bold;
+          color: $gray-500;
+  
+          .breadcrumb-item {
+            &:first-child {
+              cursor: pointer;
+              color: $dark-green;
+            }
+          }
+          .breadcrumb-chevron {
+            display: flex;
+          }
+        }
+  
+        .nav-crud {
+          flex-grow: 0;
+          justify-content: flex-end;
+  
+          .crud-btn {
+            height: 32px;
+            margin-top: auto;
+            margin-left: 10px;
+            font-size: 11px;
+            font-weight: bold;
+            background-color: white !important;
+            box-shadow: 1px 3px 6px 1px rgba($gray-500, 0.2) !important;
+          }
+  
+          #reloadBtn {
+            color: $gray-500;
+          }
+          #updateOrderType_Treo_Btn {
+            color: $bad-red;
+          }
+          .updateStatusBtn {
+            // color: $dark-green;
+            text-transform: uppercase;
+  
+            &.gray {
+              color: $light-blue-gray;
+            }
+            &.yellow {
+              color: $medium-yellow;
+            }
+            &.green {
+              color: $dark-green;
+            }
+            &.red {
+              color: $bad-red;
+            }
+          }
+          .onDeleteBtn {
+            background-color: $gray-500 !important;
+            color: white;
+          }
+          #onAddBtn {
+            background-color: $dark-green !important;
+            color: white;
+          }
+  
+          .border-center {
+            margin: auto 0 1px 10px;
+            border-right: 1px solid $gray-300;
+            height: 31px;
+          }
+        }
+        .nav-file {
+          flex-grow: 0;
+  
+          .file-btn-group {
+            background: white;
+            box-shadow: 1px 3px 6px 1px rgba($gray-500, 0.2);
+            border-radius: 3px;
+            color: $gray-500;
+            min-width: fit-content;
+            height: 32px;
+            display: flex;
+            margin-top: auto;
+            margin-left: 15px;
+            // cursor: pointer;
+  
+            span.text {
+              margin: auto;
+              padding-right: 9px;
+            }
+            #onUploadBtn {
+              width: 32px;
+            }
+            #onImportBtn {
+              width: 64px;
+  
+              .excel-ic {
+                width: 32px;
+                height: 100%;
+                margin-left: 2px;
+              }
+            }
+            .border-center {
+              align-self: center;
+              height: 90%;
+              border-right: 1px solid $gray-500;
+            }
+  
+            .k-i-arrow-chevron-down {
+              text-align: center;
+              padding: 7px 0;
+              width: 32px;
+              height: 100%;
+  
+              &:before {
+                font-size: 20px;
+              }
+            }
+          }
+        }
+      }
+  
+      .body {
+        .sections {
+          .section {
+            .title {
+              margin: 12px 0;
+              font-weight: bold;
+              font-size: 16px;
+              display: flex;
+              justify-content: space-between;
+            }
+            .crud-btn {
+              height: 32px;
+              font-size: 11px;
+              font-weight: bold;
+              background-color: $dark-green !important;
+              color: white;
+            }
+  
+            .section-grid {
+              display: grid;
+              column-gap: 26px;
+              row-gap: 10px;
+              background-color: white;
+              padding: 15px;
+  
+              .grid-item {
+                display: flex;
+                flex-direction: column;
+  
+                .itemNull {
+                  display: none !important;
+                }
+              }
+  
+              .k-textbox {
+                flex-grow: 1;
+                width: auto;
+              }
+              .k-numerictextbox {
+                flex-grow: 1;
+                width: auto;
+  
+                &.red-color input {
+                  color: $bad-red;
+                }
+              }
+  
+              .k-dropdownlist {
+                flex-grow: 1;
+                width: auto;
+              }
+              .k-datepicker {
+                flex-grow: 1;
+                width: auto;
+              }
+            }
+  
+            &#thongtindonhangTbl {
+              .title {
+                justify-content: flex-start;
+                column-gap: 15px;
+  
+                span.red {
+                  color: $bad-red;
+  
+                  img {
+                    margin-top: -7px;
+                  }
+                }
+  
+                .orderType {
+                  color: $gray-500;
+  
+                  &.red {
+                    color: $bad-red;
+                  }
+                  &.green {
+                    color: $dark-green;
+                  }
+                }
+              }
+  
+              .section-grid {
+                grid-template-columns: 240px auto auto auto;
+  
+                .item1 {
+                  .label {
+                    display: flex;
+                    flex-grow: 1;
+                    justify-content: space-between;
+  
+                    .tinhtrang {
+                      color: $good-green;
+                    }
+                  }
+                }
+                .item7 {
+                  .label {
+                    display: flex;
+                    flex-grow: 1;
+                    justify-content: space-between;
+  
+                    .nguoimuahang {
+                      color: $good-green;
+                    }
+                  }
+                }
+                .item9 {
+                  grid-row: 1 / span 2;
+                  grid-column: 4 / span 2;
+  
+                  textarea {
+                    resize: none;
+                    border-radius: 3px;
+                    border-color: rgba(0, 0, 0, 0.08);
+                    outline: none;
+                    height: 100%;
+                    padding: 4px 8px;
+  
+                    &:hover,
+                    &:focus-visible {
+                      border-color: $dark-green;
+                    }
+                  }
+                }
+                .item10 {
+                  #phanloaidonhangBtn {
+                    color: $gray-900;
+                    font-weight: bold;
+                    display: flex;
+                    justify-content: flex-start;
+                    border: none;
+                    box-shadow: none;
+  
+                    &:focus,
+                    &:active {
+                      box-shadow: none;
+                    }
+                    .k-checkbox {
+                      margin-right: 9px;
+                    }
+                  }
+                }
+                .item12 {
+                  grid-row: 3;
+                  grid-column: 3 / span 3;
+                  flex-direction: row;
+                  display: flex;
+                  column-gap: 10px;
+  
+                  .address-item {
+                    display: flex;
+                    flex-direction: column;
+  
+                    &.address {
+                      flex-grow: 1;
+                    }
+                    &.address-province {
+                      width: 144px;
+                    }
+                    &.address-district {
+                      width: 115px;
+                    }
+                    &.address-ward {
+                      width: 115px;
+                    }
+                  }
+                }
+              }
+            }
+  
+            &#thongtinthanhtoanTbl {
+              .section-grid {
+                grid-template-columns: auto 200px 200px 330px;
+                row-gap: 7px;
+  
+                .item1 {
+                  grid-column: 1;
+                  grid-row: 1 / span 2;
+                }
+                .item2 {
+                  grid-column: 1;
+                  grid-row: 3 / span 2;
+                }
+                .item3 {
+                  grid-column: 1;
+                  grid-row: 5 / span 3;
+                  justify-content: space-evenly;
+  
+                  .k-textbox {
+                    margin-bottom: 7px;
+  
+                    &:last-child {
+                      margin-bottom: 0;
+                    }
+                  }
+                }
+                .item4 {
+                  grid-row: 1;
+                  grid-column: 2 / span 2;
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                  column-gap: 10px;
+  
+                  .label {
+                    margin-bottom: 0;
+                  }
+                  .k-textbox {
+                    flex-grow: 0;
+                  }
+                }
+                .item5 {
+                  grid-column: 2 / span 2;
+                  grid-row: 2 / span 6;
+                  column-gap: 40px;
+                  row-gap: 10px;
+                  flex-direction: row;
+                  flex-wrap: wrap;
+                  align-content: flex-start;
+  
+                  .item {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    width: 45%;
+  
+                    .k-i-trash {
+                      color: $bad-red;
+                      cursor: pointer;
+                    }
+                  }
+                }
+                .item6,
+                .item7,
+                .item8 {
+                  justify-content: space-between;
+  
+                  .item {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+  
+                    .label {
+                      flex-grow: 1;
+                      margin-bottom: 0;
+                    }
+                    .k-numerictextbox {
+                      max-width: 50%;
+                      max-height: 24px;
+                    }
+                  }
+                }
+                .item6 {
+                  grid-column: 4;
+                  grid-row: 1 / span 2;
+                }
+                .item7 {
+                  grid-column: 4;
+                  grid-row: 3 / span 2;
+                }
+                .item8 {
+                  grid-column: 4;
+                  grid-row: 5 / span 2;
+                  justify-content: space-around;
+                }
+                .item9 {
+                  grid-column: 4;
+                  grid-row: 7;
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                  justify-content: space-between;
+  
+                  .label {
+                    color: $gray-900;
+                    margin-bottom: 0;
+                  }
+                  .number {
+                    color: $blue;
+                    font-weight: bold;
+                    font-size: 24px;
+                  }
+                }
+              }
+            }
+  
+            &#thongtinchitietdonhangTbl {
+              .title {
+                margin-bottom: 0;
+              }
+              .grids {
+                .grid-title {
+                  display: flex;
+                  align-items: center;
+  
+                  .grid-subtitle {
+                    font-weight: bold;
+                    font-size: 15px;
+                    margin: 0 15px;
+                  }
+                  img {
+                    height: 17px;
+                  }
+                }
+                .gridGroup {
+                  &.gridNull {
+                    display: none;
+                  }
+                }
+                .grid1 {
+                  .grid-subtitle {
+                    color: $good-green;
+                  }
+                }
+                .grid2 {
+                  .grid-subtitle {
+                    color: $blue;
+                    margin-top: 12px;
+                  }
+                }
+  
+                .k-grid {
+                  th {
+                    .hachi24 {
+                      height: 15px;
+                    }
+  
+                    &:nth-child(3),
+                    &:nth-child(4),
+                    &:nth-child(5) {
+                      text-align: center;
+                    }
+                    &:nth-last-child(2) {
+                      text-align: center;
+                      border-right: 40px solid transparent;
+                    }
+                  }
+  
+                  tr:not(.k-grouping-row) td {
+                    &:first-child {
+                      padding-left: 10px;
+                    }
+                    &:nth-last-child(2) {
+                      border-right: 40px solid transparent;
+                    }
+                  }
+  
+                  .isHachi24,
+                  .soluong,
+                  .dongia {
+                    max-width: 100px;
+                    width: 100px;
+                    text-align: center;
+                  }
+  
+                  .tensanpham {
+                    display: flex;
+  
+                    img {
+                      max-height: 64px;
+                      margin-right: 20px;
+                    }
+                    .tensanpham_masanpham {
+                      display: flex;
+                      flex-direction: column;
+                      justify-content: space-between;
+  
+                      .tensanpham {
+                        white-space: normal;
+                      }
+  
+                      .masanpham {
+                        color: $gray-700;
+                      }
+                    }
+                  }
+                  .dongia {
+                    .BasePrice {
+                      color: $bad-red;
+                      text-decoration: line-through $bad-red;
+                    }
+                  }
+                  .thanhtien {
+                    max-width: 130px;
+                    width: 130px;
+                    text-align: center;
+                  }
+                }
+              }
+            }
+  
+            &#quatangTbl {
+              .quatang-list {
+                display: grid;
+                // grid-template-columns: 18% 18% 18% 18% 18%;
+                grid-template-columns: 18% 18% 18% 18%;
+                // column-gap: 3%;
+                column-gap: 9%;
+  
+                .quatang-item {
+                  padding: 5px;
+                  border-radius: 3px;
+                  width: 250px;
+                  height: 110px;
+                  background-color: white;
+                  position: relative;
+                  display: grid;
+                  grid-template-columns: 30% auto;
+                  column-gap: 10px;
+  
+                  &:hover {
+                    box-shadow: 0 0 0 1px $dark-green;
+                  }
+  
+                  .k-i-trash {
+                    color: $bad-red;
+                    cursor: pointer;
+                    position: absolute;
+                    top: 3px;
+                    left: 3px;
+                  }
+                  .hinhanh {
+                    grid-column: 1;
+                    grid-row: 1 / span 2;
+                    display: flex;
+                    align-items: center;
+  
+                    img {
+                      border-radius: 3px;
+                      width: 100%;
+                    }
+                  }
+                  .tenquatang_maquatang {
+                    grid-column: 2 / span 2;
+                    grid-row: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                  }
+                  .soluongquatang {
+                    grid-column: 2 / span 2;
+                    grid-row: 2;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+  
+                    .soluong {
+                      font-weight: bold;
+                    }
+                  }
+                }
+              }
+            }
+  
+            &#lichsuxulydonhangTbl {
+              .title {
+                margin-bottom: 0;
+              }
+  
+              .k-grid {
+                tr:not(.k-grouping-row) td {
+                  &:first-child {
+                    padding-left: 10px;
+                  }
+                  &:last-child {
+                    display: none;
+                  }
+                }
+  
+                .thoidiemxuly {
+                  display: flex;
+                  column-gap: 5px;
+                }
+              }
+            }
+  
+            &#chukybengiaonhanTbl {
+              display: flex;
+              flex-direction: column;
+  
+              .chuky-bg {
+                max-height: 600px;
+                height: 400px;
+                display: flex;
+                justify-content: center;
+                background-color: white;
+                flex-grow: 1;
+  
+                &.empty {
+                  height: auto;
+                }
+                img {
+                  max-width: auto;
+                  max-height: 100%;
+                }
+              }
+            }
+          }
+        }
+      }
+  
+      .label {
+        margin-bottom: 6px;
+        font-weight: bold;
+        color: $gray-500;
+  
+        &.thick-label {
+          color: $gray-900;
+  
+          + .number {
+            font-weight: bold;
+          }
+          + .k-numerictextbox {
+            input {
+              font-weight: bold;
+            }
+          }
+        }
+        &.thin-label {
+          font-weight: normal;
+          color: $gray-800;
+        }
+      }
+    }
+  }
+}

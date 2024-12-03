@@ -1,0 +1,208 @@
+<div class="config-purchase-attribute">
+    <div class="section">
+        <div class="title">THUỘC TÍNH MUA HÀNG</div>
+        <div class="section-grid">
+          <!-- col 1 -->
+          <div class="column_1">
+          <div class="grid-item item1">
+            <div class="history-Ncc">
+                <div class="label">Nhà cung cấp</div>
+                <span (click)="OpenDialogNCC()">Lịch sử thay đổi NCC</span>
+            </div>
+            <p-kendo-dropdownlist [data]="listSupplier" [disabled]="disable"  textField="VNName" valueField="Code"
+            [(ngModel)]="selectedSupplier" [filterable]="true" (valueChange)="onDropdownlistClick($event,['Supplier'])">
+            </p-kendo-dropdownlist>
+          </div>
+  
+          <div class="grid-item item2">
+            <div class="label">Shipper</div>
+            <p-kendo-dropdownlist [data]="listShipper" [disabled]="disable" valueField="Code" textField="VNName"
+             [(ngModel)]="selectedShipper" (valueChange)="onDropdownlistClick($event,['Shipper'])">
+            </p-kendo-dropdownlist>
+          </div>
+  
+          <div class="grid-item item3">
+            <div class="label">Maker</div>
+            <app-p-textbox  [propName]="'prop'" class="k-textbox" [disabled]="disable" [(ngModel)]="product.MakerName" (blur)="onBlurTextbox('MakerName')">
+            </app-p-textbox>
+          </div>
+  
+          <div class="grid-item item4">
+            <div class="label">Đơn hàng đầu tiên</div>
+            <app-p-textbox [propName]="'prop'" class="k-textbox"  [disabled]="disable" [(ngModel)]="product.FirstPO" (blur)="onBlurTextbox('FirstPO')">
+            </app-p-textbox>
+          </div>
+
+        </div>
+
+        <div class="column_2">
+          <!--col 2-->
+          <div class="grid-item item5">
+            <div class="history-sale">
+                <div class="label">Giá mua gần nhất</div>
+                <span (click)="OpenDialogPurchase()">Lịch sử thay đổi giá mua hàng</span>
+            </div>
+            <div class="item5_1">
+                <app-p-numeric-textbox propName="sl" [format]="'n0'" [spinners]="false" [min]="0" [disabled]="true" [(ngModel)]="product.Bid"></app-p-numeric-textbox>
+                <p-kendo-dropdownlist [data]="listCurrency" valueField="Code" textField="CurrencyID" [(ngModel)]="currencyIn"
+                [disabled]="true" ></p-kendo-dropdownlist>
+               <p-kendo-dropdownlist [data]="listCommercialTerm" valueField="Code" textField="ShortName" [disabled]="true" 
+               [(ngModel)]="commercialTerm"></p-kendo-dropdownlist>
+            </div>
+
+            </div>
+
+            <div class="grid-item item6">
+                <div class="label">Giá vốn hàng hóa</div>
+                <div class="item6_1">
+                    <app-p-numeric-textbox propName="sl" [format]="'n0'" [spinners]="false" [min]="0" [disabled]="true" [(ngModel)]="product.AvgPrice"></app-p-numeric-textbox>
+                    <p-kendo-dropdownlist [data]="listCurrency" valueField="Code" textField="CurrencyID" [(ngModel)]="currencyOut"
+                    [disabled]="true"  [(ngModel)]="currencyAvg"></p-kendo-dropdownlist>
+                </div>
+            </div>
+
+            <div class="grid-item item7">
+                 <div class="label">Cơ sở mua hàng</div>
+                <div class="item7_1">
+                    <div class="label">Doanh số tháng dự kiến</div>
+                    <app-p-numeric-textbox propName="sl" [format]="'n0'" [spinners]="false" [min]="0" [disabled]="disable"
+                     [(ngModel)]="product.AmountMonthSale" (blur)="onBlurTextbox('AmountMonthSale')"></app-p-numeric-textbox>
+                </div>
+                <div class="item7_1">
+                    <div class="label">Số lượng bán dự kiến hàng tháng</div>
+                    <app-p-numeric-textbox propName="sl" [format]="'n0'" [spinners]="false" [min]="0" [disabled]="disable"
+                     [(ngModel)]="product.QtyMonthSale"  (blur)="onBlurTextbox('QtyMonthSale')"></app-p-numeric-textbox>
+                </div>
+                <div class="item7_1">
+                    <div class="label">Số lượng dữ trữ thêm</div>
+                    <app-p-numeric-textbox propName="sl" [format]="'n0'" [spinners]="false" [min]="0" [disabled]="disable"
+                     [(ngModel)]="product.QtyMore" (blur)="onBlurTextbox('QtyMore')"></app-p-numeric-textbox>
+                </div>
+                <div class="item7_1">
+                    <div class="label">Số lượng trưng bày tối thiểu</div>
+                    <app-p-numeric-textbox propName="sl" [format]="'n0'" [spinners]="false" [min]="0" [disabled]="disable"
+                     [(ngModel)]="product.MinDisplay" (blur)="onBlurTextbox('MinDisplay')"></app-p-numeric-textbox>
+                </div>
+            </div>
+        </div>
+  
+
+        <div class="column_3">
+          <!-- col 3 -->
+          <div class="grid-item item8">
+           <div class="label">Tên khai quan/xuất hóa đơn</div>
+            <app-p-textbox [propName]="'prop'" class="k-textbox" [disabled]="disable"  [(ngModel)]="product.TaxName" (blur)="onBlurTextbox('TaxName')"></app-p-textbox>
+        </div>
+        
+            <div class="grid-item item9">
+                    <div class="item9_1">
+                        <div class="label">Mã khai quan</div>
+                        <kendo-dropdownlist [data]="[]" [disabled]="disable" [(ngModel)]="product.TaxID"></kendo-dropdownlist>
+                    </div>
+                    <div class="item9_1">
+                        <div class="label">Mã thuế nhập khẩu</div>
+                        <app-p-textbox [propName]="'prop'" class="k-textbox" [disabled]="disable" [(ngModel)]="product.IMTaxCode" (blur)="onBlurTextbox('IMTaxCode')"></app-p-textbox>
+                    </div>
+                    <div class="item9_1">
+                        <div class="label">Thuế suất NK (%)</div>
+                        <app-p-numeric-textbox propName="sl" [format]="'n0'" [spinners]="false" [min]="0" [disabled]="disable" [(ngModel)]="product.IMTaxRate" (blur)="onBlurTextbox('IMTaxRate')"></app-p-numeric-textbox>
+                    </div>
+            </div>
+
+            <div class="grid-item item10">
+                <div class="item9_1" style="visibility: hidden;">
+                    <div class="label"></div>
+                    <app-p-numeric-textbox propName="sl" [format]="'n0'" [spinners]="false" [min]="0" [disabled]="disable"></app-p-numeric-textbox>
+                </div>
+                <div class="item9_1">
+                    <div class="label">Mã thuế TTĐB</div>
+                    <app-p-textbox [propName]="'prop'" class="k-textbox" [disabled]="true"></app-p-textbox>
+                </div>
+                <div class="item9_1">
+                    <div class="label">Thuế TTĐB (%)</div>
+                    <app-p-numeric-textbox propName="sl" [format]="'n0'" [spinners]="false" [min]="0" [disabled]="true"></app-p-numeric-textbox>
+                </div>
+        </div>
+
+        <div class="grid-item item11">
+            <div class="item9_1">
+                <div class="label">Mã thuế VAT</div>
+                <app-p-textbox [propName]="'prop'" class="k-textbox" [disabled]="disable" [(ngModel)]="product.VATInCode" (blur)="onBlurTextbox('VATInCode')"></app-p-textbox>
+            </div>
+            <div class="item9_1">
+                <div class="label">VAT đầu vào (%)</div>
+                <app-p-numeric-textbox propName="sl" [format]="'n0'" [spinners]="false" [min]="0" [disabled]="disable"  [(ngModel)]="product.VATIn"  (blur)="onBlurTextbox('VATIn')"></app-p-numeric-textbox>
+            </div>
+            <div class="item9_1">
+                <div class="label">VAT đầu ra (%) <input type="checkbox" kendoCheckBox  [disabled]="disable"  [checked]="product.IsVATOut"  (change)="valueChange($event,'IsVATOut')"></div> 
+                <app-p-numeric-textbox propName="sl" [format]="'n0'" [spinners]="false" [min]="0" [disabled]="disable" [(ngModel)]="product.VAT" (blur)="onBlurTextbox('VAT')"></app-p-numeric-textbox>
+            </div>
+    </div>
+
+        </div>
+
+
+        </div>
+    </div>
+    <!--POPUP LỊCH SỬ THAY ĐỔI NHÀ CUNG CẤP -->
+    <app-config-history-popup 
+    [popupTitle]="titleSupplier" 
+    [isDialogOpened]="showPopupSupplier"
+    [popupData]="Item"
+    [popupGridData]="gridViewHTNCC | async"
+    [columnConfig]="columnConfigSupplier"
+    (closeHistoryDialog)="closeDialog()"
+    >   
+    </app-config-history-popup>
+
+    <ng-template #customSupplierTemplate let-dataItem>
+        <div class="LabelName" title="{{dataItem.PartnerName}}">
+            {{dataItem.PartnerName}}
+        </div>
+    </ng-template>
+
+    <ng-template #customEffectiveTemplate let-dataItem>
+        <div class="thoigianhieuluc" [ngClass]="{'today': checkTodate(dataItem.EffectiveTo)}">
+            <div *ngIf="checkTodate(dataItem.EffectiveTo)">Hiện tại</div>
+            <div class="ngaybatdau" *ngIf="!checkTodate(dataItem.EffectiveTo)"> {{dataItem.EffectiveTo | date: 'dd/MM/yyyy'}} </div>
+            <div class="ngayketthuc">{{dataItem.EffectiveFrom | date: 'dd/MM/yyyy'}}</div>
+        </div>
+    </ng-template>
+
+    <ng-template #customBillTemplate let-dataItem>
+        <div class="donhangcuoicung">
+            <div class="madonhang"> {{dataItem.LastPO}} </div>
+            <div class="ngay">{{dataItem.LastPODate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+    </ng-template>
+
+    <!--POPUP LỊCH SỬ THAY ĐỔI GIÁ MUA HÀNG -->
+    <app-config-history-popup 
+    [popupTitle]="titlePurchase" 
+    [isDialogOpened]="showPopupPurchase"
+    [popupData]="Item"
+    [popupGridData]="gridViewHTPS | async"
+    [columnConfig]="columnConfigPurchase"   
+    (closeHistoryDialog)="closeDialog()"
+    ></app-config-history-popup>
+
+    <ng-template #customPurchaseTemplate let-dataItem>
+        <div class="LabelName"  title="{{dataItem.PartnerName}}">
+            {{dataItem.PartnerName}}
+        </div>
+    </ng-template>
+
+    <ng-template #customPurchasePriceTemplate let-dataItem>
+        <div class="Price">
+            <span class="num" *ngIf="dataItem.BuyedPrice != null">{{dataItem.BuyedPrice + ' '}} <span>{{dataItem.CurrencyID}}</span></span>
+           <span class="Pricetype" *ngIf="dataItem.BuyedPrice != null">()</span>
+        </div>
+    </ng-template>
+
+    <ng-template #customPurchaseEffectiveTemplate let-dataItem>
+        <div class="NgayHieuLuc">
+            <div class="ngay">{{dataItem.EffDate | date: 'dd/MM/yyyy'}}</div>
+            <div class="madonhang"> <span *ngIf="dataItem.LastPO != null">(</span>{{dataItem.LastPO}} <span *ngIf="dataItem.LastPO != null">)</span> </div>
+        </div>
+    </ng-template>
+  </div>

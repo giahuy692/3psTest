@@ -1,0 +1,120 @@
+<div class="config003-enterprise-product">
+    <!-- header 1-->
+    <div class="header header-1">
+        <!-- breadcrumb -->
+        <div class="breadcrumbAnddropdownlist"> 
+            <app-p-kendo-breadcrumb (loadData)="loadPage()"></app-p-kendo-breadcrumb>
+
+            <kendo-dropdownlist [data]="listModeArray" [value]="currentListMode" [textField]="'text'" [valueField]="'value'"
+                (valueChange)="onDropdownlistClick($event)" [disabled]="!isFilterActive" [popupSettings]="{appendTo:'component'}">
+                <ng-template kendoDropDownListValueTemplate let-dataItem>
+                    <!-- <span class="k-icon k-i-chart-column-stacked"></span> -->
+                    <fa-icon [icon]="['fas', dataItem.Icon]" *ngIf="dataItem.Icon != null && dataItem.Icon != ''" class="Icon-Dropdown"></fa-icon>
+                    <span class="value">{{ dataItem.text }}</span>
+                </ng-template>
+                <ng-template kendoDropDownListItemTemplate let-dataItem>
+                    <fa-icon [icon]="['fas', dataItem.Icon]" *ngIf="dataItem.Icon != null && dataItem.Icon != ''" class="Icon-Dropdown"></fa-icon>
+                    <span class="value">{{ dataItem.text }}</span>
+                </ng-template>
+            </kendo-dropdownlist>
+    
+        </div>
+
+        <div class="search-btn checkbox-button-group">
+            <app-checkbox-button-group 
+            [toggleable]="isFilterActive" 
+            [selected]="daDuyet_checked"
+            title="Đã duyệt"
+            (selectedChange)="selectedBtnChange($event, 'daDuyet_checked')" 
+            [checked]="daDuyet_checked">
+            </app-checkbox-button-group>
+            <app-checkbox-button-group 
+            [toggleable]="isFilterActive" 
+            [selected]="NgungApDung_checked"
+            title="Ngưng áp dụng"
+            (selectedChange)="selectedBtnChange($event, 'NgungApDung_checked')" 
+            [checked]="NgungApDung_checked">
+            </app-checkbox-button-group>
+        </div>
+       
+        <!-- nav-btn -->
+        <div class="nav-btn nav-crud" >
+            <div class="nav-file nav-btn" *ngIf="isToanQuyen || isAllowedToCreate">            
+                <div class="file-btn-group">
+                <button kendoButton id="onUploadBtn" class="k-button" [icon]="'export'" (click)="importExcel()" [disabled]="!isFilterActive"></button>
+                </div>
+        
+                <div class="file-btn-group">
+                <button kendoButton id="onDownloadBtn" class="k-button" [icon]="'import'" (click)="downloadExcel()" [disabled]="!isFilterActive">Template</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- header 2-->
+    <div class="header header-2">
+        <app-search-filter-group [placeholder]="placeholder" [disabled]="!isFilterActive"
+        (valueChange)="handleSearch($event)" (onReset)="resetFilter()"></app-search-filter-group>    
+    </div>
+
+    <!-- body -->
+
+    <div class="body">
+        <!-- danh sách Sản phẩm -->
+        <div class="DSSP">
+            <div class="grid-wrapper">
+                <app-p-kendo-grid class="grid scrollable " [data]=" gridView | async" [scrollable]="'none'" [loading]="loading"
+                [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize"[skip]="gridState.skip" [take]="gridState.take" 
+                [sortable]="true" [onPageChangeCallback]="onPageChangeCallback" [allowedMoreActionDropdown]="allowActionDropdown" 
+                [getActionDropdownCallback]="getActionDropdownCallback" [onActionDropdownClickCallback]="onActionDropdownClickCallback">
+            
+            
+                    <kendo-grid-column title="Tên sản phẩm" class="col_Name" field="VNName">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <div class="ImageAndName">
+                            <div class="ImageBox">
+                                <img loading="lazy" class="Image" src="{{dataItem.URLThumbImage}}" alt="">
+                            </div>
+                            <span class="Name" title="{{dataItem.VNName}}">{{dataItem.VNName}}</span>
+                        </div>
+                    </ng-template>
+                    </kendo-grid-column>
+                
+                    <kendo-grid-column title="Barcode" class="col_Barcode" field="Barcode">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        {{dataItem.Barcode}}
+                    </ng-template>
+                    </kendo-grid-column>
+                
+                    <kendo-grid-column title="Xuất xứ" class="col_origin" field="origin">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        {{dataItem.OriginName}}
+                    </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column title="Thương hiệu" class="col_BrandName" field="BrandName">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        {{dataItem.BrandName}}
+                    </ng-template>
+                    </kendo-grid-column>
+                
+                    <kendo-grid-column title="Nhà sản xuất" class="col_producer" field="producer">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        {{dataItem.BrandName}}
+                    </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column title="Tình trạng" class="col_producer" field="StatusID">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <div class="Status">
+                            <div [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID"></div>
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+            
+                </app-p-kendo-grid>
+            </div>
+        </div>
+    </div>
+    <app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>
+</div>

@@ -1,0 +1,252 @@
+<!--START DRAWER CONTAINER RIGHT-->
+<kendo-drawer-container id="drawerContainerRight">
+
+	<!-- START DRAWER RIGHT -->
+	<kendo-drawer id="drawerRight" #drawerRight mode="overlay" position="end" [expanded]="false"
+		(collapse)="onDrawerCollapse()" [(autoCollapse)]="isautoCollapse">
+		<ng-template kendoDrawerHeaderTemplate>
+
+			<!-- TITLE CONTROL-->
+			<div class="title">
+				<span>
+					<img loading="lazy" src="assets/img/icon/icon_questionGroupGreen.svg" alt="">
+				</span>
+				phân nhóm câu hỏi
+			</div>
+
+			<!-- INPUT CONTROL -->
+			<div class="formControl">
+				<!-- Phân nhóm câu hỏi -->
+				<kendo-label text="Phân nhóm câu hỏi">
+					<span class="symbol">(*)</span>
+					<app-p-textbox [propName]="'CategoryName'" [placeHolder]="'Tên nhóm câu hỏi...'"
+						[(ngModel)]="d_newGroup.CategoryName" [disabled]="d_disable">
+					</app-p-textbox>
+					<!-- <kendo-textbox placeholder="Tên nhóm câu hỏi..." [(ngModel)]="d_newGroup.CategoryName"
+						[disabled]="d_disable">
+					</kendo-textbox> -->
+				</kendo-label>
+
+				<!-- Phân nhóm trực thuộc -->
+				<kendo-label text="Phân nhóm trực thuộc">
+					<kendo-dropdowntree kendoDropDownTreeExpandable class="classRemoveDropdowntree"
+						[kendoDropDownTreeHierarchyBinding]="d_listQuestionGroupDropdown" textField="CategoryName"
+						valueField="Code" childrenField="ListChilds" [value]="d_dataItemBding" [filterable]="true"
+						[expandOnFilter]="true" [popupSettings]="{ appendTo: 'component' }"
+						(valueChange)="valueDropdowntreeChange($event)" [disabled]="d_disable">
+						<ng-template kendoDropDownTreeNodeTemplate let-dataItem>
+							<img loading="lazy" [ngClass]="{'nullItem': dataItem.Code == null}"
+								src="assets/img/icon/icon_questionGroup.svg" />
+							{{ dataItem.CategoryName }}
+						</ng-template>
+					</kendo-dropdowntree>
+					<!-- <kendo-dropdownlist [data]="d_listQuestionGroupDropdown" textField="CategoryName" valueField="Code"
+						[valuePrimitive]="true" [(ngModel)]="d_newGroup.Parent"
+						[defaultItem]="{Code: null, CategoryName: '-- Chọn --'}"
+						[popupSettings]="{appendTo:'component'}" [disabled]="d_disable">
+					</kendo-dropdownlist> -->
+				</kendo-label>
+
+				<!-- Mã nhóm câu hỏi -->
+				<kendo-label text="Mã nhóm câu hỏi">
+					<span class="symbol">(*)</span>
+					<app-p-textbox [propName]="'CategoryID'" [placeHolder]="'Mã nhóm câu hỏi...'"
+						[(ngModel)]="d_newGroup.CategoryID" [disabled]="d_disable">
+					</app-p-textbox>
+					<!-- <kendo-textbox placeholder="Mã nhóm câu hỏi..." [(ngModel)]="d_newGroup.CategoryID"
+						[disabled]="d_disable">
+					</kendo-textbox> -->
+				</kendo-label>
+
+				<!-- Ghi chú -->
+				<kendo-label text="Ghi chú">
+					<app-p-textarea [(ngModel)]="d_newGroup.Remark" [propName]="'Remark'" [disabled]="d_disable"
+						[placeHolder]="'Ghi chú nhóm câu hỏi...'"></app-p-textarea>
+					<!-- <kendo-textarea [(ngModel)]="d_newGroup.Remark" resizable="none" [style.height.px]="135"
+						placeholder="Ghi chú nhóm câu hỏi..." [disabled]="d_disable">
+					</kendo-textarea> -->
+				</kendo-label>
+
+				<!-- Vai trò tạo ngân hàng câu hỏi -->
+				<kendo-label text="Vai trò tạo ngân hàng câu hỏi">
+					<span class="symbol">(*)</span>
+					<kendo-multiselect (filterChange)="onFilterRoleChange($event)" [data]="d_listPositionRoleDropdown"
+						[filterable]="true" textField="RoleName" valueField="Code" placeholder="-- Chọn --"
+						[popupSettings]="{appendTo:'component'}" [clearButton]="false"
+						[(ngModel)]="d_newGroup.ListCreators" [disabled]="d_disable">
+					</kendo-multiselect>
+				</kendo-label>
+
+				<!-- Vai trò phê duyệt ngân hàng câu hỏi -->
+				<kendo-label text="Vai trò phê duyệt ngân hàng câu hỏi">
+					<span class="symbol">(*)</span>
+					<kendo-multiselect (filterChange)="onFilterRoleChange($event)" [data]="d_listPositionRoleDropdown"
+						[filterable]="true" textField="RoleName" valueField="Code" placeholder="-- Chọn --"
+						[popupSettings]="{appendTo:'component'}" [clearButton]="false"
+						[(ngModel)]="d_newGroup.ListVerifiers" [disabled]="d_disable">
+					</kendo-multiselect>
+				</kendo-label>
+
+				<!--Tình trạng-->
+				<kendo-label text="Tình trạng">
+					<kendo-dropdownlist [data]="d_listStatusDropdown" textField="StatusName" valueField="OrderBy"
+						[popupSettings]="{appendTo:'component'}" [valuePrimitive]="true"
+						[(ngModel)]="d_newGroup.StatusID" [itemDisabled]="itemDisabled">
+					</kendo-dropdownlist>
+				</kendo-label>
+
+				<p class="symbol fst-italic mt-2">(*) Trường bắt buộc nhập.</p>
+
+			</div>
+
+			<!-- BUTTON CONTROL -->
+			<div class="btnControl">
+				<button kendoButton class="btn-hachi hachi-primary hachi-secondary"
+					(click)="drawerRight.toggle();">đóng</button>
+				<button kendoButton class="btn-hachi hachi-primary" (click)="updateQuestionGroup();"
+					(keydown.Enter)="updateQuestionGroup();">
+					{{functionText}}
+				</button>
+			</div>
+		</ng-template>
+	</kendo-drawer>
+	<!-- END DRAWER RIGHT -->
+
+	<!-- START DRAWER CONTENT RIGHT -->
+	<kendo-drawer-content id="drawerContentRight">
+
+		<!-- START BREADCRUMB AND BUTTON -->
+		<div id="breadcrumbButtonBlock" class="header header-2">
+
+			<!-- BREADCRUMB -->
+			<app-p-kendo-breadcrumb style="width: 350px;"
+				(loadData)="onLoadListQuestionGroup()"></app-p-kendo-breadcrumb>
+
+
+			<!-- BUTTON GROUP -->
+			<kendo-buttongroup style="width: fit-content;">
+				<button kendoButton class="btn-import" icon="export" *ngIf="isCanCreate || isAllPers"
+					(click)="onImportExcel()">
+				</button>
+				<button kendoButton class="btn-import" icon="import" *ngIf="isCanCreate || isAllPers"
+					(click)="onDownloadExcel()">
+					Template
+				</button>
+				<button kendoButton class="btn-hachi hachi-primary" imageUrl="assets/img/icon/icon_questionGroup.svg"
+					(click)="d_drawer = drawerRight; executesAction('add')" *ngIf="isAllPers || isCanCreate">
+					thêm mới phân nhóm
+				</button>
+				<button kendoButton class="btn-hachi hachi-primary" imageUrl="assets/img/icon/icon_questionGroup.svg"
+					(click)="d_drawer = drawerRight; executesAction('addChild')"
+					*ngIf="(isAllPers || isCanCreate) && isShowBtnAddChild">
+					thêm mới phân nhóm con
+				</button>
+			</kendo-buttongroup>
+		</div>
+		<!-- END BREADCRUMB AND BUTTON -->
+
+		<!-- START FUNCTIONBAR -->
+		<div id="functionbar" class="header header-2">
+
+			<!-- SEARCH FILTER -->
+			<app-search-filter-group placeholder="Tìm theo phân nhóm câu hỏi" [fields]="['CategoryName']"
+				(onReset)="onResetFilter($event)" (filterChange)="onSearchDataGroupQuestion($event)">
+			</app-search-filter-group>
+
+			<div class="buttonGroup ml-4">
+				<app-checkbox-button-group title="Đang soạn thảo" [checked]="isNew" (selectedChange)="isNew = $event"
+					(filterChange)="filterChangeCheckbox($event, 'isNew')" field="StatusID" operator="eq" value="0">
+				</app-checkbox-button-group>
+				<app-checkbox-button-group title="Gửi duyệt" [checked]="isSent" (selectedChange)="isSent = $event"
+					(filterChange)="filterChangeCheckbox($event, 'isSent')" field="StatusID" operator="eq" value="1">
+				</app-checkbox-button-group>
+				<app-checkbox-button-group title="Đã duyệt" [checked]="isApproved"
+					(selectedChange)="isApproved = $event" (filterChange)="filterChangeCheckbox($event, 'isApproved')"
+					field="StatusID" operator="eq" value="2">
+				</app-checkbox-button-group>
+				<app-checkbox-button-group title="Ngưng áp dụng" [checked]="isStoped"
+					(selectedChange)="isStoped = $event" (filterChange)="filterChangeCheckbox($event, 'isStoped')"
+					field="StatusID" operator="eq" value="3">
+				</app-checkbox-button-group>
+				<app-checkbox-button-group title="Trả về" [checked]="isReturn" (selectedChange)="isReturn = $event"
+					(filterChange)="filterChangeCheckbox($event, 'isComplete')" field="StatusID" operator="eq"
+					value="4">
+				</app-checkbox-button-group>
+			</div>
+		</div>
+		<!-- END FUNCTIONBAR -->
+
+		<!-- START TREE LIST GIRD -->
+		<kendo-treelist [data]="dataGroupTreeCopy" [fetchChildren]="fetchChildren" [hasChildren]="hasChildren"
+			[filter]="gridState.filter" kendoTreeListSelectable [selectable]="settingsTreelist" [loading]="loading"
+			[initiallyExpanded]="true" kendoTreeListExpandable hideHeader="'true" [(selectedItems)]="treelistSelected"
+			itemKey="Code" (selectionChange)="onChangeSelectedTreelist($event)" [trackBy]="trackBy">
+
+			<!-- COLUMN 1 -->
+			<kendo-treelist-span-column [expandable]="true">
+				<kendo-treelist-column field="CategoryName" [width]="'auto'"></kendo-treelist-column>
+				<ng-template kendoTreeListCellTemplate let-dataItem>
+					<span class="iconImg" [ngClass]="dataItem.ParentID == null ? 'bigItem' : ''">
+						<img loading="lazy" src="assets/img/icon/icon_questionGroup.svg" alt="">
+					</span>
+					<span class="mr-5" [ngClass]="hasChildren(dataItem) ? 'hasChild' : ''">{{ dataItem.CategoryName
+						}}</span>
+					<span class="ml-5" [ngClass]="hasChildren(dataItem) ? 'hasChild' : ''">{{ dataItem.CategoryID
+						}}</span>
+				</ng-template>
+			</kendo-treelist-span-column>
+
+			<kendo-treelist-column class="col_tinhTrang" field="StatusID" [width]="'135'">
+				<ng-template kendoTreeListCellTemplate let-dataItem>
+					<div [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID">
+					</div>
+				</ng-template>
+			</kendo-treelist-column>
+
+			<!-- COLUMN 2 -->
+			<kendo-treelist-column field="id" [width]="41">
+				<ng-template kendoTreeListCellTemplate let-dataItem>
+					<div class="content-dropdown">
+						<kendo-dropdownbutton #dropdownlisttree
+							[popupSettings]="{ animate: true, popupClass: 'fmDropdown', align: 'right', appendTo: 'component' }"
+							[data]="itemsDropdownTreelist" (focus)="onFocusDropdownTreelist(dataItem)"
+							(click)="dropdownlisttreeTS = dropdownlisttree; ddltFormat($event)"
+							(itemClick)="d_drawer = drawerRight;  executesAction($event.val)">
+							<span class=" k-icon k-i-more-horizontal"></span>
+						</kendo-dropdownbutton>
+					</div>
+				</ng-template>
+			</kendo-treelist-column>
+		</kendo-treelist>
+		<!-- END TREE LIST GIRD -->
+	</kendo-drawer-content>
+	<!-- END DRAWER CONTENT RIGHT -->
+</kendo-drawer-container>
+<!--END DRAWER CONTAINER RIGHT-->
+
+<!-- START DIALOG -->
+<kendo-dialog class="dialog-delete" [minHeight]="250" [minWidth]="400" *ngIf="openedDialog">
+	<kendo-dialog-titlebar>
+		<span class="k-icon k-i-warning"></span>
+		xóa {{dialog.obj}}
+	</kendo-dialog-titlebar>
+
+	<div class="dialog-content">
+		<div>
+			Bạn chắc chắn muốn xóa {{dialog.obj}}
+			<h4>{{dialog.item}}</h4>
+		</div>
+		<div>
+			<span>{{dialog.obj}}</span> bị xóa sẽ <span>Không</span> thể khôi phục lại.
+		</div>
+	</div>
+
+	<div class="dialog-footer">
+		<button kendoButton (click)="openedDialog = false">Không xóa</button>
+		<button kendoButton icon="trash" (click)="openedDialog = false; deleteQuestionGroup(currentlySelectedGroup)">
+			xóa {{dialog.obj}}
+		</button>
+	</div>
+</kendo-dialog>
+<!-- END DIALOG -->
+<app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>

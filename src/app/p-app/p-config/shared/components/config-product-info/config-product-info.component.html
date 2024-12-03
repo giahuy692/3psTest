@@ -1,0 +1,232 @@
+<div class="config-product-info">
+  <div class="section">
+    <div class="title">{{typeInfo == 1 || typeInfo == 3 || typeInfo == 5
+      ? "THÔNG TIN HAMPER"
+      : typeInfo == 2
+      ? "THÔNG TIN SẢN PHẨM"
+      : typeInfo == 4
+      ? "THÔNG TIN SẢN PHẨM GỐC"
+      : ""}}
+
+      <b *ngIf="typeInfo == 1 || typeInfo == 5" [innerHTML]="hamper.StatusName | colorStatus:hamper.StatusID">
+
+      </b>
+
+      <span *ngIf="typeInfo == 2 || typeInfo == 3"> {{ hamper.BarcodeBase }} <i
+          (click)="openHamperDetail()">(Barcode gốc)</i></span>
+
+    </div>
+
+    <div class="section-grid">
+      <!-- col 1 -->
+      <div class="grid-item item1">
+        <div class="label">{{typeInfo == 1 || typeInfo == 4 || typeInfo == 5
+          ? "Barcode gốc"
+          : typeInfo == 2 || typeInfo == 3
+          ? "Barcode"
+          : ""}}</div>
+
+        <app-p-textbox class="k-textbox" [propName]="'Barcode'" (keydown.Enter)="$event.target.blur()"
+          *ngIf="typeInfo == 1 || typeInfo == 4 || typeInfo == 5" (blur)="onBlurTextbox('Barcode')"
+          [(ngModel)]="hamper.Barcode" [disabled]="typeInfo == 1 || typeInfo == 4 || typeInfo == 5">
+        </app-p-textbox>
+      </div>
+
+      <!-- type của sản phẩm -->
+
+      <div class="grid-item item1_V1" *ngIf="typeInfo == 3 || typeInfo == 2">
+        <div class="item1_barcode">
+          <div class="label">Barcode <span class="impose">(*)</span></div>
+          <app-p-textbox class="k-textbox" [propName]="'Barcode'" (keydown.Enter)="$event.target.blur()"
+            (blur)="onBlurTextbox('Barcode')" [(ngModel)]="hamper.Barcode" [disabled]="disableType2">
+          </app-p-textbox>
+        </div>
+        <div class="item1_poscode">
+          <div class="label">Poscode </div>
+          <app-p-textbox class="k-textbox" [propName]="'Poscode'" (keydown.Enter)="$event.target.blur()"
+            (blur)="onBlurTextbox('Poscode')" [(ngModel)]="hamper.Poscode" [disabled]="disableType2">
+          </app-p-textbox>
+        </div>
+      </div>
+
+      <div class="grid-item item2">
+        <div class="label">Tên tiếng Việt <span class="impose">(*)</span></div>
+        <app-p-textbox [propName]="'VNName'" class="k-textbox" *ngIf="typeInfo == 1 || typeInfo == 4 || typeInfo == 5"
+          (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('VNName')" [(ngModel)]="hamper.VNName"
+          [title]="hamper.VNName" [disabled]="disable"></app-p-textbox>
+
+        <app-p-textbox [propName]="'ProductName'" class="k-textbox" *ngIf="typeInfo == 2 || typeInfo == 3"
+          (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('ProductName')" [(ngModel)]="hamper.ProductName"
+          [title]="hamper.ProductName" [disabled]="disable">
+        </app-p-textbox>
+      </div>
+
+      <div class="grid-item item3">
+        <div class="item_type3" *ngIf="typeInfo !== 3">
+          <div class="label">Tên tiếng Anh</div>
+
+          <app-p-textbox [propName]="'ENName'" class="k-textbox" (keydown.Enter)="$event.target.blur()"
+            *ngIf="typeInfo == 1 || typeInfo == 4 || typeInfo == 5" (blur)="onBlurTextbox('ENName')"
+            [(ngModel)]="hamper.ENName" [disabled]="disable" [title]="hamper.ENName">
+          </app-p-textbox>
+
+          <app-p-textbox [propName]="'ProductNameEN'" class="k-textbox" (keydown.Enter)="$event.target.blur()"
+            *ngIf="typeInfo == 2" (blur)="onBlurTextbox('ProductNameEN')" [(ngModel)]="hamper.ProductNameEN"
+            [disabled]="disable" [title]="hamper.ProductNameEN">
+          </app-p-textbox>
+
+        </div>
+        <div class="item_type3" *ngIf="typeInfo == 3">
+          <div class="label">Xuất xứ</div>
+          <kendo-dropdownlist  [data]="[]" [disabled]="disable" [(ngModel)]="hamper.OriginName">
+            <!-- [textField]="'ChannelName'" [ngModelField]="'Code'"  -->
+          </kendo-dropdownlist >
+        </div>
+      </div>
+
+      <div class="grid-item item4">
+        <div class="item_type3" *ngIf="typeInfo !== 3">
+          <div class="label">Tên tiếng Nhật</div>
+          <app-p-textbox [propName]="'JPName'" class="k-textbox" (keydown.Enter)="$event.target.blur()"
+            *ngIf="typeInfo == 1 || typeInfo == 4 || typeInfo == 5" (blur)="onBlurTextbox('JPName')"
+            [(ngModel)]="hamper.JPName" [disabled]="disable" [title]="hamper.JPName">
+          </app-p-textbox>
+
+          <app-p-textbox [propName]="'ProductNameJP'" class="k-textbox" (keydown.Enter)="$event.target.blur()"
+            *ngIf="typeInfo == 2" (blur)="onBlurTextbox('ProductNameJP')" [(ngModel)]="hamper.ProductNameJP"
+            [disabled]="disable" [title]="hamper.ProductNameJP">
+          </app-p-textbox>
+
+        </div>
+        <div class="item_type3" *ngIf="typeInfo == 3">
+          <div class="label">Chất liệu tiếng Việt</div>
+          <app-p-textbox [propName]="'Material'" class="k-textbox" (keydown.Enter)="$event.target.blur()"
+            (blur)="onBlurTextbox('Material')" [(ngModel)]="hamper.Material" [disabled]="disable"
+            [title]="hamper.Material">
+          </app-p-textbox>
+        </div>
+      </div>
+
+      <div class="grid-item item5" *ngIf="typeInfo == 4">
+        <div class="label">Thương hiệu</div>
+        <kendo-dropdownlist [data]="[]" [disabled]="disable" [(ngModel)]="hamper.BrandName">
+
+        </kendo-dropdownlist>
+      </div>
+
+      <!-- col 2 -->
+
+      <div class="grid-item item6" *ngIf="typeInfo == 4 || typeInfo == 2">
+        <div class="label">Xuất xứ</div>
+        <kendo-dropdownlist [data]="[]" [disabled]="disable"  [(ngModel)]="hamper.OriginName"> 
+        </kendo-dropdownlist>
+      </div>
+
+      <div class="grid-item item7" *ngIf="typeInfo == 4 || typeInfo == 2">
+        <div class="label">{{typeInfo == 4
+          ? "Chất liệu tiếng Việt"
+          : typeInfo == 2
+          ? "Chất liệu"
+          : ""}} <span class="impose">(*)</span></div>
+        <app-p-textbox [propName]="'VNMaterial'" class="k-textbox" (keydown.Enter)="$event.target.blur()"
+          (blur)="onBlurTextbox('VNMaterial')" [(ngModel)]="hamper.VNMaterial" [disabled]="disable"
+          *ngIf="typeInfo == 4" [title]="hamper.VNMaterial">
+        </app-p-textbox>
+
+        <app-p-textbox [propName]="'Material'" class="k-textbox" (keydown.Enter)="$event.target.blur()"
+          (blur)="onBlurTextbox('Material')" [(ngModel)]="hamper.Material" [disabled]="disable" *ngIf="typeInfo == 2"
+          [title]="hamper.Material">
+        </app-p-textbox>
+      </div>
+
+      <div class="grid-item item8" *ngIf="typeInfo != 3">
+        <div class="item_type1" *ngIf=" typeInfo == 4 ">
+          <div class="label">Chất liệu tiếng Anh</div>
+          <app-p-textbox [propName]="'ENMaterial'" class="k-textbox" (keydown.Enter)="$event.target.blur()"
+            (blur)="onBlurTextbox('ENMaterial')" [(ngModel)]="hamper.ENMaterial" [disabled]="disable">
+          </app-p-textbox>
+        </div>
+        <div class="item_type2" *ngIf="typeInfo == 2">
+          <div class="label">Thương hiệu</div>
+          <kendo-dropdownlist [data]="[]" [disabled]="disable" [(ngModel)]="hamper.BrandName">
+
+          </kendo-dropdownlist>
+        </div>
+      </div>
+
+      <div class="grid-item item7_1" *ngIf="typeInfo != 3">
+        <div class="item_type1" *ngIf=" typeInfo == 4">
+          <div class="label">Chất liệu tiếng Nhật</div>
+          <app-p-textbox [propName]="'JPMaterial'" class="k-textbox" (keydown.Enter)="$event.target.blur()"
+            (blur)="onBlurTextbox('JPMaterial')" [(ngModel)]="hamper.JPMaterial" [disabled]="disable">
+          </app-p-textbox>
+        </div>
+        <div class="item_type2" *ngIf="typeInfo == 2">
+          <div class="label">Nhà sản xuất</div>
+          <kendo-dropdownlist [data]="[]" [disabled]="disable" [(ngModel)]="hamper.ManufacturerName" >
+          </kendo-dropdownlist>
+        </div>
+      </div>
+      <div class="grid-item item8_1" *ngIf="typeInfo == 4">
+        <div class="label">Nhà sản xuất</div>
+        <kendo-dropdownlist [data]="[]" [disabled]="disable" [(ngModel)]="hamper.ManufacturerName">
+        </kendo-dropdownlist>
+      </div>
+
+      <!-- col 3 -->
+      <div class="grid-item item9">
+        <div class="label">
+          <span class="upload-img">
+            {{typeInfo == 4
+            ? "Hình ảnh đại diện"
+            : typeInfo != 4
+            ? "Hình ảnh"
+            : ""}}
+            <div class="iconExport">
+              <span class="k-icon k-i-export" (click)="onUploadImg()" *ngIf="!disable || typeInfo == 3"></span>
+              <span class="impose"> (*)</span>
+            </div>
+
+          </span>
+
+          <label *ngIf="typeInfo != 4">Là hình đại diện
+            <input type="checkbox" class="k-checkbox" [disabled]="hamper.URLThumbImage == curImage.URLImage || disable"
+              [checked]="hamper.URLThumbImage == curImage.URLImage && hamper.Code !== 0"
+              (change)="updateImageDefault($event,curImage)" />
+          </label>
+          <!-- <span class="k-icon k-i-trash" (click)="deleteImg()"></span> -->
+          <span class="k-icon k-i-minus-outline" (click)="deleteImg('URLThumbImage')"
+            *ngIf="hamper.URLThumbImage == curImage.URLImage && isValidImg(hamper.URLThumbImage) && !disable"></span>
+        </div>
+
+
+        <img loading="lazy" *ngIf="typeInfo != 4 && isValidImg(curImage.URLImage)" [src]="getRes(curImage.URLImage)"
+          [alt]="curImage.URLImage" loading="lazy" (error)="handleError()">
+
+        <img loading="lazy" *ngIf="typeInfo == 4 && isValidImg(hamper.URLThumbImage)"
+          [src]="getRes(hamper.URLThumbImage)" [alt]="hamper.URLThumbImage" loading="lazy" (error)="handleError()">
+
+        <div class="image-child" *ngIf="typeInfo != 4">
+          <ng-container *ngFor="let image of listImage">
+            <div class="layout-child">
+              <img loading="lazy" *ngIf="isValidImg(image.URLImage)" [src]="getRes(image.URLImage)" alt=""
+              (click)="viewImage(image)" (error)="handleError()">
+              <div *ngIf="typeInfo !== 5">
+                <span class="k-icon k-i-minus-outline" (click)="deleteSmallImage(image)"
+                  *ngIf="image.URLImage != hamper.URLThumbImage || typeInfo == 3 && !disable "></span>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+
+      </div>
+
+      <!-- <div class="grid-item item10">
+          <div class="label">GIÁ BÁN LẺ</div>
+          <div class="giaBanLe">{{ product.UnitPrice | number: '1.' }}</div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+  <app-folder-popup [pickFileCallback]="pickFileCallback" [GetFolderCallback]="GetFolderCallback"></app-folder-popup>

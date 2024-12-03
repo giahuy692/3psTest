@@ -1,0 +1,166 @@
+@import "../../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    .config-purchase-attribute{
+        max-height: 600px;
+        display: flex;
+        flex-direction: column;
+        margin: 10px 0;
+        .section{
+            overflow: auto;
+            .title{
+                display: flex;
+                align-items: center;
+                padding-bottom: 5px;
+                font-size: 16px;
+                font-weight: 700;
+                b{
+                    font-size: 13px;
+                    padding-left: 30px;
+                }
+            }
+            .section-grid {
+                min-width: 1100px;
+                background-color: white;
+                display: flex;
+                // justify-content: space-between;
+                padding: 15px;
+                .grid-item {
+                    padding-bottom: 5px;
+                    .label{
+                        font-weight: 700;
+                        color: #959DB3;
+                        padding-bottom: 10px;
+                    }
+                    .k-textbox{
+                        width: 100%;
+                    }
+                }
+                .column_1,.column_2,.column_3{
+                    width: 350px;
+                }
+                .column_1{
+                    .k-dropdown{
+                        width: 100%;
+                    }
+                    .history-Ncc{
+                        display: flex;
+                        justify-content: space-between;
+                        span{
+                            font-weight: 700;
+                            cursor: pointer;
+                            color: #31ADFF;
+                        }
+                    }
+                }
+                .column_2{
+                    width: 370px;
+                    .history-sale{
+                        display: flex;
+                        justify-content: space-between;
+                        span{
+                            font-weight: 700;
+                            cursor: pointer;
+                            color: #31ADFF;
+                        }
+                    }
+                    .item5_1,.item6_1{
+                        display: flex;
+                        flex-direction: row;
+                        gap: 10px;
+                        p-kendo-dropdownlist{
+                            width: 100px;
+                        }
+                            .customized-input{
+                                width: 130px;
+                            }
+                            .k-dropdownlist{
+                                width: 105px;
+                            }
+                    }
+                    .item6_1{
+                        .customized-input{
+                            width: 240px;
+                        }
+                    }
+                    .item7_1{
+                        display: flex;
+                        flex-direction: row;
+                       
+                        .label{
+                            min-width: 205px;
+                            font-weight: 400;
+                            margin: 5px 20px;
+                        }
+                        .customized-input{
+                            width: 100%;
+                        }
+                    }
+                  
+                }
+                .column_3{
+                    width: 380px !important;
+                    .customized-input{
+                        .k-input-inner{
+                            text-align: left;
+                        }
+                    }
+                    .item9,.item10,.item11{
+                        display: flex;
+                        justify-content: space-between;
+                        gap: 5px;
+                        .label{
+                            min-width: 125px;
+                        }
+                        .k-dropdownlist,.customized-input{
+                            width: 115px;
+                        }
+                        .k-textbox{
+                            width: 120px;
+                        }
+                    }
+                    .item11{
+                    //   display: flex;
+                    //   gap: 15px;
+                    //     .k-textbox{
+                    //         width: 110px;
+                    //     }
+                    //     .customized-input{
+                    //         width: 119px;
+                    //     }
+                    //     &:last-child{
+                    //         .customized-input{
+                    //             width: 115px;
+                    //         }
+                    //     }
+                    }
+                }
+            }
+        }
+        .LabelName{
+            min-width: 250px;
+            white-space: initial;      
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
+        }
+        .today{
+            color: #1A6634;
+        }
+        .Price{
+            display: flex;
+            flex-direction: column;
+            .Pricetype{
+                font-size: 10px;
+            }
+        }
+        .NgayHieuLuc{
+            .madonhang{
+                font-size: 10px;
+            }
+        }
+    
+    }
+}

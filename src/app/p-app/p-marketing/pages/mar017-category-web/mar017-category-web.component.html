@@ -1,0 +1,327 @@
+<div id="location-list-wrapper" class="app-drawer-container">
+  <mat-sidenav-container (backdropClick)="onBackdropClick()">
+
+    <!-- Center Content -->
+    <mat-sidenav-content>
+
+      <div class="header header-1">
+        <div class="breadcumb">
+          <app-p-kendo-breadcrumb (loadData)="GetData(1)"></app-p-kendo-breadcrumb>
+        </div>
+
+        <div class="nav-btn nav-crud" *ngIf="isCreator || isMaster">
+          <button kendoButton class="btn-import" icon="export" (click)="onImportExcel()">
+          </button>
+          <button kendoButton class="btn-import" icon="import" (click)="onDownloadExcel()">
+            Template
+          </button>
+          <button kendoButton class="crud-btn k-button onAddBtn" (click)="onHandleOpenFormHeaderButton(false)"
+            imageUrl="assets/img/icon/icon_site_map.svg">
+            THÊM PHÂN NHÓM
+          </button>
+          <button kendoButton class="crud-btn k-button onAddBtn" (click)="onHandleOpenFormHeaderButton(true)"
+            imageUrl="assets/img/icon/icon_site_map.svg" [disabled]="GroupWebSelectedDTO.Level == 3">
+            THÊM PHÂN NHÓM CON
+          </button>
+        </div>
+      </div>
+
+      <div class="header header-2">
+        <app-search-filter-group placeholder="Tìm theo mã điểm làm việc, tên điểm làm việc" [disabled]="!isFilterActive"
+          [fields]="['VNGroupName', 'ENGroupName', 'JPGroupName', 'GroupID']" (filterChange)="handleSearch($event)"
+          (onReset)="resetFilter()">
+        </app-search-filter-group>
+
+        <div class="nav-btn nav-crud" *ngIf="isCreator || isMaster">
+          <app-checkbox-button-group title="Đang soạn thảo" [checked]="isNew" (selectedChange)="isNew = $event"
+            (filterChange)="filterChangeCheckbox($event, 'isNew')" field="StatusID" operator="eq" value="0">
+          </app-checkbox-button-group>
+          <app-checkbox-button-group title="Đã duyệt" [checked]="isApproved"
+            (selectedChange)="isApproved = $event" (filterChange)="filterChangeCheckbox($event, 'isApproved')"
+            field="StatusID" operator="eq" value="2">
+          </app-checkbox-button-group>
+          <app-checkbox-button-group title="Ngưng áp dụng" [checked]="isStoped"
+            (selectedChange)="isStoped = $event" (filterChange)="filterChangeCheckbox($event, 'isStoped')"
+            field="StatusID" operator="eq" value="3">
+          </app-checkbox-button-group>
+          <app-checkbox-button-group title="Trả về" [checked]="isReturn" (selectedChange)="isReturn = $event"
+            (filterChange)="filterChangeCheckbox($event, 'isComplete')" field="StatusID" operator="eq"
+            value="4">
+          </app-checkbox-button-group>
+        </div>
+      </div>
+
+      <div class="treelist-wrapper">
+        <kendo-treelist [data]="listGroupWebTreeListFind" [fetchChildren]="fetchChildren" [filter]="gridState.filter"
+          [hasChildren]="hasChildren" kendoTreeListExpandable [hideHeader]="true" [isExpanded]="isExpanded"
+          (expand)="onExpand($event)" (collapse)="onCollapse($event)" kendoTreeListSelectable [selectable]="settings"
+          (selectionChange)="onChange($event)" [(selectedItems)]="selectedTreelistItem" itemKey="Code" idField="Code">
+
+          <kendo-treelist-column [expandable]="true" field="VNGroupName" title="VNGroupName">
+            <ng-template kendoTreeListCellTemplate let-dataItem>
+              <img loading="lazy" class="location-icon" src="assets/img/icon/icon_departmentGray.svg" />
+              <p class="text-name" style="width: 310px" [class.parent]="dataItem.ParentID == null">
+                {{ dataItem.VNGroupName }}
+              </p>
+              <p class="text-id">
+                <ng-container *ngIf="dataItem.Level == 2">
+                  Cột: {{ dataItem.UserColumnDefine ? dataItem.UserColumnDefine : 1 | number: '1.' }}
+                  |
+                </ng-container>
+                Thứ tự: {{ dataItem.OrderBy | number: '1.' }}
+              </p>
+
+            </ng-template>
+          </kendo-treelist-column>
+
+          <kendo-treelist-column class="status-column">
+            <ng-template kendoTreeListCellTemplate let-dataItem>
+              <div [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID">
+              </div>
+            </ng-template>
+          </kendo-treelist-column>
+
+          <kendo-treelist-column title="Size" [width]="40">
+            <ng-template kendoTreeListCellTemplate let-dataItem let-rowIndex="rowIndex">
+              <!-- button more -->
+              <button kendoButton #anchor (click)="togglePopup(rowIndex, dataItem)" (blur)="onBlurButton()" class="k-button k-button-icon togglePopup"
+              icon="more-horizontal"></button>         
+
+              <!-- <kendo-dropdownbutton [data]="menuItemList" [popupSettings]="{
+                    animate: true,
+                    popupClass: 'rowMoreActionPopup',
+                    appendTo: 'component',
+                    align: 'right'
+                  }"
+                buttonClass="{{dataItem.Code == GroupWebSelectedDTO.Code && isPopupDropdownOpen ? 'active-popup' : ''}}"
+                (open)="onOpenMenuDropdown(dataItem)" (close)="onCloseMenuDropdown(dataItem)" icon="more-horizontal">
+
+                <ng-template kendoDropDownButtonItemTemplate let-dataItem>
+                  <div class="popup-item" (click)="onClickMenuDropdownItem(dataItem)">
+                    <span class="k-icon k-i-{{ dataItem.iconName }}"></span>
+                    <span class="popup-item-text">{{ dataItem.text }}</span>
+                  </div>
+                </ng-template>
+              </kendo-dropdownbutton> -->
+            </ng-template>
+          </kendo-treelist-column>
+        </kendo-treelist>
+      </div>
+    </mat-sidenav-content>
+
+    <!-- Drawer -->
+    <mat-sidenav #formDrawer position="end" disableClose>
+      <form class="formSanpham k-form" [formGroup]="webForm">
+        <ng-container *ngIf="true; else postForm">
+          <!-- PRODUCT FROM -->
+          <fieldset [disabled]="isLockAll">
+            <legend>PHÂN NHÓM WEB</legend>
+            <div class="formProduct">
+              <!-- Render input name by nameLanguage variable -->
+              <div class="group-name-laguage">
+                <div class="title-box">
+                  <kendo-label text="Tên phân nhóm" class="Customlabel">
+                    <span class="symbol" *ngIf="language == 0">(*)</span>
+                  </kendo-label>
+                  <div class="language-setting">
+                    <p (click)="onChangeLanguage(0)" [ngClass]="{'selectedLanguage': language == 0}">
+                      Tiếng Việt</p>
+                    |
+                    <p (click)="onChangeLanguage(1)" [ngClass]="{'selectedLanguage': language == 1}">
+                      日本語</p>
+                    |
+                    <p (click)="onChangeLanguage(2)" [ngClass]="{'selectedLanguage': language == 2}">
+                      English</p>
+                  </div>
+                </div>
+                <kendo-textbox class="k-textbox CustomBoxShadown" formControlName="VNGroupName" *ngIf="language == 0" #GroupName required [ngClass]="{disabledColor: onCheckStatust()}"></kendo-textbox>
+                <kendo-textbox class="k-textbox CustomBoxShadown" formControlName="JPGroupName" #GroupName *ngIf="language == 1" [ngClass]="{disabledColor: onCheckStatust()}"></kendo-textbox>
+                <kendo-textbox class="k-textbox CustomBoxShadown" formControlName="ENGroupName" #GroupName *ngIf="language == 2" [ngClass]="{disabledColor: onCheckStatust()}"></kendo-textbox>
+              </div>
+              <!-- render những input của các level form  -->
+              <ng-container *ngIf="levelOfForm == 2 || levelOfForm == 3; else level1OfInputs">
+                <!-- Những inputs dùng chung cho form level 2 và 3 -->
+                <kendo-formfield class="formfield-item">
+                  <kendo-label text="Phân nhóm cha" for="ParentID"></kendo-label>
+
+                  <kendo-dropdowntree kendoDropDownTreeExpandable [kendoDropDownTreeHierarchyBinding]="parentGroupTree"
+                    #ParentID formControlName="Parent" [loading]="loading" [defaultItem]="defaultParent"
+                    textField="VNGroupName" valueField="Code" childrenField="ListChilds" [(ngModel)]="curParentGroup"
+                    [popupSettings]="{
+                      appendTo: 'component'
+                    }" [filterable]="true" (filterChange)="onFilterMultiSelectTree($event)" [expandOnFilter]="true">
+
+                    <ng-template kendoDropDownTreeNodeTemplate let-dataItem let-index="index">
+                      <div [ngClass]="{'nullItem': dataItem.Code == null}">
+                        <img loading="lazy" src="assets/img/icon/icon_departmentGray.svg" />
+                        {{ dataItem.VNGroupName }}
+                      </div>
+                    </ng-template>
+                  </kendo-dropdowntree>
+                </kendo-formfield>
+
+                <div class="group-input">
+                  <kendo-formfield class="formfield-item">
+                    <kendo-label text="Cột hiển thị" [for]="UserColumnDefine"></kendo-label>
+                    <kendo-numerictextbox class="order-by-input" formControlName="UserColumnDefine" [min]="1"
+                      format="#,0" #UserColumnDefine>
+                    </kendo-numerictextbox>
+                  </kendo-formfield>
+
+                  <kendo-formfield class="formfield-item">
+                    <kendo-label text="Thứ tự hiển thị" [for]="OrderBy"></kendo-label>
+                    <kendo-numerictextbox class="order-by-input CustomBoxShadown  " formControlName="OrderBy" [min]="1" format="#,0"
+                      #OrderBy>
+                    </kendo-numerictextbox>
+                  </kendo-formfield>
+                </div>
+              </ng-container>
+              <!-- -------------------------- -->
+
+              <!-- Template của form level 1 -->
+              <ng-template #level1OfInputs>
+                <div class="level-1-group">
+                  <div class="left-side">
+                    <kendo-formfield class="formfield-item top-item">
+                      <kendo-label text="Icon font" [for]="IconSmall"></kendo-label>
+
+                      <kendo-dropdownlist class="CustomBoxShadown" #IconSmall [loading]="loading" [data]="ListIconFont" textField="IconSmall"
+                        valueField="IconSmall" formControlName="IconSmall" [valuePrimitive]="true" [ngClass]="{disabledColor: onCheckStatust()}"
+                        [value]="GroupWebSelectedDTO.IconSmall" [popupSettings]="{ appendTo: 'component' }">
+                      </kendo-dropdownlist>
+                    </kendo-formfield>
+
+                    <kendo-formfield class="formfield-item bottom-item">
+                      <div style="display: flex; gap: 16px;">
+                        <kendo-label text="Link hình quảng cáo" [for]="URLImage2"></kendo-label>
+                        <button class="uploadImgButton" [disabled]="isLockAll" (click)="onUploadImg()">
+                          <img loading="lazy" src="/assets/img/icon/icon_CategoryWebExport.svg" [style.opacity]="isLockAll ? 0.5 : 1">
+                        </button>
+                      </div>
+
+                      <!-- <a aria-readonly="true" style="cursor: pointer;text-decoration: none;"
+                        [href]="getImgRes(webForm.controls['URLImage1'].value)" target="_blank"> -->
+                      <kendo-textbox class="k-textbox CustomBoxShadown" [ngClass]="{disabledColor: onCheckStatust()}" formControlName="URLImage2" #URLImage2 [value]="GroupWebSelectedDTO.URLImage2">
+                      </kendo-textbox>
+                      <!-- </a> -->
+                    </kendo-formfield>
+                  </div>
+                  <kendo-button class="deleteImgButton" *ngIf="!isLockAll" (click)="deleteImg()" icon="trash">
+                  </kendo-button>
+                  <img loading="lazy" class="ads-img" *ngIf="validImg(webForm.controls['URLImage1'].value)"
+                    [src]="getImgRes(webForm.controls['URLImage1'].value)">
+                </div>
+                <kendo-formfield class="formfield-item">
+                  <kendo-label text="Thứ tự hiển thị" [for]="OrderBy"></kendo-label>
+                  <kendo-numerictextbox class="order-by-input"
+                    [disabled]="!isAdd && GroupWebSelectedDTO.StatusID !== 0 && GroupWebSelectedDTO.StatusID !== 4"
+                    formControlName="OrderBy" [min]="0" format="#,0" #OrderBy>
+                  </kendo-numerictextbox>
+                </kendo-formfield>
+              </ng-template>
+
+              <!-- input mapping chỉ dùng form level 3 -->
+              <kendo-formfield class="formfield-item" *ngIf="levelOfForm == 3">
+                <kendo-label text="Mapping phân nhóm sản phẩm cấp 4" [for]="ListChilds"></kendo-label>
+
+                <kendo-multiselecttree kendoMultiSelectTreeExpandable
+                  [disabled]="!isAdd && GroupWebSelectedDTO.StatusID !== 0 && GroupWebSelectedDTO.StatusID !== 4"
+                  #ListChilds formControlName="ListChilds" [filterable]="true" [expandOnFilter]="true"
+                  [kendoMultiSelectTreeHierarchyBinding]="mappingGroupTree" childrenField="ListChilds"
+                  textField="VNGroupName" valueField="Code" [value]="ListChildsLevel4" [popupSettings]="{
+                    appendTo: 'component'
+                  }" (valueChange)="multiselectvalueChange($event)" [loading]="loading"
+                  (filterChange)="onFilterMultiSelectTree($event)">
+                  <ng-template kendoMultiSelectTreeNodeTemplate let-dataItem let-index="index">
+                    <img loading="lazy" src="assets/img/icon/icon_departmentGray.svg" />
+                    {{ dataItem.VNGroupName }}
+                  </ng-template>
+                </kendo-multiselecttree>
+              </kendo-formfield>
+              <!-- Dung chung -->
+              <kendo-label text="Đường dẫn"></kendo-label>
+              <a aria-readonly="true" style="text-decoration: none; word-break: break-all;" class="link-website-input"
+                [href]="getUrlHachi(webForm.controls['AliasVN'].value)" target="_blank">
+                {{webForm.controls['AliasVN'].value}}
+              </a>
+
+              <kendo-formfield class="formfield-item">
+                <kendo-label text="Tình trạng"></kendo-label>
+                <kendo-dropdownlist class="CustomBoxShadown" #StatusID [loading]="loading" [data]="ListStatus" textField="StatusName" 
+                  valueField="OrderBy" formControlName="StatusID" [valuePrimitive]=" true"
+                  [value]="GroupWebSelectedDTO.StatusID" [popupSettings]="{ appendTo: 'component' }"
+                  
+                  [itemDisabled]="isItemDisabled" (valueChange)="onStatusChange($event)">
+                </kendo-dropdownlist>
+                
+              </kendo-formfield>
+              <p class="symbol fst-italic mt-2">(*) Trường bắt buộc nhập.</p>
+
+            </div>
+          </fieldset>
+
+          <div class="k-form-buttons">
+            <button kendoButton class="k-button closeBtn" (click)="onCloseForm()">
+              Đóng
+            </button>
+            <button kendoButton class="k-button updateBtn" (click)="UpdateGroupWeb()">
+              {{isAdd ? 'THÊM MỚI' : 'CẬP NHẬT'}}
+            </button>
+          </div>
+        </ng-container>
+        <!-- POST FORM -->
+        <ng-template #postForm> </ng-template>
+      </form>
+    </mat-sidenav>
+  </mat-sidenav-container>
+  <!-- DIALOG DELETE Phân nhóm Web -->
+  <kendo-dialog class="deleteDialog" title="Xóa Phân nhóm Web" [hidden]="!deleteGroupWebDialogOpened"
+    (close)="deleteGroupWebDialogOpened = false" [minWidth]="250">
+    <p style="margin: 30px; text-align: center">
+      Bạn chắc chắn muốn xóa vĩnh viễn phân nhóm <b>{{ GroupWebSelectedDTO.VNGroupName }}</b> này?
+    </p>
+    <div class="dialog-footer">
+      <button kendoButton class="btn-hachi hachi-secondary" (click)="deleteGroupWebDialogOpened = false"
+        [icon]="'close'">
+        Không
+      </button>
+      <button kendoButton class="btn-hachi hachi-warning" (click)="deleteGroupWeb()" [icon]="'trash'">
+        Có
+      </button>
+    </div>
+  </kendo-dialog>
+
+  <!-- DIALOG NGƯNG ÁP DỤNG Phân nhóm Web -->
+  <kendo-dialog class="deleteDialog" title="Ngưng áp dụng Phân nhóm Web" [hidden]="!stopGroupWebDialogOpened"
+    (close)="stopGroupWebDialogOpened = false" [minWidth]="450">
+    <p style="margin: 30px; text-align: center">
+      Bạn chắc chắn muốn Ngưng áp dụng phân nhóm <b>{{ GroupWebSelectedDTO.VNGroupName }}</b> này và các phân nhóm con
+      của nó?
+    </p>
+    <div class="dialog-footer">
+      <button kendoButton class="btn-hachi hachi-secondary" (click)="closeStopDialog()" [icon]="'close'">
+        Không
+      </button>
+      <button kendoButton class="btn-hachi hachi-warning" (click)="stopGroupWeb()" [icon]="'minus-outline'">
+        Có
+      </button>
+    </div>
+  </kendo-dialog>
+
+  <!-- Popup của  button more-->
+  <kendo-popup #rowMoreActionPopup class="rowMoreActionPopup" [style.visibility]="isPopupVisible()" [anchor]="getAnchor()"
+  [anchorAlign]="{ horizontal:'left', vertical: 'top'}" [popupAlign]="{ horizontal:'right', vertical: topValue}">
+
+    <div *ngFor="let item of menuItemList; let i = index" class="popup-item" (click)="onClickMenuDropdownItem(item)">
+      <span class="k-icon k-i-{{ item.iconName }}"></span>
+      <span class="popup-item-text">{{ item.text }}</span>
+    </div>
+
+  </kendo-popup> 
+
+  <!-- popup Import excel -->
+  <app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>
+
+</div>
+
+<app-folder-popup [pickFileCallback]="pickFileCallback" [GetFolderCallback]="GetFolderCallback"></app-folder-popup>

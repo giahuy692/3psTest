@@ -1,0 +1,156 @@
+
+<div *ngIf="isShow" class="main">
+    <div class="content-info">
+       
+        <div class="title">
+            <div *ngIf="typeHrPolicy == 1">
+                {{'Thông tin chính sách Onboarding' | uppercase}}
+            </div>
+            <div *ngIf="typeHrPolicy == 2">
+                {{'Thông tin chính sách Offboarding' | uppercase}}
+            </div>
+
+        </div>
+
+        <div class="frame">
+            <p-loading-spinner class="loading-spiner" [isLoading]="isLoading"></p-loading-spinner>
+            <!-- block bên trái của frame info -->
+            <div class="left-block">
+
+                <!-- khu vực mã chính sách -->
+                <div class="box-area">
+                    <div class="label">
+                        Mã chính sách
+                    </div>
+                    <kendo-textbox (keydown.enter)="onBlurTextbox(0)"
+                        *ngIf="dataHrPolicyMaster?.PolicyID || dataHrPolicyMaster?.PolicyID == ''"
+                        [(ngModel)]="dataHrPolicyMaster.PolicyID" (inputBlur)="onBlurTextbox(0)"
+                        [disabled]="true"
+                        type="text" class="k-textbox">
+                    </kendo-textbox>
+                </div>
+
+                <!-- khu vực thời gian hiệu lực -->
+                <div class="box-area">
+                    <div class="label">
+                        Thời gian hiệu lực <span class="important">(*)</span>
+                    </div>
+                    <!-- <app-p-textbox class="k-textbox" [propName]="'Barcode'" (keydown.Enter)="$event.target.blur()">
+                    </app-p-textbox> -->
+                    <app-datepicker [min]="currentDate"
+                        [disabled]="dataHrPolicyMaster?.Status == 2 || isAdd || dataHrPolicyMaster?.Status == 3 || handleCheckDisableApproverEdit() || isViewer()"
+                        class="datepicker" 
+                        [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'"
+                        [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                        [popupSetting]="{animate:true, appendTo: 'root',popupClass:'popupLayoutCpnDatePicker'}"
+                        [readOnlyInput]="true" [(ngModel)]="dataHrPolicyMaster.EffDate"
+                        (valueChange)="onDateblur($event)"></app-datepicker>
+                </div>
+
+                <!-- khu vực phạm vi áp dụng -->
+                <div class="box-area">
+                    <div class="label">
+                        Phạm vi áp dụng <span class="important">(*)</span>
+                    </div>
+                    <p-kendo-dropdownlist 
+                        (opened)="openDropdownChangeApply()"
+                        [ngClass]="dataHrPolicyMaster?.Status == 2 || isAdd || dataHrPolicyMaster?.Status == 3 || handleCheckDisableApproverEdit() || isViewer() ? 'disable-dropdown-list' : 'dropdown-list'"
+                        (valueChange)="onHRChange($event)"
+                        [hasValueNull]="false" 
+                        [(ngModel)]="typeApply"
+                        textField="ListName" 
+                        valueField="Code"
+                        [data]="listHR"
+                        [disabled]="dataHrPolicyMaster?.Status == 2 || isAdd || dataHrPolicyMaster?.Status == 3 || handleCheckDisableApproverEdit() || isViewer()">
+
+                    </p-kendo-dropdownlist>
+                </div>
+
+                <!-- khu vực tình trạng -->
+                <div class="box-area box-status">
+                    <div class="label">
+                        Tình trạng
+                    </div>
+                    <div class="title-status">
+                        <span class="status-name"
+                            [innerHTML]="dataHrPolicyMaster?.StatusName | colorStatus: dataHrPolicyMaster?.Status"></span>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- block bên phải của frame -->
+            <div class="right-block">
+                <div class="box-area">
+                    <div class="label">
+                        Tên chính sách <span class="important">(*)</span>
+                    </div>
+                    <kendo-textbox (keydown.enter)="onBlurTextbox(1)"
+                        *ngIf="dataHrPolicyMaster?.PolicyName || dataHrPolicyMaster?.PolicyName == ''"
+                        [(ngModel)]="dataHrPolicyMaster.PolicyName" (inputBlur)="onBlurTextbox(1)"
+                        [disabled]="dataHrPolicyMaster?.Status == 2 || dataHrPolicyMaster?.Status == 3 || handleCheckDisableApproverEdit() || isViewer()"
+                        type="text" class="k-textbox">
+                    </kendo-textbox>
+                </div>
+
+                <div class="box-area box-description">
+                    <div class="label">Mô tả</div>
+                    <textarea *ngIf="dataHrPolicyMaster?.Description || dataHrPolicyMaster?.Description == ''"
+                        [(ngModel)]="dataHrPolicyMaster.Description"
+                        [ngClass]="dataHrPolicyMaster?.Status == 2 ? 'textarea-disable' : 'textarea'"
+                        [disabled]="dataHrPolicyMaster?.Status == 2 || isAdd || dataHrPolicyMaster?.Status == 3 || handleCheckDisableApproverEdit() || isViewer()"
+                        (blur)="onBlurTextbox(2)"></textarea>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <!-- POPUP CONFIRM CHANGE STATUS -->
+    <kendo-dialog (close)="handleClosePopup()" *ngIf="isShowPopComfirm" class="dialog-delete popup-confirm-custom"
+        [minHeight]="206" [minWidth]="400">
+        <!-- HEADER -->
+        <div class="dialog-header">
+            <span
+                class="btn-title-dialog"
+                kendoButton
+                imageUrl="assets/img/icon/icon_warning.svg"
+            ></span>
+            <!-- <span class="k-icon k-i-warning"></span> -->
+            <div>Bạn thay đổi loại chính sách?</div>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="dialog-content">
+            <div class="text-confirm">
+                <span class="text-first">Bạn chắc chắn muốn cập nhật loại chính sách này không?<br>
+                    <span class="text" *ngIf="dataHrPolicyMaster.TypeApply == 1">Toàn bộ chức danh</span>
+                    <span class="text" *ngIf="dataHrPolicyMaster.TypeApply == 2">Chức danh chỉ định</span>
+                </span>
+                <div class="policy-name-text">
+
+                </div>
+            </div>
+
+            <div *ngIf="dataHrPolicyMaster.TypeApply == 1" class="warning-change-status">
+                <span>Danh sách chức danh áp dụng thuộc chính sách này sẽ bị xóa và <span
+                        style="color: #FD7676;">KHÔNG</span> thể khôi phục lại</span>
+            </div>
+            <div *ngIf="dataHrPolicyMaster.TypeApply == 2" class="warning-change-status">
+                <span>Danh sách công việc có ngoại lệ thuộc chính sách này sẽ bị xóa và <span
+                    style="color: #FD7676;">KHÔNG</span> thể khôi phục lại</span>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="dialog-footer">
+            <button (click)="handleClosePopup()" kendoButton class="cancel-button">Hủy</button>
+            <button (click)="handleHRChange(tempHrApply)" kendoButton class="btn-delete">Chuyển phạm vi</button>
+        </div>
+    </kendo-dialog>
+
+
+</div>

@@ -1,0 +1,26 @@
+<div class="file-btn-group">
+  <kendo-groupbutton [disabled]="disable">
+    <!-- Icon import -->
+    <button *ngIf="listButton.includes(1)" kendoButton class="k-button" [icon]="'import'"
+      (click)="onItemClick(data[0], 1)" title="Export File" [disabled]="disable"></button>
+
+    <!-- Icon In -->
+    <button *ngIf="listButton.includes(2)" kendoButton class="k-button k-btn-print" imageUrl="assets\img\logo\print.svg"
+      [title]="'Print'" [disabled]="disable" (click)="onItemClick(data[1], 2)"></button>
+
+    <!-- Icon được chọn từ dropdownbutton -->
+    <button *ngIf="filteredData.length > 0" kendoButton class="k-button"
+      imageUrl="assets\img\logo\{{selectedButton.iconName}}" [title]="selectedButton.title" [disabled]="disable"
+      (click)="onItemClick(selectedButton)"></button>
+
+    <!-- Danh sách các loại in có thể -->
+    <kendo-dropdownbutton [disabled]="disable" *ngIf="filteredData.length > 1" [data]="filteredData"
+      (itemClick)="onItemClick($event, -1)">
+      <span class="k-icon k-font-icon k-i-arrow-chevron-down"></span>
+      <ng-template kendoDropDownButtonItemTemplate let-dataItem>
+        <img src="assets\img\logo\{{dataItem.iconName}}" [width]="20" [height]="20">
+        <span>{{ dataItem.text }}</span>
+      </ng-template>
+    </kendo-dropdownbutton>
+  </kendo-groupbutton>
+</div>

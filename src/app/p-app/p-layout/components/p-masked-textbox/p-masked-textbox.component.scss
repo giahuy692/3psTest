@@ -1,0 +1,32 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+    .customized-masked-textbox {
+        background-color: white;
+        border-radius: 3px;
+        border: 1px solid #DBDEE7;
+        height: 32px;
+        max-height: 32px;
+        font-size: 13px;
+        border-radius: 3px;
+        box-shadow: 1px 3px 6px 1px rgba($gray-500, 0.2);
+
+        &:hover, &.k-focus {
+            outline: 1px solid $darkgreen;
+        }
+
+        .prefix-icon {
+            padding-left: 15px;
+            padding-right: 10px;
+        }
+
+        .suffix-icon {
+            padding: 0 15px;
+        }
+
+        &.k-disabled {
+            opacity: 1;
+            background-color: #EDEFF3;
+        }
+    }
+}

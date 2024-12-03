@@ -1,0 +1,558 @@
+<div class="pur008-price-product-detail">
+
+    <!-- START HEADER -->
+    <div class="header header-1">
+        <app-p-kendo-breadcrumb (loadData)="loadData()"></app-p-kendo-breadcrumb>
+        <!-- STATUS BUTTON -->
+        <div class="nav-crud">
+          <!-- <kendo-button  iconClass="k-icon k-i-undo" class="btn-hachi hachi-secondary" (click)="openDetail()">QUAY VỀ</kendo-button> -->
+          <button kendoButton class="btn-hachi btnNgunghienthi" icon="trash" (click)="openDialog()"
+          *ngIf="priceProduct.Code > 0 && (priceProduct.StatusID == 0 && statusPrice == 0) && (isMaster || isCreator)">
+              XÓA SẢN PHẨM
+        </button>
+          <button kendoButton class="btn-hachi btn-aplication" icon="check-outline" (click)="onUpdateStatusRequest(2)"
+          *ngIf="priceProduct.Code > 0 && (priceProduct.StatusID == 3 && statusPrice == 2) && (isApprover || isMaster) && isValidEffDate">
+            PHÊ DUYỆT
+         </button>
+         <button kendoButton class="btn-hachi btnNgunghienthi" icon="minus-outline" (click)="onUpdateStatusRequest(3)"
+          *ngIf="priceProduct.Code > 0 && (priceProduct.StatusID == 2 && statusPrice == 2) && (isApprover || isMaster) && isValidEffDate">
+             NGƯNG ÁP DỤNG
+         </button>
+          <button kendoButton class="btn-hachi hachi-primary" icon="plus" *ngIf="(statusPrice == 0 || statusPrice == 4) && (isMaster || isCreator)" (click)="onAddNewPriceProduct()">
+                TẠO MỚI
+          </button>
+        </div>
+    </div>
+    <!-- END HEADER -->
+
+    <!-- START BODY -->
+    <div class="body">
+      <!-- THÔNG TIN ĐỀ NGHỊ BÁO GIÁ -->
+        <div class="block block-request">
+            <div class="title">THÔNG TIN ĐỀ NGHỊ BÁO GIÁ</div>
+            <div class="section">
+                <div class="column1">
+                    <div class="label">Mã nhà cung cấp</div>
+                    <app-p-textbox propName="" [(ngModel)]="supplierProduct.PartnerID" [disabled]="true"></app-p-textbox>
+                </div>
+                <div class="column2">
+                    <div class="label">Tên nhà cung cấp</div>
+                    <app-p-textbox propName="" [(ngModel)]="supplierProduct.PartnerName" [disabled]="true"></app-p-textbox>
+                </div>
+            </div>
+        </div>
+        <!-- THÔNG TIN SẢN PHẨM -->
+        <div class="block block-product">
+            <div class="title">THÔNG TIN SẢN PHẨM</div>
+            <div class="section">
+                <div class="column1">
+                    <div class="label">Barcode  <span class="barcode">{{priceProduct.BaseBarcode}}</span> <span class="impose"> (*) </span></div> 
+                    <app-p-textbox propName="" (keydown.space)="$event.preventDefault()"  [(ngModel)]="priceProduct.Barcode" [ngClass]="{'nullBarcode':!priceProduct.Barcode}"
+                     [disabled]="priceProduct.StatusID == 2 || statusPrice == 3 || statusPrice == 2 || isApprover" (blur)=" isLock == false ? onBlurTextbox('Barcode') : onBlurTextboxByBarcode()"></app-p-textbox>
+                    <div class="label pencil">Mã khai quan/xuất hóa đơn <button kendoButton [hidden]="(priceProduct.StatusID == 2 || statusPrice == 3 || statusPrice == 2 || isApprover)" imageUrl="assets/img/icon/icon_pencilBlue.svg" (click)="onclickTax()"></button></div>
+                    <app-p-textbox propName="" (keydown.space)="$event.preventDefault()" [disabled]="isLockTax || isLock"  [(ngModel)]="priceProduct.TaxCode" (blur)="onBlurTextbox('TaxCode')"></app-p-textbox>
+                    <div class="label">Phân loại</div>
+                    <span class="type_name">{{priceProduct.TypeDataName}}</span>
+                </div>
+                <div class="column2">
+                    <div class="label">Tên sản phẩm <span class="impose">(*)</span></div> 
+                    <app-p-textbox propName=""  [(ngModel)]="priceProduct.ProductName" [ngClass]="{'nullProductName':!priceProduct.ProductName && priceProduct.Code != 0}"
+                     [disabled]="isLock" (blur)="onBlurTextbox('ProductName')"></app-p-textbox>
+                    <div class="label">Tên khai quan/xuất hóa đơn </div>
+                    <app-p-textbox propName="" [disabled]=" isLock || !priceProduct.TaxCode || priceProduct.TaxID && priceProduct.TaxID > 0 || isLockTax" [(ngModel)]="priceProduct.TaxName" (blur)="onBlurTextbox('TaxName')"></app-p-textbox>
+                    <div class="label">Thông tin hiện tại</div>
+                    <div class="groupName" *ngFor="let i of [1,2,3,4];let index = index">
+                      <div>
+                        <span *ngIf="priceProduct['GroupID'+ i]">{{priceProduct['GroupID'+ i]}} : {{priceProduct['GroupName'+ i]}}</span>
+                      </div>
+                    </div>
+                
+                      <div>
+                        <span *ngIf="priceProduct.GroupID">{{priceProduct.GroupID}} : {{priceProduct.GroupName5}}</span>
+                      </div>
+                   
+                </div>
+                <div class="column3">
+                    <img [src]="getImgRes(priceProduct.URLImage)" alt="">
+                </div>
+            </div>
+        </div>
+        <!-- THÔNG TIN MUA HÀNG -->
+        <div class="block block-purchase">
+            <div class="title">THÔNG TIN MUA HÀNG</div>
+            <div class="section">
+                <div class="row-item row1">
+                    <div class="item1">
+                        <div class="label">Giá mua (chưa VAT) <span class="impose">(*)</span></div> 
+                        <app-p-numeric-textbox  propName="sl"  [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                         [(ngModel)]="priceProduct.Bid" (blur)="onBlurTextbox('Bid')" [disabled]="isLock" 
+                              >
+                            </app-p-numeric-textbox>
+                    </div>
+                    <div class="item2">
+                        <div class="label">VAT (%) <span class="impose">(*)</span></div> 
+                        <app-p-numeric-textbox  propName="sl"  [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                          [(ngModel)]="priceProduct.VATIn" (blur)="onBlurTextbox('VATIn')" [disabled]="isLock" 
+                              >
+                            </app-p-numeric-textbox>
+                    </div>
+                    <div class="item3">
+                        <div class="label">Giá mua (+ VAT)</div>
+                        <app-p-numeric-textbox [disabled]="true"  propName="sl"  [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                       [(ngModel)]="currentPurchasePrice"
+                              >
+                            </app-p-numeric-textbox>
+                    </div>
+                    <div class="item4">
+                        <div class="label">Đồng tiền <span class="impose">(*)</span></div>
+                        <p-kendo-dropdownlist [data]="listCurrency" valueField="Code" textField="CurrencyID"
+                          [(ngModel)]="currencyIn" (valueChange)="onDropdownClick($event,['CurrencyIn'])" [disabled]="isLock" 
+                        ></p-kendo-dropdownlist>
+                    </div>
+                    <div class="item5">
+                        <div class="label">Điều kiện thương mại</div>
+                        <p-kendo-dropdownlist #dropdownValueTM [data]="listCommercialTerm" valueField="Code" textField="ShortName" [disabled]="isLock" 
+                         [(ngModel)]="commercialTerm" (valueChange)="onDropdownClick($event,['CommercialTerm'])"></p-kendo-dropdownlist>
+                    </div>
+                </div>
+
+                <div class="row-item row2">
+                    <div class="item1">
+                        <div class="label">Giá bán lẻ dự kiến (chưa VAT)</div> 
+                       <app-p-numeric-textbox  propName="sl"  [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                          [(ngModel)]="priceProduct.UnitPrice" [disabled]="true" 
+                              >
+                            </app-p-numeric-textbox>
+                    </div>
+                    <div class="item2">
+                        <div class="label">VAT (%)  <span class="impose"> (*) </span></div>
+                       <app-p-numeric-textbox  propName="sl"  [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                          [(ngModel)]="priceProduct.VATOut" (blur)="onBlurTextbox('VATOut')" [disabled]="isLock" 
+                              >
+                            </app-p-numeric-textbox>
+                    </div>
+                    <div class="item3">
+                        <div class="label">Giá bán (+ VAT) <span class="impose"> (*) </span></div>
+                       <app-p-numeric-textbox [disabled]="isLock"  propName="sl"  [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                        [(ngModel)]="currentSalePrice" (blur)="onBlurTextbox('UnitPrice')"
+                              >
+                            </app-p-numeric-textbox>
+                    </div>
+                    <div class="item4">
+                        <div class="label">Đồng tiền <span class="impose">(*)</span></div>
+                        <p-kendo-dropdownlist [data]="listCurrency" valueField="Code" textField="CurrencyID" [(ngModel)]="currencyOut"
+                         (valueChange)="onDropdownClick($event,['CurrencyOut'])" [disabled]="isLock" ></p-kendo-dropdownlist>
+                    </div>
+                    <div class="item5">
+                        <div class="label">Margin (tính theo giá trước VAT)</div>
+                        <span class="margin">{{(priceProduct.Margin || 0 | number:'1.0-0' ) + '%'}} ({{priceProduct.MarginAmount || 0 | number:'1.0-0'}}) </span>
+                    </div>
+                </div>
+
+                <div class="row-item row3">
+                    <div class="item1">
+                        <div class="label">Giá vốn tham khảo <span class="impose">(*)</span></div> 
+                        <app-p-numeric-textbox  propName="sl"  [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                          [(ngModel)]="priceProduct.AvgPrice" (blur)="onBlurTextbox('AvgPrice')" [disabled]="isLock" 
+                              >
+                            </app-p-numeric-textbox>
+                    </div>
+                    <div class="item2">
+                        <div class="label">Đồng tiền <span class="impose">(*)</span></div>
+                        <p-kendo-dropdownlist #dropdownValueDT [data]="listCurrency" valueField="Code" textField="CurrencyID" [(ngModel)]="currencyAvg"
+                         (valueChange)="onDropdownClick($event,['CurrencyAvg'])" [disabled]="isLock" ></p-kendo-dropdownlist>
+                    </div>
+                </div>
+
+                <div class="row-item row4">
+                    <div class="item1">
+                        <div class="label">Số lượng dữ trữ thêm <span class="impose">(*)</span></div> 
+                        <app-p-numeric-textbox  propName="sl"  [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                          [(ngModel)]="priceProduct.QtyMore" (blur)="onBlurTextbox('QtyMore')" [disabled]="isLock" 
+                              >
+                            </app-p-numeric-textbox>
+                    </div>
+                    <div class="item2">
+                        <div class="label">Số lượng bán/tháng <span class="impose">(*)</span> </div> 
+                        <app-p-numeric-textbox  propName="sl"  [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                          [(ngModel)]="priceProduct.QtyMonthSale" (blur)="onBlurTextbox('QtyMonthSale')" [disabled]="isLock" 
+                              >
+                            </app-p-numeric-textbox>
+                    </div>
+                    <div class="item3">
+                        <div class="label">Doanh thu/tháng <span class="impose">(*)</span></div> 
+                        <app-p-numeric-textbox  propName="sl"  [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                          [(ngModel)]="priceProduct.AmountMonthSale" (blur)="onBlurTextbox('AmountMonthSale')" [disabled]="isLock" 
+                              >
+                            </app-p-numeric-textbox>
+                    </div>
+                    <div class="item4">
+                        <div class="label">SL đặt tối thiểu <span class="impose">(*)</span></div>
+                        <app-p-numeric-textbox  propName="sl"  [(ngModel)]="priceProduct.MinQuantity"  [format]="'n0'"
+                          [spinners]="false" [min]="0" class="k-textbox" [disabled]="isLock"  (blur)="onBlurTextbox('MinQuantity')"
+                              
+                              >
+                            </app-p-numeric-textbox>
+                    </div>
+                    <div class="item5">
+                        <div class="label">SL đặt đơn đầu tiên <span class="impose">(*)</span> </div> 
+                        <app-p-numeric-textbox  propName="sl"  [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                          [(ngModel)]="priceProduct.QtyFirstOrder" (blur)="onBlurTextbox('QtyFirstOrder')" [disabled]="isLock" 
+                              >
+                            </app-p-numeric-textbox>
+                    </div>
+                    <div class="item6">
+                        <div class="label">Đơn vị mua hàng <span class="impose">(*)</span></div>
+                        <p-kendo-dropdownlist #dropdownPur1 [data]="filteredBuyerUnitList" textField="VNPackingUnit" valueField="Code"  [(ngModel)]="currentBuyerUnit"
+                        (valueChange)="onDropdownClick($event,['BuyerUnit'])" [disabled]="isLock" ></p-kendo-dropdownlist>
+                    </div>
+                </div>
+                <div class="row-item row5">
+                    <div class="item1">
+                        <div class="label">PO đầu tiên dự kiến</div>
+                        <app-p-textbox propName="" [(ngModel)]="priceProduct.FirstPO"  (blur)="onBlurTextbox('FirstPO')" [disabled]="isLock" ></app-p-textbox>
+                    </div>
+                    <div class="item2">
+                        <div class="label">T.gian đầu tiên dự kiến mua</div>
+                        <div class="item_date">
+                        <app-datepicker [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'"
+                        [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                        [popupSetting]="{animate:true, appendTo: 'root',popupClass:'popupLayoutCpnDatePicker'}"
+                        [(ngModel)]="priceProduct.POFrom"
+                        [min]="effDate"
+                        [readOnlyInput]="true"
+                        (blur)="onBlurDateFormTo('POFrom', $event)"
+                        [disabled]="isLock" 
+                        ></app-datepicker>
+    
+                        <app-datepicker [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'"
+                        [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                        [popupSetting]="{animate:true, appendTo: 'root',popupClass:'popupLayoutCpnDatePicker'}"
+                        [(ngModel)]="priceProduct.POTo"
+                        [min]="minDatePO"
+                        [readOnlyInput]="true"
+                        (blur)="onBlurDateFormTo('POTo', $event)"
+                        [disabled]="isLock" 
+                        ></app-datepicker>
+                        </div>
+                    </div>
+                    <div class="item3">
+                        <div class="label">T.gian dự kiến lên cửa hàng</div>
+                        <div class="item_date">
+                        <app-datepicker [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'"
+                        [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                        [popupSetting]="{animate:true, appendTo: 'root',popupClass:'popupLayoutCpnDatePicker'}"
+                        [min]="effDate"
+                        [readOnlyInput]="true"
+                        (blur)="onBlurDateFormTo('StoreFrom', $event)"
+                        [(ngModel)]="priceProduct.StoreFrom"
+                        [disabled]="isLock" 
+                        ></app-datepicker>
+    
+                        <app-datepicker [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'"
+                        [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                        [popupSetting]="{animate:true, appendTo: 'root',popupClass:'popupLayoutCpnDatePicker'}"
+                        [min]="minDateStore"
+                        [readOnlyInput]="true"
+                        [(ngModel)]="priceProduct.StoreTo"
+                        (blur)="onBlurDateFormTo('StoreTo', $event)"
+                        [disabled]="isLock" 
+                        ></app-datepicker>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row-item row6">
+                    <div class="item">
+                        <div class="label">Diễn giải</div>
+                        <app-p-textarea propName=""   [(ngModel)]="priceProduct.Remark" (blur)="onBlurTextbox('Remark')" [readonly]="isLock" ></app-p-textarea>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <!-- THÔNG TIN HẠN CHẾ BÁN HÀNG -->
+        <div class="block block-sales">
+            <div class="title">THÔNG TIN HẠN CHẾ BÁN HÀNG</div>
+            <div class="section">
+              <div class="without" *ngFor="let item of listWithoutConfig">
+                <label> <input kendoCheckBox type="checkbox" [checked]="item.IsSelected" [disabled]="isLock" (change)="onCheckBoxChange($event,item,listWithoutConfig)"> <span>{{item.WHName}}</span></label>
+                  <div class="withoutStoreList">
+                    <ng-container *ngIf="item.ListChild && item.ListChild.length > 0 && item.IsSelected == true">
+                      <div class="withoutStore"  *ngFor="let itemChild of item.ListChild">
+                        <label><input kendoCheckBox type="checkbox" [disabled]="isLock" (change)="onCheckBoxChange($event,itemChild,listWithoutConfig)" [checked]="itemChild.IsSelected"> <span>{{itemChild.WHName}}</span></label>
+                      </div>
+                    </ng-container>
+                </div>
+              </div>
+            </div>
+        </div>
+        <!-- THUỘC TÍNH SẢN PHẨM -->
+        <div class="block block-attribute">
+            <div class="title">THUỘC TÍNH SẢN PHẨM</div>
+
+            <div class="section">
+
+                <div class="column1">
+                    <div class="item item1">
+                        <div class="label">Phân nhóm cấp 1 </div>
+                        <p-kendo-dropdownlist [data]="listGroupWebData?.level1" valueField="Code" textField="GroupName"
+                        [disabled]="isLock" (valueChange)="onDropdownClick($event, ['GroupID1'])" [(ngModel)]="currentGroupWeb1"
+                         [filterable]="true"></p-kendo-dropdownlist>
+                    </div>
+                    <div class="item item2">
+                      <div class="label">Phân nhóm cấp 2</div>
+                      <p-kendo-dropdownlist #dropdown2 [data]="listGroupWebData?.level2" valueField="Code" textField="GroupName"
+                      [disabled]="isLock || !currentGroupWeb1" (valueChange)="onDropdownClick($event, ['GroupID2'])" [(ngModel)]="currentGroupWeb2"
+                       [filterable]="true"></p-kendo-dropdownlist>
+                    </div>
+                    <div class="item item3">
+                      <div class="label">Phân nhóm cấp 3</div>
+                      <p-kendo-dropdownlist #dropdown3 [data]="listGroupWebData?.level3" valueField="Code" textField="GroupName"
+                      [disabled]="isLock || !currentGroupWeb2" (valueChange)="onDropdownClick($event, ['GroupID3'])" [(ngModel)]="currentGroupWeb3"
+                    
+                      [filterable]="true"></p-kendo-dropdownlist>
+                    </div>
+                    <div class="item item4">
+                        <div class="label">Phân nhóm cấp 4</div>
+                        <p-kendo-dropdownlist #dropdown4 [data]="listGroupWebData?.level4" valueField="Code" textField="GroupName"
+                      [disabled]="isLock || !currentGroupWeb3" (valueChange)="onDropdownClick($event, ['GroupID4'])" [(ngModel)]="currentGroupWeb4"
+                    
+                        [filterable]="true"></p-kendo-dropdownlist>
+                    </div>
+                    <div class=" item item5">
+                    <div class="label">Phân nhóm cấp 5</div>
+                        <p-kendo-dropdownlist #dropdown5 [data]="listGroupWebData?.level5" valueField="Code" textField="GroupName"
+                        [disabled]="isLock || !currentGroupWeb4" (valueChange)="onDropdownClick($event, ['GroupID'])" [(ngModel)]="currentGroupWeb5"
+                        [filterable]="true"></p-kendo-dropdownlist>
+                    </div>
+                </div>
+                <div class="column2">
+                    <div class="item item1">
+                        <div class="label">Đơn vị sản phẩm (Base unit) <span class="impose">(*)</span></div>
+                        <p-kendo-dropdownlist  [data]="filteredBaseUnitList" textField="VNPackingUnit" valueField="Code"  [(ngModel)]="currentBaseUnit"
+                        (valueChange)="onDropdownClick($event,['BaseUnit'])"  [disabled]="isLock" 
+                        >
+                        </p-kendo-dropdownlist>
+                      </div>
+                
+                      <div class="item item2">
+                        <div class="label">Kích thước sản phẩm (dài x rộng x cao x cân nặng) (cm - g)</div>
+                
+                        <div class="item_grid">
+                          <div class="item_item1">
+                            <app-p-numeric-textbox  propName="sl"  [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                             [(ngModel)]="priceProduct.BaseUnitL" (blur)="onBlurTextbox('BaseUnitL')" [disabled]="isLock" 
+                              >
+                            </app-p-numeric-textbox>
+                          </div>
+                          <div class="item_item2">
+                            <app-p-numeric-textbox  propName="sl"  [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                             [(ngModel)]="priceProduct.BaseUnitW" (blur)="onBlurTextbox('BaseUnitW')" [disabled]="isLock" 
+                              >
+                            </app-p-numeric-textbox>
+                          </div>
+                          <div class="item_item3">
+                            <app-p-numeric-textbox   propName="sl"  [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                             [(ngModel)]="priceProduct.BaseUnitH" (blur)="onBlurTextbox('BaseUnitH')" [disabled]="isLock" 
+                              >
+                            </app-p-numeric-textbox>
+                          </div>
+                          <div class="item_item4">
+                            <app-p-numeric-textbox  propName="sl"  [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                             [(ngModel)]="priceProduct.BaseUnitWeight" (blur)="onBlurTextbox('BaseUnitWeight')" [disabled]="isLock" 
+                              >
+                            </app-p-numeric-textbox>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="item item3">
+                        <div class="label">Kích thước inner (dài x rộng x cao x cân nặng) (cm - g)</div>
+                
+                        <div class="item_grid">
+                          <div class="item_item1">
+                            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox" 
+                             [(ngModel)]="priceProduct.InnerL" (blur)="onBlurTextbox('InnerL')" [disabled]="isLock" 
+                            >
+                                         </app-p-numeric-textbox>
+                          </div>
+                          <div class="item_item2">
+                            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                             [(ngModel)]="priceProduct.InnerW" (blur)="onBlurTextbox('InnerW')" [disabled]="isLock" 
+                                         ></app-p-numeric-textbox>
+                          </div>
+                          <div class="item_item3">
+                            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                             [(ngModel)]="priceProduct.InnerH" (blur)="onBlurTextbox('InnerH')" [disabled]="isLock" 
+                                         ></app-p-numeric-textbox>
+                          </div>
+                          <div class="item_item4">
+                            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                             [(ngModel)]="priceProduct.InnerWeight" (blur)="onBlurTextbox('InnerWeight')" [disabled]="isLock" 
+                              >
+                            </app-p-numeric-textbox>
+                          </div>
+                        </div>
+                      </div>
+                
+                      <div class="item item4">
+                        <div class="label">Kích thước carton (dài x rộng x cao x cân nặng) (cm - g)</div>
+                
+                        <div class="item_grid">
+                          <div class="item_item1">
+                            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                             [(ngModel)]="priceProduct.CartonL" (blur)="onBlurTextbox('CartonL')" [disabled]="isLock" 
+                                          ></app-p-numeric-textbox>
+                          </div>
+                          <div class="item_item2">
+                            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                             [(ngModel)]="priceProduct.CartonW" (blur)="onBlurTextbox('CartonW')" [disabled]="isLock" 
+                                          ></app-p-numeric-textbox>
+                          </div>
+                          <div class="item_item3">
+                            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                             [(ngModel)]="priceProduct.CartonH" (blur)="onBlurTextbox('CartonH')" [disabled]="isLock" 
+                                          ></app-p-numeric-textbox>
+                          </div>
+                          <div class="item_item4">
+                            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                             [(ngModel)]="priceProduct.CartonWeight" (blur)="onBlurTextbox('CartonWeight')" [disabled]="isLock" 
+                              >
+                            </app-p-numeric-textbox>
+                          </div>
+                        </div>
+                      </div>
+                
+                      <div class="item item5">
+                        <div class="label">Kích thước pallet (dài x rộng x cao x cân nặng) (cm - g)</div>
+                
+                        <div class="item_grid">
+                          <div class="item_item1">
+                            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                            [(ngModel)]="priceProduct.PalletL" (blur)="onBlurTextbox('PalletL')" [disabled]="isLock" 
+                                          ></app-p-numeric-textbox>
+                          </div>
+                          <div class="item_item2">
+                            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                            [(ngModel)]="priceProduct.PalletW" (blur)="onBlurTextbox('PalletW')" [disabled]="isLock" 
+                                          ></app-p-numeric-textbox>
+                          </div>
+                          <div class="item_item3">
+                            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                            [(ngModel)]="priceProduct.PalletH" (blur)="onBlurTextbox('PalletH')" [disabled]="isLock" 
+                                          ></app-p-numeric-textbox>
+                          </div>
+                          <div class="item_item4">
+                            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                            [(ngModel)]="priceProduct.PalletWeight" (blur)="onBlurTextbox('PalletWeight')" [disabled]="isLock" 
+                              >
+                            </app-p-numeric-textbox>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="item item6">
+                        <div class="label">Kích thước đóng gói (dài x rộng x cao x cân nặng) (cm - g)</div>
+                
+                        <div class="item_grid">
+                          <div class="item_item1">
+                            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                            [(ngModel)]="priceProduct.PackageL" (blur)="onBlurTextbox('PackageL')" [disabled]="isLock" 
+                                          ></app-p-numeric-textbox>
+                          </div>
+                          <div class="item_item2">
+                            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                            [(ngModel)]="priceProduct.PackageW" (blur)="onBlurTextbox('PackageW')" [disabled]="isLock" 
+                                          ></app-p-numeric-textbox>
+                          </div>
+                          <div class="item_item3">
+                            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                            [(ngModel)]="priceProduct.PackageH" (blur)="onBlurTextbox('PackageH')" [disabled]="isLock" 
+                                          ></app-p-numeric-textbox>
+                          </div>
+                          <div class="item_item4">
+                            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                            [(ngModel)]="priceProduct.PackageWeight" (blur)="onBlurTextbox('PackageWeight')" [disabled]="isLock" 
+                              >
+                            </app-p-numeric-textbox>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="item item7">
+                        <div class="hsd">
+                            <div class="label">Hạn sử dụng cảnh báo (ngày)</div>
+                            <label><div class="label" style="cursor: pointer;">Quản lý date  <input type="checkbox" (change)="onCheckboxDateChange($event,'IsDate')" [checked]="priceProduct.IsDate" kendoCheckBox [disabled]="isLock" > </div></label>
+                        </div>
+                        <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                        [disabled]="isLock" [(ngModel)]="priceProduct.DateDuration" (blur)="onBlurTextbox('DateDuration')"
+                        >
+                      </app-p-numeric-textbox>
+                
+                    </div>
+
+                </div>
+                <div class="column3">
+                    <div class="item item1">
+                        <div class="label">Quy đổi quy cách sản phẩm</div>
+                        
+                        <div class="item1_1">
+                          <div class="label">Inner</div>
+                          <b> = </b>
+                          <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                           [(ngModel)]="priceProduct.InnerBase" (blur)="onBlurTextbox('InnerBase')" [disabled]="isLock" 
+                            >
+                          </app-p-numeric-textbox>
+                          <span>Base unit</span> 
+                        </div>
+                
+                        <div class="item1_1">
+                          <div class="label">Carton</div>
+                          <b> = </b>
+                          <app-p-numeric-textbox  propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                           [(ngModel)]="priceProduct.CartonBase" (blur)="onBlurTextbox('CartonBase')" [disabled]="isLock" 
+                            >
+                          </app-p-numeric-textbox>
+                          <span>Base unit</span> 
+                        </div>
+                
+                        <div class="item1_1">
+                          <div class="label">Pallet</div>
+                          <b> = </b>
+                          <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+                          [(ngModel)]="priceProduct.PalletBase" (blur)="onBlurTextbox('PalletBase')" [disabled]="isLock" 
+                            >
+                          </app-p-numeric-textbox>
+                          <span>Base unit</span> 
+                        </div>
+                      </div>
+                      <div class="item item2">
+                        <div class="label">Đơn vị mua hàng <span class="impose">(*)</span></div>
+                        <p-kendo-dropdownlist #dropdownPur2 [data]="filteredBuyerUnitList" textField="VNPackingUnit" valueField="Code"  [(ngModel)]="currentBuyerUnit"
+                        (valueChange)="onDropdownClick($event,['BuyerUnit'])" [disabled]="isLock" ></p-kendo-dropdownlist>
+                      </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="impose"><i>(*) Thông tin bắt buộc nhập </i></div>
+  
+    </div>
+    <!-- END BODY -->
+
+    <!-- START DIALOG -->
+    <app-p-kendo-dialog class="dialogPrice" *ngIf="dialogProduct" [title]="'Xác nhận Xóa Sản phẩm'"
+    (close)="closeDialog()"
+    (handleButton)="onDeleteProduct()"
+    [iconTitle]="'k-icon k-i-warning'"
+    [iconButton]="'delete'"
+    [cancelText]="'KHÔNG'"
+    [actionText]="'CÓ'"
+    [dialogType]="1"
+    >
+      <p>Bạn có chắc chắn muốn Xóa Sản phẩm  <span style="color: green">{{priceProduct?.ProductName}}</span> này? </p>
+     
+    </app-p-kendo-dialog>
+    <!-- END DIALOG -->
+
+</div>

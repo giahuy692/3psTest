@@ -1,0 +1,362 @@
+.color-white {
+  color: #ffffff;
+}
+
+.color-gray {
+  color: #23282c;
+}
+
+.color-darkblue {
+  color: #39579a;
+}
+
+.color-blue {
+  color: #008cd7;
+}
+
+.color-lightblue {
+  color: #46b1ff;
+}
+
+.color-darkgreen {
+  color: #316e00;
+}
+
+.color-green {
+  color: #649e0f;
+}
+
+.color-lightgreen {
+  color: #8dc63f;
+}
+
+.color-yellowgreen {
+  color: #c1d72e;
+}
+
+.color-yellow {
+  color: #ffc400;
+}
+
+.color-mediumyellow {
+  color: #FFB900;
+}
+
+.color-orangeyellow {
+  color: #ffab00;
+}
+
+.color-lightorange {
+  color: #ff5230;
+}
+
+.color-lightpink {
+  color: #dc3545;
+}
+
+.color-red {
+  color: #d82c12;
+}
+
+.color-badred {
+  color: #EB273A;
+}
+
+.hachi-color-primary-1 {
+  color: #353935;
+}
+
+.hachi-color-primary-2 {
+  color: #868b86;
+}
+
+.hachi-color-primary-3 {
+  color: #8dc63f;
+}
+
+.hachi-color-primary-4 {
+  color: #c1d72e;
+}
+
+.hachi-color-primary-5 {
+  color: #ffffff;
+}
+
+.hachi-color-secondary-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-1 {
+  color: #46b1ff;
+}
+
+.hachi-color-text-2 {
+  color: #868b86;
+}
+
+.hachi-color-text-3 {
+  color: #008cd7;
+}
+
+.hachi-color-text-4 {
+  color: #d82c12;
+}
+
+.hachi-color-text-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-6 {
+  color: #ffffff;
+}
+
+.hachi-color-text-7 {
+  color: #8dc63f;
+}
+
+.hachi-color-text-8 {
+  color: #626662;
+}
+
+.hachi-color-text-10 {
+  color: #ff5230;
+}
+
+.hachi-color-text-9 {
+  color: #bbc0bb;
+}
+
+.hachi-color-text-11 {
+  color: #dc3545;
+}
+
+.hachi-color-text-12 {
+  color: #828282;
+}
+
+::ng-deep app-log001-hachi24h-list .mat-drawer .formfield-grid {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  column-gap: 5px;
+}
+
+::ng-deep app-log001-hachi24h-list .mat-drawer .formfield-grid .item1_1 {
+  grid-column: 1;
+  grid-row: 1;
+  margin-top: 1rem;
+}
+
+::ng-deep app-log001-hachi24h-list .mat-drawer .formfield-grid .item1_2 {
+  grid-column: 1;
+  grid-row: 2;
+  margin-top: 1rem;
+}
+
+::ng-deep app-log001-hachi24h-list .mat-drawer .formfield-grid .item1_3 {
+  grid-column: 1;
+  grid-row: 3;
+  margin-top: 1rem;
+}
+
+::ng-deep app-log001-hachi24h-list .mat-drawer .formfield-grid .item2 {
+  margin-top: 1rem;
+  grid-column: 2;
+  grid-row: 1 / span 3;
+}
+
+::ng-deep app-log001-hachi24h-list .mat-drawer .formfield-grid .item2 img {
+  width: 100%;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list {
+  height: calc(93vh - 30px);
+  padding: 0 15px 35px 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .header {
+  display: flex;
+  column-gap: 10px;
+  padding: 9px 0;
+  margin-bottom: 0;
+  border-bottom: 1px solid rgba(143, 155, 166, 0.4);
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .header.header-1 .k-dropdown {
+  width: 222px;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .header.header-1 .k-dropdown .k-input {
+  column-gap: 5px;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .header .label {
+  margin-bottom: 6px;
+  font-weight: 700;
+  font-size: 13px;
+  color: #5c6873;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .header .nav-btn {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .header .nav-crud {
+  flex-grow: 0;
+  justify-content: flex-end;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .header .nav-crud .onAddBtn {
+  height: 32px;
+  margin-top: auto;
+  background-color: #1a6634 !important;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .header .nav-crud .border-center {
+  margin: auto 0 1px 10px;
+  border-right: 1px solid #c8ced3;
+  height: 31px;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .header .nav-file {
+  flex-grow: 0;
+  margin-left: auto;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .header .nav-file .file-btn-group {
+  background: white;
+  box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+  border-radius: 3px;
+  color: #8f9ba6;
+  min-width: fit-content;
+  height: 32px;
+  margin-left: 15px;
+  display: flex;
+  margin-top: auto;
+  cursor: pointer;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .header .nav-file .file-btn-group span.text {
+  margin: auto;
+  padding-right: 9px;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .header .nav-file .file-btn-group .onImportBtn {
+  width: 64px;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .header .nav-file .file-btn-group .onImportBtn .excel-ic {
+  width: 32px;
+  height: 100%;
+  margin-left: 2px;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .header .nav-file .file-btn-group .border-center {
+  align-self: center;
+  height: 90%;
+  border-right: 1px solid #8f9ba6;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .header .nav-file .file-btn-group .k-i-arrow-chevron-down {
+  text-align: center;
+  padding: 7px 0;
+  width: 32px;
+  height: 100%;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .header .nav-file .file-btn-group .k-i-arrow-chevron-down:before {
+  font-size: 20px;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list app-p-kendo-grid.scrollable .k-grid .k-grid-aria-root {
+  overflow-x: auto;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list app-p-kendo-grid.scrollable .k-grid table {
+  width: 1370px;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list app-p-kendo-grid.scrollable .k-grid tr {
+  position: initial;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .k-grid thead tr {
+  height: fit-content !important;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .k-grid thead tr th {
+  padding: 0 12px;
+  height: 13px;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .k-grid tr:not(.k-grouping-row) td:first-child {
+  padding-left: 10px !important;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .k-grid .col_img_tensanpham_masanpham {
+  max-width: 400px;
+  width: 400px;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .k-grid .img_tensanpham_masanpham {
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .k-grid .img_tensanpham_masanpham img {
+  max-height: 64px;
+  max-width: 64px;
+  width: 100%;
+  margin-right: 10px;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .k-grid .img_tensanpham_masanpham .tensanpham_masanpham {
+  height: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .k-grid .img_tensanpham_masanpham .tensanpham_masanpham .tensanpham {
+  white-space: normal;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .k-grid .img_tensanpham_masanpham .tensanpham_masanpham .masanpham {
+  color: #5c6873;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .k-grid .img_tensanpham_masanpham .tensanpham_masanpham .tinhtrang.red {
+  color: #EB273A;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .k-grid .img_tensanpham_masanpham .tensanpham_masanpham .tinhtrang.green {
+  color: #1a6634;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .k-grid .col_nguoiBan,
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .k-grid .col_xuatXu,
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .k-grid .col_dieuKien {
+  text-align: center;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .k-grid .col_nguoiBan > .k-link,
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .k-grid .col_xuatXu > .k-link,
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .k-grid .col_dieuKien > .k-link {
+  justify-content: center;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .k-grid .col_giaBanLe {
+  padding-right: 50px;
+}
+
+::ng-deep app-log001-hachi24h-list .app-log001-hachi24h-list .grid-wrapper {
+  height: calc(100vh - 216px);
+}

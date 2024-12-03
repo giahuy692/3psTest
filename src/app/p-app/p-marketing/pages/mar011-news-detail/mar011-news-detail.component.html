@@ -1,0 +1,227 @@
+<div class="mar011-news-detail">
+    <div class="header header-1">
+        <div class="nav-btn nav-breadcrumb">
+            <div class="breadcrumb-item">
+                <!-- (click)="gotoOnlineOrderList()" -->
+                TIN TỨC
+            </div>
+            <div class="breadcrumb-chevron">
+                <span class="k-icon k-i-arrow-chevron-right"></span>
+            </div>
+            <div class="breadcrumb-item">
+                {{ isAdd ? 'TẠO MỚI' : isLockAll ? 'CHI TIẾT' : 'CHỈNH SỬA' }} TIN TỨC
+            </div>
+        </div>
+
+        <div class="nav-btn nav-crud" style="flex-grow: 1;">
+            <button kendoButton *ngIf="(isMaster || isCreator) && !isAdd && (news.StatusID == 0 || news.StatusID == 4)"
+                (click)="onClickChangeStatus(1)" class="btn-hachi hachi-secondary" [icon]="'redo'">
+                GỬI DUYỆT
+            </button>
+
+            <button kendoButton *ngIf="(isMaster || isApprover) && !isAdd && (news.StatusID == 1 || news.StatusID == 3)"
+                (click)="onClickChangeStatus(2)" class="btn-hachi hachi-secondary" [icon]="'check-outline'">
+                PHÊ DUYỆT
+            </button>
+
+            <button kendoButton *ngIf="(isMaster || isApprover) && !isAdd && (news.StatusID == 1 || news.StatusID == 3)"
+                (click)="onClickChangeStatus(4)" class="btn-hachi hachi-warning hachi-secondary" [icon]="'undo'">
+                TRẢ VỀ
+            </button>
+
+            <button kendoButton *ngIf="(isMaster || isApprover) && !isAdd && (news.StatusID == 2)"
+                (click)="onClickChangeStatus(3)" class="btn-hachi hachi-warning hachi-secondary"
+                [icon]="'minus-outline'">
+                NGƯNG HIỂN THỊ
+            </button>
+
+            <button kendoButton class="btn-hachi hachi-warning" (click)="showDeleteDialog = true" [icon]="'trash'"
+                *ngIf="((isMaster || isApprover) && news.StatusID == 3) || ((news.StatusID == 0 || news.StatusID == 4) && (isMaster || isCreator)) && !isAdd">
+                XÓA BÀI VIẾT
+            </button>
+
+            <button kendoButton *ngIf="isMaster || isCreator" class="btn-hachi hachi-primary" (click)="onCreateNews()"
+                [icon]="'plus'">
+                TẠO MỚI
+            </button>
+        </div>
+    </div>
+
+    <div class="body">
+        <div class="sections">
+            <div class="section">
+                <div class="title" style="display: flex;">
+                    <span class="section-tab borderRight" [ngClass]="{'active': curTab == 0 }"
+                        (click)="changeTab(0)">THÔNG TIN BÀI VIẾT</span>
+                    <span class="section-tab" [ngClass]="{'active': curTab == 1 }" (click)="changeTab(1)">NỘI DUNG BÀI
+                        VIẾT</span>
+
+                    <span class="languages" style="margin-left: auto;">
+                        <span class="borderRight vietnamese" [ngClass]="{'active': curLanguage == 0 }"
+                            (click)="changeLanguage(0)">
+                            Tiếng Việt
+                        </span>
+
+                        <span class="borderRight japanese" [ngClass]="{'active': curLanguage == 1 }"
+                            (click)="changeLanguage(1)">
+                            日本語
+                        </span>
+
+                        <span class="english" [ngClass]="{'active': curLanguage == 2 }" (click)="changeLanguage(2)">
+                            English
+                        </span>
+                    </span>
+                </div>
+
+                <div class="section-grid" [hidden]="curTab != 0">
+                    <div class="grid-item item1_1">
+                        <div class="label"> Hình ảnh </div>
+
+                        <div class="image-grid-item">
+                            <div class="label">
+                                <div>Ảnh đại diện</div>
+                                <!-- <div>(294px x 176px)</div> -->
+                                <div>(616px x 368px)</div>
+                                <div class="btn-group" [hidden]="isLockAll">
+                                    <span class="k-icon k-i-export" (click)="onUploadImg(1)"></span>
+                                    <span class="k-icon k-i-trash" (click)="onRemoveImg(1)"></span>
+                                </div>
+                            </div>
+                            <img loading="lazy" [src]="news.ImageSetting1" style="max-width: 616px;">
+                        </div>
+                        <!-- Background Image 1 -->
+                        <!-- <div class="image-grid-item">
+                            <div class="label">
+                                <div>Ảnh nền 1</div>
+                                <div>(216px x 129px)</div>
+                                <div class="btn-group" [hidden]="isLockAll">
+                                    <span class="k-icon k-i-export" (click)="onUploadImg(2)"></span>
+                                    <span class="k-icon k-i-trash" (click)="onRemoveImg(2)"></span>
+                                </div>
+                            </div>
+                            <img loading="lazy" [src]="news.ImageSetting2" style="max-width: 216px;">
+                        </div> -->
+                        <!-- Background Image 2 -->
+                        <div class="image-grid-item">
+                            <div class="label">
+                                <div>Ảnh nền 2</div>
+                                <div>(80px x 80px)</div>
+                                <div class="btn-group" [hidden]="isLockAll">
+                                    <span class="k-icon k-i-export" (click)="onUploadImg(3)"></span>
+                                    <span class="k-icon k-i-trash" (click)="onRemoveImg(3)"></span>
+                                </div>
+                            </div>
+                            <img loading="lazy" [src]="news.ImageSetting3" style="max-width: 80px;">
+                        </div>
+                    </div>
+
+                    <div class="grid-item item2_1">
+                        <div class="label"> Tiêu đề </div>
+
+                        <kendo-textbox class="k-textbox" type="textbox" placeholder="Tiêu đề bài viết"
+                            [ngModel]="curLanguage == 0 ? news.TitleVN : curLanguage == 1 ? news.TitleJP : news.TitleEN"
+                            (ngModelChange)="onValueChange('Title', $event)" (blur)="onSaveInput('Title')"
+                            [attr.disabled]="isLockAll ? true : null">
+                        </kendo-textbox>
+
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="label"> Phân nhóm </div>
+
+                                <kendo-dropdownlist [data]="listCategory" [textField]="'NewsCategory'"
+                                    [valueField]="'Code'" [valuePrimitive]="true" [(ngModel)]="news.NewsCategory"
+                                    [attr.disabled]="isLockAll ? true : null" [defaultItem]="defaultCategory"
+                                    [itemDisabled]="isItemDisabled" (blur)="onSaveInput('NewsCategory')"
+                                    [popupSettings]="{width: 'auto', appendTo: 'component'}">
+                                    <ng-template kendoDropDownListValueTemplate let-item>
+                                        <span class="value"
+                                            [ngStyle]="{'color': item.Code == -1 ? '#008000': '#26282E', 'width': 'auto'}">
+                                            {{ item.NewsCategory }}
+                                        </span>
+                                    </ng-template>
+                                </kendo-dropdownlist>
+                            </div>
+                            <div class="col-4">
+                                <div class="label"> Ngày đăng bài </div>
+
+                                <kendo-datepicker [format]="'dd/MM/yyyy'" placeholder="dd/mm/yyyy"
+                                    [(ngModel)]="postDate"
+                                    [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                                    [attr.disabled]="isLockAll ? true : null" (keydown.Enter)="$event.target.blur()"
+                                    (blur)="onSaveInput('PostDate')">
+                                </kendo-datepicker>
+                            </div>
+                        </div>
+
+                        <div class="label"> Miêu tả </div>
+
+                        <textarea [style.resize]="'none'" [placeholder]="'Miêu tả bài viết'"
+                            [ngModel]="curLanguage == 0 ? news.SummaryVN : curLanguage == 1 ? news.SummaryJP : news.SummaryEN"
+                            (ngModelChange)="onValueChange('Summary', $event)" (blur)="onSaveInput('Summary')"
+                            [attr.disabled]="isLockAll ? true : null">
+                        </textarea>
+
+                        <div class="label">Hashtag</div>
+
+                        <kendo-multiselect [disabled]="isLockAll" class="mapping-multiselect"
+                            [(value)]="listSelectedHashtag" [data]="listFilterHashtag" textField="TagName"
+                            valueField="Code" defaultItem="Không lựa chọn" (blur)="onSaveInput('ListTag')"
+                            [filterable]="true" #multiSelect [loading]="loading"
+                            [popupSettings]="{  appendTo: 'component'  }">
+
+                            <ng-template kendoMultiSelectTagTemplate let-dataItem>
+                                <span class="value">{{ dataItem.TagCode }} | {{ dataItem.TagName }}</span>
+                            </ng-template>
+
+                            <ng-template kendoMultiSelectItemTemplate let-dataItem>
+                                <span class="value">
+                                    {{ dataItem.TagCode }} | {{ dataItem.TagName }}
+                                </span>
+                            </ng-template>
+                        </kendo-multiselect>
+                    </div>
+
+                    <!-- <div class="grid-item item3_2">
+                        <div class="label">
+                            Hình ảnh
+                        </div>
+
+                        <div class="img-group">
+                            <img loading="lazy" [src]="news.ImageThumb" [style.width.px]="80" [style.height.px]="80">
+
+                            <div class="btn-group" [hidden]="isLockAll ? true : null">
+                                <span class="k-icon k-i-export" (click)="onUploadImg(1)"></span>
+                                <span class="k-icon k-i-trash" (click)="onRemoveImg()"></span>
+                            </div>
+                        </div>
+
+                        <div class="label" style="margin-top: 6px;">
+                            Ảnh đại diện
+                        </div>
+                    </div> -->
+                </div>
+
+                <app-p-kendo-editor [hidden]="curTab != 1" style="height: 100vh;" [readonly]="isLockAll ? true : null"
+                    [content]="curLanguage == 0 ? news.ContentVN : curLanguage == 1 ? news.ContentJP : news.ContentEN"
+                    (valueChange)="onValueChange('Content', $event)" (saveEvent)="onSaveInput('Content', $event)">
+                </app-p-kendo-editor>
+            </div>
+        </div>
+    </div>
+</div>
+
+<kendo-dialog #dialog class="deleteDialog" title="Xóa Bài viết" [hidden]="!showDeleteDialog"
+    (close)="showDeleteDialog = false" [minWidth]="250">
+    <p style="margin: 30px; text-align: center;">
+        Bạn chắc chắn muốn xóa vĩnh viễn bài viết này?</p>
+    <div class="dialog-footer">
+        <button kendoButton class="btn-hachi hachi-secondary" (click)="showDeleteDialog = false"
+            [icon]="'close'">Không</button>
+        <button kendoButton class="btn-hachi hachi-warning" (click)="deleteNews(news)" [icon]="'trash'">Có</button>
+    </div>
+</kendo-dialog>
+
+<app-folder-popup [pickFileCallback]="curTab == 0 ? pickFileCallback : pickFileCallback2"
+    [GetFolderCallback]="curTab == 0 ? GetFolderCallback : GetFolderCallback2" [canResize]="curTab == 1"
+    [serviceIndex]="curTab">
+</app-folder-popup>

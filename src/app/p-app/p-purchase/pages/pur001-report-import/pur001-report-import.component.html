@@ -1,0 +1,49 @@
+<div class="app-pur001-report">
+  <div class="header header-1">
+    <div class="nav-filter nav-btn">
+      <div class="filter-btn-group clear-btn-group">
+        <div class="label">
+          <span class="k-icon k-i-filter"></span>Lọc dữ liệu
+        </div>
+        <button kendoButton class="k-button clear-filter-btn" (click)="resetFilter()">Reset bộ lọc</button>
+      </div>
+
+      <form style="display: flex; flex-grow: 1;" [formGroup]="searchForm">
+        <div class="filter-btn-group search-btn-group">
+          <div class="label">
+            Tìm kiếm Báo cáo
+          </div>
+          <div class="search-btn">
+            <span class="k-icon k-i-search"></span>
+            <kendo-textbox formControlName="SearchQuery" type="text" class="k-textbox"
+              placeholder="Tìm kiếm tên báo cáo, mô tả báo cáo">
+            </kendo-textbox>
+          </div>
+        </div>
+
+        <button kendoButton class="k-button searchBtn" [icon]="'search'"  (click)="search()">TÌM</button>
+      </form>
+
+    </div>
+  </div>
+  
+  <div class="grid-wrapper">
+    <app-p-kendo-grid class="grid" [data]="gridDSView | async" [scrollable]="'none'" [loading]="loading"
+      [pageable]="false" [getActionDropdownCallback]="getActionDropdownCallback"
+      [onActionDropdownClickCallback]="onActionDropdownClickCallback">
+  
+      <kendo-grid-column field="DataID" title="Mã" class="DataID">
+      </kendo-grid-column>
+  
+      <kendo-grid-column field="DataName" title="Tên báo cáo" class="DataName">
+      </kendo-grid-column>
+  
+      <kendo-grid-column field="DataDescription" title="Mô tả" class="DataDescription">
+      </kendo-grid-column>
+    </app-p-kendo-grid>
+  </div>
+</div>
+
+
+
+<app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>

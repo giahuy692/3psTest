@@ -1,0 +1,437 @@
+.color-white {
+  color: #ffffff;
+}
+
+.color-gray {
+  color: #23282c;
+}
+
+.color-darkblue {
+  color: #39579a;
+}
+
+.color-blue {
+  color: #008cd7;
+}
+
+.color-lightblue {
+  color: #46b1ff;
+}
+
+.color-darkgreen {
+  color: #316e00;
+}
+
+.color-green {
+  color: #649e0f;
+}
+
+.color-lightgreen {
+  color: #8dc63f;
+}
+
+.color-yellowgreen {
+  color: #c1d72e;
+}
+
+.color-yellow {
+  color: #ffc400;
+}
+
+.color-mediumyellow {
+  color: #FFB900;
+}
+
+.color-orangeyellow {
+  color: #ffab00;
+}
+
+.color-lightorange {
+  color: #ff5230;
+}
+
+.color-lightpink {
+  color: #dc3545;
+}
+
+.color-red {
+  color: #d82c12;
+}
+
+.color-badred {
+  color: #EB273A;
+}
+
+.hachi-color-primary-1 {
+  color: #353935;
+}
+
+.hachi-color-primary-2 {
+  color: #868b86;
+}
+
+.hachi-color-primary-3 {
+  color: #8dc63f;
+}
+
+.hachi-color-primary-4 {
+  color: #c1d72e;
+}
+
+.hachi-color-primary-5 {
+  color: #ffffff;
+}
+
+.hachi-color-secondary-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-1 {
+  color: #46b1ff;
+}
+
+.hachi-color-text-2 {
+  color: #868b86;
+}
+
+.hachi-color-text-3 {
+  color: #008cd7;
+}
+
+.hachi-color-text-4 {
+  color: #d82c12;
+}
+
+.hachi-color-text-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-6 {
+  color: #ffffff;
+}
+
+.hachi-color-text-7 {
+  color: #8dc63f;
+}
+
+.hachi-color-text-8 {
+  color: #626662;
+}
+
+.hachi-color-text-10 {
+  color: #ff5230;
+}
+
+.hachi-color-text-9 {
+  color: #bbc0bb;
+}
+
+.hachi-color-text-11 {
+  color: #dc3545;
+}
+
+.hachi-color-text-12 {
+  color: #828282;
+}
+
+::ng-deep #folderDialogPopup {
+  z-index: 7;
+}
+
+::ng-deep #folderDialogPopup .k-dialog {
+  min-width: 900px;
+  max-width: 80vw;
+  height: 580px;
+  border-radius: 3px;
+}
+
+::ng-deep #folderDialogPopup .k-dialog .k-dialog-titlebar {
+  color: white;
+  background-color: #1a6634;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 14px;
+  border-radius: 3px 3px 0 0;
+}
+
+::ng-deep #folderDialogPopup .k-dialog .k-dialog-titlebar .k-dialog-title {
+  justify-content: center;
+  font-size: 20px;
+}
+
+::ng-deep #folderDialogPopup .k-dialog .k-dialog-content.k-window-content {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow-y: hidden;
+  overflow: scroll;
+}
+
+::ng-deep #folderDialogPopup .k-dialog .k-dialog-content.k-window-content #footer {
+  text-align: right;
+  padding: 16px;
+  border-top: 1px solid #959db3;
+  border-radius: 0 0 3px 3px;
+}
+
+::ng-deep #folderDialogPopup .k-dialog .k-dialog-content.k-window-content #footer .k-button {
+  min-width: 103px;
+  min-height: 32px;
+  margin-left: 15px;
+  border-radius: 3px;
+  font-weight: 700;
+  font-size: 11px;
+  background-image: none;
+  box-shadow: 0px 1px 1px rgba(90, 98, 118, 0.502);
+}
+
+::ng-deep #folderDialogPopup .k-dialog .k-dialog-content.k-window-content #footer .k-button span {
+  text-transform: uppercase;
+}
+
+::ng-deep #folderDialogPopup .k-dialog .k-dialog-content.k-window-content #footer #closeImportPopupBtn {
+  color: #1a6634;
+  margin: 0 16px;
+}
+
+::ng-deep #folderDialogPopup .k-dialog .k-dialog-content.k-window-content #footer #closeImportPopupBtn:hover {
+  border: 1px solid #1a6634;
+}
+
+::ng-deep #folderDialogPopup .k-dialog .k-dialog-content.k-window-content #footer #pickFileBtn {
+  color: white;
+  background-color: #1a6634 !important;
+}
+
+::ng-deep #folderDialogPopup .k-dialog .k-dialog-content.k-window-content #footer #pickFileBtn.disabled {
+  background-color: rgba(26, 102, 52, 0.5);
+  cursor: not-allowed;
+}
+
+::ng-deep #folderDialogPopup #folderTreeDiv {
+  flex-direction: column;
+  display: flex;
+  padding: 0;
+}
+
+::ng-deep #folderDialogPopup #folderTreeDiv #folderTree.k-grid {
+  flex-grow: 1;
+}
+
+::ng-deep #folderDialogPopup #folderTreeDiv #folderTree.k-grid tbody tr:hover {
+  background-color: rgba(26, 102, 52, 0.4);
+}
+
+::ng-deep #folderDialogPopup #folderTreeDiv #folderTree.k-grid tbody tr:hover > td:first-child {
+  border-left: 5px solid rgba(26, 102, 52, 0.8);
+}
+
+::ng-deep #folderDialogPopup #folderTreeDiv #folderTree.k-grid tbody tr:hover > td:last-child .k-button {
+  display: initial;
+}
+
+::ng-deep #folderDialogPopup #folderTreeDiv #folderTree.k-grid tr.k-state-selected, ::ng-deep #folderDialogPopup #folderTreeDiv #folderTree.k-grid tr.k-selected {
+  background-color: #008000;
+}
+
+::ng-deep #folderDialogPopup #folderTreeDiv #folderTree.k-grid tr.k-state-selected > td, ::ng-deep #folderDialogPopup #folderTreeDiv #folderTree.k-grid tr.k-selected > td {
+  color: white;
+  background: none;
+}
+
+::ng-deep #folderDialogPopup #folderTreeDiv #folderTree.k-grid tr.k-state-selected > td:first-child, ::ng-deep #folderDialogPopup #folderTreeDiv #folderTree.k-grid tr.k-selected > td:first-child {
+  border-left: 5px solid #1a6634;
+}
+
+::ng-deep #folderDialogPopup #folderTreeDiv #folderTree.k-grid tr th,
+::ng-deep #folderDialogPopup #folderTreeDiv #folderTree.k-grid tr td {
+  border: none;
+  background-color: none !important;
+}
+
+::ng-deep #folderDialogPopup #folderTreeDiv #folderTree.k-grid tr th:last-child,
+::ng-deep #folderDialogPopup #folderTreeDiv #folderTree.k-grid tr td:last-child {
+  position: absolute;
+  right: 1px;
+  padding: 3px 0;
+  white-space: nowrap;
+}
+
+::ng-deep #folderDialogPopup #folderTreeDiv #folderTree.k-grid tr .k-header {
+  vertical-align: middle;
+}
+
+::ng-deep #folderDialogPopup #folderTreeDiv #folderTree.k-grid tr td:first-child {
+  cursor: pointer;
+}
+
+::ng-deep #folderDialogPopup #folderTreeDiv #folderTree.k-grid tr td:last-child .k-button {
+  display: none;
+}
+
+::ng-deep #folderDialogPopup #folderTreeDiv #folderTree.k-grid tr.k-state-selected td:last-child .k-button, ::ng-deep #folderDialogPopup #folderTreeDiv #folderTree.k-grid tr.k-selected td:last-child .k-button, ::ng-deep #folderDialogPopup #folderTreeDiv #folderTree.k-grid tr.k-grid-edit-row td:last-child .k-button {
+  display: initial;
+}
+
+::ng-deep #folderDialogPopup #folderTreeDiv #folderTree.k-grid .k-command-cell > .k-button {
+  margin: 0;
+  border-radius: 3px;
+}
+
+::ng-deep #folderDialogPopup #folderTreeDiv #folderTree.k-grid #addFolderBtn {
+  background-color: #1a6634 !important;
+  border: none;
+  color: white;
+}
+
+::ng-deep #folderDialogPopup .row {
+  margin: 0;
+  flex-grow: 1;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv {
+  flex-direction: column;
+  display: flex;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv #folderPath {
+  height: 32px;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv #folderPath .label {
+  font-weight: 700;
+  font-size: 13px;
+  color: #73818f;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv #folderPath div {
+  margin: auto 5px;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid {
+  max-height: 430px;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid tr {
+  height: 32px;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid tr:not(.k-grouping-row) td:first-child {
+  padding-left: 0;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid tr th:nth-child(2) {
+  position: unset;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid tr th:nth-child(2) .k-upload {
+  position: absolute;
+  right: 0;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid tr th:nth-child(2) .k-upload .k-dropzone {
+  padding: 0;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid tr th:nth-child(2) .k-upload .k-dropzone .k-upload-button {
+  border: none;
+  background-color: #1a6634 !important;
+  background-image: none;
+  color: white;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid tr td:last-child {
+  padding: 2px;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid .col_file_img {
+  max-width: 333px;
+  width: 33%;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid .col_file_img img {
+  max-width: 333px;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid .col_file_name {
+  max-width: 444px;
+  width: 88%;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid .col_file_name.k-header {
+  min-width: 350px;
+  width: 100%;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid .col_file_name .file_name {
+  white-space: normal;
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  word-break: break-all;
+  /* Instead use this non-standard one: */
+  word-break: break-word;
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid .col_file_name .col_search {
+  display: flex;
+  margin-left: 10px;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid .col_file_name .col_search .search-btn {
+  width: 100%;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid .col_file_name .col_search .k-i-search {
+  position: absolute;
+  height: 100%;
+  width: 30px;
+  z-index: 1;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid .col_file_name .col_search .k-textbox {
+  padding-left: 30px;
+  min-width: fit-content;
+  width: 100%;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid .col_file_name .k-upload {
+  z-index: 99999;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid tbody tr {
+  height: 64px;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid tbody tr .file_img {
+  max-width: 100%;
+  max-height: 64px;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid tbody tr .file_name {
+  padding-right: 10px;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid tbody .action {
+  box-shadow: none !important;
+}
+
+::ng-deep #folderDialogPopup .row #folderGridDiv .k-grid .k-grid-content {
+  overflow-x: hidden;
+}

@@ -1,0 +1,172 @@
+<div id="app-drawer-container">
+  <mat-drawer-container [hasBackdrop]="true">
+    <mat-drawer #drawer [mode]="'over'" position="end" opened="false">
+      <form class="formSanpham k-form" [formGroup]="form" (keydown.Enter)="keydownEnter($event)">
+        <fieldset>
+          <legend>SẢN PHẨM KHUYẾN MÃI</legend>
+
+          <kendo-formfield>
+            <kendo-label text="Phân loại" [for]="TypeOfDeadLink">
+              <span class="symbol">(*)</span>
+            </kendo-label>
+            <div class="d-flex Type_radio_group">
+              <label for="f_rdo_1" class="my_label">
+                <input type="radio" id="f_rdo_1" formControlName="TypeOfDeadLink" name="TypeOfDeadLink" #TypeOfDeadLink
+                  class="k-radio" kendoRadioButton [value]="1" [(ngModel)]="curDeadLink.TypeOfDeadLink" />
+                Dead link sản phẩm
+              </label>
+              <label for="f_rdo_2" class="my_label">
+                <input type="radio" id="f_rdo_2" formControlName="TypeOfDeadLink" name="TypeOfDeadLink" #TypeOfDeadLink
+                  class="k-radio" kendoRadioButton [value]="0" [(ngModel)]="curDeadLink.TypeOfDeadLink" checked />
+                Dead link bài viết & khác
+              </label>
+            </div>
+          </kendo-formfield>
+
+          <!-- <div class="masanpham_img d-flex"> -->
+          <kendo-formfield>
+            <kendo-label text="Mô tả link" [for]="Description">
+              <span class="symbol">(*)</span>
+            </kendo-label>
+            <kendo-textbox formControlName="Description" #Description [(value)]="curDeadLink.Description">
+              <!-- (keydown.Enter)="$event.target.blur()"
+                (inputBlur)="onTextboxLoseFocus('Barcode')" -->
+            </kendo-textbox>
+          </kendo-formfield>
+          <!-- </div> -->
+
+          <kendo-formfield>
+            <kendo-label text="Link site cũ" [for]="OldLink">
+              <span class="symbol">(*)</span>
+            </kendo-label>
+            <textarea formControlName="OldLink" #OldLink [(ngModel)]="curDeadLink.OldLink"></textarea>
+          </kendo-formfield>
+
+          <kendo-formfield>
+            <kendo-label text="Link site mới" [for]="NewLink">
+              <span class="symbol">(*)</span>
+            </kendo-label>
+            <textarea formControlName="NewLink" #NewLink [(ngModel)]="curDeadLink.NewLink"></textarea>
+          </kendo-formfield>
+
+          <kendo-formerror>(*) Trường bắt buộc nhập.</kendo-formerror>
+
+          <div class="k-form-buttons">
+            <button kendoButton class="k-button closeBtn"  (click)="closeForm()">Đóng</button>
+            <button kendoButton class="k-button updateBtn"  (click)="onSubmit()">
+              {{ isAdd ? 'THÊM MỚI' : 'CẬP NHẬT' }}
+            </button>
+          </div>
+        </fieldset>
+      </form>
+    </mat-drawer>
+    <!-- center content -->
+    <mat-drawer-content>
+
+      <div class="app-ecom005-dead-link">
+        <div class="header header-1">
+          <button kendoButton class="k-button checkbox-btn-group sanPham_btn" [toggleable]="isFilterActive"
+            (selectedChange)="selectedBtnChange($event, 'sanPham_btn')" [selected]="sanPham_checked"
+            [disabled]="!isFilterActive">
+            Dead link Sản phẩm
+            <input type="checkbox" class="k-checkbox" disabled [checked]="sanPham_checked" />
+          </button>
+
+          <button kendoButton class="k-button checkbox-btn-group baiViet_btn" [toggleable]="isFilterActive"
+            (selectedChange)="selectedBtnChange($event, 'baiViet_btn')" [selected]="baiViet_checked"
+            [disabled]="!isFilterActive">
+            Dead link bài viết & khác
+            <input type="checkbox" class="k-checkbox" disabled [checked]="baiViet_checked" />
+          </button>
+
+          <div class="nav-file nav-btn">
+            <div class="file-btn-group">
+              <button kendoButton id="onUploadBtn" class="k-button" [icon]="'export'" (click)="onImportExcel()"
+                 [disabled]="!isFilterActive "></button>
+            </div>
+
+            <div class="file-btn-group">
+              <button kendoButton id="onDownloadBtn" class="k-button" [icon]="'import'" (click)="downloadExcel()"
+                 [disabled]="!isFilterActive ">Template</button>
+            </div>
+          </div>
+
+          <div class="nav-btn nav-crud">
+            <button kendoButton class="k-button onAddBtn" [icon]="'plus'" (click)="onAdd()" 
+              [disabled]="!isFilterActive ">
+              THÊM MỚI</button>
+          </div>
+        </div>
+
+        <div class="header header-2">
+          <div class="nav-filter nav-btn">
+            <div class="filter-btn-group clear-btn-group">
+              <div class="label">
+                <span class="k-icon k-i-filter"></span>Lọc dữ liệu
+              </div>
+              <button kendoButton class="k-button clear-filter-btn" (click)="resetFilter()">Reset bộ lọc</button>
+            </div>
+
+            <form style="display: flex; flex-grow: 1;" [formGroup]="searchForm">
+              <div class="filter-btn-group search-btn-group">
+                <div class="label">
+                  Tìm kiếm đường link
+                </div>
+                <div class="search-btn">
+                  <span class="k-icon k-i-search"></span>
+                  <kendo-textbox formControlName="SearchQuery" type="text" class="k-textbox"
+                    placeholder="Tìm kiếm mô tả, đường link site cũ, đường link site mới ">
+                  </kendo-textbox>
+                </div>
+              </div>
+
+              <button kendoButton class="k-button searchBtn" [icon]="'search'"  (click)="search()"
+                [disabled]="!isFilterActive">TÌM</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="grid-wrapper">
+          <app-p-kendo-grid class="grid" [data]="gridDSView | async" [scrollable]="'none'" [loading]="loading"
+            [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize" [skip]="gridDSState.skip"
+            [take]="gridDSState.take" [onPageChangeCallback]="onPageChangeCallback"
+            [allowedMoreActionDropdown]="allowActionDropdown"
+            [onActionDropdownClickCallback]="onActionDropdownClickCallback" [selectable]="selectable"
+            [onSelectCallback]="onSelectCallback" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+            [getSelectionPopupCallback]="getSelectionPopupCallback">
+  
+            <kendo-grid-column field="Description" title="Mô tả link" class="col_Description">
+            </kendo-grid-column>
+  
+            <kendo-grid-column field="OldLink" title="Link site cũ" class="col_OldLink">
+            </kendo-grid-column>
+  
+            <kendo-grid-column field="NewLink" title="Link site mới" class="col_NewLink">
+            </kendo-grid-column>
+          </app-p-kendo-grid>
+        </div>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+
+  <!-- popup confirm delete -->
+  <kendo-dialog #dialog id="deleteDialog" title="Hủy mapping link" [hidden]="!deleteDialogOpened"
+    (close)="closeDeleteDialog()" [minWidth]="250" class="deleteDialog">
+    <p style="margin: 30px; text-align: center;">
+      Bạn chắc chắn muốn hủy mapping link&nbsp;
+      <span *ngFor="let delLink of listDeleteDeadLink">
+        "{{ delLink.Description }}",&nbsp;
+      </span>
+      &nbsp;này?
+    </p>
+    <div class="dialog-footer">
+      <button kendoButton class="btn btn-hachi hachi-secondary" (click)="closeDeleteDialog()"
+        [icon]="'close'">Không</button>
+      <button kendoButton class="btn btn-hachi hachi-warning" id="deleteBtn" (click)="delete()"
+        [icon]="'trash'">Có</button>
+    </div>
+  </kendo-dialog>
+
+  <app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>
+  
+</div>

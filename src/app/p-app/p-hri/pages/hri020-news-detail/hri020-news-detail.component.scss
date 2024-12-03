@@ -1,0 +1,98 @@
+@import "../../../../../assets/scss/variable.scss";
+
+
+::ng-deep {
+    app-hri020-news-detail {
+
+        .app-hri020-news-detail {
+            padding: 0 15px 0 20px;
+
+            // ========== START HEADER ==========
+            .header {
+                justify-content: space-between;
+
+                app-p-kendo-breadcrumb {
+                    // margin-left: 5px;
+                    min-width: 475px;
+                }
+
+                .nav-btn {
+                    display: flex;
+                    align-items: center;
+                    // margin-right: 15px;
+
+                    .onDeleteBtn {
+                        background-color: rgba(189, 194, 210, 1);
+                        width: 130px;
+                        color: #ffffff;
+                        font-size: 11px;
+                        font-weight: bold;
+
+                        .k-icon {
+                            display: none !important;
+                        }
+                    }
+
+                    .btnGuiDuyet {
+                        width: fit-content;
+                        height: 32px;
+                        background-color: $white;
+                        color: $dark-green;
+                        border: 1px solid $dark-green;
+                        box-shadow: 0 0 8px $lightgray;
+                        font-weight: 700;
+                        font-size: 11px;
+                    }
+
+                    .btn-aplication {
+                        width: fit-content;
+                        height: 32px;
+                        background-color: $white;
+                        color: $dark-green;
+                        box-shadow: 0 0 8px $lightgray;
+                        font-weight: 700;
+                        font-size: 11px;
+                    }
+
+
+                    .btnTraVe {
+                        width: fit-content;
+                        height: 32px;
+                        background-color: $white;
+                        color: $bad-red;
+                        border: 1px solid $bad-red;
+                        box-shadow: 0 0 8px $lightgray;
+                        font-weight: 700;
+                        font-size: 11px;
+                    }
+
+                    .btnNgunghienthi {
+                        width: fit-content;
+                        height: 32px;
+                        background-color: $bad-red;
+                        color: $white;
+                        border: 1px solid $white;
+                        box-shadow: 0 0 8px $lightgray;
+                        font-weight: 700;
+                        font-size: 11px;
+                    }
+                }
+            }
+
+            // ========== END HEADER ==========
+
+            // ========== START MAIN CONTENT ==========
+            .mainContent {
+
+                app-hr-news-detail {
+                    .app-hr-new-info {
+                        margin-top: 15px;
+                    }
+                }
+            }
+
+            // ========== END MAIN CONTENT ==========
+
+        }
+    }
+}

@@ -1,0 +1,1047 @@
+@import "../../../../../../assets/scss/variables/colors";
+
+::ng-deep {
+    app-hr-onboard-decision-detail {
+        .drawer-container {
+            position: relative;
+            height: 100vh;
+
+            .drawer-content {
+                height: calc(100vh - 84px);
+                width: 100%;
+
+                .hr-onboarding-decision-detail {
+                    height: 100%;
+                    overflow-y: auto;
+
+                    .header {
+
+
+                        &.disable {
+                            pointer-events: none;
+                            opacity: 0.6;
+                            filter: grayscale(0.1);
+                        }
+
+                        &.header-1 {
+                            justify-content: space-between;
+                            overflow-x: auto;
+                            padding-right: 10px;
+
+                            .btnWrapper {
+                                display: flex;
+                                gap: 10px;
+                            }
+                        }
+                    }
+
+                    .content-wrapper {
+                        height: calc(100vh - 51px - 30px - 54px);
+                        overflow-y: auto;
+
+                        .Topic {
+                            display: block;
+                            color: var(--color-text-content, #26282e);
+                            font-size: 16px;
+                            font-weight: 700;
+                            width: 100%;
+                            padding: 12px 0 15px 0;
+                        }
+
+                        .loading-spiner {
+                            // position: absolute;
+                            // width: calc(100% - 30px);
+                            // height: calc(100% - 30px);
+                            // .loading{
+                            //     background-color: unset;
+                            // }
+                        }
+
+                        .flex {
+                            display: flex;
+                            width: 100%;
+                            // overflow-x: auto;
+                        }
+
+                        .decision-info {
+                            padding: 0 10px 0 10px;
+
+                            .input-container {
+                                position: relative;
+                                display: flex;
+                                background-color: white;
+                                padding: 15px;
+                                // gap: 40px;
+                                height: 615px;
+
+                                .flex {
+                                    gap: 40px;
+                                }
+
+                                .box-area {
+                                    width: 100%;
+                                    margin-bottom: 20px;
+
+                                    .label {
+                                        color: #959db3;
+                                        font-weight: bold;
+                                        margin-bottom: 5px;
+
+                                        .important {
+                                            color: red;
+                                        }
+
+                                    }
+
+
+
+                                    .k-textbox {
+                                        height: 33px;
+                                        width: 245px !important;
+                                    }
+
+                                    .datepicker {
+                                        width: 245px !important;
+                                        height: 33px !important;
+                                        color: black;
+
+                                        .datepicker-wrapper {
+                                            width: 100% !important;
+                                            text-align: left;
+
+                                            .k-datepicker {
+                                                width: 100%;
+
+                                                .k-i-calendar {
+
+                                                    &::before {
+                                                        color: #5c6873 !important;
+
+                                                    }
+
+                                                    color: #5c6873 !important;
+                                                }
+                                            }
+
+                                            .k-input-inner {
+                                                text-align: left;
+                                            }
+                                        }
+                                    }
+
+                                    .box-text {
+                                        color: black;
+                                        padding-left: 5px;
+                                    }
+                                }
+
+                                .right-block {
+                                    width: 100%;
+
+                                    .k-textbox {
+                                        width: 100% !important;
+                                    }
+
+                                    .k-editor {
+                                        height: 482px !important;
+                                    }
+                                }
+                            }
+
+
+                        }
+
+                        .decision-overall {
+                            padding: 0 10px 0 10px;
+
+                            .overall-container {
+                                position: relative;
+                                display: flex;
+                                // gap: 20px;
+                                padding: 15px;
+                                min-height: 86px;
+                                background-color: white;
+                                overflow-x: auto;
+
+                                .flex {
+                                    gap: 20px;
+                                }
+                            }
+
+
+                            .box {
+
+                                &.box1 {
+                                    width: 15%;
+                                    max-width: 230px;
+                                    min-width: 230px;
+                                }
+
+                                &.box2 {
+                                    min-width: 490px;
+                                    width: 30%;
+                                }
+
+                                &.box3 {
+                                    min-width: 590px;
+                                    width: 55%;
+                                }
+
+                                &.fill-box {
+                                    width: 85%;
+                                }
+
+                                &.min-width1 {
+                                    min-width: 190px;
+                                }
+
+                                &.min-width2 {
+                                    min-width: 480px
+                                }
+
+                                .label {
+                                    color: #959db3;
+                                    font-weight: bold;
+                                    margin-bottom: 5px;
+                                }
+
+
+
+                            }
+
+                            .grid {
+                                display: flex;
+                                flex-wrap: wrap;
+                                column-gap: 70px;
+
+
+                                .span-block {
+                                    display: flex;
+                                    justify-content: space-between;
+                                    white-space: nowrap;
+                                    width: 180px;
+
+
+                                    .span-text {
+                                        width: 150px;
+                                        white-space: nowrap;
+                                        text-overflow: ellipsis;
+                                        overflow: hidden;
+                                    }
+
+
+                                }
+
+                            }
+                        }
+
+                        .decision-profile-list {
+                            padding: 0 10px 0 10px;
+
+                            .filter-container {
+                                border-bottom: unset;
+                                display: flex;
+                                justify-content: space-between;
+                                overflow-y: auto;
+
+
+                                .title-search-container {
+                                    display: flex;
+
+                                    .Topic {
+                                        width: fit-content;
+                                        white-space: nowrap;
+
+                                        .important {
+                                            font-weight: 700;
+                                            color: red;
+
+                                        }
+                                    }
+
+                                    app-search-filter-group {
+                                        .nav-filter {
+                                            .filter-btn-group {
+
+                                                span.k-i-filter,
+                                                .clear-filter-btn,
+                                                .label.ng-star-inserted,
+                                                .label {
+                                                    display: none !important;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                                .button-container {
+                                    display: flex;
+                                    gap: 10px;
+                                }
+
+                                .export-excel {
+                                    border-radius: 3px;
+                                    box-shadow: 1px 3px 9px 1px rgba(143, 155, 166, 0.2) !important;
+
+                                    &:hover {
+                                        filter: brightness(98%);
+                                    }
+                                }
+                            }
+
+                            .grid-wrapper {
+                                margin-top: 0px;
+
+                                .grid-custom {
+
+                                    &.pagerDisable {
+                                        .k-pager {
+                                            pointer-events: none;
+                                            opacity: 0.6;
+                                            filter: grayscale(0.1);
+                                        }
+                                    }
+
+                                    th {
+                                        color: #5A6276 !important;
+
+                                        &:first-child {
+                                            padding-left: 30px;
+                                        }
+                                    }
+
+                                    td {
+                                        font-size: 13px !important;
+                                    }
+
+                                    .col-name {
+                                        display: flex;
+                                        gap: 10px;
+
+                                        img {
+                                            max-height: 49px;
+                                            border-radius: 50px;
+                                            max-width: 49px;
+                                            width: 49px;
+                                            height: 49px;
+                                        }
+
+                                        .name-ctn {
+                                            display: flex;
+                                            flex-direction: column;
+                                            justify-content: center;
+                                            overflow: hidden;
+
+                                            .name {
+                                                color: #5A6276;
+                                                font-weight: 700;
+                                                text-overflow: ellipsis;
+                                                overflow: hidden;
+                                            }
+                                        }
+                                    }
+
+                                    .col-company {
+
+                                        .position {
+                                            font-weight: 700;
+                                        }
+
+                                        .location {
+                                            font-style: italic;
+                                        }
+                                    }
+
+                                    .col-gender {
+                                        text-align: center;
+                                    }
+
+                                    .col-birth {
+                                        text-align: center;
+                                    }
+
+                                    .col-typestaff {
+                                        text-align: center;
+                                    }
+
+                                    .col-joindate {
+                                        text-align: center;
+                                        // font-weight: 700;
+                                    }
+
+                                    .center-col {
+                                        text-align: center;
+
+                                        .k-link {
+                                            justify-content: center;
+                                            padding-right: 18px;
+                                        }
+                                    }
+
+                                    .fullname-col {
+                                        min-width: 150px;
+                                        max-width: 320px;
+                                    }
+
+                                    .position-col {
+                                        min-width: 150px;
+                                        max-width: 200px;
+                                    }
+
+                                    .contact-col {
+                                        min-width: 150px;
+                                        max-width: 200px;
+                                    }
+
+                                    .overflow-col {
+                                        overflow: hidden;
+                                        text-overflow: ellipsis;
+                                    }
+
+                                    .reason-col {
+                                        min-width: 170px;
+                                        max-width: 210px;
+                                        white-space: none !important;
+
+                                        .col-reason {
+                                            white-space: normal !important;
+                                            overflow: hidden;
+                                            text-overflow: ellipsis;
+                                            display: -webkit-box;
+                                            -webkit-line-clamp: 2;
+                                            -webkit-box-orient: vertical;
+                                        }
+                                    }
+
+                                    .flex-end-col {
+                                        display: flex;
+                                        justify-content: flex-end;
+
+                                        .k-link {
+                                            padding-right: 18px;
+                                        }
+                                    }
+
+                                    .status-col {
+                                        min-width: 200px;
+                                        max-width: 250px;
+                                        text-align: right !important;
+                                        padding-right: 18px;
+
+                                    }
+                                }
+
+
+                                .k-i-file-word {
+                                    color: rgba(39, 84, 155, 1) !important;
+                                }
+                            }
+
+
+                        }
+
+                        .span-important {
+                            padding: 10px;
+                            color: red;
+                        }
+                    }
+
+                }
+
+                .confirm-dialog {
+                    .k-window-content {
+                        text-align: center;
+                    }
+                }
+
+                .popup-confirm-custom {
+                    .dialog-header {
+                        color: #FD7676;
+                        font-size: 15px !important;
+                        font-weight: 600;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        text-transform: uppercase;
+                        padding: 15px 10px;
+                        border-bottom: 1px solid #DBDEE7;
+                        border-top-left-radius: 3px;
+                        border-top-right-radius: 3px;
+                        gap: 10px;
+
+                        .k-icon {
+                            font-size: 22px;
+                        }
+
+                        div {
+                            padding-top: 3px;
+                        }
+                    }
+
+                    .dialog-content {
+                        height: calc(100% - 106px);
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        text-align: center;
+                        padding: 20px 10px;
+                        color: #26282E;
+                        border-radius: 3px;
+
+                        .text-confirm {
+                            max-width: 350px;
+                            display: flex;
+                            flex-direction: column;
+                            align-self: center;
+                            gap: 5px;
+
+                            .policy-name-text {
+                                font-weight: 600;
+                                color: #36C8CF;
+                                overflow: hidden;
+                                text-wrap: nowrap;
+                                text-overflow: ellipsis;
+                            }
+                        }
+
+                        .warning {
+                            display: flex;
+                            gap: 3px;
+                            justify-content: center;
+                        }
+                    }
+
+                    .dialog-footer {
+                        height: 53px;
+                        border-bottom-left-radius: 3px;
+                        border-bottom-right-radius: 3px;
+
+
+                        button {
+                            height: 100%;
+                            width: 50%;
+                            text-transform: uppercase;
+                            font-weight: 600;
+                            color: #959DB3;
+                        }
+
+                        .btn-delete {
+                            background-color: #FD7676;
+                            color: #fff;
+
+                            .k-i-trash {
+                                display: flex;
+                                align-items: center;
+                                font-size: 18px;
+                            }
+                        }
+                    }
+
+                    .k-window {
+                        border-radius: 3px;
+                    }
+
+                    .k-window-content {
+                        padding: 0 !important;
+                    }
+                }
+
+                .dialog-stopped {
+                    .k-window {
+                        min-width: 500px;
+                        width: 500px;
+
+                        .k-window-content {
+                            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+                            border-radius: 3px;
+                            overflow: hidden;
+
+                            .dialog-header-stopped {
+                                height: 50px;
+                                font-size: 20px;
+                                font-weight: 600;
+                                background: rgba(216, 44, 18, 1);
+                                color: white;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            }
+
+                            .dialog-content-stopped {
+                                height: calc(100% - 50px - 45px);
+                                display: flex;
+                                flex-direction: column;
+                                padding: 20px;
+                                gap: 15px;
+                                padding-bottom: 0px;
+
+                                .text-confirm {
+
+                                    .text-stop {
+                                        font-weight: 700;
+                                        color: rgba(235, 39, 58, 1);
+                                    }
+
+                                    .text-fullName {
+                                        font-weight: 700;
+                                        color: rgba(13, 153, 255, 1);
+                                    }
+                                }
+
+                                .box-input {
+                                    display: flex;
+                                    flex-direction: column;
+                                    gap: 10px;
+
+                                    .box-input-reason,
+                                    .box-input-remark,
+                                    .box-input-solution {
+                                        display: flex;
+                                        flex-direction: column;
+                                        gap: 5px;
+
+                                        .header-box-input {
+                                            font-weight: 700;
+                                            color: rgba(90, 98, 118, 1);
+                                        }
+
+                                        kendo-dropdownlist {
+                                            width: 100%;
+                                            box-shadow: none !important;
+
+                                            .k-input-value-text {
+                                                padding-left: 7px;
+                                            }
+                                        }
+
+                                        kendo-textarea {
+                                            width: 100%;
+                                            height: 63px;
+                                            padding: 0 !important;
+                                            box-shadow: none !important;
+
+                                            textarea {
+                                                padding-left: 7px !important;
+                                            }
+                                        }
+
+                                        .important {
+                                            color: red;
+                                        }
+
+                                        .box-checkbox {
+                                            display: flex;
+                                            gap: 10px;
+
+                                            .box-checkbox-return,
+                                            .box-checkbox-quit {
+                                                display: flex;
+                                                align-items: center;
+                                                gap: 7px;
+                                                height: 31px;
+                                                border-radius: 3px;
+                                                padding: 8px;
+                                                border: 1px solid rgb(219, 222, 231);
+                                                font-size: 13px !important;
+
+                                                &:hover {
+                                                    cursor: pointer;
+                                                    border: 1px solid rgba(26, 102, 52, 1);
+
+                                                    input {
+                                                        border: 1px solid rgb(0, 0, 0);
+                                                    }
+                                                }
+
+                                                label {
+                                                    margin-bottom: 0 !important;
+
+                                                    &:hover {
+                                                        cursor: pointer;
+                                                    }
+                                                }
+
+                                                input {
+                                                    cursor: pointer;
+                                                }
+                                            }
+
+                                            .box-checkbox-return:hover input[type="radio"],
+                                            .box-checkbox-quit:hover input[type="radio"] {
+                                                border: 1px solid rgb(0, 0, 0);
+                                            }
+
+                                            .box-checkbox-return.active,
+                                            .box-checkbox-quit.active {
+                                                border: 1px solid rgba(26, 102, 52, 1) !important;
+                                            }
+
+                                            input[type="radio"]:checked {
+                                                accent-color: rgba(26, 102, 52, 1);
+                                            }
+                                        }
+
+                                    }
+                                }
+                            }
+
+                            .dialog-footer {
+                                height: 60px;
+                                display: flex;
+                                gap: 15px;
+                                padding-top: 5px;
+                                padding-right: 20px;
+                                justify-content: flex-end;
+
+                                .btn {
+                                    font-size: 12px;
+                                    font-weight: bold;
+                                    width: 103px;
+                                    height: 31px;
+                                    border-radius: 3px
+                                }
+
+                                .cancel-button {
+                                    color: #D82C12;
+                                }
+
+                                .confirm-button {
+                                    color: white;
+                                    background-color: #D82C12;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .drawer {
+                z-index: 5;
+                height: calc(100vh - 85px);
+                margin-top: 55px;
+
+                .k-drawer-wrapper {
+                    width: 430px !important;
+                    height: 100%;
+                    scrollbar-color: unset !important;
+                }
+
+                .drawer-profile {
+
+                    // TITLE CONTROL
+                    .title {
+                        height: 40px;
+                        border-bottom: 1px solid $gray-300;
+                        color: $dark-green;
+                        font-size: 13px;
+                        font-weight: 700;
+                        padding-left: 15px;
+                        display: flex;
+                        align-items: center;
+                        text-transform: uppercase;
+                        gap: 10px;
+                        box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+                    }
+
+                    .profile-container {
+                        width: calc(100% - 10px);
+                        height: calc(100vh - 170px);
+                        padding: 10px 15px 10px 10px;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 15px;
+                        overflow-y: auto;
+
+                        .important {
+                            margin-left: 5px;
+                            color: $bad-red;
+                        }
+
+                        .block {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 15px;
+
+                            .box-area {
+                                display: flex;
+                                flex-direction: column;
+                                gap: 5px;
+
+                                .k-input {
+                                    width: 100%;
+                                }
+
+                                .k-picker {
+                                    width: 100%;
+                                    cursor: pointer;
+                                }
+
+                                .label {
+                                    font-weight: bold;
+
+                                    .important {
+                                        &.unbold {
+                                            font-weight: normal;
+                                        }
+                                    }
+                                }
+
+                                .text-area {
+                                    .k-textarea {
+                                        height: 70px;
+                                    }
+                                }
+
+                                .text {
+                                    min-height: 20px;
+                                    max-width: 100%;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+                                }
+
+                                .classRemoveDropdowntree {
+
+                                    .CustomPopupTreeAtRoot {
+                                        .k-treeview {
+                                            .k-treeview-group {
+
+                                                .k-treeview-item:has(.k-treeview-top) {
+                                                    .k-treeview-top:has(.k-treeview-leaf) {
+                                                        height: 36px;
+
+                                                        .k-treeview-leaf:has(.k-treeview-leaf-text .disableChoice) {
+                                                            pointer-events: none;
+                                                            cursor: default;
+                                                            filter: contrast(0.1);
+
+                                                            .bold {
+                                                                font-weight: bold;
+                                                            }
+                                                        }
+
+                                                        .k-treeview-leaf {
+                                                            display: flex;
+                                                            height: 100%;
+                                                            align-items: center;
+                                                        }
+                                                    }
+                                                }
+
+                                                .k-treeview-item:has(.k-treeview-mid) {
+                                                    .k-treeview-mid:has(.k-treeview-leaf) {
+                                                        height: 36px;
+
+                                                        .k-treeview-leaf:has(.k-treeview-leaf-text .disableChoice) {
+                                                            display: flex;
+                                                            height: 100%;
+                                                            align-items: center;
+                                                            pointer-events: none;
+                                                            cursor: default;
+                                                            filter: contrast(0.1);
+
+                                                            .bold {
+                                                                font-weight: bold;
+                                                            }
+                                                        }
+
+                                                        .k-treeview-leaf {
+                                                            display: flex;
+                                                            height: 100%;
+                                                            align-items: center;
+                                                        }
+                                                    }
+                                                }
+
+                                                .k-treeview-item:has(.k-treeview-bot) {
+                                                    .k-treeview-bot:has(.k-treeview-leaf) {
+                                                        height: 36px;
+
+                                                        .k-treeview-leaf:has(.k-treeview-leaf-text .disableChoice) {
+                                                            display: flex;
+                                                            height: 100%;
+                                                            align-items: center;
+                                                            pointer-events: none;
+                                                            cursor: default;
+                                                            filter: contrast(0.1);
+
+                                                            .bold {
+                                                                font-weight: bold;
+                                                            }
+                                                        }
+
+                                                        .k-treeview-leaf {
+                                                            display: flex;
+                                                            height: 100%;
+                                                            align-items: center;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .treeItem {
+                                        display: flex;
+                                        flex-direction: column;
+                                        justify-content: center;
+                                        padding-left: 10px;
+
+                                        .item-status {
+                                            font-weight: 700;
+                                            color: #959DB3;
+                                            font-size: 9px;
+                                        }
+                                    }
+
+                                    .k-icon-wrapper-host {
+                                        display: flex;
+                                    }
+                                }
+                            }
+                        }
+
+                        .top-block {
+                            width: 100%;
+                            display: flex;
+
+
+                            .left-block {
+                                display: flex;
+                                flex-direction: column;
+                                gap: 15px;
+                                width: 55%;
+                            }
+
+                            .right-block {
+                                width: 45%;
+
+                                .avatar-block {
+                                    display: flex;
+                                    flex-direction: column;
+                                    align-items: center;
+                                    justify-content: center;
+
+                                    &.disable {
+                                        pointer-events: none;
+                                    }
+
+                                    .avatar {
+                                        margin: 10px 15px 0 0;
+                                        display: flex;
+                                        float: right;
+
+                                        .btn-cancel {
+                                            background-color: rgba($gray-500, 0.4);
+                                            width: 25px;
+                                            height: 25px;
+                                            clip-path: polygon(100% 0, 0 0, 0 100%);
+                                            box-shadow: none;
+                                            border: none;
+                                            position: relative;
+                                            left: 15px;
+
+                                            &:hover {
+                                                border: none;
+                                            }
+
+                                            .k-button-text {
+                                                margin: 0 10px 10px 0;
+                                                color: $worse-red;
+                                            }
+                                        }
+
+                                        .img-avatar {
+                                            border-radius: 50%;
+                                            border: 1px solid rgba($gray-500, 0.4);
+                                        }
+                                    }
+
+                                    .btn-updateAvt {
+                                        font-size: 10px;
+                                        font-weight: 400;
+                                        color: $dark-green;
+                                        border: none;
+                                        box-shadow: none;
+
+                                        &:hover {
+                                            border: none !important;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .bottom-block {
+                            width: 100%;
+                            display: flex;
+                            flex-direction: column;
+                            gap: 15px;
+
+                            .divide-block {
+                                display: flex;
+
+                                .left-block {
+                                    width: 35%;
+                                }
+
+                                .right-block {
+                                    width: 65%;
+                                }
+                            }
+
+                            .fill-block {
+                                display: flex;
+                                flex-direction: column;
+                                gap: 15px;
+
+                            }
+                        }
+                    }
+
+                    .datepicker-wrapper{
+                        width: 100%;
+                        .customDatePicker {
+                            .k-dateinput{
+                                .k-input-inner{
+                                    text-align: left;
+                                }
+                            }
+                        }
+                    }
+
+                    .ProbationPeriodDays{
+                        input {
+                            text-align: left;
+                        }
+                    }
+
+                    .btn-wrapper {
+                        height: 45px;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        padding-left: 10px;
+                        padding-right: 10px;
+                    }
+                }
+            }
+        }
+
+        // DRAWER CONTAINER RIGHT EXPANDED
+        #drawerContainerRight.k-drawer-expanded {
+
+            // pointer-events: none;
+            .k-drawer {
+                pointer-events: all;
+                width: 420px;
+            }
+
+            .k-overlay {
+                position: absolute;
+                z-index: 1;
+            }
+        }
+    }
+}

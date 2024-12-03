@@ -1,0 +1,103 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+  .app-drawer-container{
+    .config003-enterprise-product-detail{
+      height: calc(93vh - #{$footer-height});
+      padding-bottom:15px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      .hearder{
+        padding-left: 15px;
+        padding-right: 20px;
+      }
+      .header-1{
+        display: flex;
+        justify-content: space-between;
+        .nav-crud {
+          margin-right: 10px;
+          .onAddBtn{
+            height: 32px;
+            margin-top: auto;
+            background-color: $dark-green;
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+          }
+        }
+      }
+      .body{
+        padding-left: 15px;
+        padding-right: 20px;
+        overflow-y: scroll;
+        margin-top: 10px;
+        .impose{
+          font-weight: 700;
+          color: $bad-red;
+          padding-bottom: 10px;
+      }
+      }
+    }
+    .k-drawer-container {
+      display: block;
+      font-family: "Mulish", sans-serif;
+      font-size: 13px;
+      padding: 0;
+      .wrapper-drawer-right {
+        .header-drawer-right {
+          color: $dark-green;
+          font-weight: 700;
+          border-bottom: 1px solid $black;
+          padding-bottom: 5px;
+        }
+        .content-drawer-right {
+          z-index: 1;
+          padding: 10px;
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 40px;
+          .info-product{
+              padding-bottom: 10px;
+              .impose{
+                font-weight: 700;
+                color: $bad-red;
+                padding-bottom: 10px;
+            }
+             .info{
+              .label{
+                  font-weight: 700;
+                  color: #959DB3;
+                  padding-bottom: 5px;
+              }
+              .item{
+                  padding: 5px 0;
+                  .img-product{
+                    display: flex;
+                    justify-content: space-between;
+                  }
+                  .k-textbox{
+                      width: 100%;
+                  }
+              }
+             }
+          }
+          .btn-ev{
+            position: fixed;
+            bottom: 40px;
+            box-shadow: #959DB3;
+            button{
+              margin-right: 10px;
+            }
+            .btn-close{
+              background-color: $white;
+              color: $dark-green;
+            }
+  
+          }
+        }
+      }
+    }
+  }
+}

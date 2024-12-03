@@ -1,0 +1,180 @@
+<!-- header 1 -->
+<div class="header-1 header">
+  <app-p-kendo-breadcrumb (loadData)="reloadData()"></app-p-kendo-breadcrumb>
+  <button *ngIf="dataSuppliers.Code !== 0" [disabled]="isLock" kendoButton icon="trash"
+    class="k-button btn-hachi hachi-warning onDeleteBtn" (click)="toggleDialog()">XÓA NHÀ CUNG
+    CẤP</button>
+</div>
+<!-- header 1 -->
+
+<!-- main -->
+<div class="main">
+  <!-- main left -->
+  <div class="left">
+    <div class="side-left">
+      <app-pur-menu-supplier-info [data]="dataSuppliers" [Link]="'pur005-supplier-detail'"></app-pur-menu-supplier-info>
+    </div>
+  </div>
+  <!-- main left -->
+
+  <!-- main right -->
+  <div class="right">
+    <div class="block-supplierInfo">
+
+      <kendo-label class="title-block">1. Thông tin nhà cung cấp</kendo-label>
+      <div class="content-block">
+        <div class="column-1">
+          <kendo-label class="title-field" [text]="'Mã nhà cung cấp'">
+            <app-p-textbox propName="PartnerID" [(ngModel)]="dataSuppliers.PartnerID"
+              (blur)="onBlurTextBox(['PartnerID'], 'mã nhà cung cấp')" [disabled]="isLock"></app-p-textbox>
+          </kendo-label>
+
+          <kendo-label class="title-field" [text]="'Tên viết tắt'">
+            <app-p-textbox propName="ShortName" [disabled]="true" [(ngModel)]="dataSuppliers.ShortName"></app-p-textbox>
+          </kendo-label>
+
+          <kendo-label class="title-field" [text]="'Thứ tự hiển thị'">
+            <app-p-numeric-textbox [spinners]="false" propName="OrderBy" [(ngModel)]="dataSuppliers.OrderBy"
+              (blur)="onBlurTextBox(['OrderBy'], 'thứ tự hiển thị')" (keydown.Enter)="$event.target.blur()"
+              [disabled]="isLock"></app-p-numeric-textbox>
+          </kendo-label>
+
+          <kendo-label class="title-field" [text]="'Tình trạng'">
+            <p-kendo-dropdownlist [data]="listStatus" [valuePrimitive]="true" [hasValueNull]="false"
+              [textField]="'StatusName'" [valueField]="'Code'" [(ngModel)]="dataSuppliers.StatusID"
+              (valueChange)="onChangeDropdown(['IsClosed'],$event,'tình trạng')"
+              [disabled]="isLock"></p-kendo-dropdownlist>
+          </kendo-label>
+
+          <kendo-label class="title-field" [text]="'Lý do ngừng hợp tác'" *ngIf="selectedStatus === true">
+            <p-kendo-dropdownlist [data]="listReason" [valuePrimitive]="true" [defaultItem]="''"
+              [textField]="'ReasonName'" [valueField]="'OrderBy'" [filterable]="true"
+              (valueChange)="onChangeDropdown(['ReasonID'],$event,'lý do ngừng hợp tác')" [disabled]="isLock"
+              [(ngModel)]="selectedReason">
+            </p-kendo-dropdownlist>
+          </kendo-label>
+        </div>
+
+
+        <div class=" column-2">
+          <kendo-label class="title-field firstItem" [text]="'Tên tiếng Việt'">
+            <app-p-textbox propName="VNName" [disabled]="true" [(ngModel)]="dataSuppliers.VNName"></app-p-textbox>
+          </kendo-label>
+
+          <kendo-label class="title-field" [text]="'Tên tiếng Anh'">
+            <app-p-textbox propName="ENName" [disabled]="true" [(ngModel)]="dataSuppliers.ENName"></app-p-textbox>
+          </kendo-label>
+
+          <kendo-label class="title-field" [text]="'Tên tiếng Nhật'">
+            <app-p-textbox propName="JPName" [disabled]="true" [(ngModel)]="dataSuppliers.JPName"></app-p-textbox>
+          </kendo-label>
+
+          <kendo-label class="title-field" [text]="'Trực thuộc công ty'">
+            <!-- <p-kendo-dropdownlist [disabled]="true" ></p-kendo-dropdownlist> -->
+            <kendo-dropdownlist class="parentDropdown" [(ngModel)]="selectedParentName"
+              [disabled]="true"></kendo-dropdownlist>
+          </kendo-label>
+
+          <kendo-label class="title-field" [text]="'Lý do chi tiết ngừng hợp tác'" *ngIf="selectedStatus === true">
+            <app-p-textbox propName="ReasonDetail" [(ngModel)]="dataSuppliers.ReasonDetail"
+              (blur)="onBlurTextBox(['ReasonDetail'], 'lý do chi tiết ngừng hợp tác')"
+              (keydown.Enter)="$event.target.blur()" [disabled]="isLock"></app-p-textbox>
+          </kendo-label>
+        </div>
+      </div>
+    </div>
+
+    <div class="block-contactInfo">
+      <kendo-label class="title-block">2. Thông tin liên hệ</kendo-label>
+      <div class="content-block">
+
+        <div class="column-1">
+          <kendo-label class="title-field" [text]="'Quốc gia'">
+            <!-- <p-kendo-dropdownlist [data]="listNationality" [textField]="'CountryName'" [valueField]="'Country'"
+              [(ngModel)]="selectedNationality" [disabled]="true" [defaultItem]="''"></p-kendo-dropdownlist> -->
+            <kendo-dropdownlist [(ngModel)]="selectedNationality" [disabled]="true"></kendo-dropdownlist>
+          </kendo-label>
+
+          <kendo-label class="title-field" [text]="'Tỉnh thành'">
+            <!-- <p-kendo-dropdownlist [data]="listProvince" [textField]="'ProvinceName'" [valueField]="'Province'"
+              [disabled]="true" [valuePrimitive]="true" [(ngModel)]="selectedProvince"
+              [defaultItem]="''"></p-kendo-dropdownlist> -->
+            <kendo-dropdownlist [(ngModel)]="selectedProvince" [disabled]="true"></kendo-dropdownlist>
+          </kendo-label>
+
+          <kendo-label class="title-field" [text]="'Quận/huyện'">
+            <!-- <p-kendo-dropdownlist [data]="listDistrict" [textField]="'DistrictName'" [valueField]="'District'"
+              [disabled]="true" [valuePrimitive]="true" [(ngModel)]="selectedDistrict"
+              [defaultItem]="''"></p-kendo-dropdownlist> -->
+            <kendo-dropdownlist [(ngModel)]="selectedDistrict" [disabled]="true"></kendo-dropdownlist>
+          </kendo-label>
+
+          <kendo-label class="title-field" [text]="'Phường/xã'">
+            <!-- <p-kendo-dropdownlist [data]="listWard" [textField]="'WardName'" [valueField]="'Ward'" [disabled]="true"
+              [valuePrimitive]="true" [(ngModel)]="selectedWard" [defaultItem]="''"></p-kendo-dropdownlist> -->
+            <kendo-dropdownlist [(ngModel)]="selectedWard" [disabled]="true"></kendo-dropdownlist>
+          </kendo-label>
+
+        </div>
+
+
+        <div class="column-2">
+          <kendo-label class="title-field" [text]="'Địa chỉ'">
+            <app-p-textbox propName="Partner" [disabled]="true" [(ngModel)]="dataSuppliers.Address"></app-p-textbox>
+          </kendo-label>
+
+          <div class="groupNO-field">
+            <kendo-label class="title-field phoneNo" [text]="'Số điện thoại'">
+              <app-p-textbox propName="Partner" [disabled]="true" [(ngModel)]="dataSuppliers.Tel"></app-p-textbox>
+            </kendo-label>
+
+            <kendo-label class="title-field faxNo" [text]="'Số fax'">
+              <app-p-textbox propName="Partner" [disabled]="true" [(ngModel)]="dataSuppliers.Fax"></app-p-textbox>
+            </kendo-label>
+          </div>
+
+          <kendo-label class="title-field" [text]="'Website'">
+            <app-p-textbox propName="Partner" [disabled]="true" [(ngModel)]="dataSuppliers.Website"></app-p-textbox>
+          </kendo-label>
+        </div>
+
+
+      </div>
+    </div>
+
+    <div class="block-taxInfo">
+      <kendo-label class="title-block">3. Thông tin thuế</kendo-label>
+      <div class="content-block">
+        <div class="column-1">
+          <kendo-label class="title-field" [text]="'Mã số thuế'">
+            <app-p-textbox propName="Partner" [disabled]="true" [(ngModel)]="dataSuppliers.InvNo"></app-p-textbox>
+          </kendo-label>
+        </div>
+
+        <div class="column-2">
+          <kendo-label class="title-field" [text]="'Tên xuất hóa đơn'">
+            <app-p-textbox propName="Partner" [disabled]="true" [(ngModel)]="dataSuppliers.InvName"></app-p-textbox>
+          </kendo-label>
+
+          <kendo-label class="title-field" [text]="'Địa chỉ xuất hóa đơn'">
+            <app-p-textbox propName="Partner" [disabled]="true" [(ngModel)]="dataSuppliers.InvAddress"></app-p-textbox>
+          </kendo-label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- main right -->
+  <!-- START DIALOG DELETE -->
+  <app-p-kendo-dialog *ngIf="openConfirmDeleteDialog" [title]="'XÓA NHÀ CUNG CẤP'" (close)="toggleDialog()"
+    (handleButton)="onDeleteDialog('yes')" [iconButton]="'delete'" [dialogType]="1" [iconTitle]="'k-icon k-i-warning'">
+    <div class="text-center">
+      Bạn có chắc chắn muốn xóa nhà cung cấp <br>
+      <strong>{{dataSuppliers.Partner}}</strong>
+      <p class="content-sub">
+        bị xóa sẽ <span style="color: red">KHÔNG</span> thể khôi phục lại.
+      </p>
+    </div>
+  </app-p-kendo-dialog>
+  <!-- END DIALOG DELETE -->
+</div>
+<!-- main -->

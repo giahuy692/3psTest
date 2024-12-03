@@ -1,0 +1,407 @@
+<div class="evaluation-supervision-wrapper">
+  <!-- START BREADCRUMB AND BUTTON -->
+  <div class="header header1">
+    <!-- BREADCRUMB -->
+      <app-p-kendo-breadcrumb (loadData)="GetAllData()"></app-p-kendo-breadcrumb>
+
+      <div class="btn-action-status" *ngIf="quizSession?.SessionStatusID <= 3">
+        <button kendoButton class="btn-hachi done hachi-primary hachi-secondary"
+        *ngIf="quizSession?.SessionStatusID == 2 && (userQuizRole?.TypeData == 1 || isMaster)"
+        (click)="onUpdateButton(quizSession,['SessionStatusID'])"
+         >
+          Hoàn tất <br> đợt đánh giá
+        </button>
+
+        <button kendoButton class="btn-hachi hachi-primary hachi-secondary"
+          *ngIf="quizSession?.SessionStatusID == 1 && (userQuizRole?.TypeData == 1 || isMaster) "
+          (click)="onUpdateButton(quizSession,'SessionStatusID')"
+          >
+          Kết thúc <br> đợt đánh giá
+        </button>
+
+        <button kendoButton class="btn-hachi hachi-primary hachi-secondary score"
+         *ngIf="quizSession?.SessionStatusID == 3 && (userQuizRole?.TypeData == 1 || isMaster)"
+         (click)="calculateMarkQuiz()"
+         >
+          Tính điểm <br> đợt đánh giá
+        </button>
+    </div>
+
+  </div>
+
+  
+
+  <app-hr-quiz-session-info [step]="2"></app-hr-quiz-session-info>
+  <div id="supervisorInfo" class="block-layout">
+    <!-- TITTLE -->
+    <div class="supervisor-header-block">
+      <h1 class="block-title">
+        {{
+          isStaffListOpened
+            ? "GIÁM SÁT NHÂN SỰ THAM GIA ĐỢT ĐÁNH GIÁ"
+            : "GIÁM SÁT ĐƠN VỊ THAM GIA ĐỢT ĐÁNH GIÁ"
+        }}
+      </h1>
+      <div class="header header2">
+        <app-search-filter-group
+        *ngIf="isStaffListOpened"
+        [placeholder]="'Tìm theo mã, họ và tên nhân viên, chức danh'"
+        [clearButton]="true"
+        (valueChange)="Search($event)" (onReset)="resetFilter()"
+        [loading]="loading"
+        [disabled]="quizSession?.SessionStatusID >= 3"
+        ></app-search-filter-group>
+
+        <app-search-filter-group
+        *ngIf="!isStaffListOpened"
+        [placeholder]="'Tìm theo đơn vị công tác và điểm làm việc'"
+        (valueChange)="Search($event)" (onReset)="resetFilter()"
+        [clearButton]="true"
+        [disabled]="quizSession?.SessionStatusID >= 3"
+        [loading]="loading"
+        ></app-search-filter-group>
+    </div>
+
+      <div class="view-transform-btn-group">
+        <span
+          [style.color]="isStaffListOpened ? '#1A6634' : '#959DB3'"
+          (click)="onChangeViewGrid(true)"
+          class="k-icon k-i-grid-layout pointer-style"
+          [title]="'GIÁM SÁT NHÂN SỰ THAM GIA ĐỢT ĐÁNH GIÁ'"
+        ></span>
+        <span
+          *ngIf="isStaffListOpened"
+          (click)="onChangeViewGrid(false)"
+          class="view-change-icon"
+          kendoButton
+          imageUrl="assets/img/icon/icon_questionGroupPink.svg"
+          [title]="'GIÁM SÁT ĐƠN VỊ THAM GIA ĐỢT ĐÁNH GIÁ'"
+        ></span>
+        <span
+          *ngIf="!isStaffListOpened"
+          class="view-change-icon"
+          kendoButton
+          imageUrl="assets/img/icon/icon_questionGroupGreen.svg"
+          [title]="'GIÁM SÁT ĐƠN VỊ THAM GIA ĐỢT ĐÁNH GIÁ'"
+        ></span>
+      </div>
+    </div>
+
+    <div class="grid-wrapper" *ngIf="isStaffListOpened">
+      <app-p-kendo-grid
+        class="monitor-grid scrollable"
+        [data]="gridViewStaff | async"
+        [scrollable]="'none'"
+        [loading]="loading"
+        [pageable]="true"
+        [pageSizes]="pageSizes"
+        [pageSize]="pageSize"
+        [hasMoreAction]="hasMenuDropdown"
+        [skip]="gridStateStaff.skip"
+        [take]="gridStateStaff.take"
+        [onPageChangeCallback]="onPageStaffChangeCallback"
+        [allowedMoreActionDropdown]="allowActionDropdown"
+        [onActionDropdownClickCallback]="onActionDropdownClickCallback"
+        [getActionDropdownCallback]="getActionDropdownCallback"
+       
+      >
+        <kendo-grid-column
+          field="ProductName"
+          title="Họ và tên"
+          class="fullname-col"
+          headerClass="column-header non-center-text"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="fullname-info-wrapper">
+              <div class="staff-img">
+                <img width="50" height="50" src="{{dataItem.ImageThumb == null ? 'assets/img/icon/icon-nonImageThumb.svg' : dataItem.ImageThumb}}">
+              </div>
+              <div class="staff-info">
+                <p class="fullname-text">
+                  {{ dataItem.StaffName != null ? dataItem.StaffName : "" }}
+                </p>
+                <div class="staff-position">
+                  <p class="generic-text staff-id">
+                    {{ dataItem.StaffCode != null ? dataItem.StaffCode : "" }}
+                  </p>
+                  <p class="generic-text">
+                    {{
+                      dataItem.PositionName != null ? dataItem.PositionName : ""
+                    }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="Department"
+          title="Đơn vị công tác"
+          class="info-col"
+          headerClass="column-header non-center-text"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="staff-info">
+              <p class="generic-text">
+                {{
+                  dataItem.DepartmentName != null ? dataItem.DepartmentName : ""
+                }}
+              </p>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="Location"
+          title="Điểm làm việc"
+          class="info-col"
+          headerClass="column-header non-center-text"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="staff-info">
+              <p class="generic-text">
+                {{ dataItem.LocationName != null ? dataItem.LocationName : "" }}
+              </p>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="GenderName"
+          title="Giới tính"
+          class="info-col"
+          headerClass="column-header "
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="staff-info">
+              <p class="generic-text text-center">
+                {{ dataItem.GenderName ? dataItem.GenderName : "" }}
+              </p>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="Department"
+          title="Năm sinh"
+          class="info-col"
+          headerClass="column-header"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="staff-info">
+              <p class="generic-text text-center">
+                {{ dataItem.Birthday | date : "dd/MM/yyyy" }}
+              </p>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="JoinDate"
+          title="Ngày vào làm"
+          class="info-col"
+          headerClass="column-header"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="staff-info">
+              <p class="generic-text text-center">
+                {{ dataItem.JoinDate | date : "dd/MM/yyyy" }}
+              </p>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="JoinDate"
+          title="Loại nhân viên"
+          class="info-col"
+          headerClass="column-header"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="staff-info">
+              <p class="generic-text text-center">
+                {{ dataItem.TypeDataName ? dataItem.TypeDataName : "" }}
+              </p>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="JoinDate"
+          title="Tình trạng làm bài"
+          class="info-col"
+          headerClass="column-header "
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="staff-info generic-text text-center">
+              <p
+                [ngClass]="{
+                  'finish-color': dataItem.StatusID === 2,
+                  'doing-color': dataItem.StatusID === 1,
+                  'stop-color': dataItem.StatusID === 3,
+                  'notyet-color': dataItem === null
+                }"
+              >
+              {{dataItem.StatusName || 'Chưa làm bài'}}
+              </p>
+              <p *ngIf="dataItem.RemainDuration > 0 && dataItem.StatusID == 1" class="count-down">
+                {{ dataItem.RemainDuration | convertMinuteToString }}
+              </p>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        ></app-p-kendo-grid
+      >
+    </div>
+
+    <div class="grid-wrapper" *ngIf="!isStaffListOpened">
+      <app-p-kendo-grid
+        class="monitor-grid scrollable department-grid"
+        [data]="gridListQuizDepartment | async"
+        [scrollable]="'none'"
+        [loading]="loading"
+        [pageable]="true"
+        [pageSizes]="pageSizes"
+        [pageSize]="pageSize"
+        [hasMoreAction]="false"
+        [skip]="gridStateStaff.skip"
+        [take]="gridStateStaff.take"
+        [onPageChangeCallback]="onPageStaffChangeCallback"
+      >
+        <kendo-grid-column
+          field="Department"
+          title="Đơn vị công tác"
+          class="info-col"
+          headerClass="column-header non-center-text header-title-nonpadding-left"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="staff-info">
+              <p class="generic-text">
+                {{ dataItem.DepartmentName ? dataItem.DepartmentName : "" }}
+              </p>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="Location"
+          title="Điểm làm việc"
+          class="info-col"
+          headerClass="column-header non-center-text"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="staff-info">
+              <p class="generic-text">
+                {{ dataItem.LocationName ? dataItem.LocationName : "" }}
+              </p>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="GenderName"
+          title="Số nhân sự tham gia"
+          class="info-col"
+          headerClass="column-header"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="staff-info">
+              <p class="generic-text text-center attend-color">
+                {{ dataItem.NoOfStaff }}
+              </p>
+              <p class="generic-text text-center attend-color percentag-text">
+                {{ dataItem.PercentOfStaff }}%
+              </p>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="Department"
+          title="Số nhân sự hoàn tất"
+          class="info-col"
+          headerClass="column-header"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="staff-info display-flex">
+              <p class="generic-text text-center staff-done">
+                {{ dataItem.NoOfDone }}
+              </p>
+              <p class="separate-line staff-done">|</p>
+              <p class="generic-text text-center staff-done percentag-text">
+                {{ dataItem.PercentOfDone + "%" }}
+              </p>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="JoinDate"
+          title="Số nhân sự đang làm"
+          class="info-col"
+          headerClass="column-header"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="staff-info display-flex">
+              <p class="generic-text text-center staff-doing">
+                {{ dataItem.NoOfDoing }}
+              </p>
+              <p class="separate-line staff-doing">|</p>
+              <p class="generic-text text-center staff-doing percentag-text">
+                {{ dataItem.PercentOfDoing + "%" }}
+              </p>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="JoinDate"
+          title="Số nhân sự chưa làm"
+          class="info-col"
+          headerClass="column-header"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="staff-info display-flex">
+              <p class="generic-text text-center staff-notyet">
+                {{ dataItem.NoOfNew }}
+              </p>
+              <p class="separate-line staff-notyet">|</p>
+              <p class="generic-text text-center staff-notyet percentag-text">
+                {{ dataItem.PercentOfNew + "%" }}
+              </p>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        ></app-p-kendo-grid
+      >
+    </div>
+  </div>
+
+  <app-p-kendo-dialog
+    title="DỪNG BÀI ĐÁNH GIÁ"
+    *ngIf="isStopQuizDialogOpened"
+    [iconTitle]="'k-icon k-i-warning'"
+    (close)="closeDialog()"
+    [dialogType]="dialogWarning"
+    (handleButton)="handleSubmitDialogBtn('stop')"
+  >
+    Bạn có chắc chắn muốn  <b>Dừng bài đánh giá</b> của nhân sự
+    <b class="name">{{ selectedStaff?.StaffName ? selectedStaff?.StaffName : null }}</b> không? 
+    <br><br>
+    <kendo-textarea  [(ngModel)]="selectedStaff.StopReason" placeholder="LÍ DO DỪNG LÀM BÀI"></kendo-textarea>
+    <!-- <app-p-textbox [propName]="'StopedTime'" [(ngModel)]="selectedStaff.StopedTime"></app-p-textbox> -->
+  </app-p-kendo-dialog>
+
+  <app-p-kendo-dialog
+    title="XÓA VÀ TẠO MỚI ĐỀ"
+    *ngIf="isDeleteAndCreateQuizDialogOpened"
+    [iconTitle]="'k-icon k-i-warning'"
+    (close)="closeDialog()"
+    [dialogType]="dialogWarning"
+    (handleButton)="handleSubmitDialogBtn('delete')"
+  >
+    Bạn có chắc chắn muốn <b>Xóa và tạo mới đề</b> của nhân sự
+    <b class="name">{{ selectedStaff?.StaffName ? selectedStaff?.StaffName : null }}</b> không?
+  </app-p-kendo-dialog>
+
+  <app-p-kendo-dialog
+    title="KẾT THÚC BÀI THI"
+    *ngIf="isEndQuizDialogOpened"
+    [iconTitle]="'k-icon k-i-warning'"
+    (close)="closeDialog()"
+    [dialogType]="dialogWarning"
+    (handleButton)="handleSubmitDialogBtn('end')"
+  >
+    Bạn có chắc chắn muốn <b>Kết thúc bài thi</b> của nhân sự
+    <b class="name">{{ selectedStaff?.StaffName ? selectedStaff?.StaffName : null }}</b> không?
+  </app-p-kendo-dialog>
+</div>

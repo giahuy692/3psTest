@@ -1,0 +1,236 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+
+    .config007-cargo-status{
+        .header-1{
+            display: flex;
+            justify-content: space-between;
+            padding: 10px !important;
+            overflow: auto;
+            .list-Status{
+                position: relative;
+                display: flex;
+                flex-direction: row;
+                gap: 40px;
+                min-width: 650px;
+                margin-left: 50px;
+                .status{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    .label{
+                        font-weight: 400;
+                        color: #31ADFF;
+                    }
+                    .k-radio {
+                        position: relative;
+                        z-index: 2;
+                        border-color: $dark-green !important;
+                        &:checked, &::before{
+                            color: $dark-green;
+                            background-color: $dark-green;
+                        }
+                    }
+                    .active{
+                        font-weight: 700;
+                        color: $dark-green;
+                    }
+                }
+                .line {
+                    position: absolute;
+                    width: 555px;
+                    height: 1px;
+                    left: 20px;
+                    border-top: 1px dashed black;
+                    top: 33px;
+                    z-index: 1;
+                }
+            }
+        }
+        .header-2{
+            app-search-filter-group{
+                padding-left: 15px;
+            }
+        }
+        .body{
+            padding: 0px 15px;
+            .grid-wrapper{
+                .grid{
+                    .col_productInfo{
+                        .col-name{
+                            display: flex;
+                            gap: 10px;
+                            .product-name{
+                                .label{
+                                    font-weight: 700;
+                                }
+                                .bar-pos{
+                                    display: flex;
+                                    flex-direction: row;
+                                    grid-gap: 5px;
+                                   
+                                }
+                            }
+                        }
+                    }
+                    .col_group{
+                        .level1{
+                            font-weight: 700;
+                        }
+                    }
+                    .col_statusInfo{
+                        .k-cell-inner{
+                            .k-link{
+                                justify-content: right;
+                            }
+                        }
+                    }
+                    .col_infoMiss{
+                        .k-cell-inner{
+                            .k-link{
+                                justify-content: left;
+                            }
+                        }
+                    }
+                    .statusInfo{
+                      .flex{
+                        display: flex;
+                        gap: 15px;
+                        .group-circle{
+                            min-width: 50px;
+                            #reverse{
+                                display: flex;
+                                align-items: center;
+                                flex-direction: column;
+                            }
+                            .reverse1,.reverse3{
+                               margin-top: 28px;
+                               flex-direction: column-reverse !important;
+                               gap: 5px !important;
+                            }
+                        }
+
+                        label{
+                            color: #31ADFF;
+                        }
+                        .circle {
+                            width: 20px;
+                            height: 20px;
+                            border-radius: 50%;
+                            border: 1px solid $dark-green;
+                            // background-image: linear-gradient(to right, #ffffff 20%, $dark-green 20%);
+                            position: relative;
+                          
+                            .line {
+                              position: absolute;
+                           
+                              margin-left: 10px;
+                              width: 55px;
+                              top: 50%;
+                              left: 50%;
+                              border-top: 1px dashed black;
+                            //   transform: translate(-50%, -50%);
+                            }
+                          }
+                      }
+                     
+                    }
+                    
+                }
+            }
+        }
+
+
+
+        .mat-drawer{
+            padding: 0 !important;
+            height: 100%;
+            transition: none !important;
+            .k-drawer-wrapper{
+              scrollbar-color: unset !important;
+            }
+            .formCargoStatus{
+              padding: 0 !important;
+              fieldset{
+                margin-right: 0 !important;
+                legend{
+                  padding: 10px !important ;
+                  position: fixed;
+                  z-index: 1;
+                  background-color: white
+                }
+                .cargoStatus{
+                  padding: 10px 15px;
+                  margin-top: 50px;
+                  margin-bottom: 20px;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 10px;
+                  .form-item{
+                    .label{
+                        font-weight: 700;
+                        padding-bottom: 5px;
+                        .detailInfo,.checkCondition{
+                            font-weight: 400;
+                            font-size: 13px;
+                            margin-left: 10px;
+                            color: #31ADFF;
+                            cursor: pointer;
+                            &:hover{
+                                text-decoration: underline;
+                            }
+                        }
+                        .toggle{
+                            border: 1px solid #31ADFF;
+                            color: #31ADFF;
+                            font-size: 10px;
+                            cursor: pointer;
+                            b{
+                                position: relative;
+                                top: 2px;
+                                right: 2.3px;
+                                font-weight: 700;
+                                font-size: 20px;
+                            }
+                        }
+                        .minus{
+                            padding: 0 2px;
+                        }
+                    }
+                    span{
+                        margin-left: 10px;
+                    }
+                    .child{
+                        display: flex;
+                        gap: 5px;
+                        justify-content: space-between;
+                    }
+                  }
+                  .item1{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                  }
+                }
+                .k-form-buttons{
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);;
+                  width: 100%;
+                  display: flex;
+                  flex-direction: row;
+                  bottom: 30px !important;
+                  background-color: white;
+                  height: 50px;
+                  align-items: center;
+                  .closeBtn{
+                    background-color: $white;
+                    color: $dark-green;
+                    box-shadow: #343A40;
+                  }
+                }
+            }
+        }
+        }
+    }
+
+}

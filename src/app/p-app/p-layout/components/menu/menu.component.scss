@@ -1,0 +1,164 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+    .sidebar app-menu {
+        height: 100%;
+        background: $gray-700;
+        color: $white;
+
+        .k-drawer-container {
+            height: 100%;
+        }
+
+        .k-drawer {
+            background-color: $gray-700;
+            color: $gray-300;
+            height: calc(100vh - 90px);
+
+            @media screen and (max-width: 688px) {
+                top: 56px;
+            }
+
+            .k-drawer-wrapper {
+                height: 100%;
+                width: 100%;
+                scrollbar-color: unset !important;
+                
+                // &::-webkit-scrollbar {
+                //     width: 4px;
+                //     height: 4px;
+                //     background-color: transparent;
+                // }
+                // &::-webkit-scrollbar-thumb {
+                //     background-color: $dark-green;
+                //     border-radius: 30px;
+                // }
+
+                .drawerExpanded{
+                    position: absolute;
+                    bottom: 0;
+                    border-top: 1px solid white;
+                }
+            }
+
+            .k-drawer-items {
+                height: 100%;
+                overflow: hidden;
+                overflow-y: auto;
+
+                &::-webkit-scrollbar {
+                    width: 4px;
+                    height: 4px;
+                    background-color: transparent;
+                }
+                &::-webkit-scrollbar-thumb {
+                    background-color: $dark-green;
+                    border-radius: 30px;
+                }
+
+                .k-drawer-item {
+                    flex-direction: column;
+                    padding: 0;
+                    transition-duration: 2s; //todo
+                    -o-transition-duration: 2s;
+                    -moz-transition-duration: 2s;
+                    -webkit-transition-duration: 2s;
+
+                    // &:last-child {
+                    //     margin-top: auto;
+
+                    //     .drawer-item {
+                    //         position: absolute;
+                    //         bottom: 0;
+                    //         border-top: 1px solid white;
+                    //     }
+                    // }
+                    &.k-state-selected,
+                    &.k-selected {
+                        background-color: $dark-blue;
+                    }
+                    &:hover {
+                        background-color: inherit;
+                        color: inherit;
+                    }
+                    &:focus {
+                        background-color: inherit;
+                    }
+                    .itemMenuUser {
+                        display: none;
+
+                        @media screen and (max-width: 640px) {
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+        .drawer-item {
+            height: 49px;
+            width: 100%;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            letter-spacing: 1px;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            column-gap: 5px;
+            padding: 0 10px;
+            background: #5c6873;
+
+            &:hover,
+            &.active {
+                color: white;
+                // background-color: rgba($dark-blue, 0.5) !important;
+                background-color: $medium-blue-gray !important;
+            }
+            &.active {
+                border-left: 5px solid white;
+                // padding-left: 13px;
+            }
+
+            &.groupMenu:hover,
+            &.groupMenu.active {
+                color: $good-green;
+                // background-color: rgba($dark-blue, 0.7) !important;
+                background-color: $medium-blue-gray !important;
+            }
+            &.groupMenu.active {
+                border-left: 5px solid $good-green;
+            }
+            span {
+                margin: 0;
+
+                &.child {
+                    margin-left: 1rem;
+                }
+            }
+            .k-icon {
+                height: 100%;
+
+                &.k-i-arrow-chevron-down,
+                &.k-i-arrow-chevron-up {
+                    flex-grow: 1;
+                    justify-content: flex-end;
+                }
+            }
+
+            &.groupMenu {
+                text-transform: uppercase;
+                font-size: 14px;
+            }
+            // &:not(.groupMenu) {
+            // padding-left: 10px; //32px;
+            // }
+        }
+
+        .drawer-last-item{
+            //ẩn item cuối
+            // display: none;
+            height: 49px;
+        }
+    }
+}

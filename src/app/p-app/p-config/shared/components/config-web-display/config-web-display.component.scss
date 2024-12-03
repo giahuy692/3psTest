@@ -1,0 +1,73 @@
+@import "../../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    .config-web-display{
+        max-height: 600px;
+        display: flex;
+        flex-direction: column;
+        margin: 10px 0;
+        .section{
+            overflow: auto;
+            .title{
+                display: flex;
+                align-items: center;
+                padding-bottom: 5px;
+                font-size: 16px;
+                font-weight: 700;
+                b{
+                    font-size: 13px;
+                    padding-left: 30px;
+                }
+            }
+            .section-grid {
+                min-width: 1100px;
+                background-color: white;
+                display: flex;
+                // justify-content: space-between;
+                padding: 15px;
+                .grid-item {
+                    padding-bottom: 5px;
+                    .label{
+                        font-weight: 700;
+                        color: #959DB3;
+                        padding-bottom: 10px;
+                    }
+                    .k-dropdownlist,.k-textbox{
+                        width: 100%;
+                    }
+                }
+                .column_1,.column_2,.column_3{
+                    width: 350px;
+                }
+                .iten-link{
+                    span{
+                        font-weight: 700;
+                        color: #31ADFF;
+                    }
+                }
+               .column_1{
+                .item5{
+                   .k-textbox{
+                    margin-bottom: 10px;
+                   }
+                }
+               }
+               .column_2{
+                .customized-textarea{
+                    width: 100%;
+                    height: 150px;
+                }
+               }
+               .column_3{
+                    .customized-input{
+                        width: 100%;
+                        .k-input-inner{
+                            text-align: left;
+                        }
+                    }
+               }
+              
+            }
+        }
+    }
+}

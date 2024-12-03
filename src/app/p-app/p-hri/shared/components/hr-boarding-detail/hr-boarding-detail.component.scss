@@ -1,0 +1,1141 @@
+@import "../../../../../../assets/scss/variables/colors";
+
+::ng-deep {
+    app-hr-boarding-detail {
+        .drawer-container {
+            position: relative;
+            height: 100vh;
+
+            .clickable {
+                cursor: default !important;
+            }
+
+            .color_red {
+                color: $bad-red;
+            }
+
+            .drawer {
+                z-index: 10000;
+                height: calc(100vh - 85px);
+                margin-top: 55px;
+
+                app-p-numeric-textbox,
+                kendo-textbox,
+                kendo-textarea {
+                    &.readonly-field {
+                        input {
+                            background-color: #f0f3f5;
+                            border: 1px solid rgba(0, 0, 0, 0.08);
+                        }
+                    }
+                }
+
+                kendo-multiselect {
+                    height: fit-content;
+
+                    kendo-taglist {
+                        max-height: 96px !important;
+                    }
+
+                    &.readonly-field {
+
+                        kendo-taglist,
+                        kendo-searchbar input {
+                            background-color: #f0f3f5;
+                        }
+                    }
+                }
+
+                .k-drawer-wrapper {
+                    width: 420px !important;
+                    height: 100%;
+                    scrollbar-color: unset !important;
+                }
+
+                .add-position-area {
+
+                    // TITLE CONTROL
+                    .title {
+                        height: 40px;
+                        border-bottom: 1px solid $gray-300;
+                        color: $dark-green;
+                        font-size: 13px;
+                        font-weight: 700;
+                        padding-left: 15px;
+                        display: flex;
+                        align-items: center;
+                        text-transform: uppercase;
+                        gap: 10px;
+                        box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+                    }
+
+                    .form {
+                        padding-bottom: 50px;
+                    }
+
+                    .info-position-area,
+                    .info-task {
+                        padding-bottom: 50px;
+                        height: calc(100vh - 170px);
+
+                        &_block {
+                            height: calc(100% - 30px);
+                            overflow-y: auto;
+                            display: flex;
+                            flex-direction: column;
+                            gap: 20px;
+                            padding: 10px;
+
+                            .field-text {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+
+                                .id-hr {
+                                    font-weight: bold;
+                                }
+
+                                .checkbox-area {
+                                    display: flex;
+                                    gap: 4px;
+                                    align-items: center;
+
+                                    .title-checkbox {
+                                        cursor: pointer;
+                                    }
+
+                                    .disabled-field {
+                                        pointer-events: none;
+                                    }
+                                }
+                            }
+
+                            .font-blue {
+                                font-weight: 100;
+                                color: $blue;
+                                font-style: italic;
+                                cursor: pointer;
+                            }
+
+                            .block-assignee,
+                            .block-approved {
+                                kendo-dropdownlist {
+                                    width: 100%;
+                                }
+
+                            }
+
+                            .date-picker-area {
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                height: 37px;
+                                position: relative;
+
+                                .datepicker {
+                                    width: 100% !important;
+                                }
+
+                                .datepicker-wrapper {
+                                    width: 100% !important;
+                                    max-width: none !important;
+
+                                    .k-datepicker {
+                                        width: 100% !important;
+                                        box-shadow: none;
+
+                                        .k-input-inner {
+                                            text-align: left;
+                                        }
+                                    }
+                                }
+
+                                .text-warning {
+                                    color: #BD0100 !important;
+                                    display: flex;
+                                    align-items: center;
+                                    padding-right: 10px;
+                                    position: absolute;
+                                    right: 0;
+                                    margin: 0;
+
+                                }
+                            }
+
+
+
+
+                        }
+
+                        .note {
+                            height: 30px;
+                            font-style: italic;
+                            color: #eb273a;
+                            display: flex;
+                            align-items: center;
+                            padding: 0 10px;
+                        }
+
+                        .block {
+                            width: 100%;
+
+                            .important {
+                                margin-left: 5px;
+                                color: $bad-red;
+                            }
+
+                            .box-area {
+                                display: flex;
+                                flex-direction: column;
+                                gap: 4px;
+
+                                .area {
+                                    display: flex;
+                                    justify-content: space-between;
+                                }
+
+                                .none-task {
+                                    color: #959DB3;
+                                }
+
+                                .label {
+                                    font-weight: bold;
+                                }
+
+                                .k-textbox {
+                                    width: 100%;
+                                }
+
+                                // .k-textbox:read-only{
+                                //   background-color: #D9D9D9;
+                                // }
+
+                                .multiselect-custom {
+                                    span.k-clear-value {
+                                        display: none !important;
+                                    }
+
+                                    &::after {
+                                        right: 0 !important;
+                                        text-align: center;
+                                        font-size: 16px;
+                                        font-weight: 600;
+                                    }
+
+                                    kendo-searchbar {
+                                        margin-right: 0;
+                                    }
+
+                                    kendo-taglist {
+                                        .k-chip {
+                                            background-color: #dbdee7;
+                                            color: #000;
+
+                                            .k-chip-actions {
+                                                kendo-icon {
+                                                    &.k-i-x-circle {
+                                                        &::before {
+                                                            margin-bottom: 1px;
+                                                            content: "\e11b";
+                                                            color: #959db3;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .task-system {
+                                    padding-left: 10px;
+                                }
+                            }
+
+                            &.block-description-task {
+                                kendo-textarea {
+                                    min-height: 100px;
+                                    padding: 0 !important;
+                                    width: 100%;
+                                }
+                            }
+
+                            &.block-duration,
+                            &.block-orderby {
+                                kendo-numerictextbox {
+                                    width: 100%;
+
+                                    input {
+                                        text-align: left;
+                                    }
+
+                                    .k-input-spinner {
+                                        button {
+                                            display: none;
+                                        }
+                                    }
+                                }
+                            }
+
+                            &.block-add-exception {
+                                .label {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 6px;
+
+                                    span {
+                                        color: #1a6634;
+
+                                        &:hover {
+                                            cursor: pointer;
+                                        }
+                                    }
+                                }
+
+                                // custom treelist
+                                .treelist-container {
+
+                                    .k-grid-header,
+                                    .k-header,
+                                    th.k-header,
+                                    .k-grid-header-wrap,
+                                    .k-grouping-header,
+                                    .k-grouping-header .k-group-indicator,
+                                    .k-grid td,
+                                    .k-grid-footer,
+                                    .k-grid-footer-wrap,
+                                    .k-grid-content-locked,
+                                    .k-grid-footer-locked,
+                                    .k-grid-header-locked,
+                                    .k-filter-row>td,
+                                    .k-filter-row>th {
+                                        border: none !important;
+                                    }
+
+                                    .bold-text {
+                                        font-weight: 600;
+                                    }
+
+                                    .underline-text {
+                                        text-decoration: underline;
+                                    }
+
+
+                                    // height: 400px;
+                                    overflow-y: auto;
+
+                                    kendo-treelist.treelist-custom {
+                                        border: none;
+
+                                        kendo-treelist-list {
+                                            max-height: fit-content;
+                                        }
+
+                                        .status-name {
+                                            font-size: 12px;
+                                        }
+
+                                        //Header tree list
+                                        thead {
+                                            tr.k-table-row {
+                                                display: none;
+                                            }
+                                        }
+
+                                        .k-grid-header {
+                                            display: none;
+                                        }
+
+                                        // Body tree list
+                                        .k-grid-content {
+                                            background-color: #fff !important;
+
+                                            table.k-table {
+                                                border-spacing: 0 4px;
+
+                                                tbody {
+                                                    .row-level-1 {
+                                                        td {
+                                                            border-top: 1px solid #000 !important;
+                                                        }
+                                                    }
+
+                                                    .row-level-1:first-child {
+                                                        td {
+                                                            border-top: none !important;
+                                                        }
+                                                    }
+
+                                                    tr.k-table-row {
+                                                        background-color: #fff;
+                                                        box-shadow: none !important;
+
+                                                        td.k-table-td {
+                                                            height: 46px !important;
+                                                            box-shadow: none !important;
+                                                            color: #5a6276;
+
+                                                            &:first-child {
+                                                                display: flex;
+                                                                align-items: center;
+                                                                gap: 10px;
+                                                                height: 46px !important;
+                                                                padding-left: 0px !important;
+
+                                                                kendo-icon {
+                                                                    cursor: pointer;
+                                                                }
+
+                                                                .k-icon {
+                                                                    font-size: 18px;
+                                                                }
+                                                            }
+
+                                                            &:last-child {
+                                                                .icon {
+                                                                    display: flex;
+                                                                    align-items: center;
+                                                                    justify-content: center;
+
+                                                                    span {
+                                                                        color: #eb273a;
+                                                                        cursor: pointer;
+                                                                        font-size: 20px;
+                                                                    }
+                                                                }
+                                                            }
+
+                                                            &[aria-colindex="1"] {
+                                                                text-wrap: wrap !important;
+                                                            }
+
+                                                            &[aria-colindex="2"] {
+                                                                text-align: end;
+                                                            }
+
+                                                            .name {
+                                                                display: flex;
+                                                                // flex-direction: column;
+                                                                gap: 4px;
+                                                                overflow: hidden;
+
+                                                                span {
+                                                                    text-wrap: nowrap;
+                                                                    text-overflow: ellipsis;
+                                                                    overflow: hidden;
+                                                                }
+                                                            }
+                                                        }
+
+                                                        background-color: #fff;
+                                                        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+                                                        &:hover {
+                                                            background: none !important;
+
+                                                            &>td {
+                                                                background: none !important;
+                                                            }
+
+                                                            &>td:last-child {
+                                                                background: none !important;
+                                                            }
+                                                        }
+
+                                                        .role {
+                                                            display: flex;
+                                                            gap: 9px;
+                                                            align-items: center;
+
+                                                            .bar {
+                                                                width: 1px;
+                                                                height: 16px;
+                                                                background-color: #5a6276;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .block-1 {
+                            display: flex;
+                            justify-content: space-between;
+
+                            .box-area {
+                                .label {
+                                    font-weight: bold;
+                                }
+
+                                .k-textbox {
+                                    min-width: 193px;
+                                }
+
+                                .checkbox-area {
+                                    display: flex;
+                                    gap: 10px;
+                                    align-items: center;
+                                }
+                            }
+
+                            .box-right {
+                                margin-top: 18px;
+                            }
+                        }
+
+                        .block-4 {
+                            .label {
+                                font-weight: bold;
+                            }
+
+                            .list-location {
+                                height: 100%;
+                                // margin-bottom: 50px;
+                                // overflow-y: auto;
+                                // overflow-x: hidden;
+
+                                .block-area {
+                                    height: 30px;
+                                    width: 100%;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: space-between;
+                                    // cursor: pointer;
+
+                                    .checkbox {
+                                        width: 50px;
+                                    }
+
+                                    .position-name {
+                                        cursor: pointer;
+                                        width: 150px;
+                                        white-space: nowrap;
+                                        text-overflow: ellipsis;
+                                        overflow: hidden;
+                                    }
+
+                                    .disable-position-name {
+                                        cursor: default;
+                                        // pointer-events: none;
+                                        width: 150px;
+                                        white-space: nowrap;
+                                        text-overflow: ellipsis;
+                                        overflow: hidden;
+                                    }
+
+                                    .position-id {
+                                        cursor: pointer;
+                                        width: 60px;
+                                        white-space: nowrap;
+                                        text-overflow: ellipsis;
+                                        overflow: hidden;
+                                    }
+
+                                    .disable-position-id {
+                                        cursor: default;
+                                        // pointer-events: none;
+                                        width: 60px;
+                                        white-space: nowrap;
+                                        text-overflow: ellipsis;
+                                        overflow: hidden;
+                                    }
+
+                                    .position-status-name {
+                                        cursor: pointer;
+                                        width: 120px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: right;
+                                        white-space: nowrap;
+                                        text-overflow: ellipsis;
+                                        overflow: hidden;
+                                        padding-right: 5px;
+                                    }
+
+                                    .disable-position-status-name {
+                                        cursor: default;
+                                        // pointer-events: none;
+                                        width: 120px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: right;
+                                        white-space: nowrap;
+                                        text-overflow: ellipsis;
+                                        overflow: hidden;
+                                        padding-right: 5px;
+                                    }
+
+                                    .icon-area {
+                                        width: 20px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+
+                                        .icon {
+                                            font-size: 20px;
+                                            color: red;
+                                            cursor: pointer;
+
+                                            &:hover {
+                                                opacity: 0.7;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .btnControl {
+                    background-color: $white;
+                    position: absolute;
+                    bottom: 0;
+                    height: 45px;
+                    padding: 0 10px;
+                    width: 100%;
+                    z-index: 100;
+                    display: flex;
+                    align-items: center;
+                    border-top: 1px solid $gray-300;
+                    box-shadow: 1px 3px 6px 6px rgba(143, 155, 166, 0.2);
+
+                    button {
+                        width: 95px;
+                        margin-right: 10px;
+                    }
+                }
+
+                .assetRecovery {
+                    overflow-y: auto;
+                    height: 192px;
+
+                    app-p-textbox {
+                        width: 100%;
+                    }
+                }
+            }
+
+            .drawer-content {
+                height: calc(100vh - 85px);
+                width: 100%;
+                padding-left: 10px;
+                padding-right: 10px;
+                overflow-y: auto !important;
+                overflow-x: hidden;
+
+                .font-blue {
+                    color: $blue;
+                }
+
+                .pre-status-text {
+                    color: $blue;
+                }
+
+                .on-off-status-text {
+                    color: $orange;
+                }
+
+                .onboarded-status-text {
+                    color: $dark-green;
+                }
+
+                .stop-status-text {
+                    color: $bad-red;
+                }
+
+
+
+
+                .main {
+                    .area {
+                        .body-content {
+                            overflow: auto;
+                        }
+
+                        margin-bottom: 10px;
+
+                        .header-1 {
+                            justify-content: space-between;
+
+                            .excel-area {}
+                        }
+
+                        .block-title {
+                            color: #26282e;
+                            font-size: 16px;
+                            font-weight: bold;
+                            padding-bottom: 5px;
+                        }
+
+                        .block-info-recovered {
+                            width: 100%;
+                            margin-top: 20px;
+
+                            .block-recovered {
+                                background-color: $white;
+                                display: block;
+                                overflow: auto;
+
+                                // max-height: 178px;
+
+
+                                .col-recoverd-1 {
+                                    min-width: 500px;
+                                }
+
+                                .col-recoverd-2 {
+                                    min-width: 300px;
+                                }
+
+                                .col-recoverd-3 {
+                                    min-width: 300px;
+                                    display: flex;
+                                    justify-content: center;
+                                }
+
+                                .col-recoverd-4 {
+                                    color: $blue;
+                                }
+
+                                .header-area {
+                                    display: flex;
+
+                                    .col-head {
+                                        color: #5A6276;
+                                        font-weight: bold;
+                                    }
+
+
+                                }
+
+                                .content-area {
+                                    height: 130px;
+                                    min-width: 1230px;
+                                    overflow-y: auto;
+                                    overflow-x: hidden;
+
+                                    .item {
+                                        display: flex;
+                                    }
+                                }
+                            }
+                        }
+
+
+
+                        .block-info {
+                            margin-top: 20px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            // overflow-y: hidden;
+                            width: 100%;
+
+                            .loading-spiner-block-1 {}
+
+                            .title-area {
+                                display: flex;
+                                justify-content: space-between;
+
+                                .btn-show-hide {
+                                    font-style: italic;
+                                    cursor: pointer;
+                                }
+                            }
+
+                            .title-info {
+                                color: #959DB3;
+                                font-weight: bold
+                            }
+
+
+                        }
+
+                        .area-block-1 {
+                            background-color: $white;
+                            overflow: auto;
+                            padding-right: 20px;
+                            position: relative;
+                        }
+
+                        .block {
+                            white-space: nowrap;
+                            display: flex;
+                            gap: 10px;
+                            width: 100%;
+                        }
+
+                        .info-area {
+                            padding: 10px;
+                            background-color: $white;
+                            display: flex;
+                            gap: 60px;
+                            position: relative;
+                            overflow: auto;
+
+                            .block {
+                                display: flex;
+                                gap: 10px;
+                                white-space: nowrap;
+
+                                .title-info-1 {
+                                    min-width: 115px;
+                                    margin-bottom: 10px;
+                                }
+
+                                .title-info-2 {
+                                    min-width: 108px;
+                                }
+
+                                .title-info-3 {
+                                    min-width: 98px;
+                                }
+
+                                .info-txt {
+                                    margin-bottom: 10px;
+                                }
+
+                                .info {
+                                    display: grid;
+                                }
+
+                            }
+
+
+
+                            .col-info-1 {
+                                padding: 0 20px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+
+                                .image-area {
+
+                                    .avatar-area {
+                                        width: 100%;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        margin-bottom: 5px;
+
+                                        .avatar {
+                                            height: 50px;
+                                            width: 50px;
+                                            border-radius: 100%;
+                                        }
+                                    }
+
+                                    .name-profile {
+                                        text-align: center;
+                                        white-space: nowrap;
+                                        font-weight: bold;
+                                    }
+
+                                    .code-profile {
+                                        text-align: center;
+                                        white-space: nowrap;
+                                    }
+                                }
+
+                            }
+
+                            .frame-right {
+                                width: 1000%;
+                                margin-bottom: -10px;
+
+                                // margin-right: 20px;
+
+
+                                .iconInfo {
+                                    color: $blue;
+                                    margin-left: 2px;
+                                    margin-bottom: 1px;
+                                    // font-size: 10px;
+                                }
+
+                                .align-items {
+                                    display: flex;
+                                    /* Để các phần tử trong thẻ <p> xếp theo chiều ngang */
+                                    align-items: center;
+                                    /* Căn giữa theo chiều dọc */
+                                    gap: 5px;
+                                    /* Khoảng cách giữa các phần tử */
+                                }
+
+
+                                .row-1 {
+                                    display: flex;
+                                    gap: 60px;
+
+                                    .col-info {
+                                        min-width: 350px;
+                                    }
+
+
+                                    .col-info-2 {
+                                        .block {
+                                            white-space: nowrap;
+                                            display: flex;
+                                            gap: 10px;
+                                            width: 100%;
+                                        }
+                                    }
+
+                                    .col-info-3 {
+                                        .block {
+                                            height: 30px;
+                                        }
+                                    }
+
+                                    .col-info-4 {
+                                        padding-right: 20px;
+                                    }
+                                }
+
+                                .row-stop {
+                                    display: flex;
+                                    flex-direction: column;
+                                    gap: 10px;
+                                }
+
+                                .row-2 {
+                                    padding-top: 15px;
+                                    display: flex;
+                                    gap: 60px;
+
+                                    .col-info {
+                                        min-width: 350px;
+                                    }
+
+                                    .block {
+                                        .info-description {
+                                            display: -webkit-box;
+                                            -webkit-line-clamp: 5;
+                                            -webkit-box-orient: vertical;
+                                            overflow: hidden;
+                                            text-overflow: ellipsis;
+                                            // max-width: 1000px;
+                                            white-space: normal;
+
+                                            .info-txt-description {
+                                                white-space: normal;
+                                            }
+                                        }
+                                    }
+
+                                    .block-2 {
+                                        height: 30px;
+                                    }
+                                }
+
+                                .row-transfer {
+                                    margin-right: 10px;
+                                    border-top: 1px solid $gray-300;
+                                }
+                            }
+
+
+
+
+                            .col-summary-1 {
+                                .title-info {
+                                    margin: 0 !important;
+                                }
+
+                                .area-info-summary {
+                                    display: flex;
+                                    gap: 60px;
+                                    margin-left: 10px;
+                                }
+                            }
+
+
+
+                            .block-2 {
+                                display: flex;
+                                gap: 10px;
+                                height: 20px;
+
+                                .numAction {
+                                    color: $blue;
+                                    cursor: pointer;
+                                }
+
+                                .numBold {
+                                    font-weight: bold;
+                                }
+                            }
+
+
+                        }
+                    }
+                }
+
+                .dialog-area {
+                    overflow: hidden;
+
+                    .k-window-content {
+                        overflow: hidden;
+                    }
+
+
+                    .btn-action {
+                        display: none;
+                    }
+
+                    .body-area {
+                        height: 100%;
+                        overflow: auto;
+                    }
+
+                    .area {
+                        height: 450px;
+
+                        .dialog {
+
+                            .content-dialog,
+                            .header-dialog {
+                                display: flex;
+                                justify-content: space-between;
+                                width: 100%;
+                                padding: 0px 10px;
+
+                                .header-title {
+                                    white-space: nowrap;
+                                    font-weight: 700;
+                                    color: #5A6276;
+                                    // padding: 0px 5px;
+
+                                }
+
+                                .col-dialog-1 {
+                                    width: 20%;
+                                }
+
+                                .col-dialog-2 {
+                                    width: 30%;
+                                }
+
+                                .col-dialog-3 {
+                                    width: 50%;
+                                }
+                            }
+
+                            .content {}
+
+
+                            .content-dialog {
+                                height: 70px;
+                                padding: 10px;
+                                background-color: #EDEFF3;
+                                // margin: 0 !important;
+                                margin-bottom: 5px;
+                                border-radius: 5px;
+
+                                .col-dialog {
+                                    display: flex;
+                                    flex-direction: column;
+                                    justify-content: center;
+
+                                    .font-bold {
+                                        font-weight: bold;
+                                    }
+
+                                    p {
+                                        margin-bottom: 5px !important;
+                                    }
+
+                                }
+
+                                .text-des {
+                                    display: -webkit-box;
+                                    -webkit-line-clamp: 3;
+                                    /* Số dòng tối đa trước khi hiển thị dấu "..." */
+                                    -webkit-box-orient: vertical;
+                                    overflow: hidden;
+                                    /* Ẩn phần văn bản thừa */
+                                    text-overflow: ellipsis;
+                                }
+
+                            }
+                        }
+                    }
+
+                    .block {
+                        .box-area {
+                            .label {
+                                font-weight: bold;
+                                margin-bottom: 5px;
+
+                                .important {
+                                    margin-left: 5px;
+                                    color: $bad-red;
+                                }
+                            }
+
+                            .text-area-description {
+                                height: 64px;
+                                width: 100%;
+                            }
+
+                            .k-textarea:read-only {
+                                background-color: $white;
+                            }
+
+                            .k-dropdown {
+                                width: 100%;
+                            }
+                        }
+                    }
+
+                    .k-actions-stretched>* {
+                        -ms-flex: none;
+                        flex: none;
+                    }
+
+                    .btn-close,
+                    .btn-action {
+                        width: 105px;
+                    }
+
+                    .btn-close {
+                        color: $dark-green;
+                    }
+
+                    .k-actions {
+                        padding: 26px;
+                        justify-content: right;
+                        gap: 10px;
+                    }
+
+                    .k-window-titlebar-actions {
+                        display: none;
+                    }
+                }
+            }
+
+            .disabled-item{
+                pointer-events: none;
+                opacity: 0.7;
+            }
+        }
+
+        // DRAWER CONTAINER RIGHT EXPANDED
+        #drawerContainerRight.k-drawer-expanded {
+
+            // pointer-events: none;
+            .k-drawer {
+                pointer-events: all;
+                width: 420px;
+            }
+
+            .k-overlay {
+                position: absolute;
+                z-index: 1;
+            }
+        }
+    }
+}

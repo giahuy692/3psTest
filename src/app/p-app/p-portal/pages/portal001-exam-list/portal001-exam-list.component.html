@@ -1,0 +1,282 @@
+<div class="app-portal001-exam-list" *ngIf="!isMobile">
+    <div class="header header-2">
+        <app-search-filter-group [placeholder]="placeholder" 
+        [disabled]="!isFilterActive" 
+        (filterChange)="handleSearch($event)"
+        (onReset)="resetFilter()"
+        [fields]="['QuizSessionName','TypeOfSessionName', 'QuizSessionID']"
+        >
+        </app-search-filter-group>
+        <div class="filter-btn-group date-btn-group">
+            <div class="label">
+                Lọc theo thời gian mở đợt kiểm tra
+            </div>
+            <div class="search-btn datepicker-btn-group">
+                <kendo-datepicker 
+                    [format]="'dd/MM/yyyy'" 
+                    placeholder="dd/MM/yyyy" 
+                    [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }" 
+                    [disabled]="!isFilterActive" 
+                    [(ngModel)]="filterStartDate.value"
+                    [max]="filterEndDate.value"
+                    (keydown.Enter)="$event.target.blur()" 
+                    (blur)="onDatepickerChange('filterStartDate', $event)">
+                </kendo-datepicker>
+                <span class="cross">-</span>
+                <kendo-datepicker 
+                    [format]="'dd/MM/yyyy'" 
+                    placeholder="dd/MM/yyyy" 
+                    [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }" 
+                    [disabled]="!isFilterActive" 
+                    [(ngModel)]="filterEndDate.value"
+                    [min]="filterStartDate.value"
+                    (keydown.Enter)="$event.target.blur()" 
+                    (blur)="onDatepickerChange('filterStartDate', $event)">
+                </kendo-datepicker>
+            </div>
+        </div>
+        <div class="filter-btn-group">
+            <div class="label">
+                Lọc theo tình trạng
+            </div>
+            <div class="search-btn checkbox-button-group">
+                <app-checkbox-button-group 
+                [toggleable]="isFilterActive" 
+                (selectedChange)="selectedBtnChange($event, 'dangkiemtra_checked')" 
+                [selected]="dangkiemtra_checked"
+                title="Đang kiểm tra"
+                [checked]="dangkiemtra_checked">
+                </app-checkbox-button-group>
+                <app-checkbox-button-group 
+                [toggleable]="isFilterActive" 
+                (selectedChange)="selectedBtnChange($event, 'ketthuc_checked')" 
+                [selected]="ketthuc_checked"
+                title="Kết thúc "
+                [checked]="ketthuc_checked">
+                </app-checkbox-button-group>
+                <app-checkbox-button-group 
+                [toggleable]="isFilterActive" 
+                [selected]="phuckhao_checked"
+                title="Phúc khảo"
+                (selectedChange)="selectedBtnChange($event, 'phuckhao_checked')" 
+                [checked]="phuckhao_checked">
+                </app-checkbox-button-group>
+            </div>
+        </div>
+    </div>
+    <div class="grid-wrapper">
+        <app-p-kendo-grid class="grid scrollable " [data]=" gridView | async" [scrollable]="'none'" [loading]="loading"
+        [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize"[skip]="gridState.skip" [take]="gridState.take" 
+        [sortable]="true" [onPageChangeCallback]="onPageChangeCallback" [allowedMoreActionDropdown]="allowActionDropdown" 
+        [getActionDropdownCallback]="getActionDropdownCallback" [onActionDropdownClickCallback]="onActionDropdownClickCallback">
+
+            <kendo-grid-column title="Đợt đánh giá" field="_" class="col_dotdanhgia" [headerStyle]="{ 'color': '#5A6276' }">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="tendotdanhgia_phanloai">
+                        <div class="title tendotdanhgia"><span class="QuizSessionID">{{dataItem.QuizSessionID }}</span>{{' | ' + dataItem.QuizSessionName}}</div>
+                        <div>
+                           Phân loại <span>{{' | ' + dataItem.TypeOfSessionName}}</span>
+                        </div>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column [width]="130" title="Thời gian đánh giá" field="_" class="col_thoigiandanhgia" [headerStyle]="{ 'color': '#5A6276' }">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="thoigiandanhgia">
+                        <div class="ngaybatdau title"> {{dataItem.StartDate | date: 'dd/MM/yyyy'}} </div>
+                        <div class="ngayketthuc">{{dataItem.EndDate | date: 'dd/MM/yyyy'}}</div>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column [width]="180" title="Thời gian làm bài" field="_" class="col_thoigianlambai" [headerClass]="'headerthoigianlambaiCustomClass'" [headerStyle]="{ 'color': '#5A6276' }">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div *ngIf="dataItem.BeginTime != null || dataItem.EndTime != null">
+                        <div class="thoigianlambai">
+                            <div class="thoigianbatdau title"> {{formatdate(dataItem.BeginTime)}} </div>
+                            <div class="thoigianketthuc"> {{formatdate(dataItem.EndTime)}}</div>
+                        </div>
+                    </div>
+                    <div *ngIf="dataItem.BeginTime == null || dataItem.EndTime == null">
+                        <div class="thoigianlambai">
+                            <div class="thoigianbatdau title"> {{formatdate(dataItem.OpenedDate)}} </div>
+                            <div class="thoigianketthuc"> {{formatdate(dataItem.ClosedDate)}}</div>
+                        </div>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column [width]="205" title="Thời gian làm bài còn lại(phút)" field="_" class="col_thoigianlambaiconlai" [headerStyle]="{ 'color': '#5A6276' }">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="thoigianlambaiconlai">
+                        <div class="thoigianlambaiconlai title " [ngClass]="{'highlight': isStatus(dataItem.StatusID)}" *ngIf="dataItem.StatusID === 1 || dataItem.StatusID === 0"> 
+                            <div *ngIf="dataItem.Duration != null && dataItem.RemainDuration === null">
+                                {{ dataItem.Duration | convertMinuteToString }} 
+                            </div>
+                            <div *ngIf="(dataItem.RemainDuration != null && dataItem.Duration != 0) && dataItem.StatusID === 1"> 
+                                {{ dataItem.RemainDuration | convertMinuteToString }} 
+                            </div>
+                        </div>
+                        <div class="thoigianlambaiconlai title " *ngIf="dataItem.StatusID === 2 || (dataItem.SessionStatusID != 1 && dataItem.SessionStatusID != 0)"> 
+                            00:00
+                        </div>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Tình trạng" field="_" class="col_tìnhtrạng" [headerClass]="'headerCustomClass'" [headerStyle]="{ 'color': '#5A6276' }" >
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="Status" [ngClass]="{DontShow: CheckList(dataItem)}">
+                        <div [innerHTML]="dataItem.SessionStatusName | colorStatus:dataItem.SessionStatusID"></div>
+                        <div [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID"></div>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+
+        </app-p-kendo-grid>
+    </div>
+</div>
+
+
+<!--  -->
+<div class="app-portal001-exam-list" *ngIf="isMobile">
+    <kendo-drawer-container id="drawerContainerRight" >
+        <kendo-drawer
+        id="drawerRight" 
+        #drawerRight
+        [mode]="expandMode"
+        [expanded]="false"
+        fillMode="flat"
+        position="end"
+        >
+            <ng-template kendoDrawerTemplate let-item>
+                <div class="header collum">
+                    <div class="Customlabel" (click)="drawerRight.toggle()">
+                        <span class="k-icon k-i-filter"></span>LỌC DỮ LIỆU
+                    </div>
+                    <div class="filter-btn-group date-btn-group">
+                        <div class="Text padding">
+                            Lọc theo thời gian mở đợt kiểm tra
+                        </div>
+                        <div class="search-btn datepicker-btn-group">
+                            <kendo-datepicker 
+                                [format]="'dd/MM/yyyy'" 
+                                placeholder="dd/MM/yyyy" 
+                                [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }" 
+                                [disabled]="!isFilterActive" 
+                                [(ngModel)]="filterStartDate.value"
+                                [max]="filterEndDate.value"
+                                (keydown.Enter)="$event.target.blur()" 
+                                (blur)="onDatepickerChange('filterStartDate', $event)">
+                            </kendo-datepicker>
+                            <span class="cross">-</span>
+                            <kendo-datepicker 
+                                [format]="'dd/MM/yyyy'" 
+                                placeholder="dd/MM/yyyy" 
+                                [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }" 
+                                [disabled]="!isFilterActive" 
+                                [(ngModel)]="filterEndDate.value"
+                                [min]="filterStartDate.value"
+                                (keydown.Enter)="$event.target.blur()" 
+                                (blur)="onDatepickerChange('filterEndDate', $event)">
+                            </kendo-datepicker>
+                        </div>
+                    </div>
+                    <div class="filter-btn-group">
+                        <div class="Text padding">
+                            Lọc theo tình trạng
+                        </div>
+                        <div class="search-btn checkbox-button-group">
+                            <label for="danglambai_checked" class="customcheckbox">
+                                <input 
+                                type="checkbox" 
+                                class="k-checkbox" 
+                                id="danglambai_checked" 
+                                [checked]="dangkiemtra_checked"
+                                (change)="onCheckboxClick('dangkiemtra_checked')" 
+                                >
+                                <span class="text">Đang làm bài</span>
+                            </label>
+                            <label for="ketthucdanhgia_checked" class="customcheckbox">
+                                <input 
+                                type="checkbox" 
+                                class="k-checkbox" 
+                                id="ketthucdanhgia_checked" 
+                                [checked]="ketthuc_checked"
+                                (change)="onCheckboxClick('ketthuc_checked')" 
+                                >
+                                <span class="text">Kết thúc đánh giá</span>
+                            </label>
+                            <label for="phuckhao_checked" class="customcheckbox">
+                                <input 
+                                type="checkbox" 
+                                class="k-checkbox" 
+                                id="phuckhao_checked" 
+                                [checked]="phuckhao_checked"
+                                (change)="onCheckboxClick('phuckhao_checked')" 
+                                >
+                                <span class="text">Phúc Khảo</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </kendo-drawer>
+        <kendo-drawer-content>
+            <div>
+                <div class="header">
+                    <app-search-filter-group [placeholder]="placeholder" 
+                    [disabled]="!isFilterActive" 
+                    (filterChange)="handleSearch($event)"
+                    (onReset)="resetFilter()"
+                    [fields]="['QuizSessionName', 'TypeOfSessionName', 'QuizSessionID']"
+                    >
+                    </app-search-filter-group>
+                    <kendo-button class="Customlabel" fillMode="flat" (click)="drawerRight.toggle()">
+                        <span class="k-icon k-i-filter"></span>LỌC DỮ LIỆU
+                    </kendo-button> 
+                </div>
+                <div class="grid-wrapper" #scrollContainer>
+
+                    <app-p-kendo-grid class="grid scrollable " [data]=" gridView | async" [scrollable]="'none'" [loading]="loading"
+                    [hasMoreAction]="isOpenDetail" [width]="500"
+                    >
+                        <kendo-grid-column class="col_thongtinđotanhgia" [width]="245">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="Thongtin" [ngClass]="{'Block': (dataItem.Code == null && dataItem.SessionStatusID == 1) ||  (dataItem.StatusID == 1 && dataItem.RemainDuration >= 0)}">
+                                    <div class="title tendotdanhgia">{{dataItem.QuizSessionID + ' | ' + dataItem.QuizSessionName }}</div>
+                                    <div class="Classify" >
+                                        <div class="titlePhanLoai">Phân loại</div> <span class="line"></span><div class="TypeOfSessionName">{{dataItem.TypeOfSessionName}}</div>
+                                    </div>
+                                    <div class="thoigianlambai">
+                                        <p class="titlethoigianlambai">Thời gian làm bài</p> 
+                                        <span class="line"></span> 
+                                        <p class="boxtime">
+                                            <span class="Begin">{{formatdate(dataItem.BeginTime)}}</span>
+                                            <span class="highlightText">{{formatdate(dataItem.EndTime)}}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <kendo-grid-column  class="col_action " [width]="150">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="tinhtrangButton">
+                                    <span class="text SessionStatusName" [ngClass]="{'Textcolor':  !isSessionStatusIDStatus(dataItem.SessionStatusID) }">{{dataItem.SessionStatusName}}</span>
+                                    <span class="text" [ngClass]="{'Textcolor': !isStatus(dataItem.StatusID)}">{{dataItem.StatusName}}</span>
+                                    <kendo-button class="k-button custombutton green" icon="change-manually" *ngIf="(dataItem.SessionStatusID == 1 && dataItem.Code == null) || dataItem.StatusID == 1" (click)="openDetail(dataItem)">LÀM BÀI THI</kendo-button>
+                                    <kendo-button class="k-button custombutton gray" icon="eye" *ngIf=" (dataItem.EvaluationView == 0 && (dataItem.StatusID == 2 || dataItem.StatusID == 3 ))" (click)="openDetail(dataItem)">XEM BÀI THI</kendo-button>
+                                    <kendo-button class="k-button custombutton gray" icon="eye" *ngIf=" (dataItem.EvaluationView == 1 && dataItem.SessionStatusID == 3 )" (click)="openDetail(dataItem)">XEM BÀI THI</kendo-button>
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                    </app-p-kendo-grid>
+
+                </div>
+            </div>
+        </kendo-drawer-content>
+    </kendo-drawer-container>
+</div>
+

@@ -1,0 +1,66 @@
+<div class="app-hri020-news-detail">
+
+
+
+  <!-- ======== START HEADER ========-->
+  <div class="header">
+    <app-p-kendo-breadcrumb (loadData)="reloadData()"></app-p-kendo-breadcrumb>
+
+    <div class="nav-btn nav-crud">
+
+      <button kendoButton
+        *ngIf="(isAllPers || isCanCreate)  && (this.news.StatusID == 0 || this.news.StatusID == 4) && this.news.Code !== 0"
+        (click)="onBtnStatus(1)" class="k-button btn-hachi hachi-primary" [icon]="'redo'">
+        GỬI DUYỆT
+      </button>
+
+      <button kendoButton
+        *ngIf="(isAllPers || isCanApproved)  && (this.news.StatusID == 1 || this.news.StatusID == 3)&& this.news.Code !== 0"
+        (click)="onBtnStatus(2)" class="k-button btn-hachi hachi-primary" [icon]="'check-outline'">
+        PHÊ DUYỆT
+      </button>
+
+      <button kendoButton *ngIf=" (isAllPers || isCanApproved) && (this.news.StatusID==1 || this.news.StatusID==3) && this.news.Code
+        !==0" (click)="onBtnStatus(4)" class="k-button btn-hachi hachi-warning hachi-secondary" [icon]="'undo'">
+        TRẢ VỀ
+      </button>
+
+      <button kendoButton *ngIf="(isAllPers || isCanApproved)  && (this.news.StatusID == 2) && this.news.Code !== 0"
+        (click)="onBtnStatus(3) " class="k-button btn-hachi hachi-warning" [icon]="'minus-outline'">
+        NGƯNG HIỂN THỊ
+      </button>
+
+      <button *ngIf="(isAllPers || isCanCreate ) && this.news.StatusID == 0 && this.news.Code !== 0 " kendoButton
+        class="k-button btn-hachi hachi-warning" (click)="onToggleDel()">
+        XÓA BÀI VIẾT</button>
+
+
+      <button kendoButton class="k-button btn-hachi hachi-primary" [icon]="'plus'" (click)="onCreatePost()"
+        *ngIf=" isAllPers == true || isCanCreate == true">
+        TẠO MỚI </button>
+    </div>
+  </div>
+  <!-- ======== END HEADER ========-->
+
+
+
+  <!-- ======== START MAIN CONTENT ========-->
+  <div class="mainContent">
+    <app-hr-news-detail [Status]="StatusID" [CreateNews]="AddNew" [DeleteNews]="delete"
+      (dataChange)="GetData($event)"></app-hr-news-detail>
+  </div>
+  <!-- ======== END MAIN CONTENT ========-->
+
+
+  <!-- START DIALOG DELETE -->
+  <app-p-kendo-dialog *ngIf="opened" [title]="'XÓA BÀI VIẾT CHÍNH SÁCH'" (close)="onToggleDel()"
+    (handleButton)="onDeleteDialog('yes')" [iconButton]="'delete'" [dialogType]="1" [iconTitle]="'k-icon k-i-warning'">
+    <div class="text-center">
+      Bạn có chắc chắn muốn xóa bài viết<br> <strong>{{this.news.TitleVN}} </strong>
+      <p class="content-sub">
+        bị xóa sẽ <span style="color: red">KHÔNG</span> thể khôi phục lại.
+      </p>
+    </div>
+  </app-p-kendo-dialog>
+  <!-- END DIALOG DELETE -->
+</div>

@@ -1,0 +1,179 @@
+<div class="config-product-attribute">
+    <div class="section">
+        <div class="title">
+          {{typeInfo == 2
+            ? "THUỘC TÍNH SẢN PHẨM"
+            : "THUỘC TÍNH HAMPER"
+            }}
+
+        </div>
+        <div class="section-grid">
+          <!-- col 1 -->
+          <div class="column_1">
+            <div class=" grid-item item1">
+                <div class="label">Phân nhóm cấp 1</div>
+                <p-kendo-dropdownlist [data]="listGroupWebData?.level1" valueField="Code" textField="GroupName"
+                 [disabled]="disable" (valueChange)="onDropdownlistClick($event, ['GroupID1'])" [(ngModel)]="currentGroupWeb1"
+                 [filterable]="true"></p-kendo-dropdownlist>
+            </div>
+            <div class=" grid-item item2">
+              <div class="label">Phân nhóm cấp 2</div>
+              <p-kendo-dropdownlist #dropdown2 [data]="listGroupWebData?.level2" valueField="Code" textField="GroupName"
+               [disabled]="disable || !currentGroupWeb1" (valueChange)="onDropdownlistClick($event, ['GroupID2'])" [(ngModel)]="currentGroupWeb2"
+               [filterable]="true"></p-kendo-dropdownlist>
+          </div>
+            <div class=" grid-item item3">
+              <div class="label">Phân nhóm cấp 3</div>
+              <p-kendo-dropdownlist #dropdown3 [data]="listGroupWebData?.level3" valueField="Code" textField="GroupName"
+              [disabled]="disable || !currentGroupWeb2" (valueChange)="onDropdownlistClick($event, ['GroupID3'])" [(ngModel)]="currentGroupWeb3"
+              [filterable]="true"></p-kendo-dropdownlist>
+          </div>
+        <div class=" grid-item item4">
+            <div class="label">Phân nhóm cấp 4</div>
+            <p-kendo-dropdownlist #dropdown4 [data]="listGroupWebData?.level4" valueField="Code" textField="GroupName"
+            [disabled]="disable || !currentGroupWeb3" (valueChange)="onDropdownlistClick($event, ['GroupID4'])" [(ngModel)]="currentGroupWeb4"
+            [filterable]="true"></p-kendo-dropdownlist>
+          </div>
+      <div class=" grid-item item5">
+          <div class="label">Phân nhóm cấp 5</div>
+            <p-kendo-dropdownlist #dropdown5 [data]="listGroupWebData?.level5" valueField="Code" textField="GroupName"
+            [disabled]="disable || !currentGroupWeb4" (valueChange)="onDropdownlistClick($event, ['GroupID5'])" [(ngModel)]="currentGroupWeb5"
+            [filterable]="true"></p-kendo-dropdownlist>
+            </div>
+        </div>
+
+        <div class="column_2">
+          <!--col 2-->
+          <div class="grid-item item6">
+            <div class="label">Đơn vị tính</div>
+                <div class="item6_1">
+                    <div class="label">Mua hàng</div>
+                    <p-kendo-dropdownlist [data]="listPackingUnitCustom" textField="VNPackingUnit" valueField="Code"
+                      (valueChange)="onDropdownlistClick($event, ['BuyerUnit'])"
+                      [(ngModel)]="currentUnit['BuyerUnit']" [disabled]="disable" 
+                    >
+                    </p-kendo-dropdownlist>
+                </div>
+                <div class="item6_1">
+                    <div class="label">Bán lẻ</div>
+                    <p-kendo-dropdownlist [data]="listPackingUnitCustom" textField="VNPackingUnit" valueField="Code"
+                      (valueChange)="onDropdownlistClick($event, ['BaseUnit'])"
+                      [(ngModel)]="currentUnit['BaseUnit']" [disabled]="disable"
+                    >
+                    </p-kendo-dropdownlist>
+                </div>
+                <div class="item6_1">
+                    <div class="label">Bán sỉ</div>
+                    <p-kendo-dropdownlist [data]="listPackingUnitCustom" textField="VNPackingUnit" valueField="Code"
+                      (valueChange)="onDropdownlistClick($event, ['SellerUnit'])"
+                      [(ngModel)]="currentUnit['SellerUnit']" [disabled]="disable"
+                    >
+                    </p-kendo-dropdownlist>
+                </div>
+                <div class="item6_1">
+                    <div class="label">Điều phối hàng</div>
+                    <p-kendo-dropdownlist [data]="listPackingUnitCustom" textField="VNPackingUnit" valueField="Code"
+                    (valueChange)="onDropdownlistClick($event, ['WHUnit'])"
+                    [(ngModel)]="currentUnit['WHUnit']" [disabled]="disable"
+                    >
+                    </p-kendo-dropdownlist>
+                </div>
+            </div>
+
+  
+          <div class="grid-item item7">
+            <div class="label">Tình trạng</div>
+                <div class="item7_1">
+                    <div class="label">Mua hàng
+                        <i>(31/12/2023)</i>
+                    </div>
+                    <p-kendo-dropdownlist [data]="listStatus['listPurchases']" textField="StatusName" valueField="Code"   [(ngModel)]="currentTypeData[10]"
+                      (valueChange)="onDropdownlistClick($event, ['StatusBuyer'])"
+                    [disabled]="isCheckTwoRole"
+                    >
+                    </p-kendo-dropdownlist>
+                </div>
+                <div class="item7_1">
+                    <div class="label">Bán lẻ <i>(31/12/2023)</i></div>
+                    <p-kendo-dropdownlist [data]="listStatus['listRetail']" textField="StatusName" valueField="Code"  [(ngModel)]="currentTypeData[11]"
+                       (valueChange)="onDropdownlistClick($event, ['Status'])"
+                     [disabled]=" isCheckTwoRole"
+                    >
+                    </p-kendo-dropdownlist>
+                </div>
+                <div class="item7_1">
+                    <div class="label">Bán sỉ <i>(31/12/2023)</i></div>
+                    <p-kendo-dropdownlist [data]="listStatus['listWholesale']" textField="StatusName" valueField="Code"  [(ngModel)]="currentTypeData[12]"
+                     [disabled]="isCheckTwoRole"  (valueChange)="onDropdownlistClick($event, ['StatusWhole'])"
+                    >
+                    </p-kendo-dropdownlist>
+                </div>
+          </div>
+        </div>
+  
+
+        <div class="column_3">
+          <!-- col 3 -->
+          <div class="grid-item item8">
+            <div class="search_kho">
+
+           <div class="label">Tồn kho</div>
+           <span>Tra cứu tồn kho toàn hệ thống</span>
+        </div>
+           <div class="item8_1">
+                <div class="label">Tồn thực
+                </div>
+                <app-p-numeric-textbox propName="sl"  [format]="'n0'" [spinners]="false" [min]="0" [disabled]="true" [(ngModel)]="product.Quantity"></app-p-numeric-textbox>
+           </div>
+           <!-- todo -->
+           <div class="item8_1">
+                <div class="label">Tồn trừ hoàn tất đóng gói</div>
+                <app-p-numeric-textbox propName="sl" [format]="'n0'" [spinners]="false" [min]="0" [disabled]="true"></app-p-numeric-textbox>
+                </div>
+                <!-- todo -->
+            <div class="item8_1">
+                <div class="label">Tồn trừ đơn đang xử lý</div>
+                <app-p-numeric-textbox propName="sl" [format]="'n0'" [spinners]="false" [min]="0" [disabled]="true"></app-p-numeric-textbox>
+            </div>
+        </div>
+        
+
+            <div class="grid-item item9" *ngIf="typeInfo == 2">
+                <div class="label">Số công bố</div>
+                <span>Hachi/CB/2022/01213</span>
+            </div>
+            <div class="grid-item item10" *ngIf="typeInfo == 2">
+                <div class="dateManage">
+                    <div class="label">Hạn sử dụng cảnh báo (ngày)</div>
+
+                    <span class="label">Quản lý date   <input type="checkbox" kendoCheckBox [checked]="product.IsDate" [(value)]="product.IsDate"
+                      (change)="valueChange($event,'IsDate')" [disabled]="disable"></span> 
+                </div>
+                <app-p-numeric-textbox propName="sl"  [format]="'n0'" [spinners]="false" [min]="0" [disabled]="disable" [(ngModel)]="product.DateDuration"
+                (blur)="onBlurTextbox('DateDuration')"></app-p-numeric-textbox>
+            </div>
+
+            <div class="grid-item item11" *ngIf="typeInfo == 2">
+                <div class="label">Kích thước đóng gói (dài x rộng x cao x cân nặng) (cm - g)</div>
+                
+                <div class="item-grid">
+                    <app-p-numeric-textbox propName="sl" [format]="'n0'" [spinners]="false" [min]="0" [disabled]="disable"
+                     [(ngModel)]="product.PackageL"   (blur)="onBlurTextbox('PackageL')">
+                    </app-p-numeric-textbox>
+                    <app-p-numeric-textbox propName="sl"  [format]="'n0'" [spinners]="false" [min]="0" [disabled]="disable"
+                     [(ngModel)]="product.PackageW"   (blur)="onBlurTextbox('PackageW')">
+                    </app-p-numeric-textbox>
+                    <app-p-numeric-textbox propName="sl"  [format]="'n0'" [spinners]="false" [min]="0" [disabled]="disable"
+                     [(ngModel)]="product.PackageH"   (blur)="onBlurTextbox('PackageH')">
+                    </app-p-numeric-textbox>
+                    <app-p-numeric-textbox class="last-textbox" propName="sl"  [format]="'n0'" [spinners]="false" [min]="0"
+                     [disabled]="disable" [(ngModel)]="product.PackageWeight" (blur)="onBlurTextbox('PackageWeight')">
+                    </app-p-numeric-textbox>
+                </div>
+            </div>
+        </div>
+
+
+        </div>
+      </div>
+  </div>

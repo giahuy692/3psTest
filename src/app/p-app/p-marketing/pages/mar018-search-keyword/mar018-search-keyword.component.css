@@ -1,0 +1,286 @@
+.color-white {
+  color: #ffffff;
+}
+
+.color-gray {
+  color: #23282c;
+}
+
+.color-darkblue {
+  color: #39579a;
+}
+
+.color-blue {
+  color: #008cd7;
+}
+
+.color-lightblue {
+  color: #46b1ff;
+}
+
+.color-darkgreen {
+  color: #316e00;
+}
+
+.color-green {
+  color: #649e0f;
+}
+
+.color-lightgreen {
+  color: #8dc63f;
+}
+
+.color-yellowgreen {
+  color: #c1d72e;
+}
+
+.color-yellow {
+  color: #ffc400;
+}
+
+.color-mediumyellow {
+  color: #FFB900;
+}
+
+.color-orangeyellow {
+  color: #ffab00;
+}
+
+.color-lightorange {
+  color: #ff5230;
+}
+
+.color-lightpink {
+  color: #dc3545;
+}
+
+.color-red {
+  color: #d82c12;
+}
+
+.color-badred {
+  color: #EB273A;
+}
+
+.hachi-color-primary-1 {
+  color: #353935;
+}
+
+.hachi-color-primary-2 {
+  color: #868b86;
+}
+
+.hachi-color-primary-3 {
+  color: #8dc63f;
+}
+
+.hachi-color-primary-4 {
+  color: #c1d72e;
+}
+
+.hachi-color-primary-5 {
+  color: #ffffff;
+}
+
+.hachi-color-secondary-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-1 {
+  color: #46b1ff;
+}
+
+.hachi-color-text-2 {
+  color: #868b86;
+}
+
+.hachi-color-text-3 {
+  color: #008cd7;
+}
+
+.hachi-color-text-4 {
+  color: #d82c12;
+}
+
+.hachi-color-text-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-6 {
+  color: #ffffff;
+}
+
+.hachi-color-text-7 {
+  color: #8dc63f;
+}
+
+.hachi-color-text-8 {
+  color: #626662;
+}
+
+.hachi-color-text-10 {
+  color: #ff5230;
+}
+
+.hachi-color-text-9 {
+  color: #bbc0bb;
+}
+
+.hachi-color-text-11 {
+  color: #dc3545;
+}
+
+.hachi-color-text-12 {
+  color: #828282;
+}
+
+::ng-deep .app-mar018-search-keyword {
+  height: calc(93vh - 30px);
+  padding: 0 15px 35px 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+::ng-deep .app-mar018-search-keyword .header.header-2 .nav-btn {
+  align-items: stretch;
+  column-gap: 2%;
+}
+
+::ng-deep .app-mar018-search-keyword .header.header-2 .nav-btn .searchBtn {
+  margin-top: auto;
+}
+
+::ng-deep .app-mar018-search-keyword .myCustomGrid.k-grid tr td {
+  white-space: normal;
+}
+
+::ng-deep .app-mar018-search-keyword .myCustomGrid.k-grid tr td .img {
+  width: 51px;
+  height: 51px;
+}
+
+::ng-deep .app-mar018-search-keyword .myCustomGrid.k-grid tr td .img img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+::ng-deep .app-mar018-search-keyword .myCustomGrid.k-grid tr td.Alias {
+  min-width: 33%;
+  width: 33%;
+  max-width: 333px;
+  word-break: break-all;
+}
+
+::ng-deep .app-mar018-search-keyword .myCustomGrid.k-grid tr td.Alias a {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+::ng-deep .app-mar018-search-keyword .myCustomGrid.k-grid tr td.OrderBy {
+  text-align: center;
+}
+
+::ng-deep .app-mar018-search-keyword .myCustomGrid.k-grid tr td.col_status {
+  white-space: nowrap;
+}
+
+::ng-deep .app-mar018-search-keyword .col_status .red {
+  color: #EB273A;
+}
+
+::ng-deep .app-mar018-search-keyword .col_status .yellow {
+  color: #FFB900;
+}
+
+::ng-deep .app-mar018-search-keyword .col_status .green {
+  color: #1a6634;
+}
+
+::ng-deep .k-list-container .k-button:hover,
+::ng-deep .k-list-container .k-button {
+  background-color: transparent;
+}
+
+::ng-deep .popupClass .category-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 30px;
+  align-items: center;
+  padding-left: 4px;
+}
+
+::ng-deep .formKeyword.k-form .search-keyword-form .green {
+  color: #1a6634;
+}
+
+::ng-deep .formKeyword.k-form .search-keyword-form .image-container {
+  display: flex;
+  column-gap: 10%;
+}
+
+::ng-deep .formKeyword.k-form .search-keyword-form .image-container .first {
+  display: inline-flex;
+  justify-items: center;
+}
+
+::ng-deep .formKeyword.k-form .search-keyword-form .image-container .first .k-label {
+  margin-top: 5px;
+  white-space: nowrap;
+}
+
+::ng-deep .formKeyword.k-form .search-keyword-form .image-container .second {
+  display: flex;
+  justify-content: flex-start;
+}
+
+::ng-deep .formKeyword.k-form .search-keyword-form .image-container .second img {
+  width: 77px;
+  height: 77px;
+}
+
+::ng-deep .formKeyword.k-form .search-keyword-form .image-container .k-button {
+  width: 32px;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+::ng-deep .formKeyword.k-form .search-keyword-form .group-input {
+  display: flex;
+  column-gap: 12px;
+}
+
+::ng-deep .formKeyword.k-form .search-keyword-form .group-input .noOfClick {
+  height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .formKeyword.k-form .search-keyword-form .date-picker-container {
+  display: flex;
+  column-gap: 15px;
+}
+
+::ng-deep .formKeyword.k-form .search-keyword-form .k-input.k-formatted-value {
+  text-align: left;
+}
+
+::ng-deep .formKeyword.k-form .search-keyword-form .k-numerictextbox input {
+  text-align: left;
+}
+
+::ng-deep .formKeyword.k-form .search-keyword-form .k-dropdownlist {
+  width: 100%;
+}
+
+::ng-deep .formKeyword.k-form .search-keyword-form .k-form-buttons .gray {
+  background-color: #bdc2d2 !important;
+}
+
+::ng-deep .formKeyword.k-form .search-keyword-form .k-form-buttons .gray:hover {
+  background-color: #959db3 !important;
+}

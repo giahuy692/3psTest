@@ -1,0 +1,328 @@
+<div class="app-config001-product-list">
+
+  <div class="header header-1">
+    <kendo-dropdownlist [data]="listModeArray" [value]="currentListMode" [textField]="'text'" [valueField]="'value'"
+      (valueChange)="onDropdownlistClick($event)" [disabled]="!isFilterActive" [popupSettings]="{appendTo:'component'}">
+      <ng-template kendoDropDownListValueTemplate let-dataItem>
+        <span class="k-icon k-i-chart-column-stacked"></span>
+        <span class="value">{{ dataItem.text }}</span>
+      </ng-template>
+    </kendo-dropdownlist>
+
+    <app-checkbox-button-group 
+    [toggleable]="isFilterActive" 
+    (selectedChange)="selectedBtnChange($event, 'catCode_Checked')" 
+    [selected]="catCode_Checked"
+    title="Cắt Code"
+    [checked]="catCode_Checked">
+    </app-checkbox-button-group>
+    <app-checkbox-button-group 
+    [toggleable]="isFilterActive" 
+    [selected]="dangKinhDoanh_checked"
+    title="Đang kinh doanh"
+    (selectedChange)="selectedBtnChange($event, 'dangKinhDoanh_checked')" 
+    [checked]="dangKinhDoanh_checked">
+    </app-checkbox-button-group>
+    <app-checkbox-button-group 
+    [toggleable]="isFilterActive" 
+    [selected]="ngungKinhDoanh_checked"
+    title="Ngừng kinh doanh"
+    (selectedChange)="selectedBtnChange($event, 'ngungKinhDoanh_checked')" 
+    [checked]="ngungKinhDoanh_checked">
+    </app-checkbox-button-group>
+
+    <div class="nav-file nav-btn">
+      <div class="file-btn-group">
+        <button kendoButton id="onUploadBtn" class="k-button" [icon]="'export'" (click)="onImportExcel()"
+          [disabled]="!isFilterActive"></button>
+      </div>
+
+      <div class="file-btn-group">
+        <button kendoButton id="onDownloadBtn" class="k-button" [icon]="'import'" (click)="downloadExcel()"
+          [disabled]="!isFilterActive">Template</button>
+      </div>
+
+      <div class="file-btn-group">
+        <button kendoButton class="k-button onImportBtn" [icon]="'import'">
+          <!-- (click)="p_ExportCurrentMaster()" -->
+        </button>
+        <button kendoButton class="k-button k-btn-xlsx" imageUrl="assets\img\logo\xlsx.svg"></button>
+        <div class="border-center"></div>
+        <span class="k-icon k-i-arrow-chevron-down"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="header header-2">
+    <app-search-filter-group [placeholder]="currentListMode.value == 0 ? 'Tìm kiếm barcode, tên sản phẩm, người bán, thương hiệu'
+    : currentListMode.value == 1 ? 'Tìm kiếm barcode, tên hamper, sản phẩm thuộc hamper' 
+    : 'Tìm kiếm barcode, tên quà tặng, người bán, thương hiệu'" [disabled]="!isFilterActive"
+    (valueChange)="search($event)" (onReset)="resetFilter()"></app-search-filter-group>    
+    <!-- [hidden]="currentListMode.value == 0" -->
+    <!-- <div class="nav-filter nav-btn">
+      <div class="filter-btn-group clear-btn-group">
+        <div class="label">
+          <span class="k-icon k-i-filter"></span>Lọc dữ liệu
+        </div>
+        <button kendoButton class="k-button clear-filter-btn" (click)="resetFilter()">Reset bộ lọc</button>
+      </div>
+
+      <form style="display: flex; flex-grow: 1;" [formGroup]="currentListMode.value == 0 ? searchForm 
+        : currentListMode.value == 1 ? searchFormHamper : searchFormGift">
+        <div class="filter-btn-group search-btn-group">
+          <div class="label">
+            {{currentListMode.value == 0 ? 'Tìm kiếm sản phẩm' : currentListMode.value == 1
+            ? 'Tìm kiếm hamper' : 'Tìm kiếm barcode, tên quà tặng, người bán, thương hiệu'}}
+          </div>
+          <div class="search-btn">
+            <span class="k-icon k-i-search"></span>
+            <kendo-textbox formControlName="SearchQuery" type="text" class="k-textbox" [placeholder]="currentListMode.value == 0 ? 'Tìm kiếm barcode, tên sản phẩm, người bán, thương hiệu'
+               : currentListMode.value == 1 ? 'Tìm kiếm barcode, tên hamper, sản phẩm thuộc hamper' 
+               : 'Tìm kiếm barcode, tên quà tặng, người bán, thương hiệu'">
+            </kendo-textbox>
+          </div>
+        </div>
+
+        <button kendoButton class="k-button searchBtn" [icon]="'search'" (click)="search()"
+          [disabled]="!isFilterActive">TÌM</button>
+      </form>
+
+    </div> -->
+  </div>
+
+  <!-- <div class="header header-2" [hidden]="currentListMode.value == 1">
+    <div class="nav-filter nav-btn">
+      <div class="filter-btn-group clear-btn-group">
+        <div class="label">
+          <span class="k-icon k-i-filter"></span>Lọc dữ liệu
+        </div>
+        <button kendoButton class="k-button clear-filter-btn" (click)="resetFilter()">Reset bộ lọc</button>
+      </div>
+
+      <form style="display: flex; flex-grow: 1;" [formGroup]="searchFormGift">
+        <div class="filter-btn-group search-btn-group">
+          <div class="label">
+            Tìm kiếm quà tặng
+          </div>
+          <div class="search-btn">
+            <span class="k-icon k-i-search"></span>
+            <kendo-textbox formControlName="SearchQuery" type="text" class="k-textbox"
+              placeholder="Tìm kiếm barcode, tên quà tặng, người bán, thương hiệu">
+            </kendo-textbox>
+          </div>
+        </div>
+
+        <button kendoButton class="k-button searchBtn" [icon]="'search'" (click)="search()"
+          [disabled]="!isFilterActive">TÌM</button>
+      </form>
+
+    </div>
+  </div> -->
+
+  <div class="grids grid-wrapper">
+    <!-- START DANH SÁCH SẢN PHẨM -->
+    <!-- <div class="gridGroup1 gridGroup" [hidden]="currentListMode.value != 0"> -->
+      <app-p-kendo-grid [hidden]="currentListMode.value != 0" class="scrollable" [data]="gridView | async" [scrollable]="'none'" [loading]="loading"
+        [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize" [skip]="gridState.skip" [take]="gridState.take"
+        [onPageChangeCallback]="onPageChangeCallback" [allowedMoreActionDropdown]="allowActionDropdown"
+        [onActionDropdownClickCallback]="onActionDropdownClickCallback">
+
+        <kendo-grid-column field="ProductName" title="Tên sản phẩm" class="col_img_tensanpham_masanpham"
+          headerClass="col_img_tensanpham_masanpham">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="img_tensanpham_masanpham">
+              <img loading="lazy" [src]="getRes(dataItem.ImageSetting)" alt="" (error)="handleError()">
+              <div class="tensanpham_masanpham">
+                <div class="tensanpham">{{ dataItem.ProductName }}</div>
+                <div class="masanpham">
+                  {{ dataItem.Barcode + ' | ' + dataItem.Poscode }}
+                  <span class="tinhtrang" >
+                    {{ ' | ' + dataItem.StatusName | colorStatus:dataItem.StatusID }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="BuyerName" title="Nguời bán" class="col_nguoiBan" headerClass="col_nguoiBan">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div><b>{{ dataItem.BuyerName }}</b></div>
+            <div>{{ dataItem.MakerName }}</div>
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="GroupIDCode1" title="Phân nhóm" class="col_phanNhom">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="group1">
+              <b>{{ dataItem.GroupIDCode1 }} : {{ dataItem.GroupIDName1 }}</b>
+            </div>
+            <div class="group2" *ngIf="dataItem.GroupIDCode2 != null && dataItem.GroupIDCode2 != ''">
+              {{ dataItem.GroupIDCode2 }} : {{ dataItem.GroupIDName2 }}
+            </div>
+            <div class="group3" *ngIf="dataItem.GroupIDCode3 != null && dataItem.GroupIDCode3 != ''">
+              <i>{{ dataItem.GroupIDCode3 }} : {{ dataItem.GroupIDName3 }}</i>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="OriginName" title="Xuất xứ" class="col_xuatXu" headerClass="col_xuatXu">
+        </kendo-grid-column>
+
+        <kendo-grid-column field="BrandName" title="Thương hiệu" class="col_thuonghieu">
+        </kendo-grid-column>
+
+        <kendo-grid-column field="UnitPrice" title="Giá bán lẻ" class="col_giaBanLe" headerClass="col_giaBanLe">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            {{ dataItem.UnitPrice | number: '1.' }}
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="IsDate" title="Quản lý Date" class="col_quanLyDate" headerClass="col_quanLyDate">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <input type="checkbox" class="k-checkbox" [checked]="dataItem.IsDate" disabled />
+          </ng-template>
+        </kendo-grid-column>
+      </app-p-kendo-grid>
+    <!-- </div> -->
+    <!-- END DANH SÁCH SẢN PHẨM -->
+    <!-- START DANH SÁCH HAMPER -->
+    <!-- <div class="gridGroup1 gridGroup" [hidden]="currentListMode.value != 1"> -->
+      <app-p-kendo-grid [hidden]="currentListMode.value != 1" class="scrollable" [data]="gridViewH | async" [scrollable]="'none'" [loading]="loading"
+        [pageable]="true" [pageSizes]="pageSizesH" [pageSize]="pageSizeH" [skip]="gridStateH.skip" [take]="gridStateH.take"
+        [onPageChangeCallback]="onPageChangeCallback" [allowedMoreActionDropdown]="allowActionDropdown"
+        [onActionDropdownClickCallback]="onActionDropdownClickCallback">
+
+        <kendo-grid-column field="ProductName" title="Tên hamper" class="col_img_tensanpham_masanpham"
+          headerClass="col_img_tensanpham_masanpham">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="img_tensanpham_masanpham">
+              <img loading="lazy" [src]="getRes(dataItem.ImageSetting)" alt="" (error)="handleError()">
+              <div class="tensanpham_masanpham">
+                <div class="tensanpham">{{ dataItem.ProductName }}</div>
+                <div class="masanpham">
+                  <span class="tinhtrang" >
+                    {{ dataItem.StatusName | colorStatus:dataItem.StatusID }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="Barcode" title="Barcode">
+        </kendo-grid-column>
+
+        <!-- <kendo-grid-column field="BuyerName" title="Nguời bán" class="col_nguoiBan" headerClass="col_nguoiBan">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div><b>{{ dataItem.BuyerName }}</b></div>
+            <div>{{ dataItem.MakerName }}</div>
+          </ng-template>
+        </kendo-grid-column> -->
+
+        <!-- <kendo-grid-column field="GroupIDCode1" title="Phân nhóm" class="col_phanNhom">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="group1">
+              <b>{{ dataItem.GroupIDCode1 }} : {{ dataItem.GroupIDName1 }}</b>
+            </div>
+            <div class="group2" *ngIf="dataItem.GroupIDCode2 != null && dataItem.GroupIDCode2 != ''">
+              {{ dataItem.GroupIDCode2 }} : {{ dataItem.GroupIDName2 }}
+            </div>
+            <div class="group3" *ngIf="dataItem.GroupIDCode3 != null && dataItem.GroupIDCode3 != ''">
+              <i>{{ dataItem.GroupIDCode3 }} : {{ dataItem.GroupIDName3 }}</i>
+            </div>
+          </ng-template>
+        </kendo-grid-column> -->
+
+        <kendo-grid-column field="OriginName" title="Xuất xứ" class="col_xuatXu" headerClass="col_xuatXu">
+        </kendo-grid-column>
+
+        <kendo-grid-column field="BrandName" title="Thương hiệu" class="col_thuonghieu">
+        </kendo-grid-column>
+        
+        <kendo-grid-column field="MakerName" title="Nhà sản xuất" class="col_nhasanxuat">
+        </kendo-grid-column>
+
+        <kendo-grid-column field="UnitPrice" title="Giá bán lẻ" class="col_giaBanLe" headerClass="col_giaBanLe">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            {{ dataItem.UnitPrice | number: '1.' }}
+          </ng-template>
+        </kendo-grid-column>
+
+        <!-- <kendo-grid-column field="IsDate" title="Quản lý Date" class="col_quanLyDate" headerClass="col_quanLyDate">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <input type="checkbox" class="k-checkbox" [checked]="dataItem.IsDate" disabled />
+          </ng-template>
+        </kendo-grid-column> -->
+      </app-p-kendo-grid>
+    <!-- </div> -->
+    <!-- END DANH SÁCH HAMPER -->
+    <!-- START DANH SÁCH QUÀ TẶNG -->
+    <!-- <div class="gridGroup2 gridGroup" [hidden]="currentListMode.value != 2"> -->
+      <app-p-kendo-grid [hidden]="currentListMode.value != 2" class="scrollable" [data]="gridViewG | async" [scrollable]="'none'" [loading]="loading"
+        [pageable]="true" [pageSizes]="pageSizesG" [pageSize]="pageSizeG" [skip]="gridStateG.skip"
+        [take]="gridStateG.take" [onPageChangeCallback]="onPageChangeCallback"
+        [allowedMoreActionDropdown]="allowActionDropdown"
+        [onActionDropdownClickCallback]="onActionDropdownClickCallback">
+
+        <kendo-grid-column field="ProductName" title="Tên quà tặng" class="img_tensanpham_masanpham">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <img loading="lazy" [src]="getRes(dataItem.ImageSetting)" alt="" (error)="handleError()">
+            <div class="tensanpham_masanpham">
+              <div class="tensanpham">{{ dataItem.ProductName }}</div>
+              <div class="masanpham">
+                {{ dataItem.Barcode + ' | ' + dataItem.Poscode }}
+                <span class="tinhtrang" >
+                  {{ ' | ' + dataItem.StatusName | colorStatus:dataItem.StatusID }}
+                </span>
+              </div>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="BuyerName" title="Nguời bán" class="col_nguoiBan" headerClass="col_nguoiBan">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div><b>{{ dataItem.BuyerName }}</b></div>
+            <div>{{ dataItem.MakerName }}</div>
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="GroupIDCode1" title="Phân nhóm" class="col_phanNhom">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="group1">
+              <b>{{ dataItem.GroupIDCode1 }} : {{ dataItem.GroupIDName1 }}</b>
+            </div>
+            <div class="group2" *ngIf="dataItem.GroupIDCode2 != null && dataItem.GroupIDCode2 != ''">
+              {{ dataItem.GroupIDCode2 }} : {{ dataItem.GroupIDName2 }}
+            </div>
+            <div class="group3" *ngIf="dataItem.GroupIDCode3 != null && dataItem.GroupIDCode3 != ''">
+              <i>{{ dataItem.GroupIDCode3 }} : {{ dataItem.GroupIDName3 }}</i>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="OriginName" title="Xuất xứ" class="col_xuatXu" headerClass="col_xuatXu">
+        </kendo-grid-column>
+
+        <kendo-grid-column field="BrandName" title="Thương hiệu" class="col_thuonghieu">
+        </kendo-grid-column>
+
+        <kendo-grid-column field="UnitPrice" title="Giá bán lẻ" class="col_giaBanLe" headerClass="col_giaBanLe">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            {{ dataItem.UnitPrice | number: '1.' }}
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="IsDate" title="Quản lý Date" class="col_quanLyDate" headerClass="col_quanLyDate">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <input type="checkbox" class="k-checkbox" [checked]="dataItem.IsDate" disabled />
+          </ng-template>
+        </kendo-grid-column>
+      </app-p-kendo-grid>
+    <!-- </div> -->
+    <!-- END DANH SÁCH QUÀ TẶNG -->
+  </div>
+
+</div>
+
+<app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>

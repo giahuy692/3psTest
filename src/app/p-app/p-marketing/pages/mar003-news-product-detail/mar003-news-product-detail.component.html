@@ -1,0 +1,237 @@
+<div class="mar003-news-product-detail">
+  <div class="header header-1">
+    <div class="nav-btn nav-breadcrumb">
+      <div class="breadcrumb-item">
+        NỘI DUNG WEBSITE
+      </div>
+      <div class="breadcrumb-chevron">
+        <span class="k-icon k-i-arrow-chevron-right"></span>
+      </div>
+      <div class="breadcrumb-item">
+        GIỚI THIỆU SẢN PHẨM
+      </div>
+    </div>
+
+    <div class="nav-btn nav-crud">
+      <!-- <button kendoButton id="onAddBtn" class="k-button crud-btn" [icon]="'save'" (click)="saveWebContent()"
+        >
+        LƯU</button> -->
+
+      <button kendoButton class="crud-btn k-button updateStatusBtn"
+        *ngIf="(isToanQuyen || isAllowedToCreate) && !isAdd && (webContent.StatusID == 0 || webContent.StatusID == 4)"
+        [icon]="'redo'" (click)="onUpdateWebContentStatus(1)">
+        GỬI DUYỆT
+      </button>
+
+      <button kendoButton class="crud-btn k-button updateStatusBtn"
+        *ngIf="(isToanQuyen || isAllowedToVerify) && !isAdd && (webContent.StatusID == 1 || webContent.StatusID == 3)"
+        [icon]="'check-outline'" (click)="onUpdateWebContentStatus(2)">
+        PHÊ DUYỆT
+      </button>
+
+      <button kendoButton class="crud-btn k-button updateStatusBtn red"
+        *ngIf="(isToanQuyen || isAllowedToVerify) && !isAdd && (webContent.StatusID == 1 || webContent.StatusID == 3)"
+        [icon]="'undo'" (click)="onUpdateWebContentStatus(4)">
+        TRẢ VỀ
+      </button>
+
+      <button kendoButton class="crud-btn k-button updateStatusBtn red"
+        *ngIf="(isToanQuyen || isAllowedToVerify) && !isAdd && webContent.StatusID == 2" [icon]="'minus-outline'"
+        (click)="onUpdateWebContentStatus(3)">
+        NGƯNG HIỂN THỊ
+      </button>
+
+      <button kendoButton class="crud-btn k-button onDeleteBtn" [icon]="'trash'"
+        *ngIf="(isToanQuyen || isAllowedToCreate) && webContent.StatusID == 0 && !isAdd" (click)="onDeletePromotion()">
+        XÓA BÀI VIẾT
+      </button>
+
+      <button kendoButton id="onAddBtn" class="k-button crud-btn" [icon]="'plus'" (click)="createNewPromotion()"
+        *ngIf="isToanQuyen || isAllowedToCreate">
+        TẠO MỚI</button>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="sections">
+      <div class="section" id="thongtinsanphamTbl">
+        <div class="title">THÔNG TIN SẢN PHẨM
+          <!-- <span class="type green">{{webContent.VNName}}</span> -->
+
+        </div>
+
+        <div class="section-grid">
+          <div class="grid-item item1">
+            <div class="label">Hình ảnh
+              <!-- <button kendoButton icon="export" [disabled]="isLockAll" (click)="onUploadFile(1)"
+                      ></button> -->
+            </div>
+            <img loading="lazy" [src]="webContent.ImageSetting" class="w-100 bigImg">
+          </div>
+
+          <div class="grid-item item2">
+            <div class="label">Mã sản phẩm </div>
+            <kendo-textbox type="text" class="k-textbox" [(ngModel)]="webContent.Barcode"
+              (blur)="onTextboxLoseFocus('Barcode')" (keydown.Enter)="$event.target.blur()" [disabled]="isLockAll">
+            </kendo-textbox>
+          </div>
+
+          <div class="grid-item item3">
+            <div class="label">Tên sản phẩm hiển thị trên web</div>
+            <div>{{ webContent.WebName }}&nbsp;</div>
+          </div>
+
+          <div class="grid-item item4">
+            <div class="label">Xuất xứ</div>
+            <div>{{ webContent.Origin }}&nbsp;</div>
+          </div>
+
+          <div class="grid-item item5">
+            <div class="label">Tên sản phẩm</div>
+            <div>{{ webContent.VNName }}&nbsp;</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="sections">
+      <div class="section" id="baivietsanphamTbl">
+        <div class="title">BÀI VIẾT VỀ SẢN PHẨM
+
+          <span class="languages">
+            <span class="borderRight vietnamese" [ngClass]="{'active': curLanguage == 1 }"
+              (click)="changeLanguage(1)">Tiếng Việt</span>
+            <span class="borderRight japanese" [ngClass]="{'active': curLanguage == 2 }"
+              (click)="changeLanguage(2)">日本語</span>
+            <span class="english" [ngClass]="{'active': curLanguage == 3 }" (click)="changeLanguage(3)">English</span>
+          </span>
+        </div>
+
+      </div>
+
+      <div class="" id="editor">
+        <app-p-kendo-editor style="height: 100vh;" [readonly]="isLockAll"
+          [content]="curLanguage == 1 ? webContent.WebContentVN : curLanguage == 2 ? webContent.WebContentJP : webContent.WebContentEN"
+          (valueChange)="onEditorValueChange($event)" (saveEvent)="saveWebContent()">
+
+        </app-p-kendo-editor>
+
+        <!-- <kendo-editor id="myeditor" #myeditor style="height: 100vh;" [readonly]="isLockAll"
+          [ngModel]="curLanguage == 1 ? webContent.WebContentVN : curLanguage == 2 ? webContent.WebContentJP : webContent.WebContentEN"
+          (ngModelChange)="onEditorValueChange($event)">
+
+          <kendo-toolbar>
+            <kendo-toolbar-buttongroup>
+              <kendo-toolbar-button kendoEditorUndoButton></kendo-toolbar-button>
+              <kendo-toolbar-button kendoEditorRedoButton></kendo-toolbar-button>
+            </kendo-toolbar-buttongroup>
+            <kendo-toolbar-buttongroup>
+              <kendo-toolbar-button kendoEditorBoldButton></kendo-toolbar-button>
+              <kendo-toolbar-button kendoEditorItalicButton></kendo-toolbar-button>
+              <kendo-toolbar-button kendoEditorUnderlineButton></kendo-toolbar-button>
+              <kendo-toolbar-button kendoEditorStrikethroughButton></kendo-toolbar-button>
+            </kendo-toolbar-buttongroup>
+            <kendo-toolbar-buttongroup>
+              <kendo-toolbar-button kendoEditorSubscriptButton></kendo-toolbar-button>
+              <kendo-toolbar-button kendoEditorSuperscriptButton></kendo-toolbar-button>
+            </kendo-toolbar-buttongroup>
+            <kendo-toolbar-buttongroup>
+              <kendo-toolbar-button kendoEditorAlignLeftButton></kendo-toolbar-button>
+              <kendo-toolbar-button kendoEditorAlignCenterButton></kendo-toolbar-button>
+              <kendo-toolbar-button kendoEditorAlignRightButton></kendo-toolbar-button>
+              <kendo-toolbar-button kendoEditorAlignJustifyButton></kendo-toolbar-button>
+            </kendo-toolbar-buttongroup>
+            <kendo-toolbar-buttongroup>
+              <kendo-toolbar-button kendoEditorIndentButton></kendo-toolbar-button>
+              <kendo-toolbar-button kendoEditorOutdentButton></kendo-toolbar-button>
+              <kendo-toolbar-button kendoEditorInsertUnorderedListButton></kendo-toolbar-button>
+              <kendo-toolbar-button kendoEditorInsertOrderedListButton></kendo-toolbar-button>
+            </kendo-toolbar-buttongroup>
+            <kendo-toolbar-dropdownlist kendoEditorFormat></kendo-toolbar-dropdownlist>
+            <kendo-toolbar-dropdownlist kendoEditorFontSize></kendo-toolbar-dropdownlist>
+            <kendo-toolbar-dropdownlist kendoEditorFontFamily></kendo-toolbar-dropdownlist>
+            <kendo-toolbar-colorpicker kendoEditorForeColor></kendo-toolbar-colorpicker>
+            <kendo-toolbar-colorpicker kendoEditorBackColor view="gradient"></kendo-toolbar-colorpicker>
+            <kendo-editor-insert-table-button></kendo-editor-insert-table-button>
+            <kendo-toolbar-buttongroup>
+              <kendo-toolbar-button kendoEditorAddColumnBeforeButton></kendo-toolbar-button>
+              <kendo-toolbar-button kendoEditorAddColumnAfterButton></kendo-toolbar-button>
+              <kendo-toolbar-button kendoEditorAddRowBeforeButton></kendo-toolbar-button>
+              <kendo-toolbar-button kendoEditorAddRowAfterButton></kendo-toolbar-button>
+            </kendo-toolbar-buttongroup>
+            <kendo-toolbar-buttongroup>
+              <kendo-toolbar-button kendoEditorDeleteColumnButton></kendo-toolbar-button>
+              <kendo-toolbar-button kendoEditorDeleteRowButton></kendo-toolbar-button>
+              <kendo-toolbar-button kendoEditorDeleteTableButton></kendo-toolbar-button>
+            </kendo-toolbar-buttongroup>
+            <kendo-toolbar-buttongroup>
+              <kendo-toolbar-button kendoEditorCreateLinkButton></kendo-toolbar-button>
+              <kendo-toolbar-button kendoEditorUnlinkButton></kendo-toolbar-button>
+            </kendo-toolbar-buttongroup>
+            <kendo-toolbar-button kendoEditorCleanFormattingButton></kendo-toolbar-button>
+
+            <kendo-toolbar-buttongroup>
+              <kendo-toolbar-button kendoEditorViewSourceButton></kendo-toolbar-button>
+              <kendo-toolbar-button kendoEditorInsertFileButton></kendo-toolbar-button>
+              <kendo-toolbar-button kendoButton [icon]="'image'" (click)="onUploadImg()" title="Insert Image Link">
+              </kendo-toolbar-button>
+              <kendo-toolbar-button kendoButton [icon]="'video-external'" (click)="onEmbedVideoURL()"
+                title="Insert Video Link">
+              </kendo-toolbar-button>
+              <kendo-toolbar-button kendoButton [icon]="'save'" title="Lưu" class="editorSaveBtn"
+                (click)="saveWebContent()">
+              </kendo-toolbar-button>
+            </kendo-toolbar-buttongroup>
+          </kendo-toolbar>
+        </kendo-editor>
+
+        <kendo-popup class="iframePopup" [anchor]="currentAnchor" [hidden]="popupShow == false"
+          [anchorAlign]="{ horizontal:'right', vertical: 'top'}" [popupAlign]="{ horizontal:'left', vertical: 'top'}"
+          style="position: 'absolute !important'; margin-top: '150px'; margin-left: '-30px';">
+          <button kendoButton icon="pencil" (click)="editIframe()" ></button>
+        </kendo-popup> -->
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- popup confirm delete -->
+<kendo-dialog #dialog class="deleteDialog" title="Xóa Bài Viết" [hidden]="!deleteDialogOpened"
+  (close)="closeDeleteDialog()" [minWidth]="250">
+  <p style="margin: 30px; text-align: center;">
+    Bạn chắc chắn muốn xóa vĩnh viễn Bài viết cho Sản phẩm&nbsp;
+    "{{ webContent.VNName }}"
+    &nbsp;này?</p>
+  <div class="dialog-footer">
+    <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteDialog()" [icon]="'close'">Không</button>
+    <button kendoButton class="btn-hachi hachi-warning" (click)="delete()" [icon]="'trash'">Có</button>
+  </div>
+</kendo-dialog>
+
+<app-folder-popup [pickFileCallback]="pickFileCallback" [GetFolderCallback]="GetFolderCallback" [canResize]="true">
+</app-folder-popup>
+
+<!-- <kendo-dialog class="videoURLdialog" title="{{isAddVideo ? 'Chèn' : 'Sửa' + ' link video clip'}}"
+  [hidden]="!isVideoURLdialog" (close)="closeVideoURLdialog()" [minWidth]="350">
+  <form style="display: flex; flex-grow: 1;" [formGroup]="videoURLform">
+    <div class="label">Link tới video</div>
+    <kendo-textbox formControlName="URL" type="text" class="k-textbox"
+      placeholder="https://www.youtube.com/watch?v=abcdef" title="Link youtube không được dùng timestamp">
+    </kendo-textbox>
+
+    <div class="label">Chiều rộng</div>
+    <kendo-numerictextbox formControlName="Width" format="#,0 px" [min]="100" placeholder="100">
+    </kendo-numerictextbox>
+
+    <div class="label">Chiều cao</div>
+    <kendo-numerictextbox formControlName="Height" format="#,0 px" [min]="50" placeholder="50">
+    </kendo-numerictextbox>
+  </form>
+  <div class="dialog-footer">
+    <button kendoButton class="btn-hachi hachi-secondary" (click)="closeVideoURLdialog()" [icon]="'close'">Hủy</button>
+    <button kendoButton class="btn-hachi hachi-primary" (click)="embedVideoURL()" [icon]="'link'">OK</button>
+  </div>
+</kendo-dialog> -->

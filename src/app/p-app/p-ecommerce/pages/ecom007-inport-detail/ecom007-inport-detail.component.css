@@ -1,0 +1,428 @@
+<<<<<<< HEAD
+::ng-deep .mat-drawer .masanpham .img {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
+
+=======
+>>>>>>> phong.co/PostList
+::ng-deep .mat-drawer .minmax {
+  margin-top: 1rem;
+}
+
+::ng-deep .mat-drawer .minmax .k-label,
+::ng-deep .mat-drawer .minmax .k-form-field {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+::ng-deep .mat-drawer .formfield-grid {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  column-gap: 5px;
+}
+
+::ng-deep .mat-drawer .formfield-grid .item1_1 {
+  grid-column: 1;
+  grid-row: 1;
+  margin-top: 1rem;
+}
+
+::ng-deep .mat-drawer .formfield-grid .item1_2 {
+  grid-column: 1;
+  grid-row: 2;
+  margin-top: 1rem;
+}
+
+::ng-deep .mat-drawer .formfield-grid .item1_3 {
+  grid-column: 1;
+  grid-row: 3;
+  margin-top: 1rem;
+}
+
+::ng-deep .mat-drawer .formfield-grid .item2 {
+  margin-top: 1rem;
+  grid-column: 2;
+  grid-row: 1 / span 3;
+}
+
+::ng-deep .mat-drawer .formfield-grid .item2 img {
+  width: 100%;
+}
+
+::ng-deep .mat-drawer .dieukien {
+  margin-top: 1rem;
+}
+
+::ng-deep .mat-drawer .dieukien .k-label {
+  margin-bottom: 0;
+}
+
+::ng-deep .mat-drawer .dieukien .onsite_item {
+  padding-left: 30px;
+  margin-top: 0.5rem;
+}
+
+::ng-deep .mat-drawer .dieukien .onsite_item.red {
+  color: #EB273A;
+}
+
+::ng-deep .mat-drawer .dieukien .onsite_item .k-checkbox {
+  float: right;
+}
+
+::ng-deep .app-ecom007-inport-detail {
+  height: calc(93vh - 30px);
+  padding: 0 15px 35px 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+::ng-deep .app-ecom007-inport-detail .header-1 .nav-crud {
+  margin-left: auto;
+}
+
+::ng-deep .app-ecom007-inport-detail .header-2 .nav-file {
+  margin-left: auto;
+}
+
+::ng-deep .app-ecom007-inport-detail .body .sections .section .title {
+  margin: 12px 0;
+  font-weight: bold;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+::ng-deep .app-ecom007-inport-detail .body .sections .section .crud-btn {
+  height: 32px;
+  font-size: 11px;
+  font-weight: bold;
+  background-color: #1a6634 !important;
+  color: white;
+}
+
+::ng-deep .app-ecom007-inport-detail .body .sections .section .section-grid {
+  display: grid;
+  column-gap: 27px;
+  row-gap: 10px;
+  background-color: white;
+  padding: 15px;
+}
+
+::ng-deep .app-ecom007-inport-detail .body .sections .section .section-grid .grid-item {
+  display: flex;
+  flex-direction: column;
+}
+
+::ng-deep .app-ecom007-inport-detail .body .sections .section .section-grid .k-textbox {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .app-ecom007-inport-detail .body .sections .section .section-grid .k-numerictextbox {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .app-ecom007-inport-detail .body .sections .section .section-grid .k-numerictextbox.red-color input {
+  color: #EB273A;
+}
+
+::ng-deep .app-ecom007-inport-detail .body .sections .section .section-grid .k-dropdown {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .app-ecom007-inport-detail .body .sections .section .section-grid .k-datepicker {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .app-ecom007-inport-detail .body .sections .section .section-grid .k-timepicker {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .app-ecom007-inport-detail .body .sections .section .section-grid .k-timepicker .k-input {
+  width: 70px;
+}
+
+::ng-deep .app-ecom007-inport-detail .body .sections .section .section-grid .k-checkbox {
+  margin-right: 10px;
+}
+
+::ng-deep .app-ecom007-inport-detail .body .sections .section .section-grid textarea {
+  resize: none;
+  border-radius: 3px;
+  border-color: rgba(0, 0, 0, 0.08);
+  outline: none;
+  height: 100%;
+  padding: 4px 8px;
+}
+
+::ng-deep .app-ecom007-inport-detail .body .sections .section .section-grid textarea:hover, ::ng-deep .app-ecom007-inport-detail .body .sections .section .section-grid textarea:focus-visible {
+  border-color: #1a6634;
+}
+
+::ng-deep .app-ecom007-inport-detail .body .sections .section .section-grid label {
+  margin-bottom: 0;
+}
+
+::ng-deep .app-ecom007-inport-detail .body .sections .section .section-grid .input_label {
+  margin-bottom: 10px;
+}
+
+::ng-deep .app-ecom007-inport-detail .body .sections .section .section-grid .row {
+  align-items: center;
+  margin-bottom: 7px;
+}
+
+::ng-deep .app-ecom007-inport-detail .body .sections .section .section-grid .subrow {
+  margin-left: 20px;
+}
+
+::ng-deep .app-ecom007-inport-detail #thongtinkhuyenmaiTbl .title {
+  justify-content: flex-start;
+  column-gap: 15px;
+}
+
+::ng-deep .app-ecom007-inport-detail #thongtinkhuyenmaiTbl .title .languages {
+  margin-left: auto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 20px;
+  color: #bbc0bb;
+}
+
+::ng-deep .app-ecom007-inport-detail #thongtinkhuyenmaiTbl .title .languages .active,
+::ng-deep .app-ecom007-inport-detail #thongtinkhuyenmaiTbl .title .languages :hover {
+  color: #626662;
+  cursor: pointer;
+}
+
+::ng-deep .app-ecom007-inport-detail #thongtinkhuyenmaiTbl .title .languages .borderRight {
+  border-right: 1px solid #bbc0bb;
+  padding-right: 5px;
+  margin-right: 5px;
+}
+
+::ng-deep .app-ecom007-inport-detail #thongtinkhuyenmaiTbl .section-grid {
+  grid-template-columns: 300px 300px 300px;
+}
+
+::ng-deep .app-ecom007-inport-detail #thongtinkhuyenmaiTbl .section-grid .item1_1 {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+::ng-deep .app-ecom007-inport-detail #thongtinkhuyenmaiTbl .section-grid .item1_2 {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+::ng-deep .app-ecom007-inport-detail #thongtinkhuyenmaiTbl .section-grid .item1_3 {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+::ng-deep .app-ecom007-inport-detail #thongtinkhuyenmaiTbl .section-grid .item1_4 {
+  grid-column: 1;
+  grid-row: 4;
+}
+
+::ng-deep .app-ecom007-inport-detail #thongtinkhuyenmaiTbl .section-grid .item1_5 {
+  grid-column: 1;
+  grid-row: 5;
+}
+
+::ng-deep .app-ecom007-inport-detail #thongtinkhuyenmaiTbl .section-grid .item2_1 {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+<<<<<<< HEAD
+::ng-deep .app-ecom007-inport-detail #thongtinkhuyenmaiTbl .section-grid .item2_1 .k-combobox {
+  width: 100%;
+}
+
+::ng-deep .app-ecom007-inport-detail #thongtinkhuyenmaiTbl .section-grid .item2_2 {
+  grid-column: 2 / span 2;
+=======
+::ng-deep .app-ecom007-inport-detail #thongtinkhuyenmaiTbl .section-grid .item2_1 .k-dropdown {
+  flex-grow: 0;
+}
+
+::ng-deep .app-ecom007-inport-detail #thongtinkhuyenmaiTbl .section-grid .item2_2 {
+  grid-column: 2/span 2;
+>>>>>>> phong.co/PostList
+  grid-row: 2;
+}
+
+::ng-deep .app-ecom007-inport-detail #thongtinkhuyenmaiTbl .section-grid .item2_3 {
+<<<<<<< HEAD
+  grid-column: 2 / span 2;
+=======
+  grid-column: 2/span 2;
+>>>>>>> phong.co/PostList
+  grid-row: 3;
+}
+
+::ng-deep .app-ecom007-inport-detail #thongtinkhuyenmaiTbl .section-grid .item2_4 {
+  grid-column: 2;
+  grid-row: 4;
+}
+
+::ng-deep .app-ecom007-inport-detail #thongtinkhuyenmaiTbl .section-grid .item3_1 {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid thead tr {
+  height: fit-content !important;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid thead tr th {
+  padding: 0 12px;
+  height: 13px;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid tr:not(.k-grouping-row) td:first-child {
+  padding-left: 10px !important;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid .col_img_tensanpham_masanpham {
+  max-width: 400px;
+  width: 400px;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid .img_tensanpham_masanpham {
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid .img_tensanpham_masanpham img {
+  max-height: 64px;
+  max-width: 64px;
+  width: 100%;
+  margin-right: 10px;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid .img_tensanpham_masanpham .tensanpham_masanpham {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid .img_tensanpham_masanpham .tensanpham_masanpham .tensanpham {
+  white-space: normal;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid .img_tensanpham_masanpham .tensanpham_masanpham .masanpham {
+  color: #5c6873;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid .img_tensanpham_masanpham .tensanpham_masanpham .tinhtrang.red {
+  color: #EB273A;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid .img_tensanpham_masanpham .tensanpham_masanpham .tinhtrang.green {
+  color: #1a6634;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid .col_giaBan,
+::ng-deep .app-ecom007-inport-detail .k-grid .col_dieuKien {
+  text-align: center;
+}
+
+<<<<<<< HEAD
+::ng-deep .app-ecom007-inport-detail .k-grid .col_giaBan .red,
+::ng-deep .app-ecom007-inport-detail .k-grid .col_dieuKien .red {
+  color: #EB273A;
+}
+
+=======
+>>>>>>> phong.co/PostList
+::ng-deep .app-ecom007-inport-detail .k-grid .col_giaBan > .k-link,
+::ng-deep .app-ecom007-inport-detail .k-grid .col_dieuKien > .k-link {
+  justify-content: center;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid .col_ngayDuyet {
+  text-align: right;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid .col_ngayDuyet > .k-link {
+  justify-content: flex-end;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid .col_ngayDuyet .StartDate {
+  color: #1a6634;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid .col_ngayDuyet .EndDate {
+  color: #EB273A;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid .col_dieuKien .green {
+  color: #1a6634;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid .col_dieuKien .red {
+  color: #EB273A;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid .col_tinhTrang {
+  padding-right: 50px;
+  text-align: right;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid .col_tinhTrang > .k-link {
+  justify-content: flex-end;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid .col_tinhTrang .green {
+  color: #1a6634;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid .col_tinhTrang .red {
+  color: #EB273A;
+}
+
+::ng-deep .app-ecom007-inport-detail .k-grid .col_tinhTrang .yellow {
+  color: #FFB900;
+}
+
+::ng-deep .app-ecom007-inport-detail .myCustomGrid.k-grid tr:not(.k-grouping-row) td:first-child {
+  padding-left: 0;
+}
+
+::ng-deep .app-ecom007-inport-detail .label {
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #8f9ba6;
+}
+
+::ng-deep .app-ecom007-inport-detail .label.thick-label {
+  color: #23282c;
+}
+
+::ng-deep .app-ecom007-inport-detail .label.thick-label + .number {
+  font-weight: bold;
+}
+
+::ng-deep .app-ecom007-inport-detail .label.thick-label + .k-numerictextbox input {
+  font-weight: bold;
+}
+
+::ng-deep .app-ecom007-inport-detail .label.thin-label {
+  font-weight: normal;
+  color: #2f353a;
+}
+
+::ng-deep .dropdownDonVi_subitem {
+  padding-left: 20px;
+}

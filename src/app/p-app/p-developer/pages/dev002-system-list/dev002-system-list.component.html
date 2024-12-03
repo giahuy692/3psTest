@@ -1,0 +1,567 @@
+<div class="app-drawer-container">
+  <mat-drawer-container [hasBackdrop]="true">
+
+    <!-- Center Content -->
+    <mat-drawer-content>
+
+      <div class="app-developer002-system-list">
+
+        <!-- HEADER 1: BREAD CUM AND BUTTON ADD -->
+        <div class="header header-1">
+          <app-p-kendo-breadcrumb (loadData)="getApi()"></app-p-kendo-breadcrumb>
+          <div class="nav-btn nav-crud">
+
+            <!-- START BUTTON MODULE HEADER-->
+            <button *ngIf="showBtnAddModule" kendoButton class=" onAddBtn k-button btn-hachi hachi-primary"
+              [disabled]="" imageUrl="assets/img/icon/icon_site_map.svg"
+              (click)="onOpenDrawer('create','module', null,'sameLevel')">
+              THÊM MỚI MODULE
+            </button>
+
+            <button *ngIf="showBtnAddModuleChild" kendoButton class=" onAddBtn k-button btn-hachi hachi-primary"
+              [disabled]="" imageUrl="assets/img/icon/icon_site_map.svg"
+              (click)="onOpenDrawer('create','module', null, 'childLevel')">
+              THÊM MỚI MODULE CON
+            </button>
+            <!-- END BUTTON MODULE HEADER-->
+
+            <!-- START BUTTON FUNCTION HEADER-->
+            <button *ngIf="showBtnAddFunc" kendoButton class=" onAddBtn k-button btn-hachi hachi-primary" [disabled]=""
+              imageUrl="assets/img/icon/icon_server.svg" (click)="onOpenDrawer('create','function',null,'sameLevel')">
+              THÊM MỚI TÍNH NĂNG
+            </button>
+
+            <button *ngIf="showBtnAddFuncChild" kendoButton class=" onAddBtn k-button btn-hachi hachi-primary"
+              [disabled]="" imageUrl="assets/img/icon/icon_server.svg"
+              (click)="onOpenDrawer('create','function',null, 'childLevel')">
+              THÊM MỚI TÍNH NĂNG CON
+            </button>
+            <!-- END BUTTON MODULE HEADER-->
+
+            <!-- START BUTTON ACTION HEADER-->
+            <button *ngIf="showBtnAddAct" kendoButton class=" onAddBtn k-button btn-hachi hachi-primary"
+              [icon]="'share'" (click)="onOpenDrawer('create', 'action',null,'sameLevel')">
+              THÊM MỚI CHỨC NĂNG
+            </button>
+
+            <button *ngIf="showBtnAddActChild" kendoButton class=" onAddBtn k-button btn-hachi hachi-primary"
+              [icon]="'share'" (click)="onOpenDrawer('create', 'action',null, 'childLevel')">
+              THÊM MỚI CHỨC NĂNG CON
+            </button>
+            <!-- END BUTTON ACTION HEADER-->
+
+          </div>
+        </div>
+
+        <!-- HEADER 2: SEARCH -->
+        <div class="header header-2">
+          <div id="functionbar">
+            <app-search-filter-group placeholder="Tìm theo mã, tên, module/tính năng" [disabled]="false"
+              (onReset)="onResetFilter($event)" (filterChange)="onSearch($event)"
+              [fields]="['Vietnamese','ModuleID','DLLPackage']" [ignoreCase]="true">
+            </app-search-filter-group>
+          </div>
+        </div>
+
+        <!-- TREE SYSTEM LIST  -->
+        <div class="treelist-wrapper">
+          <kendo-treelist #treeListSystem [data]=" rootData" [fetchChildren]="fetchChildren" [loading]="isLoading"
+            [hasChildren]="hasChildren" kendoTreeListSelectable [hideHeader]="true" [selectable]="settings"
+            [(expandedKeys)]="itemCollapsed" (selectionChange)="selectionChange($event)" [initiallyExpanded]="true"
+            kendoTreeListExpandable>
+
+
+            <!-- Column1 -->
+            <kendo-treelist-column [expandable]="true">
+              <ng-template kendoTreeListCellTemplate let-dataItem>
+                <div class="colNameTree colNameTreeBold" *ngIf="dataItem.ListGroup || dataItem.ListFunctions ">
+                  <img loading="lazy" class="colName-icon" src="assets/img/icon/icon_departmentGray.svg" />
+                  <div class="text-name">
+                    <span> {{ dataItem.Vietnamese }}</span>
+                  </div>
+
+                  <p class="text-id">
+                    {{ dataItem.ModuleID }}
+                  </p>
+                </div>
+
+                <div class="colNameTree" *ngIf="dataItem.DLLPackage">
+                  <img loading="lazy" class="colName-icon" src="assets/img/icon/icon_serverGray.svg" />
+                  <p class="text-name"> {{ dataItem.Vietnamese }}</p>
+                  <p class="text-id">
+                    {{ dataItem.DLLPackage }}
+                  </p>
+                </div>
+
+
+                <div class="colNameTree" *ngIf="dataItem.ActionName">
+                  <img loading="lazy" class="colName-icon" src="assets/img/icon/icon_share.svg" />
+                  <p class="text-name"> {{ dataItem.ActionName }} </p>
+                  <p class="text-id italics">
+                    Loại: {{ dataItem.TypeData }}
+                  </p>
+                </div>
+              </ng-template>
+            </kendo-treelist-column>
+
+            <!-- Column2 -->
+            <kendo-treelist-column field="id" [width]="50">
+              <ng-template kendoTreeListCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <kendo-button #anchor class="k-button k-button-icon togglePopup" [ngClass]="{'opendPopup':popupShow}"
+                  icon="more-horizontal" (click)="togglePopup(rowIndex, dataItem)"></kendo-button>
+              </ng-template>
+            </kendo-treelist-column>
+          </kendo-treelist>
+        </div>
+      </div>
+    </mat-drawer-content>
+
+    <!-- Drawer -->
+    <mat-drawer #Drawer [mode]="'over'" position="end" [hasBackdrop]="true" (keydown.Enter)="onKeydownEnter($event)"
+      [disableClose]='true'>
+      <!-- [disableClose]='true' -->
+      <div class="formModule">
+        <legend class="title-formSystem">{{currentDrawer == 'module' ? 'THÔNG TIN MODULE' : currentDrawer == 'function'
+          ? 'THÔNG TIN TÍNH NĂNG' : 'THÔNG TIN CHỨC NĂNG'}}</legend>
+        <div class="container-form">
+          <form class="formSystem " [formGroup]="MultiOOPForm">
+            <kendo-label class="k-form customLabel">
+              <div class="lable">
+                <span class="labelName">
+                  <span class="name">{{currentDrawer == 'module' ? 'Tên module' : currentDrawer == 'function' ?
+                    'Tên tính năng' : 'Tên chức năng'}}</span>
+                  <span class="symbol">(*)</span>
+                  <span class="line"> | </span>
+                  <span class="codeCompany">{{MultiOOPForm.get('Code').value}}</span>
+                </span>
+
+                <div class="labelisVisible d-flex align-items-center"
+                  *ngIf="currentDrawer == 'module' || currentDrawer == 'action'">
+                  <span class="isVisible"> Hiển thị lên phần mềm <span class="symbol">(*)</span> </span>
+                  <input type="checkbox" class="k-checkbox" [checked]="true" formControlName="IsVisible" />
+                </div>
+
+              </div>
+              <app-p-textbox *ngIf="currentDrawer == 'action'" [propName]="'ActionName'"
+                formControlName="ActionName"></app-p-textbox>
+              <app-p-textbox [propName]="'Vietnamese'" *ngIf="currentDrawer !== 'action'"
+                formControlName="Vietnamese"></app-p-textbox>
+
+            </kendo-label>
+
+
+
+            <kendo-label class="k-form mt-10 d-block customLabel">
+              <div class="lable">
+                <span class="labelName"><span class="name">
+                    {{currentDrawer == 'module' || currentDrawer == 'action' ? 'Nhóm cấp cha': 'Module'}}
+                  </span>
+                  <span *ngIf="currentDrawer == 'function'" class="symbol">(*)</span></span>
+              </div>
+
+
+              <!-- dropdown của module-->
+              <kendo-dropdowntree kendoDropDownTreeExpandable *ngIf="currentDrawer == 'module' "
+                [kendoDropDownTreeHierarchyBinding]="listModuleTree" textField="Vietnamese" valueField="Code"
+                childrenField="ListGroup" formControlName="GroupID" [filterable]="true" [expandOnFilter]="true"
+                (valueChange)="  onSelectedDropdownList($event)" [popupSettings]="{ appendTo: 'component' }"
+                [loading]="loading">
+                <ng-template kendoDropDownTreeNodeTemplate let-dataItem let-index="index">
+                  <div [ngClass]="{'nullItem': dataItem.Code === null}">
+                    <img loading="lazy" class="colName-icon" src="assets/img/icon/icon_departmentGray.svg" />{{
+                    dataItem.Vietnamese }}
+                  </div>
+                </ng-template>
+              </kendo-dropdowntree>
+
+              <!-- dropdown của function -->
+              <kendo-dropdowntree kendoDropDownTreeExpandable *ngIf="currentDrawer == 'function'"
+                [kendoDropDownTreeHierarchyBinding]="listModuleTree" textField="Vietnamese" valueField="Code"
+                childrenField="ListGroup" formControlName="ModuleID" [filterable]="true" [expandOnFilter]="true"
+                (valueChange)="onSelectedDropdownList($event)" [popupSettings]="{ appendTo: 'component' }"
+                [loading]="loading">
+                <ng-template kendoDropDownTreeNodeTemplate let-dataItem let-index="index">
+                  <div [ngClass]="{'nullItem': dataItem.Code === null}">
+                    <img loading="lazy" class="colName-icon" src="assets/img/icon/icon_departmentGray.svg" />{{
+                    dataItem.Vietnamese }}
+                  </div>
+                </ng-template>
+              </kendo-dropdowntree>
+
+              <!-- dropdown của action -->
+              <kendo-dropdowntree kendoDropDownTreeExpandable *ngIf="currentDrawer == 'action'"
+                [kendoDropDownTreeHierarchyBinding]="listActionTree" textField="ActionName" valueField="Code"
+                childrenField="ListAction" formControlName="ParentID" [filterable]="true" [expandOnFilter]="true"
+                (valueChange)="  onSelectedDropdownList($event)" [popupSettings]="{ appendTo: 'component' }"
+                [loading]="loading">
+                <ng-template kendoDropDownTreeNodeTemplate let-dataItem let-index="index">
+                  <div [ngClass]="{'nullItem': dataItem.Code === null}">
+                    <img loading="lazy" class="colName-icon" src="assets/img/icon/icon_share.svg" />{{
+                    dataItem.ActionName }}
+                  </div>
+                </ng-template>
+              </kendo-dropdowntree>
+            </kendo-label>
+
+
+            <kendo-label class="k-form mt-10 d-block customLabel" *ngIf="currentDrawer == 'module'">
+              <div class="lable">
+                <span class="labelName"><span class="name">Mã module</span>
+                  <span class="symbol">(*)</span></span>
+              </div>
+
+              <app-p-textbox [propName]="'ModuleID'" formControlName="ModuleID" class="ModuleID"></app-p-textbox>
+            </kendo-label>
+
+
+            <!-- textbox APIPackage của form module: vì dùng if gộp APIPackage và DLLPackage -> DLLPackage không nhận formControlName-->
+            <kendo-label class="k-form mt-10 d-block customLabel" *ngIf="currentDrawer == 'module'">
+              <div class="lable">
+                <span class="labelName">
+                  <span class="name"> API Package </span>
+                </span>
+              </div>
+
+              <app-p-textbox [propName]="'ModuleID'" formControlName="ModuleID" [disabled]="disable"></app-p-textbox>
+            </kendo-label>
+
+
+            <!-- textbox DLLPackage của form function: vì dùng if gộp DLLPackage và DLLPackage -> DLLPackage không nhận formControlName-->
+            <kendo-label class="k-form mt-10 d-block customLabel" *ngIf="currentDrawer == 'function'">
+              <div class="lable">
+                <span class="labelName">
+                  <span class="name"> DLL Package </span>
+                  <span class="symbol">(*)</span>
+                </span>
+              </div>
+
+              <app-p-textbox [propName]="'DLLPackage'" formControlName="DLLPackage"></app-p-textbox>
+            </kendo-label>
+
+
+            <!-- Start: 2 text này của form Action: vì form này có tận 3   -->
+            <kendo-label class="k-form mt-10 d-block customLabel" *ngIf="currentDrawer == 'action'">
+              <div class="lable">
+                <span class="labelName">
+                  <span class="name"> Module </span>
+                  <span class="symbol">(*)</span>
+                </span>
+              </div>
+
+              <app-p-textbox [propName]="'ModuleName'" formControlName="ModuleName"
+                [disabled]="disable"></app-p-textbox>
+            </kendo-label>
+
+            <kendo-label class="k-form mt-10 d-block customLabel" *ngIf="currentDrawer == 'action'">
+              <div class="lable">
+                <span class="labelName">
+                  <span class="name"> Tính năng </span>
+                  <span class="symbol">(*)</span>
+                </span>
+              </div>
+              <app-p-textbox [propName]="'FunctionName'" formControlName="FunctionName"
+                [disabled]="disable"></app-p-textbox>
+            </kendo-label>
+            <!-- end: 2 text này của  form Action-->
+
+
+
+            <kendo-label class="k-form mt-10 d-block customLabel"
+              *ngIf="currentDrawer == 'module' || currentDrawer == 'function'">
+              <div class="lable">
+                <span class="labelName"><span class="name">Font icon</span>
+                </span>
+              </div>
+              <app-p-textbox [propName]="'ImageSetting'" formControlName="ImageSetting"
+                class="ImageSetting"></app-p-textbox>
+            </kendo-label>
+
+            <kendo-label class="k-form mt-10 d-block customLabel">
+              <div class="lable">
+                <span class="labelName">
+                  <span class="name">Loại data</span>
+                  <span class="symbol" *ngIf="currentDrawer == 'function' ||currentDrawer == 'action' ">(*)</span>
+                </span>
+              </div>
+
+
+              <div class="bothInputTx">
+
+                <!-- required của func/action -->
+                <app-p-numeric-textbox *ngIf="currentDrawer == 'function' || currentDrawer == 'action' "
+                  [spinners]="false" [propName]="'TypeData'" formControlName="TypeData"
+                  class="TypeData"></app-p-numeric-textbox>
+
+                <!-- <app-p-textbox *ngIf="currentDrawer == 'function' ||currentDrawer == 'action' " [propName]="'TypeData'"
+                formControlName="TypeData" class="TypeData" required></app-p-textbox> -->
+
+
+                <!-- không required của module  -->
+                <app-p-numeric-textbox *ngIf="currentDrawer == 'module'" [propName]="'TypeData'" [spinners]="false"
+                  formControlName="TypeData" class="TypeData"></app-p-numeric-textbox>
+
+                <!-- <app-p-textbox *ngIf="currentDrawer == 'module'" [propName]="'TypeData'" formControlName="TypeData"
+                class="TypeData"></app-p-textbox> -->
+
+
+                <!-- opend dialog func data detail  -->
+                <span Class="funcDetail" (click)="openDialogFuncDetail()"
+                  *ngIf=" this.currentDrawer == 'function' && this.MultiOOPForm.value.Code !== 0 &&  this.selectedItem.TypeData == 5 ">
+                  <span *ngIf="lengOfArrDetailFunc > 0">{{lengOfArrDetailFunc}}</span> Tính năng chi tiết dữ liệu
+                </span>
+              </div>
+
+            </kendo-label>
+
+            <kendo-label class="k-form mt-10 d-block customLabel"
+              *ngIf="currentDrawer == 'module' || currentDrawer == 'function'">
+              <div class="lable">
+                <span class="labelName"><span class="name">Thứ tự hiển thị </span>
+                </span>
+              </div>
+
+
+              <app-p-numeric-textbox [propName]="'OrderBy'" formControlName="OrderBy" [spinners]="false"
+                class="OrderBy"></app-p-numeric-textbox>
+              <!-- <app-p-textbox [propName]="'OrderBy'" formControlName="OrderBy" class="OrderBy"></app-p-textbox> -->
+            </kendo-label>
+
+
+
+            <kendo-label class="k-form mt-10 d-block customLabel"
+              *ngIf=" currentDrawer == 'function' ||  currentDrawer == 'action'">
+              <div class="lable">
+                <span class="labelName"><span class="name">Thiết lập thông số phân quyền </span>
+                </span>
+              </div>
+
+              <app-p-textarea formControlName="PermissionConf" [propName]="'PermissionConf'"
+                name="PermissionConf"></app-p-textarea>
+            </kendo-label>
+
+            <kendo-formerror>(*) Trường bắt buộc nhập.</kendo-formerror>
+
+          </form>
+        </div>
+
+
+        <div class="footer-formSystem">
+          <button kendoButton class="k-button btn-hachi hachi-primary hachi-secondary" (click)="onCloseDrawer()">
+            Đóng
+          </button>
+          <button kendoButton class="k-button btn-hachi hachi-primary" (click)="onSubmitForm()">
+            {{MultiOOPForm.get('Code').value !== 0 ? 'CẬP NHẬT' : 'TẠO MỚI'}}
+          </button>
+          <button kendoButton class="k-button btn-hachi hachi-primary deleteBtn"
+            *ngIf="MultiOOPForm.get('Code').value !== 0 && checkbtnDel" (click)="onToggleDialog()">
+            {{delItem.ListGroup && delItem.ListFunctions ? 'XÓA MODULE':
+            delItem.DLLPackage ? 'XÓA TÍNH NĂNG': 'XÓA CHỨC NĂNG'}}
+          </button>
+        </div>
+
+      </div>
+
+    </mat-drawer>
+  </mat-drawer-container>
+
+
+  <!-- START DIALOG DELETE -->
+  <app-p-kendo-dialog *ngIf="opened"
+    [title]=" delItem.ListGroup && delItem.ListFunctions ? 'XÓA MODULE': delItem.DLLPackage ? 'XÓA TÍNH NĂNG': 'XÓA CHỨC NĂNG'"
+    (close)="onToggleDialog()" (handleButton)="onDeleteDialog('yes')" [iconButton]="'delete'" [dialogType]="1"
+    [iconTitle]="'k-icon k-i-warning'">
+    <div class="text-center">
+      Bạn có chắc chắn muốn xóa <br> <strong> {{delItem.Vietnamese ? delItem.Vietnamese :
+        delItem.ActionName}}</strong>
+      <p class="content-sub">
+        bị xóa sẽ <span style="color: red">KHÔNG</span> thể khôi phục lại.
+      </p>
+    </div>
+  </app-p-kendo-dialog>
+  <!-- END DIALOG DELETE -->
+
+
+  <!-- START POPUP ACTION MORE -->
+  <kendo-popup #stylePopup class="stylePopup" [style.visibility]="isPopupVisible()" [anchor]="getAnchor()"
+    *ngIf="popupShow" [anchorAlign]="{ horizontal:'left', vertical: 'top'}"
+    [popupAlign]="{ horizontal:'right', vertical: topValue}">
+    <div *ngFor="let item of OptionTool; let i = index" class="popup-item" (click)="onActionDropdownBtn(item)">
+
+      <img loading="lazy" *ngIf="item.imageUrl" src="{{item.imageUrl}}" class="imgUrl_popup imgwhite">
+      <kendo-icon *ngIf="item.icon" class="{{item.icon}} k-icon"></kendo-icon>
+      <span class="popup-item-text">{{ item.text }}</span>
+    </div>
+  </kendo-popup>
+  <!-- END POPUP ACTION MORE -->
+
+
+  <!-- START DIALOG FUNCTION DATA DETAIL-->
+  <div class="dialogFuncDetail">
+    <app-p-kendo-dialog title="TÍNH NĂNG CHI TIẾT DỮ LIỆU" (close)="closeDialogFuncDetail()" [width]="600"
+      *ngIf="isDialogOpened" [dialogType]="3">
+
+      <div class="body_dialog">
+
+        <div class="info">
+          <span class="title">Tính năng</span>
+          <span class="breadcumb">{{BreadCrumbItem}}</span>
+        </div>
+
+
+        <div class="detailFun">
+          <span class="title">Tính năng chi tiết</span>
+
+          <button kendoButton class="onAddBtn k-button btn-hachi hachi-primary" (click)="onCreateDetailFunc()">
+            TẠO MỚI
+          </button>
+        </div>
+
+        <div class="grid-popup">
+          <app-p-kendo-grid class="grid scrollable" [data]="popupGridData" [scrollable]="'none'" [loading]="loading"
+            [width]="500" [pageable]="false" [hasMoreAction]="false">
+
+            <kendo-grid-column [headerClass]="'headerCustomClass'">
+
+              <ng-container *ngFor="let data of popupGridData">
+                <ng-template kendoGridCellTemplate let-dataItem>
+
+                  <div class="rowInforDetail">
+                    <div class="leftRow">
+                      <!-- icon arrow -->
+                      <span class="k-icon k-i-arrow-chevron-down" (click)="toggleDetail(dataItem)"
+                        *ngIf="!expandedItems[dataItem.Code]"></span>
+                      <span class="k-icon k-i-arrow-chevron-up" (click)="toggleDetail(dataItem)"
+                        *ngIf="expandedItems[dataItem.Code]"></span>
+
+                      <div class="inforFuncDetail">
+                        <!-- <div class="nameFuncDetail" [ngClass]="{'isInput': this.isInput == true}"> -->
+                        <div class="nameFuncDetail">
+
+                          <div class="k-textbox k-input">
+                            <input class="k-input-inner" type="text" [(ngModel)]="dataItem.DataName"
+                              (dblclick)="onDoubleClick(dataItem)" (blur)="onBlur( dataItem, 'DataName')" [readonly]="
+                            !isEditing">
+                          </div>
+
+                        </div>
+
+                        <div class="codeFuncDetail">
+
+
+                          <div class="k-textbox k-input">
+                            <input class="k-input-inner" type="text" [(ngModel)]="dataItem.DataID"
+                              (dblclick)="onDoubleClick(dataItem)" (blur)="onBlur( dataItem, 'DataID')" [readonly]="
+                            !isEditing">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="rightRow">
+                      <span class="k-icon k-i-trash button-icon" (click)="onToggleDelDetailFunc(dataItem)"></span>
+                    </div>
+                  </div>
+
+                  <div class="expandDetail" *ngIf="expandedItems[dataItem.Code]">
+                    <div class="desDetail">
+
+                      <span class="lable">Mô tả</span>
+                      <div class="k-textbox k-input" [ngClass]="{'k-disabled': this.disableDes == true}">
+                        <input class="k-input-inner" type="text" [(ngModel)]="dataItem.DataDescription"
+                          (dblclick)="onDoubleClick(dataItem)" (blur)="onBlur( dataItem, 'DataDescription')" [readonly]="
+                            !isEditing" [disabled]="disableDes">
+                      </div>
+                    </div>
+
+                    <div class="cofDetail">
+                      <span class="lable">Cấu hình</span>
+
+                      <div class="customized-textarea k-textarea k-input"
+                        [ngClass]="{'k-disabled': this.disableCof == true }">
+                        <textarea class="k-input-inner" [(ngModel)]="dataItem.ReportConfig"
+                          (dblclick)="onDoubleClick(dataItem)" (blur)="onBlur( dataItem, 'ReportConfig')" [readonly]="
+                            !isEditing" [disabled]="disableCof"></textarea>
+                      </div>
+                    </div>
+
+                    <div class="typeOrder">
+
+                      <div class="typeData mr_20">
+                        <div class="lable">Loại data <span class="symbol">(*)</span></div>
+                        <div class="type">
+
+                          <div class="customized-input k-input k-numerictextbox"
+                            [ngClass]="{'k-disabled': disableTypeData}">
+                            <input class="k-input-inner" type="number" [(ngModel)]="dataItem.TypeData"
+                              (dblclick)="onDoubleClick(dataItem)" (blur)="onBlur( dataItem, 'TypeData')" [readonly]="
+                                !isEditing" [disabled]="disableTypeData">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="typePopup mr_20">
+                        <div class="lable">Loại popup <span class="symbol">(*)</span> </div>
+                        <div class="type">
+
+
+                          <div class="customized-input k-input k-numerictextbox"
+                            [ngClass]="{'k-disabled': disableTypePopup}">
+                            <input class="k-input-inner" type="number" [propName]="'TypePopup'"
+                              [(ngModel)]="dataItem.TypePopup" #TypePopup (dblclick)="onDoubleClick(dataItem)"
+                              (blur)="onBlur( dataItem, 'TypePopup')" [readonly]="
+                                !isEditing" [disabled]="disableTypePopup">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="orderBy mr_20">
+                        <div class="lable">Thứ tự hiển thị <span class="symbol">(*)</span> </div>
+                        <div class="type">
+
+                          <div class="customized-input k-input k-numerictextbox"
+                            [ngClass]="{'k-disabled': disableOrderby}">
+                            <input class="k-input-inner" type="number" [propName]="'OrderBy'"
+                              [(ngModel)]="dataItem.OrderBy" #Orderby (dblclick)="onDoubleClick(dataItem)"
+                              (blur)="onBlur( dataItem, 'OrderBy')" [readonly]="
+                                !isEditing" [disabled]="disableOrderby">
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                </ng-template>
+              </ng-container>
+            </kendo-grid-column>
+          </app-p-kendo-grid>
+        </div>
+      </div>
+
+
+      <!-- START DIALOG DELETE -->
+      <app-p-kendo-dialog *ngIf="openedDialogDetailFunc" title=" XÓA TÍNH NĂNG CHI TIẾT"
+        (close)="onToggleDelDetailFunc()" (handleButton)="onDeleteDetailFunc('yes')" [iconButton]="'delete'"
+        [dialogType]="1" [iconTitle]="'k-icon k-i-warning'">
+        <div class="text-center" *ngIf="delDetailFunc.Code != 0">
+          Bạn có chắc chắn muốn xóa <br> <strong> {{delDetailFunc.DataName}}</strong>
+          <p class="content-sub">
+            bị xóa sẽ <span style="color: red">KHÔNG</span> thể khôi phục lại.
+          </p>
+        </div>
+
+        <!-- trường hợp xóa row empty -->
+        <div class="text-center" *ngIf="delDetailFunc.Code == 0">
+          Bạn chưa nhập thông tin cho tính năng chi tiết này
+          <p class="content-sub">
+            Bạn có chắc chắn muốn xóa?
+          </p>
+        </div>
+      </app-p-kendo-dialog>
+      <!-- END DIALOG DELETE -->
+
+    </app-p-kendo-dialog>
+
+  </div>
+  <!-- END DIALOG FUNCTION DATA DETAIL-->
+</div>

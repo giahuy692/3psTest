@@ -1,0 +1,31 @@
+<div class="header header-1">
+  <app-p-kendo-breadcrumb (loadData)="reloadData()"></app-p-kendo-breadcrumb>
+</div>
+<div class="main">
+  <!-- main left -->
+  <div class="main-left">
+    <app-pur-menu-supplier-info [Link]="'pur009-partner-template-email'"></app-pur-menu-supplier-info>
+  </div>
+
+  <!-- main right -->
+  <div class="main-right">
+    <div class="block-templateEmail">
+      <kendo-label text="Người nhận">
+        <app-p-textbox [(ngModel)]="objTemplateEmail.MailTo" (blur)="handleCallUpdate(['MailTo'])"
+          [propName]="'receivePeople'"></app-p-textbox>
+      </kendo-label>
+
+      <kendo-label text="Cc">
+        <app-p-textbox [(ngModel)]="objTemplateEmail.MailCC" (blur)="handleCallUpdate(['MailCC'])"
+          [propName]="'Cc'"></app-p-textbox>
+      </kendo-label>
+
+      <kendo-label class="content-email" text="Nội dung email">
+        <app-p-kendo-editor [ngModel]="objTemplateEmail.MailContext"
+          (saveEvent)="onSaveInput(['MailContext'],$event)"></app-p-kendo-editor>
+      </kendo-label>
+      <app-folder-popup [pickFileCallback]="pickFileCallback2" [GetFolderCallback]="GetFolderCallback2">
+      </app-folder-popup>
+    </div>
+  </div>
+</div>

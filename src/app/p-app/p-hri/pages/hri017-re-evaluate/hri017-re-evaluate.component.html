@@ -1,0 +1,644 @@
+<div class="hri017-re-evaluate">
+
+    <!-- START HEADER -->
+    <div class="header header-1">
+        <app-p-kendo-breadcrumb (loadData)="onLoadData()"></app-p-kendo-breadcrumb>
+        <div class="nav-btn">
+            <button *ngIf="question.StatusID == 3 && isFinalMark !== 3" [disabled]="isLockAll" kendoButton class="k-button onfinish" [icon]="'check'" (click)="onShowDialog('status')">
+                HOÀN TẤT
+            </button>
+            <button kendoButton class="k-button btn-hachi hachi-secondary" [icon]="'undo'" (click)="onNavigate()">
+                TRỞ VỀ
+            </button>
+        </div>
+    </div>
+    <!-- END HEADER -->
+
+    <!-- START BODY -->
+    <div class="body">
+        <div class="question-info">
+            <div class="title">
+                THÔNG TIN CÂU HỎI
+                <i *ngIf="question.TypeOfQuestion == 2"> <span (click)="onToggleContent()"> {{ isExpanded ? 'Thu gọn' : 'chi tiết' }} </span> </i>
+            </div>
+
+
+            <div class="block-essay" *ngIf="question.TypeOfQuestion == 3">
+                <div class="grid-item item1">
+                    <div class="item-name">
+                        <b>Câu hỏi: </b>
+                    </div>
+                    <p> {{removeHtmlTags(question.Question)}}</p>
+                </div>
+                <div class="grid-item item2">
+                    <div class="item-name">
+                        <b>Đáp án gợi ý:</b>
+                    </div>
+                    <p style="color: #1A6634; font-weight: 500;"> {{question.Remark}}</p>
+                </div>
+            </div>
+
+
+            <div class="block-question" *ngIf="question.TypeOfQuestion !== 3">
+                <div class="grid-item item3">
+                    <div class="item-name">
+                        <b>Câu hỏi: </b>
+                    </div>
+                    <p style="color: #1A6634; font-weight: 500;"> {{removeHtmlTags(question.Question)}}</p>
+                </div>
+                <div class="grid-item item3">
+                    <div class="item-name">
+                        <b>Ghi chú:</b>
+                    </div>
+                    <p>{{question.Remark}}</p>
+                </div>
+
+                <div *ngIf="isExpanded">
+                <div class="question-group">
+                    <div class="item1">
+                        <b>Phân nhóm câu hỏi:</b>
+                        {{question.CategoryName}}
+                    </div>
+                    <div class="item1" *ngIf="question.TypeOfQuestion == 2">
+                        <b>Cách tính điểm:</b>
+                        {{question.TypeOfEvaluationName ? question.TypeOfEvaluationName : ''}}
+                    </div>
+                    <div class="item1">
+                        <b>Loại câu hỏi:</b>
+                       {{question.TypeOfQuestionName}}
+                    </div>
+                </div>
+
+
+
+                <div class="question-type">
+                    <div class="anychoice">
+                        <div class="answer">
+                            <div class="column">
+                                <b>Đáp án</b>
+                            <div *ngFor="let item of listAnswer; let i = index">
+                                <div class="options" *ngIf="question.TypeOfQuestion !== 2" >
+                                    <input type="radio" name="answerOnBlockInfo" [checked]="item.IsRight" [disabled]="true"  kendoRadioButton/>
+                                 
+                                </div>
+                                <div class="options" *ngIf="question.TypeOfQuestion == 2">
+                                    <input type="checkbox" [checked]="item.IsRight" [disabled]="true" kendoCheckBox  />
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Thiết lập lại của block thông tin -->
+                        <div class="resetting" *ngIf="questionAppeal.TypeOfMultipleReEval != 3">
+                            <div class="column">
+                                <b>Thiết lập lại</b>
+                                <div *ngFor=" let i of questionAppeal.ListMark">
+                                    <div class="options" *ngIf="question.TypeOfQuestion !== 2">
+                                        <!-- <input type="radio"  name="Answer" [value]="i" (change)="checked($event,i)" [checked]="checked.IsRight"  kendoRadioButton /> -->
+                                        <input [disabled]="isLockAll" type="radio" kendoRadioButton name="Answer" (change)="onChecked($event, i)" [checked]="i.IsRight" />
+                                    </div>
+                                    <div class="options"  *ngIf="question.TypeOfQuestion == 2">
+                                        <!-- <input type="checkbox"  name="Answer" [value]="i" (change)="checked($event,i)" [checked]="checked.IsRight" kendoCheckBox  /> -->
+                                        <input [disabled]="isLockAll" type="checkbox" [(ngModel)]="i.IsRight" kendoCheckBox (change)="calculateMark(i,'not')" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="scorePercent" *ngIf="question.TypeOfQuestion == 2">
+                            <div class="column">
+                                <b>% điểm</b>
+                                <div class="options" *ngFor="let i of questionAppeal.TypeOfMultipleReEval != 3 ? questionAppeal.ListMark : this.listAnswer; let idx = index">
+                                    <app-p-numeric-textbox [propName]="'Mark'" [format]="'n0'"
+                                    [min]="question.TypeOfEvaluation == 3 ? -100 : 0" [max]="100"
+                                    [disabled]="questionAppeal.TypeOfMultipleReEval == 3 || !i.IsRight || isLockAll
+                                        || lastItemIsRightCode == i.Code || question.TypeOfEvaluation == 3 && lastItemNotRightCode == i.Code"
+                                    (blur)="calculateMark(i,'input')" [placeHolder]="i.TypeOfMultipleReEval !== 3 ? listAnswer[idx].Mark : null"
+                                    [spinners]="false"(keydown.Enter)="$event.target.blur()" (focus)="onFocusMark(i)"
+                                    [autoCorrect]="true" [(ngModel)]="i.Mark" >
+                                        {{ i.Mark }}</app-p-numeric-textbox>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="answer-content">
+                          <div class="column">
+                            <b>Câu trả lời</b>
+                                <div class="options reasons" *ngFor="let item of listAnswer; let i = index">
+                                    <span [title]="item.Answer">{{ i + 1 }}.  {{item.Answer}}</span>
+                                </div>
+                          </div>
+                        </div>
+
+
+                        <div class="answer-reason" *ngIf="questionAppeal.TypeOfMultipleReEval != 3">
+                            <div class="column">
+                            <b style="visibility: hidden;">Reason Answer</b>
+                              <div class="options" *ngFor="let i of questionAppeal.ListMark; let idx = index">
+                                <app-p-textbox [disabled]="isLockAll" class="textbox-reason" [(ngModel)]="i.Remark" [ngStyle]="{'visibility': i.IsRight ? 'visible': 'hidden'}"  
+                                [required]="i.RefID !== ''" [propName]="'RefID'" [placeHolder]="'Lý do chọn câu trả lời'"></app-p-textbox> 
+
+                                <!-- <div *ngIf="question.TypeOfQuestion == 2" style="visibility: hidden;">
+                                    <input type="checkbox"  name="Answer" [value]="i.IsRight" (change)="checked($event,i)"kendoCheckBox  />
+                                </div>
+                                <div *ngIf="question.TypeOfQuestion == 1" style="visibility: hidden;">
+                                    <input type="radio"  name="Answer" [value]="i.IsRight" (change)="checked($event,i)" kendoCheckBox  />
+                                </div>
+
+                                <div>
+                                    <kendo-textbox class="textbox-reason" *ngIf="selectedItems.includes(i)" [placeholder]="'Lý do chọn câu trả lời mới'"></kendo-textbox>
+                                <app-p-textbox class="textbox-reason" *ngIf="selectedItems.includes(i)"  [propName]="'Answer'" [placeholder]="'Lý do chọn câu trả lời'"></app-p-textbox> 
+                                </div> -->
+                              </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+
+                <div class="setting">
+                    <div class="item">
+                        <b>Thiết lập tính lại điểm:</b>
+                        <div class="cham">
+                            <kendo-dropdownlist [data]="listHR"
+                                textField="ListName" 
+                                valueField="OrderBy"
+                                [(ngModel)]="questionAppeal.TypeOfMultipleReEval"
+                                [valuePrimitive]="true"
+                                (valueChange)="onDropdownlistClick($event)"
+                                [disabled]="isLockAll"
+                            ></kendo-dropdownlist>
+                            <button class="k-button scoreAll" [disabled]="isLockAll" (click)="onShowDialog('marking')">CHẤM ĐIỂM TẤT CẢ</button>
+                        </div>
+                    </div>
+                    <div class="item item2" *ngIf="isReplyAll">
+                        <b>Phản hồi tất cả bài thi không có yêu cầu phúc khảo</b>
+                        <app-p-textbox [propName]="'Reply'" [disabled]="isLockAll"  [(ngModel)]="appealInQuestion.Reply" (keydownEnter)="$event.target.blur()" (blur)="onUpdateRepplyAll(['Reply'],listAppealInQuestion)"></app-p-textbox>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+        </div>
+
+        <div class="re-marking">
+            <div class="header header2">
+
+                <div class="title">
+                    {{isGridHasRequest ? 'YÊU CẦU PHÚC KHẢO' : 'BÀI ĐÁNH GIÁ KHÔNG YÊU CẦU PHÚC KHẢO'}}
+                </div>
+            
+                <app-onSearch-filter-group
+                    [placeholder]="'Tìm theo tên nhân sự, đơn vị công tác'"
+                    [clearButton]="true"
+                    (valueChange)="onSearch($event)"
+                    [loading]="loading"
+                ></app-onSearch-filter-group>
+            
+
+          
+                <div class="view-transform-btn-group ml-auto" *ngIf="question.TypeOfQuestion !== 3">
+                    <span
+                        [style.color]="isGridHasRequest ? '#1A6634' : '#959DB3'"
+                        (click)="onToggleGrid(true)"
+                        class="k-icon k-i-grid-layout pointer-style"
+                        [title]="'DANH SÁCH NHÂN SỰ YÊU CẦU PHÚC KHẢO'"
+                    ></span>
+                    <span
+                        [ngClass]="{'icon-green': !isGridHasRequest}"
+                        (click)="onToggleGrid(false)"
+                        class="view-change-icon"
+                        kendoButton
+                        imageUrl="assets/img/icon/icon_questionGroupPink.svg"
+                        [title]="'DANH SÁCH NHÂN SỰ KHÔNG YÊU CẦU PHÚC KHẢO'"
+                    ></span>
+                    <!-- <span
+                        *ngIf="!isGridHasRequest"
+                        class="view-change-icon"
+                        kendoButton
+                        imageUrl="assets/img/icon/icon_questionGroupGreen.svg"
+                        [title]="'DANH SÁCH NHÂN SỰ KHÔNG YÊU CẦU PHÚC KHẢO'"
+                    ></span> -->
+                </div>
+            </div>
+
+            <!-- YÊU CẦU PHÚC KHẢO  -->
+            <div class="grid-wrapper">
+                <app-p-kendo-grid [data]="gridView | async" [hasMoreAction]="false" class="grid scrollable"  [scrollable]="'none'" [loading]="loading" [sort]=""
+                [pageable]="false" [getActionDropdownCallback]="getActionDropdownCallback" [pageable]="true"  [rowClass]="rowCallback" [sortable]="true"  [sort]="gridState.sort"  [onSortChangeCallback]="onSortChangeCallback"
+                [onActionDropdownClickCallback]="onActionDropdownClickCallback" 
+              >
+                    <kendo-grid-column title="Nhân sự yêu cầu" field="staffName" class="col_hoVaten" [headerClass]="'col_name'">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            
+                            <div class="img_tennhanvien_manhanvien">
+                                <div (click)="toggleQuestionDetail(dataItem)" class="iconShowDetail">
+                                    <span [ngClass]="{'k-icon k-i-arrow-chevron-down': !dataItem['ShowQuestion']}"></span>
+                                    <span [ngClass]="{'k-icon k-i-arrow-chevron-up': dataItem['ShowQuestion']}"></span>
+                                </div>
+                                <img loading="lazy" src="{{dataItem.ImageThumb == null ? 'assets/img/icon/icon-nonImageThumb.svg' : dataItem.ImageThumb}}"
+                                    alt="">
+                                <div class="tennhanvien_manhanvien">
+                                    <div class="tennhanvien" *ngIf="(dataItem.Fullname) != null">{{dataItem.Fullname}}</div>
+                                    <div>
+                                        {{dataItem.StaffID}}<span *ngIf="dataItem.PositionName != null">{{' | '+ dataItem.PositionName}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text" *ngIf="isGridHasRequest" [ngClass]="{'show-content': dataItem['ShowQuestion'],'text-question': question.TypeOfQuestion !== 3}">
+                                
+                                <div class="content">
+
+                                    <div class="block-question" *ngIf="dataItem.TypeOfQuestion == 3">
+                                        <div class="grid-item item3">
+                                            <div class="item-name">
+                                                <b>Câu trả lời</b>
+                                            </div>
+                                            <p [title]="dataItem.Answer">{{dataItem.Answer}}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="anychoice" *ngIf="dataItem.TypeOfQuestion != 3">
+                                        <div class="answer">
+                                            <!-- Hiển thị đáp án của câu hỏi-->
+                                            <div class="column">
+                                                <b>Đáp án cũ </b>
+                                                <div class="result" *ngFor="let item of dataItem.ListAnswers; let i = index">
+                                                    <span
+                                                    kendoButton
+                                                    *ngIf="item.IsRight == true"
+                                                    class="checkbox-icon"
+                                                    imageUrl="assets/img/icon/icon_check_right.svg"
+                                                  ></span>
+                                                  <!-- icon incorrect  -->
+                                                  <span
+                                                    kendoButton
+                                                    *ngIf="item.IsRight == false"
+                                                    class="checkbox-icon"
+                                                    imageUrl="assets/img/icon/icon_check_wrong.svg"
+                                                  ></span>
+                                                    <div class="options" *ngIf="dataItem.TypeOfQuestion !== 2" >
+                                                        <input type="radio" name="answerOnBlockStaff"  [checked]="item.Selected" [disabled]="true"  kendoRadioButton/>
+                                                    
+                                                    </div>
+                                                    <div class="options" *ngIf="dataItem.TypeOfQuestion == 2">
+                                                        <input type="checkbox" [checked]="item.Selected" [disabled]="true" kendoCheckBox  />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                
+                                        <!-- Thiết lập của yêu cầu phúc khảo -->
+                                        <div class="resetting" *ngIf="questionAppeal.TypeOfMultipleReEval != 3">
+                                            <div class="column">
+                                                <b>Thiết lập lại</b>
+                                                <div *ngFor="let i of questionAppeal.ListMark; let idx = index">
+                                                    <div class="options" *ngIf="dataItem.TypeOfQuestion == 1 || dataItem.TypeOfQuestion == 4">
+                                                        <input type="radio" name="AnswerConfig" [checked]="i.IsRight" [disabled]="true" kendoRadioButton />
+                                                    </div>
+                                                    <div class="options" *ngIf="dataItem.TypeOfQuestion == 2">
+                                                        <input type="checkbox" name="AnswerConfig" [(ngModel)]="i.IsRight" [checked]="i.IsRight" [disabled]="true" kendoCheckBox />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                
+                                        <!-- Hiển thị câu trở lời của câu hỏi trong ngân hàng câu hỏi  -->
+                                        <div class="answer-content">
+                                          <div class="column">
+                                            <b>Câu trả lời</b>
+                                                <div class="options reasons" *ngFor="let item of dataItem.ListAnswers; let i = index">
+                                                    <span [title]="item.Answer">{{ i + 1 }}.  {{item.Answer}}</span>
+                                                </div>
+                                          </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Nhập lý do yêu cầu phúc khảo  -->
+                                    <div class="reason-request" [ngClass]="{'reason-question': dataItem.TypeOfQuestion !== 3}">
+                                    <div class="grid-item item3 date">
+                                        <div class="item-name">
+                                            <b>Lý do yêu cầu phúc khảo </b>
+                                            <i><span>{{dataItem.CreateTime | date : "dd/MM/yyyy HH:mm" : "Indochina Time" : "vi_VN"}}</span></i>
+                                        </div>
+                                        <p [title]="dataItem.Reason">{{dataItem.Reason}}</p>
+                                    </div>
+                    
+                                    <!-- Nhập điểm phúc khảo  -->
+                                    <div class="grid-item  center">
+                                        <div class="item-name" *ngIf="dataItem.TypeOfQuestion == 3">
+                                            <div style="padding-bottom: 5px;">
+                                                <b>Điểm phúc khảo</b>
+                                            </div>
+                                            <div class="tbx1">
+                                                <app-p-numeric-textbox [disabled]="isLockAll" [propName]="'NewMark'" [(ngModel)]="dataItem.NewMark"  [format]="'n0'" [min]="0" [max]="100" [spinners]="false"(keydown.Enter)="$event.target.blur()" (blur)="onUpdateBlurTextbox(['Mark'],dataItem)" [autoCorrect]="true">
+                                                    </app-p-numeric-textbox> / 100
+                                            </div>
+                                        </div>
+                                           
+                                    
+                                        <div class="item-name reply">
+                                            <div style="display: flex; padding-bottom: 5px;">
+                                                <b>Phản hồi</b>
+                                                <i><p style="margin-bottom: 0;">{{dataItem.LastModifiedTime | date : "dd/MM/yyyy HH:mm" : "Indochina Time" : "vi_VN"}}</p></i>
+                                            </div>
+                                            <div class="tbx2">
+                                                <app-p-textbox [propName]="'Reply'" [disabled]="isLockAll" [(ngModel)]="dataItem.Reply" (keydown.Enter)="$event.target.blur()" (inputBlur)="onUpdateBlurTextbox(['Reply'],dataItem)"></app-p-textbox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </ng-template>
+
+                    </kendo-grid-column>
+
+                   
+                    <kendo-grid-column title="Đơn vị công tác" field="department" class="col_donViCongTac">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <span [title]="dataItem.DepartmentName">{{dataItem.DepartmentName}}</span> 
+                            <div class="text" [ngClass]="{'show-content': dataItem['ShowQuestion'],'text-question': question.TypeOfQuestion !== 3}">
+                              
+                            </div>
+                        </ng-template>
+
+                    </kendo-grid-column>
+        
+                    <kendo-grid-column title="Điểm làm việc" field="location" class="col_diemLamViec">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <span [title]="dataItem.LocationName">{{dataItem.LocationName}}</span> 
+                            <div class="text" [ngClass]="{'show-content': dataItem['ShowQuestion'],'text-question': question.TypeOfQuestion !== 3}">
+                              
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+        
+                   
+        
+                    <kendo-grid-column title="Ngày sinh" field="birthday" [headerClass]="'headerCenterCustomClass'" class="col_nawmSinh" [width]="30">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{dataItem.Birthday | date : "dd/MM/yyyy" : "Indochina Time" : "vi_VN"}}
+                            <div class="text" [ngClass]="{'show-content': dataItem['ShowQuestion'],'text-question': question.TypeOfQuestion !== 3}">
+                               
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+        
+                    <kendo-grid-column title="Ngày vào làm" field="joinDate" [headerClass]="'headerCenterCustomClass'" class="col_ngayVaoLam">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{dataItem.JoinDate | date : "dd/MM/yyyy HH:mm" : "Indochina Time" : "vi_VN"}}
+                            <div class="text" [ngClass]="{'show-content': dataItem['ShowQuestion'],'text-question': question.TypeOfQuestion !== 3}">
+                               
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+        
+                    <kendo-grid-column title="Tình trạng" field="StatusID" class="col_tinhTrang" [headerClass]="'headerCustomClass'">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <!-- <span [ngClass]="{ 'stop-color': dataItem.StatusID == 0,}">{{dataItem.StatusName}}</span> -->
+                            <div [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID"></div>
+                            <div class="text" [ngClass]="{'show-content': dataItem['ShowQuestion'],'text-question': question.TypeOfQuestion !== 3}">
+                               
+                            </div>
+
+                        </ng-template>
+                    </kendo-grid-column>
+        
+                    <kendo-grid-column title="Điểm cũ" class="col_diem" field="Mark" [headerClass]="'headerCustomClassColdiem'">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <div class="col">
+                                <div class="line-doc" *ngIf="dataItem.TypeOfQuestion == 3"></div>   
+                                <span class="strike-through" [ngClass]="{'oldscore':dataItem.TypeOfQuestion == 3}">{{dataItem.Mark}}<span> / 100</span></span>
+                            </div>
+
+                            <div class="text" [ngClass]="{'show-content': dataItem['ShowQuestion'],'text-question': question.TypeOfQuestion !== 3}">
+                               
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column title="Điểm mới" class="col_diem" [headerClass]="'headerCustomClassColdiem'" *ngIf="question.TypeOfQuestion !== 3">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <div class="col">
+                                <div class="line-doc"></div>
+                                <span style="color: #C0392B; margin-top: 18px;font-weight: 700;">{{dataItem.NewMark ? dataItem.NewMark  : 0}} <span style="font-weight: 700; color: black;"> / 100</span></span>
+                            </div>
+
+                            <div class="text" [ngClass]="{'show-content': dataItem['ShowQuestion'],'text-question': question.TypeOfQuestion !== 3}">
+                               
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                </app-p-kendo-grid>
+            </div>
+            <!-- BÀI ĐÁNH GIÁ KHÔNG YÊU CẦU PHÚC KHẢO  -->
+            <!-- <div class="grid-wrapper" *ngIf="!isGridHasRequest">
+                <app-p-kendo-grid [data]="gridView | async" [hasMoreAction]="false" class="grid scrollable"  [scrollable]="'none'" [loading]="loading" [sort]=""
+                [pageable]="false" [getActionDropdownCallback]="getActionDropdownCallback" [pageable]="true"  [rowClass]="rowCallback" [sortable]="true" [onSortChangeCallback]="onSortChangeCallback"
+                [onActionDropdownClickCallback]="onActionDropdownClickCallback">
+                    <kendo-grid-column title="Nhân sự yêu cầu" field="staffName" class="col_hoVaten" [headerClass]="'col_name'">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            
+                            <div class="img_tennhanvien_manhanvien">
+                                <div (click)="toggleQuestionDetail(dataItem)" class="iconShowDetail">
+                                    <span [ngClass]="{'k-icon k-i-arrow-chevron-down': !dataItem['ShowQuestion']}"></span>
+                                    <span [ngClass]="{'k-icon k-i-arrow-chevron-up': dataItem['ShowQuestion']}"></span>
+                                </div>
+                                <img loading="lazy" src="{{dataItem.ImageThumb == null ? 'assets/img/icon/icon-nonImageThumb.svg' : dataItem.ImageThumb}}"
+                                    alt="">
+                                <div class="tennhanvien_manhanvien">
+                                    <div class="tennhanvien" *ngIf="(dataItem.FullName) != null">{{dataItem.FullName}}</div>
+                                    <div>
+                                        {{dataItem.StaffID}}<span *ngIf="dataItem.PositionName != null">{{' | '+ dataItem.PositionName}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text" [ngClass]="{'show-content': dataItem['ShowQuestion']}">
+                                <div class="content">
+
+                                   
+                                        <div class="anychoice">
+                                            Hiển thị đáp án của câu hỏi và lựa chọn của người làm
+                                            <div class="answer">
+                                                <div class="column">
+                                                    <b>Đáp án</b>
+                                                <div *ngFor="let item of listAnswer; let i = index">
+                                                    <div class="options" *ngIf="question.TypeOfQuestion !== 2" >
+                                                        <input type="radio"  [checked]="item.IsRight" [disabled]="true"  kendoRadioButton/>
+                                                     
+                                                    </div>
+                                                    <div class="options" *ngIf="question.TypeOfQuestion == 2">
+                                                        <input type="checkbox" [checked]="item.IsRight" [disabled]="true" kendoCheckBox  />
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            
+                    
+                                            Thiệt lập 2 
+                                            <div class="resetting"  *ngIf="questionAppeal.TypeOfMultipleReEval != 3">
+                                                <div class="column">
+                                                    <b>Thiết lập lại</b>
+                                                    <div *ngFor="let i of questionAppeal.ListMark; let idx = index">
+                                                        <div class="options" *ngIf="dataItem.TypeOfQuestion == 1 || dataItem.TypeOfQuestion == 4">
+                                                            <input type="radio" name="AnswerConfig" [checked]="i.IsRight" [disabled]="true" kendoRadioButton />
+                                                        </div>
+                                                        <div class="options" *ngIf="dataItem.TypeOfQuestion == 2">
+                                                            <input type="checkbox" name="AnswerConfig" [(ngModel)]="i.IsRight" [disabled]="true" kendoCheckBox />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                        
+                                            <div class="answer-content">
+                                              <div class="column">
+                                                <b>Câu trả lời</b>
+                                                    <div class="options reasons" *ngFor="let item of listAnswer; let i = index">
+                                                        <span [title]="item.Answer">{{ i + 1 }}.  {{item.Answer}}</span>
+                                                    </div>
+                                              </div>
+                                            </div>
+                                        </div>
+                   
+                                 </div>
+                            </div>
+                           
+
+
+                           
+
+                          </ng-template>
+
+                    </kendo-grid-column>
+
+                   
+                    <kendo-grid-column title="Đơn vị công tác" field="department" class="col_donViCongTac">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <span [title]="dataItem.DepartmentName">{{dataItem.department}}</span> 
+                            <div class="text" [ngClass]="{'show-content': dataItem['ShowQuestion']}">
+                              
+                            </div>
+                        </ng-template>
+
+                    </kendo-grid-column>
+        
+                    <kendo-grid-column title="Điểm làm việc" field="location" class="col_diemLamViec">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <span [title]="dataItem.LocationName">{{dataItem.location}}</span> 
+                            <div class="text" [ngClass]="{'show-content': dataItem['ShowQuestion']}">
+                              
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+        
+                   
+        
+                    <kendo-grid-column title="Ngày sinh" field="birthday" [headerClass]="'headerCenterCustomClass'" class="col_nawmSinh" [width]="30">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{dataItem.Birtday | date : "dd/MM/yyyy HH:mm" : "Indochina Time" : "vi_VN"}}
+                            <div class="text" [ngClass]="{'show-content': dataItem['ShowQuestion']}">
+                               
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+        
+                    <kendo-grid-column title="Ngày vào làm" field="joinDate" [headerClass]="'headerCenterCustomClass'" class="col_ngayVaoLam">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{dataItem.JoinDate | date : "dd/MM/yyyy HH:mm" : "Indochina Time" : "vi_VN"}}
+                            <div class="text" [ngClass]="{'show-content': dataItem['ShowQuestion']}">
+                               
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+        
+                    <kendo-grid-column title="Tình trạng" field="status" class="col_tinhTrang" [headerClass]="'headerCustomClass'">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            nhớ comment lại <span [ngClass]="{ 'stop-color': dataItem.StatusID == 0,}">{{dataItem.StatusName}}</span>
+                            <div [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID"></div>
+
+                            <div class="text" [ngClass]="{'show-content': dataItem['ShowQuestion']}">
+                               
+                            </div>
+
+                        </ng-template>
+                    </kendo-grid-column>
+        
+                    <kendo-grid-column title="Điểm cũ" class="col_diem" field="oldScore" [headerClass]="'headerCustomClassColdiem'">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <div class="col">
+                                <div class="line-doc" *ngIf="question.TypeOfQuestion == 3"></div>   
+                                <span class="strike-through" [ngClass]="{'oldscore':question.TypeOfQuestion == 3}">{{dataItem.Mark}}</span>
+                            </div>
+
+                            <div class="text" [ngClass]="{'show-content': dataItem['ShowQuestion']}">
+                               
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                   
+                    <kendo-grid-column title="Điểm mới" class="col_diem" [headerClass]="'headerCustomClassColdiem'" *ngIf="question.TypeOfQuestion !== 3">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <div class="col">
+                                <div class="line-doc"></div>
+                                <span style="color: #C0392B; margin-top: 18px">{{dataItem.NewMark}}  <span style="font-weight: 700;"> / 100</span></span>
+                            </div>
+
+                            <div class="text" [ngClass]="{'show-content': dataItem['ShowQuestion']}">
+                               
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    
+
+                </app-p-kendo-grid>
+            </div> -->
+        </div>
+
+        <app-p-kendo-dialog
+        *ngIf="openDialogMarking"
+        [title]="'Chấm điểm cho tất cả'"
+        (close)="onCloseDialog()"
+        (handleButton)="onMarkMutiple(questionAppeal)"
+        >
+        <div class="text-center">
+            Bạn có chắc chắn muốn chấm điểm tất cả<br> 
+            theo thiết lập <span class="font-weight-bold text-danger">{{ TypeOfMultipleReEvalName }}</span>?
+        </div>
+    </app-p-kendo-dialog>
+
+
+    <app-p-kendo-dialog
+        *ngIf="openDialogStatus"
+        [title]="'Hoàn tất chấm bài'"
+        (close)="onCloseDialog()"
+        (handleButton)="onUpdateStatus(['StatusID'])"
+        >
+        <div class="text-center">
+            Bạn có chắc chắn muốn hoàn tất chấm bài phúc khảo không?
+        </div>
+    </app-p-kendo-dialog>
+    <app-p-kendo-dialog
+        *ngIf="openDialogGoBack"
+        [title]="'Bạn thực sự muốn thoát khỏi trang này?'"
+        (close)="onCloseDialog()"
+        (handleButton)="onGoBackList()"
+        [dialogType]="1"
+        >
+        <div class="text-center">
+            Bạn có chắc chắn trở về danh sách câu hỏi phúc khảo không?<br>
+            Nếu như trở về những <span class="font-weight-bold text-danger">thiết lập lại điểm</span> của <span class="font-weight-bold text-danger">câu hỏi sẽ bị mất</span>
+        </div>
+    </app-p-kendo-dialog>
+
+    </div>
+    <!-- END BODY -->
+</div>

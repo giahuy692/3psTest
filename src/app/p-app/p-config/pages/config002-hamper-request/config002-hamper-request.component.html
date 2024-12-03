@@ -1,0 +1,130 @@
+<div class="config002-hamper-request">
+  <div class="header header-1">
+    <div class="breadcrumbAndCheckbox">
+
+      <app-p-kendo-breadcrumb (loadData)="loadPage()"></app-p-kendo-breadcrumb>
+
+      <div class="search-btn checkbox-button-group">
+        <app-checkbox-button-group 
+        [toggleable]="isFilterActive" 
+        (selectedChange)="selectedBtnChange($event, 'dangSoanThao_checked')" 
+        [selected]="dangSoanThao_checked"
+        title="Đang soạn thảo"
+        [checked]="dangSoanThao_checked">
+        </app-checkbox-button-group>
+        <app-checkbox-button-group 
+        [toggleable]="isFilterActive" 
+        (selectedChange)="selectedBtnChange($event, 'guiDuyet_checked')" 
+        [selected]="guiDuyet_checked"
+        title="Gửi duyệt"
+        [checked]="guiDuyet_checked">
+        </app-checkbox-button-group>
+        <app-checkbox-button-group 
+        [toggleable]="isFilterActive" 
+        [selected]="daDuyet_checked"
+        title="Đã duyệt"
+        (selectedChange)="selectedBtnChange($event, 'daDuyet_checked')" 
+        [checked]="daDuyet_checked">
+        </app-checkbox-button-group>
+        <app-checkbox-button-group 
+        [toggleable]="isFilterActive" 
+        [selected]="NgungApDung_checked"
+        title="Ngưng áp dụng"
+        (selectedChange)="selectedBtnChange($event, 'NgungApDung_checked')" 
+        [checked]="NgungApDung_checked">
+        </app-checkbox-button-group>
+      </div>  
+    </div>
+
+    <div class="nav-btn nav-crud" *ngIf="isToanQuyen || isAllowedToCreate">
+      <div class="nav-file nav-btn">
+        <div class="file-btn-group">
+        <button kendoButton id="onUploadBtn" class="k-button" [icon]="'export'" (click)="importExcel()" [disabled]="!isFilterActive"></button>
+        </div>
+
+        <div class="file-btn-group">
+        <button kendoButton id="onDownloadBtn" class="k-button" [icon]="'import'" (click)="downloadExcel()" [disabled]="!isFilterActive">Template</button>
+        </div>
+        <button kendoButton class="k-button onAddBtn" [icon]="'plus'" (click)="openDetail(true)"
+        [disabled]="!isFilterActive">TẠO MỚI</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="header header-2">
+    <app-search-filter-group [placeholder]="placeholder" [disabled]="!isFilterActive"
+    (valueChange)="handleSearch($event)" (onReset)="resetFilter()"></app-search-filter-group>
+  </div>
+
+  <div class="grid-wrapper">
+    <app-p-kendo-grid class="grid scrollable " [data]=" gridView | async" [scrollable]="'none'" [loading]="loading"
+    [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize"[skip]="gridState.skip" [take]="gridState.take" 
+    [sortable]="true" [onPageChangeCallback]="onPageChangeCallback" [allowedMoreActionDropdown]="allowActionDropdown" 
+    [getActionDropdownCallback]="getActionDropdownCallback" [onActionDropdownClickCallback]="onActionDropdownClickCallback">
+
+
+    <kendo-grid-column title="Tên hamper" class="col_HamperName" field="VNName">
+      <ng-template kendoGridCellTemplate let-dataItem>
+         <div class="HamperImageAndHamperName">
+            <div class="PaddingImg">
+              <img loading="lazy" class="HamperImage" src="{{dataItem.URLThumbImage}}" alt="">
+            </div>
+            <div class="HamperName" title="{{dataItem.VNName}}">{{dataItem.VNName}}</div>
+         </div>
+      </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column title="Barcode" class="col_Barcode" field="Barcode">
+      <ng-template kendoGridCellTemplate let-dataItem>
+         {{dataItem.Barcode}}
+      </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column title="Số lượng" class="col_Quality" field="Quality">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <div class="QualityHamper"> 
+          <span> SL: {{dataItem.Quantity}}</span>
+          <span> SKU: {{dataItem.SKU}}</span>  
+        </div>
+      </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column title="Xuất xứ" class="col_origin" field="origin">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        {{dataItem.OriginName}}
+      </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column title="Tình trạng" class="col_Status" field="Status" [headerClass]="'headerCustomClass'">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <div class="Status">
+          <div [innerHTML]="dataItem.StatusName | colorStatus:dataItem.StatusID"></div>
+        </div>
+      </ng-template>
+    </kendo-grid-column>
+
+    </app-p-kendo-grid>
+  </div>
+<!-- Popup thông báo xóa -->
+
+  <app-p-kendo-dialog 
+  *ngIf="opened" 
+  [dialogType]="1" 
+  [title]="'XÓA HAMPER?'" 
+  [iconTitle]="'k-font-icon k-i-exception k-i-warning k-icon'"
+  (close)="onCloseDialog()" 
+  (handleButton)="onDeleteDialog('yes')"
+  
+  >
+    <div class="ContentDialog">
+      <p>Bạn chắc chắn muốn xóa Hamper</p>
+      <p><strong>{{ Hamper?.VNName }}</strong></p>
+      <p class="content-sub">
+        Hamper bị xóa sẽ <span style="color: red">KHÔNG</span> thể
+        khôi phục lại.
+      </p>
+    </div>
+  
+  </app-p-kendo-dialog>
+  <app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>
+</div>

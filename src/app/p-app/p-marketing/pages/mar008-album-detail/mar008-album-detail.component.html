@@ -1,0 +1,366 @@
+<div class="app-drawer-container">
+  <mat-drawer-container [hasBackdrop]="true">
+    <mat-drawer #drawer [mode]="'over'" position="end" opened="false">
+      <form class="formSanpham k-form" [formGroup]="form" (keydown.Enter)="keydownEnter($event)">
+        <fieldset>
+          <legend>SẢN PHẨM ĐỔI GIÁ</legend>
+
+          <div class="masanpham_img d-flex">
+            <kendo-formfield>
+              <kendo-label text="Nhập mã sản phẩm" [for]="Barcode">
+                <span class="symbol">(*)</span>
+              </kendo-label>
+              <kendo-textbox formControlName="Barcode" #Barcode (keydown.Enter)="$event.target.blur()"
+                (inputBlur)="onTextboxLoseFocus('Barcode')" [(value)]="albumDetail.Barcode"
+                [disabled]="!isAddDetail || isLockAll">
+              </kendo-textbox>
+            </kendo-formfield>
+          </div>
+
+          <div class="tensanpham">
+            <kendo-label text="Tên sản phẩm">
+              <b>{{ albumDetail.PosCode }}</b>
+              <!-- <b class="tbarcode" [hidden]="albumDetail.TBarcode == null || albumDetail.TBarcode == ''">
+                {{ albumDetail.TBarcode }}</b> -->
+            </kendo-label>
+            <div class="VNName">{{ albumDetail.ProductName }}</div>
+          </div>
+
+          <div class="formfield-grid">
+            <div class="item1_1">
+              <kendo-label text="Giá bán lẻ"></kendo-label>
+              <div class="VNName">{{ albumDetail.UnitPrice | number: '1.' }} đ</div>
+            </div>
+
+            <div class="item1_2">
+              <kendo-label text="Thương hiệu"></kendo-label>
+              <div class="VNName">{{ albumDetail.BrandName }}</div>
+            </div>
+
+            <div class="item1_3">
+              <kendo-label text="Xuất xứ"></kendo-label>
+              <div class="VNName">{{ albumDetail.OriginName }}</div>
+            </div>
+
+            <div class="img item2">
+              <img loading="lazy" [src]="albumDetail.URLImageSetting" alt="Ảnh sản phẩm">
+            </div>
+          </div>
+
+          <kendo-formerror>(*) Trường bắt buộc nhập.</kendo-formerror>
+
+          <div class="k-form-buttons">
+            <button kendoButton class="k-button closeBtn" (click)="closeForm()">Đóng</button>
+            <button kendoButton class="k-button updateBtn" (click)="onSubmit()" *ngIf="isAddDetail">
+              THÊM MỚI
+            </button>
+            <button kendoButton class="k-button deleteBtn" (click)="onDeleteDetail()"
+              *ngIf="!isAddDetail && album.StatusID != 2 && album.StatusID != 3">
+              XÓA
+            </button>
+          </div>
+        </fieldset>
+      </form>
+    </mat-drawer>
+    <!-- center content -->
+    <mat-drawer-content>
+      <div class="mar008-album-detail">
+        <div class="header header-1">
+          <div class="nav-btn nav-breadcrumb">
+            <div class="breadcrumb-item">
+              CHÍNH SÁCH
+            </div>
+            <div class="breadcrumb-chevron">
+              <span class="k-icon k-i-arrow-chevron-right"></span>
+            </div>
+            <div class="breadcrumb-item">
+              CHỦ ĐỀ NỔI BẬT
+            </div>
+          </div>
+
+          <div class="nav-btn nav-crud">
+            <!-- <button kendoButton class="crud-btn k-button updateStatusBtn" 
+              *ngIf="!isAdd && (album.StatusID == 0 || album.StatusID == 4)" [icon]="'redo'"
+              (click)="updatePromotionStatus(1)">
+              GỬI DUYỆT
+            </button> -->
+
+            <button kendoButton class="crud-btn k-button updateStatusBtn" [icon]="'check-outline'" *ngIf="!isAdd && (isAllowedToVerify || isToanQuyen) &&
+              (album.StatusID == 0 || album.StatusID == 3 || album.StatusID == 4)" (click)="updatePromotionStatus(2)">
+              PHÊ DUYỆT
+            </button>
+
+            <button kendoButton class="crud-btn k-button updateStatusBtn red"
+              *ngIf="(isToanQuyen || isAllowedToVerify) && !isAdd && album.StatusID == 2" [icon]="'minus-outline'"
+              (click)="updatePromotionStatus(3)">
+              NGƯNG HIỂN THỊ
+            </button>
+
+            <button kendoButton class="crud-btn k-button updateStatusBtn red"
+              *ngIf="!isAdd && album.StatusID == 3 && (isToanQuyen || isAllowedToVerify)" [icon]="'undo'"
+              (click)="updatePromotionStatus(4)">
+              TRẢ VỀ
+            </button>
+
+            <button kendoButton class="crud-btn k-button onDeleteBtn" [icon]="'trash'"
+              *ngIf="album.StatusID == 0 && !isAdd && (isToanQuyen || isAllowedToCreate)" (click)="onDelete()">
+              XÓA CHỦ ĐỀ
+            </button>
+          </div>
+
+          <div class="nav-btn nav-crud" *ngIf="isAllowedToCreate || isToanQuyen">
+            <button kendoButton class="k-button onAddBtn" [icon]="'plus'" (click)="createNew()"
+              [disabled]="!isFilterActive">
+              TẠO MỚI</button>
+          </div>
+        </div>
+
+        <div class="body">
+          <div class="sections">
+            <div class="section" id="thongtinkhuyenmaiTbl">
+              <div class="title">THÔNG TIN CHỦ ĐỀ
+                <!-- <span class="type green">{{album.CategoryName}}</span> -->
+
+                <span class="languages">
+                  <span class="borderRight vietnamese" [ngClass]="{'active': curLanguage == 1 }"
+                    (click)="changeLanguage(1)">Tiếng Việt</span>
+                  <span class="borderRight japanese" [ngClass]="{'active': curLanguage == 2 }"
+                    (click)="changeLanguage(2)">日本語</span>
+                  <span class="english" [ngClass]="{'active': curLanguage == 3 }"
+                    (click)="changeLanguage(3)">English</span>
+                </span>
+              </div>
+
+              <div class="section-grid">
+                <div class="grid-item item1_1">
+                  <div class="label">Hình ảnh
+                    <span class="k-icon k-i-export" (click)="onUploadImg()"></span>
+                  </div>
+                  <img loading="lazy" [src]="album.ImgSetting">
+                </div>
+
+                <div class="grid-item item1_2">
+                  <div class="label">Thứ tự hiển thị</div>
+                  <kendo-numerictextbox type="text" class="k-textbox" format="#,0" [min]="0"
+                    (keydown.Enter)="$event.target.blur()" [(ngModel)]=" album.OrderBy"
+                    (blur)="onTextboxLoseFocus('OrderBy')" [disabled]="isLockAll">
+                  </kendo-numerictextbox>
+                </div>
+
+                <div class="grid-item item1_3">
+                  <div class="label">Tình trạng</div>
+                  <b class="d-flex" [ngClass]="{'yellow': album.StatusID == 1 || album.StatusID == 4, 
+                  'green': album.StatusID == 2, 'red': album.StatusID == 3}">{{ album.StatusName }}
+                  </b>
+                </div>
+
+                <div class="grid-item item2_1">
+                  <div class="label">Tên chủ đề</div>
+                  <kendo-textbox type="text" class="k-textbox" [disabled]="isLockAll"
+                    (keydown.Enter)="$event.target.blur()"
+                    [ngModel]="curLanguage == 1 ? album.AlbumNameVN : curLanguage == 2 ? album.AlbumNameJP : album.AlbumNameEN"
+                    (ngModelChange)="curLanguage == 1 ? album.AlbumNameVN=$event : curLanguage == 2 ? album.AlbumNameJP=$event : album.AlbumNameEN=$event"
+                    (blur)="onTextboxLoseFocus(curLanguage == 1 ? 'AlbumNameVN' : curLanguage == 2 ? 'AlbumNameJP' : 'AlbumNameEN')">
+                  </kendo-textbox>
+                </div>
+
+                <div class="grid-item item2_2" id="editor" style="position: 'relative';">
+                  <div class="label">Mô tả chủ đề</div>
+                  <kendo-editor id="myeditor" #myeditor style="height: 100%;" [readonly]="isLockAll"
+                    [ngModel]="curLanguage == 1 ? album.SummaryVN : curLanguage == 2 ? album.SummaryJP : album.SummaryEN"
+                    (ngModelChange)="onEditorValueChange($event)">
+
+                    <kendo-toolbar>
+                      <kendo-toolbar-buttongroup>
+                        <kendo-toolbar-button kendoEditorUndoButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorRedoButton></kendo-toolbar-button>
+                      </kendo-toolbar-buttongroup>
+                      <kendo-toolbar-buttongroup>
+                        <kendo-toolbar-button kendoEditorBoldButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorItalicButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorUnderlineButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorStrikethroughButton></kendo-toolbar-button>
+                      </kendo-toolbar-buttongroup>
+                      <kendo-toolbar-buttongroup>
+                        <kendo-toolbar-button kendoEditorSubscriptButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorSuperscriptButton></kendo-toolbar-button>
+                      </kendo-toolbar-buttongroup>
+                      <kendo-toolbar-buttongroup>
+                        <kendo-toolbar-button kendoEditorAlignLeftButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorAlignCenterButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorAlignRightButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorAlignJustifyButton></kendo-toolbar-button>
+                      </kendo-toolbar-buttongroup>
+                      <kendo-toolbar-buttongroup>
+                        <kendo-toolbar-button kendoEditorIndentButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorOutdentButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorInsertUnorderedListButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorInsertOrderedListButton></kendo-toolbar-button>
+                      </kendo-toolbar-buttongroup>
+                      <kendo-toolbar-dropdownlist kendoEditorFormat></kendo-toolbar-dropdownlist>
+                      <kendo-toolbar-dropdownlist kendoEditorFontSize></kendo-toolbar-dropdownlist>
+                      <kendo-toolbar-dropdownlist kendoEditorFontFamily></kendo-toolbar-dropdownlist>
+                      <kendo-toolbar-colorpicker kendoEditorForeColor></kendo-toolbar-colorpicker>
+                      <kendo-toolbar-colorpicker kendoEditorBackColor view="gradient"></kendo-toolbar-colorpicker>
+
+                      <kendo-toolbar-buttongroup>
+                        <kendo-toolbar-button kendoEditorCreateLinkButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorUnlinkButton></kendo-toolbar-button>
+                      </kendo-toolbar-buttongroup>
+                      <kendo-toolbar-button kendoEditorCleanFormattingButton></kendo-toolbar-button>
+
+                      <kendo-toolbar-buttongroup>
+                        <kendo-toolbar-button kendoEditorViewSourceButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoButton [icon]="'save'" title="Lưu" class="editorSaveBtn"
+                          (click)="saveWebContent()"></kendo-toolbar-button>
+                      </kendo-toolbar-buttongroup>
+                    </kendo-toolbar>
+                  </kendo-editor>
+                  <!-- ALBUM editor ko dùng embed -->
+                  <!-- <kendo-popup class="iframePopup" [anchor]="currentAnchor" [hidden]="popupShow == false"
+                    [anchorAlign]="{ horizontal:'right', vertical: 'top'}"
+                    [popupAlign]="{ horizontal:'left', vertical: 'top'}"
+                    style="position: 'absolute !important'; margin-top: '150px'; margin-left: '-30px';">
+                    <button kendoButton icon="pencil" (click)="editIframe()" ></button>
+                  </kendo-popup> -->
+                </div>
+
+                <div class="grid-item item3_1">
+                  <div class="label">Phân nhóm</div>
+                  <kendo-dropdownlist [data]="typeDropdownList" [textField]="'AlbumNameVN'" [valueField]="'Code'"
+                    [value]="typeDropdown" (valueChange)="onDropdownlistClick($event, 'ParentID')"
+                    [disabled]="isLockAll" [popupSettings]="{appendTo:'component'}">
+                  </kendo-dropdownlist>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="header header-2">
+          <div class="title">DS SẢN PHẨM TRONG CHỦ ĐỀ</div>
+
+          <div class="nav-filter nav-btn">
+            <form style="display: flex; flex-grow: 1;" [formGroup]="searchForm">
+              <div class="filter-btn-group search-btn-group">
+                <div class="search-btn">
+                  <span class="k-icon k-i-search"></span>
+                  <kendo-textbox formControlName="SearchQuery" type="text" class="k-textbox"
+                    placeholder="Tìm theo barcode, poscode, tên sản phẩm">
+                  </kendo-textbox>
+                </div>
+              </div>
+
+              <button kendoButton class="k-button searchBtn" [icon]="'search'" [disabled]="!isFilterActive || isAdd"
+                (click)="search()">TÌM</button>
+            </form>
+          </div>
+
+          <div class="nav-file nav-btn" *ngIf="!isLockAll">
+            <div class="file-btn-group">
+              <button kendoButton id="onUploadBtn" class="k-button" [icon]="'export'" (click)="onImportExcel()"
+                [disabled]="!isFilterActive || isAdd"></button>
+            </div>
+
+            <div class="file-btn-group">
+              <button kendoButton id="onDownloadBtn" class="k-button" [icon]="'import'" (click)="downloadExcel()"
+                [disabled]="!isFilterActive || isAdd">Template</button>
+            </div>
+          </div>
+
+          <div class="nav-btn nav-crud" *ngIf="!isLockAll">
+            <button kendoButton class="k-button onAddBtn" [icon]="'plus'" (click)="onAdd()"
+              [disabled]="!isFilterActive || isAdd">
+              THÊM MỚI</button>
+          </div>
+        </div>
+
+        <div class="body">
+          <div class="sections">
+            <div class="section grid-wrapper" id="thongtinchitietchuongtrinhTbl">
+              <app-p-kendo-grid class="grid scrollable" [data]="gridDSView | async" [scrollable]="'none'"
+                [loading]="loading" [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize"
+                [skip]="gridDSState.skip" [take]="gridDSState.take" [onPageChangeCallback]="onPageChangeCallback"
+                [sortable]="true" [sort]="gridDSState.sort" [onSortChangeCallback]="onSortChangeCallback"
+                [allowedMoreActionDropdown]="allowActionDropdown"
+                [getActionDropdownCallback]="getActionDropdownCallback"
+                [onActionDropdownClickCallback]="onActionDropdownClickCallback" [selectable]="selectable"
+                [onSelectCallback]="onSelectCallback" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+                [getSelectionPopupCallback]="getSelectionPopupCallback">
+
+                <kendo-grid-column field="ProductName" title="Tên sản phẩm" class="col_img_tensanpham_masanpham"
+                  headerClass="col_img_tensanpham_masanpham">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="img_tensanpham_masanpham">
+                      <img loading="lazy" src="{{dataItem.URLImageSetting}}" alt="">
+                      <div class="tensanpham_masanpham">
+                        <div class="tensanpham">{{ dataItem.ProductName }}</div>
+                        <div class="masanpham">
+                          {{ dataItem.Barcode + ' | ' + dataItem.PosCode }}
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column field="GroupIDName1" title="Phân nhóm" class="col_phanNhom">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="group1" *ngIf="dataItem.GroupIDName1 != null && dataItem.GroupIDName1 != ''">
+                      <b>{{ dataItem.GroupIDName1 }}</b>
+                    </div>
+                    <div class="group2" *ngIf="dataItem.GroupIDName2 != null && dataItem.GroupIDName2 != ''">
+                      {{ dataItem.GroupIDName2 }}
+                    </div>
+                    <div class="group3" *ngIf="dataItem.GroupIDName3 != null && dataItem.GroupIDName3 != ''">
+                      <i>{{ dataItem.GroupIDName3 }}</i>
+                    </div>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column field="OriginName" title="Xuất xứ" class="col_xuatXu" headerClass="col_xuatXu">
+                </kendo-grid-column>
+
+                <kendo-grid-column field="BrandName" title="Thương hiệu" class="col_thuonghieu">
+                </kendo-grid-column>
+
+                <kendo-grid-column field="UnitPrice" title="Giá bán lẻ" class="col_giaBanLe" headerClass="col_giaBanLe">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    {{ dataItem.UnitPrice | number: '1.' }}
+                  </ng-template>
+                </kendo-grid-column>
+              </app-p-kendo-grid>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+  <!-- popup confirm delete -->
+  <kendo-dialog #dialog class="deleteDialog" title="Xóa {{context[contextIndex]}}" [hidden]="!deleteDialogOpened"
+    (close)="closeDeleteDialog()" [minWidth]="250">
+    <p style="margin: 30px; text-align: center;">
+      Bạn chắc chắn muốn xóa vĩnh viễn {{context[contextIndex]}}&nbsp;
+      "{{ contextName[contextIndex] }}" này?</p>
+    <div class="dialog-footer">
+      <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteDialog()"
+        [icon]="'close'">Không</button>
+      <button kendoButton class="btn-hachi hachi-warning" (click)="delete()" [icon]="'trash'">Có</button>
+    </div>
+  </kendo-dialog>
+
+  <kendo-dialog #dialog class="deleteDialog" title="Xóa các Sản phẩm đã chọn" [hidden]="!deleteManyDialogOpened"
+    (close)="closeDeleteDialog()" [minWidth]="250">
+    <div style="margin: 30px; text-align: center;">
+      Bạn chắc chắn muốn xóa vĩnh viễn {{ deleteList.length }} Sản phẩm này?
+    </div>
+    <div class="dialog-footer">
+      <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteManyDialog()"
+        [icon]="'close'">Không</button>
+      <button kendoButton class="btn-hachi hachi-warning" (click)="deleteMany()" [icon]="'trash'">Có</button>
+    </div>
+  </kendo-dialog>
+</div>
+
+<app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>
+
+<app-folder-popup [pickFileCallback]="pickFileCallback" [GetFolderCallback]="GetFolderCallback"></app-folder-popup>

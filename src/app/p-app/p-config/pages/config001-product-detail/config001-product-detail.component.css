@@ -1,0 +1,849 @@
+.color-white {
+  color: #ffffff;
+}
+
+.color-gray {
+  color: #23282c;
+}
+
+.color-darkblue {
+  color: #39579a;
+}
+
+.color-blue {
+  color: #008cd7;
+}
+
+.color-lightblue {
+  color: #46b1ff;
+}
+
+.color-darkgreen {
+  color: #316e00;
+}
+
+.color-green {
+  color: #649e0f;
+}
+
+.color-lightgreen {
+  color: #8dc63f;
+}
+
+.color-yellowgreen {
+  color: #c1d72e;
+}
+
+.color-yellow {
+  color: #ffc400;
+}
+
+.color-mediumyellow {
+  color: #FFB900;
+}
+
+.color-orangeyellow {
+  color: #ffab00;
+}
+
+.color-lightorange {
+  color: #ff5230;
+}
+
+.color-lightpink {
+  color: #dc3545;
+}
+
+.color-red {
+  color: #d82c12;
+}
+
+.color-badred {
+  color: #EB273A;
+}
+
+.hachi-color-primary-1 {
+  color: #353935;
+}
+
+.hachi-color-primary-2 {
+  color: #868b86;
+}
+
+.hachi-color-primary-3 {
+  color: #8dc63f;
+}
+
+.hachi-color-primary-4 {
+  color: #c1d72e;
+}
+
+.hachi-color-primary-5 {
+  color: #ffffff;
+}
+
+.hachi-color-secondary-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-1 {
+  color: #46b1ff;
+}
+
+.hachi-color-text-2 {
+  color: #868b86;
+}
+
+.hachi-color-text-3 {
+  color: #008cd7;
+}
+
+.hachi-color-text-4 {
+  color: #d82c12;
+}
+
+.hachi-color-text-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-6 {
+  color: #ffffff;
+}
+
+.hachi-color-text-7 {
+  color: #8dc63f;
+}
+
+.hachi-color-text-8 {
+  color: #626662;
+}
+
+.hachi-color-text-10 {
+  color: #ff5230;
+}
+
+.hachi-color-text-9 {
+  color: #bbc0bb;
+}
+
+.hachi-color-text-11 {
+  color: #dc3545;
+}
+
+.hachi-color-text-12 {
+  color: #828282;
+}
+
+::ng-deep .config001-product-detail {
+  height: calc(93vh - 30px);
+  padding: 0 15px 35px 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+::ng-deep .config001-product-detail .header {
+  display: flex;
+  padding: 9px 0;
+  margin-bottom: 0;
+  border-bottom: 1px solid rgba(143, 155, 166, 0.4);
+}
+
+@media screen and (max-width: 480px) {
+  ::ng-deep .config001-product-detail .header {
+    display: none;
+  }
+}
+
+::ng-deep .config001-product-detail .header.header-1 .checkbox-btn-group {
+  margin-right: 10px;
+}
+
+::ng-deep .config001-product-detail .header .label {
+  margin-bottom: 6px;
+  font-weight: 700;
+  font-size: 13px;
+  color: #5c6873;
+}
+
+::ng-deep .config001-product-detail .header .nav-btn {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+::ng-deep .config001-product-detail .header .nav-btn.nav-file, ::ng-deep .config001-product-detail .header .nav-btn.nav-crud {
+  flex-grow: 0;
+}
+
+::ng-deep .config001-product-detail .header .nav-breadcrumb {
+  font-weight: bold;
+  color: #8f9ba6;
+}
+
+::ng-deep .config001-product-detail .header .nav-breadcrumb .breadcrumb-item:first-child {
+  cursor: pointer;
+  color: #1a6634;
+}
+
+::ng-deep .config001-product-detail .header .nav-breadcrumb .breadcrumb-chevron {
+  display: flex;
+}
+
+::ng-deep .config001-product-detail .body .sections .section .title {
+  margin: 12px 0;
+  font-weight: bold;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+::ng-deep .config001-product-detail .body .sections .section .crud-btn {
+  height: 32px;
+  font-size: 11px;
+  font-weight: bold;
+  background-color: #1a6634 !important;
+  color: white;
+}
+
+::ng-deep .config001-product-detail .body .sections .section .section-grid {
+  display: grid;
+  column-gap: 27px;
+  row-gap: 10px;
+  background-color: white;
+  padding: 15px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section .section-grid .grid-item {
+  display: flex;
+  flex-direction: column;
+}
+
+::ng-deep .config001-product-detail .body .sections .section .section-grid .k-textbox {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .config001-product-detail .body .sections .section .section-grid .k-numerictextbox {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .config001-product-detail .body .sections .section .section-grid .k-numerictextbox.red-color input {
+  color: #EB273A;
+}
+
+::ng-deep .config001-product-detail .body .sections .section .section-grid .k-dropdownlist {
+  flex-grow: 1;
+  width: auto;
+  max-height: 32px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section .section-grid .k-datepicker {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .config001-product-detail .body .sections .section .section-grid .k-timepicker {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .config001-product-detail .body .sections .section .section-grid .k-timepicker .k-input {
+  width: 70px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section .section-grid .k-checkbox {
+  margin-right: 10px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section .section-grid textarea {
+  resize: none;
+  border-radius: 3px;
+  border-color: rgba(0, 0, 0, 0.08);
+  outline: none;
+  height: 100%;
+  padding: 4px 8px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section .section-grid textarea:hover, ::ng-deep .config001-product-detail .body .sections .section .section-grid textarea:focus-visible {
+  border-color: #1a6634;
+}
+
+::ng-deep .config001-product-detail .body .sections .section .section-grid label {
+  margin-bottom: 0;
+}
+
+::ng-deep .config001-product-detail .body .sections .section .section-grid .input_label {
+  margin-bottom: 10px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section .section-grid .row {
+  align-items: center;
+  margin-bottom: 7px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section .section-grid .subrow {
+  margin-left: 20px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamGoc_tbl > .title {
+  justify-content: flex-start;
+  column-gap: 50px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamGoc_tbl .section-grid {
+  grid-template-columns: 350px 350px 330px;
+  column-gap: 14px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamGoc_tbl .section-grid .item1 {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamGoc_tbl .section-grid .item2 {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamGoc_tbl .section-grid .item3 {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamGoc_tbl .section-grid .item4 {
+  grid-column: 1;
+  grid-row: 4;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamGoc_tbl .section-grid .item4_1 {
+  grid-column: 1;
+  grid-row: 5;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamGoc_tbl .section-grid .item5 {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamGoc_tbl .section-grid .item6 {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamGoc_tbl .section-grid .item7 {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamGoc_tbl .section-grid .item7_1 {
+  grid-column: 2;
+  grid-row: 4;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamGoc_tbl .section-grid .item8 {
+  grid-column: 2;
+  grid-row: 5;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamGoc_tbl .section-grid .item9 {
+  grid-column: 3;
+  grid-row: 1 / span 3;
+  align-items: center;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamGoc_tbl .section-grid .item9 .label {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamGoc_tbl .section-grid .item9 .k-icon {
+  font-size: 19px;
+  cursor: pointer;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamGoc_tbl .section-grid .item9 .k-icon.k-i-export {
+  color: #1a6634;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamGoc_tbl .section-grid .item9 .k-icon.k-i-minus-outline {
+  color: #EB273A;
+  position: absolute;
+  right: 0;
+  top: 40px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamGoc_tbl .section-grid .item9 img {
+  height: 100%;
+  overflow-wrap: anywhere;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamGoc_tbl .section-grid .item10 {
+  grid-column: 3;
+  grid-row: 4;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamGoc_tbl .section-grid .item10 .giaBanLe {
+  margin-bottom: 6px;
+  margin-left: 17px;
+  color: #D82C12;
+  font-weight: 700;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid {
+  grid-template-columns: 180px 160px 300px 130px 130px 130px;
+  column-gap: 7px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item1_1 {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item1_2 {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item1_3 {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item1_4 {
+  grid-column: 1;
+  grid-row: 4;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item1_5 {
+  grid-column: 1;
+  grid-row: 5;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item2_1 {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item2_2 {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item2_3 {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item2_4 {
+  grid-column: 2;
+  grid-row: 4;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item2_5 {
+  grid-column: 2;
+  grid-row: 5;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item3_1 {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item3_2 {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item3_3 {
+  grid-column: 3;
+  grid-row: 3;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item3_4 {
+  grid-column: 3;
+  grid-row: 4;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item3_5 {
+  grid-column: 3;
+  grid-row: 5;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item4_1 {
+  grid-column: 4 / span 3;
+  grid-row: 1;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item4_2_1 {
+  grid-column: 4;
+  grid-row: 2;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item4_2_2 {
+  grid-column: 5;
+  grid-row: 2;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item4_2_3 {
+  grid-column: 6;
+  grid-row: 2;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item4_3_1 {
+  grid-column: 4;
+  grid-row: 3;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item4_3_2 {
+  grid-column: 5;
+  grid-row: 3;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item4_3_3 {
+  grid-column: 6;
+  grid-row: 3;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item4_3_3 .k-checkbox {
+  float: right;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item4_4 {
+  grid-column: 4 / span 3;
+  grid-row: 4;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item4_4 .k-checkbox {
+  float: right;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item4_4 .item4_4_col {
+  display: flex;
+  align-items: center;
+  column-gap: 7px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPham_tbl .section-grid .item4_4 .item4_4_col .label {
+  white-space: nowrap;
+  margin-bottom: 0;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamHienThiWebsite_tbl .section-grid {
+  grid-template-columns: 350px 350px 330px;
+  column-gap: 14px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamHienThiWebsite_tbl .section-grid .item1_1 {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamHienThiWebsite_tbl .section-grid .item1_2 {
+  grid-column: 1;
+  grid-row: 2 / span 2;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamHienThiWebsite_tbl .section-grid .item1_2 .k-textbox {
+  margin-bottom: 6px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamHienThiWebsite_tbl .section-grid .item1_2 .k-textbox:last-child {
+  margin-bottom: 0;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamHienThiWebsite_tbl .section-grid .item1_3 {
+  grid-column: 1;
+  grid-row: 4;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamHienThiWebsite_tbl .section-grid .item1_3 {
+  grid-column: 1;
+  grid-row: 5;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamHienThiWebsite_tbl .section-grid .item2_1 {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamHienThiWebsite_tbl .section-grid .item2_2 {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamHienThiWebsite_tbl .section-grid .item2_3 {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamHienThiWebsite_tbl .section-grid .item2_4 {
+  grid-column: 2;
+  grid-row: 4 / span 2;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamHienThiWebsite_tbl .section-grid .item3_1 {
+  grid-column: 3;
+  grid-row: 1 / span 3;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamHienThiWebsite_tbl .section-grid .item3_2 {
+  grid-column: 3;
+  grid-row: 4 / span 1;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinSanPhamHienThiWebsite_tbl .section-grid .item3_3 {
+  grid-column: 3;
+  grid-row: 5 / span 1;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinDongGoiVanChuyen_tbl .section-grid {
+  grid-template-columns: 370px 350px 300px;
+  column-gap: 14px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinDongGoiVanChuyen_tbl .section-grid .item1_1 {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinDongGoiVanChuyen_tbl .section-grid .item_grid {
+  display: grid;
+  grid-template-columns: 80px 80px 80px auto;
+  column-gap: 7px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinDongGoiVanChuyen_tbl .section-grid .item1_2 {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinDongGoiVanChuyen_tbl .section-grid .item1_3 {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinDongGoiVanChuyen_tbl .section-grid .item1_4 {
+  grid-column: 1;
+  grid-row: 4;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinDongGoiVanChuyen_tbl .section-grid .item1_5 {
+  grid-column: 1;
+  grid-row: 5;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinDongGoiVanChuyen_tbl .section-grid .item1_6 {
+  grid-column: 1;
+  grid-row: 6;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinDongGoiVanChuyen_tbl .section-grid .item2_1 {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinDongGoiVanChuyen_tbl .section-grid .item2_1 .item2_1_item {
+  display: flex;
+  align-items: center;
+  column-gap: 7px;
+  white-space: nowrap;
+  margin-bottom: 6px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinDongGoiVanChuyen_tbl .section-grid .item2_1 .item2_1_item .label {
+  margin-bottom: 0;
+  width: 50%;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinDongGoiVanChuyen_tbl .section-grid .item3_1 {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinDongGoiVanChuyen_tbl .section-grid .item3_2 {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinDongGoiVanChuyen_tbl .section-grid .item3_2 .k-checkbox {
+  margin-left: 14px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinTemNhan_tbl .section-grid {
+  grid-template-columns: 350px 350px 330px;
+  column-gap: 14px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinTemNhan_tbl .section-grid .item1_1 {
+  grid-column: 1;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinTemNhan_tbl .section-grid .item1_1 .item1_1_item {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  padding: 0 11px;
+  border: 1px solid #dbdee7;
+  border-radius: 3px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinTemNhan_tbl .section-grid .item1_1 .item1_1_item .span_label {
+  flex-grow: 1;
+  cursor: pointer;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinTemNhan_tbl .section-grid .item1_1 .item1_1_item.selected {
+  border: 1px solid #1a6634;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinTemNhan_tbl .section-grid .item1_1 .item1_1_item.selected .span_label {
+  color: #1a6634;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinTemNhan_tbl .section-grid .item2_1,
+::ng-deep .config001-product-detail .body .sections .section.thongTinTemNhan_tbl .section-grid .item2_2 {
+  grid-column: 2;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinTemNhan_tbl .section-grid .item2_1 .k-textbox,
+::ng-deep .config001-product-detail .body .sections .section.thongTinTemNhan_tbl .section-grid .item2_2 .k-textbox {
+  margin-bottom: 6px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinTemNhan_tbl .section-grid .item3_1 {
+  grid-column: 3;
+  grid-row: 1 / span 3;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinTemNhan_tbl .section-grid .item3_1 textarea {
+  margin-bottom: 6px;
+  min-height: 64px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinKhac_tbl .section-grid {
+  grid-template-columns: 350px 350px 330px;
+  column-gap: 14px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinKhac_tbl .section-grid .item1_1 {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinKhac_tbl .section-grid .item1_2 {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinKhac_tbl .section-grid .item1_3 {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinKhac_tbl .section-grid .item1_4 {
+  grid-column: 1;
+  grid-row: 4;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinKhac_tbl .section-grid .item2_1 {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinKhac_tbl .section-grid .item2_1 {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinKhac_tbl .section-grid .item2_2 {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinKhac_tbl .section-grid .item2_3 {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinKhac_tbl .section-grid .item3_1 {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinKhac_tbl .section-grid .item3_2 {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinKhac_tbl .section-grid .item3_2 .text {
+  color: #31adff;
+  font-weight: 700;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinKhac_tbl .section-grid .item3_3 {
+  grid-column: 3;
+  grid-row: 3;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.thongTinKhac_tbl .section-grid .item3_3 .text {
+  color: #31adff;
+  font-weight: 700;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.congTyAnDung_tbl .section-grid {
+  display: flex;
+  column-gap: unset;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.congTyAnDung_tbl .section-grid .label {
+  margin-top: 10px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.congTyAnDung_tbl .section-grid label {
+  font-weight: bold;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.congTyAnDung_tbl .section-grid .price {
+  display: flex;
+  column-gap: 7px;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.congTyAnDung_tbl .section-grid .price .k-textbox {
+  flex-grow: 1;
+}
+
+::ng-deep .config001-product-detail .body .sections .section.congTyAnDung_tbl .section-grid .price .k-dropdownlist {
+  min-width: 109px;
+}
+
+::ng-deep .config001-product-detail .label {
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #8f9ba6;
+}
+
+::ng-deep .config001-product-detail .label.thick-label {
+  color: #23282c;
+}
+
+::ng-deep .config001-product-detail .label.thick-label + .number {
+  font-weight: bold;
+}
+
+::ng-deep .config001-product-detail .label.thick-label + .k-numerictextbox input {
+  font-weight: bold;
+}
+
+::ng-deep .config001-product-detail .label.thin-label {
+  font-weight: normal;
+  color: #2f353a;
+}

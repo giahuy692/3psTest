@@ -1,0 +1,38 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    .config002-hamper-detail-request {
+        height: calc(93vh - #{$footer-height});
+        display: flex;
+        flex-direction: column;
+    
+        .header {
+            display: flex;
+            margin-bottom: 0;
+            border-bottom: 1px solid rgba($gray-500, 0.4);
+            justify-content: space-between;
+    
+            .label {
+                margin-bottom: 6px;
+                font-weight: 700;
+                font-size: 13px;
+                color: $gray-700;
+            }
+           .k-breadcrumb{
+                ol{
+                    li{
+                        color: #1a6634;
+                        &:last-child{
+                            color: #959DB3;
+                        }
+                    }
+                }
+           }
+        }
+        .body{
+            overflow-y: scroll;
+            overflow-x: hidden;
+            padding: 0 15px 35px 20px;
+        }
+    }
+}   

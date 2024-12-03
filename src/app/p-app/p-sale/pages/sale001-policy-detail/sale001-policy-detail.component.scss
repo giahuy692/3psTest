@@ -1,0 +1,575 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+  .mat-drawer {
+    .formfield-grid {
+      display: grid;
+      grid-template-columns: 33% 33%;
+      column-gap: 29px;
+
+      .item6 {
+        .k-label {
+          white-space: nowrap;
+        }
+        .OldPrice {
+          font-weight: 700;
+          text-decoration: line-through;
+        }
+      }
+
+      .item7 {
+        .PromotionPrice {
+          color: $worse-red;
+        }
+      }
+
+      .item9 {
+        margin-top: 1em;
+
+        .AdjPercent {
+          color: $worse-red;
+          height: 32px;
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+
+    .IsApDung_radio_group {
+      column-gap: 15px;
+
+      .my_label {
+        align-items: center;
+        column-gap: 5px;
+        margin: 0 !important;
+        font-weight: normal !important;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .sale001-policy-detail {
+    height: calc(93vh - #{$footer-height});
+    padding: 0 15px 35px 20px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    .header {
+      display: flex;
+      padding: 9px 0;
+      margin-bottom: 0;
+      border-bottom: 1px solid rgba($gray-500, 0.4);
+
+      @media screen and (max-width: 480px) {
+        display: none;
+      }
+
+      &.header-1 {
+        .checkbox-btn-group {
+          margin-right: 10px;
+        }
+      }
+
+      .label {
+        margin-bottom: 6px;
+        font-weight: 700;
+        font-size: 13px;
+        color: $gray-700;
+      }
+      .nav-btn {
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+      }
+      .nav-breadcrumb {
+        font-weight: bold;
+        color: $gray-500;
+
+        .breadcrumb-item {
+          &:first-child {
+            cursor: pointer;
+            color: $dark-green;
+          }
+        }
+        .breadcrumb-chevron {
+          display: flex;
+        }
+      }
+
+      .nav-crud {
+        flex-grow: 0;
+        justify-content: flex-end;
+
+        .crud-btn {
+          height: 32px;
+          margin-left: 10px;
+          font-size: 11px;
+          font-weight: bold;
+          background-color: white !important;
+          box-shadow: 1px 3px 6px 1px rgba($gray-500, 0.2) !important;
+        }
+
+        #reloadBtn {
+          color: $gray-500;
+        }
+        #updateOrderType_Treo_Btn {
+          color: $bad-red;
+        }
+        .updateStatusBtn {
+          // color: $dark-green;
+          text-transform: uppercase;
+
+          &.gray {
+            color: $light-blue-gray;
+          }
+          &.yellow {
+            color: $medium-yellow;
+          }
+          &.green {
+            color: $dark-green;
+          }
+          &.red {
+            color: $bad-red;
+          }
+        }
+        .onDeleteBtn {
+          background-color: $gray-500 !important;
+          color: white;
+        }
+
+        .onAddBtn {
+          height: 32px;
+          margin-top: auto;
+          margin-left: 15px;
+          background-color: $dark-green !important;
+          color: white;
+          font-size: 11px;
+          font-weight: bold;
+        }
+
+        .border-center {
+          margin: auto 0 1px 10px;
+          border-right: 1px solid $gray-300;
+          height: 31px;
+        }
+      }
+      .nav-file {
+        flex-grow: 0;
+        column-gap: 10px;
+        margin-left: auto;
+
+        .file-btn-group {
+          background: white;
+          box-shadow: 1px 3px 6px 1px rgba($gray-500, 0.2);
+          border-radius: 3px;
+          color: $gray-500;
+          min-width: fit-content;
+          height: 32px;
+          display: flex;
+          // margin-left: 15px;
+          margin-top: auto;
+          cursor: pointer;
+
+          span.text {
+            margin: auto;
+            padding-right: 9px;
+          }
+          .onImportBtn {
+            width: 64px;
+
+            .excel-ic {
+              width: 32px;
+              height: 100%;
+              margin-left: 2px;
+            }
+          }
+          .border-center {
+            align-self: center;
+            height: 90%;
+            border-right: 1px solid $gray-500;
+          }
+
+          .k-i-arrow-chevron-down {
+            text-align: center;
+            padding: 7px 0;
+            width: 32px;
+            height: 100%;
+
+            &:before {
+              font-size: 20px;
+            }
+          }
+        }
+      }
+
+      .nav-filter {
+        padding-left: 15px;
+
+        .search-btn-group {
+          margin-right: 5px;
+
+          .search-btn {
+            position: relative;
+            font-weight: 400;
+
+            .k-i-search {
+              position: absolute;
+              height: 100%;
+              width: 30px;
+              z-index: 1;
+            }
+            .k-textbox {
+              padding-left: 30px;
+              min-width: fit-content;
+              width: 375px;
+            }
+          }
+        }
+
+        .searchBtn {
+          height: 31px;
+          margin-bottom: 1px;
+          margin-top: auto;
+          background-color: $dark-green !important;
+          color: white;
+          font-size: 11px;
+          font-weight: bold;
+        }
+      }
+
+      .title {
+        margin: 12px 0;
+        font-weight: bold;
+        font-size: 16px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      &.header-2 {
+        .title {
+          font-size: 14px;
+        }
+      }
+    }
+
+    .body {
+      .sections {
+        .section {
+          .title {
+            margin: 12px 0;
+            font-weight: bold;
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+          }
+          .crud-btn {
+            height: 32px;
+            font-size: 11px;
+            font-weight: bold;
+            background-color: $dark-green !important;
+            color: white;
+          }
+
+          .section-grid {
+            display: grid;
+            column-gap: 27px;
+            row-gap: 10px;
+            background-color: white;
+            padding: 15px;
+
+            .grid-item {
+              display: flex;
+              flex-direction: column;
+            }
+
+            .k-textbox {
+              flex-grow: 1;
+              width: auto;
+            }
+            .k-numerictextbox {
+              flex-grow: 1;
+              width: auto;
+
+              &.red-color input {
+                color: $bad-red;
+              }
+            }
+
+            .k-dropdownlist {
+              flex-grow: 1;
+              width: auto;
+            }
+            .k-datepicker {
+              flex-grow: 1;
+              width: auto;
+            }
+            .k-timepicker {
+              flex-grow: 1;
+              width: auto;
+
+              .k-input {
+                width: 70px;
+              }
+            }
+            .k-checkbox {
+              margin-right: 10px;
+            }
+            textarea {
+              resize: none;
+              border-radius: 3px;
+              border-color: rgba(0, 0, 0, 0.08);
+              outline: none;
+              height: 100%;
+              padding: 4px 8px;
+
+              &:hover,
+              &:focus-visible {
+                border-color: $dark-green;
+              }
+            }
+            label {
+              margin-bottom: 0;
+              // cursor: pointer;
+            }
+            .input_label {
+              margin-bottom: 10px;
+            }
+            .row {
+              align-items: center;
+              margin-bottom: 7px;
+            }
+            .subrow {
+              margin-left: 20px;
+            }
+          }
+        }
+      }
+    }
+
+    #thongtinkhuyenmaiTbl {
+      .title {
+        justify-content: flex-start;
+        column-gap: 15px;
+
+        // .type {
+        //   color: $gray-500;
+
+        //   &.red {
+        //     color: $bad-red;
+        //   }
+        //   &.green {
+        //     color: $dark-green;
+        //   }
+        // }
+
+        // .languages {
+        //   margin-left: auto;
+        //   font-style: normal;
+        //   font-weight: normal;
+        //   font-size: 13px;
+        //   line-height: 20px;
+        //   color: #bbc0bb;
+
+        //   .active,
+        //   :hover {
+        //     color: #626662;
+        //     cursor: pointer;
+        //   }
+        //   .borderRight {
+        //     border-right: 1px solid #bbc0bb;
+        //     padding-right: 5px;
+        //     margin-right: 5px;
+        //   }
+        // }
+      }
+
+      .section-grid {
+        grid-template-columns: 260px auto;
+
+        .item1_1 {
+          grid-column: 1;
+          grid-row: 1;
+        }
+        .item1_2 {
+          grid-column: 1;
+          grid-row: 2;
+
+          .green {
+            color: $dark-green;
+          }
+          .red {
+            color: $bad-red;
+          }
+        }
+
+        .item2_1 {
+          grid-column: 2;
+          grid-row: 1;
+        }
+        .item2_2 {
+          grid-column: 2;
+          grid-row: 2 / span 2;
+        }
+        .item2_3 {
+          grid-column: 2;
+          grid-row: 4;
+        }
+      }
+    }
+
+    #thongtinchitietchuongtrinhTbl {
+      .k-grid {
+        .k-grid-header .k-header > .k-link {
+          .giakhuyenmai,
+          .chietkhau,
+          .tinhtrang {
+            width: 100%;
+          }
+        }
+      }
+
+      .grid {
+        &.scrollable {
+          .k-grid {
+            .k-grid-aria-root {
+              overflow-x: auto;
+            }
+            table {
+              // width: 1370px;
+            }
+            //đặt lại more action btn absolute theo table relative
+            tr {
+              position: initial;
+
+              td,
+              th {
+                &:last-child {
+                  position: absolute;
+                  top: initial;
+                  margin-top: calc(1% - 10px);
+                }
+              }
+            }
+          }
+
+          // &.scroll5 table {
+          //   width: 1370px;
+          // }
+          &.scroll6 table {
+            // width: 1400px;
+
+            td {
+              &.hanmucmua,
+              &.giakhuyenmai,
+              &.chietkhau {
+                min-width: 150px;
+              }
+
+              &.tinhtrang {
+                min-width: 210px;
+              }
+            }
+          }
+        }
+
+        tr:not(.k-grouping-row) td {
+          &:first-child {
+            padding-left: 10px;
+          }
+        }
+        .col_img_tensanpham_masanpham {
+          max-width: 30%;
+          width: 30%;
+        }
+        .img_tensanpham_masanpham {
+          display: flex;
+
+          .img {
+            height: 65px;
+            width: 87px;
+
+            img {
+              max-height: 100%;
+            }
+          }
+          .tensanpham_masanpham {
+            flex-direction: column;
+            justify-content: space-between;
+
+            .tensanpham {
+              white-space: normal;
+            }
+
+            // .tbarcode {
+            //   border-left: 1px solid;
+            //   padding-left: 5px;
+            //   margin-left: 5px;
+            //   color: $dark-green;
+            // }
+          }
+        }
+
+        .col_giaMoi,
+        .col_giaCu {
+          text-align: center;
+
+          > .k-link {
+            justify-content: center;
+          }
+        }
+
+        .col_giaMoi {
+          .amount {
+            font-weight: 700;
+          }
+        }
+
+        .col_giaCu {
+          .unitprice {
+            color: $worse-red;
+          }
+          .baseprice {
+            text-decoration: line-through;
+            font-weight: 700;
+          }
+        }
+
+        .col_tinhTrang {
+          padding-right: 50px;
+
+          .red {
+            color: $worse-red;
+          }
+          .green {
+            color: $dark-green;
+          }
+        }
+      }
+    }
+
+    .label {
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: $gray-500;
+
+      &.thick-label {
+        color: $gray-900;
+
+        + .number {
+          font-weight: bold;
+        }
+        + .k-numerictextbox {
+          input {
+            font-weight: bold;
+          }
+        }
+      }
+      &.thin-label {
+        font-weight: normal;
+        color: $gray-800;
+      }
+    }
+  }
+}

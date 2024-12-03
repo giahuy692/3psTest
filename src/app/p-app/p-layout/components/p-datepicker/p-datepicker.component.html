@@ -1,0 +1,19 @@
+<div class="datepicker-wrapper">
+    <kendo-datepicker class="customDatePicker" #datepickerRef [disabled]="disabled" [(ngModel)]="value" [disabledDates]="disabledDates"
+        calendarType="classic" [min]="min" [max]="max" [readOnlyInput]="readOnlyInput"
+        [popupSettings]="{animate:true,appendTo: 'component',popupClass:'popupClassDatepicker'}" [format]="format"
+        [placeholder]="placeholder" [formatPlaceholder]="formatPlaceholder"
+        (ngModelChange)="onDatepickerValueChange($event)" [ngClass]="{'readOnlyInput': readOnlyInput}" (blur)="onBlur()"
+        (keydown.Enter)="$event.target.blur()" [popupSettings]="popupSetting" (focus)="onFocus()">
+        <ng-template kendoCalendarHeaderTitleTemplate let-title let-date let-view="activeView">
+            <span>{{ view === 'month' ? (title | date: formatHeaderTitle : 'Indochina Time' : 'vi_VN') : title }}</span>
+            <ng-template kendoCalendarYearCellTemplate let-context="cellContext">
+                <span>{{ view === 'year' ? (context.value | date: formatYearCell : 'Indochina Time' : 'vi_VN') :
+                    context.formattedValue }}</span>
+            </ng-template>
+            <ng-template kendoCalendarMonthCellTemplate let-date let-context="cellContext">
+                <span>{{date.getDate()}} </span>
+            </ng-template>
+        </ng-template>
+    </kendo-datepicker>
+</div>

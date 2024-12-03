@@ -1,0 +1,504 @@
+@import "../../../../../assets/scss/variables/colors";
+
+$widthColHeaderGroup: 364px;
+$Firstwidth: 40px;
+
+@mixin textarea {
+    display: block;
+    padding: 5px;
+    width: 100%;
+    min-height: 75px;
+    resize: none;
+    overflow: hidden;
+    height: auto;
+}
+
+@mixin btncreate {
+    text-align: center;
+
+    button {
+        border: none;
+        color: $dark-green;
+        background-color: transparent;
+
+        .k-icon {
+            width: 32px;
+            height: 32px;
+            border: 1px solid $dark-green;
+            border-radius: 16px;
+
+            span {
+                &::before {
+                    margin: auto;
+                    width: 16px;
+                    height: 16px;
+                }
+            }
+        }
+
+        &:focus {
+            border: none;
+            box-shadow: none;
+        }
+    }
+}
+
+::ng-deep {
+    app-hri019-payroll-detail {
+
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;
+        // height: -webkit-fill-available;
+
+        .symbol {
+            color: $dark-red !important;
+
+            &.fst-italic {
+                font-style: italic !important;
+            }
+        }
+
+        .borderColorMain {
+            border-color: #d6e5dc;
+        }
+
+
+        .highlight {
+            background-color: rgba(219, 222, 231, 0.30) !important;
+
+        }
+
+        .text-ellipsis {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .colGap10{
+            column-gap: 10px !important;
+        }
+
+        .customized-textarea{
+            min-height: 85px;
+        }
+
+
+        .img{
+            border-radius: 100%;
+            overflow: hidden;
+            width: 50px;
+            height: 50px;
+            img{
+                width: 100%;
+                height: 100%;
+                background-size: cover;
+                background-repeat: no-repeat;
+                max-width: unset !important;
+                max-height: unset !important;
+            }
+        }
+
+        .header-1 {
+            margin: 0 15px 0 20px !important;
+            height: 50px;
+            overflow-x: auto;
+            overflow-y: hidden;
+
+            .breadcumb {
+                app-p-kendo-breadcrumb {
+                    display: inline-block;
+                    min-width: 510px;
+                }
+            }
+
+            .nav-crud {
+                display: flex;
+                margin-left: auto;
+
+            
+                .addImport {
+                    border-radius: 5px;
+                }
+
+                .addExport {
+                    border-radius: 5px;
+                }
+            }
+        }
+
+        .Topic {
+            display: block;
+            color: var(--color-text-content, #26282e);
+            font-size: 16px;
+            font-family: Mulish;
+            font-weight: 700;
+            width: 100%;
+            padding: 12px 0 15px 0;
+            text-align: left;
+        }
+
+        .TimeAndStatus {
+            width: 30%;
+  
+            .status {
+              div {
+                font-weight: 700;
+              }
+            }
+          }
+
+        .label {
+            display: block;
+            color: #959db3;
+            font-size: 13px;
+            font-family: Mulish;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .main {
+            padding: 0 15px 15px 20px;
+            height: calc(100vh - 135px);
+            overflow-y: scroll;
+
+            .grid-wrapper{
+                margin-top: 0;
+            }
+            .InfoPayroll {
+                font-size: 13px;
+
+                .containerInfo {
+                    padding: 13px 20px;
+                    background-color: $white;
+                    display: flex;
+                    column-gap: 20px;
+                }
+
+                .TimeAndStatus {
+                    width: 30%;
+
+                    .status {
+                        div {
+                            font-weight: 700;
+                        }
+                    }
+                }
+
+                .infomation {
+                    flex: 1;
+
+                    .k-textbox,
+                    .k-area {
+                        width: 100%;
+                    }
+
+                    .k-area {
+                        min-height: 100px;
+                        padding: 4px 8px;
+
+                        &:focus {
+                            box-shadow: 0 0 0 1px $dark-green !important;
+                        }
+                    }
+                }
+            }
+            .PayrolllDetail{
+                .file-btn-group{
+                    display: flex;
+                    gap: 10px;
+                    background: none !important;
+                    box-shadow: none !important;
+                }
+            }
+
+            .EmployeeID{
+                width: fit-content;
+                max-width: 96px;
+            }
+
+            .PositionName{
+                width: fit-content;
+                max-width: 288px;
+            }
+
+        }
+
+        .content-primary {
+            p {
+                margin: 0;
+                font-size: 16px;
+                font-weight: 700;
+            }
+
+            strong {
+                color: $primary;
+                font-size: 16px;
+                font-weight: 700;
+            }
+        }
+
+        .content-sub {
+            margin: 16px 0 0 0;
+        }
+
+        .col_Fullname{
+            text-align: start;
+
+            .k-link {
+                display: flex;
+                justify-content: start;
+
+                .k-column-title {
+                    width: 100%;
+                }
+            }
+        }
+
+         .col_LocationName, .col_Gender, .col_BirthDate, .col_JoinDate, .col_TypeDataName{
+            text-align: center;
+            width: 156px;
+
+            .k-link {
+                display: flex;
+                justify-content: center;
+
+                .k-column-title {
+                    width: 100%;
+                }
+            }
+        }
+
+        .k-grid td{
+            padding: 3px 12px;
+        }
+        
+
+        .col_TotalSal, .col_status{
+            text-align: end;
+            width: 156px;
+
+            .k-link {
+                display: flex;
+                justify-content: end;
+
+                .k-column-title {
+                    width: 100%;
+                }
+            }
+        }
+        app-p-kendo-grid .myCustomGrid.k-grid tr:not(.k-grouping-row) td:first-child {
+            padding-left: 10px;
+        }
+    }
+
+
+        // .k-dialog-wrapper {
+        //     z-index: 1000;
+
+        //     .k-dialog {
+        //         .k-dialog-titlebar {
+        //             color: #ffffff;
+        //             background-color: $dark-green;
+
+        //             .k-dialog-title {
+        //                 justify-content: center;
+        //             }
+        //         }
+
+        //         .k-dialog-titlebar-actions {
+        //             .k-dialog-titlebar-action {
+        //                 color: $white;
+        //             }
+        //         }
+
+        //         .k-dialog-content {
+
+        //             .searhcInput {
+        //                 position: relative;
+        //                 display: flex;
+        //                 justify-content: space-between;
+        //                 column-gap: 6px;
+
+        //                 kendo-multiselect {
+        //                     width: 100%;
+        //                     height: 32px;
+
+        //                     &.k-state-focused {
+        //                         border-color: $dark-green;
+        //                     }
+
+        //                     .k-multiselect-wrap {
+        //                         &:hover {
+        //                             border-color: $dark-green;
+        //                         }
+
+        //                         .k-searchbar {
+        //                             &::before {
+        //                                 content: "";
+        //                                 width: 30px;
+        //                                 background-image: url(../../../../../assets/img/icon/icon_search.svg);
+        //                                 background-repeat: no-repeat;
+        //                                 background-position: center;
+        //                             }
+        //                         }
+
+        //                         .k-select {
+        //                             display: none;
+        //                         }
+        //                     }
+
+        //                     .k-animation-container-shown {
+        //                         .k-popup {
+        //                             kendo-list {
+
+        //                                 .k-state-selected,
+        //                                 .k-state-focused {
+        //                                     background-color: transparent;
+        //                                     box-shadow: none;
+        //                                 }
+
+        //                                 .k-list-scroller {
+        //                                     .k-list {
+        //                                         padding: 5px;
+
+        //                                         .k-state-disabled {
+        //                                             opacity: 1;
+        //                                             filter: none;
+        //                                             font-weight: 700;
+        //                                             font-size: 13px;
+        //                                             color: $gray-850;
+        //                                         }
+
+        //                                         .k-item {
+        //                                             display: block;
+        //                                             padding: 0;
+
+        //                                             &:hover {
+        //                                                 background-color: #d9d9d94d;
+        //                                                 color: $gray-850;
+        //                                             }
+        //                                         }
+        //                                     }
+        //                                 }
+        //                             }
+        //                         }
+        //                     }
+        //                 }
+        //             }
+
+        //             //#endregion
+
+        //             #wrapper-dialog {
+        //                 .k-dialog {
+        //                     .k-dialog-titlebar {
+        //                         display: flex;
+        //                         align-items: center;
+        //                         background-color: $white;
+        //                         color: #fd7676;
+
+        //                         .k-dialog-title {
+        //                             justify-content: center;
+        //                             align-items: center;
+
+        //                             .title-delete {
+        //                                 column-gap: 10px;
+
+        //                                 span {
+        //                                     font-weight: 700;
+        //                                 }
+
+        //                                 .k-button {
+        //                                     background-color: white;
+        //                                     padding: 0;
+        //                                     background-image: none;
+        //                                     width: fit-content;
+        //                                     height: fit-content;
+        //                                     border: none;
+        //                                 }
+        //                             }
+        //                         }
+
+        //                         .k-dialog-titlebar-actions {
+        //                             display: none;
+        //                         }
+        //                     }
+
+        //                     .k-dialog-content {
+        //                         text-align: center;
+        //                         padding: 0;
+        //                         width: unset;
+
+        //                         .body_dialog {
+        //                             width: 100%;
+        //                             position: absolute;
+        //                             top: 34%;
+        //                             left: 50%;
+        //                             transform: translate(-50%, -50%);
+        //                             padding: 10px;
+
+        //                             .content-primary {
+        //                                 p {
+        //                                     margin: 0;
+        //                                     font-size: 16px;
+        //                                     font-weight: 700;
+        //                                 }
+
+        //                                 strong {
+        //                                     color: $primary;
+        //                                     font-size: 16px;
+        //                                     font-weight: 700;
+        //                                 }
+        //                             }
+
+        //                             .content-sub {
+        //                                 margin: 16px 0 0 0;
+        //                             }
+        //                         }
+        //                     }
+
+        //                     .k-dialog-actions {
+        //                         display: flex;
+        //                         width: 100%;
+        //                         padding: 0;
+        //                         column-gap: 0;
+        //                         position: absolute;
+        //                         bottom: 0;
+
+        //                         .delete {
+        //                             background: #fd7676;
+        //                             color: #fff;
+        //                         }
+
+        //                         .cancel {
+        //                             background: $white;
+        //                             color: #959db3;
+        //                         }
+
+        //                         button {
+        //                             width: 50%;
+        //                             height: 53px;
+        //                             border-radius: 0;
+        //                             font-weight: 700;
+
+        //                             .k-button-icon {
+        //                                 width: 20px;
+
+        //                                 img {
+        //                                     width: 20px;
+        //                                 }
+        //                             }
+        //                         }
+        //                     }
+        //                 }
+
+        //                 //End: dialog
+        //             }
+        //         }
+        //     }
+        // }
+}

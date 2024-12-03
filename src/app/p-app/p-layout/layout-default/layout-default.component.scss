@@ -1,0 +1,59 @@
+@import "../../../../assets/scss/variable.scss";
+
+#pageBody {
+    overflow: hidden;
+    
+    /* width */
+    ::-webkit-scrollbar {
+        width: 0.5rem;
+        height: 0.5rem;
+    }
+    /* Track */
+    ::-webkit-scrollbar-track {
+        border-radius: 0.25rem;
+    }
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: $blue-gray;
+        border-radius: 0.25rem;
+    }
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: $light-blue-gray;
+    }
+
+    * {
+        /* width */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+            background-color: transparent;
+        }
+        /* Track */
+        ::-webkit-scrollbar-track {
+            border-radius: 2px;
+        }
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background-color: $dark-green;
+            border-radius: 2px;
+        }
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba($dark-green, 0.5);
+        }
+    }
+}
+.app-body {
+    height: calc(100vh - #{$right-container-height});
+    display: flex;
+    background: $gray-200;
+}
+.px-2.py-1 {
+    width: 100%;
+    overflow: hidden;
+    font-size: 13px;
+    background-color: $gray-100;
+    padding: 0 !important;
+
+}

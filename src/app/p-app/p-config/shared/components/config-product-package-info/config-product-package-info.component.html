@@ -1,0 +1,217 @@
+<div class="config-product-package-info">
+<div class="section">
+    <div class="title">THÔNG TIN ĐÓNG GÓI</div>
+
+    <div class="section-grid">
+      <!-- col 1 -->
+      <div class="grid-item item1_1">
+        <div class="label">Đơn vị sản phẩm (Base unit)</div>
+        <p-kendo-dropdownlist [data]="listPackingUnit" textField="VNPackingUnit" valueField="Code"
+         (valueChange)="onDropdownlistClick($event, ['BaseUnit'])"
+        [(ngModel)]="currentBaseUnit" [disabled]="disable">
+
+        </p-kendo-dropdownlist>
+      </div>
+
+      <div class="grid-item item1_2">
+        <div class="label">Kích thước sản phẩm (dài x rộng x cao x cân nặng) (cm - g)</div>
+
+        <div class="item_grid">
+          <div class="item_item1">
+            <app-p-numeric-textbox  propName="sl"  [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+              [(ngModel)]="hamper.BaseUnitL"  (keydown.Enter)="$event.target.blur()" [disabled]="disable"
+              (blur)="onBlurTextbox('BaseUnitL')"
+              >
+            </app-p-numeric-textbox>
+          </div>
+          <div class="item_item2">
+            <app-p-numeric-textbox  propName="sl"  [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+             [(ngModel)]="hamper.BaseUnitW" [disabled]="disable"
+              (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('BaseUnitW')"
+              >
+            </app-p-numeric-textbox>
+          </div>
+          <div class="item_item3">
+            <app-p-numeric-textbox   propName="sl"  [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+             [(ngModel)]="hamper.BaseUnitH" [disabled]="disable"
+              (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('BaseUnitH')"
+              >
+            </app-p-numeric-textbox>
+          </div>
+          <div class="item_item4">
+            <app-p-numeric-textbox  propName="sl"  [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+              [(ngModel)]="hamper.BaseUnitWeight" [disabled]="disable"
+              (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('BaseUnitWeight')"
+              >
+            </app-p-numeric-textbox>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="grid-item item1_3">
+        <div class="label">Kích thước đóng gói (dài x rộng x cao x cân nặng) (cm - g)</div>
+
+        <div class="item_grid">
+          <div class="item_item1">
+            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+             [disabled]="disable"
+               (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('BaseUnitW')"
+              
+            ></app-p-numeric-textbox>
+          </div>
+          <div class="item_item2">
+            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+             [disabled]="disable"
+               (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('BaseUnitW')"
+              
+            ></app-p-numeric-textbox>
+          </div>
+          <div class="item_item3">
+            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+             [disabled]="disable"
+               (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('BaseUnitW')"
+              
+            ></app-p-numeric-textbox>
+          </div>
+          <div class="item_item4">
+            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+             [disabled]="disable"
+              (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('BaseUnitW')"
+              >
+            </app-p-numeric-textbox>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="grid-item item1_4">
+        <div class="label">Kích thước inner (dài x rộng x cao x cân nặng) (cm - g)</div>
+
+        <div class="item_grid">
+          <div class="item_item1">
+            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+             [(ngModel)]="hamper.InnerL" [disabled]="disable"
+              (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('InnerL')">
+                         </app-p-numeric-textbox>
+          </div>
+          <div class="item_item2">
+            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+             [(ngModel)]="hamper.InnerW" [disabled]="disable"
+              (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('InnerW')"
+                         ></app-p-numeric-textbox>
+          </div>
+          <div class="item_item3">
+            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+             [(ngModel)]="hamper.InnerH" [disabled]="disable"
+              (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('InnerH')"
+                         ></app-p-numeric-textbox>
+          </div>
+          <div class="item_item4">
+            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+             [(ngModel)]="hamper.InnerWeight" [disabled]="disable"
+              (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('InnerWeight')"
+              >
+            </app-p-numeric-textbox>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-item item1_5">
+        <div class="label">Kích thước carton (dài x rộng x cao x cân nặng) (cm - g)</div>
+
+        <div class="item_grid">
+          <div class="item_item1">
+            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+             [(ngModel)]="hamper.CartonL" [disabled]="disable"
+              (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('CartonL')"
+                          ></app-p-numeric-textbox>
+          </div>
+          <div class="item_item2">
+            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+              [(ngModel)]="hamper.CartonW" [disabled]="disable"
+              (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('CartonW')"
+                          ></app-p-numeric-textbox>
+          </div>
+          <div class="item_item3">
+            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+             [(ngModel)]="hamper.CartonH" [disabled]="disable"
+              (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('CartonH')"
+                          ></app-p-numeric-textbox>
+          </div>
+          <div class="item_item4">
+            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+             [(ngModel)]="hamper.CartonWeight" [disabled]="disable"
+               (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('CartonWeight')"
+              >
+            </app-p-numeric-textbox>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-item item1_6">
+        <div class="label">Kích thước pallet (dài x rộng x cao x cân nặng) (cm - g)</div>
+
+        <div class="item_grid">
+          <div class="item_item1">
+            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+             [(ngModel)]="hamper.PalletL" [disabled]="disable"
+              (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('PalletL')"
+                          ></app-p-numeric-textbox>
+          </div>
+          <div class="item_item2">
+            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+             [(ngModel)]="hamper.PalletW" [disabled]="disable"
+              (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('PalletW')"
+                          ></app-p-numeric-textbox>
+          </div>
+          <div class="item_item3">
+            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+             [(ngModel)]="hamper.PalletH" [disabled]="disable"
+              (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('PalletH')"
+                          ></app-p-numeric-textbox>
+          </div>
+          <div class="item_item4">
+            <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+              [(ngModel)]="hamper.PalletWeight" [disabled]="disable"
+               (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('PalletWeight')"
+              >
+            </app-p-numeric-textbox>
+          </div>
+        </div>
+      </div>
+      <!-- col 2 -->
+      <div class="grid-item item2_1">
+        <div class="label">Quy đổi quy cách sản phẩm</div>
+
+        <div class="item2_1_item">
+          <div class="label">Inner<b style="float: right;"> = </b></div>
+          <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+           (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('InnerBase')" [(ngModel)]="hamper.InnerBase" [disabled]="disable" 
+            >
+          </app-p-numeric-textbox>
+          Base unit
+        </div>
+
+        <div class="item2_1_item">
+          <div class="label">Carton<b style="float: right;"> = </b></div>
+          <app-p-numeric-textbox  propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+            (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('CartonBase')" [(ngModel)]="hamper.CartonBase" [disabled]="disable"
+            >
+          </app-p-numeric-textbox>
+          Base unit
+        </div>
+
+        <div class="item2_1_item">
+          <div class="label">Pallet<b style="float: right;"> = </b></div>
+          <app-p-numeric-textbox propName="sl" [format]="'n0'"  [spinners]="false" [min]="0" class="k-textbox"
+           (keydown.Enter)="$event.target.blur()" (blur)="onBlurTextbox('PalletBase')" [(ngModel)]="hamper.PalletBase"  [disabled]="disable"
+            >
+          </app-p-numeric-textbox>
+          Base unit
+        </div>
+      </div>
+      <!-- col 3 -->
+      
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+
+    .customized-input {
+        
+        &.k-focus {
+            //focus cho cả numeric  
+            box-shadow: 0 0 0 1px $dark-green !important; 
+        }
+
+        &:hover {
+            outline: 1px solid #1a6634;
+        }
+
+        &.k-disabled {
+            opacity: 1;
+            background-color: #f0f3f5;
+            cursor: not-allowed;
+        }
+
+        .k-spinner-increase, .k-spinner-decrease {
+            background-color: transparent !important;
+        }
+
+        .k-input-inner:focus {
+            box-shadow: unset !important;
+        }
+    }
+    
+    .prefix-icon, .suffix-icon {
+    }
+
+    .prefix-icon, .suffix-icon {
+        padding: 0 15px;
+    }
+}

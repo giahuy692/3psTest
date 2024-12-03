@@ -1,0 +1,814 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    .hr007-personal-info{
+        span.k-icon.k-i-arrow-s{
+            color: #959DB3;
+        }
+        height: calc(93vh - #{$footer-height});
+        display: flex;
+        flex-direction: column;
+        //header nav-btn
+        .header{
+            min-height: 48px;
+            display: flex;
+            padding-right: 15px !important;
+            margin-bottom: 0;
+            border-bottom: 1px solid rgba($gray-500, 0.4);
+            .breadcumb {
+                z-index: 1;
+                app-p-kendo-breadcrumb{
+                  display: inline-block;
+                  min-width: 510px;
+                }
+            }
+            .nav-btn {
+                display: flex;
+                align-items: center;
+                flex-grow: 1;
+                &.nav-breadcrumb{
+                    margin: 5px 5px;
+
+                    .breadcrumb-chevron{
+                        margin: 0 10px;
+                    }
+                }
+                .onAddBtn {
+                    height: 32px;
+                    margin-top: auto;
+                    background-color: $dark-green !important;
+                    color: white;
+                    font-size: 11px;
+                    font-weight: bold;
+                }
+            }
+        }
+        .body{
+            display: flex;
+            //route link
+            
+            //
+            .body-right{
+                width: 100%;
+                padding: 0 10px;
+                overflow-y: scroll;
+                height: calc(100vh - #{$footer-height});
+
+                .symbol{
+                    padding-left: 3px;
+                    color: $dark-red !important;
+                }
+                
+                .sections{
+                    padding-bottom: 100px;
+                    
+                    .section{
+                        
+                        .title{
+                            margin-top: 12px;
+                            font-weight: bold;
+                        }
+                        .section-grid{
+                            margin-top: 5px;
+                            background-color: $white;
+                            padding: 15px;
+                            display: grid;
+                            overflow-x: scroll;
+                            grid-template-columns: 300px 300px 400px;
+                            grid-template-rows: repeat(4, auto);
+                            .grid-item{
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: space-between;
+                                kendo-label{
+                                    font-weight: 700;
+                                }
+                                kendo-dropdownlist{
+                                    width: 270px;
+                                    margin-top: 10px;
+                                    &:hover{
+                                        outline: 1px solid #1a6634;
+                                        border-color: rgba(0, 0, 0, 0.16);
+                                    }
+                                    &:focus{
+                                        outline: 1px solid #1a6634;
+                                        border-color: rgba(0, 0, 0, 0.16);
+                                    }
+                                }
+                                .k-input-inner{
+                                    display: flex;
+                                }
+                                body .Bps [class*=caret][class*=down]::before{
+                                    color: #959DB3;
+                                }
+                                kendo-maskedtextbox{
+                                    border :1px solid lighten($gray-base, 80%);
+                                    margin-top: 2px;
+                                    border-radius: 3px;
+                                    width: 270px;
+                                    &:hover{
+                                        outline: 1px solid #316e00;;
+                                    }
+                                    &:focus{
+                                        outline: 1px solid #316e00;;
+                                    }
+                                }
+                                .k-textbox,.k-dropdown{
+                                    margin-top: 10px;
+                                    width: 270px;
+                                    display: flex;
+                                }
+                                .k-icon .k-i-arrow-s{
+                                    color: lighten($gray-base, 80%);
+                                }
+                                .box{
+                                    width: 400px;
+                                }
+                                .k-textbox{
+                                    &:focus{
+                                        border-color: rgba($gray-500, 0.4);
+                                    }
+                                }
+                                kendo-datepicker{
+                                    
+                                    &:hover{
+                                        outline: 1px solid #1a6634;
+                                        border-color: rgba(0, 0, 0, 0.16);
+                                    }
+                                    &:focus{
+                                        outline: 1px solid #1a6634;
+                                        border-color: rgba(0, 0, 0, 0.16);
+                                    }
+                                    button{
+                                        border-left:none;
+                                        background-color: rgba(255, 255, 255, 1);
+                                        &:hover{
+                                            outline: none;
+                                            border-color: rgba(0, 0, 0, 0.16);
+                                        }
+                                        &:focus{
+                                            outline: none;
+                                            border-color: rgba(0, 0, 0, 0.16);
+                                        }
+                                    }
+                                    .k-i-calendar::before{
+                                        color: #959DB3;
+                                    }
+                                }
+                                kendo-dateinput{
+                                    width: 240px;
+                                    border-right: none;
+                                    &:hover{
+                                        outline: none;
+                                        border-color: rgba(0, 0, 0, 0.16);
+                                    }
+                                    &:focus{
+                                        outline: none;
+                                        border-color: rgba(0, 0, 0, 0.16);
+                                    }
+                                }
+                                .list-dropdownlist{
+                                    display: flex;
+                                    column-gap: 10px;
+                                    .dropdownlist-year{
+                                        .k-dropdown{
+                                            width: 100px;
+                                        }
+                                    }
+                                    .dropdownlist-month{
+                                        .k-dropdown{
+                                            max-width: 70px;
+                                        }
+                                    }
+                                    .changeSize{
+                                        .k-dropdown{
+                                            max-width: 110px !important;
+                                        }
+                                    }
+                                    .dropdownlist-date{
+                                        .k-dropdown{
+                                            max-width: 75px;
+                                        }
+                                    }
+                                }
+                                .k-numerictextbox {
+                                    .k-select{
+                                        display: none !important;
+    
+                                    }
+                                    input{
+                                        text-align: left !important;
+                                    }
+                                }
+                                .k-datepicker.k-widget{
+                                    margin-top: 10px;
+                                    width: 270px;
+                                    border :2px solid lighten($gray-base, 80%);
+                                    .k-select{
+                                        background-color: $white;
+                                    }
+                                    .k-picker-wrap.k-state-focused{
+                                        box-shadow: none;
+                                    }
+                                }
+                                .title-Checkbox{
+                                    display: flex;
+                                    input{
+                                        margin: 0 10px;
+                                    }
+                                }
+                                .BoxInternet{
+                                    display: flex;
+                                    .socialNetwork{
+                                        margin-left: 5px;
+                                        width: 100px;
+                                    }
+                                }
+                            }
+                            .Scroll{
+                                 .k-list{
+                                    overflow-y: scroll;
+                                }
+                            }
+                        }
+                    }
+                    .thongTinCoBan_tbl{
+                        .section-grid{
+                            .item1{
+                                grid-column: 1;
+                                grid-row: 1;
+                            }
+                            .item2{
+                                grid-column: 1;
+                                grid-row: 2;
+                            }
+                            .item3{
+                                grid-column: 1;
+                                grid-row: 3;
+                            }
+                            .item4{
+                                grid-column: 1;
+                                grid-row: 4;
+                            }
+                            .item5{
+                                grid-column: 2;
+                                grid-row: 1;
+                            }
+                            .item6{
+                                grid-column: 2;
+                                grid-row: 2;
+                            }
+                            .item7{
+                                grid-column: 2;
+                                grid-row: 3;
+                            }
+                            .item8{
+                                grid-column: 2;
+                                grid-row: 4;
+                            }
+                        }
+                    }
+                    .thongTinChungThuVaThueTNCN_tbl{
+                        .section-grid{
+                            .item1{
+                                grid-column: 1;
+                                grid-row: 1;
+                            }
+                            .item2{
+                                grid-column: 1;
+                                grid-row: 2;
+                            }
+                            .item3{
+                                grid-column: 1;
+                                grid-row: 3;
+                            }
+                            .item4{
+                                grid-column: 1;
+                                grid-row: 4;
+                            }
+                            .item5{
+                                grid-column: 2;
+                                grid-row: 1;
+                            }
+                            .item6{
+                                grid-column: 2;
+                                grid-row: 2;
+                            }
+                            .item7{
+                                grid-column: 2;
+                                grid-row: 3;
+                            }
+                            .item8{
+                                grid-column: 2;
+                                grid-row: 4;
+                            }
+                        }
+                    }
+                    .vanHoaChuyenMonNgheNghiep{
+                        .section-grid{
+                            .item1{
+                                grid-column: 1;
+                                grid-row: 1;
+                            }
+                            .item2{
+                                grid-column: 1;
+                                grid-row: 2;
+                            }
+                            .item3{
+                                grid-column: 1;
+                                grid-row: 3;
+                            }
+                            .item4{
+                                grid-column: 2;
+                                grid-row: 1;
+                            }
+                            .item5{
+                                grid-column: 2;
+                                grid-row: 2;
+                            }
+                        }
+                    }
+                    .thongTinLienHe{
+                        .section-grid{
+                            .item1{
+                                grid-column: 1;
+                                grid-row: 1;
+                            }
+                            .item2{
+                                grid-column: 1;
+                                grid-row: 2;
+                            }
+                            .item3{
+                                grid-column: 1;
+                                grid-row: 3;
+                            }
+                            .item4{
+                                grid-column: 2;
+                                grid-row: 1;
+                            }
+                            .item5{
+                                grid-column: 2;
+                                grid-row: 2;
+                            }
+                            .item6{
+                                grid-column: 2;
+                                grid-row: 3;
+                            }
+                        }
+                    }
+                    .diaChiCuTru{
+                        .section-grid{
+                            background-color: $white;
+                            padding: 15px;
+                            display: grid;
+                            grid-template-columns: 500px 500px;
+                            grid-template-rows: repeat(4, auto);
+                            // height: 345px;
+                            .grid-item{
+                                .width500{
+                                    .k-textbox{
+                                        width: 450px;
+                                    }
+                                }
+                                .k-list{
+                                    overflow-y: scroll;
+                                }
+                            }
+                            .item1{
+                                grid-column: 1;
+                                grid-row: 1;
+                            }
+                            .item2{
+                                grid-column: 1;
+                                grid-row: 2;
+                            }
+                            .item3{
+                                grid-column: 1;
+                                grid-row: 3;
+                            }
+                            .item4{
+                                grid-column: 1;
+                                grid-row: 4;
+                            }
+                            .item5{
+                                grid-column: 1;
+                                grid-row: 5;
+                            }
+                        }
+                    }
+                }
+            }
+            .CustomPopupDropdown{
+                border: 1px solid #1a6634;
+            }
+        }
+    }
+    .k-animation-container{
+        .CustomPopupDatePickerPersonal{
+            .k-calendar{
+                kendo-virtualization{
+                    .k-calendar-table{
+                        .k-selected{
+                            background-color: #1a6634;
+                            color: #ffffff;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+// ::ng-deep{
+//     .hr007-personal-info{
+//         span.k-icon.k-i-arrow-s{
+//             color: #959DB3;
+//         }
+//         height: calc(93vh - #{$footer-height});
+//         display: flex;
+//         flex-direction: column;
+//         //header nav-btn
+//         .header{
+//             min-height: 48px;
+//             display: flex;
+//             padding-right: 15px !important;
+//             margin-bottom: 0;
+//             border-bottom: 1px solid rgba($gray-500, 0.4);
+//             .breadcumb {
+//                 z-index: 1;
+//                 app-p-kendo-breadcrumb{
+//                   display: inline-block;
+//                   min-width: 510px;
+//                 }
+//             }
+//             .nav-btn {
+//                 display: flex;
+//                 align-items: center;
+//                 flex-grow: 1;
+//                 &.nav-breadcrumb{
+//                     margin: 5px 5px;
+
+//                     .breadcrumb-chevron{
+//                         margin: 0 10px;
+//                     }
+//                 }
+//                 .onAddBtn {
+//                     height: 32px;
+//                     margin-top: auto;
+//                     background-color: $dark-green !important;
+//                     color: white;
+//                     font-size: 11px;
+//                     font-weight: bold;
+//                 }
+//             }
+//         }
+//         .body{
+//             display: flex;
+//             //route link
+            
+//             //
+//             .body-right{
+//                 width: 100%;
+//                 padding: 0 10px;
+//                 overflow-y: scroll;
+//                 height: calc(100vh - #{$footer-height});
+
+//                 .symbol{
+//                     padding-left: 3px;
+//                     color: $dark-red !important;
+//                 }
+                
+//                 .sections{
+//                     padding-bottom: 100px;
+                    
+//                     .section{
+                        
+//                         .title{
+//                             margin-top: 12px;
+//                             font-weight: bold;
+//                         }
+//                         .section-grid{
+//                             margin-top: 5px;
+//                             background-color: $white;
+//                             padding: 15px;
+//                             display: grid;
+//                             overflow-x: scroll;
+//                             grid-template-columns: 300px 300px 400px;
+//                             grid-template-rows: repeat(4, auto);
+//                             .grid-item{
+//                                 display: flex;
+//                                 flex-direction: column;
+//                                 kendo-label{
+//                                     font-weight: 700;
+//                                 }
+//                                 kendo-dropdownlist{
+//                                     width: 270px;
+//                                     margin-top: 10px;
+//                                     &:hover{
+//                                         outline: 1px solid #1a6634;
+//                                         border-color: rgba(0, 0, 0, 0.16);
+//                                     }
+//                                     &:focus{
+//                                         outline: 1px solid #1a6634;
+//                                         border-color: rgba(0, 0, 0, 0.16);
+//                                     }
+//                                 }
+//                                 .k-input-inner{
+//                                     display: flex;
+//                                 }
+//                                 body .Bps [class*=caret][class*=down]::before{
+//                                     color: #959DB3;
+//                                 }
+//                                 kendo-maskedtextbox{
+//                                     border :1px solid lighten($gray-base, 80%);
+//                                     margin-top: 2px;
+//                                     border-radius: 3px;
+//                                     width: 270px;
+//                                     &:hover{
+//                                         outline: 1px solid #316e00;;
+//                                     }
+//                                     &:focus{
+//                                         outline: 1px solid #316e00;;
+//                                     }
+//                                 }
+//                                 .k-textbox,.k-dropdown{
+//                                     margin-top: 10px;
+//                                     width: 270px;
+//                                     display: flex;
+//                                 }
+//                                 .k-icon .k-i-arrow-s{
+//                                     color: lighten($gray-base, 80%);
+//                                 }
+//                                 .box{
+//                                     width: 400px;
+//                                 }
+//                                 .k-textbox{
+//                                     &:focus{
+//                                         border-color: rgba($gray-500, 0.4);
+//                                     }
+//                                 }
+//                                 kendo-datepicker{
+                                    
+//                                     &:hover{
+//                                         outline: 1px solid #1a6634;
+//                                         border-color: rgba(0, 0, 0, 0.16);
+//                                     }
+//                                     &:focus{
+//                                         outline: 1px solid #1a6634;
+//                                         border-color: rgba(0, 0, 0, 0.16);
+//                                     }
+//                                     button{
+//                                         border-left:none;
+//                                         background-color: rgba(255, 255, 255, 1);
+//                                         &:hover{
+//                                             outline: none;
+//                                             border-color: rgba(0, 0, 0, 0.16);
+//                                         }
+//                                         &:focus{
+//                                             outline: none;
+//                                             border-color: rgba(0, 0, 0, 0.16);
+//                                         }
+//                                     }
+//                                     .k-i-calendar::before{
+//                                         color: #959DB3;
+//                                     }
+//                                 }
+//                                 kendo-dateinput{
+//                                     width: 240px;
+//                                     border-right: none;
+//                                     &:hover{
+//                                         outline: none;
+//                                         border-color: rgba(0, 0, 0, 0.16);
+//                                     }
+//                                     &:focus{
+//                                         outline: none;
+//                                         border-color: rgba(0, 0, 0, 0.16);
+//                                     }
+//                                 }
+//                                 .list-dropdownlist{
+//                                     display: flex;
+//                                     width: 270px;
+//                                     justify-content: space-between;
+//                                     .dropdownlist-year{
+//                                         width: 100px;
+//                                         margin-right: 6px;
+//                                     }
+//                                     .dropdownlist-month{
+//                                         width: 70px;
+//                                         margin-right: 6px;
+//                                     }
+//                                     .dropdownlist-date{
+//                                         width: 75px;
+                                        
+//                                     }
+//                                 }
+//                                 .k-numerictextbox {
+//                                     .k-select{
+//                                         display: none !important;
+    
+//                                     }
+//                                     input{
+//                                         text-align: left !important;
+//                                     }
+//                                 }
+//                                 .k-datepicker.k-widget{
+//                                     margin-top: 10px;
+//                                     width: 270px;
+//                                     border :2px solid lighten($gray-base, 80%);
+//                                     .k-select{
+//                                         background-color: $white;
+//                                     }
+//                                     .k-picker-wrap.k-state-focused{
+//                                         box-shadow: none;
+//                                     }
+//                                 }
+//                                 .title-Checkbox{
+//                                     display: flex;
+//                                     input{
+//                                         margin: 0 10px;
+//                                     }
+//                                 }
+//                                 .BoxInternet{
+//                                     display: flex;
+//                                     .socialNetwork{
+//                                         margin-left: 5px;
+//                                         width: 100px;
+//                                     }
+//                                 }
+//                             }
+//                             .Scroll{
+//                                  .k-list{
+//                                     overflow-y: scroll;
+//                                 }
+//                             }
+//                         }
+//                     }
+//                     .thongTinCoBan_tbl{
+//                         .section-grid{
+//                             .item1{
+//                                 grid-column: 1;
+//                                 grid-row: 1;
+//                             }
+//                             .item2{
+//                                 grid-column: 1;
+//                                 grid-row: 2;
+//                             }
+//                             .item3{
+//                                 grid-column: 1;
+//                                 grid-row: 3;
+//                             }
+//                             .item4{
+//                                 grid-column: 1;
+//                                 grid-row: 4;
+//                             }
+//                             .item5{
+//                                 grid-column: 2;
+//                                 grid-row: 1;
+//                             }
+//                             .item6{
+//                                 grid-column: 2;
+//                                 grid-row: 2;
+//                             }
+//                             .item7{
+//                                 grid-column: 2;
+//                                 grid-row: 3;
+//                             }
+//                             .item8{
+//                                 grid-column: 2;
+//                                 grid-row: 4;
+//                             }
+//                         }
+//                     }
+//                     .thongTinChungThuVaThueTNCN_tbl{
+//                         .section-grid{
+//                             .item1{
+//                                 grid-column: 1;
+//                                 grid-row: 1;
+//                             }
+//                             .item2{
+//                                 grid-column: 1;
+//                                 grid-row: 2;
+//                             }
+//                             .item3{
+//                                 grid-column: 1;
+//                                 grid-row: 3;
+//                             }
+//                             .item4{
+//                                 grid-column: 1;
+//                                 grid-row: 4;
+//                             }
+//                             .item5{
+//                                 grid-column: 2;
+//                                 grid-row: 1;
+//                             }
+//                             .item6{
+//                                 grid-column: 2;
+//                                 grid-row: 2;
+//                             }
+//                             .item7{
+//                                 grid-column: 2;
+//                                 grid-row: 3;
+//                             }
+//                             .item8{
+//                                 grid-column: 2;
+//                                 grid-row: 4;
+//                             }
+//                         }
+//                     }
+//                     .vanHoaChuyenMonNgheNghiep{
+//                         .section-grid{
+//                             .item1{
+//                                 grid-column: 1;
+//                                 grid-row: 1;
+//                             }
+//                             .item2{
+//                                 grid-column: 1;
+//                                 grid-row: 2;
+//                             }
+//                             .item3{
+//                                 grid-column: 1;
+//                                 grid-row: 3;
+//                             }
+//                             .item4{
+//                                 grid-column: 2;
+//                                 grid-row: 1;
+//                             }
+//                             .item5{
+//                                 grid-column: 2;
+//                                 grid-row: 2;
+//                             }
+//                         }
+//                     }
+//                     .thongTinLienHe{
+//                         .section-grid{
+//                             .item1{
+//                                 grid-column: 1;
+//                                 grid-row: 1;
+//                             }
+//                             .item2{
+//                                 grid-column: 1;
+//                                 grid-row: 2;
+//                             }
+//                             .item3{
+//                                 grid-column: 1;
+//                                 grid-row: 3;
+//                             }
+//                             .item4{
+//                                 grid-column: 2;
+//                                 grid-row: 1;
+//                             }
+//                             .item5{
+//                                 grid-column: 2;
+//                                 grid-row: 2;
+//                             }
+//                             .item6{
+//                                 grid-column: 2;
+//                                 grid-row: 3;
+//                             }
+//                         }
+//                     }
+//                     .diaChiCuTru{
+//                         .section-grid{
+//                             background-color: $white;
+//                             padding: 15px;
+//                             display: grid;
+//                             grid-template-columns: 500px 500px;
+//                             grid-template-rows: repeat(4, auto);
+//                             // height: 345px;
+//                             .grid-item{
+//                                 .width500{
+//                                     width: 450px;
+//                                 }
+//                                 .k-list{
+//                                     overflow-y: scroll;
+//                                 }
+//                             }
+//                             .item1{
+//                                 grid-column: 1;
+//                                 grid-row: 1;
+//                             }
+//                             .item2{
+//                                 grid-column: 1;
+//                                 grid-row: 2;
+//                             }
+//                             .item3{
+//                                 grid-column: 1;
+//                                 grid-row: 3;
+//                             }
+//                             .item4{
+//                                 grid-column: 1;
+//                                 grid-row: 4;
+//                             }
+//                             .item5{
+//                                 grid-column: 1;
+//                                 grid-row: 5;
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//             .CustomPopupDropdown{
+//                 border: 1px solid #1a6634;
+//             }
+//         }
+//     }
+// }

@@ -1,0 +1,189 @@
+<!-- START BREADCRUMB AND BUTTON -->
+  <div class="header header-1 justify-content-between">
+    <!-- Breadcumb  -->
+    <div class="breadcumb d-flex align-items-center">
+      <app-p-kendo-breadcrumb
+        (loadData)="onLoadDataBreadcumb()"
+      ></app-p-kendo-breadcrumb>
+      <!-- GROUP BUTTON FILTER -->
+    </div>
+    <div class="buttonGroup">
+      <app-checkbox-button-group
+        [ignoreCase]="true"
+        title="Đang soạn thảo"
+        [checked]="isDrafting"
+        [field]="'Status'"
+        [value]="0"
+        (selectedChange)="onSelectedChangeCheckbox($event, 'isDrafting')"
+        (filterChange)="onFilterChange($event, 'Drafting')"
+        [disabled]="!isFilterActive"
+      ></app-checkbox-button-group>
+      <app-checkbox-button-group
+        [ignoreCase]="true"
+        title="Gửi duyệt"
+        [checked]="isSent"
+        [field]="'Status'"
+        [value]="1"
+        (selectedChange)="onSelectedChangeCheckbox($event, 'isSent')"
+        (filterChange)="onFilterChange($event, 'Sent')"
+        [disabled]="!isFilterActive"
+      ></app-checkbox-button-group>
+      <app-checkbox-button-group
+        [ignoreCase]="true"
+        title="Đã duyệt"
+        [checked]="isApproved"
+        [field]="'Status'"
+        [value]="2"
+        (selectedChange)="onSelectedChangeCheckbox($event, 'isApproved')"
+        (filterChange)="onFilterChange($event, 'Approved')"
+        [disabled]="!isFilterActive"
+      ></app-checkbox-button-group>
+
+      <app-checkbox-button-group
+        [ignoreCase]="true"
+        title="Ngưng áp dụng"
+        [checked]="isSuspended"
+        [field]="'Status'"
+        [value]="3"
+        (selectedChange)="onSelectedChangeCheckbox($event, 'isSuspended')"
+        (filterChange)="onFilterChange($event, 'Suspended')"
+        [disabled]="!isFilterActive"
+      ></app-checkbox-button-group>
+    </div>
+
+    
+    <!-- BUTTON -->
+    <div class="btnWrapper">
+      <p-file-button-group></p-file-button-group>
+      <button
+        kendoButton
+        iconClass="k-icon k-i-plus"
+        (click)="onAdd()"
+        [disabled]="!isFilterActive"
+        *ngIf="isToanQuyen || isAllowedToCreate || isLockAll"
+        class="btn-hachi hachi-primary"
+      >
+        thêm mới
+      </button>
+    </div>
+  </div>
+  <!-- END BREADCRUMB AND BUTTON -->
+
+  <!-- START FUNCTIONBAR -->
+  <div id="functionbar" class="header header-2">
+    <!-- SEARCH FILTER -->
+    <app-search-filter-group
+      placeholder="Tìm theo mã, tên, vị trí của nhân sự hoặc mã quyết định"
+      [fields]="['FullName', 'StaffID', 'PositionName', 'DepartmentName', 'LocationName', 'LocationName', 'DecisionID']"
+      (valueChange)="handleSearch($event)"
+      (onReset)="onResetFilter()"
+      [disabled]="!isFilterActive"
+    ></app-search-filter-group>
+
+    <!-- FILTER EFFDATE -->
+    <kendo-label text="Ngày hiệu lực">
+        <div class="in-label">
+            <p-kendo-dropdownlist class="filter-by-date" [data]="ListDateFilterOperator" textField="TypeFilter"
+                valueField="ValueFilter" [(ngModel)]="curDateFilterOperator" (selectionChange)="
+            handleOperatorChange($event, 'curDateFilterOperator')
+          " [hasValueNull]="false" [disabled]="isFilterDisable">
+            </p-kendo-dropdownlist>
+            <app-datepicker [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'" [(ngModel)]="curDateFilterValue"
+                [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                (valueChange)="handleFilterChange($event, 'curDateFilterValue')"
+                [disabled]="isFilterDisable || isLockAll"></app-datepicker>
+        </div>
+    </kendo-label>
+  </div>
+  <!-- END FUNCTIONBAR -->
+
+  <!-- START GIRD LAYOUT -->
+  <div class="grid-wrapper">
+    <app-p-kendo-grid
+      class="grid scrollable" [data]="gridView | async" [scrollable]="'none'"
+      [loading]="isLoading" [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize"
+      [skip]="gridState.skip" [take]="gridState.take" [sortable]="true" [sort]="gridState.sort"
+      [selectable]="selectable" [allowedMoreActionDropdown]="allowActionDropdown"
+      [getActionDropdownCallback]="getActionDropdownCallback"
+      [getSelectionPopupCallback]="getSelectionPopupCallback"
+      [onActionDropdownClickCallback]="onActionDropdownClickCallback"
+      [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+      [onSelectCallback]="onSelectCallback"
+      [onPageChangeCallback]="onPageChangeCallback"
+    >
+    <kendo-grid-column title="Họ và tên" [headerClass]="'headerhoVatenCustomClass'" class="col_hoVaten">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="img_tennhanvien_manhanvien">
+                <img loading="lazy" [src]="getResImg(dataItem.ImageThumb,'image'+ dataItem.Code)" class="avata"
+                    (error)="handleError('image'+ dataItem.Code)">
+                <div class="tennhanvien_manhanvien">
+                    <div class="tennhanvien">
+                        <span [title]="dataItem.FullName">{{dataItem.FullName}}</span>
+                    </div>
+                    <div [title]="dataItem.StaffID">
+                        {{dataItem.StaffID}}
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column title="Vị trí hiện tại" class="col_viTriHienTai">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <div [title]="dataItem.PositionName" class="text">{{dataItem.PositionName}}</div>
+            <div [title]="dataItem.DepartmentName" class="text-bold">{{dataItem.DepartmentName}}</div>
+            <div [title]="dataItem.LocationName" class="text-italic">{{dataItem.LocationName}}</div>
+        </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column title="Quyết định" class="col_Quyetdinh">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <div [title]="dataItem.DecisionID " class="text-bold">Mã: {{dataItem.DecisionID }}</div>
+            <div *ngIf=" dataItem.EffDate" [title]="dataItem.EffDate | date: 'dd/MM/yyyy'" class="">Hiệu lực
+                : {{dataItem.EffDate| date: 'dd/MM/yyyy'}}</div>
+
+        </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column title="Hình thức kỷ luật" class="col_lyDo">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <div [title]="dataItem.DisciplinaryFormName" class="text_lydo">{{ dataItem.DisciplinaryFormName }}
+            </div>
+        </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column title="Người lập" [headerClass]="'headerCenterCustomClass'" class="col_nguoiLap">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="testCenter">
+                <div [title]="dataItem.CreatedBy" class="date">{{ dataItem.CreatedBy }}</div>
+                <div [title]="dataItem.CreatedTime |  date: 'dd/MM/yyyy'" class=" date">{{
+                    dataItem.CreatedTime | date: 'dd/MM/yyyy'}}
+                </div>
+            </div>
+        </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column title="Người phê duyệt" [headerClass]="'headerCenterCustomClass'" class="col_ngayVaoLam">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="testCenter">
+                <div [title]="dataItem.ApprovedBy" class="date">{{ dataItem.ApprovedBy }}</div>
+                <div [title]="dataItem.ApprovedTime |  date: 'dd/MM/yyyy'" class=" date">{{
+                    dataItem.ApprovedTime | date:
+                    'dd/MM/yyyy'}}</div>
+            </div>
+        </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column title="Tình trạng" field="StatusName" class="col_tinhTrang"
+        [headerClass]="'headerCustomClass col_headerTinhTrang'">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="Status">
+                <span class="status-name"
+                    [innerHTML]="dataItem.StatusName | colorStatus: dataItem.Status">{{dataItem.StatusName}}</span>
+
+            </div>
+        </ng-template>
+    </kendo-grid-column>
+    </app-p-kendo-grid>
+  </div>
+  <!-- END GIRD LAYOUT -->

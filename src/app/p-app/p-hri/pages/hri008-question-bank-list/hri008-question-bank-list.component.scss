@@ -1,0 +1,333 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+  app-hri008-question-bank-list {
+    // padding: 0 26px 0 20px;
+    display: flex;
+    flex-direction: column;
+    height: -webkit-fill-available;
+      // BREADCRUMB AND BUTTON
+      margin: 0 15px 0 20px !important;
+      .header-1 {
+        justify-content: space-between;
+        // GROUP BUTTON FILTER
+        .buttonGroup {
+          display: flex;
+          gap: 10px;
+        }
+
+        //BUTTON
+        
+
+        .btnWrapper{
+          display: flex;
+          column-gap:10px;
+          align-items: center;
+          .addBtn {
+            height: 32px;
+            font-size: 11px;
+            line-height: 14px;
+            background-color: $dark-green;
+            color: $white;
+            text-transform: uppercase;
+            font-weight: 700;
+            border-radius: 5px;
+          }
+          .addImport{
+            border-radius: 5px;
+          }
+
+          .addExport{
+            border-radius: 5px;
+          }
+        }
+      }
+
+      // FUNCTIONBAR
+      #functionbar {
+        display: flex;
+        justify-content: space-between;
+        height: 75px;
+        padding: 15px;
+      }
+
+      // GIRD LAYOUT
+      .grid-wrapper{
+        app-p-kendo-grid{
+          .myCustomGrid {
+            // height: calc(100vh - 256px) !important;
+            .k-grid-aria-root {
+              // padding: 0 15px 0 20px;
+              // overflow-y: scroll !important;
+              table {
+                thead {
+                  tr {
+                    th:first-child {
+                      padding-left: 30px;
+                    }
+  
+                    th:nth-child(4) {
+                      text-align: center;
+                      span {
+                        display: flex;
+                        justify-content: center;
+                      }
+                    }
+  
+                    th:nth-child(5) {
+                      padding-right: 30px;
+                      display: flex;
+                      justify-content: flex-end;
+                    }
+                    .col_Duration{
+                      text-align: center;
+                      .k-cell-inner{
+                        .k-link {
+                            display: flex;
+                            justify-content: center;
+                        }
+                      }
+                    }
+                  }
+
+                }
+                tbody {
+                  .k-grid-norecords{
+                    td{
+                      width: 100%;
+                    }
+                  }
+                  tr {
+                    height: 58px;
+                    td:nth-child(2) {
+                      font-size: 13px;
+                      max-width: 550px;
+                    }
+                    
+                    td{
+                      color: $gray-850;
+                    }
+  
+                    td:nth-child(3) {
+                      font-size: 13px;
+                      flex-direction: column;
+                      span{
+                        display: block;
+                      }
+                    }
+  
+                    td:nth-child(4) {
+                      font-weight: 700;
+                      font-size: 13px;
+                      text-align: center;
+                    }
+  
+                    td:nth-child(5) {
+                      padding-right: 30px;
+                      text-align: right;
+                      font-size: 13px;
+                    }
+
+                    .col_Duration {
+                      max-width: 156px;
+                      text-align: center;
+                    }
+  
+                    // COL-5
+                    td:last-child {
+                      width: 40px;
+                      height: 58px;
+                      border-left: 1px solid #bdc2d2;
+                      background-color: #ffffff;
+                      padding: 0;
+                      .btnCell{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                      }
+                      .k-state-focused {
+                        background-color: $blue-gray !important;
+                      }
+                    }
+  
+                    .col_theQueston {
+                      .title {
+                        font-size: 13px;
+                        font-weight: 700;
+                      }
+  
+                      span:nth-child(2),
+                      span:nth-child(3),
+                      .codeAndTypeQuestion {
+                        font-size: 13px;
+                      }
+                    }
+
+
+                   
+  
+                    .col_subgroups {
+                      span:nth-child(1) {
+                        font-size: 13px;
+                        font-weight: 700;
+                      }
+                      span:nth-child(2) {
+                        font-size: 13px;
+                      }
+                    }
+                  }
+  
+                  tr:hover {
+                    td:last-child {
+                      padding: 0;
+                      background-color: $white;
+                      div {
+                        background-color: transparent;
+                      }
+                    }
+                  }
+                }
+
+                
+              }
+            }
+  
+            &::-webkit-scrollbar {
+              width: 4px;
+              height: 4px;
+              background-color: transparent;
+            }
+            &::-webkit-scrollbar-thumb {
+              background-color: $dark-green;
+              border-radius: 30px;
+            }
+      
+            // .k-grid-pager {
+            //   position: fixed;
+            //   bottom: 30px; //chiều cao của footer
+            //   width: -webkit-fill-available;
+            //   margin-right: 30px;
+            // }
+          }
+        }
+      }
+
+      #girdData::-webkit-scrollbar {
+        width: 4px;
+        background-color: transparent;
+      }
+
+      #girdData::-webkit-scrollbar-thumb {
+        background-color: $worse-green;
+        border-radius: 30px;
+      }
+
+     // Start: dialog
+  .wrapper-dialog {
+    .k-dialog {
+      .k-dialog-titlebar {
+        display: flex;
+        align-items: center;
+        background-color: $white;
+        color: #fd7676;
+
+        .k-dialog-title {
+          justify-content: center;
+          align-items: center;
+          .title-delete{
+            column-gap: 10px;
+            .k-button {
+              background-color: white;
+              padding: 0;
+              background-image: none;
+              width: fit-content;
+              height: fit-content;
+              border: none;
+            }
+          }
+        }
+        .k-dialog-titlebar-actions {
+          display: none;
+        }
+      }
+
+      .k-dialog-content {
+        text-align: center;
+        padding: 0;
+
+        .body_dialog {
+          width: 100%;
+          position: absolute;
+          top: 34%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          .content-primary {
+            p {
+              margin: 0;
+              font-size: 16px;
+              font-weight: 700;
+            }
+            strong {
+              color: $primary;
+              font-size: 16px;
+              font-weight: 700;
+            }
+          }
+          .content-sub {
+            margin: 16px 0 0 0;
+          }
+        }
+      }
+
+      .k-dialog-actions {
+        width: 100%;
+        display: flex;
+        padding: 0;
+        column-gap: 0;
+        position: absolute;
+        bottom: 0;
+        .delete{
+          background: #FD7676;
+          color: #fff;
+        }
+        .cancel{
+          background: $white;
+          color: #959DB3;
+        }
+        button {
+          width: 50%;
+          height: 53px;
+          border-radius: 0;
+          font-weight: 700;
+          
+          .k-button-icon {
+            width: 20px;
+            img {
+              width: 20px;
+            }
+          }
+        }
+      }
+    }
+    //End: dialog
+  }
+    //#region Color status
+    .colorNew {
+      color: $gray-900;
+    }
+    .colorSent {
+      color: $medium-yellow;
+    }
+    .colorApproved {
+      color: $dark-green;
+    }
+    .colorStopped {
+      color: $bad-red;
+    }
+    .colorReturned {
+      color: $bad-red;
+    }
+    //#endregion
+
+  }
+}

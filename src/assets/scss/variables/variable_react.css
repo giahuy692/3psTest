@@ -1,0 +1,991 @@
+.color-white {
+  color: #ffffff;
+}
+
+.color-darkblue {
+  color: #39579a;
+}
+
+.color-blue {
+  color: #008cd7;
+}
+
+.color-lightblue {
+  color: #46b1ff;
+}
+
+.color-darkgreen {
+  color: #316e00;
+}
+
+.color-green {
+  color: #649e0f;
+}
+
+.color-lightgreen {
+  color: #8dc63f;
+}
+
+.color-yellowgreen {
+  color: #c1d72e;
+}
+
+.color-yellow {
+  color: #ffc400;
+}
+
+.color-orangeyellow {
+  color: #ffab00;
+}
+
+.color-lightorange {
+  color: #ff5230;
+}
+
+.color-lightpink {
+  color: #dc3545;
+}
+
+.color-red {
+  color: #d82c12;
+}
+
+.hachi-color-primary-1 {
+  color: #353935;
+}
+
+.hachi-color-primary-2 {
+  color: #868b86;
+}
+
+.hachi-color-primary-3 {
+  color: #8dc63f;
+}
+
+.hachi-color-primary-4 {
+  color: #c1d72e;
+}
+
+.hachi-color-primary-5 {
+  color: #ffffff;
+}
+
+.hachi-color-secondary-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-1 {
+  color: #46b1ff;
+}
+
+.hachi-color-text-2 {
+  color: #868b86;
+}
+
+.hachi-color-text-3 {
+  color: #008cd7;
+}
+
+.hachi-color-text-4 {
+  color: #d82c12;
+}
+
+.hachi-color-text-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-6 {
+  color: #ffffff;
+}
+
+.hachi-color-text-7 {
+  color: #8dc63f;
+}
+
+.hachi-color-text-8 {
+  color: #626662;
+}
+
+.hachi-color-text-10 {
+  color: #ff5230;
+}
+
+.hachi-color-text-9 {
+  color: #bbc0bb;
+}
+
+.hachi-color-text-11 {
+  color: #dc3545;
+}
+
+.hachi-color-text-12 {
+  color: #828282;
+}
+
+.color-white {
+  color: #ffffff;
+}
+
+.color-darkblue {
+  color: #39579a;
+}
+
+.color-blue {
+  color: #008cd7;
+}
+
+.color-lightblue {
+  color: #46b1ff;
+}
+
+.color-darkgreen {
+  color: #316e00;
+}
+
+.color-green {
+  color: #649e0f;
+}
+
+.color-lightgreen {
+  color: #8dc63f;
+}
+
+.color-yellowgreen {
+  color: #c1d72e;
+}
+
+.color-yellow {
+  color: #ffc400;
+}
+
+.color-orangeyellow {
+  color: #ffab00;
+}
+
+.color-lightorange {
+  color: #ff5230;
+}
+
+.color-lightpink {
+  color: #dc3545;
+}
+
+.color-red {
+  color: #d82c12;
+}
+
+.hachi-color-primary-1 {
+  color: #353935;
+}
+
+.hachi-color-primary-2 {
+  color: #868b86;
+}
+
+.hachi-color-primary-3 {
+  color: #8dc63f;
+}
+
+.hachi-color-primary-4 {
+  color: #c1d72e;
+}
+
+.hachi-color-primary-5 {
+  color: #ffffff;
+}
+
+.hachi-color-secondary-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-1 {
+  color: #46b1ff;
+}
+
+.hachi-color-text-2 {
+  color: #868b86;
+}
+
+.hachi-color-text-3 {
+  color: #008cd7;
+}
+
+.hachi-color-text-4 {
+  color: #d82c12;
+}
+
+.hachi-color-text-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-6 {
+  color: #ffffff;
+}
+
+.hachi-color-text-7 {
+  color: #8dc63f;
+}
+
+.hachi-color-text-8 {
+  color: #626662;
+}
+
+.hachi-color-text-10 {
+  color: #ff5230;
+}
+
+.hachi-color-text-9 {
+  color: #bbc0bb;
+}
+
+.hachi-color-text-11 {
+  color: #dc3545;
+}
+
+.hachi-color-text-12 {
+  color: #828282;
+}
+
+.border-white {
+  border-color: #ffffff;
+}
+
+.border-darkblue {
+  border-color: #39579a;
+}
+
+.border-blue {
+  border-color: #008cd7;
+}
+
+.border-lightblue {
+  border-color: #46b1ff;
+}
+
+.border-darkgreen {
+  border-color: #316e00;
+}
+
+.border-green {
+  border-color: #649e0f;
+}
+
+.border-lightgreen {
+  border-color: #8dc63f;
+}
+
+.border-yellowgreen {
+  border-color: #c1d72e;
+}
+
+.border-yellow {
+  border-color: #ffc400;
+}
+
+.border-orangeyellow {
+  border-color: #ffab00;
+}
+
+.border-lightorange {
+  border-color: #ff5230;
+}
+
+.border-lightpink {
+  border-color: #dc3545;
+}
+
+.border-red {
+  border-color: #d82c12;
+}
+
+.border-color-1 {
+  border-color: #ffffff;
+}
+
+.background-main {
+  background-color: #fafafa;
+}
+
+.hachi-bg-color-1 {
+  background-color: #ff5230;
+}
+
+.hachi-bg-color-2 {
+  background-color: #ffab00;
+}
+
+.hachi-bg-color-3 {
+  background-color: #008cd7;
+}
+
+.hachi-bg-color-4 {
+  background-color: #626662;
+}
+
+.hachi-bg-color-5 {
+  background-color: #649e0f;
+}
+
+.hachi-bg-color-6 {
+  background-color: #d82c12;
+}
+
+.hachi-bg-color-7 {
+  background-color: #ffc400;
+}
+
+.hachi-bg-color-8 {
+  background-color: #46b1ff;
+}
+
+.hachi-bg-color-9 {
+  background-color: #bbc0bb;
+}
+
+.hachi-bg-color-10 {
+  background-color: #e2e2e2;
+}
+
+.hachi-bg-color-11 {
+  background-color: #edeeed;
+}
+
+.hachi-bg-color-12 {
+  background-color: #f1f2f1;
+}
+
+.hachi-bg-color-13 {
+  background-color: #39579a;
+}
+
+.hachi-bg-color-14 {
+  background-color: #8dc63f;
+}
+
+.hachi-bg-color-15 {
+  background-color: #ffffff;
+}
+
+.bg-white {
+  background-color: #ffffff;
+}
+
+.bg-darkblue {
+  background-color: #39579a;
+}
+
+.bg-blue {
+  background-color: #008cd7;
+}
+
+.bg-lightblue {
+  background-color: #46b1ff;
+}
+
+.bg-darkgreen {
+  background-color: #316e00;
+}
+
+.bg-green {
+  background-color: #649e0f;
+}
+
+.bg-lightgreen {
+  background-color: #8dc63f;
+}
+
+.bg-yellowgreen {
+  background-color: #c1d72e;
+}
+
+.bg-yellow {
+  background-color: #ffc400;
+}
+
+.bg-orangeyellow {
+  background-color: #ffab00;
+}
+
+.bg-lightorange {
+  background-color: #ff5230;
+}
+
+.bg-lightpink {
+  background-color: #dc3545;
+}
+
+.bg-red {
+  background-color: #d82c12;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito", sans-serif;
+  font-weight: bold;
+}
+
+h1,
+.h1 {
+  font-size: 24;
+}
+
+h2,
+.h2 {
+  font-size: 20;
+  line-height: 35;
+}
+
+h3,
+.h3 {
+  font-size: 16;
+}
+
+h4,
+.h4 {
+  font-size: 13;
+}
+
+h5,
+.h5 {
+  font-size: 13;
+}
+
+h6,
+.h6 {
+  font-size: 13;
+}
+
+.font-size-11 {
+  font-size: 11px;
+}
+
+.font-size-13 {
+  font-size: 13px;
+}
+
+.font-size-16 {
+  font-size: 16px;
+}
+
+.font-size-20 {
+  font-size: 20px;
+}
+
+.font-size-21 {
+  font-size: 21px;
+}
+
+.font-size-24 {
+  font-size: 24px;
+}
+
+.line-height-18 {
+  line-height: 18px;
+}
+
+.line-height-20 {
+  line-height: 20px;
+}
+
+.line-height-24 {
+  line-height: 24px;
+}
+
+.line-height-30 {
+  line-height: 30px;
+}
+
+.line-height-35 {
+  line-height: 35px;
+}
+
+.hachi-title {
+  font-style: normal;
+  font-weight: bold;
+  font-family: "Nunito", sans-serif;
+  font-size: 20;
+  line-height: 35;
+}
+
+.hachi-title-green {
+  font-style: normal;
+  font-weight: bold;
+  font-family: "Nunito", sans-serif;
+  font-size: 20;
+  line-height: 35;
+  color: #649e0f;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.mt-16 {
+  margin-top: 16px;
+}
+
+.mt-30 {
+  margin-top: 30px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.pt-20 {
+  padding-top: 20px;
+}
+
+.pt-30 {
+  padding-top: 30px;
+}
+
+.pt-40 {
+  padding-top: 40px;
+}
+
+.pb-20 {
+  padding-bottom: 20px;
+}
+
+.pb-30 {
+  padding-bottom: 30px;
+}
+
+.pb-40 {
+  padding-bottom: 40px;
+}
+
+.pl-20 {
+  padding-top: 20px;
+}
+
+.pl-30 {
+  padding-top: 30px;
+}
+
+.pl-40 {
+  padding-top: 40px;
+}
+
+.pr-20 {
+  padding-top: 20px;
+}
+
+.pr-30 {
+  padding-top: 30px;
+}
+
+.pr-40 {
+  padding-top: 40px;
+}
+
+a {
+  color: #242624;
+}
+
+a:hover {
+  text-decoration: unset;
+  color: #649e0f;
+}
+
+a.hachi-link {
+  color: #008cd7;
+}
+
+a.hachi-link:hover {
+  color: #46b1ff;
+  text-decoration: underline;
+}
+
+a.hachi-link-title {
+  color: #242624;
+  font-weight: bold;
+  font-family: "Nunito", sans-serif;
+  font-size: 16;
+}
+
+a.hachi-link-title:hover {
+  color: #649e0f;
+}
+
+.hachi-active-title {
+  color: #649e0f;
+  font-weight: bold;
+  font-family: "Nunito", sans-serif;
+  font-size: 20;
+}
+
+.hachi-title-green a {
+  color: #649e0f;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+button {
+  outline: none;
+}
+
+button:focus {
+  outline: none;
+}
+
+.btn.focus,
+.btn:focus,
+.btn:hover {
+  outline: none;
+}
+
+.btn.hachi-primary {
+  background: #8dc63f;
+  border-radius: 3px;
+  color: #ffffff;
+  border-color: #8dc63f;
+}
+
+.btn.hachi-primary span::before {
+  color: #ffffff;
+}
+
+.btn.hachi-primary:hover {
+  color: #ffffff;
+  background: #649e0f;
+  border-color: #649e0f;
+}
+
+.btn.hachi-primary:focus {
+  color: #ffffff;
+  background: #316e00;
+  border-color: #316e00;
+}
+
+.btn.hachi-primary:disabled {
+  background: #edeeed;
+  color: #868b86;
+  border-color: #edeeed;
+}
+
+.btn.hachi-outline-primary {
+  background-color: white;
+  color: #8dc63f;
+}
+
+.btn.hachi-outline-primary:hover {
+  background-color: #8dc63f;
+  color: white;
+}
+
+.btn.hachi-secondary {
+  background: #ffffff;
+  border-radius: 3px;
+  color: #649e0f;
+  border-color: #649e0f;
+}
+
+.btn.hachi-secondary:hover {
+  color: #649e0f;
+  background: #ffffff;
+  border-width: 2px;
+  margin: -1px;
+}
+
+.btn.hachi-secondary:focus {
+  color: #649e0f;
+  background: #ffffff;
+}
+
+.btn.hachi-secondary:disabled {
+  background: #ffffff;
+  color: #242624;
+  border-color: #edeeed;
+}
+
+.btn.hachi-standard {
+  background: #edeeed;
+  border-radius: 3px;
+  color: #242624;
+  border-color: #edeeed;
+}
+
+.btn.hachi-standard:hover {
+  color: #242624;
+  background: #e2e2e2;
+}
+
+.btn.hachi-standard:focus {
+  color: #ffffff;
+  background: #868b86;
+}
+
+.btn.hachi-standard:disabled {
+  background: #edeeed;
+  color: #242624;
+  border-color: #edeeed;
+}
+
+.container-checkbox {
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.container-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.container-checkbox input:checked ~ .checkmark {
+  background-color: #8dc63f;
+  border: unset;
+}
+
+.container-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container-checkbox:hover {
+  color: #8dc63f;
+}
+
+.container-checkbox:hover input ~ .checkmark {
+  border-color: #8dc63f;
+}
+
+.container-checkbox .checkmark:after {
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 16px;
+  width: 16px;
+  border-radius: 3px;
+  background-color: #ffffff;
+  border: 2px solid #e2e2e2;
+  box-sizing: border-box;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.list-inline > li {
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+}
+
+.list-inline > li:not(:last-child)::after {
+  margin: 0px 0px 0px 7px;
+  width: 2px;
+  height: 18px;
+  vertical-align: middle;
+  border-right-color: #bbc0bb;
+  border-right-width: 1px;
+  border-right-style: solid;
+  display: inline-block;
+  content: "";
+}
+
+.list-inline > li:not(:first-child) {
+  padding-left: 6px;
+}
+
+ul {
+  padding: 0;
+  margin-left: 1em;
+}
+
+ol {
+  padding: 0;
+  list-style: decimal inside none;
+}
+
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+  padding-left: 10px;
+}
+
+.hachi-modal .modal {
+  z-index: 10001;
+  display: block;
+}
+
+.hachi-modal .modal .modal-header {
+  padding: 12px 17px 0px 24px;
+  border: unset;
+}
+
+.hachi-modal .modal .modal-header button.btn-close {
+  background: #ffffff;
+  border: unset;
+  display: flex;
+  align-content: center;
+}
+
+.hachi-modal .modal .modal-header button.btn-close span::before {
+  color: #8dc63f;
+}
+
+.hachi-modal .modal .modal-body {
+  padding: 14px 24px 0px 24px;
+}
+
+.hachi-modal .modal .modal-footer {
+  padding: 0px 24px 16px 24px;
+  border-top: unset;
+}
+
+.hachi-modal .modal .modal-footer button {
+  font-family: "Nunito", sans-serif;
+}
+
+.hachi-model-fade {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 10000;
+  transition: opacity 0.15s linear;
+  background-color: #000;
+  opacity: 0.5;
+}
+
+.hachi-react-select-container .hachi-react-select__control {
+  min-height: 32px;
+  height: 32px;
+  align-items: normal;
+}
+
+.hachi-react-select-container .hachi-react-select__control .hachi-react-select__value-container {
+  padding: 0px 0.75rem;
+  height: 32px;
+}
+
+.hachi-react-select-container .hachi-react-select__control .hachi-react-select__value-container .css-1g6gooi {
+  margin: 0;
+  padding-top: 0;
+}
+
+.hachi-react-select-container .hachi-react-select__control .hachi-react-select__value-container .css-1g6gooi input {
+  box-shadow: unset !important;
+}
+
+.hachi-react-select-container .hachi-react-select__control .hachi-react-select__indicators {
+  height: 32px;
+}
+
+.hachi-react-select-container .hachi-react-select__control .hachi-react-select__indicators .hachi-react-select__indicator-separator {
+  display: none;
+}
+
+.hachi-react-select-container .hachi-react-select__control .hachi-react-select__indicators .hachi-react-select__dropdown-indicator {
+  padding: 4px 8px;
+}
+
+.hachi-react-select-container.error .hachi-react-select__control {
+  border-color: #ff5230;
+}
+
+#hachi-page {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+
+#hachi-page #hachi-page__body {
+  padding-bottom: 10px;
+}
+
+.main-content-qc {
+  display: none;
+}
+
+@media (min-width: 1160px) {
+  .main-content-qc {
+    display: unset;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+  .main-content-qc .main-qc {
+    width: 984px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .main-content-qc .main-qc > div {
+    position: absolute;
+    width: calc((100vw - 1015px) / 2);
+    max-width: 150px;
+  }
+  .main-content-qc .main-qc > div:nth-child(1) {
+    left: 0px;
+    transform: translateX(-100%);
+  }
+  .main-content-qc .main-qc > div:nth-child(2) {
+    right: 0px;
+    transform: translateX(100%);
+  }
+  .main-content-qc .main-qc .hachi-carousel .carousel:hover .carousel-control-prev,
+.main-content-qc .main-qc .hachi-carousel .carousel:hover .carousel-control-next {
+    visibility: hidden !important;
+  }
+  .main-content-qc .main-qc .hachi-carousel .carousel-indicators {
+    visibility: hidden;
+  }
+}
+
+#hachi_mobile_menu {
+  display: none;
+}
+
+.hachi-section {
+  margin: 0 auto;
+  clear: both;
+  display: block;
+  width: 100%;
+}
+
+.hachi-section:before,
+.hachi-section:after {
+  display: block;
+  width: 100%;
+  content: "";
+  clear: both;
+}

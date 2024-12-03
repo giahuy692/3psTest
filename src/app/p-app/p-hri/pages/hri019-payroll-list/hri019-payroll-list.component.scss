@@ -1,0 +1,376 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+    app-hri019-payroll-list {
+        // padding: 0 15px 0 20px;
+        display: flex;
+        flex-direction: column;
+        height: -webkit-fill-available;
+
+        .text-ellipsis {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            /* Số dòng tối đa */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+        }
+
+        .colGap10{
+            column-gap: 10px;
+        }
+
+        .header-1 {
+            justify-content: space-between;
+            overflow-x: auto;
+            margin: 0 15px 0 20px !important;
+
+            // BREADCRUMB AND BUTTON
+            .breadcumb {
+                app-p-kendo-breadcrumb {
+                    display: inline-block;
+                    min-width: 230px;
+                }
+            }
+
+            // GROUP BUTTON FILTER
+            .buttonGroup {
+                display: flex;
+                gap: 10px;
+                margin-left: 10px;
+            }
+
+            //BUTTON
+            .btnWrapper {
+                display: flex;
+                column-gap: 10px;
+                align-items: center;
+
+                .addBtn {
+                    height: 32px;
+                    font-size: 11px;
+                    line-height: 14px;
+                    background-color: $dark-green;
+                    color: $white;
+                    text-transform: uppercase;
+                    font-weight: 700;
+                    border-radius: 5px;
+                }
+
+                .addImport {
+                    border-radius: 5px;
+                }
+
+                .addExport {
+                    border-radius: 5px;
+                }
+            }
+        }
+
+        // FUNCTIONBAR
+        #functionbar {
+            display: flex;
+            // justify-content: space-between;
+            column-gap: 20px;
+            height: 75px;
+            margin: 0 15px;
+        }
+
+        // GIRD LAYOUT
+        .grid-wrapper {
+            padding: 0 15px;
+
+            // height: calc(100vh - 256px) !important;
+            app-p-kendo-grid {
+                .myCustomGrid {
+
+                    .k-grid-aria-root {
+                        // padding: 0 15px 0 20px;
+                        overflow-y: scroll !important;
+
+                        table {
+                            thead {
+                                tr {
+                                    th:first-child {
+                                        padding-left: 30px;
+                                    }
+
+                                    th:nth-child(2) {
+                                        width: 300px;
+                                    }
+
+                                    @for $i from 3 through 5 {
+                                        th:nth-child(#{$i}) {
+                                            text-align: center;
+                                            width: 156px;
+
+                                            .k-link {
+                                                display: flex;
+                                                justify-content: center;
+
+                                                .k-column-title {
+                                                    width: 100%;
+                                                }
+                                            }
+                                        }
+                                    }
+
+
+                                    th:nth-child(6) {
+                                        text-align: right;
+
+                                        .k-link {
+                                            display: flex;
+                                            justify-content: right;
+                                        }
+                                    }
+
+
+                                }
+                            }
+
+                            tbody {
+                                .k-grid-norecords {
+                                    td {
+                                        width: 100%;
+                                    }
+                                }
+
+                                tr {
+                                    height: 58px;
+
+                                    td:nth-child(2) {
+                                        font-size: 13px;
+                                        max-width: 300px;
+                                    }
+
+                                    td {
+                                        color: $gray-850;
+                                    }
+
+                                    td:nth-child(3) {
+                                        font-size: 13px;
+                                        flex-direction: column;
+                                    }
+
+                                    td:nth-child(4) {
+                                        font-weight: 400;
+                                        font-size: 13px;
+                                        text-align: center;
+                                    }
+
+
+
+                                    .col_SalaryName {
+                                        .title {
+                                            font-size: 13px;
+                                            font-weight: 700;
+                                        }
+                                    }
+
+                                    .col_Period {
+                                        max-width: 156px;
+                                        text-align: center;
+                                    }
+
+                                    .col_EffDate {
+                                        max-width: 156px;
+                                        text-align: center;
+                                    }
+
+                                    .col_NoOfEmployee {
+                                        max-width: 156px;
+                                        text-align: center;
+                                    }
+
+                                    .col_status {
+                                        text-align: right;
+                                    }
+
+                                    td:last-child {
+                                        width: 40px;
+                                        height: 58px;
+                                        border-left: 1px solid #bdc2d2;
+                                        background-color: #ffffff;
+                                        padding: 0;
+
+                                        .btnCell {
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                        }
+
+                                        .k-state-focused {
+                                            background-color: $blue-gray !important;
+                                        }
+                                    }
+                                }
+
+
+                            }
+                        }
+                    }
+
+                    &::-webkit-scrollbar {
+                        width: 4px;
+                        height: 4px;
+                        background-color: transparent;
+                    }
+
+                    &::-webkit-scrollbar-thumb {
+                        background-color: $dark-green;
+                        border-radius: 30px;
+                    }
+
+                    .k-grid-pager {
+                        // position: fixed;
+                        // bottom: 30px; //chiều cao của footer
+                        // width: -webkit-fill-available;
+                        // margin-right: 20px;
+                    }
+                }
+            }
+        }
+
+        #girdData::-webkit-scrollbar {
+            width: 4px;
+            background-color: transparent;
+        }
+
+        #girdData::-webkit-scrollbar-thumb {
+            background-color: $worse-green;
+            border-radius: 30px;
+        }
+
+        //#region Start: dialog
+        .wrapper-dialog {
+            .k-dialog {
+                .k-dialog-titlebar {
+                    display: flex;
+                    align-items: center;
+                    background-color: $white;
+                    color: #fd7676;
+
+                    .k-dialog-title {
+                        justify-content: center;
+                        align-items: center;
+
+                        .title-delete {
+                            column-gap: 10px;
+
+                            span {
+                                font-weight: 700;
+                            }
+
+                            .k-button {
+                                background-color: white;
+                                padding: 0;
+                                background-image: none;
+                                width: fit-content;
+                                height: fit-content;
+                                border: none;
+                            }
+                        }
+                    }
+
+                    .k-dialog-titlebar-actions {
+                        display: none;
+                    }
+                }
+
+                .k-dialog-content {
+                    text-align: center;
+                    padding: 0;
+
+                    .body_dialog {
+                        width: 100%;
+                        position: absolute;
+                        top: 34%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        padding: 10px;
+
+                        .content-primary {
+                            p {
+                                margin: 0;
+                                font-size: 16px;
+                                font-weight: 700;
+                            }
+
+                            strong {
+                                color: $primary;
+                                font-size: 16px;
+                                font-weight: 700;
+                            }
+                        }
+
+                        .content-sub {
+                            margin: 16px 0 0 0;
+                        }
+                    }
+                }
+
+                .k-dialog-actions {
+                    display: flex;
+                    width: 100%;
+                    padding: 0;
+                    column-gap: 0;
+                    position: absolute;
+                    bottom: 0;
+
+                    .delete {
+                        background: #FD7676;
+                        color: #fff;
+                    }
+
+                    .cancel {
+                        background: $white;
+                        color: #959DB3;
+                    }
+
+                    button {
+                        width: 50%;
+                        height: 53px;
+                        border-radius: 0;
+                        font-weight: 700;
+
+                        .k-button-icon {
+                            width: 20px;
+
+                            img {
+                                width: 20px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            //End: dialog
+
+        }
+
+        //#region Color status
+        .colorNew {
+            color: $gray-900;
+        }
+
+        .colorSent {
+            color: $medium-yellow;
+        }
+
+        .colorApproved {
+            color: $dark-green;
+        }
+
+        .colorStopped {
+            color: $bad-red;
+        }
+
+        .colorReturned {
+            color: $bad-red;
+        }
+
+        //#endregion
+    }
+}

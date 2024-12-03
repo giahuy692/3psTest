@@ -1,0 +1,99 @@
+@import "../../../../../../assets/scss/variable.scss";
+::ng-deep {
+    .config-product-list {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 10px;
+        .dialogDelete{
+            .k-window-content{
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 150px;
+              p{
+                font-size: 18px;
+              }
+            }
+          }
+        .header{
+            border-bottom: none !important;
+            display: flex;
+            overflow-y: hidden;
+            overflow-x: scroll;
+            justify-content: unset !important;
+            .title{
+                font-size: 16px;
+                font-weight: 700;
+                min-width: 350px;
+            }
+            .filter-btn-group.clear-btn-group,.label{
+                display: none;
+            }
+            .nav-btn{
+                display: flex;
+                align-items: center;
+                flex: auto !important;
+                .file-btn-group {
+                  background-color: $white;
+                  border-radius: 3px;
+                  .k-button-text,.k-button-icon{
+                    color: #959DB3;
+                  }
+                }
+            }
+        }
+        .grid-product {
+            .grid-wrapper{
+                height: unset !important;
+            }
+            .myCustomGrid.k-grid{
+                height: calc(80vh - 180px) !important;
+                 tr:not(.k-grouping-row) td:first-child{
+                    height: 74px;
+                 }
+            }
+            .grid {
+                .k-grid-pager{
+                    position: unset;
+                    bottom: 0;
+                    width: 100%;
+                }
+                .k-grid-aria-root {
+                    padding-bottom: 5px;
+                }
+                th.col_name {
+                    span.k-link {
+                        margin-left: 25px;
+                    }
+                }
+                .col_soLuong{
+                    .ng-star-inserted{
+                        margin-left: 17px;
+                    }
+                }
+                .img_tensanpham_masanpham {
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: nowrap;
+                    align-items: center;
+                    img {
+                       
+                    }
+                    .tensanpham_masanpham {
+                        margin-left: 10px;
+                        .tensanpham {
+                            font-weight: 700;
+                            color: #5a6276;
+                        }
+                    }
+                }
+                tr:has(.noExam) {
+                    .action {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+    
+}

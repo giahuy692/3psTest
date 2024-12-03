@@ -1,0 +1,103 @@
+@import "../../../../../../assets/scss/variable.scss";
+
+::ng-deep{
+    .config-product-package-info{
+        max-height: 600px;
+        display: flex;
+        flex-direction: column;
+        padding: 10px 0;
+        .section{
+            overflow: auto;
+            .title{
+                padding-bottom: 5px;
+                font-size: 16px;
+                font-weight: 700;
+            }
+    .section-grid {
+        min-width: 1100px;
+        display: grid;
+        grid-template-columns: 370px 370px 300px;
+        column-gap: 14px;
+        .grid-item {
+            display: flex;
+            flex-direction: column;
+            .label{
+                font-weight: 700;
+                color: #959DB3;
+                padding-bottom: 5px;
+            }
+        }
+        .k-textbox{
+            width: 60px;
+            .k-input-inner{
+                text-align: center;
+            }
+        }
+        
+        .item1_1 {
+            grid-column: 1;
+            grid-row: 1;
+            .k-dropdown{
+                width: 100%;
+            }
+        }
+        .item_grid {
+            display: grid;
+            grid-template-columns: 40px 40px 40px auto;
+            gap: 30px;
+            .item_item4{
+                .k-textbox{
+                    width: 160px;
+                }
+            }
+        }
+
+        .item1_2 {
+            grid-column: 1;
+            grid-row: 2;
+        }
+        // .item1_3 {
+        //     grid-column: 1;
+        //     grid-row: 3;
+        // }
+        .item1_4 {
+            grid-column: 1;
+            grid-row: 3;
+        }
+        .item1_5 {
+            grid-column: 1;
+            grid-row: 4;
+        }
+        .item1_6 {
+            grid-column: 1;
+            grid-row: 5;
+        }
+
+        .item2_1 {
+            grid-column: 2;
+            grid-row: 1 / span 3;
+            .k-textbox{
+                width: 160px;
+                .k-input-inner{
+                    text-align: right;
+                }
+            }
+            .item2_1_item {
+                display: flex;
+                align-items: center;
+                column-gap: 7px;
+                white-space: nowrap;
+                margin-bottom: 6px;
+
+                .label {
+                    margin-bottom: 0;
+                    width: 50%;
+                }
+            }
+        }
+
+
+    }
+    }
+}
+}

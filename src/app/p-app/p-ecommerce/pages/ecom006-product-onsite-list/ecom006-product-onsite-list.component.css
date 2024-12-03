@@ -1,0 +1,548 @@
+.color-white {
+  color: #ffffff;
+}
+
+.color-gray {
+  color: #23282c;
+}
+
+.color-darkblue {
+  color: #39579a;
+}
+
+.color-blue {
+  color: #008cd7;
+}
+
+.color-lightblue {
+  color: #46b1ff;
+}
+
+.color-darkgreen {
+  color: #316e00;
+}
+
+.color-green {
+  color: #649e0f;
+}
+
+.color-lightgreen {
+  color: #8dc63f;
+}
+
+.color-yellowgreen {
+  color: #c1d72e;
+}
+
+.color-yellow {
+  color: #ffc400;
+}
+
+.color-mediumyellow {
+  color: #FFB900;
+}
+
+.color-orangeyellow {
+  color: #ffab00;
+}
+
+.color-lightorange {
+  color: #ff5230;
+}
+
+.color-lightpink {
+  color: #dc3545;
+}
+
+.color-red {
+  color: #d82c12;
+}
+
+.color-badred {
+  color: #EB273A;
+}
+
+.hachi-color-primary-1 {
+  color: #353935;
+}
+
+.hachi-color-primary-2 {
+  color: #868b86;
+}
+
+.hachi-color-primary-3 {
+  color: #8dc63f;
+}
+
+.hachi-color-primary-4 {
+  color: #c1d72e;
+}
+
+.hachi-color-primary-5 {
+  color: #ffffff;
+}
+
+.hachi-color-secondary-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-1 {
+  color: #46b1ff;
+}
+
+.hachi-color-text-2 {
+  color: #868b86;
+}
+
+.hachi-color-text-3 {
+  color: #008cd7;
+}
+
+.hachi-color-text-4 {
+  color: #d82c12;
+}
+
+.hachi-color-text-5 {
+  color: #649e0f;
+}
+
+.hachi-color-text-6 {
+  color: #ffffff;
+}
+
+.hachi-color-text-7 {
+  color: #8dc63f;
+}
+
+.hachi-color-text-8 {
+  color: #626662;
+}
+
+.hachi-color-text-10 {
+  color: #ff5230;
+}
+
+.hachi-color-text-9 {
+  color: #bbc0bb;
+}
+
+.hachi-color-text-11 {
+  color: #dc3545;
+}
+
+.hachi-color-text-12 {
+  color: #828282;
+}
+
+::ng-deep .mat-drawer .minmax {
+  margin-top: 1rem;
+}
+
+::ng-deep .mat-drawer .minmax .k-label,
+::ng-deep .mat-drawer .minmax .k-form-field {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+::ng-deep .mat-drawer .formfield-grid {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  column-gap: 5px;
+}
+
+::ng-deep .mat-drawer .formfield-grid .item1_1 {
+  grid-column: 1;
+  grid-row: 1;
+  margin-top: 1rem;
+}
+
+::ng-deep .mat-drawer .formfield-grid .item1_2 {
+  grid-column: 1;
+  grid-row: 2;
+  margin-top: 1rem;
+}
+
+::ng-deep .mat-drawer .formfield-grid .item1_3 {
+  grid-column: 1;
+  grid-row: 3;
+  margin-top: 1rem;
+}
+
+::ng-deep .mat-drawer .formfield-grid .item2 {
+  margin-top: 1rem;
+  grid-column: 2;
+  grid-row: 1 / span 3;
+}
+
+::ng-deep .mat-drawer .formfield-grid .item2 img {
+  width: 100%;
+}
+
+::ng-deep .mat-drawer .dieukien {
+  margin-top: 1rem;
+}
+
+::ng-deep .mat-drawer .dieukien .k-label {
+  margin-bottom: 0;
+}
+
+::ng-deep .mat-drawer .dieukien .onsite_item {
+  padding-left: 30px;
+  margin-top: 0.5rem;
+}
+
+::ng-deep .mat-drawer .dieukien .onsite_item.red {
+  color: #EB273A;
+}
+
+::ng-deep .mat-drawer .dieukien .onsite_item .k-checkbox {
+  float: right;
+}
+
+::ng-deep .mat-drawer-content {
+  overflow-y: auto !important;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list {
+  padding: 0 15px 0 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .header-1 .nav-crud {
+  margin-left: auto;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .header-2 .nav-file {
+  margin-left: auto;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .body .sections .section .title {
+  margin: 12px 0;
+  font-weight: bold;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .body .sections .section .crud-btn {
+  height: 32px;
+  font-size: 11px;
+  font-weight: bold;
+  background-color: #1a6634 !important;
+  color: white;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .body .sections .section .section-grid {
+  display: grid;
+  column-gap: 27px;
+  row-gap: 10px;
+  background-color: white;
+  padding: 15px;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .body .sections .section .section-grid .grid-item {
+  display: flex;
+  flex-direction: column;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .body .sections .section .section-grid .k-textbox {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .body .sections .section .section-grid .k-numerictextbox {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .body .sections .section .section-grid .k-numerictextbox.red-color input {
+  color: #EB273A;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .body .sections .section .section-grid .k-dropdownlist {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .body .sections .section .section-grid .k-datepicker {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .body .sections .section .section-grid .k-timepicker {
+  flex-grow: 1;
+  width: auto;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .body .sections .section .section-grid .k-timepicker .k-input {
+  width: 70px;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .body .sections .section .section-grid .k-checkbox {
+  margin-right: 10px;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .body .sections .section .section-grid textarea {
+  resize: none;
+  border-radius: 3px;
+  border-color: rgba(0, 0, 0, 0.08);
+  outline: none;
+  height: 100%;
+  padding: 4px 8px;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .body .sections .section .section-grid textarea:hover, ::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .body .sections .section .section-grid textarea:focus-visible {
+  border-color: #1a6634;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .body .sections .section .section-grid label {
+  margin-bottom: 0;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .body .sections .section .section-grid .input_label {
+  margin-bottom: 10px;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .body .sections .section .section-grid .row {
+  align-items: center;
+  margin-bottom: 7px;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .body .sections .section .section-grid .subrow {
+  margin-left: 20px;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list #thongtinkhuyenmaiTbl .title {
+  justify-content: flex-start;
+  column-gap: 15px;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list #thongtinkhuyenmaiTbl .title .languages {
+  margin-left: auto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 20px;
+  color: #bbc0bb;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list #thongtinkhuyenmaiTbl .title .languages .active,
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list #thongtinkhuyenmaiTbl .title .languages :hover {
+  color: #626662;
+  cursor: pointer;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list #thongtinkhuyenmaiTbl .title .languages .borderRight {
+  border-right: 1px solid #bbc0bb;
+  padding-right: 5px;
+  margin-right: 5px;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list #thongtinkhuyenmaiTbl .section-grid {
+  grid-template-columns: 150px 150px 350px 300px;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list #thongtinkhuyenmaiTbl .section-grid .item1_1 {
+  grid-column: 1;
+  grid-row: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list #thongtinkhuyenmaiTbl .section-grid .item1_1 .label {
+  margin: 0;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list #thongtinkhuyenmaiTbl .section-grid .item1_1 .k-icon {
+  margin-left: 10px;
+  margin-top: -7px;
+  font-weight: 500;
+  font-size: 20px;
+  color: #1a6634;
+  cursor: pointer;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list #thongtinkhuyenmaiTbl .section-grid .item1_1 img {
+  height: 100%;
+  max-height: 57px;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list #thongtinkhuyenmaiTbl .section-grid .item1_2 {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list #thongtinkhuyenmaiTbl .section-grid .item1_2 .green {
+  color: #1a6634;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list #thongtinkhuyenmaiTbl .section-grid .item1_2 .red {
+  color: #EB273A;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list #thongtinkhuyenmaiTbl .section-grid .item1_2 .yellow {
+  color: #FFB900;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list #thongtinkhuyenmaiTbl .section-grid .item2_1 {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list #thongtinkhuyenmaiTbl .section-grid .item2_2 {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list #thongtinkhuyenmaiTbl .section-grid .item3_1 {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list #thongtinkhuyenmaiTbl .section-grid .item3_2 {
+  grid-column: 3;
+  grid-row: 2;
+  flex-direction: row;
+  column-gap: 10px;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list #thongtinkhuyenmaiTbl .section-grid .item4_1 {
+  grid-column: 4;
+  grid-row: 1;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list #thongtinkhuyenmaiTbl .section-grid .item4_1 .k-dropdownlist {
+  flex-grow: 0;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid tr:not(.k-grouping-row) td:first-child {
+  padding-left: 10px !important;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .col_img_tensanpham_masanpham {
+  max-width: 400px;
+  width: 400px;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .img_tensanpham_masanpham {
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .img_tensanpham_masanpham img {
+  max-height: 64px;
+  max-width: 64px;
+  width: 100%;
+  margin-right: 10px;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .img_tensanpham_masanpham .tensanpham_masanpham {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .img_tensanpham_masanpham .tensanpham_masanpham .tensanpham {
+  white-space: normal;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .img_tensanpham_masanpham .tensanpham_masanpham .masanpham {
+  color: #5c6873;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .img_tensanpham_masanpham .tensanpham_masanpham .tinhtrang.red {
+  color: #EB273A;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .img_tensanpham_masanpham .tensanpham_masanpham .tinhtrang.green {
+  color: #1a6634;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .col_giaBan,
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .col_dieuKien {
+  text-align: center;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .col_giaBan > .k-link,
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .col_dieuKien > .k-link {
+  justify-content: center;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .col_ngayDuyet {
+  text-align: right;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .col_ngayDuyet > .k-link {
+  justify-content: flex-end;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .col_ngayDuyet .StartDate {
+  color: #1a6634;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .col_ngayDuyet .EndDate {
+  color: #EB273A;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .col_dieuKien .green {
+  color: #1a6634;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .col_dieuKien .red {
+  color: #EB273A;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .col_tinhTrang {
+  padding-right: 50px;
+  text-align: right;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .col_tinhTrang > .k-link {
+  justify-content: flex-end;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .col_tinhTrang .green {
+  color: #1a6634;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .col_tinhTrang .red {
+  color: #EB273A;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .k-grid .col_tinhTrang .yellow {
+  color: #FFB900;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .myCustomGrid.k-grid tr:not(.k-grouping-row) td:first-child {
+  padding-left: 0;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .label {
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #8f9ba6;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .label.thick-label {
+  color: #23282c;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .label.thick-label + .number {
+  font-weight: bold;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .label.thick-label + .k-numerictextbox input {
+  font-weight: bold;
+}
+
+::ng-deep .mat-drawer-content .app-ecom006-product-onsite-list .label.thin-label {
+  font-weight: normal;
+  color: #2f353a;
+}
+
+::ng-deep .dropdownDonVi_subitem {
+  padding-left: 20px;
+}

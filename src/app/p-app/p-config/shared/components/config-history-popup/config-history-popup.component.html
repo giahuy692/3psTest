@@ -1,0 +1,65 @@
+<div class="HistoryDialogPopup">
+    <app-p-kendo-dialog 
+    [title]="popupTitle" 
+    (close)="closeDialog()"
+    [width]="600"
+    *ngIf="isDialogOpened"
+    [dialogType]="3"
+    >
+
+        <div class="body_dialog">
+            <div class="info-Product">
+                <div class="info">
+                    <span class="title_Product">Barcode</span>
+                    <span class="Barcode_Product content">{{popupData.Barcode}}</span>
+                    <span class="title_Product">Tên sản phẩm</span>
+                    <span class="content">{{popupData.ProductName}}</span>
+                </div>
+                <img loading="lazy" class="Product-img" src="{{popupData.ImageThum}}" alt="">
+            </div>
+
+            <span class="Content">
+                {{popupTitle}}
+            </span>
+           
+
+            <div class="grid-wrapper">
+                <app-p-kendo-grid 
+                class="grid scrollable " 
+                [data]="popupGridData" 
+                [scrollable]="'none'" 
+                [loading]="loading"
+                [hasMoreAction]="isOpenDetail" 
+                [width]="500">
+
+                <ng-container *ngFor="let column of columnConfig">
+                    <kendo-grid-column
+                        [title]="column.title"
+                        [class]="column.class"
+                        [field]="column.field"
+                        [headerClass]="'headerCustomClass'"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <ng-container
+                            [ngTemplateOutlet]="column.cellTemplate"
+                            [ngTemplateOutletContext]="{ $implicit: dataItem }"
+                            >
+                            </ng-container>
+                            <ng-template #defaultCellTemplate>
+                                <div>{{ dataItem[column.field] }}</div>
+                            </ng-template>
+                            
+                        </ng-template>
+                    </kendo-grid-column>
+
+                </ng-container>
+
+                </app-p-kendo-grid>
+
+            </div>
+
+        </div>
+
+    </app-p-kendo-dialog>
+
+</div>

@@ -1,0 +1,59 @@
+export default class DTOInport {
+    Code: number = 0
+    Status: number = 0
+    FromWarehouse: number = 0
+    ToWarehouse: number = 0
+    RefID: number = 0
+    Amount: number = 0
+    VAT: number = 0
+    ShippingFee: number = 0
+    TypeData: number = 0
+    NoOfSKU: number = 0
+    Quantity: number = 0
+    FromWarehouseName: string = ''
+    ToWarehouseName: string = ''
+    CreatedBy: string = ''
+    StatusName: string = ''
+    DocumentNo: string = ''
+    RefNo: string = ''
+    DeliveredBy: string = ''
+    ReceivedBy: string = ''
+    Shipper: string = ''
+    RemarkFrom: string = ''
+    RemarkTo: string = ''
+    RequestDate: Date = null
+    EstDelivery: Date = null
+    ShipmentDate: Date = null
+    DeliveredDate: Date = null
+}
+
+export class DTOInportProduct {
+    Code: number = 0
+    Barcode: string = ""
+    PosCode: string = ""
+    ProductName: string = ''
+    Quantity: number = 0
+    QtyPacked: number = 0
+    QtyRequest: number = 0
+    Price: number = 0
+    ImageSetting: string = ''
+    RemarkFrom: string = ''
+    RemarkTo: string = ''
+    RefID: number = null
+    RefNo: string = ''
+    Product: number = null
+    CreateBy: string
+    CreateTime: Date = null
+    ExpDate: Date = null
+    MinExpDate: Date = null
+    ExpDuration: number = 0
+    AvgPriceMonth: number = 0
+    AvgPriceTime: number = 0
+    ItemID: number = null
+    TransferID: number = 0
+    TypeData: number = 1
+    Unit: string = ''
+    UnitPrice: number = 0
+    VAT: number = 0
+    WHTransfer: number = null
+}

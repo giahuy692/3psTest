@@ -1,0 +1,340 @@
+<kendo-drawer-container id="drawerContainerRight" class="drawer-container">
+    <kendo-drawer id="drawerRight" #drawerRight [position]="positionDrawer" [width]="widthDrawer" [mode]="expandMode"
+        [(expanded)]="expanded" class="drawer" [autoCollapse]="false">
+        <ng-template kendoDrawerHeaderTemplate>
+            <div class="add-position-area">
+                <!-- TITLE CONTROL-->
+                <div class="title">
+                    Thông tin công việc
+                </div>
+
+                <!-- INPUT FORM CÔNG VIỆC -->
+                <div class="info-task">
+                    <div class="info-task_block">
+                        <!-- Tên công việc -->
+                        <div class="block">
+                            <div class="box-area">
+                                <div class="label">
+                                    Tên công việc<span class="important">(*)</span>
+                                </div>
+                                <kendo-textbox [readonly]="false" [ngClass]="{'readonly-field' : false}"
+                                    [(value)]="taskHandler.TaskName" type="text" class="k-textbox">
+                                </kendo-textbox>
+                            </div>
+                        </div>
+
+                        <!-- Mô tả công việc -->
+                        <div class="block block-description-task">
+                            <div class="box-area">
+                                <div class="label">
+                                    Mô tả công việc
+                                </div>
+                                <kendo-textarea [readonly]="false" [ngClass]="{'readonly-field' : false}"
+                                    [(value)]="taskHandler.Description" [resizable]="'none'"
+                                    (valueChange)="handleGetValueTaskFromInput($event, 'description')">
+                                </kendo-textarea>
+                            </div>
+                        </div>
+
+                        <!-- Thứ tự thực hiện -->
+                        <div class="block block-orderby">
+                            <div class="box-area">
+                                <div class="label">
+                                    Thứ tự thực hiện
+                                </div>
+                                <app-p-numeric-textbox [readonly]="false" [ngClass]="{'readonly-field' : false}"
+                                    propName="" [(ngModel)]="taskHandler.OrderBy" [min]="1">
+                                </app-p-numeric-textbox>
+                            </div>
+                        </div>
+
+                        <!-- Thời gian hoàn tất -->
+                        <div class="block block-duration">
+                            <div class="box-area">
+                                <div class="label">
+                                    Thời gian hoàn tất (ngày)<span class="important">(*)</span>
+                                </div>
+                                <app-p-numeric-textbox [readonly]="false" [ngClass]="{'readonly-field' : false}"
+                                    propName="" [(ngModel)]="taskHandler.DateDuration" [min]="1">
+                                </app-p-numeric-textbox>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lưu ý -->
+                    <div class="note">(*) Trường bắt buộc nhập</div>
+                </div>
+            </div>
+
+            <!-- BUTTON CONTROL -->
+            <div class="btnControl">
+                <button (click)="handleCloseDrawer()" kendoButton
+                    class="btn-hachi hachi-primary hachi-secondary">ĐÓNG</button>
+
+                <button *ngIf="statusDrawer == 1" kendoButton class="btn-hachi hachi-primary">THÊM MỚI</button>
+
+                <button *ngIf="statusDrawer == 2" kendoButton class="btn-hachi hachi-primary">CẬP NHẬT</button>
+
+                <button *ngIf="statusDrawer == 2" kendoButton class="btn-hachi hachi-warning">XÓA</button>
+            </div>
+        </ng-template>
+    </kendo-drawer>
+
+    <kendo-drawer-content class="drawer-content">
+        <div class="main">
+            <div class="area">
+                <div class="header header-1" [ngClass]="{'disable-block': isDisableBlock}">
+                    <!-- BREADCRUMB -->
+                    <app-p-kendo-breadcrumb (loadData)="handleLoadBreadCrumb()"></app-p-kendo-breadcrumb>
+
+                    <!-- FUNCTION BUTTON WRAPPER -->
+                    <div class="btnWrapper">
+                        <div class="nav-btn nav-crud">
+                            <div class="nav-file nav-btn">
+                                <button (click)=" handleOpenDialogDeleteTaskBoard()" kendoButton
+                                    class="btn-hachi btnNgunghienthi" icon="trash"
+                                    *ngIf="isVisibleField('button-delete-task-board')">
+                                    XÓA BẢNG C.VIỆC
+                                </button>
+                            </div>
+
+                            <div class="nav-crud StatusBtn" *ngIf="arrBtnStatus?.length > 0">
+                                <button *ngFor="let i of arrBtnStatus" kendoButton iconClass="k-icon k-i-{{ i.code }}"
+                                    class="{{ i.class }} " (click)="handleUpdateStatusPolicy(i.link)">
+                                    {{ i.text }}
+                                </button>
+                            </div>
+
+                            <div (click)="handleAddNewClick()" class="nav-file nav-btn">
+                                <button *ngIf="isVisibleField('button-add-task-board')" kendoButton
+                                    class="k-button onAddBtn" [icon]="'plus'">
+                                    THÊM MỚI
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="content" *ngIf="taskBoardMaster">
+                    <!-- THÔNG TIN CỦA BẢNG CÔNG VIỆC -->
+                    <div class="block-info block-content" [ngClass]="{'disable-block': isDisableBlock}">
+                        <div class="content-info">
+
+                            <div class="title">
+                                {{'Thông tin bảng công việc' | uppercase}}
+                            </div>
+
+                            <div class="frame">
+                                <p-loading-spinner class="loading-spiner" [isLoading]="isLoading"></p-loading-spinner>
+                                <!-- block bên trái của frame info -->
+                                <div class="left-block">
+                                    <!-- Khu vực mã bảng công việc -->
+                                    <div class="box-area">
+                                        <div class="label">
+                                            Mã bảng công việc
+                                        </div>
+                                        <kendo-textbox *ngIf="taskBoardMaster" [(ngModel)]="taskBoardMaster.PolicyID" [disabled]="true"
+                                            type="text" class="k-textbox">
+                                        </kendo-textbox>
+                                    </div>
+
+                                    <!-- khu vực thời gian hiệu lực -->
+                                    <div class="box-area">
+                                        <div class="label">
+                                            Thời gian hiệu lực <span class="important">(*)</span>
+                                        </div>
+
+                                        <app-datepicker 
+                                            *ngIf="taskBoardMaster"
+                                            [min]="currentDate"
+                                            [disabled]="isDisableField('date-picker-task-board')" class="datepicker"
+                                            [format]="'dd/MM/yyyy'" [placeholder]="'dd/MM/yyyy'"
+                                            [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }"
+                                            [popupSetting]="{animate:true, appendTo: 'root', popupClass:'popupLayoutCpnDatePicker'}"
+                                            [readOnlyInput]="true" [(ngModel)]="taskBoardMaster.EffDate"
+                                            (valueChange)="onDateblur($event)">
+                                        </app-datepicker>
+                                    </div>
+
+                                    <!-- khu vực tình trạng -->
+                                    <div class="box-area box-status">
+                                        <div class="label">
+                                            Tình trạng
+                                        </div>
+                                        <div class="title-status">
+                                            <span class="status-name"
+                                                [innerHTML]="taskBoardMaster?.StatusName | colorStatus: taskBoardMaster?.Status"></span>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <!-- block bên phải của frame -->
+                                <div class="right-block">
+                                    <div class="box-area">
+                                        <div class="label">
+                                            Tên bảng công việc <span class="important">(*)</span>
+                                        </div>
+                                        <kendo-textbox (keydown.enter)="onBlurTextbox(1)"
+                                            *ngIf="isVisibleField('input-name-task-board')"
+                                            [(ngModel)]="taskBoardMaster.PolicyName" (inputBlur)="onBlurTextbox(1)"
+                                            [disabled]="isDisableField('input-name-task-board')" type="text"
+                                            class="k-textbox">
+                                        </kendo-textbox>
+                                    </div>
+
+                                    <div class="box-area box-description">
+                                        <div class="label">Mô tả</div>
+                                        <textarea *ngIf="isVisibleField('input-description-task-board')"
+                                            [(ngModel)]="taskBoardMaster.Description"
+                                            [ngClass]="isDisableField('input-description-task-board') ? 'textarea-disable' : 'textarea'"
+                                            [disabled]="isDisableField('input-description-task-board')"
+                                            (blur)="onBlurTextbox(2)">
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DANH SÁCH CÔNG VIỆC -->
+                    <div class="block-content" *ngIf="taskBoardMaster.Code != 0">
+                        <div class="grid-wrapper">
+                            <app-p-kendo-grid #grid class="grid scrollable grid-custom" [loading]="isLoading"
+                                [data]="gridView" [scrollable]="'none'" [selectable]="selectable"
+                                [take]="gridState.take" [skip]="gridState.skip" [sortable]="true"
+                                [sort]="gridState.sort" [getActionDropdownCallback]="getActionDropdownCallback"
+                                [onActionDropdownClickCallback]="onActionDropDownClickCallback"
+                                [getSelectionPopupCallback]="getSelectionPopupCallback"
+                                [onSortChangeCallback]="onSortChangeCallback"
+                                [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallback"
+                                [onSelectCallback]="onSelectCallback">
+
+                                <!-- Col-1: Tên công việc -->
+                                <kendo-grid-column title="Tên công việc" headerClass="header-name-task" [width]="300">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <div class="col-name-task" [attr.code-task]="dataItem.Code">
+                                            <span class="name" [title]="dataItem.TaskName">{{ dataItem.TaskName
+                                                }}</span>
+                                        </div>
+                                    </ng-template>
+                                </kendo-grid-column>
+
+                                <!-- Col-2: Mô tả -->
+                                <kendo-grid-column title="Mô tả" headerClass="header-description" [width]="450">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <div class="col-description">
+                                            <span [title]="dataItem.Description">{{ dataItem.Description }}</span>
+                                        </div>
+                                    </ng-template>
+                                </kendo-grid-column>
+
+                                <!-- Col-3: Thứ tự thực hiện -->
+                                <kendo-grid-column title="Thứ tự thực hiện" headerClass="header-orderBy" [width]="150"
+                                    field="OrderBy">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <div class="col-orderBy">
+                                            <span [title]="dataItem.OrderBy">{{ dataItem.OrderBy }}</span>
+                                        </div>
+                                    </ng-template>
+                                </kendo-grid-column>
+
+
+                                <!-- Col-4: Thời gian thực hiện -->
+                                <kendo-grid-column title="Thời gian thực hiện" headerClass="header-date-duration"
+                                    [width]="150" field="DateDuration">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <div class="col-duration">
+                                            <span title="{{dataItem.DateDuration + ' ngày'}}"
+                                                *ngIf="dataItem.DateDuration > 0">{{
+                                                dataItem.DateDuration }} ngày</span>
+                                        </div>
+                                    </ng-template>
+                                </kendo-grid-column>
+
+
+                                <!-- Col-5: Tài liệu tham khảo -->
+                                <kendo-grid-column title="Tài liệu tham khảo" headerClass="header-type-staff">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+
+                                    </ng-template>
+                                </kendo-grid-column>
+                            </app-p-kendo-grid>
+                        </div>
+                    </div>
+
+                    <div [ngClass]="taskBoardMaster?.PolicyID == 0 ? 'footer-add-new' : 'footer'">
+                        <div><span class="important">(*) </span>Trường bắt buộc nhập</div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- POPUP CONFIRM DELETE POLICY -->
+        <kendo-dialog class="dialog-delete popup-confirm-custom" [minHeight]="250" [minWidth]="400"
+            *ngIf="isDialogDeleteTaskBoardShow">
+            <!-- HEADER -->
+            <div class="dialog-header">
+                <span class="k-icon k-i-warning"></span>
+                <div>Xóa bảng công việc</div>
+            </div>
+
+            <!-- CONTENT -->
+            <div class="dialog-content">
+                <div class="text-confirm">
+                    <span>Bạn có chắc chắn muốn bảng công việc</span>
+                    <div class="policy-name-text">
+                        {{taskBoardMaster.PolicyID}}
+                    </div>
+                </div>
+
+                <div class="warning">
+                    <span>Chính sách bị xóa sẽ <span style="color: #FD7676;">KHÔNG</span> thể khôi phục lại</span>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="dialog-footer">
+                <button kendoButton (click)="handleCloseDialog()" class="cancel-button">Không xóa</button>
+                <button kendoButton (click)="handleDeleteTaskBoard()" icon="trash" class="btn-delete">xóa</button>
+            </div>
+        </kendo-dialog>
+
+        <!-- DIALOG CONFIRM DELETE TASK -->
+        <kendo-dialog class="dialog-delete popup-confirm-task-custom" [minHeight]="250" [minWidth]="400"
+            *ngIf="isOpenPopupConfirmDeleteTask">
+            <!-- HEADER -->
+            <div class="dialog-header">
+                <span class="k-icon k-i-warning"></span>
+                <div>Xóa công việc</div>
+            </div>
+
+            <!-- CONTENT -->
+            <!-- <div class="dialog-content">
+                <div class="text-confirm">
+                    <span>Bạn chắc chắn muốn xóa công việc</span>
+                    <span class="task" *ngIf="seletedTaskToDelete">{{seletedTaskToDelete.TaskName}}</span>
+                </div>
+                <div class="warning">
+                    <span>{{listSelectedTaskToDelete ? 'Ngoại lệ bị xóa sẽ' : 'Công việc bị xóa sẽ'}}</span>
+                    <span style="color: #FD7676;">KHÔNG</span>
+                    <span>thể khôi phục lại.</span>
+                </div>
+            </div> -->
+
+            <!-- FOOTER -->
+            <!-- <div class="dialog-footer">
+                <button kendoButton (click)="handleClosePopupConfirmDeleteTask()">Không xóa</button>
+                <button *ngIf="seletedTaskToDelete" kendoButton icon="trash" class="btn-delete"
+                    (click)="handleDeleteListPolicyTask()">xóa</button>
+                <button *ngIf="listSelectedTaskToDelete" kendoButton icon="trash" class="btn-delete"
+                    (click)="APIDeleteHRPolicyLimit(listSelectedTaskToDelete)">xóa</button>
+            </div> -->
+        </kendo-dialog>
+    </kendo-drawer-content>
+</kendo-drawer-container>

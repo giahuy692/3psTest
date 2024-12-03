@@ -1,0 +1,14 @@
+<kendo-maskedtextbox
+    #maskedTextbox
+    [(ngModel)]="input"
+    (ngModelChange)="onInputValueChange($event)"    
+    class="customized-masked-textbox"
+    [mask]="mask"
+    [readonly]="readonly"
+    [disabled]="disabled"
+    [prompt]="prompt"
+    [maskValidation]="isMaskValidation"
+    [includeLiterals]="includeLiterals"
+    (blur)="onBlur($event)"
+    (keydown.Enter)="onKeyDownEnter($event)"
+></kendo-maskedtextbox>

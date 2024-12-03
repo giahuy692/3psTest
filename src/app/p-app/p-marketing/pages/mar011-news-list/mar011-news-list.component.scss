@@ -1,0 +1,174 @@
+@import "../../../../../assets/scss/variable.scss";
+
+::ng-deep {
+    .app-mar011-news-list {
+        height: calc(100vh - #{$footer-height});
+        padding: 0 15px 0 20px;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: scroll;
+
+        .header.header-2 {
+            .nav-btn {
+                align-items: stretch;
+                column-gap: 2%;
+
+                .searchBtn {
+                    margin-top: auto;
+                }
+            }
+
+            .k-multiselect {
+                min-width: 222px;
+            }
+        }
+
+        .myCustomGrid.k-grid tr td {
+            white-space: normal;
+
+            img {
+                max-height: unset;
+            }
+        }
+
+        .col_img_tieudebaiviet_tomtatbaiviet {
+            width: 600px;
+            max-width: 600px;
+
+            .img_tieudebaiviet_tomtatbaiviet {
+                display: flex;
+                column-gap: 10px;
+                align-items: center;
+
+                img {
+                    max-width: 80px;
+                    max-height: 80px;
+                    width: 100%;
+                }
+
+                .tieudebaiviet_tomtatbaiviet {
+                    height: 80px;
+
+                    display: flex;
+                    flex-direction: column;
+
+                    justify-content: space-evenly;
+
+                    .tomtatbaiviet {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 2;
+                        line-clamp: 2;
+                        -webkit-box-orient: vertical;
+                    }
+                }
+            }
+        }
+
+        // .k-window-content
+        // {
+        //     display: flex;
+        //     flex-direction: column;
+        //     row-gap: 5px;
+
+        //     .category-name
+        //     {
+        //         display: flex;
+        //         flex-direction: column;
+        //         row-gap: 5px;
+        //     }
+        //     .container
+        //     {
+        //         padding: 0;
+
+        //         display: flex;
+        //         column-gap: 10px;
+
+        //         .img-group
+        //         {
+        //             width: auto;
+
+        //             display: flex;
+        //             flex-direction: column;
+        //             row-gap: 5px;
+
+        //             .btn-group
+        //             {
+        //                 display: flex;
+        //                 column-gap: 5px;
+        //                 align-items: center;
+        //                 justify-content: flex-start;
+        //             }
+        //         }
+
+        //         .info-container
+        //         {
+        //             height: 100%;
+
+        //             display: flex;
+        //             flex-direction: column;
+        //             align-items: center;
+        //             justify-content: space-between;
+
+        //             .action
+        //             {
+        //                 display: flex;
+        //                 flex-direction: column;
+        //                 row-gap: 10px;
+
+        //                 .updateBtn, .closeBtn
+        //                 {
+        //                     background-color: #008000;
+        //                     color: white;
+        //                     padding: 10px 20px;
+        //                     border: none;
+        //                     -webkit-border-radius: 5px;
+        //                     -moz-border-radius: 5px;
+        //                     -ms-border-radius: 5px;
+        //                     -o-border-radius: 5px;
+        //                 }
+        //                 .closeBtn
+        //                 {
+        //                     background-color: transparent;
+        //                     color: #008000;
+        //                     border: 2px solid #008000;
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+        .red {
+            color: red;
+        }
+        .yellow {
+            color: rgb(255, 123, 0);
+        }
+        .green {
+            color: green;
+        }
+        .k-list-container .k-button:hover,
+        .k-list-container .k-button {
+            background-color: transparent;
+        }
+    }
+    .popupClass {
+        .category-container {
+            width: 100%;
+
+            display: grid;
+            grid-template-columns: auto 30px;
+            align-items: center;
+            padding-left: 4px;
+
+            input[type="checkbox"] {
+                border-radius: 50%;
+                -webkit-border-radius: 50%;
+                -moz-border-radius: 50%;
+                -ms-border-radius: 50%;
+                -o-border-radius: 50%;
+            }
+        }
+    }
+}

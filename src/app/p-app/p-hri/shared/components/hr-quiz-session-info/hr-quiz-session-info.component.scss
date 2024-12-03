@@ -1,0 +1,391 @@
+//  EVALUATION TRANCHE INFORMATIONS
+@import "../../../../../../assets/scss/variable.scss";
+
+::ng-deep app-hr-quiz-session-info #evaluationSupervisionInfo {
+    padding: 15px;
+    .symbol{
+        color: $dark-red !important;
+        &.fst-italic{
+          font-style: italic !important;
+        }
+      }
+    #TimePicker {
+        .check-wrapper {
+            display: none;
+        }
+    }
+
+    .k-input,
+    .k-dropdownlist {
+        box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+    }
+
+    kendo-datepicker,
+    kendo-dateinput {
+        box-shadow: none !important;
+
+        .k-input-inner {
+            box-shadow: none !important;
+        }
+
+        &.customDatePicker {
+            border: 1px solid rgba(0, 0, 0, 0.08) !important;
+        }
+    }
+
+    .datepicker-wrapper,
+    .datetimepicker-wrapper {
+        border-color: $white;
+        background-color: #f0f3f5;
+
+        &:hover {
+            border-color: $dark-green;
+        }
+
+        &:has(.k-disabled):hover {
+            border-color: $white;
+        }
+
+        .readOnlyInput {
+            background-color: transparent;
+
+            kendo-dateinput {
+                background-color: transparent;
+
+                input {
+                    background-color: transparent !important;
+                }
+            }
+
+            .k-input-button {
+                background-color: $white;
+            }
+
+            &.k-disabled {
+                .k-input-button {
+                    background-color: transparent;
+                }
+            }
+        }
+    }
+
+    textarea {
+        background-color: $white !important;
+    }
+
+    .k-disabled {
+        outline: none !important;
+        cursor: default !important;
+        opacity: 1 !important;
+        filter: grayscale(0.1) !important;
+        pointer-events: none !important;
+        background-color: #f0f3f5 !important;
+        border: 1px solid rgba(0, 0, 0, 0.08) !important;
+        box-shadow: none !important;
+
+        &.k-textarea {
+            textarea.k-input-inner.k-input-inner:read-only {
+                background-color: transparent !important;
+            }
+        }
+
+        &.readOnlyInput {
+            kendo-dateinput {
+                border: none !important;
+
+                input {
+                    background-color: transparent !important;
+                    box-shadow: none !important;
+                }
+            }
+        }
+    }
+
+
+
+    p {
+        margin-bottom: unset;
+        margin-block-end: unset;
+    }
+
+    // TITTLE
+    .block-title {
+        font-size: 16px;
+        color: $gray-850;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+    .title-block-wrapper {
+        display: flex;
+        justify-content: space-between;
+
+        .group-action {
+            display: flex;
+            gap: 20px;
+
+            .see-quiz-session {
+                color: #31ADFF;
+                font-style: italic;
+                font-weight: 400;
+                cursor: pointer;
+            }
+        }
+
+        .collapsing-block,
+        .expanding-block {
+            color: #31ADFF;
+            font-style: italic;
+            font-weight: 400;
+            cursor: pointer;
+        }
+    }
+
+    // FORM 
+    .formContainer {
+        padding: 13px 20px 0 20px;
+        background-color: $white;
+        box-shadow: 0px 3px 6px rgba(149, 157, 179, 0.2);
+
+        .k-textbox {
+
+            .k-input-inner {
+                // padding: 9px 10px 8px 10px;
+            }
+        }
+
+        .transparent-input {
+            border: unset !important;
+            box-shadow: unset !important;
+
+            input {
+                font-weight: 700;
+                font-size: 13px;
+
+                &:focus {
+                    box-shadow: unset !important;
+                }
+            }
+
+            &.k-focus {
+                border: unset !important;
+                outline: unset !important;
+            }
+
+            // &.k-disabled {
+            //     background-color: transparent;
+            // }
+
+            // .k-input-inner:disabled {
+            //     background-color: unset !important;
+            // }
+
+            &:hover {
+                outline: unset;
+            }
+        }
+
+        .status-input {
+            input {
+                padding: unset;
+                color: $dark-green;
+            }
+        }
+
+        .numeric-input-wrapper {
+
+            .k-numerictextbox {
+                width: 140px;
+            }
+
+        }
+
+        .k-numerictextbox {
+            width: 155px;
+        }
+
+        // .datepicker-wrapper,
+        // .datetimepicker-wrapper {
+        //     min-width: 155px !important;
+        //     width: 155px;
+        // }
+
+        .k-datepicker,
+        .k-datetimepicker {
+            min-width: 155px !important;
+            width: 155px;
+            height: 34px;
+            border: 1px solid #DBDEE7;
+            display: flex;
+            flex-direction: row-reverse;
+            border-radius: 3px;
+            box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2) !important;
+            background-color: #f0f3f5 !important;
+            filter: grayscale(0.1) !important;
+
+            &:hover {
+                outline: 1px solid #1a6634;
+            }
+
+            .k-input-button {
+                border: unset !important;
+                background-color: unset !important;
+                box-shadow: unset;
+            }
+
+            .k-input {
+                border: unset;
+                font-size: 13px;
+                padding: 3px;
+            }
+
+            .k-input-inner {
+                background-color: transparent;
+            }
+
+            .k-input-button {
+                border: unset !important;
+                background-color: $white !important;
+            }
+        }
+
+        .k-datepicker {
+            &.k-disabled {
+                outline: none;
+                cursor: default;
+                opacity: 0.6;
+                filter: grayscale(0.1);
+                pointer-events: none;
+                box-shadow: none;
+            }
+        }
+
+        .new-status>input {
+            color: $gray-900 !important;
+        }
+
+        .sent-status>input {
+            color: $medium-yellow !important;
+        }
+
+        .approved-status>input {
+            color: $dark-green !important;
+        }
+
+        .stopped-status>input {
+            color: $bad-red !important;
+        }
+
+        .return-status>input {
+            color: $bad-red !important;
+        }
+
+        .quizz-time-group {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            justify-content: space-between;
+
+            p {
+                margin-bottom: unset;
+                margin-block-end: unset;
+            }
+        }
+
+        .row {
+            margin: 0;
+            gap: 30px;
+            display: flex;
+            flex-wrap: nowrap;
+
+            .colFirst {
+                width: 340px;
+            }
+
+            .colLast {
+                width: calc(100% - 325px);
+
+                .h-102 {
+                    .k-textarea {
+                        height: 102.5px;
+                    }
+                }
+
+                .h-171 {
+                    .k-textarea {
+                        height: 171px;
+                    }
+                }
+            }
+
+            .k-textbox {
+                width: 100%;
+                height: 36px;
+                max-height: unset;
+            }
+
+            .k-textarea {
+                width: 100%;
+                height: 79%;
+                padding: unset;
+
+                .k-input-inner {
+                    // padding: 9px 10px 8px 10px;
+
+                }
+
+                textarea:read-only {
+                    background-color: white !important;
+                }
+            }
+
+
+            .k-dropdownlist {
+                width: 100%;
+                height: 34px;
+
+                .k-input-inner {
+                    display: flex;
+                }
+
+                .k-icon {
+                    color: #959DB3;
+                }
+
+                .k-list-optionlabel {
+                    display: none;
+                }
+
+            }
+
+            kendo-label {
+                margin-bottom: 10px;
+                display: block;
+
+                .k-label {
+                    font-size: 13px;
+                    color: $light-blue-gray;
+                    margin-bottom: 5px;
+                    font-weight: 700;
+                }
+
+
+                .in-label {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    .k-i-minus {
+                        color: $light-blue-gray;
+                    }
+                }
+
+
+                .status {
+                    color: $dark-green;
+                }
+
+            }
+        }
+    }
+}

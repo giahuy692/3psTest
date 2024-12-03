@@ -1,0 +1,380 @@
+@import "variables";
+
+@font-face {
+  font-family: '#{$icomoon-font-family}';
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?6vh9yq');
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?6vh9yq#iefix') format('embedded-opentype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?6vh9yq') format('truetype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?6vh9yq') format('woff'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?6vh9yq##{$icomoon-font-family}') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="hachi-icon-"], [class*=" hachi-icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: '#{$icomoon-font-family}' !important;
+  // speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.hachi-icon-brand {
+  &:before {
+    content: $hachi-icon-brand;     
+    color: #626662;
+  }
+}
+.hachi-icon-like {
+  &:before {
+    content: $hachi-icon-like;     
+    color: #626662;
+  }
+}
+.hachi-icon-list {
+  &:before {
+    content: $hachi-icon-list;     
+    color: #626662;
+  }
+}
+.hachi-icon-home {
+  &:before {
+    content: $hachi-icon-home;     
+    color: #626662;
+  }
+}
+.hachi-icon-top {
+  &:before {
+    content: $hachi-icon-top;     
+    color: #626662;
+  }
+}
+.hachi-icon-hachi24 {
+  &:before {
+    content: $hachi-icon-hachi24;     
+    color: #626763;
+  }
+}
+.hachi-icon-star {
+  &:before {
+    content: $hachi-icon-star;     
+    color: #bbc0bb;
+  }
+}
+.hachi-icon-up {
+  &:before {
+    content: $hachi-icon-up;     
+    color: #626662;
+  }
+}
+.hachi-icon-down {
+  &:before {
+    content: $hachi-icon-down;     
+    color: #626662;
+  }
+}
+.hachi-icon-right {
+  &:before {
+    content: $hachi-icon-right;     
+    color: #626662;
+  }
+}
+.hachi-icon-left {
+  &:before {
+    content: $hachi-icon-left;     
+    color: #626662;
+  }
+}
+.hachi-icon-heart {
+  &:before {
+    content: $hachi-icon-heart;     
+    color: #626763;
+  }
+}
+.hachi-icon-information {
+  &:before {
+    content: $hachi-icon-information;     
+    color: #626763;
+  }
+}
+.hachi-icon-gift {
+  &:before {
+    content: $hachi-icon-gift;     
+    color: #626662;
+  }
+}
+.hachi-icon-vppdochoi {
+  &:before {
+    content: $hachi-icon-vppdochoi;     
+    color: #626763;
+  }
+}
+.hachi-icon-freephone .path1 {
+  &:before {
+    content: $hachi-icon-freephone-path1;  
+    color: rgb(139, 197, 65);
+  }
+}
+.hachi-icon-freephone .path2 {
+  &:before {
+    content: $hachi-icon-freephone-path2;  
+    margin-left: -0.845703125em;  
+    color: rgb(139, 197, 65);
+  }
+}
+.hachi-icon-freephone .path3 {
+  &:before {
+    content: $hachi-icon-freephone-path3;  
+    margin-left: -0.845703125em;  
+    color: rgb(255, 255, 255);
+  }
+}
+.hachi-icon-maymacphukien {
+  &:before {
+    content: $hachi-icon-maymacphukien;     
+    color: #626763;
+  }
+}
+.hachi-icon-diendientu {
+  &:before {
+    content: $hachi-icon-diendientu;     
+    color: #626763;
+  }
+}
+.hachi-icon-ngoaitroidilai {
+  &:before {
+    content: $hachi-icon-ngoaitroidilai;     
+    color: #626763;
+  }
+}
+.hachi-icon-thucpham {
+  &:before {
+    content: $hachi-icon-thucpham;     
+    color: #626763;
+  }
+}
+.hachi-icon-mevabe {
+  &:before {
+    content: $hachi-icon-mevabe;     
+    color: #626763;
+  }
+}
+.hachi-icon-sapxeptrangtri {
+  &:before {
+    content: $hachi-icon-sapxeptrangtri;     
+    color: #626763;
+  }
+}
+.hachi-icon-suckhoesacdep {
+  &:before {
+    content: $hachi-icon-suckhoesacdep;     
+    color: #626763;
+  }
+}
+.hachi-icon-giatgiuvesinh {
+  &:before {
+    content: $hachi-icon-giatgiuvesinh;     
+    color: #626763;
+  }
+}
+.hachi-icon-nhabep {
+  &:before {
+    content: $hachi-icon-nhabep;     
+    color: #626763;
+  }
+}
+.hachi-icon-combogiftset {
+  &:before {
+    content: $hachi-icon-combogiftset;     
+    color: #626662;
+  }
+}
+.hachi-icon-spkhuyenmai {
+  &:before {
+    content: $hachi-icon-spkhuyenmai;     
+    color: #626662;
+  }
+}
+.hachi-icon-spmoi {
+  &:before {
+    content: $hachi-icon-spmoi;     
+    color: #626662;
+  }
+}
+.hachi-icon-hangnhatdocdao {
+  &:before {
+    content: $hachi-icon-hangnhatdocdao;     
+    color: #626662;
+  }
+}
+.hachi-icon-handbag {
+  &:before {
+    content: $hachi-icon-handbag;     
+    color: #626662;
+  }
+}
+.hachi-icon-truck {
+  &:before {
+    content: $hachi-icon-truck;     
+    color: #626662;
+  }
+}
+.hachi-icon-fax {
+  &:before {
+    content: $hachi-icon-fax;     
+    color: #626662;
+  }
+}
+.hachi-icon-phone {
+  &:before {
+    content: $hachi-icon-phone;     
+    color: #626662;
+  }
+}
+.hachi-icon-refesh {
+  &:before {
+    content: $hachi-icon-refesh;     
+    color: #626662;
+  }
+}
+.hachi-icon-filterline {
+  &:before {
+    content: $hachi-icon-filterline;     
+    color: #626662;
+  }
+}
+.hachi-icon-trashbin {
+  &:before {
+    content: $hachi-icon-trashbin;     
+    color: #626662;
+  }
+}
+.hachi-icon-eyeopen {
+  &:before {
+    content: $hachi-icon-eyeopen;     
+    color: #626662;
+  }
+}
+.hachi-icon-comment {
+  &:before {
+    content: $hachi-icon-comment;     
+    color: #626662;
+  }
+}
+.hachi-icon-onoff {
+  &:before {
+    content: $hachi-icon-onoff;     
+    color: #626662;
+  }
+}
+.hachi-icon-close {
+  &:before {
+    content: $hachi-icon-close;     
+    color: #626662;
+  }
+}
+.hachi-icon-minus {
+  &:before {
+    content: $hachi-icon-minus;     
+    color: #626662;
+  }
+}
+.hachi-icon-plus {
+  &:before {
+    content: $hachi-icon-plus;     
+    color: #626662;
+  }
+}
+.hachi-icon-roadpath {
+  &:before {
+    content: $hachi-icon-roadpath;     
+    color: #626662;
+  }
+}
+.hachi-icon-location {
+  &:before {
+    content: $hachi-icon-location;     
+    color: #626662;
+  }
+}
+.hachi-icon-email {
+  &:before {
+    content: $hachi-icon-email;     
+    color: #626662;
+  }
+}
+.hachi-icon-pricetag {
+  &:before {
+    content: $hachi-icon-pricetag;     
+    color: #626662;
+  }
+}
+.hachi-icon-bag {
+  &:before {
+    content: $hachi-icon-bag;     
+    color: #626662;
+  }
+}
+.hachi-icon-calendar {
+  &:before {
+    content: $hachi-icon-calendar;     
+    color: #626662;
+  }
+}
+.hachi-icon-scancode {
+  &:before {
+    content: $hachi-icon-scancode;     
+    color: #626662;
+  }
+}
+.hachi-icon-package {
+  &:before {
+    content: $hachi-icon-package;     
+    color: #626662;
+  }
+}
+.hachi-icon-bell {
+  &:before {
+    content: $hachi-icon-bell;     
+    color: #626662;
+  }
+}
+.hachi-icon-user {
+  &:before {
+    content: $hachi-icon-user;     
+    color: #626662;
+  }
+}
+.hachi-icon-search {
+  &:before {
+    content: $hachi-icon-search;     
+    color: #626662;
+  }
+}
+.hachi-icon-love {
+  &:before {
+    content: $hachi-icon-love;     
+    color: #626662;
+  }
+}
+.hachi-icon-introlley {
+  &:before {
+    content: $hachi-icon-introlley;     
+    color: #626662;
+  }
+}
+.hachi-icon-trolley {
+  &:before {
+    content: $hachi-icon-trolley;     
+    color: #626662;
+  }
+}
+

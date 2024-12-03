@@ -1,0 +1,24 @@
+<div class="config008-personal-info-detail">
+    <!-- header nav-btn -->
+    <div class="header">
+        <div class="breadcumb">
+            <app-p-kendo-breadcrumb (loadData)="loadPage()"></app-p-kendo-breadcrumb>
+        </div>
+        <div class="nav-btn nav-crud" *ngIf="(isToanQuyen || isAllowedToCreate) && !isLockAll">
+            <button kendoButton class="k-button onAddBtn" [icon]="'plus'" (click)="onAddNew()">
+                THÊM MỚI
+            </button>
+        </div>
+    </div>
+    <!-- End header nav-btn -->
+
+    <div class="body">
+        <!-- body right - sections -->
+        <div class="body-right">
+            <app-personal-info-detail [isLockAll]="isLockAll" [isToanQuyen]="isToanQuyen"
+                [isAllowedToCreate]="isAllowedToCreate" [isAllowedToVerify]="isAllowedToVerify"
+                #personalInfoRef></app-personal-info-detail>
+            <!-- End body right - sections -->
+        </div>
+    </div>
+</div>

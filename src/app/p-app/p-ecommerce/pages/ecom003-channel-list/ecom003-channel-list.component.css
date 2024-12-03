@@ -1,0 +1,301 @@
+::ng-deep .app-ecom003-channel-list {
+  height: calc(93vh - 30px);
+  padding: 0 15px 35px 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+::ng-deep .app-ecom003-channel-list .header {
+  display: flex;
+  column-gap: 10px;
+  padding: 9px 0;
+  margin-bottom: 0;
+  border-bottom: 1px solid rgba(143, 155, 166, 0.4);
+}
+
+::ng-deep .app-ecom003-channel-list .header.header-1 .k-dropdown {
+  width: 222px;
+}
+
+::ng-deep .app-ecom003-channel-list .header.header-1 .k-dropdown .k-input {
+  column-gap: 5px;
+}
+
+::ng-deep .app-ecom003-channel-list .header .checkbox-btn-group {
+  border-radius: 15px;
+}
+
+::ng-deep .app-ecom003-channel-list .header .checkbox-btn-group:hover, ::ng-deep .app-ecom003-channel-list .header .checkbox-btn-group.active, ::ng-deep .app-ecom003-channel-list .header .checkbox-btn-group.k-state-active {
+  border: 1px solid #1a6634;
+  background-image: none;
+  background-color: white;
+  color: initial;
+}
+
+::ng-deep .app-ecom003-channel-list .header .checkbox-btn-group:hover .k-checkbox, ::ng-deep .app-ecom003-channel-list .header .checkbox-btn-group.active .k-checkbox, ::ng-deep .app-ecom003-channel-list .header .checkbox-btn-group.k-state-active .k-checkbox {
+  background-color: #1a6634;
+}
+
+::ng-deep .app-ecom003-channel-list .header .checkbox-btn-group .k-checkbox {
+  margin-left: 8px;
+  border-color: #1a6634;
+}
+
+::ng-deep .app-ecom003-channel-list .header .label {
+  margin-bottom: 6px;
+  font-weight: 700;
+  font-size: 13px;
+  color: #5c6873;
+}
+
+::ng-deep .app-ecom003-channel-list .header .label.fake {
+  visibility: hidden;
+}
+
+::ng-deep .app-ecom003-channel-list .header .nav-btn {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+::ng-deep .app-ecom003-channel-list .header .nav-filter {
+  column-gap: 10px;
+}
+
+::ng-deep .app-ecom003-channel-list .header .nav-filter .filter-btn-group.clear-btn-group .label {
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .app-ecom003-channel-list .header .nav-filter .filter-btn-group.clear-btn-group .clear-filter-btn {
+  color: #5CB800;
+  border: none;
+  background: none;
+  text-decoration: underline;
+}
+
+::ng-deep .app-ecom003-channel-list .header .nav-filter .filter-btn-group.search-btn-group {
+  margin-right: 5px;
+}
+
+::ng-deep .app-ecom003-channel-list .header .nav-filter .filter-btn-group.search-btn-group .search-btn {
+  position: relative;
+}
+
+::ng-deep .app-ecom003-channel-list .header .nav-filter .filter-btn-group.search-btn-group .search-btn .k-i-search {
+  position: absolute;
+  height: 100%;
+  width: 30px;
+  z-index: 1;
+}
+
+::ng-deep .app-ecom003-channel-list .header .nav-filter .filter-btn-group.search-btn-group .search-btn .k-textbox {
+  padding-left: 30px;
+  min-width: fit-content;
+  width: 475px;
+}
+
+::ng-deep .app-ecom003-channel-list .header .nav-filter .filter-btn-group.date-btn-group {
+  flex-grow: 1;
+}
+
+::ng-deep .app-ecom003-channel-list .header .nav-filter .searchBtn {
+  height: 31px;
+  margin-bottom: 1px;
+  margin-top: auto;
+  background-color: #1a6634 !important;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+::ng-deep .app-ecom003-channel-list .header .nav-crud {
+  justify-content: flex-end;
+}
+
+::ng-deep .app-ecom003-channel-list .header .nav-crud .onAddBtn {
+  height: 32px;
+  margin-top: auto;
+  background-color: #1a6634 !important;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+::ng-deep .app-ecom003-channel-list .header .nav-crud .border-center {
+  margin: auto 0 1px 10px;
+  border-right: 1px solid #c8ced3;
+  height: 31px;
+}
+
+::ng-deep .app-ecom003-channel-list .header .nav-file {
+  flex-grow: 0;
+  margin-left: auto;
+}
+
+::ng-deep .app-ecom003-channel-list .header .nav-file .file-btn-group {
+  background: white;
+  box-shadow: 1px 3px 6px 1px rgba(143, 155, 166, 0.2);
+  border-radius: 3px;
+  color: #8f9ba6;
+  min-width: fit-content;
+  height: 32px;
+  margin-left: 15px;
+  display: flex;
+  margin-top: auto;
+  cursor: pointer;
+}
+
+::ng-deep .app-ecom003-channel-list .header .nav-file .file-btn-group span.text {
+  margin: auto;
+  padding-right: 9px;
+}
+
+::ng-deep .app-ecom003-channel-list .header .nav-file .file-btn-group .onImportBtn {
+  width: 64px;
+}
+
+::ng-deep .app-ecom003-channel-list .header .nav-file .file-btn-group .onImportBtn .excel-ic {
+  width: 32px;
+  height: 100%;
+  margin-left: 2px;
+}
+
+::ng-deep .app-ecom003-channel-list .header .nav-file .file-btn-group .border-center {
+  align-self: center;
+  height: 90%;
+  border-right: 1px solid #8f9ba6;
+}
+
+::ng-deep .app-ecom003-channel-list .header .nav-file .file-btn-group .k-i-arrow-chevron-down {
+  text-align: center;
+  padding: 7px 0;
+  width: 32px;
+  height: 100%;
+}
+
+::ng-deep .app-ecom003-channel-list .header .nav-file .file-btn-group .k-i-arrow-chevron-down:before {
+  font-size: 20px;
+}
+
+::ng-deep .app-ecom003-channel-list .k-grid thead tr {
+  height: fit-content !important;
+}
+
+::ng-deep .app-ecom003-channel-list .k-grid thead tr th {
+  padding: 0 12px;
+  height: 13px;
+}
+
+::ng-deep .app-ecom003-channel-list .k-grid tr:not(.k-grouping-row) td:first-child {
+  padding-left: 10px !important;
+}
+
+::ng-deep .app-ecom003-channel-list .k-grid .col_img_tensanpham_masanpham {
+  max-width: 500px;
+  width: 500px;
+}
+
+::ng-deep .app-ecom003-channel-list .k-grid .img_tensanpham_masanpham {
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .app-ecom003-channel-list .k-grid .img_tensanpham_masanpham img {
+  max-height: 64px;
+  max-width: 64px;
+  width: 100%;
+  margin-right: 10px;
+}
+
+::ng-deep .app-ecom003-channel-list .k-grid .img_tensanpham_masanpham .tensanpham_masanpham {
+  height: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+::ng-deep .app-ecom003-channel-list .k-grid .img_tensanpham_masanpham .tensanpham_masanpham .tensanpham {
+  white-space: normal;
+  font-weight: 700;
+}
+
+::ng-deep .app-ecom003-channel-list .k-grid .img_tensanpham_masanpham .tensanpham_masanpham .masanpham {
+  color: #5c6873;
+  white-space: normal;
+}
+
+::ng-deep .app-ecom003-channel-list .k-grid .col_tinhTrang {
+  text-align: center;
+  padding-right: 50px;
+}
+
+::ng-deep .app-ecom003-channel-list .k-grid .col_tinhTrang.red {
+  color: #EB273A;
+}
+
+::ng-deep .app-ecom003-channel-list .k-grid .col_tinhTrang.green {
+  color: #1a6634;
+}
+
+::ng-deep .app-ecom003-channel-list .k-grid .col_tinhTrang.yellow {
+  color: #FFB900;
+}
+
+::ng-deep .app-ecom003-channel-list .k-grid .col_tinhTrang > .k-link {
+  justify-content: center;
+}
+
+::ng-deep .app-ecom003-channel-list .k-grid td.col_nguoiTao, ::ng-deep .app-ecom003-channel-list .k-grid td.col_thongTinDuyet, ::ng-deep .app-ecom003-channel-list .k-grid td.col_tinhTrang {
+  white-space: normal;
+}
+
+::ng-deep .app-ecom003-channel-list .merge-dialog .k-dialog {
+  width: 440px;
+}
+
+::ng-deep .app-ecom003-channel-list .merge-dialog form .brand_list {
+  height: 33vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  margin-top: 11px;
+  margin-bottom: 18px;
+  padding-right: 5px;
+}
+
+::ng-deep .app-ecom003-channel-list .merge-dialog form .brand_list .hachi-radio {
+  order: 1;
+  width: 17px;
+  height: 17px;
+}
+
+::ng-deep .app-ecom003-channel-list .merge-dialog form .brand_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 9px;
+}
+
+::ng-deep .app-ecom003-channel-list .merge-dialog form .brand_row label {
+  margin: 0;
+  color: #26282e;
+  cursor: pointer;
+}
+
+::ng-deep .app-ecom003-channel-list .merge-dialog i {
+  color: #D82C12;
+}
+
+::ng-deep .app-ecom003-channel-list .merge-dialog .dialog-footer {
+  margin-top: 1rem;
+}
+
+::ng-deep .app-ecom003-channel-list .confirmMergeDialog.warnDialog .k-dialog {
+  width: 440px;
+}
+
+::ng-deep .app-ecom003-channel-list .confirmMergeDialog.warnDialog .warning {
+  color: #D82C12;
+}

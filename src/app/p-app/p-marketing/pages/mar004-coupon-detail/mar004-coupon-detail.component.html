@@ -1,0 +1,1022 @@
+<div class="app-drawer-container">
+  <mat-drawer-container [hasBackdrop]="true">
+    <mat-drawer #drawer [mode]="'over'" position="end" opened="false">
+      <form class="formSanpham k-form" [formGroup]="formSP" (keydown.Enter)="keydownEnter($event)"
+        [hidden]="this.contextIndex == 2">
+        <fieldset>
+          <legend>THÊM MỚI SẢN PHẨM</legend>
+
+          <kendo-formfield>
+            <kendo-label text="Nhập mã sản phẩm" [for]="Barcode">
+              <span class="symbol">(*)</span>
+            </kendo-label>
+            <kendo-textbox formControlName="Barcode" #Barcode (keydown.Enter)="$event.target.blur()"
+              (inputBlur)="onTextboxLoseFocus('Barcode')" [(value)]="sanpham.Barcode"
+              [disabled]="!isAddSanPham || isLockAll">
+            </kendo-textbox>
+          </kendo-formfield>
+
+          <div class="tensanpham">
+            <kendo-label text="Tên sản phẩm">
+              <!-- <b>{{ sanpham.PosCode }}</b> -->
+              <!-- <b class="tbarcode" [hidden]="sanpham.TBarcode == null || sanpham.TBarcode == ''">
+                {{ sanpham.TBarcode }}</b> -->
+            </kendo-label>
+            <div class="VNName">{{ sanpham.ProductName }}</div>
+          </div>
+
+          <div class="formfield-grid">
+            <kendo-formfield class="formfield-item item1">
+              <kendo-label text="Số lượng mua tối thiếu" [for]="MinQty">
+                <span class="symbol">(*)</span>
+              </kendo-label>
+              <kendo-numerictextbox formControlName="MinQty" [min]="1" #MinQty format="#,0" [(value)]="sanpham.MinQty"
+                [disabled]="isLockAll">
+              </kendo-numerictextbox>
+            </kendo-formfield>
+
+            <!-- <kendo-formfield class="formfield-item item2">
+              <kendo-label text="Số lượng mua tối đa" [for]="MaxQty">
+                <span class="symbol">(*)</span>
+              </kendo-label>
+              <kendo-numerictextbox formControlName="MaxQty" #MaxQty format="#,0" [min]="0" [(value)]="sanpham.MaxQty"
+                [disabled]="isLockAll">
+              </kendo-numerictextbox>
+            </kendo-formfield> -->
+
+            <div class="img item3">
+              <img loading="lazy" [src]="sanpham.ImageSetting" alt="">
+            </div>
+          </div>
+
+          <kendo-formerror>(*) Trường bắt buộc nhập.</kendo-formerror>
+
+          <div class="k-form-buttons">
+            <button kendoButton class="k-button closeBtn" (click)="closeForm()">Đóng</button>
+            <button kendoButton class="k-button updateBtn" (click)="onSubmitSP()" *ngIf="!isLockAll">
+              {{ isAddSanPham ? 'THÊM MỚI' : 'CẬP NHẬT' }}
+            </button>
+          </div>
+        </fieldset>
+      </form>
+
+      <form class="formSanpham k-form" [formGroup]="formDT" (keydown.Enter)="keydownEnter($event)"
+        [hidden]="this.contextIndex == 1">
+        <fieldset>
+          <legend>ĐỐI TƯỢNG NHẬN COUPON</legend>
+
+          <kendo-formfield>
+            <kendo-label text="Nhập số điện thoại" [for]="CellPhone"></kendo-label>
+            <kendo-textbox formControlName="CellPhone" #CellPhone (keydown.Enter)="$event.target.blur()"
+              (inputBlur)="onTextboxLoseFocus('CellPhone')" [(value)]="membership.CellPhone"
+              [disabled]="!isAddDoiTuong || isLockAll">
+            </kendo-textbox>
+          </kendo-formfield>
+
+          <div class="tensanpham">
+            <kendo-label text="Họ và tên">
+              <b>{{ membership.MembershipNo }}</b>
+            </kendo-label>
+            <div class="VNName">{{ membership.FullName }}</div>
+          </div>
+
+          <kendo-formfield>
+            <kendo-label text="Tình trạng" [for]="StatusID"></kendo-label>
+            <div class="d-flex IsApDung_radio_group">
+              <label for="f_rdo_1" class="my_label">
+                <input type="radio" id="f_rdo_1" formControlName="StatusID" name="StatusID" #StatusID class="k-radio"
+                  kendoRadioButton [value]="1" [(ngModel)]="membership.StatusID"
+                  [attr.disabled]="isLockAll ? '' : null" />
+                Áp dụng
+              </label>
+              <label for="f_rdo_2" class="my_label">
+                <input type="radio" id="f_rdo_2" formControlName="StatusID" name="StatusID" #StatusID class="k-radio"
+                  kendoRadioButton [value]="2" [(ngModel)]="membership.StatusID"
+                  [attr.disabled]="isLockAll ? '' : null" />
+                Ngừng áp dụng
+              </label>
+            </div>
+          </kendo-formfield>
+
+          <kendo-formerror>(*) Trường bắt buộc nhập.</kendo-formerror>
+
+          <div class="k-form-buttons">
+            <button kendoButton class="k-button closeBtn" (click)="closeForm()">Đóng</button>
+            <button kendoButton class="k-button updateBtn" (click)="onSubmitDT()" *ngIf="!isLockAll">
+              {{ isAddSanPham ? 'THÊM MỚI' : 'CẬP NHẬT' }}
+            </button>
+          </div>
+        </fieldset>
+      </form>
+    </mat-drawer>
+    <!-- center content -->
+    <mat-drawer-content>
+      <div class="mar004-coupon-detail">
+        <div class="header header-1">
+          <div class="nav-btn nav-breadcrumb">
+            <div class="breadcrumb-item">
+              CHÍNH SÁCH
+            </div>
+            <div class="breadcrumb-chevron">
+              <span class="k-icon k-i-arrow-chevron-right"></span>
+            </div>
+            <div class="breadcrumb-item">
+              COUPON
+            </div>
+            <div class="breadcrumb-chevron">
+              <span class="k-icon k-i-arrow-chevron-right"></span>
+            </div>
+            <div class="breadcrumb-item">
+              {{ isAdd ? 'TẠO MỚI ' : 'CHI TIẾT ' }}ĐỢT PHÁT HÀNH
+            </div>
+          </div>
+
+          <div class="nav-btn nav-crud" *ngIf="couponPolicy.StatusID > 0">
+            <button kendoButton class="k-button btn-hachi" [disabled]="isAdd" [icon]="'toggle-full-screen-mode'"
+              (click)="toggleGridCoupon()">
+              DANH SÁCH COUPON
+            </button>
+          </div>
+
+          <div class="nav-btn nav-crud">
+            <button kendoButton class="k-button btn-hachi hachi-secondary"
+              *ngIf="(isToanQuyen || isAllowedToCreate) && !isAdd && (couponPolicy.StatusID == 0 || couponPolicy.StatusID == 4)"
+              [icon]="'redo'" (click)="updateStatus(1)">
+              GỬI DUYỆT
+            </button>
+
+            <button kendoButton class="k-button btn-hachi hachi-secondary"
+              *ngIf="!isAdd && (isToanQuyen || isAllowedToVerify) && (couponPolicy.StatusID == 1 || couponPolicy.StatusID == 3)"
+              [icon]="'check-outline'" (click)="updateStatus(2)">
+              PHÊ DUYỆT
+            </button>
+
+            <button kendoButton class="k-button btn-hachi hachi-warning hachi-secondary"
+              *ngIf="!isAdd && (isToanQuyen || isAllowedToVerify) && (couponPolicy.StatusID == 1 || couponPolicy.StatusID == 3)"
+              [icon]="'undo'" (click)="updateStatus(4)">
+              TRẢ VỀ
+            </button>
+
+            <button kendoButton class="k-button btn-hachi hachi-warning hachi-secondary"
+              *ngIf="(isToanQuyen || isAllowedToVerify) && !isAdd && couponPolicy.StatusID == 2"
+              [icon]="'minus-outline'" (click)="updateStatus(3)">
+              NGƯNG HIỂN THỊ
+            </button>
+
+            <button kendoButton class="k-button btn-hachi hachi-warning" [icon]="'trash'"
+              *ngIf="(isToanQuyen || isAllowedToCreate) && couponPolicy.StatusID == 0 && !isAdd" (click)="onDelete()">
+              XÓA ĐỢT PHÁT HÀNH
+            </button>
+
+            <kendo-dropdownlist *ngIf="isToanQuyen || isAllowedToCreate" [data]="listTaoMoi" [value]="defaultTaoMoi"
+              [defaultItem]="defaultTaoMoi" [textField]="'text'" [valueField]="'value'"
+              (valueChange)="onHeaderDropdownlistClick($event)" class="onAddBtn" [popupSettings]="{
+                width: 'auto',
+                appendTo: 'component'
+              }">
+              <ng-template kendoDropDownListValueTemplate let-dataItem>
+                <span class="k-icon k-i-plus"></span>
+                <span class="value">{{ dataItem.text }}</span>
+              </ng-template>
+              <ng-template kendoDropDownListItemTemplate let-dataItem>
+                <span class="value" *ngIf="dataItem.value != -1" style="font-size: 11px !important;">
+                  {{ dataItem.text | uppercase }}</span>
+              </ng-template>
+            </kendo-dropdownlist>
+          </div>
+        </div>
+        <!-- BLOCK THÔNG TIN COUPON, ĐIỂU KIỆN ÁP DỤNG, CẤU HÌNH GỞI THÔNG BÁO -->
+        <div class="body">
+          <div class="sections">
+            <div class="section" id="thongtinkhuyenmaiTbl">
+              <div class="title">THÔNG TIN COUPON
+                <span class="type green">{{couponPolicy.TypeOfVoucherName}}</span>
+
+                <span class="languages">
+                  <span class="borderRight vietnamese" [ngClass]="{'active': curLanguage == 1 }"
+                    (click)="changeLanguage(1)">Tiếng Việt</span>
+                  <span class="borderRight japanese" [ngClass]="{'active': curLanguage == 2 }"
+                    (click)="changeLanguage(2)">日本語</span>
+                  <span class="english" [ngClass]="{'active': curLanguage == 3 }"
+                    (click)="changeLanguage(3)">English</span>
+                </span>
+              </div>
+
+              <div class="section-grid">
+                <div class="grid-item item1">
+                  <div>
+                    <div class="label">Mã bắt đầu coupon</div>
+                    <kendo-textbox type="text" class="k-textbox" [disabled]="isLockAll"
+                      [(ngModel)]="couponPolicy.Prefix" (keydown.Enter)="$event.target.blur()"
+                      (blur)="onTextboxLoseFocus('Prefix')">
+                    </kendo-textbox>
+                  </div>
+
+                  <div class="item1_i2">
+                    <div class="label">SL phát hành</div>
+                    <kendo-numerictextbox format="#,0" [min]="1" [disabled]="isLockAll"
+                      [(ngModel)]="couponPolicy.NoOfRelease" (keydown.Enter)="$event.target.blur()"
+                      (blur)="onTextboxLoseFocus('NoOfRelease')">
+                    </kendo-numerictextbox>
+                  </div>
+                </div>
+
+                <div class="grid-item item2">
+                  <div class="label">Giá trị coupon
+                    <span class="tile">
+                      <input type="checkbox" class="k-checkbox" [disabled]="isLockAll"
+                        [(ngModel)]="couponPolicy.IsRadio" (click)="clickCheckbox($event, 'IsRadio')" />
+                      tỷ lệ %
+                    </span>
+                  </div>
+
+                  <kendo-numerictextbox format="#,0" [min]="1" [disabled]="isLockAll"
+                    [(ngModel)]="couponPolicy.VoucherAmount" (keydown.Enter)="$event.target.blur()"
+                    (blur)="onTextboxLoseFocus('VoucherAmount')">
+                  </kendo-numerictextbox>
+                </div>
+
+                <div class="grid-item item3">
+                  <div class="label">Thời gian hiệu lực</div>
+
+                  <div class="d-flex">
+                    <kendo-datepicker [format]="'dd/MM/yyyy'" placeholder="dd/mm/yyyy" [(ngModel)]="StartDate"
+                      [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }" [disabled]="isLockAll"
+                      (keydown.Enter)="$event.target.blur()" (blur)="onDatepickerChange('StartDate', $event)"
+                      [max]="EndDate">
+                    </kendo-datepicker>
+
+                    <kendo-datepicker [format]="'dd/MM/yyyy'" placeholder="dd/mm/yyyy" [(ngModel)]="EndDate"
+                      [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd' }" [disabled]="isLockAll"
+                      (keydown.Enter)="$event.target.blur()" (blur)="onDatepickerChange('EndDate', $event)"
+                      [min]="StartDate">
+                    </kendo-datepicker>
+                  </div>
+                </div>
+
+                <div class="grid-item item4">
+                  <div class="label">Tình trạng</div>
+                  <b class="d-flex tinhtrang"
+                    [ngClass]="{'yellow': couponPolicy.StatusID == 1,
+                  'green': couponPolicy.StatusID == 2, 'red': couponPolicy.StatusID == 3 || couponPolicy.StatusID == 4}">
+                    {{ couponPolicy.StatusName }}
+                  </b>
+                </div>
+
+                <div class="grid-item item5">
+                  <div class="label">Tên coupon</div>
+                  <kendo-textbox type="text" class="k-textbox" [disabled]="isLockAll"
+                    (keydown.Enter)="$event.target.blur()"
+                    [ngModel]="curLanguage == 1 ? couponPolicy.CouponNameVN : curLanguage == 2 ? couponPolicy.CouponNameJP : couponPolicy.CouponNameEN"
+                    (ngModelChange)="curLanguage == 1 ? couponPolicy.CouponNameVN=$event : curLanguage == 2 ? couponPolicy.CouponNameJP=$event : couponPolicy.CouponNameEN=$event"
+                    (blur)="onTextboxLoseFocus(curLanguage == 1 ? 'CouponNameVN' : curLanguage == 2 ? 'CouponNameJP' : 'CouponNameEN')">
+                  </kendo-textbox>
+                </div>
+
+                <div class="grid-item item6">
+                  <div class="label">Mô tả điều kiện áp dụng</div>
+                  <kendo-textbox type="text" class="k-textbox" [disabled]="isLockAll"
+                    (keydown.Enter)="$event.target.blur()"
+                    [ngModel]="curLanguage == 1 ? couponPolicy.SummaryVN : curLanguage == 2 ? couponPolicy.SummaryJP : couponPolicy.SummaryEN"
+                    (ngModelChange)="curLanguage == 1 ? couponPolicy.SummaryVN=$event : curLanguage == 2 ? couponPolicy.SummaryJP=$event : couponPolicy.SummaryEN=$event"
+                    (blur)="onTextboxLoseFocus(curLanguage == 1 ? 'SummaryVN' : curLanguage == 2 ? 'SummaryJP' : 'SummaryEN')">
+                  </kendo-textbox>
+                </div>
+
+                <div class="grid-item item7">
+                  <div class="label">Diễn giải </div>
+                  <textarea [disabled]="isLockAll"
+                    [ngModel]="curLanguage == 1 ? couponPolicy.DescriptionVN : curLanguage == 2 ? couponPolicy.DescriptionJP : couponPolicy.DescriptionEN"
+                    (ngModelChange)="curLanguage == 1 ? couponPolicy.DescriptionVN=$event : curLanguage == 2 ? couponPolicy.DescriptionJP=$event : couponPolicy.DescriptionEN=$event"
+                    (blur)="onTextboxLoseFocus(curLanguage == 1 ? 'DescriptionVN' : curLanguage == 2 ? 'DescriptionJP' : 'DescriptionEN')"></textarea>
+                </div>
+
+                <div class="grid-item item8">
+                  <div class="label">Mã coupon ngẫu nhiên gấp (x) lần
+                    <span class="tile">
+                      <input type="checkbox" class="k-checkbox" [disabled]="isLockAll"
+                        [(ngModel)]="couponPolicy.IsAutoNo" (click)="clickCheckbox($event, 'IsAutoNo')" />
+                    </span>
+                  </div>
+
+                  <kendo-numerictextbox format="#,0" [min]="1" [disabled]="isLockAll || !couponPolicy.IsAutoNo"
+                    [(ngModel)]="couponPolicy.AutoNoRange" (keydown.Enter)="$event.target.blur()"
+                    (blur)="onTextboxLoseFocus('AutoNoRange')">
+                  </kendo-numerictextbox>
+                </div>
+              </div>
+            </div>
+
+            <div class="section" id="dieukienapdungTbl" [hidden]="showCouponGrid">
+              <div class="title">ĐIỂU KIỆN ÁP DỤNG</div>
+
+              <div class="section-grid">
+                <div class="grid-item item1">
+                  <div class="label">Đơn vị áp dụng</div>
+
+                  <div *ngFor="let d of listWareHouse; let i = index">
+                    <div class="input_label" [ngClass]="{'subrow': d.WH != 7 && d.WH != -1}">
+                      <input type="checkbox" class="k-checkbox" id="cb_donviapdung_{{i}}" [(ngModel)]="d.IsSelected"
+                        (click)="clickCheckbox($event, 'WHName', d)" [disabled]="isLockAll || isAdd || 
+                        ((couponPolicy.TypeOfVoucher == 2 || couponPolicy.TypeOfVoucher == 4) && d.WH != 7)"
+                        [indeterminate]="checkboxHasChild(d.WH)" />
+                      <label for="cb_donviapdung_{{i}}">{{ d.WHName }}</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="grid-item item2">
+                  <div class="row">
+                    <div class="col-12 label">Hạn mức sử dụng</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-6">
+                      <label>Số lượt sử dùng của coupon</label>
+                    </div>
+                    <div class="col-6">
+                      <kendo-numerictextbox format="#,0" [min]="1" [disabled]="isLockAll || isAdd"
+                        [(ngModel)]="couponPolicy.NoOfAllowed" (keydown.Enter)="$event.target.blur()"
+                        (blur)="onTextboxLoseFocus('NoOfAllowed')">
+                      </kendo-numerictextbox>
+                    </div>
+                  </div>
+
+                  <div class="row" *ngIf="couponPolicy.TypeOfVoucher == 3 || couponPolicy.TypeOfVoucher == 4">
+                    <div class="col-12 label">Giá trị đơn hàng được áp dụng coupon</div>
+                  </div>
+
+                  <div class="row" *ngIf="couponPolicy.TypeOfVoucher == 3 || couponPolicy.TypeOfVoucher == 4">
+                    <div class="col-6">
+                      <label>Giá trị đơn hàng tối thiểu</label>
+                    </div>
+                    <div class="col-6">
+                      <kendo-numerictextbox format="#,0" [min]="0" [disabled]="isLockAll || isAdd"
+                        [(ngModel)]="couponPolicy.MinOfOrder" (keydown.Enter)="$event.target.blur()"
+                        (blur)="onTextboxLoseFocus('MinOfOrder')">
+                      </kendo-numerictextbox>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12 label">Giá trị chiết khấu tối đa của coupon</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-6">
+                      <label>Giá trị chiết khấu tối đa</label>
+                    </div>
+                    <div class="col-6">
+                      <kendo-numerictextbox format="#,0" [min]="0"
+                        [disabled]="!couponPolicy.IsRadio || isLockAll || isAdd" [(ngModel)]="couponPolicy.MaxValue"
+                        (keydown.Enter)="$event.target.blur()" (blur)="onTextboxLoseFocus('MaxValue')">
+                      </kendo-numerictextbox>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="grid-item item3">
+                  <!-- START Phân loại coupon -->
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="label">Phân loại coupon</div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12">
+                      <input type="radio" class="k-radio" id="plcCongKhai" name="{{couponPolicy.IsPublic}}"
+                        [disabled]="isLockAll || isAdd" (click)="clickCheckbox($event, 'IsPublic')"
+                        [checked]="couponPolicy.IsPublic == true || couponPolicy.IsPublic != false" [value]="true" />
+                      <label for="plcCongKhai">công khai</label>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12">
+                      <input type="radio" class="k-radio" id="plcCaNhan" name="{{couponPolicy.IsPublic}}"
+                        [disabled]="isLockAll || isAdd" (click)="clickCheckbox($event, 'IsPublic')"
+                        [checked]="couponPolicy.IsPublic == false" [value]="false" />
+                      <label for="plcCaNhan">cá nhân</label>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12">
+                      <input type="checkbox" class="k-checkbox" id="plcDichDanh"
+                        [disabled]="isLockAll || isAdd || couponPolicy.IsPublic"
+                        (click)="clickCheckbox($event, 'IdentifiedMember')"
+                        [(ngModel)]="couponPolicy.IdentifiedMember" />
+                      <label for="plcDichDanh">đích danh</label>
+                    </div>
+                  </div>
+                  <!-- END Phân loại coupon -->
+                  <!-- START SL phát hành áp dụng -->
+                  <div class="row" [hidden]="couponPolicy.IsPublic">
+                    <div class="col-12">
+                      <div class="label">SL phát hành áp dụng</div>
+                    </div>
+                  </div>
+
+                  <div class="row" [hidden]="couponPolicy.IsPublic">
+                    <div class="col-12">
+                      <label for="SLPHAD_1">
+                        <input type="radio" class="k-radio" id="SLPHAD_1" name="soLuongPhatHanhApDung"
+                          [disabled]="isLockAll || isAdd" (click)="clickCheckbox($event, 'NoOfReleaseForAll')"
+                          [checked]="couponPolicy.NoOfReleaseForAll == false  || couponPolicy.NoOfReleaseForAll != true"
+                          [value]="false" />
+                        số coupon cho từng cá nhân
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="row" [hidden]="couponPolicy.IsPublic">
+                    <div class="col-12">
+                      <label for="SLPHAD_2">
+                        <input type="radio" class="k-radio" id="SLPHAD_2" name="soLuongPhatHanhApDung"
+                          [disabled]="isLockAll || isAdd" (click)="clickCheckbox($event, 'NoOfReleaseForAll')"
+                          [checked]="couponPolicy.NoOfReleaseForAll == true" [value]="true" />
+                        coupon dùng chung cho tất cả
+                      </label>
+                    </div>
+                  </div>
+                  <!-- END SL phát hành áp dụng -->
+                  <!-- START Loại phân bổ chiết khấu -->
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="label">Loại phân bổ chiết khấu</div>
+                    </div>
+                  </div>
+
+                  <div class="row" [hidden]="couponPolicy.TypeOfDistribution">
+                    <div class="col-12">
+                      <label for="LPBCK_1">
+                        <input type="radio" class="k-radio" id="LPBCK_1" name="typeOfDistribution"
+                          [disabled]="isLockAll || isAdd" (click)="clickCheckbox($event, 'TypeOfDistribution')"
+                          [checked]="couponPolicy.TypeOfDistribution == 1" [value]="1" />
+                        CK trên giá bán
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="row" [hidden]="couponPolicy.TypeOfDistribution">
+                    <div class="col-12">
+                      <label for="LPBCK_2">
+                        <input type="radio" class="k-radio" id="LPBCK_2" name="typeOfDistribution"
+                          [disabled]="isLockAll || isAdd" (click)="clickCheckbox($event, 'TypeOfDistribution')"
+                          [checked]="couponPolicy.TypeOfDistribution == 0 || couponPolicy.TypeOfDistribution != 1"
+                          [value]="0" />
+                        KHÔNG CK trên giá bán
+                      </label>
+                    </div>
+                  </div>
+                  <!-- END Loại phân bổ chiết khấu -->
+                </div>
+
+                <div class="grid-item item4" *ngIf="couponPolicy.TypeOfVoucher == 2 || couponPolicy.TypeOfVoucher == 4">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="label">Điểm giao hàng</div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12">
+                      <input type="radio" class="k-radio" id="dghTatCa" name="diemGiaoHang"
+                        [checked]="couponPolicy.IsAllRouting == true" [disabled]="isLockAll || isAdd"
+                        (click)="clickCheckbox($event, 'IsAllRouting')" [value]="true" />
+                      <label for="dghTatCa">Tất cả</label>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12">
+                      <input type="radio" class="k-radio" id="dghChiDinh" name="diemGiaoHang"
+                        [checked]="couponPolicy.IsAllRouting == false" [disabled]="isLockAll || isAdd"
+                        (click)="clickCheckbox($event, 'IsAllRouting')" [value]="false" />
+                      <label for="dghChiDinh">Chỉ định</label>
+                      <span class="k-icon k-i-plus" *ngIf="!isLockAll && !isAdd"
+                        (click)="openDialogDiemGiaoHang()"></span>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12">
+                      <ng-container *ngFor="let t of couponPolicy.ListRouting">
+                        <!-- tinh thanh -->
+                        <div class="dghChiDinh_label" *ngIf="t.District == null; else quanHuyen">
+                          {{ t.ProvinceName }}
+                          <span class="k-icon k-i-trash" *ngIf="!isLockAll && !isAdd"
+                            (click)="deleteDiemGiaoHang(t)"></span>
+                        </div>
+                        <!-- quan huyen -->
+                        <ng-template #quanHuyen>
+                          <!-- *ngFor="let q of t.ListChild" -->
+                          <div class="dghChiDinh_sublabel">
+                            {{ t.DistrictName }}
+                            <span class="k-icon k-i-trash" [disabled]="isLockAll || isAdd"
+                              (click)="deleteDiemGiaoHang(t)"></span>
+                          </div>
+                        </ng-template>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section" id="cauHinhGuiThongBaoTbl" [hidden]="showCouponGrid">
+              <div class="title">CẤU HÌNH GỞI THÔNG BÁO
+
+                <b class="languages">
+                  <span class="borderRight" [ngClass]="{'active': curNoti == 0 }" (click)="changeNotiTab(0)"
+                    *ngIf="!couponPolicy.IsPublic">SMS</span>
+                  <span class="borderRight" [ngClass]="{'active': curNoti == 1 }" (click)="changeNotiTab(1)">Mobile
+                    App</span>
+                  <span [ngClass]="{'active': curNoti == 2 }" (click)="changeNotiTab(2)">Giỏ hàng</span>
+                </b>
+              </div>
+
+              <div class="section-grid">
+                <!-- [ngClass]="{'isPublic': couponPolicy.IsPublic }" -->
+                <div class="grid-item item1" *ngIf="!couponPolicy.IsPublic" [hidden]="curNoti != 0">
+                  <div class="label">
+                    <input type="checkbox" class="k-checkbox" id="cb_conf_sms" [disabled]="isLockAll || isAdd"
+                      [(ngModel)]="couponPolicy.IsSMSSending" (click)="clickCheckbox($event, 'IsSMSSending')" />
+                    <label for="cb_conf_sms">Gởi SMS với template</label>
+                  </div>
+
+                  <textarea [disabled]="isLockAll || isAdd || !couponPolicy.IsSMSSending"
+                    [(ngModel)]="couponPolicy.SMSContent" (blur)="onTextboxLoseFocus('SMSContent')"></textarea>
+                </div>
+
+                <div class="grid-item item2" *ngIf="!couponPolicy.IsPublic" [hidden]="curNoti != 0">
+                  <div class="label">Thời điểm gởi SMS</div>
+                  <kendo-datetimepicker [format]="'dd/MM/yyyy HH:mm'" placeholder="dd/mm/yyyy HH:mm"
+                    [(ngModel)]="SMSSendDate" [min]="fourHoursFromNow" #dtp_SMSSendDate="ngModel"
+                    [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd', hour: 'HH', minute: 'mm' }"
+                    [disabled]="isLockAll || isAdd || !couponPolicy.IsSMSSending" (keydown.Enter)="$event.target.blur()"
+                    (blur)="onDatetimepickerChange('SMSSendDate', $event)">
+                  </kendo-datetimepicker>
+
+                  <div class="grid-item item2_1">
+                    {{dtp_SMSSendDate.errors ? 'Thời điểm gởi SMS phải hơn 1 phút kể từ lúc này' : ''}}
+                  </div>
+                </div>
+
+                <div class="grid-item item3" [hidden]="curNoti != 1">
+                  <div class="label">
+                    <input type="checkbox" class="k-checkbox" id="cb_conf_app" [disabled]="isLockAll || isAdd"
+                      [(ngModel)]="couponPolicy.IsAppSending" (click)="clickCheckbox($event, 'IsAppSending')" />
+                    <label for="cb_conf_app">Gởi thông báo trên app mobile với tiêu đề</label>
+                  </div>
+
+                  <textarea [disabled]="isLockAll || isAdd || !couponPolicy.IsAppSending"
+                    [(ngModel)]="couponPolicy.AppTitle" (blur)="onTextboxLoseFocus('AppTitle')"></textarea>
+
+                  <div class="label mt-2">Nội dung thông báo</div>
+
+                  <app-p-kendo-editor style="height: 100%;"
+                    [readonly]="isLockAll || isAdd || !couponPolicy.IsAppSending" [content]="couponPolicy.AppContent"
+                    (valueChange)="onEditorValueChange($event)" (saveEvent)="saveWebContent()">
+
+                  </app-p-kendo-editor>
+                  <!-- <kendo-editor id="myeditor" #myeditor style="height: 100%;"
+                    [readonly]="isLockAll || isAdd || !couponPolicy.IsAppSending" [ngModel]="couponPolicy.AppContent"
+                    (ngModelChange)="onEditorValueChange($event)">
+
+                    <kendo-toolbar>
+                      <kendo-toolbar-buttongroup>
+                        <kendo-toolbar-button kendoEditorUndoButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorRedoButton></kendo-toolbar-button>
+                      </kendo-toolbar-buttongroup>
+                      <kendo-toolbar-buttongroup>
+                        <kendo-toolbar-button kendoEditorBoldButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorItalicButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorUnderlineButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorStrikethroughButton></kendo-toolbar-button>
+                      </kendo-toolbar-buttongroup>
+                      <kendo-toolbar-buttongroup>
+                        <kendo-toolbar-button kendoEditorSubscriptButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorSuperscriptButton></kendo-toolbar-button>
+                      </kendo-toolbar-buttongroup>
+                      <kendo-toolbar-buttongroup>
+                        <kendo-toolbar-button kendoEditorAlignLeftButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorAlignCenterButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorAlignRightButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorAlignJustifyButton></kendo-toolbar-button>
+                      </kendo-toolbar-buttongroup>
+                      <kendo-toolbar-buttongroup>
+                        <kendo-toolbar-button kendoEditorIndentButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorOutdentButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorInsertUnorderedListButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorInsertOrderedListButton></kendo-toolbar-button>
+                      </kendo-toolbar-buttongroup>
+                      <kendo-toolbar-dropdownlist kendoEditorFormat></kendo-toolbar-dropdownlist>
+                      <kendo-toolbar-dropdownlist kendoEditorFontSize></kendo-toolbar-dropdownlist>
+                      <kendo-toolbar-dropdownlist kendoEditorFontFamily></kendo-toolbar-dropdownlist>
+                      <kendo-toolbar-colorpicker kendoEditorForeColor></kendo-toolbar-colorpicker>
+                      <kendo-toolbar-colorpicker kendoEditorBackColor view="gradient"></kendo-toolbar-colorpicker>
+                      <kendo-editor-insert-table-button></kendo-editor-insert-table-button>
+                      <kendo-toolbar-buttongroup>
+                        <kendo-toolbar-button kendoEditorAddColumnBeforeButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorAddColumnAfterButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorAddRowBeforeButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorAddRowAfterButton></kendo-toolbar-button>
+                      </kendo-toolbar-buttongroup>
+                      <kendo-toolbar-buttongroup>
+                        <kendo-toolbar-button kendoEditorDeleteColumnButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorDeleteRowButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorDeleteTableButton></kendo-toolbar-button>
+                      </kendo-toolbar-buttongroup>
+                      <kendo-toolbar-buttongroup>
+                        <kendo-toolbar-button kendoEditorCreateLinkButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorUnlinkButton></kendo-toolbar-button>
+                      </kendo-toolbar-buttongroup>
+                      <kendo-toolbar-button kendoEditorCleanFormattingButton></kendo-toolbar-button>
+
+                      <kendo-toolbar-buttongroup>
+                        <kendo-toolbar-button kendoEditorViewSourceButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoEditorInsertFileButton></kendo-toolbar-button>
+                        <kendo-toolbar-button kendoButton [icon]="'image'" (click)="onUploadImg()"
+                          title="Insert Image Link">
+                        </kendo-toolbar-button>
+                        <kendo-toolbar-button kendoButton [icon]="'video-external'" (click)="onEmbedVideoURL()"
+                          title="Insert Video Link">
+                        </kendo-toolbar-button>
+                        <kendo-toolbar-button kendoButton [icon]="'save'" title="Lưu" class="editorSaveBtn"
+                          (click)="saveWebContent()">
+                        </kendo-toolbar-button>
+                      </kendo-toolbar-buttongroup>
+                    </kendo-toolbar>
+                  </kendo-editor> -->
+                </div>
+
+                <div class="grid-item item4" [hidden]="curNoti != 1">
+                  <div class="label">Thời điểm gởi thông báo trên App mobile</div>
+
+                  <div class="dtp_error_group">
+                    <kendo-datetimepicker [format]="'dd/MM/yyyy HH:mm'" placeholder="dd/mm/yyyy HH:mm"
+                      [(ngModel)]="AppSendDate" [min]="fourHoursFromNow" #dtp_AppSendDate="ngModel"
+                      [formatPlaceholder]="{ year: 'yyyy', month: 'MM', day: 'dd', hour: 'HH', minute: 'mm' }"
+                      [disabled]="isLockAll || isAdd || !couponPolicy.IsAppSending"
+                      (keydown.Enter)="$event.target.blur()" (blur)="onDatetimepickerChange('AppSendDate', $event)">
+                    </kendo-datetimepicker>
+
+                    <div class="grid-item item4_1">
+                      {{dtp_AppSendDate.errors ?
+                      'Thời điểm gởi thông báo trên App mobile phải hơn 1 phút kể từ lúc này' :
+                      ''}}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="grid-item item5" [hidden]="curNoti != 1">
+                  <div class="label">Đối tượng gởi thông báo</div>
+
+                  <div class="row">
+                    <div class="col-5">
+                      <input type="radio" class="k-radio" id="dttb_1" name="doiTuongThongBao"
+                        [disabled]="isLockAll || isAdd || !couponPolicy.IsAppSending" [value]="0"
+                        (click)="clickCheckbox($event, 'AppObjType')" [checked]="couponPolicy.AppObjType == 0" />
+                      <label for="dttb_1">Tất cả đối tượng nhận coupon tải app</label>
+                    </div>
+                    <div class="col-3">
+                      <input type="radio" class="k-radio" id="dttb_2" name="doiTuongThongBao"
+                        [disabled]="isLockAll || isAdd || !couponPolicy.IsAppSending" [value]="1"
+                        (click)="clickCheckbox($event, 'AppObjType')" [checked]="couponPolicy.AppObjType == 1" />
+                      <label for="dttb_2">Tất cả KHTT tải app</label>
+                    </div>
+                    <div class="col-4">
+                      <input type="radio" class="k-radio" id="dttb_3" name="doiTuongThongBao"
+                        [disabled]="isLockAll || isAdd || !couponPolicy.IsAppSending" [value]="2"
+                        (click)="clickCheckbox($event, 'AppObjType')" [checked]="couponPolicy.AppObjType == 2" />
+                      <label for="dttb_3">Tất cả khách hàng tải app</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="grid-item item6" [hidden]="curNoti != 2">
+                  <div class="label">
+                    <input type="checkbox" class="k-checkbox" id="cb_conf_sms" [disabled]="isLockAll || isAdd"
+                      [(ngModel)]="couponPolicy.IsCartNoification"
+                      (click)="clickCheckbox($event, 'IsCartNoification')" />
+                    <label for="cb_conf_sms">Gởi thông báo Giỏ hàng</label>
+                  </div>
+
+                  <textarea [disabled]="isLockAll || isAdd || !couponPolicy.IsCartNoification"
+                    [(ngModel)]="couponPolicy.NotificationVN" (blur)="onTextboxLoseFocus('NotificationVN')"></textarea>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- BLOCK THÔNG TIN CHI TIẾT CHƯƠNG TRÌNH -->
+        <div class="header header-2" [hidden]="showCouponGrid"
+          *ngIf="couponPolicy.TypeOfVoucher == 1 || couponPolicy.TypeOfVoucher == 2">
+          <div class="title">THÔNG TIN CHI TIẾT CHƯƠNG TRÌNH</div>
+
+          <div class="nav-filter nav-btn">
+            <form style="display: flex; flex-grow: 1;" [formGroup]="searchForm">
+              <div class="filter-btn-group search-btn-group">
+                <div class="search-btn">
+                  <span class="k-icon k-i-search"></span>
+                  <kendo-textbox formControlName="SearchQuery" type="text" class="k-textbox"
+                    placeholder="Tìm theo barcode, poscode, tên sản phẩm">
+                  </kendo-textbox>
+                </div>
+              </div>
+
+              <button kendoButton class="k-button searchBtn" [icon]="'search'" [disabled]="!isFilterActive || isAdd"
+                (click)="searchSanPham()">TÌM</button>
+            </form>
+          </div>
+
+          <div class="nav-file nav-btn" *ngIf="!isLockAll">
+            <div class="file-btn-group">
+              <button kendoButton id="onUploadBtn" class="k-button" [icon]="'export'" (click)="onImportExcelSanPham()"
+                [disabled]="!isFilterActive || isAdd"></button>
+            </div>
+
+            <div class="file-btn-group">
+              <button kendoButton class="k-button" [icon]="'import'" (click)="downloadExcelSanPham()"
+                [disabled]="!isFilterActive || isAdd">Template</button>
+            </div>
+          </div>
+
+          <div class="nav-btn nav-crud" *ngIf="!isLockAll">
+            <button kendoButton class="k-button onAddBtn" [icon]="'plus'" (click)="onAddSanPham()">
+              <!-- [disabled]="!isFilterActive || isAdd" -->
+              THÊM MỚI SẢN PHẨM
+            </button>
+          </div>
+        </div>
+
+        <div class="body" [hidden]="showCouponGrid"
+          *ngIf="couponPolicy.TypeOfVoucher == 1 || couponPolicy.TypeOfVoucher == 2">
+          <div class="sections">
+            <div class="section grid-wrapper" id="thongtinchitietchuongtrinhTbl_1">
+              <app-p-kendo-grid class="grid" [data]="gridViewSP | async" [scrollable]="'none'" [loading]="loading"
+                [pageable]="true" [pageSizes]="pageSizes" [pageSize]="pageSize" [skip]="gridStateSP.skip"
+                [take]="gridStateSP.take" [onPageChangeCallback]="onPageChangeCallback">
+
+                <kendo-grid-column field="ProductName">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <div class="quatang-item">
+                      <span class="k-icon k-i-trash" *ngIf="!isLockAll" (click)="onDeleteSanPham(dataItem)"></span>
+                      <span class="k-icon k-i-pencil" *ngIf="!isLockAll" (click)="onAddSanPham(false, dataItem)"></span>
+                      <div class="hinhanh">
+                        <img loading="lazy" [src]="dataItem.ImageSetting" alt="">
+                      </div>
+                      <div class="tenquatang_maquatang">
+                        <div class="tenquatang">{{ dataItem.ProductName }}</div>
+                        <div class="maquatang">{{ dataItem.Barcode }}</div>
+                        <div class="soLuongMinMax">
+                          <div class="soLuongMin">
+                            Min: {{ dataItem.MinQty | number: '1.' }}
+                          </div>
+                          <!-- <div class="soLuongMax">
+                            Max: {{ dataItem.MaxQty | number: '1.' }}
+                          </div> -->
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+                </kendo-grid-column>
+              </app-p-kendo-grid>
+            </div>
+          </div>
+        </div>
+        <!-- GRID ĐỐI TƯỢNG NHẬN COUPON -->
+        <div class="header header-2" [hidden]="showCouponGrid" *ngIf="!couponPolicy.IsPublic">
+          <div class="title">ĐỐI TƯỢNG NHẬN COUPON</div>
+
+          <div class="nav-filter nav-btn">
+            <form style="display: flex; flex-grow: 1;" [formGroup]="searchFormDT">
+              <div class="filter-btn-group search-btn-group">
+                <div class="search-btn">
+                  <span class="k-icon k-i-search"></span>
+                  <kendo-textbox formControlName="SearchQuery" type="text" class="k-textbox"
+                    placeholder="Tìm theo số điện thoại, họ tên, mã KHTT">
+                  </kendo-textbox>
+                </div>
+              </div>
+
+              <button kendoButton class="k-button searchBtn" [icon]="'search'" [disabled]="!isFilterActive || isAdd"
+                (click)="searchDoiTuong()">TÌM</button>
+            </form>
+          </div>
+
+          <div class="nav-file nav-btn" *ngIf="!isLockAll">
+            <div class="file-btn-group">
+              <button kendoButton id="onUploadBtn" class="k-button" [icon]="'export'" (click)="onImportExcelDoiTuong()"
+                [disabled]="!isFilterActive || isAdd"></button>
+            </div>
+
+            <div class="file-btn-group">
+              <button kendoButton class="k-button" [icon]="'import'" (click)="downloadExcelDoiTuong()"
+                [disabled]="!isFilterActive || isAdd">Template</button>
+            </div>
+          </div>
+
+          <div class="nav-btn nav-crud" *ngIf="!isLockAll">
+            <button kendoButton class="k-button onAddBtn" [icon]="'plus'" (click)="onAddDoiTuong()"
+              [disabled]="!isFilterActive || isAdd">
+              THÊM MỚI ĐỐI TƯỢNG</button>
+          </div>
+        </div>
+
+        <div class="body" [hidden]="showCouponGrid" *ngIf="!couponPolicy.IsPublic">
+          <div class="sections">
+            <div class="section grid-wrapper" id="doiTuongNhanCouponTbl">
+              <app-p-kendo-grid class="grid" [data]="gridViewDT | async" [scrollable]="'none'" [loading]="loading"
+                [pageable]="true" [pageSizes]="pageSizesDT" [pageSize]="pageSizeDT" [skip]="gridStateDT.skip"
+                [take]="gridStateDT.take" [onPageChangeCallback]="onPageChangeCallbackDT" [sortable]="true"
+                [sort]="gridStateDT.sort" [onSortChangeCallback]="onSortChangeCallbackDT"
+                [allowedMoreActionDropdown]="allowActionDropdown"
+                [getActionDropdownCallback]="getActionDropdownCallbackDT"
+                [onActionDropdownClickCallback]="onActionDropdownClickCallbackDT" [selectable]="selectable"
+                [onSelectCallback]="onSelectCallbackDT" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallbackDT"
+                [getSelectionPopupCallback]="getSelectionPopupCallbackDT">
+
+                <kendo-grid-column field="FullName" title="Họ và tên" class="col_ten" headerClass="col_ten">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <div>{{ dataItem.FullName }}</div>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column field="CellPhone" title="Số di động" class="col_phone" headerClass="col_phone">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <div>{{ dataItem.CellPhone }}</div>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column field="Remark" title="Mã KHTT" class="col_ma_khtt" headerClass="col_ma_khtt">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <div>{{ dataItem.MembershipNo }}</div>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column field="StatusID" title="Tình trạng" class="tinhtrang">
+                  <ng-template kendoGridHeaderTemplate let-dataItem>
+                    <div class="tinhtrang">Tình trạng</div>
+                  </ng-template>
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <div [ngClass]="{'gray': dataItem.StatusID == 0, 'green': dataItem.StatusID == 1, 
+                      'red': dataItem.StatusID == 2}">{{ dataItem.StatusName }}</div>
+                  </ng-template>
+                </kendo-grid-column>
+              </app-p-kendo-grid>
+            </div>
+          </div>
+        </div>
+        <!-- GRID DANH SÁCH COUPON -->
+        <div class="header header-2" [hidden]="!showCouponGrid" *ngIf="couponPolicy.StatusID > 0">
+          <div class="title">DANH SÁCH COUPON</div>
+
+          <div class="nav-filter nav-btn">
+            <form style="display: flex; flex-grow: 1;" [formGroup]="searchFormCP">
+              <div class="filter-btn-group search-btn-group">
+                <div class="search-btn">
+                  <span class="k-icon k-i-search"></span>
+                  <kendo-textbox formControlName="SearchQuery" type="text" class="k-textbox"
+                    placeholder="Tìm theo mã coupon">
+                  </kendo-textbox>
+                </div>
+              </div>
+
+              <button kendoButton class="k-button searchBtn" [icon]="'search'" [disabled]="!isFilterActive || isAdd"
+                (click)="searchCoupon()">TÌM</button>
+            </form>
+          </div>
+
+          <div class="nav-file nav-btn" *ngIf="couponPolicy.StatusID == 2">
+            <div class="file-btn-group">
+              <button kendoButton class="k-button" [icon]="'import'" (click)="ExportExcelCoupon()"
+                [disabled]="!isFilterActive || isAdd">Xuất Excel Coupon</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="body" [hidden]="!showCouponGrid" *ngIf="couponPolicy.StatusID > 0">
+          <div class="sections">
+            <div class="section grid-wrapper" id="danhSachCouponTbl">
+              <app-p-kendo-grid class="grid" [data]="gridViewCP | async" [scrollable]="'none'" [loading]="loading"
+                [pageable]="true" [pageSizes]="pageSizesCP" [pageSize]="pageSizeCP" [skip]="gridStateCP.skip"
+                [take]="gridStateCP.take" [onPageChangeCallback]="onPageChangeCallbackCP" [sortable]="true"
+                [sort]="gridStateCP.sort" [onSortChangeCallback]="onSortChangeCallbackCP"
+                [getActionDropdownCallback]="getActionDropdownCallbackCP"
+                [onActionDropdownClickCallback]="onActionDropdownClickCallbackCP" [selectable]="selectable"
+                [onSelectCallback]="onSelectCallbackCP" [onSelectedPopupBtnCallback]="onSelectedPopupBtnCallbackCP"
+                [getSelectionPopupCallback]="getSelectionPopupCallbackCP">
+
+                <kendo-grid-column field="VoucherNo" title="Mã coupon" class="col_ma" headerClass="col_ma">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <div>{{ dataItem.VoucherNo }}</div>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column field="CouponNameVN" title="Tên coupon" class="col_ten" headerClass="col_ten">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <div>{{ dataItem.CouponNameVN }}</div>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column field="StartDate" title="Ngày hiệu lực" class="col_start" headerClass="col_start">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <span>{{ dataItem.StartDate | date : 'dd/MM/yyyy' }}</span>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column field="EndDate" title="Ngày hết hạn" class="col_end" headerClass="col_end">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <span>{{ dataItem.EndDate | date : 'dd/MM/yyyy' }}</span>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column field="StatusName" title="Tình trạng" class="col_status" headerClass="col_status">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <span>{{ dataItem.StatusName }}</span>
+                  </ng-template>
+                </kendo-grid-column>
+              </app-p-kendo-grid>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+  <!-- popup confirm delete -->
+  <kendo-dialog #dialog id="deleteDialog" class="deleteDialog" title="Xóa {{context[contextIndex]}}"
+    [hidden]="!deleteDialogOpened" (close)="closeDeleteDialog()" [minWidth]="250">
+    <p style="margin: 30px; text-align: center;">
+      Bạn chắc chắn muốn xóa vĩnh viễn {{context[contextIndex]}}&nbsp;
+      "{{ contextName[contextIndex] }}"&nbsp;này?
+    </p>
+    <div class="dialog-footer">
+      <button kendoButton class="btn-hachi hachi-secondary" (click)="closeDeleteDialog()"
+        [icon]="'close'">Không</button>
+      <button kendoButton class="btn-hachi hachi-warning" (click)="delete()" [icon]="'trash'">Có</button>
+    </div>
+  </kendo-dialog>
+
+  <!-- popup điểm giao hàng -->
+  <kendo-dialog title="THÊM ĐIỂM GIAO HÀNG" [hidden]="!isDialogDiemGiaoHang" (close)="closeDialogDiemGiaoHang()"
+    id="dialogDiemGiaoHang" class="p-hachi-dialog">
+    <div class="label">Tỉnh thành / Quận huyện</div>
+
+    <div class="warehouseList">
+      <ng-container *ngFor="let d of provinceList; let i = index">
+        <!-- tinh thanh -->
+        <div class="input_label mb-1" [ngClass]="{'notExpand': !d.IsExpanded ? true : false}">
+          <div class="tinhThanh">
+            <input type="checkbox" class="k-checkbox" id="cb_tinhThanh_{{i}}" [checked]="d.IsSelected"
+              (click)="clickCheckbox($event, 'VNProvince', d)" [disabled]="isLockAll || isAdd" />
+            <label for="cb_tinhThanh_{{i}}">{{ d.VNProvince }}</label>
+
+            <span class="k-icon k-i-plus" *ngIf="!d.IsExpanded" (click)="toggleExpandTinhThanh(d, true)"></span>
+            <span class="k-icon k-i-minus" *ngIf="d.IsExpanded" (click)="toggleExpandTinhThanh(d, false)"></span>
+          </div>
+          <!-- quan huyen -->
+          <div class="input_label mb-1 quanHuyen" *ngFor="let q of d.ListChild; let j = index">
+            <input type="checkbox" class="k-checkbox" id="cb_quanHuyen_{{j}}" [checked]="q.IsSelected"
+              (click)="clickCheckbox($event, 'VNDistrict', q, d)" [disabled]="isLockAll || isAdd" />
+            <label for="cb_quanHuyen_{{j}}">{{ q.VNDistrict }}</label>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="dialog-footer">
+      <button kendoButton class="btn btn-hachi hachi-secondary" (click)="closeDialogDiemGiaoHang()">ĐÓNG</button>
+      <button kendoButton class="btn btn-hachi hachi-primary" (click)="updateDiemGiaoHang()">CẬP NHẬT</button>
+    </div>
+  </kendo-dialog>
+</div>
+
+<!-- <kendo-dialog class="videoURLdialog" title="{{isAddVideo ? 'Chèn' : 'Sửa' + ' link video clip'}}"
+  [hidden]="!isVideoURLdialog" (close)="closeVideoURLdialog()" [minWidth]="350">
+  <form style="display: flex; flex-grow: 1;" [formGroup]="videoURLform">
+    <div class="label">Link tới video</div>
+    <kendo-textbox formControlName="URL" type="text" class="k-textbox"
+      placeholder="https://www.youtube.com/watch?v=abcdef" title="Link youtube không được dùng timestamp">
+    </kendo-textbox>
+
+    <div class="label">Chiều rộng</div>
+    <kendo-numerictextbox formControlName="Width" format="#,0 px" [min]="100" placeholder="100">
+    </kendo-numerictextbox>
+
+    <div class="label">Chiều cao</div>
+    <kendo-numerictextbox formControlName="Height" format="#,0 px" [min]="50" placeholder="50">
+    </kendo-numerictextbox>
+  </form>
+  <div class="dialog-footer">
+    <button kendoButton class="btn-hachi hachi-secondary" (click)="closeVideoURLdialog()" [icon]="'close'">Hủy</button>
+    <button kendoButton class="btn-hachi hachi-primary" (click)="embedVideoURL()" [icon]="'link'">OK</button>
+  </div>
+</kendo-dialog> -->
+
+<app-folder-popup [pickFileCallback]="pickFileCallback" [GetFolderCallback]="GetFolderCallback"></app-folder-popup>
+
+<app-import-popup [uploadEventHandlerCallback]="uploadEventHandlerCallback"></app-import-popup>
