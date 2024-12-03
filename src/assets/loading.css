@@ -1,5 +1,5 @@
 body.ps_loaded .page-loading-index {
-    display: none;
+    display: block;
 }
 
 .page-loading-index {

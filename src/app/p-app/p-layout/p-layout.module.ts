@@ -73,9 +73,6 @@ import { IntegerPartPipe } from './pipe/integer-part-pipe.pipe';
 import { PLoadingSpinnerComponent } from './components/p-loading-spinner/p-loading-spinner.component';
 import { ConvertToDatePipe } from './pipe/convert-to-date.pipe';
 import { PersonalInfoDetailComponent } from './components/personal-info-detail/personal-info-detail.component';
-import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
-import { environment } from "src/environments/environment";
-import { getMessaging, MessagingModule, provideMessaging } from '@angular/fire/messaging';
 
 @NgModule({
   declarations: [
@@ -168,11 +165,8 @@ import { getMessaging, MessagingModule, provideMessaging } from '@angular/fire/m
     NavigationModule,
     UploadModule,
     UploadsModule,
-    MessagingModule
   ],
   providers: [
-    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    provideMessaging(() => getMessaging()),
     { provide: 'IGraphServices', useClass: EmployeeAttendanceService, multi: true },
     { provide: 'IGraphServices', useClass: ProductSalesService, multi: true },
     { provide: ICON_SETTINGS, useValue: { type: 'font' } },

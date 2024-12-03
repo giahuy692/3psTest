@@ -17,6 +17,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NotificationService } from '@progress/kendo-angular-notification';
 import { DateInputModule } from '@progress/kendo-angular-dateinputs';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { environment } from "src/environments/environment";
+import { getMessaging, MessagingModule, provideMessaging } from '@angular/fire/messaging';
 
 @NgModule({
   declarations: [
@@ -39,8 +42,11 @@ import { DateInputModule } from '@progress/kendo-angular-dateinputs';
     MatInputModule,
     ReactiveFormsModule,
     TextBoxModule,
+    MessagingModule
   ],
   providers: [
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideMessaging(() => getMessaging()),
     {
       provide: LocationStrategy, 
       useClass: HashLocationStrategy,
