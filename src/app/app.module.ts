@@ -17,6 +17,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NotificationService } from '@progress/kendo-angular-notification';
 import { DateInputModule } from '@progress/kendo-angular-dateinputs';
+import { getMessaging, provideMessaging } from '@angular/fire/messaging';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,8 @@ import { DateInputModule } from '@progress/kendo-angular-dateinputs';
       provide: HTTP_INTERCEPTORS,
       useClass: PS_AuthInterceptorService, multi: true
     },
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideMessaging(() => getMessaging())
   ],
   bootstrap: [AppComponent]
 })

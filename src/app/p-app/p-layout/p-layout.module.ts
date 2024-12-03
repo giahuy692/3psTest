@@ -171,8 +171,8 @@ import { getMessaging, MessagingModule, provideMessaging } from '@angular/fire/m
     MessagingModule
   ],
   providers: [
-    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    provideMessaging(() => getMessaging()),
+    // provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    // provideMessaging(() => getMessaging()),
     { provide: 'IGraphServices', useClass: EmployeeAttendanceService, multi: true },
     { provide: 'IGraphServices', useClass: ProductSalesService, multi: true },
     { provide: ICON_SETTINGS, useValue: { type: 'font' } },

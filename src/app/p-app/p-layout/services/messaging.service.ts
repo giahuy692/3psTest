@@ -14,10 +14,13 @@ export class MessagingService {
   // Yêu cầu quyền thông báo
   requestPermission(vapidKey: string) {
     Notification.requestPermission()
-      .then((permission) => {
+      .then(async (permission) => {
         if (permission === 'granted') {
-          console.log('Notification permission granted.');
-          this.getToken(vapidKey);
+          await navigator.serviceWorker.getRegistrations().then((registration : any) => {
+            this.getToken(vapidKey, registration[0]);
+          }).catch((err) => {
+            console.error('Service Worker registration failed:', err);
+          });   
         } else {
           console.error('Unable to get permission to notify.');
         }
@@ -26,8 +29,8 @@ export class MessagingService {
   }
 
   // Lấy FCM Token
-  private getToken(vapidKey: string) {
-    getToken(this.messaging, { vapidKey })
+  private async getToken(vapidKey: string, serviceWorker : any) {
+    await getToken(this.messaging, { vapidKey: vapidKey, serviceWorkerRegistration: serviceWorker })
       .then((token) => {
         if (token) {
           console.log('FCM Token:', token);
