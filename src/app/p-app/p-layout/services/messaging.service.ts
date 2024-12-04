@@ -13,30 +13,37 @@ export class MessagingService {
 
   constructor(private messaging: Messaging) {}
 
+  // VAPID Key dùng để xác thực giữa ứng dụng client và Firebase Messaging Server.
+  // Bạn cần thay thế giá trị này bằng VAPID Key từ Firebase Console của dự án bạn.
+  vapidKey = 'BJ3oniCKyBFvdawVwUXnr3NebzsCmKOVxQ6nc8V0-_RMcYWII8f8yAE8GHR895VGRjJKiOFVYjXIwfrfe2sZoAQ';
   // Yêu cầu quyền thông báo
-  requestPermission(vapidKey: string) {
+  requestPermission() {
     Notification.requestPermission()
       .then(async (permission) => {
         if (permission === 'granted') {
-          navigator.serviceWorker.register("../../../../firebase-messaging-sw.js").then((registration : ServiceWorkerRegistration) => {
-            this.serviceWorker = registration
-            // console.log(registration)
-            // if(Ps_UtilObjectService.hasValue(registration) && registration.active)
-              // this.getToken(vapidKey, registration);
-          }).catch((err) => {
-            console.error('Service Worker registration failed:', err);
-          }); 
-        //   await navigator.serviceWorker.getRegistration("/firebase-cloud-messaging-push-scope").then((registration : any) => {
-        //     this.getToken(vapidKey, registration);
-        //   }).catch((err) => {
-        //     console.error('Service Worker registration failed:', err);
-        //   });   
-        // } else {
-        //   console.error('Unable to get permission to notify.');
+          // Kiểm tra xem đã có Service Worker đăng ký hay chưa
+          const existingRegistration = await navigator.serviceWorker.getRegistration("../../../../firebase-messaging-sw.js");
+          console.log(existingRegistration)
+          if (existingRegistration) {
+            console.log('Service Worker already registered:', existingRegistration);
+            this.serviceWorker = existingRegistration; // Lưu lại Service Worker đã đăng ký
+          } else {
+            // Đăng ký Service Worker mới nếu chưa tồn tại
+            navigator.serviceWorker.register("../../../../firebase-messaging-sw.js")
+              .then((registration: ServiceWorkerRegistration) => {
+                console.log('Service Worker registered:', registration);
+                this.serviceWorker = registration; // Lưu lại Service Worker vừa đăng ký
+              })
+              .catch((err) => {
+                console.error('Service Worker registration failed:', err);
+              });
+          }
+        } else {
+          console.error('Permission for notifications was denied.');
         }
       })
       .catch((err) => console.error('Error requesting notification permission', err));
-  }
+  }  
 
   /**
    * Lấy FCM Token
@@ -44,8 +51,8 @@ export class MessagingService {
       Bạn cần thay thế giá trị này bằng VAPID Key từ Firebase Console của dự án bạn.
    * @param serviceWorker đã đăng ký ở requestPermission
    */
-  public async getToken(vapidKey: string, serviceWorker : ServiceWorkerRegistration = this.serviceWorker) {
-    await getToken(this.messaging, { vapidKey: vapidKey, serviceWorkerRegistration: serviceWorker })
+  public async getToken(existingRegistration: ServiceWorkerRegistration) {
+    await getToken(this.messaging, { vapidKey: this.vapidKey, serviceWorkerRegistration: existingRegistration })
       .then((token) => {
         if (token) {
           console.log('FCM Token:', token);
@@ -59,14 +66,4 @@ export class MessagingService {
       });
   }
 
-  // Nhận tin nhắn khi ứng dụng đang chạy
-  receiveMessage() {
-    onMessage(this.messaging, (payload) => {
-      this.currentMessage.next(payload);
-    });
-  }
-
-  get currentMessage$() {
-    return this.currentMessage.asObservable();
-  }
 }

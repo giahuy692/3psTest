@@ -91,38 +91,48 @@ export class HeaderComponent implements OnInit, OnDestroy {
     let b = this.menuService.companyDropdownList$.subscribe(v => this.companyDropdownList = v)
     let c = this.menuService.allowModuleList$.subscribe(v => this.allowModuleList = v);
     let d = this.menuService.currentModule$.subscribe(v => { this.currentModule = v });
-
-    
-
     let g = this.menuService.changePermissionAPI().subscribe((res) => {
       if (Ps_UtilObjectService.hasValue(res)) {
         //#region firebase
+        navigator.serviceWorker.getRegistration("../../../../firebase-messaging-sw.js")
+          .then((registration) => {
+            if (registration) {
+              // Nếu Service Worker đã được đăng ký
+              console.log('Service Worker already registered:', registration);
+              this.messagingService.getToken(registration);
+            } else {
+              // Nếu chưa có Service Worker, đăng ký mới
+              console.log('No Service Worker found. Registering a new one...');
+              navigator.serviceWorker.register("../../../../firebase-messaging-sw.js")
+                .then((newRegistration) => {
+                  console.log('New Service Worker registered:', newRegistration);
+                  this.messagingService.getToken(newRegistration); // Sử dụng Service Worker mới đăng ký
+                })
+                .catch((err) => {
+                  console.error('Failed to register new Service Worker:', err);
+                });
+            }
+          })
+          .catch((err) => {
+            // Xử lý lỗi khi kiểm tra Service Worker
+            console.error('Error while checking Service Worker registration:', err);
 
-        // VAPID Key dùng để xác thực giữa ứng dụng client và Firebase Messaging Server.
-        // Bạn cần thay thế giá trị này bằng VAPID Key từ Firebase Console của dự án bạn.
-        const vapidKey = 'BJ3oniCKyBFvdawVwUXnr3NebzsCmKOVxQ6nc8V0-_RMcYWII8f8yAE8GHR895VGRjJKiOFVYjXIwfrfe2sZoAQ';
+            // Đăng ký mới nếu kiểm tra thất bại
+            navigator.serviceWorker.register("../../../../firebase-messaging-sw.js")
+              .then((newRegistration) => {
+                console.log('Fallback: New Service Worker registered:', newRegistration);
+                this.messagingService.getToken(newRegistration);
+              })
+              .catch((err) => {
+                console.error('Fallback: Failed to register Service Worker:', err);
+              });
+          });
 
-        // // Gửi yêu cầu người dùng cấp quyền nhận thông báo từ Firebase Messaging.
-        // // Nếu quyền được cấp, token FCM sẽ được lấy về và lưu trữ.
-        // this.messagingService.requestPermission(vapidKey);
-
-        // // Thiết lập lắng nghe các thông báo gửi đến khi ứng dụng đang chạy ở foreground.
-        // this.messagingService.receiveMessage();
-
-        // // Đăng ký lắng nghe observable `currentMessage$` từ Messaging Service để xử lý thông báo nhận được.
-        // // Mỗi khi có thông báo mới, observable này sẽ emit giá trị tương ứng.
-        // let f = this.messagingService.currentMessage$.subscribe((msg) => {
-        //   // Gán giá trị thông báo nhận được vào biến `message` để hiển thị hoặc xử lý sau.
-        //   this.message = msg;
-        // });
-
-        // Lấy token
-        this.messagingService.getToken(vapidKey)
         //#endregion
         // this.subArr.push(f)
       }
     });
-    this.subArr.push(a, b, c, d)
+    this.subArr.push(a, b, c, d, g)
     
   }
   ngOnDestroy(): void {

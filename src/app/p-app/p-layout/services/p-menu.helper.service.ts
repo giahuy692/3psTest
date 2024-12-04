@@ -814,7 +814,7 @@ export class PS_HelperMenuService implements OnDestroy {
     Object.assign(EnumLayout, layout);
     Object.assign(EnumDeveloper, developer);
 
-    console.log(apiConfig);
+    // console.log(apiConfig);
 
     // Kích hoạt quyền truy cập API
     this.activePermissionAPI(apiConfig);

@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation, HostListener } from '@
 import { ActivatedRoute, Router } from '@angular/router';
 import { PS_HelperMenuService } from '../services/p-menu.helper.service';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Ps_UtilObjectService } from 'src/app/p-lib';
 
 @Component({
   selector: 'app-layout-default',
@@ -14,7 +16,8 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
   constructor(public menuService: PS_HelperMenuService,
     public router: Router,
     public activatedRoute: ActivatedRoute) { }
-
+    
+  isLoading: boolean = false;
   ngUnsubcribe$ = new Subject<void>();  
 
   @HostListener('window:resize', ['$event']) onResize(event) {
@@ -39,6 +42,17 @@ export class LayoutDefaultComponent implements OnInit, OnDestroy {
     //   }
     // }
     // );
+
+    // Lắng nghe GetListModuleAPITree complete
+    this.isLoading = true
+    this.menuService
+      .changePermissionAPI()
+      .pipe(takeUntil(this.ngUnsubcribe$))
+      .subscribe((res) => {
+        if (Ps_UtilObjectService.hasValue(res)) {
+          this.isLoading = false
+        }
+      });
   }
 
   switchToLayout(){

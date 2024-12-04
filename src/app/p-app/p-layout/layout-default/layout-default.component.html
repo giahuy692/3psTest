@@ -6,7 +6,8 @@
             <app-menu></app-menu>
             <!-- <app-menu-portal></app-menu-portal> -->
         </div>
-        <div class="px-2 py-1">
+        <div class="px-2 py-1 position-relative">
+            <p-loading-spinner [isLoading]="isLoading"></p-loading-spinner>
             <router-outlet></router-outlet>
         </div>
     </div>

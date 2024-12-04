@@ -198,13 +198,9 @@ export class Sys001LoginComponent implements OnInit, AfterViewInit {
             that.router.navigate([that.returnUrl]);
             
             //#region firebase
-              // VAPID Key dùng để xác thực giữa ứng dụng client và Firebase Messaging Server.
-              // Bạn cần thay thế giá trị này bằng VAPID Key từ Firebase Console của dự án bạn.
-              const vapidKey = 'BJ3oniCKyBFvdawVwUXnr3NebzsCmKOVxQ6nc8V0-_RMcYWII8f8yAE8GHR895VGRjJKiOFVYjXIwfrfe2sZoAQ';
-
               // Gửi yêu cầu người dùng cấp quyền nhận thông báo từ Firebase Messaging.
               // Nếu quyền được cấp, token FCM sẽ được lấy về và lưu trữ.
-              this.messagingService.requestPermission(vapidKey);
+              this.messagingService.requestPermission();
             //#endregion
           });
         });
