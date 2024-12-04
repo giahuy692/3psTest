@@ -102,25 +102,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
         // Bạn cần thay thế giá trị này bằng VAPID Key từ Firebase Console của dự án bạn.
         const vapidKey = 'BJ3oniCKyBFvdawVwUXnr3NebzsCmKOVxQ6nc8V0-_RMcYWII8f8yAE8GHR895VGRjJKiOFVYjXIwfrfe2sZoAQ';
 
-        // Gửi yêu cầu người dùng cấp quyền nhận thông báo từ Firebase Messaging.
-        // Nếu quyền được cấp, token FCM sẽ được lấy về và lưu trữ.
-        this.messagingService.requestPermission(vapidKey);
+        // // Gửi yêu cầu người dùng cấp quyền nhận thông báo từ Firebase Messaging.
+        // // Nếu quyền được cấp, token FCM sẽ được lấy về và lưu trữ.
+        // this.messagingService.requestPermission(vapidKey);
 
-        // Thiết lập lắng nghe các thông báo gửi đến khi ứng dụng đang chạy ở foreground.
-        this.messagingService.receiveMessage();
+        // // Thiết lập lắng nghe các thông báo gửi đến khi ứng dụng đang chạy ở foreground.
+        // this.messagingService.receiveMessage();
 
-        // Đăng ký lắng nghe observable `currentMessage$` từ Messaging Service để xử lý thông báo nhận được.
-        // Mỗi khi có thông báo mới, observable này sẽ emit giá trị tương ứng.
-        let f = this.messagingService.currentMessage$.subscribe((msg) => {
-          // Gán giá trị thông báo nhận được vào biến `message` để hiển thị hoặc xử lý sau.
-          this.message = msg;
-        });
+        // // Đăng ký lắng nghe observable `currentMessage$` từ Messaging Service để xử lý thông báo nhận được.
+        // // Mỗi khi có thông báo mới, observable này sẽ emit giá trị tương ứng.
+        // let f = this.messagingService.currentMessage$.subscribe((msg) => {
+        //   // Gán giá trị thông báo nhận được vào biến `message` để hiển thị hoặc xử lý sau.
+        //   this.message = msg;
+        // });
 
+        // Lấy token
+        this.messagingService.getToken(vapidKey)
         //#endregion
-        this.subArr.push(f)
+        // this.subArr.push(f)
       }
     });
-    this.subArr.push(a, b, c, d, g)
+    this.subArr.push(a, b, c, d)
     
   }
   ngOnDestroy(): void {

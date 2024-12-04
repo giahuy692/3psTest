@@ -5,6 +5,7 @@ import { Ps_AuthService, Ps_UtilObjectService } from 'src/app/p-lib';
 import { envelopIcon, lockIcon, eyeIcon, userIcon } from '@progress/kendo-svg-icons';
 import { LayoutService } from '../../../p-layout/services/layout.service';
 import { Subject } from 'rxjs';
+import { MessagingService } from 'src/app/p-app/p-layout/services/messaging.service';
 
 @Component({
   selector: 'app-sys001-login',
@@ -66,6 +67,7 @@ export class Sys001LoginComponent implements OnInit, AfterViewInit {
     protected router: Router,
     protected authen: Ps_AuthService,
     public layoutService: LayoutService,
+    private messagingService: MessagingService
     // private alertService: AlertService
   ) {
     // redirect to home if already logged in
@@ -194,6 +196,16 @@ export class Sys001LoginComponent implements OnInit, AfterViewInit {
             const userInfoTime = { ...i, accessTime: Date.now().toString() }
             that.authen.setCacheUserInfo(userInfoTime)
             that.router.navigate([that.returnUrl]);
+            
+            //#region firebase
+              // VAPID Key dùng để xác thực giữa ứng dụng client và Firebase Messaging Server.
+              // Bạn cần thay thế giá trị này bằng VAPID Key từ Firebase Console của dự án bạn.
+              const vapidKey = 'BJ3oniCKyBFvdawVwUXnr3NebzsCmKOVxQ6nc8V0-_RMcYWII8f8yAE8GHR895VGRjJKiOFVYjXIwfrfe2sZoAQ';
+
+              // Gửi yêu cầu người dùng cấp quyền nhận thông báo từ Firebase Messaging.
+              // Nếu quyền được cấp, token FCM sẽ được lấy về và lưu trữ.
+              this.messagingService.requestPermission(vapidKey);
+            //#endregion
           });
         });
       }, err => {
