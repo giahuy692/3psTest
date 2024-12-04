@@ -16,7 +16,7 @@ export class MessagingService {
     Notification.requestPermission()
       .then(async (permission) => {
         if (permission === 'granted') {
-          await navigator.serviceWorker.getRegistrations().then((registration : any) => {
+          await navigator.serviceWorker.getRegistration("/firebase-cloud-messaging-push-scope").then((registration : any) => {
             this.getToken(vapidKey, registration[0]);
           }).catch((err) => {
             console.error('Service Worker registration failed:', err);
@@ -47,7 +47,6 @@ export class MessagingService {
   // Nhận tin nhắn khi ứng dụng đang chạy
   receiveMessage() {
     onMessage(this.messaging, (payload) => {
-      console.log('Message received: ', payload);
       this.currentMessage.next(payload);
     });
   }
