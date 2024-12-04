@@ -92,13 +92,35 @@ export class HeaderComponent implements OnInit, OnDestroy {
     let c = this.menuService.allowModuleList$.subscribe(v => this.allowModuleList = v);
     let d = this.menuService.currentModule$.subscribe(v => { this.currentModule = v });
 
-    const vapidKey = 'BJ3oniCKyBFvdawVwUXnr3NebzsCmKOVxQ6nc8V0-_RMcYWII8f8yAE8GHR895VGRjJKiOFVYjXIwfrfe2sZoAQ'; // Thay bằng VAPID Key từ Firebase Console
-    this.messagingService.requestPermission(vapidKey);
-    this.messagingService.receiveMessage();
-    let f = this.messagingService.currentMessage$.subscribe((msg) => {
-      this.message = msg;
+    
+
+    let g = this.menuService.changePermissionAPI().subscribe((res) => {
+      if (Ps_UtilObjectService.hasValue(res)) {
+        //#region firebase
+
+        // VAPID Key dùng để xác thực giữa ứng dụng client và Firebase Messaging Server.
+        // Bạn cần thay thế giá trị này bằng VAPID Key từ Firebase Console của dự án bạn.
+        const vapidKey = 'BJ3oniCKyBFvdawVwUXnr3NebzsCmKOVxQ6nc8V0-_RMcYWII8f8yAE8GHR895VGRjJKiOFVYjXIwfrfe2sZoAQ';
+
+        // Gửi yêu cầu người dùng cấp quyền nhận thông báo từ Firebase Messaging.
+        // Nếu quyền được cấp, token FCM sẽ được lấy về và lưu trữ.
+        this.messagingService.requestPermission(vapidKey);
+
+        // Thiết lập lắng nghe các thông báo gửi đến khi ứng dụng đang chạy ở foreground.
+        this.messagingService.receiveMessage();
+
+        // Đăng ký lắng nghe observable `currentMessage$` từ Messaging Service để xử lý thông báo nhận được.
+        // Mỗi khi có thông báo mới, observable này sẽ emit giá trị tương ứng.
+        let f = this.messagingService.currentMessage$.subscribe((msg) => {
+          // Gán giá trị thông báo nhận được vào biến `message` để hiển thị hoặc xử lý sau.
+          this.message = msg;
+        });
+
+        //#endregion
+        this.subArr.push(f)
+      }
     });
-    this.subArr.push(a, b, c, d, f)
+    this.subArr.push(a, b, c, d, g)
     
   }
   ngOnDestroy(): void {
