@@ -24,11 +24,15 @@ firebase.initializeApp(firebaseConfig); // Khởi tạo Firebase nếu chưa kh�
 
 const messaging = firebase.messaging(); // Lấy đối tượng Firebase Messaging.
 
-// Xử lý thông báo khi ứng dụng chạy nền
+// Lắng nghe sự kiện push notification
 messaging.onBackgroundMessage((payload) => {
+  console.log("[firebase-messaging-sw.js] Received background message ", payload);
 
-  // Hiển thị thông báo thông qua Service Worker
-  self.registration.showNotification(payload.notification.title, {
+  const notificationTitle = payload.notification.title;
+  const notificationOptions = {
     body: payload.notification.body,
-  });
+    icon: payload.notification.icon,
+  };
+
+  self.registration.showNotification(notificationTitle, notificationOptions);
 });

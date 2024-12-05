@@ -15,7 +15,7 @@ import { MessagingService } from '../../services/messaging.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   showUser: boolean = false
@@ -99,14 +99,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
             if (registration) {
               // Nếu Service Worker đã được đăng ký
               console.log('Service Worker already registered:', registration);
-              this.messagingService.getToken(registration);
+              this.messagingService.checkPermissionsAndGuide(registration);
             } else {
               // Nếu chưa có Service Worker, đăng ký mới
               console.log('No Service Worker found. Registering a new one...');
               navigator.serviceWorker.register("../../../../firebase-messaging-sw.js")
                 .then((newRegistration) => {
                   console.log('New Service Worker registered:', newRegistration);
-                  this.messagingService.getToken(newRegistration); // Sử dụng Service Worker mới đăng ký
+                  this.messagingService.checkPermissionsAndGuide(newRegistration); // Sử dụng Service Worker mới đăng ký
                 })
                 .catch((err) => {
                   console.error('Failed to register new Service Worker:', err);
@@ -121,7 +121,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
             navigator.serviceWorker.register("../../../../firebase-messaging-sw.js")
               .then((newRegistration) => {
                 console.log('Fallback: New Service Worker registered:', newRegistration);
-                this.messagingService.getToken(newRegistration);
+                this.messagingService.checkPermissionsAndGuide(newRegistration);
               })
               .catch((err) => {
                 console.error('Fallback: Failed to register Service Worker:', err);
