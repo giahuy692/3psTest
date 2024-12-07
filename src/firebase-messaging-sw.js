@@ -25,8 +25,8 @@ firebase.initializeApp(firebaseConfig); // Khởi tạo Firebase nếu chưa kh�
 const messaging = firebase.messaging(); // Lấy đối tượng Firebase Messaging.
 
 // Lắng nghe sự kiện push notification
-messaging.onBackgroundMessage((payload) => {
-  console.log("[firebase-messaging-sw.js] Received background message ", payload);
+messaging.onBackgroundMessage(async (payload) => {
+  console.log('[firebase-messaging-sw.js] Received background message ', payload);
 
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
@@ -34,5 +34,16 @@ messaging.onBackgroundMessage((payload) => {
     icon: payload.notification.icon,
   };
 
+  // Hiển thị thông báo
   self.registration.showNotification(notificationTitle, notificationOptions);
+
+  // Gọi API để xử lý dữ liệu
+  await fetch('/your-backend-endpoint', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  });
 });
+
