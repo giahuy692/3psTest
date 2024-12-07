@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Messaging } from '@angular/fire/messaging';
+import { getMessaging, Messaging } from '@angular/fire/messaging';
 import { BehaviorSubject } from 'rxjs';
 import { getToken, onMessage } from 'firebase/messaging';
 import { Ps_UtilObjectService } from 'src/app/p-lib';
+import { FirebaseApp, initializeApp } from '@angular/fire/app';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +12,15 @@ import { Ps_UtilObjectService } from 'src/app/p-lib';
 export class MessagingService {
   private serviceWorker: ServiceWorkerRegistration
 
-  constructor(private messaging: Messaging) { }
+  constructor(private messaging: Messaging) {
+    const app: FirebaseApp = initializeApp(environment.firebaseConfig);
+    this.messaging = getMessaging(app);
+    console.log('yes')
+    // Listen for foreground messages
+    onMessage(this.messaging, (payload) => {
+      console.log('Message received in foreground: ', payload);
+    });
+   }
 
   // VAPID Key dùng để xác thực giữa ứng dụng client và Firebase Messaging Server.
   // Bạn cần thay thế giá trị này bằng VAPID Key từ Firebase Console của dự án bạn.
